@@ -5,7 +5,6 @@ cd "$(dirname "$0")/.."
 
 rm -rf esphome_frontend
 
-mkdir esphome_frontend
-cp -r static esphome_frontend/static
+cp -r raw_package esphome_frontend
 
 NODE_ENV=production npm exec -- rollup -c
