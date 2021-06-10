@@ -14,8 +14,8 @@ script/develop
 
 It will start the dev server and will automatically re-bundle updated JavaScript (except for the `static` folder).
 
-Then run ESPHome in frontend dev mode:
+Then run ESPHome in dashboard dev mode by defining the relative path from the ESPHome repository to this dashboard repository as the environment variable `ESPHOME_DASHBOARD_DEV`.
 
 ```
-ESPHOME_FRONTEND_DEV=1 esphome dashboard ./
+ESPHOME_DASHBOARD_DEV=../dashboard esphome dashboard ./
 ```

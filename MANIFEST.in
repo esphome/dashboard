@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+graft esphome_dashboard
+recursive-exclude * *.py[co]

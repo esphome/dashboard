@@ -6,7 +6,7 @@ import typescript from "@rollup/plugin-typescript";
 const config = {
   input: "src/index.ts",
   output: {
-    dir: "esphome_frontend/static/js/esphome/",
+    dir: "esphome_dashboard/static/js/esphome/",
     format: "module",
   },
   preserveEntrySignatures: false,

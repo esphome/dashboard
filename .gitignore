@@ -1,2 +1,4 @@
 node_modules
-esphome_frontend
+esphome_dashboard
+esphome_dashboard.egg-info
+dist

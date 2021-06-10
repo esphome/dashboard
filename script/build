@@ -3,8 +3,8 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-rm -rf esphome_frontend
+rm -rf esphome_dashboard
 
-cp -r raw_package esphome_frontend
+cp -r raw_package esphome_dashboard
 
 NODE_ENV=production npm exec -- rollup -c
