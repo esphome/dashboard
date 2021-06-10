@@ -1,5 +1,5 @@
 import { ESPLoader } from "esp-web-flasher";
-import { getConfiguration } from "./api";
+import { getConfiguration } from "./api/configuration";
 import { chipFamilyToPlatform } from "./const";
 
 export const flashConfiguration = async (

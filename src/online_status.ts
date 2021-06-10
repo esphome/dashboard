@@ -1,4 +1,4 @@
-import { getOnlineStatus } from "./api";
+import { getOnlineStatus } from "./api/ping";
 
 type StatusCallback = (devices: Record<string, boolean>) => unknown;
 
@@ -12,7 +12,11 @@ export const subscribeOnlineStatus = (
   subscribers.push(onUpdate);
 
   const unsubscribe = () => {
-    subscribers.splice(subscribers.indexOf(onUpdate));
+    const index = subscribers.indexOf(onUpdate);
+    if (index === -1) {
+      return;
+    }
+    subscribers.splice(index);
 
     // No subscribers anymore, cleanup
     if (subscribers.length === 0) {
@@ -42,16 +46,18 @@ export const subscribeOnlineStatus = (
 const fetchPing = async () => {
   const nextRun = new Date().getTime() + 2000;
 
-  lastResult = await getOnlineStatus();
+  try {
+    lastResult = await getOnlineStatus();
 
-  for (const cb of subscribers) {
-    cb(lastResult);
-  }
-
-  // Check if we got canceled while we were
-  if (pollSubscription !== undefined) {
-    const delay = Math.max(0, nextRun - new Date().getTime());
-    pollSubscription = window.setTimeout(fetchPing, delay);
+    for (const cb of subscribers) {
+      cb(lastResult);
+    }
+  } finally {
+    // Check if we got canceled while we were doing an update
+    if (pollSubscription !== undefined) {
+      const delay = Math.max(0, nextRun - new Date().getTime());
+      pollSubscription = window.setTimeout(fetchPing, delay);
+    }
   }
 };
 

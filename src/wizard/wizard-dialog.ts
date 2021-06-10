@@ -20,11 +20,13 @@ import {
   createConfiguration,
   deleteConfiguration,
   getConfiguration,
-} from "../api";
+} from "../api/configuration";
 import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
+import { subscribeOnlineStatus } from "../online_status";
 
 const OK_ICON = "🎉";
+const WARNING_ICON = "👀";
 
 /*
 Flow:
@@ -54,6 +56,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "connecting_webserial"
     | "prepare_flash"
     | "flashing"
+    | "wait_come_online"
     | "done" = "basic_config";
 
   @state() private _error?: string;
@@ -94,8 +97,15 @@ export class ESPHomeWizardDialog extends LitElement {
         this._writeProgress > 3 ? this._writeProgress : undefined
       );
       hideActions = true;
+    } else if (this._state === "wait_come_online") {
+      content = this._renderProgress("Finding device on network");
+      hideActions = true;
     } else if (this._state === "done") {
-      content = this._renderMessage(OK_ICON, `Configuration created!`, true);
+      if (this._error) {
+        content = this._renderMessage(WARNING_ICON, this._error, true);
+      } else {
+        content = this._renderMessage(OK_ICON, `Configuration created!`, true);
+      }
     }
 
     return html`
@@ -120,6 +130,9 @@ export class ESPHomeWizardDialog extends LitElement {
             .progress=${progress !== undefined ? progress / 100 : undefined}
             density="8"
           ></mwc-circular-progress>
+          ${progress !== undefined
+            ? html`<div class="progress-pct">${progress}%</div>`
+            : ""}
         </div>
         ${label}
       </div>
@@ -511,12 +524,43 @@ export class ESPHomeWizardDialog extends LitElement {
       }
 
       // Configuration installed, don't delete it anymore.
-      this._state = "done";
       removeConfig = false;
+
+      // Reset the device so it can load new firmware and come online
+      await esploader.softReset();
+      await esploader.disconnect();
+
+      this._state = "wait_come_online";
+
+      try {
+        await new Promise((resolve, reject) => {
+          const unsub = subscribeOnlineStatus((status) => {
+            console.log(
+              this._configFilename,
+              status[this._configFilename],
+              status
+            );
+            if (status[this._configFilename]) {
+              unsub();
+              clearTimeout(timeout);
+              resolve(undefined);
+            }
+          });
+          // Wait up to 20 seconds to let it come online
+          const timeout = setTimeout(() => {
+            unsub();
+            reject("Timeout");
+          }, 20000);
+        });
+      } catch (err) {
+        console.error(err);
+        this._error = `Configuration created but unable to detect the device on the network`;
+      }
+
+      this._state = "done";
     } finally {
       this._busy = false;
       if (esploader?.connected) {
-        await esploader.softReset();
         await esploader.disconnect();
       }
       if (removeConfig) {
@@ -531,7 +575,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handleClose() {
     this.parentNode!.removeChild(this);
-    if (this._state === "done") {
+    if (this._state === "done" || this._state === "wait_come_online") {
       location.reload();
     }
   }
@@ -561,6 +605,12 @@ export class ESPHomeWizardDialog extends LitElement {
     }
     mwc-circular-progress {
       margin-bottom: 16px;
+    }
+    .progress-pct {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
     }
     .icon {
       font-size: 50px;
