@@ -13,7 +13,7 @@ import {
   CHIP_FAMILY_ESP32,
   CHIP_FAMILY_ESP8266,
 } from "esp-web-flasher";
-import { supportsWebSerial } from "../const";
+import { allowsWebSerial, supportsWebSerial } from "../const";
 import {
   compileConfiguration,
   CreateConfigParams,
@@ -145,19 +145,21 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _renderBasicConfig() {
     return html`
-      ${supportsWebSerial
+      ${supportsWebSerial && allowsWebSerial
         ? ""
         : html`
             <div class="notice">
-              Your browser does not support WebSerial. Use
-              <a href="https://www.microsoft.com/edge/" target="_blank"
-                >Microsoft Edge</a
-              >
-              or
-              <a href="https://www.google.com/chrome/" target="_blank"
-                >Google Chrome</a
-              >
-              to install this configuration on your ESP device via the browser.
+              You're viewing a limited version because
+              ${!supportsWebSerial
+                ? html`
+                    your browser does not support WebSerial.
+                    <a
+                      href="https://esphome.io/guides/getting_started_hassio.html#webserial"
+                      target="_blank"
+                      >Learn more</a
+                    >
+                  `
+                : "you're not browsing the dashboard over a secure connection (HTTPS)."}
             </div>
           `}
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
@@ -278,8 +280,13 @@ export class ESPHomeWizardDialog extends LitElement {
 
       <div>
         Connect your ESP32 or ESP8266 board with a USB cable to your computer
-        and click on connect. You need to do this once, after that you can
-        install updates wirelessly.
+        and click on connect. You need to do this once. Later updates install
+        wirelessly.
+        <a
+          href="https://esphome.io/guides/getting_started_hassio.html#webserial"
+          target="_blank"
+          >Learn more</a
+        >
       </div>
 
       <div>Skip this step to install it on your device later.</div>
@@ -376,7 +383,10 @@ export class ESPHomeWizardDialog extends LitElement {
 
     // Use set timeout to avoid dialog keydown handler pressing next button too
     setTimeout(() => {
-      this._state = supportsWebSerial ? "connect_webserial" : "pick_board";
+      this._state =
+        supportsWebSerial && allowsWebSerial
+          ? "connect_webserial"
+          : "pick_board";
     }, 0);
   }
 
