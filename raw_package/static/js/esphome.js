@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Document Ready
 $(document).ready(function () {
@@ -11,9 +11,9 @@ $(document).ready(function () {
 // WebSocket URL Helper
 const loc = window.location;
 const wsLoc = new URL("./", `${loc.protocol}//${loc.host}${loc.pathname}`);
-wsLoc.protocol = 'ws:';
+wsLoc.protocol = "ws:";
 if (loc.protocol === "https:") {
-  wsLoc.protocol = 'wss:';
+  wsLoc.protocol = "wss:";
 }
 const wsUrl = wsLoc.href;
 
@@ -23,11 +23,14 @@ const wsUrl = wsLoc.href;
 const fixNavbarHeight = () => {
   const fixFunc = () => {
     const sel = $(".select-wrapper");
-    $(".navbar-fixed").css("height", (sel.position().top + sel.outerHeight()) + "px");
-  }
+    $(".navbar-fixed").css(
+      "height",
+      sel.position().top + sel.outerHeight() + "px"
+    );
+  };
   $(window).resize(fixFunc);
   fixFunc();
-}
+};
 
 /**
  *  Dashboard Dynamic Grid
@@ -43,62 +46,7 @@ const nodeGrid = () => {
   } else {
     nodeGrid.classList.add("grid-3-col");
   }
-}
-
-/**
- *  Online/ Offline Status Indication
- */
-
-let isFetchingPing = false;
-
-const fetchPing = () => {
-  if (isFetchingPing) {
-    return;
-  }
-
-  isFetchingPing = true;
-
-  fetch(`./ping`, { credentials: "same-origin" }).then(res => res.json())
-    .then(response => {
-      for (let filename in response) {
-        let node = document.querySelector(`#nodes .card[data-filename="${filename}"]`);
-
-        if (node === null) {
-          continue;
-        }
-
-        let status = response[filename];
-        let className;
-
-        if (status === null) {
-          className = 'status-unknown';
-        } else if (status === true) {
-          className = 'status-online';
-          node.setAttribute('data-last-connected', Date.now().toString());
-        } else if (node.hasAttribute('data-last-connected')) {
-          const attr = parseInt(node.getAttribute('data-last-connected'));
-          if (Date.now() - attr <= 5000) {
-            className = 'status-not-responding';
-          } else {
-            className = 'status-offline';
-          }
-        } else {
-          className = 'status-offline';
-        }
-
-        if (node.classList.contains(className)) {
-          continue;
-        }
-
-        node.classList.remove('status-unknown', 'status-online', 'status-offline', 'status-not-responding');
-        node.classList.add(className);
-      }
-
-      isFetchingPing = false;
-    });
 };
-setInterval(fetchPing, 2000);
-fetchPing();
 
 /**
  *  Log Color Parsing
@@ -138,8 +86,7 @@ const colorReplace = (pre, state, text) => {
   pre.appendChild(lineSpan);
 
   const addSpan = (content) => {
-    if (content === "")
-      return;
+    if (content === "") return;
 
     const span = document.createElement("span");
     if (state.bold) span.classList.add("log-bold");
@@ -147,8 +94,10 @@ const colorReplace = (pre, state, text) => {
     if (state.underline) span.classList.add("log-underline");
     if (state.strikethrough) span.classList.add("log-strikethrough");
     if (state.secret) span.classList.add("log-secret");
-    if (state.foregroundColor !== null) span.classList.add(`log-fg-${state.foregroundColor}`);
-    if (state.backgroundColor !== null) span.classList.add(`log-bg-${state.backgroundColor}`);
+    if (state.foregroundColor !== null)
+      span.classList.add(`log-fg-${state.foregroundColor}`);
+    if (state.backgroundColor !== null)
+      span.classList.add(`log-bg-${state.backgroundColor}`);
     span.appendChild(document.createTextNode(content));
     lineSpan.appendChild(span);
 
@@ -160,11 +109,9 @@ const colorReplace = (pre, state, text) => {
     }
   };
 
-
   while (true) {
     const match = re.exec(text);
-    if (match === null)
-      break;
+    if (match === null) break;
 
     const j = match.index;
     addSpan(text.substring(i, j));
@@ -270,7 +217,7 @@ const colorReplace = (pre, state, text) => {
     }
   }
   addSpan(text.substring(i));
-  if (pre.scrollTop + 56 >= (pre.scrollHeight - pre.offsetHeight)) {
+  if (pre.scrollTop + 56 >= pre.scrollHeight - pre.offsetHeight) {
     // at bottom
     pre.scrollTop = pre.scrollHeight;
   }
@@ -280,12 +227,13 @@ const colorReplace = (pre, state, text) => {
  *  Serial Port Selection
  */
 
-const portSelect = document.querySelector('.nav-wrapper select');
+const portSelect = document.querySelector(".nav-wrapper select");
 let ports = [];
 
 const fetchSerialPorts = (begin = false) => {
-  fetch(`./serial-ports`, { credentials: "same-origin" }).then(res => res.json())
-    .then(response => {
+  fetch(`./serial-ports`, { credentials: "same-origin" })
+    .then((res) => res.json())
+    .then((response) => {
       if (ports.length === response.length) {
         let allEqual = true;
         for (let i = 0; i < response.length; i++) {
@@ -294,8 +242,7 @@ const fetchSerialPorts = (begin = false) => {
             break;
           }
         }
-        if (allEqual)
-          return;
+        if (allEqual) return;
       }
       const hasNewPort = response.length >= ports.length;
 
@@ -343,10 +290,10 @@ fetchSerialPorts(true);
 class LogModal {
   constructor({
     name,
-    onPrepare = (modalElement, config) => { },
-    onProcessExit = (modalElement, code) => { },
-    onSocketClose = (modalElement) => { },
-    dismissible = true
+    onPrepare = (modalElement, config) => {},
+    onProcessExit = (modalElement, code) => {},
+    onSocketClose = (modalElement) => {},
+    dismissible = true,
   }) {
     this.modalId = `js-${name}-modal`;
     this.dataAction = `${name}`;
@@ -355,7 +302,9 @@ class LogModal {
     this.activeFilename = null;
 
     this.modalElement = document.getElementById(this.modalId);
-    this.nodeFilenameElement = document.querySelector(`#${this.modalId} #js-node-filename`);
+    this.nodeFilenameElement = document.querySelector(
+      `#${this.modalId} #js-node-filename`
+    );
     this.logElement = document.querySelector(`#${this.modalId} #js-log-area`);
     this.onPrepare = onPrepare;
     this.onProcessExit = onProcessExit;
@@ -364,25 +313,27 @@ class LogModal {
 
   setup() {
     const boundOnPress = this._onPress.bind(this);
-    document.querySelectorAll(`[data-action="${this.dataAction}"]`).forEach((button) => {
-      button.addEventListener('click', boundOnPress);
-    });
+    document
+      .querySelectorAll(`[data-action="${this.dataAction}"]`)
+      .forEach((button) => {
+        button.addEventListener("click", boundOnPress);
+      });
   }
 
   _setupModalInstance() {
     this.modalInstance = M.Modal.init(this.modalElement, {
       onOpenStart: this._onOpenStart.bind(this),
       onCloseStart: this._onCloseStart.bind(this),
-      dismissible: this.dismissible
-    })
+      dismissible: this.dismissible,
+    });
   }
 
   _onOpenStart() {
-    document.addEventListener('keydown', this._boundKeydown);
+    document.addEventListener("keydown", this._boundKeydown);
   }
 
   _onCloseStart() {
-    document.removeEventListener('keydown', this._boundKeydown);
+    document.removeEventListener("keydown", this._boundKeydown);
     this.activeSocket.close();
   }
 
@@ -391,7 +342,7 @@ class LogModal {
   }
 
   _onPress(event) {
-    this.activeFilename = event.target.getAttribute('data-filename');
+    this.activeFilename = event.target.getAttribute("data-filename");
 
     this._setupModalInstance();
     this.nodeFilenameElement.innerHTML = this.activeFilename;
@@ -407,7 +358,7 @@ class LogModal {
 
     const socket = new WebSocket(this.wsUrl);
     this.activeSocket = socket;
-    socket.addEventListener('message', (event) => {
+    socket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
       if (data.event === "line") {
         colorReplace(this.logElement, colorLogState, data.data);
@@ -417,12 +368,12 @@ class LogModal {
       }
     });
 
-    socket.addEventListener('open', () => {
+    socket.addEventListener("open", () => {
       const msg = JSON.stringify(this._encodeSpawnMessage(this.activeFilename));
       socket.send(msg);
     });
 
-    socket.addEventListener('close', () => {
+    socket.addEventListener("close", () => {
       if (!stopped) {
         this.onSocketClose(this.modalElement);
       }
@@ -438,7 +389,7 @@ class LogModal {
 
   _encodeSpawnMessage(filename) {
     return {
-      type: 'spawn',
+      type: "spawn",
       configuration: filename,
       port: getUploadPort(),
     };
@@ -457,12 +408,12 @@ const logsModal = new LogModal({
     if (code === 0) {
       M.toast({
         html: "Program exited successfully",
-        displayLength: 10000
+        displayLength: 10000,
       });
     } else {
       M.toast({
         html: `Program failed with code ${code}`,
-        displayLength: 10000
+        displayLength: 10000,
       });
     }
     modalElem.querySelector("data-action='stop-logs'").innerHTML = "Close";
@@ -470,11 +421,11 @@ const logsModal = new LogModal({
 
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
-      displayLength: 10000
+      html: "Terminated process",
+      displayLength: 10000,
     });
-  }
-})
+  },
+});
 
 logsModal.setup();
 
@@ -482,50 +433,72 @@ logsModal.setup();
 const uploadModal = new LogModal({
   name: "upload",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-upload-modal [data-action='download-binary']").classList.add('disabled');
-    modalElement.querySelector("#js-upload-modal [data-action='upload']").setAttribute('data-filename', activeFilename);
-    modalElement.querySelector("#js-upload-modal [data-action='upload']").classList.add('disabled');
-    modalElement.querySelector("#js-upload-modal [data-action='edit']").setAttribute('data-filename', activeFilename);
-    modalElement.querySelector("#js-upload-modal [data-action='stop-logs']").innerHTML = "Stop";
+    modalElement
+      .querySelector("#js-upload-modal [data-action='download-binary']")
+      .classList.add("disabled");
+    modalElement
+      .querySelector("#js-upload-modal [data-action='upload']")
+      .setAttribute("data-filename", activeFilename);
+    modalElement
+      .querySelector("#js-upload-modal [data-action='upload']")
+      .classList.add("disabled");
+    modalElement
+      .querySelector("#js-upload-modal [data-action='edit']")
+      .setAttribute("data-filename", activeFilename);
+    modalElement.querySelector(
+      "#js-upload-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
   },
 
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
       M.toast({
         html: "Program exited successfully",
-        displayLength: 10000
+        displayLength: 10000,
       });
 
-      modalElement.querySelector("#js-upload-modal [data-action='download-binary']").classList.remove('disabled');
+      modalElement
+        .querySelector("#js-upload-modal [data-action='download-binary']")
+        .classList.remove("disabled");
     } else {
       M.toast({
         html: `Program failed with code ${code}`,
-        displayLength: 10000
+        displayLength: 10000,
       });
 
-      modalElement.querySelector("#js-upload-modal [data-action='upload']").classList.add('disabled');
-      modalElement.querySelector("#js-upload-modal [data-action='upload']").classList.remove('disabled');
+      modalElement
+        .querySelector("#js-upload-modal [data-action='upload']")
+        .classList.add("disabled");
+      modalElement
+        .querySelector("#js-upload-modal [data-action='upload']")
+        .classList.remove("disabled");
     }
-    modalElement.querySelector("#js-upload-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-upload-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
 
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
-      displayLength: 10000
+      html: "Terminated process",
+      displayLength: 10000,
     });
   },
 
-  dismissible: false
-})
+  dismissible: false,
+});
 
 uploadModal.setup();
 
-const downloadAfterUploadButton = document.querySelector("#js-upload-modal [data-action='download-binary']");
-downloadAfterUploadButton.addEventListener('click', () => {
+const downloadAfterUploadButton = document.querySelector(
+  "#js-upload-modal [data-action='download-binary']"
+);
+downloadAfterUploadButton.addEventListener("click", () => {
   const link = document.createElement("a");
   link.download = name;
-  link.href = `./download.bin?configuration=${encodeURIComponent(uploadModal.activeFilename)}`;
+  link.href = `./download.bin?configuration=${encodeURIComponent(
+    uploadModal.activeFilename
+  )}`;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -533,12 +506,20 @@ downloadAfterUploadButton.addEventListener('click', () => {
 
 // Validate Modal
 const validateModal = new LogModal({
-  name: 'validate',
+  name: "validate",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-validate-modal [data-action='stop-logs']").innerHTML = "Stop";
-    modalElement.querySelector("#js-validate-modal [data-action='edit']").setAttribute('data-filename', activeFilename);
-    modalElement.querySelector("#js-validate-modal [data-action='upload']").setAttribute('data-filename', activeFilename);
-    modalElement.querySelector("#js-validate-modal [data-action='upload']").classList.add('disabled');
+    modalElement.querySelector(
+      "#js-validate-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
+    modalElement
+      .querySelector("#js-validate-modal [data-action='edit']")
+      .setAttribute("data-filename", activeFilename);
+    modalElement
+      .querySelector("#js-validate-modal [data-action='upload']")
+      .setAttribute("data-filename", activeFilename);
+    modalElement
+      .querySelector("#js-validate-modal [data-action='upload']")
+      .classList.add("disabled");
   },
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
@@ -546,18 +527,22 @@ const validateModal = new LogModal({
         html: `<code class="inlinecode">${validateModal.activeFilename}</code> is valid 👍`,
         displayLength: 10000,
       });
-      modalElement.querySelector("#js-validate-modal [data-action='upload']").classList.remove('disabled');
+      modalElement
+        .querySelector("#js-validate-modal [data-action='upload']")
+        .classList.remove("disabled");
     } else {
       M.toast({
         html: `<code class="inlinecode">${validateModal.activeFilename}</code> is invalid 😕`,
         displayLength: 10000,
       });
     }
-    modalElement.querySelector("#js-validate-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-validate-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
+      html: "Terminated process",
       displayLength: 10000,
     });
   },
@@ -567,10 +552,14 @@ validateModal.setup();
 
 // Compile Modal
 const compileModal = new LogModal({
-  name: 'compile',
+  name: "compile",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-compile-modal [data-action='stop-logs']").innerHTML = "Stop";
-    modalElement.querySelector("#js-compile-modal [data-action='download-binary']").classList.add('disabled');
+    modalElement.querySelector(
+      "#js-compile-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
+    modalElement
+      .querySelector("#js-compile-modal [data-action='download-binary']")
+      .classList.add("disabled");
   },
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
@@ -578,18 +567,22 @@ const compileModal = new LogModal({
         html: "Program exited successfully",
         displayLength: 10000,
       });
-      modalElement.querySelector("#js-compile-modal [data-action='download-binary']").classList.remove('disabled');
+      modalElement
+        .querySelector("#js-compile-modal [data-action='download-binary']")
+        .classList.remove("disabled");
     } else {
       M.toast({
         html: `Program failed with code ${data.code}`,
         displayLength: 10000,
       });
     }
-    modalElement.querySelector("#js-compile-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-compile-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
+      html: "Terminated process",
       displayLength: 10000,
     });
   },
@@ -598,11 +591,15 @@ const compileModal = new LogModal({
 
 compileModal.setup();
 
-const downloadAfterCompileButton = document.querySelector("#js-compile-modal [data-action='download-binary']");
-downloadAfterCompileButton.addEventListener('click', () => {
+const downloadAfterCompileButton = document.querySelector(
+  "#js-compile-modal [data-action='download-binary']"
+);
+downloadAfterCompileButton.addEventListener("click", () => {
   const link = document.createElement("a");
   link.download = name;
-  link.href = `./download.bin?configuration=${encodeURIComponent(compileModal.activeFilename)}`;
+  link.href = `./download.bin?configuration=${encodeURIComponent(
+    compileModal.activeFilename
+  )}`;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -610,9 +607,11 @@ downloadAfterCompileButton.addEventListener('click', () => {
 
 // Clean MQTT Modal
 const cleanMqttModal = new LogModal({
-  name: 'clean-mqtt',
+  name: "clean-mqtt",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-clean-mqtt-modal [data-action='stop-logs']").innerHTML = "Stop";
+    modalElement.querySelector(
+      "#js-clean-mqtt-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
   },
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
@@ -626,11 +625,13 @@ const cleanMqttModal = new LogModal({
         displayLength: 10000,
       });
     }
-    modalElement.querySelector("#js-clean-mqtt-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-clean-mqtt-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
+      html: "Terminated process",
       displayLength: 10000,
     });
   },
@@ -640,9 +641,11 @@ cleanMqttModal.setup();
 
 // Clean Build Files Modal
 const cleanModal = new LogModal({
-  name: 'clean',
+  name: "clean",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-clean-modal [data-action='stop-logs']").innerHTML = "Stop";
+    modalElement.querySelector(
+      "#js-clean-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
   },
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
@@ -656,11 +659,13 @@ const cleanModal = new LogModal({
         displayLength: 10000,
       });
     }
-    modalElement.querySelector("#js-clean-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-clean-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
+      html: "Terminated process",
       displayLength: 10000,
     });
   },
@@ -670,10 +675,14 @@ cleanModal.setup();
 
 // Update All Modal
 const updateAllModal = new LogModal({
-  name: 'update-all',
+  name: "update-all",
   onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("#js-update-all-modal [data-action='stop-logs']").innerHTML = "Stop";
-    modalElement.querySelector("#js-update-all-modal #js-node-filename").style.visibility = "hidden";
+    modalElement.querySelector(
+      "#js-update-all-modal [data-action='stop-logs']"
+    ).innerHTML = "Stop";
+    modalElement.querySelector(
+      "#js-update-all-modal #js-node-filename"
+    ).style.visibility = "hidden";
   },
   onProcessExit: (modalElement, code) => {
     if (code === 0) {
@@ -681,18 +690,20 @@ const updateAllModal = new LogModal({
         html: "Program exited successfully",
         displayLength: 10000,
       });
-      downloadButton.classList.remove('disabled');
+      downloadButton.classList.remove("disabled");
     } else {
       M.toast({
         html: `Program failed with code ${data.code}`,
         displayLength: 10000,
       });
     }
-    modalElement.querySelector("#js-update-all-modal [data-action='stop-logs']").innerHTML = "Close";
+    modalElement.querySelector(
+      "#js-update-all-modal [data-action='stop-logs']"
+    ).innerHTML = "Close";
   },
   onSocketClose: (modalElement) => {
     M.toast({
-      html: 'Terminated process',
+      html: "Terminated process",
       displayLength: 10000,
     });
   },
@@ -712,7 +723,9 @@ let editorValidationScheduled = false;
 let editorValidationRunning = false;
 
 // Setup Editor
-const editorElement = document.querySelector("#js-editor-modal #js-editor-area");
+const editorElement = document.querySelector(
+  "#js-editor-modal #js-editor-area"
+);
 const editor = ace.edit(editorElement);
 
 editor.setOptions({
@@ -721,33 +734,40 @@ editor.setOptions({
   useSoftTabs: true,
   tabSize: 2,
   useWorker: false,
-  theme: 'ace/theme/dreamweaver',
-  mode: 'ace/mode/yaml'
+  theme: "ace/theme/dreamweaver",
+  mode: "ace/mode/yaml",
 });
 
 editor.commands.addCommand({
-  name: 'saveCommand',
-  bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+  name: "saveCommand",
+  bindKey: { win: "Ctrl-S", mac: "Command-S" },
   exec: function () {
     saveFile(editorActiveFilename);
   },
-  readOnly: false
+  readOnly: false,
 });
 
 // Edit Button Listener
 document.querySelectorAll("[data-action='edit']").forEach((button) => {
-  button.addEventListener('click', (event) => {
-
+  button.addEventListener("click", (event) => {
     editorActiveFilename = event.target.getAttribute("data-filename");
-    const filenameField = document.querySelector("#js-editor-modal #js-node-filename");
+    const filenameField = document.querySelector(
+      "#js-editor-modal #js-node-filename"
+    );
     filenameField.innerHTML = editorActiveFilename;
 
-    const saveButton = document.querySelector("#js-editor-modal [data-action='save']");
-    const uploadButton = document.querySelector("#js-editor-modal [data-action='upload']");
-    const closeButton = document.querySelector("#js-editor-modal [data-action='close']");
-    saveButton.setAttribute('data-filename', editorActiveFilename);
-    uploadButton.setAttribute('data-filename', editorActiveFilename);
-    uploadButton.setAttribute('onClick', `saveFile("${editorActiveFilename}")`);
+    const saveButton = document.querySelector(
+      "#js-editor-modal [data-action='save']"
+    );
+    const uploadButton = document.querySelector(
+      "#js-editor-modal [data-action='upload']"
+    );
+    const closeButton = document.querySelector(
+      "#js-editor-modal [data-action='close']"
+    );
+    saveButton.setAttribute("data-filename", editorActiveFilename);
+    uploadButton.setAttribute("data-filename", editorActiveFilename);
+    uploadButton.setAttribute("onClick", `saveFile("${editorActiveFilename}")`);
     if (editorActiveFilename === "secrets.yaml") {
       uploadButton.classList.add("disabled");
       editorActiveSecrets = true;
@@ -755,19 +775,26 @@ document.querySelectorAll("[data-action='edit']").forEach((button) => {
       uploadButton.classList.remove("disabled");
       editorActiveSecrets = false;
     }
-    closeButton.setAttribute('data-filename', editorActiveFilename);
+    closeButton.setAttribute("data-filename", editorActiveFilename);
 
-    const loadingIndicator = document.querySelector("#js-editor-modal #js-loading-indicator");
-    const editorArea = document.querySelector("#js-editor-modal #js-editor-area");
+    const loadingIndicator = document.querySelector(
+      "#js-editor-modal #js-loading-indicator"
+    );
+    const editorArea = document.querySelector(
+      "#js-editor-modal #js-editor-area"
+    );
 
     loadingIndicator.style.display = "block";
     editorArea.style.display = "none";
 
-    editor.setOption('readOnly', true);
-    fetch(`./edit?configuration=${editorActiveFilename}`, { credentials: "same-origin" })
-      .then(res => res.text()).then(response => {
+    editor.setOption("readOnly", true);
+    fetch(`./edit?configuration=${editorActiveFilename}`, {
+      credentials: "same-origin",
+    })
+      .then((res) => res.text())
+      .then((response) => {
         editor.setValue(response, -1);
-        editor.setOption('readOnly', false);
+        editor.setOption("readOnly", false);
         loadingIndicator.style.display = "none";
         editorArea.style.display = "block";
       });
@@ -776,34 +803,33 @@ document.querySelectorAll("[data-action='edit']").forEach((button) => {
     const editModalElement = document.getElementById("js-editor-modal");
     const editorModal = M.Modal.init(editModalElement, {
       onOpenStart: function () {
-        editorModalOnOpen()
+        editorModalOnOpen();
       },
       onCloseStart: function () {
-        editorModalOnClose()
+        editorModalOnClose();
       },
-      dismissible: false
-    })
+      dismissible: false,
+    });
 
     editorModal.open();
-
   });
 });
 
 // Editor On Open
 const editorModalOnOpen = () => {
-  return
-}
+  return;
+};
 
 // Editor On Close
 const editorModalOnClose = () => {
   editorActiveFilename = null;
-}
+};
 
 // Editor WebSocket Validation
 const startAceWebsocket = () => {
   editorActiveWebSocket = new WebSocket(`${wsUrl}ace`);
 
-  editorActiveWebSocket.addEventListener('message', (event) => {
+  editorActiveWebSocket.addEventListener("message", (event) => {
     const raw = JSON.parse(event.data);
     if (raw.event === "line") {
       const msg = JSON.parse(raw.data);
@@ -813,9 +839,9 @@ const startAceWebsocket = () => {
         for (const v of msg.validation_errors) {
           let o = {
             text: v.message,
-            type: 'error',
+            type: "error",
             row: 0,
-            column: 0
+            column: 0,
           };
           if (v.range != null) {
             o.row = v.range.start_line;
@@ -826,36 +852,40 @@ const startAceWebsocket = () => {
         for (const v of msg.yaml_errors) {
           arr.push({
             text: v.message,
-            type: 'error',
+            type: "error",
             row: 0,
-            column: 0
+            column: 0,
           });
         }
 
         editor.session.setAnnotations(arr);
 
         if (arr.length) {
-          document.querySelector("#js-editor-modal [data-action='upload']").classList.add('disabled');
+          document
+            .querySelector("#js-editor-modal [data-action='upload']")
+            .classList.add("disabled");
         } else {
-          document.querySelector("#js-editor-modal [data-action='upload']").classList.remove('disabled');
+          document
+            .querySelector("#js-editor-modal [data-action='upload']")
+            .classList.remove("disabled");
         }
 
         editorValidationRunning = false;
       } else if (msg.type === "read_file") {
         sendAceStdin({
-          type: 'file_response',
-          content: editor.getValue()
+          type: "file_response",
+          content: editor.getValue(),
         });
       }
     }
-  })
+  });
 
-  editorActiveWebSocket.addEventListener('open', () => {
-    const msg = JSON.stringify({ type: 'spawn' });
+  editorActiveWebSocket.addEventListener("open", () => {
+    const msg = JSON.stringify({ type: "spawn" });
     editorActiveWebSocket.send(msg);
   });
 
-  editorActiveWebSocket.addEventListener('close', () => {
+  editorActiveWebSocket.addEventListener("close", () => {
     editorActiveWebSocket = null;
     setTimeout(startAceWebsocket, 5000);
   });
@@ -863,8 +893,8 @@ const startAceWebsocket = () => {
 
 const sendAceStdin = (data) => {
   let send = JSON.stringify({
-    type: 'stdin',
-    data: JSON.stringify(data) + '\n',
+    type: "stdin",
+    data: JSON.stringify(data) + "\n",
   });
   editorActiveWebSocket.send(send);
 };
@@ -872,7 +902,8 @@ const sendAceStdin = (data) => {
 const debounce = (func, wait) => {
   let timeout;
   return function () {
-    let context = this, args = arguments;
+    let context = this,
+      args = arguments;
     let later = function () {
       timeout = null;
       func.apply(context, args);
@@ -882,19 +913,20 @@ const debounce = (func, wait) => {
   };
 };
 
-editor.session.on('change', debounce(() => {
-  editorValidationScheduled = !editorActiveSecrets;
-}, 250));
+editor.session.on(
+  "change",
+  debounce(() => {
+    editorValidationScheduled = !editorActiveSecrets;
+  }, 250)
+);
 
 setInterval(() => {
-  if (!editorValidationScheduled || editorValidationRunning)
-    return;
-  if (editorActiveWebSocket == null)
-    return;
+  if (!editorValidationScheduled || editorValidationRunning) return;
+  if (editorActiveWebSocket == null) return;
 
   sendAceStdin({
-    type: 'validate',
-    file: editorActiveFilename
+    type: "validate",
+    file: editorActiveFilename,
   });
   editorValidationRunning = true;
   editorValidationScheduled = false;
@@ -902,12 +934,12 @@ setInterval(() => {
 
 // Save File
 const saveFile = (filename) => {
-  const extensionRegex = new RegExp("(?:\.([^.]+))?$");
+  const extensionRegex = new RegExp("(?:.([^.]+))?$");
 
   if (filename.match(extensionRegex)[0] !== ".yaml") {
     M.toast({
       html: `❌ File <code class="inlinecode">${filename}</code> cannot be saved as it is not a YAML file!`,
-      displayLength: 10000
+      displayLength: 10000,
     });
     return;
   }
@@ -915,7 +947,7 @@ const saveFile = (filename) => {
   fetch(`./edit?configuration=${filename}`, {
     credentials: "same-origin",
     method: "POST",
-    body: editor.getValue()
+    body: editor.getValue(),
   })
     .then((response) => {
       response.text();
@@ -923,16 +955,16 @@ const saveFile = (filename) => {
     .then(() => {
       M.toast({
         html: `✅ Saved <code class="inlinecode">${filename}</code>`,
-        displayLength: 10000
+        displayLength: 10000,
       });
     })
     .catch((error) => {
       M.toast({
         html: `❌ An error occured saving <code class="inlinecode">${filename}</code>`,
-        displayLength: 10000
+        displayLength: 10000,
       });
-    })
-}
+    });
+};
 
 document.querySelectorAll("[data-action='save']").forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -950,32 +982,31 @@ document.querySelectorAll("[data-action='delete']").forEach((btn) => {
       method: "POST",
     })
       .then((res) => {
-        res.text()
+        res.text();
       })
       .then(() => {
         const toastHtml = `<span>🗑️ Deleted <code class="inlinecode">${filename}</code>
                            <button class="btn-flat toast-action">Undo</button>`;
         const toast = M.toast({
           html: toastHtml,
-          displayLength: 10000
+          displayLength: 10000,
         });
-        const undoButton = toast.el.querySelector('.toast-action');
+        const undoButton = toast.el.querySelector(".toast-action");
 
         document.querySelector(`.card[data-filename="${filename}"]`).remove();
 
-        undoButton.addEventListener('click', () => {
+        undoButton.addEventListener("click", () => {
           fetch(`./undo-delete?configuration=${filename}`, {
             credentials: "same-origin",
             method: "POST",
           })
             .then((res) => {
-              res.text()
+              res.text();
             })
             .then(() => {
               window.location.reload(false);
             });
         });
       });
-
   });
 });

@@ -86,3 +86,6 @@ export const compileConfiguration = (filename: string) => {
     });
   });
 };
+
+export const getOnlineStatus = () =>
+  fetchApi<Record<string, boolean>>("./ping");
