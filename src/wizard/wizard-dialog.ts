@@ -1,4 +1,4 @@
-import { LitElement, html, PropertyValues, css } from "lit";
+import { LitElement, html, PropertyValues, css, TemplateResult } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-textfield";
@@ -84,7 +84,12 @@ export class ESPHomeWizardDialog extends LitElement {
       hideActions = true;
     } else if (this._state === "flashing") {
       content = this._renderProgress(
-        "Installing",
+        html`
+          Installing<br /><br />
+          This will take
+          ${this._board === "ESP8266" ? "a minute" : "2 minutes"}.<br />
+          Keep this page visible to prevent slow down
+        `,
         // Show as undeterminate under 3% or else we don't show any pixels
         this._writeProgress > 3 ? this._writeProgress : undefined
       );
@@ -105,7 +110,7 @@ export class ESPHomeWizardDialog extends LitElement {
     `;
   }
 
-  _renderProgress(label: string, progress?: number) {
+  _renderProgress(label: string | TemplateResult, progress?: number) {
     return html`
       <div class="center">
         <div>
@@ -274,7 +279,7 @@ export class ESPHomeWizardDialog extends LitElement {
       <div>
         Connect your ESP32 or ESP8266 board with a USB cable to your computer
         and click on connect. You need to do this once, after that you can
-        upload new firmware wirelessly.
+        install updates wirelessly.
       </div>
 
       <div>Skip this step to install it on your device later.</div>
@@ -435,7 +440,7 @@ export class ESPHomeWizardDialog extends LitElement {
         this._state = "connect_webserial";
         if (esploader.connected) {
           this._error =
-            "Failed to initialize. Try resetting your device or holding the BOOT button until it starts preparing the installation.";
+            "Failed to initialize. Try resetting your device or holding the BOOT button while pressing connect until it starts preparing the installation.";
         }
         return;
       }
