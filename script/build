@@ -3,10 +3,9 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-rm -rf dist esphome_frontend
+rm -rf esphome_frontend
 
 mkdir esphome_frontend
 cp -r static esphome_frontend/static
 
-NODE_ENV=production npm exec -- tsc
 NODE_ENV=production npm exec -- rollup -c

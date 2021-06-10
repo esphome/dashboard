@@ -2,7 +2,7 @@
   "name": "esphome-dashboard",
   "version": "0.0.1",
   "description": "Dashboard for ESPHome",
-  "main": "dist/index.js",
+  "main": "epshome_frontend/static/js/esphome/index.js",
   "repository": "https://github.com/esphome/dashboard",
   "author": "ESPHome maintainers",
   "license": "Apache-2.0",

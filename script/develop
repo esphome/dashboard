@@ -3,7 +3,7 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-rm -rf dist esphome_frontend
+rm -rf esphome_frontend
 
 mkdir esphome_frontend
 cp -r static esphome_frontend/static
@@ -11,10 +11,6 @@ cp -r static esphome_frontend/static
 # Quit all background tasks when script exits
 trap "kill 0" EXIT
 
-# Run tsc once as rollup expects those files
-npm exec -- tsc || true
-
 npm exec -- serve --cors -l 8500 &
-npm exec -- tsc --watch &
 npm exec -- rollup -c --watch &
 wait
