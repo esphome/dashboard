@@ -168,16 +168,22 @@ export class ESPHomeWizardDialog extends LitElement {
       ></mwc-textfield>
 
       <div>
-        Enter your Wi-Fi information to pre-configure your device to connect to
-        your wireless network. Leave blank if you want to configure it later.
+        Enter your Wi-Fi information so your device can connect to your wireless
+        network.
       </div>
 
-      <mwc-textfield label="Wi-Fi SSID" name="ssid"></mwc-textfield>
+      <mwc-textfield
+        label="Wi-Fi SSID"
+        name="ssid"
+        required
+        @blur=${this._cleanSSIDBlur}
+      ></mwc-textfield>
 
       <mwc-textfield
         label="Wi-Fi password"
         name="password"
         type="password"
+        helper="Leave blank if no password"
       ></mwc-textfield>
 
       <mwc-button
@@ -327,12 +333,28 @@ export class ESPHomeWizardDialog extends LitElement {
     input.value = input.value.replace(/^-+/, "").replace(/-+$/, "");
   };
 
+  private _cleanSSIDBlur = (ev: Event) => {
+    const input = ev.target as TextField;
+    // Remove starting and trailing whitespace
+    input.value = input.value.trim();
+  };
+
   private async _handleBasicConfigSubmit() {
     const nameInput = this._inputName;
-    if (!nameInput.reportValidity()) {
-      nameInput.focus();
+    const ssidInput = this._inputSSID;
+
+    const nameValid = nameInput.reportValidity();
+    const ssidValid = ssidInput.reportValidity();
+
+    if (!nameValid || !ssidValid) {
+      if (!nameValid) {
+        nameInput.focus();
+      } else {
+        ssidInput.focus();
+      }
       return;
     }
+
     const name = nameInput.value;
 
     try {
@@ -343,17 +365,9 @@ export class ESPHomeWizardDialog extends LitElement {
       // This is expected.
     }
 
-    const wifiSSID = this._inputSSID.value;
-    const wifiPassword = this._inputPassword.value;
-
     this._data.name = name;
-    if (wifiSSID) {
-      this._data.ssid = wifiSSID;
-
-      if (wifiPassword) {
-        this._data.psk = wifiPassword;
-      }
-    }
+    this._data.ssid = ssidInput.value;
+    this._data.psk = this._inputPassword.value;
 
     // Use set timeout to avoid dialog keydown handler pressing next button too
     setTimeout(() => {
