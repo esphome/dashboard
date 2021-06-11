@@ -342,7 +342,7 @@ class LogModal {
   }
 
   _onPress(event) {
-    this.activeFilename = event.target.getAttribute("data-filename");
+    this.activeFilename = event.target.dataset.filename;
 
     this._setupModalInstance();
     this.nodeFilenameElement.innerHTML = this.activeFilename;
@@ -488,7 +488,7 @@ const uploadModal = new LogModal({
   dismissible: false,
 });
 
-uploadModal.setup();
+window.uploadModal = uploadModal;
 
 const downloadAfterUploadButton = document.querySelector(
   "#js-upload-modal [data-action='download-binary']"
@@ -750,7 +750,7 @@ editor.commands.addCommand({
 // Edit Button Listener
 document.querySelectorAll("[data-action='edit']").forEach((button) => {
   button.addEventListener("click", (event) => {
-    editorActiveFilename = event.target.getAttribute("data-filename");
+    editorActiveFilename = event.target.dataset.filename;
     const filenameField = document.querySelector(
       "#js-editor-modal #js-node-filename"
     );

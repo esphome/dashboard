@@ -24,6 +24,7 @@
     "@material/mwc-circular-progress": "^0.21.0",
     "@material/mwc-dialog": "^0.21.0",
     "@material/mwc-formfield": "^0.21.0",
+    "@material/mwc-list": "^0.21.0",
     "@material/mwc-radio": "^0.21.0",
     "@material/mwc-textfield": "^0.21.0",
     "esp-web-flasher": "^1.0.4",
