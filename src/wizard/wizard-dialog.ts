@@ -463,7 +463,7 @@ export class ESPHomeWizardDialog extends LitElement {
         this._state = "connect_webserial";
         if (esploader.connected) {
           this._error =
-            "Failed to initialize. Try resetting your device or holding the BOOT button while pressing connect until it starts preparing the installation.";
+            "Failed to initialize. Try resetting your device or holding the BOOT button while selecting your serial port until it starts preparing the installation.";
         }
         return;
       }
