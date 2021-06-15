@@ -158,7 +158,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _renderBasicConfig() {
     return html`
-      ${supportsWebSerial && allowsWebSerial
+      ${supportsWebSerial
         ? ""
         : html`
             <div class="notice">

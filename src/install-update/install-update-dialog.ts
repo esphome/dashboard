@@ -88,7 +88,6 @@ class ESPHomeInstallDialog extends LitElement {
 
     if (this._state === "pick_option") {
       heading = "Pick Install Target";
-      const doWebSerial = supportsWebSerial && allowsWebSerial;
       content = html`
         <mwc-list-item
           twoline
@@ -106,13 +105,13 @@ class ESPHomeInstallDialog extends LitElement {
         <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
           <span>Install via the browser</span>
           <span slot="secondary">
-            ${doWebSerial
+            ${supportsWebSerial
               ? "For devices connected to this computer"
               : allowsWebSerial
               ? "Your browser is not supported."
               : "Dashboard needs to opened via HTTPS"}
           </span>
-          ${doWebSerial ? metaChevronRight : metaHelp}
+          ${supportsWebSerial ? metaChevronRight : metaHelp}
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
