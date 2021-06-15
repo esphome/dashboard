@@ -108,9 +108,9 @@ class ESPHomeInstallDialog extends LitElement {
           <span slot="secondary">
             ${doWebSerial
               ? "For devices connected to this computer"
-              : supportsWebSerial
-              ? "Dashboard needs to opened via HTTPS"
-              : "Your browser is not supported."}
+              : allowsWebSerial
+              ? "Your browser is not supported."
+              : "Dashboard needs to opened via HTTPS"}
           </span>
           ${doWebSerial ? metaChevronRight : metaHelp}
         </mwc-list-item>

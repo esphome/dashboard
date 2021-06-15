@@ -163,7 +163,7 @@ export class ESPHomeWizardDialog extends LitElement {
         : html`
             <div class="notice">
               Limited functionality because
-              ${!supportsWebSerial
+              ${allowsWebSerial
                 ? html`
                     your browser does not support WebSerial.
                     <a
