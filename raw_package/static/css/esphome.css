@@ -7,13 +7,15 @@
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
   --alert-info-color: #00539f;
-  --alert-info-color-bg: #E6EEF5;
-  --alert-success-color: #4CAF50;
-  --alert-success-color-bg: #EDF7EE;
-  --alert-warning-color: #FF9800;
-  --alert-warning-color-bg: #FFF5E6;
-  --alert-error-color: #D93025;
-  --alert-error-color-bg: #FAEFEB;
+  --alert-info-color-bg: #e6eef5;
+  --alert-success-color: #4caf50;
+  --alert-success-color-bg: #edf7ee;
+  --alert-warning-color: #ff9800;
+  --alert-warning-color-bg: #fff5e6;
+  --alert-error-color: #d93025;
+  --alert-error-color-bg: #faefeb;
+
+  --mdc-dialog-z-index: 998;
 }
 
 body {
@@ -26,8 +28,8 @@ body {
 /* Layout */
 .valign-wrapper {
   position: absolute;
-  width:100vw;
-  height:100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .valign {
@@ -63,7 +65,8 @@ main {
   background-color: var(--alert-error-color-bg);
 }
 
-.card.card-error, .card.status-offline {
+.card.card-error,
+.card.status-offline {
   border-top: 4px solid var(--alert-error-color);
 }
 
@@ -92,7 +95,7 @@ main {
   margin-right: auto;
 }
 
-#login-page .input-field input:focus + label  {
+#login-page .input-field input:focus + label {
   color: #000;
 }
 
@@ -108,8 +111,8 @@ main {
 #login-page .version-number {
   display: block;
   text-align: center;
-  margin-bottom: 20px;;
-  color:#808080;
+  margin-bottom: 20px;
+  color: #808080;
   font-size: 12px;
 }
 
@@ -192,11 +195,12 @@ nav {
   fill: black;
 }
 
-.serial-port-select .dropdown-content li>span {
+.serial-port-select .dropdown-content li > span {
   color: black;
 }
 
-#nav-dropdown li a,  .node-dropdown li a {
+#nav-dropdown li a,
+.node-dropdown li a {
   color: black;
 }
 
@@ -211,7 +215,8 @@ main .container {
   height: calc(100% - 47px);
 }
 
-#nodes .card-content, #nodes .card-action  {
+#nodes .card-content,
+#nodes .card-action {
   padding: 12px;
 }
 
@@ -252,11 +257,11 @@ main .container {
 }
 
 i.node-update-avaliable {
-  color:#3f51b5;
+  color: #3f51b5;
 }
 
 i.node-webserver {
-  color:#039be5;
+  color: #039be5;
 }
 
 .node-config-path {
@@ -270,7 +275,8 @@ i.node-webserver {
   font-style: italic;
 }
 
-.card-action a, .card-dropdown-action a {
+.card-action a,
+.card-dropdown-action a {
   cursor: pointer;
 }
 
@@ -297,9 +303,10 @@ i.node-webserver {
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27,31,35,0.05);
+  background-color: rgba(27, 31, 35, 0.05);
   border-radius: 3px;
-  font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
 }
 
 .log {
@@ -308,7 +315,8 @@ i.node-webserver {
   background-color: #1c1c1c;
   margin-top: 0;
   margin-bottom: 0;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
   font-size: 12px;
   padding: 16px;
   overflow: auto;
@@ -316,14 +324,24 @@ i.node-webserver {
   border-radius: 3px;
   white-space: pre-wrap;
   overflow-wrap: break-word;
-  color: #DDD;
+  color: #ddd;
 }
 
-.log-bold { font-weight: bold; }
-.log-italic { font-style: italic; }
-.log-underline { text-decoration: underline; }
-.log-strikethrough { text-decoration: line-through; }
-.log-underline.log-strikethrough { text-decoration: underline line-through; }
+.log-bold {
+  font-weight: bold;
+}
+.log-italic {
+  font-style: italic;
+}
+.log-underline {
+  text-decoration: underline;
+}
+.log-strikethrough {
+  text-decoration: line-through;
+}
+.log-underline.log-strikethrough {
+  text-decoration: underline line-through;
+}
 .log-secret {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -335,22 +353,54 @@ i.node-webserver {
   width: 1px;
   font-size: 1px;
 }
-.log-fg-black { color: rgb(128,128,128); }
-.log-fg-red { color: rgb(255,0,0); }
-.log-fg-green { color: rgb(0,255,0); }
-.log-fg-yellow { color: rgb(255,255,0); }
-.log-fg-blue { color: rgb(0,0,255); }
-.log-fg-magenta { color: rgb(255,0,255); }
-.log-fg-cyan { color: rgb(0,255,255); }
-.log-fg-white { color: rgb(187,187,187); }
-.log-bg-black { background-color: rgb(0,0,0); }
-.log-bg-red { background-color: rgb(255,0,0); }
-.log-bg-green { background-color: rgb(0,255,0); }
-.log-bg-yellow { background-color: rgb(255,255,0); }
-.log-bg-blue { background-color: rgb(0,0,255); }
-.log-bg-magenta { background-color: rgb(255,0,255); }
-.log-bg-cyan { background-color: rgb(0,255,255); }
-.log-bg-white { background-color: rgb(255,255,255); }
+.log-fg-black {
+  color: rgb(128, 128, 128);
+}
+.log-fg-red {
+  color: rgb(255, 0, 0);
+}
+.log-fg-green {
+  color: rgb(0, 255, 0);
+}
+.log-fg-yellow {
+  color: rgb(255, 255, 0);
+}
+.log-fg-blue {
+  color: rgb(0, 0, 255);
+}
+.log-fg-magenta {
+  color: rgb(255, 0, 255);
+}
+.log-fg-cyan {
+  color: rgb(0, 255, 255);
+}
+.log-fg-white {
+  color: rgb(187, 187, 187);
+}
+.log-bg-black {
+  background-color: rgb(0, 0, 0);
+}
+.log-bg-red {
+  background-color: rgb(255, 0, 0);
+}
+.log-bg-green {
+  background-color: rgb(0, 255, 0);
+}
+.log-bg-yellow {
+  background-color: rgb(255, 255, 0);
+}
+.log-bg-blue {
+  background-color: rgb(0, 0, 255);
+}
+.log-bg-magenta {
+  background-color: rgb(255, 0, 255);
+}
+.log-bg-cyan {
+  background-color: rgb(0, 255, 255);
+}
+.log-bg-white {
+  background-color: rgb(255, 255, 255);
+}
 
 ul.browser-default {
   padding-left: 30px;
@@ -362,7 +412,10 @@ ul.browser-default li {
   list-style-type: initial;
 }
 
-ul.stepper:not(.horizontal) .step.active::before, ul.stepper:not(.horizontal) .step.done::before, ul.stepper.horizontal .step.active .step-title::before, ul.stepper.horizontal .step.done .step-title::before {
+ul.stepper:not(.horizontal) .step.active::before,
+ul.stepper:not(.horizontal) .step.done::before,
+ul.stepper.horizontal .step.active .step-title::before,
+ul.stepper.horizontal .step.done .step-title::before {
   background-color: #3f51b5 !important;
 }
 
@@ -391,7 +444,8 @@ ul.stepper:not(.horizontal) .step.active::before, ul.stepper:not(.horizontal) .s
 }
 
 @media only screen and (max-width: 992px) {
-  .page-footer .left, .page-footer .right {
+  .page-footer .left,
+  .page-footer .right {
     width: 100%;
     text-align: center;
   }
