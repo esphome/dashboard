@@ -12,7 +12,6 @@ import {
 import { customElement, state } from "lit/decorators.js";
 import { getSerialPorts, SerialPort } from "../api/serial-ports";
 import "@material/mwc-dialog";
-import { subscribeOnlineStatus } from "../online_status";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
@@ -66,8 +65,6 @@ const openLegacyUploadModal = (filename: string) =>
 class ESPHomeInstallDialog extends LitElement {
   @state() public filename!: string;
 
-  @state() private _onlineStatus?: boolean;
-
   @state() private _ports?: SerialPort[];
 
   @state() private _writeProgress = 0;
@@ -81,8 +78,6 @@ class ESPHomeInstallDialog extends LitElement {
     | "prepare_installation"
     | "installing"
     | "done" = "pick_option";
-
-  private _unsubOnlineStatus?: () => void;
 
   @state() private _error?: string | TemplateResult;
 
@@ -98,7 +93,6 @@ class ESPHomeInstallDialog extends LitElement {
         <mwc-list-item
           twoline
           hasMeta
-          .disabled=${!this._onlineStatus}
           .port=${"OTA"}
           @click=${this._handleLegacyOption}
         >
@@ -257,9 +251,6 @@ class ESPHomeInstallDialog extends LitElement {
     getSerialPorts().then((ports) => {
       this._ports = ports;
     });
-    this._unsubOnlineStatus = subscribeOnlineStatus((statuses) => {
-      this._onlineStatus = statuses[this.filename];
-    });
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -370,10 +361,6 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   private async _handleClose() {
-    if (this._unsubOnlineStatus) {
-      this._unsubOnlineStatus();
-      this._unsubOnlineStatus = undefined;
-    }
     this.parentNode!.removeChild(this);
   }
 
