@@ -527,7 +527,7 @@ export class ESPHomeWizardDialog extends LitElement {
       removeConfig = false;
 
       // Reset the device so it can load new firmware and come online
-      await esploader.softReset();
+      await esploader.hardReset();
       await esploader.disconnect();
 
       this._state = "wait_come_online";

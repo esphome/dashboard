@@ -338,7 +338,7 @@ class ESPHomeInstallDialog extends LitElement {
         return;
       }
 
-      await esploader.softReset();
+      await esploader.hardReset();
       this._state = "done";
     } finally {
       if (esploader?.connected) {

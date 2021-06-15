@@ -27,7 +27,7 @@
     "@material/mwc-list": "^0.21.0",
     "@material/mwc-radio": "^0.21.0",
     "@material/mwc-textfield": "^0.21.0",
-    "esp-web-flasher": "^1.0.4",
+    "esp-web-flasher": "^2.0.0",
     "lit": "^2.0.0-rc.2",
     "tslib": "^2.3.0"
   }
