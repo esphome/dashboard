@@ -101,6 +101,8 @@ class ESPHomeInstallDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
+        ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+
         <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
           <span>Install via the browser</span>
           <span slot="secondary">
@@ -285,7 +287,7 @@ class ESPHomeInstallDialog extends LitElement {
       );
       return;
     }
-
+    this._error = undefined;
     const configProm = getConfiguration(this.filename);
 
     let esploader: ESPLoader;
@@ -297,39 +299,41 @@ class ESPHomeInstallDialog extends LitElement {
     }
 
     try {
-      this._configuration = await configProm;
-    } catch (err) {
-      this._state = "done";
-      this._error = "Error fetching configuration information";
-      return;
-    }
-
-    const compileProm = compileConfiguration(this.filename);
-
-    this._state = "connecting_webserial";
-
-    try {
-      await esploader.initialize();
-    } catch (err) {
-      console.error(err);
-      this._state = "done";
-      this._error = "Failed to initialize.";
-      if (esploader.connected) {
-        this._error +=
-          " Failed to initialize. Try resetting your device or holding the BOOT button while pressing connect until it starts preparing the installation.";
+      try {
+        this._configuration = await configProm;
+      } catch (err) {
+        this._state = "done";
+        this._error = "Error fetching configuration information";
+        return;
       }
-      return;
-    }
 
-    this._state = "prepare_installation";
+      const compileProm = compileConfiguration(this.filename);
 
-    try {
+      this._state = "connecting_webserial";
+
+      try {
+        await esploader.initialize();
+      } catch (err) {
+        console.error(err);
+        this._state = "pick_option";
+        this._error = "Failed to initialize.";
+        if (esploader.connected) {
+          this._error +=
+            " Try resetting your device or holding the BOOT button while selecting your serial port until it starts preparing the installation.";
+        }
+        return;
+      }
+
+      this._state = "prepare_installation";
+
       try {
         await compileProm;
       } catch (err) {
         this._error = html`
           Failed to prepare configuration<br /><br />
-          Hit compile button to see what went wrong.
+          <button class="link" @click=${this._showCompileDialog}>
+            See what went wrong.
+          </button>
         `;
         this._state = "done";
         return;
@@ -351,6 +355,7 @@ class ESPHomeInstallDialog extends LitElement {
       this._state = "done";
     } finally {
       if (esploader?.connected) {
+        console.log("Disconnecting esp");
         await esploader.disconnect();
       }
     }
@@ -411,6 +416,11 @@ class ESPHomeInstallDialog extends LitElement {
     }
     .show-ports {
       margin-top: 16px;
+    }
+    .error {
+      padding: 8px 24px;
+      background-color: #fff59d;
+      margin: 0 -24px;
     }
   `;
 }
