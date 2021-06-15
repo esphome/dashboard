@@ -52,7 +52,12 @@ const selectLegacyPort = (value: string) => {
   (window as any).M.FormSelect.init(portSelect, {});
 };
 
-const openLegacyModal = (filename: string) =>
+const openLegacyCompileModal = (filename: string) =>
+  (window as any).compileModal.open({
+    target: { dataset: { filename } },
+  });
+
+const openLegacyUploadModal = (filename: string) =>
   (window as any).uploadModal.open({
     target: { dataset: { filename } },
   });
@@ -118,6 +123,14 @@ class ESPHomeInstallDialog extends LitElement {
           <span>Install via the server</span>
           <span slot="secondary"
             >For devices connected to server running dashboard</span
+          >
+          ${metaChevronRight}
+        </mwc-list-item>
+
+        <mwc-list-item twoline hasMeta @click=${this._showCompileDialog}>
+          <span>Download</span>
+          <span slot="secondary"
+            >Install it yourself using your preferred method</span
           >
           ${metaChevronRight}
         </mwc-list-item>
@@ -262,10 +275,15 @@ class ESPHomeInstallDialog extends LitElement {
     this._state = "pick_server_port";
   }
 
+  private _showCompileDialog() {
+    openLegacyCompileModal(this.filename);
+    this._close();
+  }
+
   private _handleLegacyOption(ev: Event) {
     selectLegacyPort((ev.target as any).port);
     this._close();
-    openLegacyModal(this.filename);
+    openLegacyUploadModal(this.filename);
   }
 
   private async _handleBrowserInstall() {

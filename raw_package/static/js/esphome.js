@@ -589,7 +589,7 @@ const compileModal = new LogModal({
   dismissible: false,
 });
 
-compileModal.setup();
+window.compileModal = compileModal;
 
 const downloadAfterCompileButton = document.querySelector(
   "#js-compile-modal [data-action='download-binary']"
