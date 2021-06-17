@@ -275,7 +275,7 @@ const getUploadPort = () => {
   }
 
   inst._setSelectedStates();
-  return inst.getSelectedValues()[0];
+  return inst.getSelectedValues()[0] || "OTA";
 };
 setInterval(fetchSerialPorts, 5000);
 fetchSerialPorts(true);
