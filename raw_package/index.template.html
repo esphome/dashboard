@@ -32,10 +32,6 @@
     <script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
     <script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
     <script src="{{ get_static_file_url('js/vendor/materialize-stepper/materialize-stepper.min.js') }}"></script>
-    <script
-      src="{{ get_static_file_url('js/esphome/index.js') }}"
-      type="module"
-    ></script>
 
     {% if streamer_mode %}
     <style>
@@ -474,8 +470,8 @@
       charset="utf-8"
     ></script>
     <script
-      src="{{ get_static_file_url('js/esphome.js') }}"
-      type="text/javascript"
+      src="{{ get_static_file_url('js/esphome/index.js') }}"
+      type="module"
     ></script>
 
     {% if begin and len(entries) == 1 %}
