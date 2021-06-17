@@ -428,7 +428,7 @@ const logsModal = new LogModal({
 logsModal.setup();
 
 // Upload Modal
-const uploadModal = new LogModal({
+export const uploadModal = new LogModal({
   name: "upload",
   onPrepare: (modalElement, activeFilename) => {
     modalElement
@@ -485,8 +485,6 @@ const uploadModal = new LogModal({
 
   dismissible: false,
 });
-
-window.uploadModal = uploadModal;
 
 const downloadAfterUploadButton = document.querySelector(
   "#js-upload-modal [data-action='download-binary']"
@@ -549,7 +547,7 @@ const validateModal = new LogModal({
 validateModal.setup();
 
 // Compile Modal
-const compileModal = new LogModal({
+export const compileModal = new LogModal({
   name: "compile",
   onPrepare: (modalElement, activeFilename) => {
     modalElement.querySelector(
@@ -586,8 +584,6 @@ const compileModal = new LogModal({
   },
   dismissible: false,
 });
-
-window.compileModal = compileModal;
 
 const downloadAfterCompileButton = document.querySelector(
   "#js-compile-modal [data-action='download-binary']"
