@@ -23,6 +23,7 @@ import {
   getConfiguration,
 } from "../api/configuration";
 import { flashConfiguration } from "../flash";
+import { compileModal, uploadModal } from "../legacy";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -52,12 +53,12 @@ const selectLegacyPort = (value: string) => {
 };
 
 const openLegacyCompileModal = (filename: string) =>
-  (window as any).compileModal.open({
+  compileModal.open({
     target: { dataset: { filename } },
   });
 
 const openLegacyUploadModal = (filename: string) =>
-  (window as any).uploadModal.open({
+  uploadModal.open({
     target: { dataset: { filename } },
   });
 
