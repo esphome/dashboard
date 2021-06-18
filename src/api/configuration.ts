@@ -1,4 +1,4 @@
-import { fetchApi } from ".";
+import { fetchApi, streamLogs } from ".";
 
 export interface CreateConfigParams {
   name: string;
@@ -37,37 +37,5 @@ export const deleteConfiguration = (filename: string) =>
     method: "post",
   });
 
-export const compileConfiguration = (filename: string) => {
-  const url = new URL("./compile", location.href);
-  url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
-  const socket = new WebSocket(url.toString());
-
-  return new Promise((resolve, reject) => {
-    socket.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      if (data.event !== "exit") {
-        return;
-      }
-
-      if (data.code === 0) {
-        resolve(undefined);
-      } else {
-        reject(new Error(`Error compiling configuration (${data.code})`));
-      }
-    });
-
-    socket.addEventListener("open", () => {
-      socket.send(
-        JSON.stringify({
-          configuration: filename,
-          port: "OTA",
-          type: "spawn",
-        })
-      );
-    });
-
-    socket.addEventListener("close", () => {
-      reject(new Error("Unexecpted socket closure"));
-    });
-  });
-};
+export const compileConfiguration = (filename: string) =>
+  streamLogs("compile", filename);

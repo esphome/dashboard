@@ -2,10 +2,10 @@ import { uploadModal } from "../legacy";
 
 const preload = () => import("./install-update-dialog");
 
-const startInstallUpdate = async (ev: Event) => {
+export const openInstallDialog = async (filename: string) => {
   preload();
   const dialog = document.createElement("esphome-install-dialog");
-  dialog.filename = (ev.target as HTMLElement).dataset.filename!;
+  dialog.filename = filename;
 
   // Close any old modal that might be open.
   uploadModal.close();
@@ -15,7 +15,9 @@ const startInstallUpdate = async (ev: Event) => {
 
 export const attachInstallUpdate = () => {
   document.querySelectorAll("[data-action='upload']").forEach((btn) => {
-    btn.addEventListener("click", startInstallUpdate);
+    btn.addEventListener("click", (ev) =>
+      openInstallDialog((ev.target as HTMLElement).dataset.filename!)
+    );
     btn.addEventListener("mouseover", preload, { once: true });
   });
 };
