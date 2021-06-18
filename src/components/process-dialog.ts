@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "../components/remote-process";
@@ -11,7 +11,7 @@ export class ESPHomeProcessDialog extends LitElement {
   @property() public filename!: string;
   @property() public type!: string;
 
-  private _result?: number;
+  @state() private _result?: number;
 
   protected render() {
     return html`
@@ -44,7 +44,7 @@ export class ESPHomeProcessDialog extends LitElement {
   }
 
   private _handleClose() {
-    fireEvent(this, "close");
+    fireEvent(this, "closed");
   }
 
   static styles = css`
