@@ -14,3 +14,60 @@ export const fetchApi = async <T>(
     ? resp.json()
     : resp.text();
 };
+
+export class StreamError extends Error {
+  code?: number;
+}
+
+export const streamLogs = (
+  path: string,
+  filename: string,
+  lineReceived?: (line: string) => void,
+  abortController?: AbortController
+) => {
+  const url = new URL(`./${path}`, location.href);
+  url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
+  const socket = new WebSocket(url.toString());
+
+  if (abortController) {
+    abortController.signal.addEventListener("abort", () => socket.close());
+  }
+
+  return new Promise((resolve, reject) => {
+    socket.addEventListener("message", (event) => {
+      const data = JSON.parse(event.data);
+      if (data.event === "line" && lineReceived) {
+        lineReceived(data.data);
+        return;
+      }
+
+      if (data.event !== "exit") {
+        return;
+      }
+
+      if (data.code === 0) {
+        resolve(undefined);
+      } else {
+        const error = new StreamError(
+          `Error compiling configuration (${data.code})`
+        );
+        error.code = data.code;
+        reject(error);
+      }
+    });
+
+    socket.addEventListener("open", () => {
+      socket.send(
+        JSON.stringify({
+          configuration: filename,
+          port: "OTA",
+          type: "spawn",
+        })
+      );
+    });
+
+    socket.addEventListener("close", () => {
+      reject(new Error("Unexecpted socket closure"));
+    });
+  });
+};
