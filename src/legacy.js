@@ -563,40 +563,6 @@ downloadAfterCompileButton.addEventListener("click", () => {
   link.remove();
 });
 
-// Clean MQTT Modal
-const cleanMqttModal = new LogModal({
-  name: "clean-mqtt",
-  onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector(
-      "#js-clean-mqtt-modal [data-action='stop-logs']"
-    ).innerHTML = "Stop";
-  },
-  onProcessExit: (modalElement, code) => {
-    if (code === 0) {
-      M.toast({
-        html: "Program exited successfully",
-        displayLength: 10000,
-      });
-    } else {
-      M.toast({
-        html: `Program failed with code ${code}`,
-        displayLength: 10000,
-      });
-    }
-    modalElement.querySelector(
-      "#js-clean-mqtt-modal [data-action='stop-logs']"
-    ).innerHTML = "Close";
-  },
-  onSocketClose: (modalElement) => {
-    M.toast({
-      html: "Terminated process",
-      displayLength: 10000,
-    });
-  },
-});
-
-cleanMqttModal.setup();
-
 // Update All Modal
 const updateAllModal = new LogModal({
   name: "update-all",

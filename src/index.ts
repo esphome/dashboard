@@ -4,9 +4,11 @@ import { attachInstallUpdate } from "./install-update";
 import { attachWizard } from "./wizard";
 import { attachValidate } from "./validate";
 import { attachCleanDialog } from "./clean";
+import { attachCleanMQTTDialog } from "./clean-mqtt";
 
 attachWizard();
 attachOnlineStatus();
 attachInstallUpdate();
 attachValidate();
 attachCleanDialog();
+attachCleanMQTTDialog();
