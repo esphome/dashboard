@@ -339,6 +339,16 @@ class LogModal {
     this._onPress(event);
   }
 
+  get isOpen() {
+    return this.modalInstance !== undefined && this.modalInstance.isOpen;
+  }
+
+  close() {
+    if (this.modalInstance) {
+      this.modalInstance.close();
+    }
+  }
+
   _onPress(event) {
     this.activeFilename = event.target.dataset.filename;
 
