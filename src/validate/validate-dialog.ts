@@ -69,11 +69,11 @@ class ESPHomeValidateDialog extends LitElement {
   }
 
   static styles = css`
-    :host {
-      --mdc-dialog-min-height: 85%;
-      --mdc-dialog-max-height: 85%;
-      --mdc-dialog-min-width: 95%;
-      --mdc-dialog-max-width: 95%;
+    mwc-dialog {
+      --mdc-dialog-min-height: 85vh;
+      --mdc-dialog-max-height: 85vh;
+      --mdc-dialog-min-width: 95vw;
+      --mdc-dialog-max-width: 95vw;
       --mdc-theme-primary: #03a9f4;
     }
   `;
