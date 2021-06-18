@@ -64,7 +64,7 @@ class ESPHomeValidateDialog extends LitElement {
     this._valid = ev.detail == 0;
   }
 
-  private async _handleClose() {
+  private _handleClose() {
     this.parentNode!.removeChild(this);
   }
 
