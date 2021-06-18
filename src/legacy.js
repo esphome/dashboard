@@ -510,52 +510,6 @@ downloadAfterUploadButton.addEventListener("click", () => {
   link.remove();
 });
 
-// Validate Modal
-const validateModal = new LogModal({
-  name: "validate",
-  onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector(
-      "#js-validate-modal [data-action='stop-logs']"
-    ).innerHTML = "Stop";
-    modalElement
-      .querySelector("#js-validate-modal [data-action='edit']")
-      .setAttribute("data-filename", activeFilename);
-    modalElement
-      .querySelector("#js-validate-modal [data-action='upload']")
-      .setAttribute("data-filename", activeFilename);
-    modalElement
-      .querySelector("#js-validate-modal [data-action='upload']")
-      .classList.add("disabled");
-  },
-  onProcessExit: (modalElement, code) => {
-    if (code === 0) {
-      M.toast({
-        html: `<code class="inlinecode">${validateModal.activeFilename}</code> is valid 👍`,
-        displayLength: 10000,
-      });
-      modalElement
-        .querySelector("#js-validate-modal [data-action='upload']")
-        .classList.remove("disabled");
-    } else {
-      M.toast({
-        html: `<code class="inlinecode">${validateModal.activeFilename}</code> is invalid 😕`,
-        displayLength: 10000,
-      });
-    }
-    modalElement.querySelector(
-      "#js-validate-modal [data-action='stop-logs']"
-    ).innerHTML = "Close";
-  },
-  onSocketClose: (modalElement) => {
-    M.toast({
-      html: "Terminated process",
-      displayLength: 10000,
-    });
-  },
-});
-
-validateModal.setup();
-
 // Compile Modal
 export const compileModal = new LogModal({
   name: "compile",
@@ -751,71 +705,73 @@ editor.commands.addCommand({
   readOnly: false,
 });
 
+export const openEditDialog = (filename) => {
+  editorActiveFilename = filename;
+  const filenameField = document.querySelector(
+    "#js-editor-modal #js-node-filename"
+  );
+  filenameField.innerHTML = editorActiveFilename;
+
+  const saveButton = document.querySelector(
+    "#js-editor-modal [data-action='save']"
+  );
+  const uploadButton = document.querySelector(
+    "#js-editor-modal [data-action='upload']"
+  );
+  const closeButton = document.querySelector(
+    "#js-editor-modal [data-action='close']"
+  );
+  saveButton.setAttribute("data-filename", editorActiveFilename);
+  uploadButton.setAttribute("data-filename", editorActiveFilename);
+  uploadButton.setAttribute("onClick", `saveFile("${editorActiveFilename}")`);
+  if (editorActiveFilename === "secrets.yaml") {
+    uploadButton.classList.add("disabled");
+    editorActiveSecrets = true;
+  } else {
+    uploadButton.classList.remove("disabled");
+    editorActiveSecrets = false;
+  }
+  closeButton.setAttribute("data-filename", editorActiveFilename);
+
+  const loadingIndicator = document.querySelector(
+    "#js-editor-modal #js-loading-indicator"
+  );
+  const editorArea = document.querySelector("#js-editor-modal #js-editor-area");
+
+  loadingIndicator.style.display = "block";
+  editorArea.style.display = "none";
+
+  editor.setOption("readOnly", true);
+  fetch(`./edit?configuration=${editorActiveFilename}`, {
+    credentials: "same-origin",
+  })
+    .then((res) => res.text())
+    .then((response) => {
+      editor.setValue(response, -1);
+      editor.setOption("readOnly", false);
+      loadingIndicator.style.display = "none";
+      editorArea.style.display = "block";
+    });
+  editor.focus();
+
+  const editModalElement = document.getElementById("js-editor-modal");
+  const editorModal = M.Modal.init(editModalElement, {
+    onOpenStart: function () {
+      editorModalOnOpen();
+    },
+    onCloseStart: function () {
+      editorModalOnClose();
+    },
+    dismissible: false,
+  });
+
+  editorModal.open();
+};
+
 // Edit Button Listener
 document.querySelectorAll("[data-action='edit']").forEach((button) => {
   button.addEventListener("click", (event) => {
-    editorActiveFilename = event.target.dataset.filename;
-    const filenameField = document.querySelector(
-      "#js-editor-modal #js-node-filename"
-    );
-    filenameField.innerHTML = editorActiveFilename;
-
-    const saveButton = document.querySelector(
-      "#js-editor-modal [data-action='save']"
-    );
-    const uploadButton = document.querySelector(
-      "#js-editor-modal [data-action='upload']"
-    );
-    const closeButton = document.querySelector(
-      "#js-editor-modal [data-action='close']"
-    );
-    saveButton.setAttribute("data-filename", editorActiveFilename);
-    uploadButton.setAttribute("data-filename", editorActiveFilename);
-    uploadButton.setAttribute("onClick", `saveFile("${editorActiveFilename}")`);
-    if (editorActiveFilename === "secrets.yaml") {
-      uploadButton.classList.add("disabled");
-      editorActiveSecrets = true;
-    } else {
-      uploadButton.classList.remove("disabled");
-      editorActiveSecrets = false;
-    }
-    closeButton.setAttribute("data-filename", editorActiveFilename);
-
-    const loadingIndicator = document.querySelector(
-      "#js-editor-modal #js-loading-indicator"
-    );
-    const editorArea = document.querySelector(
-      "#js-editor-modal #js-editor-area"
-    );
-
-    loadingIndicator.style.display = "block";
-    editorArea.style.display = "none";
-
-    editor.setOption("readOnly", true);
-    fetch(`./edit?configuration=${editorActiveFilename}`, {
-      credentials: "same-origin",
-    })
-      .then((res) => res.text())
-      .then((response) => {
-        editor.setValue(response, -1);
-        editor.setOption("readOnly", false);
-        loadingIndicator.style.display = "none";
-        editorArea.style.display = "block";
-      });
-    editor.focus();
-
-    const editModalElement = document.getElementById("js-editor-modal");
-    const editorModal = M.Modal.init(editModalElement, {
-      onOpenStart: function () {
-        editorModalOnOpen();
-      },
-      onCloseStart: function () {
-        editorModalOnClose();
-      },
-      dismissible: false,
-    });
-
-    editorModal.open();
+    openEditDialog(event.target.dataset.filename);
   });
 });
 
