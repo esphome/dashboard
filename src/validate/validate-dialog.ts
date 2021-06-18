@@ -1,13 +1,10 @@
-// On pick and it's OTA or serial on host
-// Then set window.SELECTED_UPLOAD_PORT to a string.
-
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "../components/remote-process";
 import { openInstallDialog } from "../install-update";
 import { openEditDialog } from "../legacy";
+import "../components/process-dialog";
 
 @customElement("esphome-validate-dialog")
 class ESPHomeValidateDialog extends LitElement {
@@ -19,18 +16,13 @@ class ESPHomeValidateDialog extends LitElement {
     const valid_icon =
       this._valid === undefined ? "" : this._valid ? "✅" : "❌";
     return html`
-      <mwc-dialog
-        open
-        heading=${`Validate ${this.filename} ${valid_icon}`}
-        scrimClickAction
+      <esphome-process-dialog
+        .heading=${`Validate ${this.filename} ${valid_icon}`}
+        .type=${"validate"}
+        .filename=${this.filename}
         @closed=${this._handleClose}
+        @process-done=${this._handleProcessDone}
       >
-        <esphome-remote-process
-          .type=${"validate"}
-          .filename=${this.filename}
-          @process-done=${this._handleProcessDone}
-        ></esphome-remote-process>
-
         <mwc-button
           slot="secondaryAction"
           dialogAction="close"
@@ -43,12 +35,7 @@ class ESPHomeValidateDialog extends LitElement {
           label="Install"
           @click=${this._openInstall}
         ></mwc-button>
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="close"
-          label="Close"
-        ></mwc-button>
-      </mwc-dialog>
+      </esphome-process-dialog>
     `;
   }
 
@@ -67,16 +54,6 @@ class ESPHomeValidateDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
-
-  static styles = css`
-    mwc-dialog {
-      --mdc-dialog-min-height: 85vh;
-      --mdc-dialog-max-height: 85vh;
-      --mdc-dialog-min-width: 95vw;
-      --mdc-dialog-max-width: 95vw;
-      --mdc-theme-primary: #03a9f4;
-    }
-  `;
 }
 
 declare global {

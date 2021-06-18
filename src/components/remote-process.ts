@@ -5,7 +5,7 @@ import { fireEvent } from "../util/fire-event";
 
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
-  public type!: "validate" | "logs" | "upload";
+  public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
   public filename!: string;
 
   private _abortController?: AbortController;
