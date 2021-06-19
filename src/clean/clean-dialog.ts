@@ -8,14 +8,14 @@ import "../components/process-dialog";
 
 @customElement("esphome-clean-dialog")
 class ESPHomeCleanDialog extends LitElement {
-  @property() public filename!: string;
+  @property() public configuration!: string;
 
   protected render() {
     return html`
       <esphome-process-dialog
-        .heading=${`Clean ${this.filename}`}
+        .heading=${`Clean ${this.configuration}`}
         .type=${"clean"}
-        .spawnParams=${{ configuration: this.filename }}
+        .spawnParams=${{ configuration: this.configuration }}
         @closed=${this._handleClose}
       >
         <mwc-button
@@ -35,11 +35,11 @@ class ESPHomeCleanDialog extends LitElement {
   }
 
   private _openEdit() {
-    openEditDialog(this.filename);
+    openEditDialog(this.configuration);
   }
 
   private _openInstall() {
-    openInstallDialog(this.filename);
+    openInstallDialog(this.configuration);
   }
 
   private _handleClose() {

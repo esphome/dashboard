@@ -1,9 +1,9 @@
 const preload = () => import("./validate-dialog");
 
-const openValidateDialog = async (filename: string) => {
+const openValidateDialog = (configuration: string) => {
   preload();
   const dialog = document.createElement("esphome-validate-dialog");
-  dialog.filename = filename;
+  dialog.configuration = configuration;
   document.body.append(dialog);
 };
 

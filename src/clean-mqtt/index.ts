@@ -1,9 +1,9 @@
 const preload = () => import("./clean-mqtt-dialog");
 
-export const openCleanMQTTDialog = async (filename: string) => {
+export const openCleanMQTTDialog = (configuration: string) => {
   preload();
   const dialog = document.createElement("esphome-clean-mqtt-dialog");
-  dialog.filename = filename;
+  dialog.configuration = configuration;
   document.body.append(dialog);
 };
 

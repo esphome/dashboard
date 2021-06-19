@@ -59,8 +59,6 @@ export const streamLogs = (
     socket.addEventListener("open", () => {
       socket.send(
         JSON.stringify({
-          // configuration: filename,
-          // port: "OTA",
           type: "spawn",
           ...spawnParams,
         })

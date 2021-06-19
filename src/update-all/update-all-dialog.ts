@@ -6,8 +6,6 @@ import "../components/process-dialog";
 
 @customElement("esphome-update-all-dialog")
 class ESPHomeUpdateAllDialog extends LitElement {
-  @property() public filename!: string;
-
   protected render() {
     return html`
       <esphome-process-dialog

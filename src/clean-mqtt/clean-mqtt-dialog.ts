@@ -6,14 +6,14 @@ import "../components/process-dialog";
 
 @customElement("esphome-clean-mqtt-dialog")
 class ESPHomeCleanMQTTDialog extends LitElement {
-  @property() public filename!: string;
+  @property() public configuration!: string;
 
   protected render() {
     return html`
       <esphome-process-dialog
-        .heading=${`Clean MQTT discovery topics for ${this.filename}`}
+        .heading=${`Clean MQTT discovery topics for ${this.configuration}`}
         .type=${"clean-mqtt"}
-        .spawnParams=${{ configuration: this.filename }}
+        .spawnParams=${{ configuration: this.configuration }}
         @closed=${this._handleClose}
       >
       </esphome-process-dialog>

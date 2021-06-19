@@ -64,7 +64,7 @@ const openLegacyUploadModal = (filename: string) =>
 
 @customElement("esphome-install-dialog")
 class ESPHomeInstallDialog extends LitElement {
-  @state() public filename!: string;
+  @state() public configuration!: string;
 
   @state() private _ports?: SerialPort[];
 
@@ -269,14 +269,14 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   private _showCompileDialog() {
-    openLegacyCompileModal(this.filename);
+    openLegacyCompileModal(this.configuration);
     this._close();
   }
 
   private _handleLegacyOption(ev: Event) {
     selectLegacyPort((ev.target as any).port);
     this._close();
-    openLegacyUploadModal(this.filename);
+    openLegacyUploadModal(this.configuration);
   }
 
   private async _handleBrowserInstall() {
@@ -288,7 +288,7 @@ class ESPHomeInstallDialog extends LitElement {
       return;
     }
     this._error = undefined;
-    const configProm = getConfiguration(this.filename);
+    const configProm = getConfiguration(this.configuration);
 
     let esploader: ESPLoader;
     try {
@@ -307,7 +307,7 @@ class ESPHomeInstallDialog extends LitElement {
         return;
       }
 
-      const compileProm = compileConfiguration(this.filename);
+      const compileProm = compileConfiguration(this.configuration);
 
       this._state = "connecting_webserial";
 
@@ -342,9 +342,14 @@ class ESPHomeInstallDialog extends LitElement {
       this._state = "installing";
 
       try {
-        await flashConfiguration(esploader, this.filename, false, (pct) => {
-          this._writeProgress = pct;
-        });
+        await flashConfiguration(
+          esploader,
+          this.configuration,
+          false,
+          (pct) => {
+            this._writeProgress = pct;
+          }
+        );
       } catch (err) {
         this._error = "Installation failed";
         this._state = "done";

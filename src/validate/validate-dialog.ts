@@ -8,7 +8,7 @@ import "../components/process-dialog";
 
 @customElement("esphome-validate-dialog")
 class ESPHomeValidateDialog extends LitElement {
-  @property() public filename!: string;
+  @property() public configuration!: string;
 
   @state() private _valid?: boolean;
 
@@ -17,9 +17,9 @@ class ESPHomeValidateDialog extends LitElement {
       this._valid === undefined ? "" : this._valid ? "✅" : "❌";
     return html`
       <esphome-process-dialog
-        .heading=${`Validate ${this.filename} ${valid_icon}`}
+        .heading=${`Validate ${this.configuration} ${valid_icon}`}
         .type=${"validate"}
-        .spawnParams=${{ configuration: this.filename }}
+        .spawnParams=${{ configuration: this.configuration }}
         @closed=${this._handleClose}
         @process-done=${this._handleProcessDone}
       >
@@ -40,11 +40,11 @@ class ESPHomeValidateDialog extends LitElement {
   }
 
   private _openEdit() {
-    openEditDialog(this.filename);
+    openEditDialog(this.configuration);
   }
 
   private _openInstall() {
-    openInstallDialog(this.filename);
+    openInstallDialog(this.configuration);
   }
 
   private _handleProcessDone(ev: { detail: number }) {
