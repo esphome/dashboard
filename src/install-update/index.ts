@@ -13,7 +13,7 @@ export const openInstallDialog = async (filename: string) => {
   document.body.append(dialog);
 };
 
-export const attachInstallUpdate = () => {
+export const attachInstallDialog = () => {
   document.querySelectorAll("[data-action='upload']").forEach((btn) => {
     btn.addEventListener("click", (ev) =>
       openInstallDialog((ev.target as HTMLElement).dataset.filename!)

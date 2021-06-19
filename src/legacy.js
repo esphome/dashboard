@@ -563,45 +563,6 @@ downloadAfterCompileButton.addEventListener("click", () => {
   link.remove();
 });
 
-// Update All Modal
-const updateAllModal = new LogModal({
-  name: "update-all",
-  onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector(
-      "#js-update-all-modal [data-action='stop-logs']"
-    ).innerHTML = "Stop";
-    modalElement.querySelector(
-      "#js-update-all-modal #js-node-filename"
-    ).style.visibility = "hidden";
-  },
-  onProcessExit: (modalElement, code) => {
-    if (code === 0) {
-      M.toast({
-        html: "Program exited successfully",
-        displayLength: 10000,
-      });
-      downloadButton.classList.remove("disabled");
-    } else {
-      M.toast({
-        html: `Program failed with code ${data.code}`,
-        displayLength: 10000,
-      });
-    }
-    modalElement.querySelector(
-      "#js-update-all-modal [data-action='stop-logs']"
-    ).innerHTML = "Close";
-  },
-  onSocketClose: (modalElement) => {
-    M.toast({
-      html: "Terminated process",
-      displayLength: 10000,
-    });
-  },
-  dismissible: false,
-});
-
-updateAllModal.setup();
-
 /**
  *  Node Editing
  */
