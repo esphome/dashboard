@@ -8,7 +8,7 @@ import { fireEvent } from "../util/fire-event";
 @customElement("esphome-process-dialog")
 export class ESPHomeProcessDialog extends LitElement {
   @property() public heading!: string;
-  @property() public filename!: string;
+  @property() public spawnParams?: Record<string, any>;
   @property() public type!: string;
 
   @state() private _result?: number;
@@ -23,7 +23,7 @@ export class ESPHomeProcessDialog extends LitElement {
       >
         <esphome-remote-process
           .type=${this.type}
-          .filename=${this.filename}
+          .spawnParams=${this.spawnParams}
           @process-done=${this._handleProcessDone}
         ></esphome-remote-process>
 

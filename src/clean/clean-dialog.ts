@@ -15,7 +15,7 @@ class ESPHomeCleanDialog extends LitElement {
       <esphome-process-dialog
         .heading=${`Clean ${this.filename}`}
         .type=${"clean"}
-        .filename=${this.filename}
+        .spawnParams=${{ configuration: this.filename }}
         @closed=${this._handleClose}
       >
         <mwc-button

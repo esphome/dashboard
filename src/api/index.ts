@@ -21,7 +21,7 @@ export class StreamError extends Error {
 
 export const streamLogs = (
   path: string,
-  filename: string,
+  spawnParams: Record<string, any>,
   lineReceived?: (line: string) => void,
   abortController?: AbortController
 ) => {
@@ -59,9 +59,10 @@ export const streamLogs = (
     socket.addEventListener("open", () => {
       socket.send(
         JSON.stringify({
-          configuration: filename,
-          port: "OTA",
+          // configuration: filename,
+          // port: "OTA",
           type: "spawn",
+          ...spawnParams,
         })
       );
     });

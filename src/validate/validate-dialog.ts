@@ -19,7 +19,7 @@ class ESPHomeValidateDialog extends LitElement {
       <esphome-process-dialog
         .heading=${`Validate ${this.filename} ${valid_icon}`}
         .type=${"validate"}
-        .filename=${this.filename}
+        .spawnParams=${{ configuration: this.filename }}
         @closed=${this._handleClose}
         @process-done=${this._handleProcessDone}
       >

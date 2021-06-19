@@ -29,13 +29,13 @@ export const createConfiguration = (params: CreateConfigParams) =>
     body: new URLSearchParams(params as any),
   });
 
-export const getConfiguration = (filename: string) =>
-  fetchApi<Configuration>(`./info?configuration=${filename}`);
+export const getConfiguration = (configuration: string) =>
+  fetchApi<Configuration>(`./info?configuration=${configuration}`);
 
-export const deleteConfiguration = (filename: string) =>
-  fetchApi(`./delete?configuration=${filename}`, {
+export const deleteConfiguration = (configuration: string) =>
+  fetchApi(`./delete?configuration=${configuration}`, {
     method: "post",
   });
 
-export const compileConfiguration = (filename: string) =>
-  streamLogs("compile", filename);
+export const compileConfiguration = (configuration: string) =>
+  streamLogs("compile", { configuration });

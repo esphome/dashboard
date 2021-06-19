@@ -6,7 +6,7 @@ import { fireEvent } from "../util/fire-event";
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
   public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
-  public filename!: string;
+  public spawnParams!: Record<string, any>;
 
   private _abortController?: AbortController;
   private _setup = false;
@@ -121,7 +121,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
 
     streamLogs(
       this.type,
-      this.filename,
+      this.spawnParams,
       (line) => {
         coloredConsole.addLine(line);
       },

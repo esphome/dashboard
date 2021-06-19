@@ -4,19 +4,17 @@ import "@material/mwc-button";
 import "../components/remote-process";
 import "../components/process-dialog";
 
-@customElement("esphome-clean-mqtt-dialog")
-class ESPHomeCleanMQTTDialog extends LitElement {
+@customElement("esphome-compile-all-dialog")
+class ESPHomeCompileAllDialog extends LitElement {
   @property() public filename!: string;
 
   protected render() {
     return html`
       <esphome-process-dialog
-        .heading=${`Clean MQTT discovery topics for ${this.filename}`}
-        .type=${"clean-mqtt"}
-        .spawnParams=${{ configuration: this.filename }}
+        heading="Update All"
+        .type=${"update-all"}
         @closed=${this._handleClose}
-      >
-      </esphome-process-dialog>
+      ></esphome-process-dialog>
     `;
   }
 
@@ -27,6 +25,6 @@ class ESPHomeCleanMQTTDialog extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-clean-mqtt-dialog": ESPHomeCleanMQTTDialog;
+    "esphome-compile-all-dialog": ESPHomeCompileAllDialog;
   }
 }
