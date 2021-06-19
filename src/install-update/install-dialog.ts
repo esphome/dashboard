@@ -23,7 +23,8 @@ import {
   getConfiguration,
 } from "../api/configuration";
 import { flashConfiguration } from "../flash";
-import { compileModal, uploadModal } from "../legacy";
+import { compileModal } from "../legacy";
+import { openInstallServerDialog } from "../install-server";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -40,25 +41,8 @@ const metaHelp = svg`
   </svg>
 `;
 
-const selectLegacyPort = (value: string) => {
-  const portSelect = document.querySelector(
-    ".nav-wrapper select"
-  ) as HTMLSelectElement;
-  const inst = (window as any).M.FormSelect.getInstance(portSelect);
-  if (inst) {
-    inst.destroy();
-  }
-  portSelect.value = value;
-  (window as any).M.FormSelect.init(portSelect, {});
-};
-
 const openLegacyCompileModal = (filename: string) =>
   compileModal.open({
-    target: { dataset: { filename } },
-  });
-
-const openLegacyUploadModal = (filename: string) =>
-  uploadModal.open({
     target: { dataset: { filename } },
   });
 
@@ -274,9 +258,8 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   private _handleLegacyOption(ev: Event) {
-    selectLegacyPort((ev.target as any).port);
     this._close();
-    openLegacyUploadModal(this.configuration);
+    openInstallServerDialog(this.configuration, (ev.currentTarget as any).port);
   }
 
   private async _handleBrowserInstall() {

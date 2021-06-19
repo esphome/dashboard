@@ -1,15 +1,9 @@
-import { uploadModal } from "../legacy";
-
 const preload = () => import("./install-dialog");
 
 export const openInstallDialog = (configuration: string) => {
   preload();
   const dialog = document.createElement("esphome-install-dialog");
   dialog.configuration = configuration;
-
-  // Close any old modal that might be open.
-  uploadModal.close();
-
   document.body.append(dialog);
 };
 
