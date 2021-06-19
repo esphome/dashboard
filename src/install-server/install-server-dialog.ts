@@ -7,7 +7,7 @@ import "../components/process-dialog";
 import { openInstallServerDialog } from ".";
 
 @customElement("esphome-install-server-dialog")
-class ESPHomeCleanDialog extends LitElement {
+class ESPHomeInstallServerDialog extends LitElement {
   @property() public configuration!: string;
   @property() public target!: string;
 
@@ -71,6 +71,6 @@ class ESPHomeCleanDialog extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-install-server-dialog": ESPHomeCleanDialog;
+    "esphome-install-server-dialog": ESPHomeInstallServerDialog;
   }
 }

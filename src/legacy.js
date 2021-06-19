@@ -437,59 +437,6 @@ const logsModal = new LogModal({
 
 logsModal.setup();
 
-// Compile Modal
-export const compileModal = new LogModal({
-  name: "compile",
-  onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector(
-      "#js-compile-modal [data-action='stop-logs']"
-    ).innerHTML = "Stop";
-    modalElement
-      .querySelector("#js-compile-modal [data-action='download-binary']")
-      .classList.add("disabled");
-  },
-  onProcessExit: (modalElement, code) => {
-    if (code === 0) {
-      M.toast({
-        html: "Program exited successfully",
-        displayLength: 10000,
-      });
-      modalElement
-        .querySelector("#js-compile-modal [data-action='download-binary']")
-        .classList.remove("disabled");
-    } else {
-      M.toast({
-        html: `Program failed with code ${data.code}`,
-        displayLength: 10000,
-      });
-    }
-    modalElement.querySelector(
-      "#js-compile-modal [data-action='stop-logs']"
-    ).innerHTML = "Close";
-  },
-  onSocketClose: (modalElement) => {
-    M.toast({
-      html: "Terminated process",
-      displayLength: 10000,
-    });
-  },
-  dismissible: false,
-});
-
-const downloadAfterCompileButton = document.querySelector(
-  "#js-compile-modal [data-action='download-binary']"
-);
-downloadAfterCompileButton.addEventListener("click", () => {
-  const link = document.createElement("a");
-  link.download = name;
-  link.href = `./download.bin?configuration=${encodeURIComponent(
-    compileModal.activeFilename
-  )}`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-});
-
 /**
  *  Node Editing
  */

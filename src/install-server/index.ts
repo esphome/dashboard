@@ -1,4 +1,4 @@
-const preload = () => import("./install-server");
+const preload = () => import("./install-server-dialog");
 
 export const openInstallServerDialog = (
   configuration: string,

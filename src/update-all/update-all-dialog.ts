@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
 import "../components/process-dialog";

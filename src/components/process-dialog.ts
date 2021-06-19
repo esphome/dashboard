@@ -39,7 +39,6 @@ export class ESPHomeProcessDialog extends LitElement {
   }
 
   private _handleProcessDone(ev: { detail: number }) {
-    fireEvent(this, "process-done", ev.detail);
     this._result = ev.detail;
   }
 
