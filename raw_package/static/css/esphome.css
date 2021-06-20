@@ -151,15 +151,21 @@ main {
   margin: 8px 0;
 }
 
+.nav-icons {
+  margin-right: 24px;
+}
+
 @media only screen and (max-width: 601px) {
   .logo {
     height: 38px;
     margin: 9px 0;
   }
-}
-
-.nav-icons {
-  margin-right: 24px;
+  .logo-wrapper {
+    margin-left: 12px;
+  }
+  .nav-icons {
+    margin-right: 0px;
+  }
 }
 
 .nav-icons i {
@@ -169,34 +175,6 @@ main {
 nav {
   height: auto;
   line-height: normal;
-}
-
-.select-port-container {
-  margin-top: 8px;
-  margin-right: 10px;
-  width: 350px;
-}
-
-.serial-port-select {
-  margin-top: 8px;
-  margin-right: 10px;
-  width: 350px;
-}
-
-.serial-port-select .select-dropdown {
-  color: black;
-}
-
-.serial-port-select .select-dropdown:focus {
-  border-bottom: 1px solid #607d8b !important;
-}
-
-.serial-port-select .caret {
-  fill: black;
-}
-
-.serial-port-select .dropdown-content li > span {
-  color: black;
 }
 
 #nav-dropdown li a,

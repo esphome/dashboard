@@ -3,7 +3,6 @@ $(document).ready(function () {
   M.AutoInit(document.body);
   nodeGrid();
   startAceWebsocket();
-  fixNavbarHeight();
 });
 
 // WebSocket URL Helper
@@ -14,21 +13,6 @@ if (loc.protocol === "https:") {
   wsLoc.protocol = "wss:";
 }
 const wsUrl = wsLoc.href;
-
-/**
- * Fix NavBar height
- */
-const fixNavbarHeight = () => {
-  const fixFunc = () => {
-    const sel = $(".select-wrapper");
-    $(".navbar-fixed").css(
-      "height",
-      sel.position().top + sel.outerHeight() + "px"
-    );
-  };
-  $(window).resize(fixFunc);
-  fixFunc();
-};
 
 /**
  *  Dashboard Dynamic Grid
@@ -45,65 +29,6 @@ const nodeGrid = () => {
     nodeGrid.classList.add("grid-3-col");
   }
 };
-
-/**
- *  Serial Port Selection
- */
-
-const portSelect = document.querySelector(".nav-wrapper select");
-let ports = [];
-
-const fetchSerialPorts = (begin = false) => {
-  fetch(`./serial-ports`, { credentials: "same-origin" })
-    .then((res) => res.json())
-    .then((response) => {
-      if (ports.length === response.length) {
-        let allEqual = true;
-        for (let i = 0; i < response.length; i++) {
-          if (ports[i].port !== response[i].port) {
-            allEqual = false;
-            break;
-          }
-        }
-        if (allEqual) return;
-      }
-      const hasNewPort = response.length >= ports.length;
-
-      ports = response;
-
-      const inst = M.FormSelect.getInstance(portSelect);
-      if (inst !== undefined) {
-        inst.destroy();
-      }
-
-      portSelect.innerHTML = "";
-      const prevSelected = getUploadPort();
-      for (let i = 0; i < response.length; i++) {
-        const val = response[i];
-        if (val.port === prevSelected) {
-          portSelect.innerHTML += `<option value="${val.port}" selected>${val.port} (${val.desc})</option>`;
-        } else {
-          portSelect.innerHTML += `<option value="${val.port}">${val.port} (${val.desc})</option>`;
-        }
-      }
-
-      M.FormSelect.init(portSelect, {});
-      if (!begin && hasNewPort)
-        M.toast({ html: "Discovered new serial port." });
-    });
-};
-
-export const getUploadPort = () => {
-  const inst = M.FormSelect.getInstance(portSelect);
-  if (inst === undefined) {
-    return "OTA";
-  }
-
-  inst._setSelectedStates();
-  return inst.getSelectedValues()[0] || "OTA";
-};
-setInterval(fetchSerialPorts, 5000);
-fetchSerialPorts(true);
 
 /**
  *  Node Editing
