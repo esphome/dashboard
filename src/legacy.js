@@ -268,7 +268,7 @@ const fetchSerialPorts = (begin = false) => {
     });
 };
 
-const getUploadPort = () => {
+export const getUploadPort = () => {
   const inst = M.FormSelect.getInstance(portSelect);
   if (inst === undefined) {
     return "OTA";
@@ -403,39 +403,6 @@ class LogModal {
     };
   }
 }
-
-// Logs Modal
-const logsModal = new LogModal({
-  name: "logs",
-
-  onPrepare: (modalElement, activeFilename) => {
-    modalElement.querySelector("[data-action='stop-logs']").innerHTML = "Stop";
-  },
-
-  onProcessExit: (modalElement, code) => {
-    if (code === 0) {
-      M.toast({
-        html: "Program exited successfully",
-        displayLength: 10000,
-      });
-    } else {
-      M.toast({
-        html: `Program failed with code ${code}`,
-        displayLength: 10000,
-      });
-    }
-    modalElem.querySelector("data-action='stop-logs'").innerHTML = "Close";
-  },
-
-  onSocketClose: (modalElement) => {
-    M.toast({
-      html: "Terminated process",
-      displayLength: 10000,
-    });
-  },
-});
-
-logsModal.setup();
 
 /**
  *  Node Editing
