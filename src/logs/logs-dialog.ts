@@ -1,6 +1,7 @@
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
+import "@material/mwc-list/mwc-list-item.js";
 import "../components/remote-process";
 import { openEditDialog } from "../legacy";
 import "../components/process-dialog";

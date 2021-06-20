@@ -6,7 +6,7 @@ import { attachValidateDialog } from "./validate";
 import { attachCleanDialog } from "./clean";
 import { attachCleanMQTTDialog } from "./clean-mqtt";
 import { attachUpdateAllDialog } from "./update-all";
-import { attachLogsDialog } from "./logs";
+import { attachLogsTargetDialog } from "./logs-target";
 
 attachWizardDialog();
 attachOnlineStatus();
@@ -15,4 +15,4 @@ attachValidateDialog();
 attachCleanDialog();
 attachCleanMQTTDialog();
 attachUpdateAllDialog();
-attachLogsDialog();
+attachLogsTargetDialog();
