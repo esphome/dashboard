@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
@@ -20,8 +20,19 @@ class ESPHomeCompileDialog extends LitElement {
         @closed=${this._handleClose}
         @process-done=${this._handleProcessDone}
       >
-        ${this._result === undefined || this._result === 0
+        ${this._result === undefined
           ? ""
+          : this._result === 0
+          ? html`
+              <a
+                slot="secondaryAction"
+                href="${`./download.bin?configuration=${encodeURIComponent(
+                  this.configuration
+                )}`}"
+              >
+                <mwc-button label="Download"></mwc-button>
+              </a>
+            `
           : html`
               <mwc-button
                 slot="secondaryAction"
@@ -58,6 +69,12 @@ class ESPHomeCompileDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
+
+  static styles = css`
+    a {
+      text-decoration: none;
+    }
+  `;
 }
 
 declare global {
