@@ -21,11 +21,8 @@ class ESPHomeRemoteProcess extends HTMLElement {
     shadowRoot.innerHTML = `
       <style>
         .log {
-          height: 100%;
-          max-height: calc(100% - 56px);
+          height: var(--remote-process-height, 100%);
           background-color: #1c1c1c;
-          margin-top: 0;
-          margin-bottom: 0;
           font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
             monospace;
           font-size: 12px;

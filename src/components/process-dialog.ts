@@ -48,10 +48,13 @@ export class ESPHomeProcessDialog extends LitElement {
 
   static styles = css`
     mwc-dialog {
-      --mdc-dialog-max-height: 85vh;
       --mdc-dialog-min-width: 95vw;
       --mdc-dialog-max-width: 95vw;
       --mdc-theme-primary: #03a9f4;
+    }
+
+    esphome-remote-process {
+      --remote-process-height: calc(90vh - 128px);
     }
   `;
 }
