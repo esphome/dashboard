@@ -48,7 +48,6 @@ export class ESPHomeProcessDialog extends LitElement {
 
   static styles = css`
     mwc-dialog {
-      --mdc-dialog-min-height: 85vh;
       --mdc-dialog-max-height: 85vh;
       --mdc-dialog-min-width: 95vw;
       --mdc-dialog-max-width: 95vw;
