@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
@@ -67,6 +67,13 @@ class ESPHomeInstallServerDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
+
+  static styles = css`
+    a[slot="secondaryAction"] {
+      text-decoration: none;
+      line-height: 32px;
+    }
+  `;
 }
 
 declare global {
