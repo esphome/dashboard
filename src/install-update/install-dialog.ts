@@ -55,13 +55,15 @@ class ESPHomeInstallDialog extends LitElement {
 
   @state() private _error?: string | TemplateResult;
 
+  private _updateSerialInterval?: number;
+
   protected render() {
     let heading;
     let content;
     let hideActions = false;
 
     if (this._state === "pick_option") {
-      heading = "Pick Install Target";
+      heading = "How do you want to install this on your ESP device?";
       content = html`
         <mwc-list-item
           twoline
@@ -69,7 +71,7 @@ class ESPHomeInstallDialog extends LitElement {
           .port=${"OTA"}
           @click=${this._handleLegacyOption}
         >
-          <span>Install wirelessly</span>
+          <span>Wirelessly</span>
           <span slot="secondary">Requires the device to be online</span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -77,30 +79,30 @@ class ESPHomeInstallDialog extends LitElement {
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
         <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
-          <span>Install via the browser</span>
+          <span>Plug into this computer</span>
           <span slot="secondary">
             ${supportsWebSerial
-              ? "For devices connected to this computer"
+              ? "For devices connected via USB to this computer"
               : allowsWebSerial
-              ? "Your browser is not supported."
+              ? "Your browser is not supported"
               : "Dashboard needs to opened via HTTPS"}
           </span>
           ${supportsWebSerial ? metaChevronRight : metaHelp}
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
-          <span>Install via the server</span>
-          <span slot="secondary"
-            >For devices connected to server running dashboard</span
-          >
+          <span>Plug into the computer running ESPHome Dashboard</span>
+          <span slot="secondary">
+            For devices connected via USB to the server
+          </span>
           ${metaChevronRight}
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showCompileDialog}>
-          <span>Download</span>
-          <span slot="secondary"
-            >Install it yourself using your preferred method</span
-          >
+          <span>Manual download</span>
+          <span slot="secondary">
+            Install it yourself using ESPHome Flasher or other tools
+          </span>
           ${metaChevronRight}
         </mwc-list-item>
 
@@ -223,13 +225,24 @@ class ESPHomeInstallDialog extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
-    getSerialPorts().then((ports) => {
-      this._ports = ports;
-    });
+    this._updateSerialPorts();
+  }
+
+  private async _updateSerialPorts() {
+    this._ports = await getSerialPorts();
   }
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
+    if (changedProps.has("_state") && this._state === "pick_server_port") {
+      const updateAndSchedule = async () => {
+        await this._updateSerialPorts();
+        this._updateSerialInterval = window.setTimeout(async () => {
+          await this._updateSerialPorts();
+        }, 5000);
+      };
+      updateAndSchedule();
+    }
   }
 
   private _showServerPorts() {
@@ -343,12 +356,14 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   private async _handleClose() {
+    if (this._updateSerialInterval) {
+      clearTimeout(this._updateSerialInterval);
+    }
     this.parentNode!.removeChild(this);
   }
 
   static styles = css`
     :host {
-      --mdc-dialog-max-width: 390px;
       --mdc-theme-primary: #03a9f4;
     }
     a {
