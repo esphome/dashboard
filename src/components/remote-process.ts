@@ -5,8 +5,8 @@ import { fireEvent } from "../util/fire-event";
 
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
-  public type!: "validate" | "logs" | "upload";
-  public filename!: string;
+  public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
+  public spawnParams!: Record<string, any>;
 
   private _abortController?: AbortController;
   private _setup = false;
@@ -21,11 +21,8 @@ class ESPHomeRemoteProcess extends HTMLElement {
     shadowRoot.innerHTML = `
       <style>
         .log {
-          height: 100%;
-          max-height: calc(100% - 56px);
+          height: var(--remote-process-height, 100%);
           background-color: #1c1c1c;
-          margin-top: 0;
-          margin-bottom: 0;
           font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
             monospace;
           font-size: 12px;
@@ -121,7 +118,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
 
     streamLogs(
       this.type,
-      this.filename,
+      this.spawnParams,
       (line) => {
         coloredConsole.addLine(line);
       },

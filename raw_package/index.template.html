@@ -20,10 +20,6 @@
     />
     <link
       rel="stylesheet"
-      href="{{ get_static_file_url('css/vendor/materialize-stepper/materialize-stepper.min.css') }}"
-    />
-    <link
-      rel="stylesheet"
       href="{{ get_static_file_url('css/esphome.css') }}"
     />
 
@@ -31,7 +27,6 @@
     <script src="{{ get_static_file_url('js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
     <script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/materialize-stepper/materialize-stepper.min.js') }}"></script>
 
     {% if streamer_mode %}
     <style>
@@ -61,10 +56,6 @@
               >
             </li>
           </ul>
-
-          <div class="serial-port-select right" id="js-serial-port-select">
-            <select></select>
-          </div>
         </div>
 
         <ul id="nav-dropdown" class="select-action dropdown-content">
@@ -235,205 +226,6 @@
             class="modal-close waves-effect waves-green btn-flat"
             data-action="close"
             >Close</a
-          >
-        </div>
-      </div>
-
-      <!-- Upload Modal -->
-      <div id="js-upload-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <h4>
-            Compiling & Installing:
-            <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-          <pre id="js-log-area" class="log"></pre>
-        </div>
-        <div class="modal-footer">
-          <a
-            href="https://esphome.io/guides/faq.html#i-can-t-get-flashing-over-usb-to-work"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <i class="material-icons">help_outline</i>
-          </a>
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="edit"
-            >Edit</a
-          >
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Stop</a
-          >
-          <div class="btn-flat">
-            <i
-              class="material-icons dropdown-trigger"
-              data-target="dropdown-upload-actions"
-              >more_vert</i
-            >
-          </div>
-        </div>
-
-        <ul
-          id="dropdown-upload-actions"
-          class="select-action dropdown-content card-dropdown-action"
-        >
-          <li>
-            <a
-              class="modal-close waves-effect waves-green btn-flat disabled"
-              data-action="download-binary"
-            >
-              Download Binary
-            </a>
-          </li>
-          <li>
-            <a
-              class="waves-effect waves-green btn-flat disabled action-upload"
-              data-action="upload"
-              >Retry Install</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Update All Modal -->
-      <div
-        id="js-update-all-modal"
-        class="modal modal-fixed-footer no-autoinit"
-      >
-        <div class="modal-content">
-          <h4>
-            Update All <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-          <pre id="js-log-area" class="log"></pre>
-        </div>
-        <div class="modal-footer">
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Stop</a
-          >
-        </div>
-      </div>
-
-      <!-- Validate Modal -->
-      <div id="js-validate-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <h4>
-            Validate: <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-          <pre id="js-log-area" class="log"></pre>
-        </div>
-        <div class="modal-footer">
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="edit"
-            >Edit</a
-          >
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="upload"
-            >Install</a
-          >
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Stop</a
-          >
-        </div>
-      </div>
-
-      <!-- Logs Modal -->
-      <div id="js-logs-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <!-- TODO: Change `node-filename` to `node-name` -->
-          <h4>
-            Showing Logs For:
-            <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-          <pre id="js-log-area" class="log"></pre>
-        </div>
-        <div class="modal-footer">
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Close</a
-          >
-        </div>
-      </div>
-
-      <!-- Compile Modal -->
-      <div id="js-compile-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <h4>
-            Compiling: <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-          <pre id="js-log-area" class="log"></pre>
-        </div>
-        <div class="modal-footer">
-          <a
-            href="https://esphome.io/guides/faq.html#i-can-t-get-flashing-over-usb-to-work"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <i class="material-icons">help_outline</i>
-          </a>
-          <a
-            class="modal-close waves-effect waves-green btn-flat disabled"
-            data-action="download-binary"
-          >
-            Download Binary
-          </a>
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Stop</a
-          >
-        </div>
-      </div>
-
-      <!-- Clean MQTT Modal -->
-      <div
-        id="js-clean-mqtt-modal"
-        class="modal modal-fixed-footer no-autoinit"
-      >
-        <div class="modal-content">
-          <div>
-            <!-- TODO: Change `node-filename` to `node-name` -->
-            <h4>
-              Clean MQTT Discovery For:
-              <code id="js-node-filename" class="inlinecode"></code>
-            </h4>
-            <pre id="js-log-area" class="log"></pre>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Close</a
-          >
-        </div>
-      </div>
-
-      <!-- Clean Build Files Modal -->
-      <div id="js-clean-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <div>
-            <!-- TODO: Change `node-filename` to `node-name` -->
-            <h4>
-              Clean Build Files For:
-              <code id="js-node-filename" class="inlinecode"></code>
-            </h4>
-            <pre id="js-log-area" class="log"></pre>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a
-            class="modal-close waves-effect waves-green btn-flat"
-            data-action="stop-logs"
-            >Stop</a
           >
         </div>
       </div>

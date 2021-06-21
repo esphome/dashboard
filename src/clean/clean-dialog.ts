@@ -1,27 +1,22 @@
 import { LitElement, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
 import { openInstallDialog } from "../install-update";
 import { openEditDialog } from "../legacy";
 import "../components/process-dialog";
 
-@customElement("esphome-validate-dialog")
-class ESPHomeValidateDialog extends LitElement {
+@customElement("esphome-clean-dialog")
+class ESPHomeCleanDialog extends LitElement {
   @property() public configuration!: string;
 
-  @state() private _valid?: boolean;
-
   protected render() {
-    const valid_icon =
-      this._valid === undefined ? "" : this._valid ? "✅" : "❌";
     return html`
       <esphome-process-dialog
-        .heading=${`Validate ${this.configuration} ${valid_icon}`}
-        .type=${"validate"}
+        .heading=${`Clean ${this.configuration}`}
+        .type=${"clean"}
         .spawnParams=${{ configuration: this.configuration }}
         @closed=${this._handleClose}
-        @process-done=${this._handleProcessDone}
       >
         <mwc-button
           slot="secondaryAction"
@@ -47,10 +42,6 @@ class ESPHomeValidateDialog extends LitElement {
     openInstallDialog(this.configuration);
   }
 
-  private _handleProcessDone(ev: { detail: number }) {
-    this._valid = ev.detail == 0;
-  }
-
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
@@ -58,6 +49,6 @@ class ESPHomeValidateDialog extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-validate-dialog": ESPHomeValidateDialog;
+    "esphome-clean-dialog": ESPHomeCleanDialog;
   }
 }
