@@ -1,13 +1,13 @@
 const preload = () => import("./wizard-dialog");
 
-const startWizard = async () => {
+export const openWizardDialog = () => {
   preload();
   document.body.append(document.createElement("esphome-wizard-dialog"));
 };
 
-export const attachWizard = () => {
+export const attachWizardDialog = () => {
   document.querySelectorAll("[data-action='wizard']").forEach((btn) => {
-    btn.addEventListener("click", startWizard);
+    btn.addEventListener("click", openWizardDialog);
     btn.addEventListener("mouseover", preload, { once: true });
   });
 };

@@ -16,23 +16,18 @@ import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
 import { connect, ESPLoader } from "esp-web-flasher";
-import { allowsWebSerial, supportsWebSerial } from "../const";
+import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import {
   compileConfiguration,
   Configuration,
   getConfiguration,
 } from "../api/configuration";
 import { flashConfiguration } from "../flash";
-import { compileModal, uploadModal } from "../legacy";
+import { openInstallServerDialog } from "../install-server";
+import { openCompileDialog } from "../compile";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
-
-const metaChevronRight = svg`
-  <svg width="24" height="24" viewBox="0 0 24 24" slot="meta">
-    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-  </svg>
-`;
 
 const metaHelp = svg`
   <svg width="24" height="24" viewBox="0 0 24 24" slot="meta">
@@ -40,31 +35,9 @@ const metaHelp = svg`
   </svg>
 `;
 
-const selectLegacyPort = (value: string) => {
-  const portSelect = document.querySelector(
-    ".nav-wrapper select"
-  ) as HTMLSelectElement;
-  const inst = (window as any).M.FormSelect.getInstance(portSelect);
-  if (inst) {
-    inst.destroy();
-  }
-  portSelect.value = value;
-  (window as any).M.FormSelect.init(portSelect, {});
-};
-
-const openLegacyCompileModal = (filename: string) =>
-  compileModal.open({
-    target: { dataset: { filename } },
-  });
-
-const openLegacyUploadModal = (filename: string) =>
-  uploadModal.open({
-    target: { dataset: { filename } },
-  });
-
 @customElement("esphome-install-dialog")
 class ESPHomeInstallDialog extends LitElement {
-  @state() public filename!: string;
+  @state() public configuration!: string;
 
   @state() private _ports?: SerialPort[];
 
@@ -269,14 +242,13 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   private _showCompileDialog() {
-    openLegacyCompileModal(this.filename);
+    openCompileDialog(this.configuration);
     this._close();
   }
 
   private _handleLegacyOption(ev: Event) {
-    selectLegacyPort((ev.target as any).port);
     this._close();
-    openLegacyUploadModal(this.filename);
+    openInstallServerDialog(this.configuration, (ev.currentTarget as any).port);
   }
 
   private async _handleBrowserInstall() {
@@ -288,7 +260,7 @@ class ESPHomeInstallDialog extends LitElement {
       return;
     }
     this._error = undefined;
-    const configProm = getConfiguration(this.filename);
+    const configProm = getConfiguration(this.configuration);
 
     let esploader: ESPLoader;
     try {
@@ -307,7 +279,7 @@ class ESPHomeInstallDialog extends LitElement {
         return;
       }
 
-      const compileProm = compileConfiguration(this.filename);
+      const compileProm = compileConfiguration(this.configuration);
 
       this._state = "connecting_webserial";
 
@@ -342,9 +314,14 @@ class ESPHomeInstallDialog extends LitElement {
       this._state = "installing";
 
       try {
-        await flashConfiguration(esploader, this.filename, false, (pct) => {
-          this._writeProgress = pct;
-        });
+        await flashConfiguration(
+          esploader,
+          this.configuration,
+          false,
+          (pct) => {
+            this._writeProgress = pct;
+          }
+        );
       } catch (err) {
         this._error = "Installation failed";
         this._state = "done";
