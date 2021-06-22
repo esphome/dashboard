@@ -1,4 +1,5 @@
-import { ESPLoader } from "esp-web-flasher";
+// @ts-ignore
+import { ESPLoader } from "esp-web-flasher/dist/web";
 import { getConfiguration } from "./api/configuration";
 import { chipFamilyToPlatform } from "./const";
 
@@ -63,7 +64,7 @@ export const flashConfiguration = async (
     const file = files.shift()!;
     await espStub.flashData(
       file,
-      (bytesWritten) => {
+      (bytesWritten: number) => {
         const newPct = Math.floor(
           ((totalWritten + bytesWritten) / totalSize) * 100
         );
@@ -73,7 +74,8 @@ export const flashConfiguration = async (
         lastPct = newPct;
         writeProgress(newPct);
       },
-      part.offset
+      part.offset,
+      true
     );
     totalWritten += file.byteLength;
   }

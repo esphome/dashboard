@@ -15,7 +15,8 @@ import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
-import { connect, ESPLoader } from "esp-web-flasher";
+// @ts-ignore
+import { connect, ESPLoader } from "esp-web-flasher/dist/web";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import {
   compileConfiguration,
