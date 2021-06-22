@@ -12,7 +12,8 @@ import {
   ESPLoader,
   CHIP_FAMILY_ESP32,
   CHIP_FAMILY_ESP8266,
-} from "esp-web-flasher";
+  // @ts-ignore
+} from "esp-web-flasher/dist/web";
 import { allowsWebSerial, supportsWebSerial } from "../const";
 import {
   compileConfiguration,
