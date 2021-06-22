@@ -83,7 +83,7 @@ export const openEditDialog = (filename) => {
   );
   saveButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.setAttribute("data-filename", editorActiveFilename);
-  uploadButton.setAttribute("onClick", `saveFile("${editorActiveFilename}")`);
+  uploadButton.onclick = () => saveFile(editorActiveFilename);
   if (editorActiveFilename === "secrets.yaml") {
     uploadButton.classList.add("disabled");
     editorActiveSecrets = true;
