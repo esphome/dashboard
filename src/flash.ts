@@ -1,5 +1,4 @@
-// @ts-ignore
-import { ESPLoader } from "esp-web-flasher/dist/web";
+import { ESPLoader } from "esp-web-flasher";
 import { getConfiguration } from "./api/configuration";
 import { chipFamilyToPlatform } from "./const";
 

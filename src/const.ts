@@ -1,8 +1,4 @@
-import {
-  CHIP_FAMILY_ESP32,
-  CHIP_FAMILY_ESP8266,
-  // @ts-ignore
-} from "esp-web-flasher/dist/web";
+import { CHIP_FAMILY_ESP32, CHIP_FAMILY_ESP8266 } from "esp-web-flasher";
 import { svg } from "lit";
 
 export const supportsWebSerial = "serial" in navigator;
