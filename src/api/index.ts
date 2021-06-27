@@ -10,7 +10,7 @@ export const fetchApi = async <T>(
   if (!resp.ok) {
     throw new Error(`Request not successful (${resp.status})`);
   }
-  return resp.headers.get("content-type") === "application/json"
+  return resp.headers.get("content-type").indexOf("application/json") !== -1
     ? resp.json()
     : resp.text();
 };
