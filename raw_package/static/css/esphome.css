@@ -65,21 +65,8 @@ main {
   background-color: var(--alert-error-color-bg);
 }
 
-.card.card-error,
-.card.status-offline {
+.card.card-error {
   border-top: 4px solid var(--alert-error-color);
-}
-
-.card.status-online {
-  border-top: 4px solid var(--alert-success-color);
-}
-
-.card.status-not-responding {
-  border-top: 4px solid var(--alert-warning-color);
-}
-
-.card.status-unknown {
-  border-top: 4px solid var(--alert-standard-color);
 }
 
 /* Login Page */

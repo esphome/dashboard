@@ -116,7 +116,6 @@
               </span>
 
               <div class="node-config-path">
-                Filename:
                 <code
                   class="inlinecode tooltipped"
                   data-position="bottom"
@@ -126,9 +125,15 @@
                 </code>
               </div>
 
+              <div class="online-status">
+                <span class="indicator"></span>
+              </div>
+
               {% if entry.comment %}
               <div class="node-card-comment">{{ escape(entry.comment) }}</div>
               {% end %}
+
+              <div class="clearfix"></div>
             </div>
             <div class="card-action">
               <a data-action="edit" data-filename="{{ entry.filename }}"

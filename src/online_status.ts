@@ -61,7 +61,7 @@ const fetchPing = async () => {
   }
 };
 
-export const attachOnlineStatus = () =>
+export const attachOnlineStatus = () => {
   subscribeOnlineStatus((statuses) => {
     for (let filename in statuses) {
       let node = document.querySelector(
@@ -104,3 +104,49 @@ export const attachOnlineStatus = () =>
       node.classList.add(className);
     }
   });
+  const styleEl = document.createElement("style");
+  styleEl.innerHTML = `
+    .online-status {
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: baseline;
+    }
+
+    .online-status .indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: grey;
+      margin-right: 5px;
+      border-radius: 50%;
+    }
+
+    .status-unknown .online-status:after {
+      content: "Unknown status";
+    }
+
+    .status-online .online-status:after {
+      content: "Online";
+    }
+    .status-online .online-status .indicator {
+      background-color: var(--alert-success-color);
+    }
+
+    .status-offline .online-status:after {
+      content: "Offline";
+    }
+    .status-offline .online-status .indicator {
+      background-color: var(--alert-error-color);
+    }
+
+    .status-not-responding .online-status:after {
+      content: "Not responding";
+    }
+    .status-not-responding .online-status .indicator {
+      background-color: var(--alert-warning-color);
+    }
+  `;
+  document.head.appendChild(styleEl);
+};
