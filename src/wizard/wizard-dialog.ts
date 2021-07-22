@@ -181,8 +181,8 @@ export class ESPHomeWizardDialog extends LitElement {
         label="Name"
         name="name"
         required
-        pattern="^[a-z0-9-]+$"
-        helper="Only use lowercase letters (a-z), numbers (0-9) or dash (-)"
+        pattern="^[a-z0-9-_]+$"
+        helper="Only use lowercase letters (a-z), numbers (0-9), dash (-) or underscore (_)"
         @input=${this._cleanNameInput}
         @blur=${this._cleanNameBlur}
       ></mwc-textfield>
@@ -347,9 +347,9 @@ export class ESPHomeWizardDialog extends LitElement {
       // Convert uppercase to lower
       .toLowerCase()
       // Replace seperator characters with -
-      .replace(/[ \._]/g, "-")
+      .replace(/[ \.]/g, "-")
       // Remove the rest
-      .replace(/[^a-z0-9-]/g, "");
+      .replace(/[^a-z0-9-_]/g, "");
   };
 
   private _cleanNameBlur = (ev: Event) => {
