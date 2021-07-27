@@ -147,6 +147,20 @@ export const attachOnlineStatus = () => {
     .status-not-responding .online-status .indicator {
       background-color: var(--alert-warning-color);
     }
+
+    .card.card-error,
+    .card.status-offline {
+      border-top: 4px solid var(--alert-error-color);
+    }
+    .card.status-online {
+      border-top: 4px solid var(--alert-success-color);
+    }
+    .card.status-not-responding {
+      border-top: 4px solid var(--alert-warning-color);
+    }
+    .card.status-unknown {
+      border-top: 4px solid var(--alert-standard-color);
+    }
   `;
   document.head.appendChild(styleEl);
 };
