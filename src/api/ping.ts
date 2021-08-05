@@ -1,4 +1,4 @@
-import { fetchApi } from ".";
+import { fetchApiJson } from ".";
 
 export const getOnlineStatus = () =>
-  fetchApi<Record<string, boolean>>("./ping");
+  fetchApiJson<Record<string, boolean>>("./ping");
