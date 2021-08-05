@@ -1,7 +1,7 @@
-export const fetchApi = async <T>(
+const fetchApiBase = async (
   path: Parameters<typeof fetch>[0],
   options?: Parameters<typeof fetch>[1]
-): Promise<T> => {
+): ReturnType<typeof fetch> => {
   if (!options) {
     options = {};
   }
@@ -10,9 +10,23 @@ export const fetchApi = async <T>(
   if (!resp.ok) {
     throw new Error(`Request not successful (${resp.status})`);
   }
-  return resp.headers.get("content-type").indexOf("application/json") !== -1
-    ? resp.json()
-    : resp.text();
+  return resp;
+};
+
+export const fetchApiText = async (
+  path: Parameters<typeof fetch>[0],
+  options?: Parameters<typeof fetch>[1]
+): Promise<string> => {
+  const resp = await fetchApiBase(path, options);
+  return resp.text();
+};
+
+export const fetchApiJson = async <T>(
+  path: Parameters<typeof fetch>[0],
+  options?: Parameters<typeof fetch>[1]
+): Promise<T> => {
+  const resp = await fetchApiBase(path, options);
+  return resp.json();
 };
 
 export class StreamError extends Error {

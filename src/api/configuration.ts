@@ -1,4 +1,4 @@
-import { fetchApi, streamLogs } from ".";
+import { fetchApiJson, fetchApiText, streamLogs } from ".";
 
 export interface CreateConfigParams {
   name: string;
@@ -24,16 +24,16 @@ export interface Configuration {
 }
 
 export const createConfiguration = (params: CreateConfigParams) =>
-  fetchApi("./wizard.html", {
+  fetchApiText("./wizard.html", {
     method: "post",
     body: new URLSearchParams(params as any),
   });
 
 export const getConfiguration = (configuration: string) =>
-  fetchApi<Configuration>(`./info?configuration=${configuration}`);
+  fetchApiJson<Configuration>(`./info?configuration=${configuration}`);
 
 export const deleteConfiguration = (configuration: string) =>
-  fetchApi(`./delete?configuration=${configuration}`, {
+  fetchApiText(`./delete?configuration=${configuration}`, {
     method: "post",
   });
 
