@@ -11,7 +11,7 @@ const fetchApiBase = async (
     throw new Error(`Request not successful (${resp.status})`);
   }
   return resp;
-}
+};
 
 export const fetchApiText = async (
   path: Parameters<typeof fetch>[0],
