@@ -35,7 +35,7 @@ export const boardSelectOptions = html`
     <option value="espresso_lite_v2">ESPert ESPresso Lite 2.0</option>
     <option value="phoenix_v1">ESPert Phoenix 1.0</option>
     <option value="wifinfo">WiFInfo</option>
-    <option value="espmxdevkit">ESP-Mx DevKit</option>    
+    <option value="espmxdevkit">ESP-Mx DevKit</option>
     <option value="heltec_wifi_kit_8">Heltec WiFi kit 8</option>
     <option value="nodemcu">NodeMCU 0.9</option>
     <option value="modwifi">Olimex MOD-WIFI</option>
@@ -58,7 +58,9 @@ export const boardSelectOptions = html`
     <option value="wemosbat">Wemos WiFi &amp; Bluetooth Battery</option>
     <option value="node32s">Node32s</option>
     <option value="alksesp32">ALKS ESP32</option>
-    <option value="az-delivery-devkit-v4">AZ-Delivery ESP-32 Dev Kit C V4</option>
+    <option value="az-delivery-devkit-v4">
+      AZ-Delivery ESP-32 Dev Kit C V4
+    </option>
     <option value="bpi-bit">BPI-Bit</option>
     <option value="briki_abc_esp32">Briki ABC</option>
     <option value="briki_mbc-wb_esp32">Briki MBC-WB</option>
@@ -90,7 +92,9 @@ export const boardSelectOptions = html`
     <option value="heltec_wifi_lora_32">Heltec WiFi LoRa 32</option>
     <option value="heltec_wifi_lora_32_V2">Heltec WiFi LoRa 32 (V2)</option>
     <option value="heltec_wireless_stick">Heltec Wireless Stick</option>
-    <option value="heltec_wireless_stick_lite">Heltec Wireless Stick Lite</option>
+    <option value="heltec_wireless_stick_lite">
+      Heltec Wireless Stick Lite
+    </option>
     <option value="honeylemon">HONEYLemon</option>
     <option value="hornbill32dev">Hornbill ESP32 Dev</option>
     <option value="hornbill32minima">Hornbill ESP32 Minima</option>
