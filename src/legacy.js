@@ -84,7 +84,10 @@ export const openEditDialog = (filename) => {
   saveButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.onclick = () => saveFile(editorActiveFilename);
-  if (editorActiveFilename === "secrets.yaml" || editorActiveFilename === "secrets.yml") {
+  if (
+    editorActiveFilename === "secrets.yaml" ||
+    editorActiveFilename === "secrets.yml"
+  ) {
     uploadButton.classList.add("disabled");
     editorActiveSecrets = true;
   } else {
@@ -256,7 +259,10 @@ setInterval(() => {
 const saveFile = (filename) => {
   const extensionRegex = new RegExp("(?:.([^.]+))?$");
 
-  if (filename.match(extensionRegex)[0] !== ".yaml" && filename.match(extensionRegex)[0] !== ".yml") {
+  if (
+    filename.match(extensionRegex)[0] !== ".yaml" &&
+    filename.match(extensionRegex)[0] !== ".yml"
+  ) {
     M.toast({
       html: `❌ File <code class="inlinecode">${filename}</code> cannot be saved as it is not a YAML file!`,
       displayLength: 10000,
