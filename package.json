@@ -25,7 +25,7 @@
     "@material/mwc-dialog": "^0.22.1",
     "@material/mwc-formfield": "^0.22.1",
     "@material/mwc-list": "^0.22.1",
-    "@material/mwc-radio": "^0.22.1",
+    "@material/mwc-radio": "^0.23.0",
     "@material/mwc-textfield": "^0.22.1",
     "esp-web-flasher": "^3.2.0",
     "lit": "^2.0.0-rc.3",
