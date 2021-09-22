@@ -2,8 +2,6 @@ import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
-import "../components/remote-process";
-import "../components/process-dialog";
 import { deleteConfiguration } from "../api/configuration";
 import { fireEvent } from "../util/fire-event";
 
