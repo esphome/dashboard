@@ -23,6 +23,7 @@ import { openLogsTargetDialog } from "../logs-target";
 class ESPHomeNodeCard extends LitElement {
   @property() public entry!: ConfiguredEntry;
   @property() public onlineStatus!: boolean;
+  @property() public highlighted!: boolean;
 
   @query("mwc-dialog") private _deleteDialog!: Dialog;
 
@@ -34,6 +35,7 @@ class ESPHomeNodeCard extends LitElement {
           "status-offline": this.onlineStatus === false,
           "status-unknown":
             this.onlineStatus === null || this.onlineStatus === undefined,
+          highlighted: this.highlighted,
         })}
       >
         <div class="card-header">
@@ -199,6 +201,28 @@ class ESPHomeNodeCard extends LitElement {
     }
     .tooltip-container {
       display: inline-block;
+    }
+
+    .highlighted {
+      animation: higlighted-bg 3s ease-in;
+    }
+
+    @keyframes higlighted-bg {
+      0% {
+        background: rgba(255, 165, 0, 1);
+      }
+      20% {
+        background: rgba(255, 165, 0, 0.8);
+      }
+      50% {
+        background: rgba(255, 165, 0, 0.5);
+      }
+      70% {
+        background: rgba(255, 165, 0, 0.5);
+      }
+      100% {
+        background: rgba(255, 165, 0, 0);
+      }
     }
   `;
 

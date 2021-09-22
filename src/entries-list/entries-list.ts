@@ -1,6 +1,10 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { getDashboardEntries, ListEntriesResult } from "../api/list-entries";
+import {
+  getDashboardEntries,
+  ImportableEntry,
+  ListEntriesResult,
+} from "../api/list-entries";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import "../components/esphome-button-menu";
@@ -13,6 +17,7 @@ import "./import-card";
 class ESPHomeEntriesList extends LitElement {
   @state() private _entries?: ListEntriesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
+  @state() private _highlightedName?: string;
 
   private _updateEntriesInterval?: number;
   private _nodeStatusUnsub?: () => void;
@@ -53,7 +58,7 @@ class ESPHomeEntriesList extends LitElement {
             (entry) => html`
               <esphome-import-card
                 .entry=${entry}
-                @imported=${this._updateEntries}
+                @imported=${() => this._handleImported(entry)}
               >
               </esphome-import-card>
             `
@@ -69,6 +74,8 @@ class ESPHomeEntriesList extends LitElement {
               .entry=${entry}
               @deleted=${this._updateEntries}
               .onlineStatus=${(this._onlineStatus || {})[entry.filename]}
+              .highlighted=${entry.name === this._highlightedName}
+              data-name=${entry.name}
             >
             </esphome-node-card>`
           )}
@@ -126,6 +133,17 @@ class ESPHomeEntriesList extends LitElement {
 
   private async _updateEntries() {
     this._entries = await getDashboardEntries();
+  }
+
+  private async _handleImported(entry: ImportableEntry) {
+    this._highlightedName = entry.name;
+    await this._updateEntries();
+    const elem = this.renderRoot!.querySelector(
+      `esphome-node-card[data-name='${entry.name}']`
+    );
+    if (elem) {
+      elem.scrollIntoView({ behavior: "smooth" });
+    }
   }
 
   public connectedCallback() {
