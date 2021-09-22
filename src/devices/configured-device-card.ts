@@ -17,6 +17,8 @@ import { openInstallDialog } from "../install-update";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
 
+const UPDATE_TO_ICON = "➡️";
+
 @customElement("esphome-configured-device-card")
 class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
@@ -52,8 +54,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                   <mwc-icon class="update-available">system_update</mwc-icon>
                   <paper-tooltip
                     >Update Available: ${this.device.deployed_version}
-                    &#x27A1;&#xFE0F;${this.device
-                      .current_version}</paper-tooltip
+                    ${UPDATE_TO_ICON}
+                    ${this.device.current_version}</paper-tooltip
                   >
                 </div>
               `

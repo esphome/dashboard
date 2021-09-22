@@ -19,9 +19,9 @@ export class ESPHomeButtonMenu extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <button @click=${this._handleClick}>
+      <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
-      </button>
+      </div>
       <mwc-menu .corner=${this.corner}>
         <slot></slot>
       </mwc-menu>
