@@ -1,5 +1,5 @@
 import "./legacy";
-import "./entries-list/entries-list";
+import "./devices/devices-list";
 import { attachUpdateAllDialog } from "./update-all";
 import { attachWizardDialog } from "./wizard";
 

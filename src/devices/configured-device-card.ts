@@ -1,31 +1,27 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ConfiguredEntry } from "../api/list-entries";
+import { ConfiguredDevice } from "../api/devices";
 import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-button";
 import "@material/mwc-icon-button";
-import "@material/mwc-dialog";
-import { Dialog } from "@material/mwc-dialog";
 import "../components/esphome-button-menu";
 import "../components/esphome-card";
+import "./delete-device-dialog";
 import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
-import { deleteConfiguration } from "../api/configuration";
-import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openEditDialog } from "../legacy";
 import { openInstallDialog } from "../install-update";
 import { openLogsTargetDialog } from "../logs-target";
+import { fireEvent } from "../util/fire-event";
 
-@customElement("esphome-node-card")
-class ESPHomeNodeCard extends LitElement {
-  @property() public entry!: ConfiguredEntry;
-  @property() public onlineStatus!: boolean;
-  @property() public highlighted!: boolean;
-
-  @query("mwc-dialog") private _deleteDialog!: Dialog;
+@customElement("esphome-configured-device-card")
+class ESPHomeConfiguredDeviceCard extends LitElement {
+  @property() public device!: ConfiguredDevice;
+  @property() public onlineStatus = false;
+  @property() public highlight = false;
 
   protected render() {
     return html`
@@ -35,12 +31,12 @@ class ESPHomeNodeCard extends LitElement {
           "status-offline": this.onlineStatus === false,
           "status-unknown":
             this.onlineStatus === null || this.onlineStatus === undefined,
-          highlighted: this.highlighted,
+          highlight: this.highlight,
         })}
       >
         <div class="card-header">
-          ${this.entry.name}
-          ${"web_server" in this.entry.loaded_integrations
+          ${this.device.name}
+          ${"web_server" in this.device.loaded_integrations
             ? html`
                 <div class="tooltip-container">
                   <a href=${`http://${this.entry.address}`} target="_blank">
@@ -50,13 +46,14 @@ class ESPHomeNodeCard extends LitElement {
                 </div>
               `
             : ""}
-          ${this.entry.deployed_version != this.entry.current_version
+          ${this.device.deployed_version != this.device.current_version
             ? html`
                 <div class="tooltip-container">
                   <mwc-icon class="update-available">system_update</mwc-icon>
                   <paper-tooltip
-                    >Update Available: ${this.entry.deployed_version}
-                    &#x27A1;&#xFE0F;${this.entry.current_version}</paper-tooltip
+                    >Update Available: ${this.device.deployed_version}
+                    &#x27A1;&#xFE0F;${this.device
+                      .current_version}</paper-tooltip
                   >
                 </div>
               `
@@ -69,7 +66,7 @@ class ESPHomeNodeCard extends LitElement {
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item>Clean Build Files</mwc-list-item>
             <mwc-list-item>Delete</mwc-list-item>
-            ${"mqtt" in this.entry.loaded_integrations
+            ${"mqtt" in this.device.loaded_integrations
               ? html`<mwc-list-item>Clean MQTT</mwc-list-item>`
               : ""}
           </esphome-button-menu>
@@ -77,9 +74,9 @@ class ESPHomeNodeCard extends LitElement {
 
         <div class="card-content">
           <div class="node-config-path tooltip-container">
-            <code class="inlinecode">${this.entry.filename}</code>
+            <code class="inlinecode">${this.device.configuration}</code>
             <paper-tooltip>
-              Full Path: <code class="inlinecode">${this.entry.path}</code>
+              Full Path: <code class="inlinecode">${this.device.path}</code>
             </paper-tooltip>
           </div>
 
@@ -87,8 +84,8 @@ class ESPHomeNodeCard extends LitElement {
             <span class="indicator"></span>
           </div>
 
-          ${this.entry.comment
-            ? html`<div class="node-card-comment">${this.entry.comment}</div>`
+          ${this.device.comment
+            ? html`<div class="node-card-comment">${this.device.comment}</div>`
             : ""}
         </div>
 
@@ -105,20 +102,6 @@ class ESPHomeNodeCard extends LitElement {
           <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
         </div>
       </esphome-card>
-
-      <mwc-dialog>
-        <div>Are you sure you want to delete ${this.entry.name}?</div>
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="close"
-          @click=${this._handleDelete}
-        >
-          Confirm
-        </mwc-button>
-        <mwc-button slot="secondaryAction" dialogAction="cancel">
-          Cancel
-        </mwc-button>
-      </mwc-dialog>
     `;
   }
 
@@ -203,11 +186,11 @@ class ESPHomeNodeCard extends LitElement {
       display: inline-block;
     }
 
-    .highlighted {
-      animation: higlighted-bg 3s ease-in;
+    .highlight {
+      animation: higlight-bg 3s ease-in;
     }
 
-    @keyframes higlighted-bg {
+    @keyframes higlight-bg {
       0% {
         background: rgba(255, 165, 0, 1);
       }
@@ -229,38 +212,38 @@ class ESPHomeNodeCard extends LitElement {
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        openCleanDialog(this.entry.filename);
+        openCleanDialog(this.device.configuration);
         break;
       case 1:
-        this._deleteDialog.show();
+        console.log(this.device);
+        const dialog = document.createElement("esphome-delete-device-dialog");
+        dialog.name = this.device.name;
+        dialog.configuration = this.device.configuration;
+        dialog.addEventListener("deleted", () => fireEvent(this, "deleted"));
+        document.body.append(dialog);
         break;
       case 2:
-        openCleanMQTTDialog(this.entry.filename);
+        openCleanMQTTDialog(this.device.configuration);
         break;
     }
   }
 
-  private async _handleDelete() {
-    await deleteConfiguration(this.entry.filename);
-    fireEvent(this, "deleted");
-  }
-
   private _handleEdit() {
-    openEditDialog(this.entry.filename);
+    openEditDialog(this.device.configuration);
   }
   private _handleValidate() {
-    openValidateDialog(this.entry.filename);
+    openValidateDialog(this.device.configuration);
   }
   private _handleInstall() {
-    openInstallDialog(this.entry.filename);
+    openInstallDialog(this.device.configuration);
   }
   private _handleLogs() {
-    openLogsTargetDialog(this.entry.filename);
+    openLogsTargetDialog(this.device.configuration);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-node-card": ESPHomeNodeCard;
+    "esphome-configured-device-card": ESPHomeConfiguredDeviceCard;
   }
 }

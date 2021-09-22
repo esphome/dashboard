@@ -1,19 +1,19 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ImportableEntry, importEntry } from "../api/list-entries";
+import { ImportableDevice, importDevice } from "../api/devices";
 import "@material/mwc-button";
 import "../components/esphome-card";
 import { fireEvent } from "../util/fire-event";
 
-@customElement("esphome-import-card")
-class ESPHomeImportCard extends LitElement {
-  @property() public entry!: ImportableEntry;
+@customElement("esphome-importable-device-card")
+class ESPHomeImportableDeviceCard extends LitElement {
+  @property() public device!: ImportableDevice;
 
   protected render() {
     return html`
       <esphome-card>
-        <div class="card-header">${this.entry.name}</div>
-        <div class="card-content">${this.entry.project_name}</div>
+        <div class="card-header">${this.device.name}</div>
+        <div class="card-content">${this.device.project_name}</div>
 
         <div class="card-actions">
           <mwc-button label="Import" @click=${this._handleImport}></mwc-button>
@@ -32,13 +32,13 @@ class ESPHomeImportCard extends LitElement {
   `;
 
   private async _handleImport() {
-    await importEntry(this.entry);
+    await importDevice(this.device);
     fireEvent(this, "imported");
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-import-card": ESPHomeImportCard;
+    "esphome-importable-device-card": ESPHomeImportableDeviceCard;
   }
 }

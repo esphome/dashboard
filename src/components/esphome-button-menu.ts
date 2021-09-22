@@ -1,6 +1,6 @@
 import "@material/mwc-menu";
 import type { Corner, Menu } from "@material/mwc-menu";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 @customElement("esphome-button-menu")
@@ -19,9 +19,9 @@ export class ESPHomeButtonMenu extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <div @click=${this._handleClick}>
+      <button @click=${this._handleClick}>
         <slot name="trigger"></slot>
-      </div>
+      </button>
       <mwc-menu .corner=${this.corner}>
         <slot></slot>
       </mwc-menu>
@@ -33,14 +33,12 @@ export class ESPHomeButtonMenu extends LitElement {
     this._menu!.show();
   }
 
-  static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: inline-block;
-        position: relative;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: inline-block;
+      position: relative;
+    }
+  `;
 }
 
 declare global {

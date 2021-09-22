@@ -1,34 +1,32 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import {
-  getDashboardEntries,
-  ImportableEntry,
-  ListEntriesResult,
-} from "../api/list-entries";
+  getDevices,
+  ImportableDevice,
+  ListDevicesResult,
+} from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
-import "../components/esphome-button-menu";
-import "../components/esphome-card";
 import { subscribeOnlineStatus } from "../online_status";
-import "./node-card";
-import "./import-card";
+import "./configured-device-card";
+import "./importable-device-card";
 
-@customElement("esphome-entries-list")
-class ESPHomeEntriesList extends LitElement {
-  @state() private _entries?: ListEntriesResult;
+@customElement("esphome-devices-list")
+class ESPHomeDevicesList extends LitElement {
+  @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
   @state() private _highlightedName?: string;
 
-  private _updateEntriesInterval?: number;
-  private _nodeStatusUnsub?: () => void;
+  private _updateDevicesInterval?: number;
+  private _onlineStatusUnsub?: () => void;
 
   protected render() {
-    if (this._entries === undefined) {
+    if (this._devices === undefined) {
       return html``;
     }
     if (
-      this._entries.configured.length === 0 &&
-      this._entries.importable.length === 0
+      this._devices.configured.length === 0 &&
+      this._devices.importable.length === 0
     ) {
       return html`
         <div class="welcome-container">
@@ -46,38 +44,35 @@ class ESPHomeEntriesList extends LitElement {
       `;
     }
 
-    const importable = this._entries.importable;
+    const importable = this._devices.importable;
 
     return html`
       <div class="container">
         ${importable.length
           ? html`
-        <h5>Discovered ESPHome devices</h5>
-        <div class="grid">
-          ${importable.map(
-            (entry) => html`
-              <esphome-import-card
-                .entry=${entry}
-                @imported=${() => this._handleImported(entry)}
-              >
-              </esphome-import-card>
+              <h5>Discovered ESPHome devices</h5>
+              <div class="grid import-container">
+                ${importable.map(
+                  (device) => html`
+                    <esphome-importable-device-card
+                      .device=${device}
+                      @imported=${() => this._handleImported(device)}
+                    ></esphome-importable-device-card>
+                  `
+                )}
+              </div>
             `
-          )}
-        </div>
-        <hr></hr>
-      `
           : ""}
 
         <div class="grid">
-          ${this._entries.configured.map(
-            (entry) => html` <esphome-node-card
-              .entry=${entry}
-              @deleted=${this._updateEntries}
-              .onlineStatus=${(this._onlineStatus || {})[entry.filename]}
-              .highlighted=${entry.name === this._highlightedName}
-              data-name=${entry.name}
-            >
-            </esphome-node-card>`
+          ${this._devices.configured.map(
+            (device) => html` <esphome-configured-device-card
+              .device=${device}
+              @deleted=${this._updateDevices}
+              .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
+              .highlight=${device.name === this._highlightedName}
+              data-name=${device.name}
+            ></esphome-configured-device-card>`
           )}
         </div>
       </div>
@@ -89,6 +84,9 @@ class ESPHomeEntriesList extends LitElement {
       margin: 20px auto;
       width: 90%;
       max-width: 1920px;
+    }
+    .import-container {
+      border-bottom: 1px solid black;
     }
     .grid {
       display: grid;
@@ -108,8 +106,8 @@ class ESPHomeEntriesList extends LitElement {
         grid-column-gap: 0;
       }
     }
-    esphome-node-card,
-    esphome-import-card {
+    esphome-configured-device-card,
+    esphome-importable-device-card {
       margin: 0.5rem 0 1rem 0;
     }
     .welcome-container {
@@ -131,15 +129,15 @@ class ESPHomeEntriesList extends LitElement {
     }
   `;
 
-  private async _updateEntries() {
-    this._entries = await getDashboardEntries();
+  private async _updateDevices() {
+    this._devices = await getDevices();
   }
 
-  private async _handleImported(entry: ImportableEntry) {
+  private async _handleImported(entry: ImportableDevice) {
     this._highlightedName = entry.name;
-    await this._updateEntries();
+    await this._updateDevices();
     const elem = this.renderRoot!.querySelector(
-      `esphome-node-card[data-name='${entry.name}']`
+      `esphome-configured-device-card[data-name='${entry.name}']`
     );
     if (elem) {
       elem.scrollIntoView({ behavior: "smooth" });
@@ -149,30 +147,30 @@ class ESPHomeEntriesList extends LitElement {
   public connectedCallback() {
     super.connectedCallback();
     const updateAndSchedule = async () => {
-      await this._updateEntries();
-      this._updateEntriesInterval = window.setInterval(async () => {
-        await this._updateEntries();
+      await this._updateDevices();
+      this._updateDevicesInterval = window.setInterval(async () => {
+        await this._updateDevices();
       }, 5000);
     };
     updateAndSchedule();
-    this._nodeStatusUnsub = subscribeOnlineStatus((res) => {
+    this._onlineStatusUnsub = subscribeOnlineStatus((res) => {
       this._onlineStatus = res;
     });
   }
 
   public disconnectedCallback() {
     super.disconnectedCallback();
-    if (this._updateEntriesInterval) {
-      window.clearInterval(this._updateEntriesInterval);
+    if (this._updateDevicesInterval) {
+      window.clearInterval(this._updateDevicesInterval);
     }
-    if (this._nodeStatusUnsub) {
-      this._nodeStatusUnsub();
+    if (this._onlineStatusUnsub) {
+      this._onlineStatusUnsub();
     }
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-entries-list": ESPHomeEntriesList;
+    "esphome-devices-list": ESPHomeDevicesList;
   }
 }

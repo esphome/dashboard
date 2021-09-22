@@ -1,8 +1,8 @@
 import { fetchApiJson, fetchApiText } from ".";
 
-export interface ConfiguredEntry {
+export interface ConfiguredDevice {
   name: string;
-  filename: string;
+  configuration: string;
   loaded_integrations: string[];
   deployed_version: string;
   current_version: string;
@@ -10,25 +10,23 @@ export interface ConfiguredEntry {
   comment: string;
   address: string;
   target_platform: string;
-  online_status: boolean;
 }
 
-export interface ImportableEntry {
+export interface ImportableDevice {
   name: string;
   import_config: string;
   project_name: string;
   project_version: string;
 }
 
-export interface ListEntriesResult {
-  configured: ConfiguredEntry[];
-  importable: ImportableEntry[];
+export interface ListDevicesResult {
+  configured: ConfiguredDevice[];
+  importable: ImportableDevice[];
 }
 
-export const getDashboardEntries = () =>
-  fetchApiJson<ListEntriesResult>("./list-entries");
+export const getDevices = () => fetchApiJson<ListDevicesResult>("./devices");
 
-export const importEntry = (params: ImportableEntry) =>
+export const importDevice = (params: ImportableDevice) =>
   fetchApiText("./import", {
     method: "post",
     body: JSON.stringify(params),
