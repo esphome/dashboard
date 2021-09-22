@@ -78,118 +78,7 @@
     </div>
 
     <main>
-      <div id="nodes" class="container">
-        <div id="grid" class="grid">
-          {% for i, entry in enumerate(entries) %}
-          <div
-            class="card status-unknown"
-            data-node-name="{{ entry.name }}"
-            data-filename="{{ entry.filename }}"
-          >
-            <div class="card-content black-text">
-              <span class="card-title">
-                <span class="node-name">{{ escape(entry.name) }}</span>
-
-                <i
-                  class="material-icons right dropdown-trigger"
-                  data-target="dropdown-{{ i }}"
-                  >more_vert</i
-                >
-
-                {% if 'web_server' in entry.loaded_integrations %}
-                <a href="http://{{ escape(entry.address) }}" target="_blank"
-                  ><i
-                    class="material-icons node-webserver right tooltipped"
-                    data-position="left"
-                    data-tooltip="Open Node Web Server Interface"
-                    >launch</i
-                  ></a
-                >
-                {% end %} {% if entry.update_available %}
-                <i
-                  class="material-icons node-update-avaliable right tooltipped"
-                  data-position="left"
-                  data-tooltip="Update Available: {{ entry.update_old }} &#x27A1;&#xFE0F;{{ entry.update_new }}"
-                  >system_update</i
-                >
-                {% end %}
-              </span>
-
-              <div class="node-config-path">
-                <code
-                  class="inlinecode tooltipped"
-                  data-position="bottom"
-                  data-tooltip='Full Path: <code class="inlinecode">{{ escape(entry.path) }}</code>'
-                >
-                  {{ escape(entry.filename) }}
-                </code>
-              </div>
-
-              <div class="online-status">
-                <span class="indicator"></span>
-              </div>
-
-              {% if entry.comment %}
-              <div class="node-card-comment">{{ escape(entry.comment) }}</div>
-              {% end %}
-            </div>
-            <div class="card-action">
-              <a data-action="edit" data-filename="{{ entry.filename }}"
-                >Edit</a
-              >
-              <a data-action="validate" data-filename="{{ entry.filename }}"
-                >Validate</a
-              >
-              <a data-action="upload" data-filename="{{ entry.filename }}"
-                >Install</a
-              >
-              <a data-action="logs" data-filename="{{ entry.filename }}"
-                >Logs</a
-              >
-            </div>
-            <ul
-              id="dropdown-{{ i }}"
-              class="
-                select-action
-                dropdown-content
-                card-dropdown-action
-                node-dropdown
-              "
-            >
-              <li>
-                <a data-action="clean-mqtt" data-filename="{{ entry.filename }}"
-                  >Clean MQTT</a
-                >
-              </li>
-              <li>
-                <a data-action="clean" data-filename="{{ entry.filename }}"
-                  >Clean Build Files</a
-                >
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a data-action="delete" data-filename="{{ entry.filename }}"
-                  >Delete</a
-                >
-              </li>
-            </ul>
-          </div>
-          {% end %}
-        </div>
-      </div>
-
-      {% if len(entries) == 0 %}
-      <div class="center">
-        <h5>Welcome to ESPHome</h5>
-        <p>It looks like you don't yet have any nodes.</p>
-        <p>
-          <button type="button" data-action="wizard" class="btn green">
-            <i class="material-icons left">add</i>
-            Add node
-          </button>
-        </p>
-      </div>
-      {% end %}
+      <esphome-entries-list></esphome-entries-list>
 
       <!-- Config Editor Modal -->
       <div id="js-editor-modal" class="modal modal-fixed-footer no-autoinit">
@@ -268,17 +157,5 @@
       src="{{ get_static_file_url('js/esphome/index.js') }}"
       type="module"
     ></script>
-
-    {% if begin and len(entries) == 1 %}
-    <script>
-      window.history.replaceState({}, document.title, "/");
-      document.addEventListener("DOMContentLoaded", () => {
-        M.toast({
-          html: "🎉 Congratulations on adding your first Node!",
-          displayLength: 10000,
-        });
-      });
-    </script>
-    {% end %}
   </body>
 </html>

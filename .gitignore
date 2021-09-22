@@ -2,3 +2,4 @@ node_modules
 esphome_dashboard
 esphome_dashboard.egg-info
 dist
+.vscode/settings.json
