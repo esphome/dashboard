@@ -28,7 +28,7 @@ export class ESPHomeButtonMenu extends LitElement {
     `;
   }
 
-  private _handleClick(ev): void {
+  private _handleClick(ev: Event): void {
     ev.preventDefault();
     this._menu!.anchor = this;
     this._menu!.show();
