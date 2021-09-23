@@ -31,11 +31,11 @@ class ESPHomeDevicesList extends LitElement {
       return html`
         <div class="welcome-container">
           <h5>Welcome to ESPHome</h5>
-          <p>It looks like you don't yet have any nodes.</p>
+          <p>It looks like you don't yet have any devices.</p>
           <p>
             <mwc-button
               raised
-              label="Add node"
+              label="Add device"
               icon="add"
               @click=${openWizardDialog}
             ></mwc-button>

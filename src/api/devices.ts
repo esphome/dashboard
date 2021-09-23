@@ -14,7 +14,7 @@ export interface ConfiguredDevice {
 
 export interface ImportableDevice {
   name: string;
-  import_config: string;
+  package_import_url: string;
   project_name: string;
   project_version: string;
 }

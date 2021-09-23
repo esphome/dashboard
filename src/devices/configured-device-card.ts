@@ -44,7 +44,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                   <a href=${`http://${this.entry.address}`} target="_blank">
                     <mwc-icon>launch</mwc-icon>
                   </a>
-                  <paper-tooltip>Open Node Web Server Interface</paper-tooltip>
+                  <paper-tooltip>
+                    Open device web server interface
+                  </paper-tooltip>
                 </div>
               `
             : ""}
@@ -52,11 +54,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             ? html`
                 <div class="tooltip-container">
                   <mwc-icon class="update-available">system_update</mwc-icon>
-                  <paper-tooltip
-                    >Update Available: ${this.device.deployed_version}
-                    ${UPDATE_TO_ICON}
-                    ${this.device.current_version}</paper-tooltip
-                  >
+                  <paper-tooltip>
+                    Update Available: ${this.device.deployed_version}
+                    ${UPDATE_TO_ICON} ${this.device.current_version}
+                  </paper-tooltip>
                 </div>
               `
             : ""}
@@ -75,7 +76,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         </div>
 
         <div class="card-content">
-          <div class="node-config-path tooltip-container">
+          <div class="device-config-path tooltip-container">
             <code class="inlinecode">${this.device.configuration}</code>
             <paper-tooltip>
               Full Path: <code class="inlinecode">${this.device.path}</code>
@@ -86,9 +87,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <span class="indicator"></span>
           </div>
 
-          ${this.device.comment
-            ? html`<div class="node-card-comment">${this.device.comment}</div>`
-            : ""}
+          ${this.device.comment ? html`<div>${this.device.comment}</div>` : ""}
         </div>
 
         <div class="card-actions">
@@ -108,7 +107,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   static styles = css`
-    .node-config-path {
+    .device-config-path {
       margin-top: -8px;
       margin-bottom: 8px;
       font-size: 14px;
