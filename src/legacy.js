@@ -1,7 +1,6 @@
 // Document Ready
 $(document).ready(function () {
   M.AutoInit(document.body);
-  nodeGrid();
   startAceWebsocket();
 });
 
@@ -17,19 +16,6 @@ const wsUrl = wsLoc.href;
 /**
  *  Dashboard Dynamic Grid
  */
-const nodeGrid = () => {
-  const nodeCount = document.querySelectorAll("#nodes .card").length;
-  const nodeGrid = document.querySelector("#nodes #grid");
-
-  if (nodeCount <= 3) {
-    nodeGrid.classList.add("grid-1-col");
-  } else if (nodeCount <= 6) {
-    nodeGrid.classList.add("grid-2-col");
-  } else {
-    nodeGrid.classList.add("grid-3-col");
-  }
-};
-
 /**
  *  Node Editing
  */
@@ -130,13 +116,6 @@ export const openEditDialog = (filename) => {
 
   editorModal.open();
 };
-
-// Edit Button Listener
-document.querySelectorAll("[data-action='edit']").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    openEditDialog(event.target.dataset.filename);
-  });
-});
 
 // Editor On Open
 const editorModalOnOpen = () => {
@@ -295,44 +274,5 @@ const saveFile = (filename) => {
 document.querySelectorAll("[data-action='save']").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     saveFile(editorActiveFilename);
-  });
-});
-
-// Delete Node
-document.querySelectorAll("[data-action='delete']").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const filename = e.target.getAttribute("data-filename");
-
-    fetch(`./delete?configuration=${filename}`, {
-      credentials: "same-origin",
-      method: "POST",
-    })
-      .then((res) => {
-        res.text();
-      })
-      .then(() => {
-        const toastHtml = `<span>🗑️ Deleted <code class="inlinecode">${filename}</code>
-                           <button class="btn-flat toast-action">Undo</button>`;
-        const toast = M.toast({
-          html: toastHtml,
-          displayLength: 10000,
-        });
-        const undoButton = toast.el.querySelector(".toast-action");
-
-        document.querySelector(`.card[data-filename="${filename}"]`).remove();
-
-        undoButton.addEventListener("click", () => {
-          fetch(`./undo-delete?configuration=${filename}`, {
-            credentials: "same-origin",
-            method: "POST",
-          })
-            .then((res) => {
-              res.text();
-            })
-            .then(() => {
-              window.location.reload(false);
-            });
-        });
-      });
   });
 });
