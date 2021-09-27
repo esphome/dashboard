@@ -1,18 +1,7 @@
 import "./legacy";
-import { attachOnlineStatus } from "./online_status";
-import { attachInstallDialog } from "./install-update";
-import { attachWizardDialog } from "./wizard";
-import { attachValidateDialog } from "./validate";
-import { attachCleanDialog } from "./clean";
-import { attachCleanMQTTDialog } from "./clean-mqtt";
+import "./devices/devices-list";
 import { attachUpdateAllDialog } from "./update-all";
-import { attachLogsTargetDialog } from "./logs-target";
+import { attachWizardDialog } from "./wizard";
 
-attachWizardDialog();
-attachOnlineStatus();
-attachInstallDialog();
-attachValidateDialog();
-attachCleanDialog();
-attachCleanMQTTDialog();
 attachUpdateAllDialog();
-attachLogsTargetDialog();
+attachWizardDialog();

@@ -24,9 +24,9 @@ export interface Configuration {
 }
 
 export const createConfiguration = (params: CreateConfigParams) =>
-  fetchApiText("./wizard.html", {
+  fetchApiText("./wizard", {
     method: "post",
-    body: new URLSearchParams(params as any),
+    body: JSON.stringify(params),
   });
 
 export const getConfiguration = (configuration: string) =>
