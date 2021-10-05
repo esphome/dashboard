@@ -38,7 +38,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       >
         <div class="card-header">
           ${this.device.name}
-          ${"web_server" in this.device.loaded_integrations
+          ${this.device.loaded_integrations.includes("web_server")
             ? html`
                 <div class="tooltip-container">
                   <a href=${`http://${this.entry.address}`} target="_blank">
