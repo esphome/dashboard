@@ -41,7 +41,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           ${this.device.loaded_integrations.includes("web_server")
             ? html`
                 <div class="tooltip-container">
-                  <a href=${`http://${this.entry.address}`} target="_blank">
+                  <a href=${`http://${this.device.address}`} target="_blank">
                     <mwc-icon>launch</mwc-icon>
                   </a>
                   <paper-tooltip>
