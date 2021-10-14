@@ -363,9 +363,6 @@ class ESPHomeInstallDialog extends LitElement {
   }
 
   static styles = css`
-    :host {
-      --mdc-theme-primary: #03a9f4;
-    }
     a {
       color: var(--mdc-theme-primary);
     }

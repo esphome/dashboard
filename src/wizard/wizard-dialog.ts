@@ -583,7 +583,6 @@ export class ESPHomeWizardDialog extends LitElement {
   static styles = css`
     :host {
       --mdc-dialog-max-width: 390px;
-      --mdc-theme-primary: #03a9f4;
     }
     a {
       color: var(--mdc-theme-primary);
