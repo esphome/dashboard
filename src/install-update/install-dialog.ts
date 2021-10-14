@@ -154,7 +154,7 @@ class ESPHomeInstallDialog extends LitElement {
         html`
           Installing<br /><br />
           This will take
-          ${this._configuration!.esp_platform === "ESP8266"
+          ${this._configuration!.esp_platform === "esp8266"
             ? "a minute"
             : "2 minutes"}.<br />
           Keep this page visible to prevent slow down
@@ -347,7 +347,7 @@ class ESPHomeInstallDialog extends LitElement {
           }
         );
       } catch (err) {
-        this._error = "Installation failed";
+        this._error = `Installation failed: ${err}`;
         this._state = "done";
         return;
       }
