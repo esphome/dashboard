@@ -1,5 +1,9 @@
 import { ESPLoader } from "esp-web-flasher";
-import { getConfiguration } from "./api/configuration";
+import {
+  getConfiguration,
+  getConfigurationManifest,
+  Manifest,
+} from "./api/configuration";
 import { chipFamilyToPlatform } from "./const";
 
 export const flashConfiguration = async (
@@ -10,23 +14,21 @@ export const flashConfiguration = async (
 ) => {
   const config = await getConfiguration(filename);
 
-  if (chipFamilyToPlatform[esploader.chipFamily] !== config.esp_platform) {
+  if (
+    chipFamilyToPlatform[esploader.chipFamily] !==
+    config.esp_platform.toUpperCase()
+  ) {
     throw new Error(
-      `Configuration does not match the platform of the connected device. Expected a ${config.esp_platform} device.`
+      `Configuration does not match the platform of the connected device. Expected a ${config.esp_platform.toUpperCase()} device.`
     );
   }
 
-  let toFlash: { path: string; offset: number }[];
+  let toFlash: Manifest;
 
-  if (config.esp_platform === "ESP32") {
-    toFlash = [
-      { path: "./static/firmware/bootloader.bin", offset: 4096 },
-      { path: "./static/firmware/partitions.bin", offset: 32768 },
-      { path: "./static/firmware/ota.bin", offset: 57344 },
-      { path: `./download.bin?configuration=${filename}`, offset: 65536 },
-    ];
-  } else {
-    toFlash = [{ path: `./download.bin?configuration=${filename}`, offset: 0 }];
+  try {
+    toFlash = await getConfigurationManifest(filename);
+  } catch (err) {
+    throw new Error(`Error fetching manifest.json for ${filename}: ${err}`);
   }
 
   const filePromises = toFlash.map(async (part) => {
