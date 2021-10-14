@@ -336,7 +336,7 @@ class ESPHomeInstallDialog extends LitElement {
           }
         );
       } catch (err) {
-        this._error = "Installation failed";
+        this._error = `Installation failed: ${err}`;
         this._state = "done";
         return;
       }
