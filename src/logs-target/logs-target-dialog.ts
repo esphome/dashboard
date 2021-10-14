@@ -39,7 +39,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
-        ${this._ports!.map(
+        ${this._ports.map(
           (port) => html`
             <mwc-list-item
               twoline
@@ -68,7 +68,13 @@ class ESPHomeLogsTargetDialog extends LitElement {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     getSerialPorts().then((ports) => {
-      this._ports = ports;
+      if (ports.length === 0) {
+        // Automatically pick wireless option if no ports are found
+        this._handleClose();
+        openLogsDialog(this.configuration, "OTA");
+      } else {
+        this._ports = ports;
+      }
     });
   }
 
