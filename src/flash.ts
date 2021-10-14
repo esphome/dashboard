@@ -16,18 +16,14 @@ export const flashConfiguration = async (
     );
   }
 
-  let toFlash: { path: string; offset: number }[];
-
-  if (config.esp_platform === "ESP32") {
-    toFlash = [
-      { path: "./static/firmware/bootloader.bin", offset: 4096 },
-      { path: "./static/firmware/partitions.bin", offset: 32768 },
-      { path: "./static/firmware/ota.bin", offset: 57344 },
-      { path: `./download.bin?configuration=${filename}`, offset: 65536 },
-    ];
-  } else {
-    toFlash = [{ path: `./download.bin?configuration=${filename}`, offset: 0 }];
+  const manifest_resp = await fetch(`./manifest.json?configuration=${filename}`)
+  if (!manifest_resp.ok) {
+    throw new Error(
+      `Error fetching manifest.json for ${filename}: ${manifest_resp.status}`,
+    )
   }
+
+  const toFlash: { path: string; offset: number }[] = await manifest_resp.json()
 
   const filePromises = toFlash.map(async (part) => {
     const url = new URL(part.path, location.href).toString();
