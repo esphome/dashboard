@@ -87,10 +87,6 @@ class ESPHomeLogsTargetDialog extends LitElement {
   }
 
   static styles = css`
-    :host {
-      --mdc-theme-primary: #03a9f4;
-    }
-
     mwc-list-item {
       margin: 0 -20px;
     }
