@@ -115,29 +115,34 @@ class ESPHomeInstallDialog extends LitElement {
       `;
     } else if (this._state === "pick_server_port") {
       heading = "Pick Server Port";
-      content = html`
-        ${this._ports!.map(
-          (port) => html`
-            <mwc-list-item
-              twoline
-              hasMeta
-              .port=${port.port}
-              @click=${this._handleLegacyOption}
-            >
-              <span>${port.desc}</span>
-              <span slot="secondary">${port.port}</span>
-              ${metaChevronRight}
-            </mwc-list-item>
-          `
-        )}
+      content =
+        this._ports === undefined
+          ? this._renderProgress("Loading serial devices")
+          : this._ports.length === 0
+          ? this._renderMessage(WARNING_ICON, "No serial devices found.", true)
+          : html`
+              ${this._ports.map(
+                (port) => html`
+                  <mwc-list-item
+                    twoline
+                    hasMeta
+                    .port=${port.port}
+                    @click=${this._handleLegacyOption}
+                  >
+                    <span>${port.desc}</span>
+                    <span slot="secondary">${port.port}</span>
+                    ${metaChevronRight}
+                  </mwc-list-item>
+                `
+              )}
 
-        <mwc-button
-          no-attention
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Cancel"
-        ></mwc-button>
-      `;
+              <mwc-button
+                no-attention
+                slot="secondaryAction"
+                dialogAction="close"
+                label="Cancel"
+              ></mwc-button>
+            `;
     } else if (this._state === "connecting_webserial") {
       content = this._renderProgress("Connecting");
       hideActions = true;
@@ -234,14 +239,20 @@ class ESPHomeInstallDialog extends LitElement {
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
-    if (changedProps.has("_state") && this._state === "pick_server_port") {
+    if (!changedProps.has("_state")) {
+      return;
+    }
+    if (this._state === "pick_server_port") {
       const updateAndSchedule = async () => {
         await this._updateSerialPorts();
         this._updateSerialInterval = window.setTimeout(async () => {
-          await this._updateSerialPorts();
+          await updateAndSchedule();
         }, 5000);
       };
       updateAndSchedule();
+    } else if (changedProps.get("_state") === "pick_server_port") {
+      clearTimeout(this._updateSerialInterval);
+      this._updateSerialInterval = undefined;
     }
   }
 
@@ -358,6 +369,7 @@ class ESPHomeInstallDialog extends LitElement {
   private async _handleClose() {
     if (this._updateSerialInterval) {
       clearTimeout(this._updateSerialInterval);
+      this._updateSerialInterval = undefined;
     }
     this.parentNode!.removeChild(this);
   }
