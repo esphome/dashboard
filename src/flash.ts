@@ -14,9 +14,12 @@ export const flashConfiguration = async (
 ) => {
   const config = await getConfiguration(filename);
 
-  if (chipFamilyToPlatform[esploader.chipFamily] !== config.esp_platform) {
+  if (
+    chipFamilyToPlatform[esploader.chipFamily] !==
+    config.esp_platform.toUpperCase()
+  ) {
     throw new Error(
-      `Configuration does not match the platform of the connected device. Expected a ${config.esp_platform} device.`
+      `Configuration does not match the platform of the connected device. Expected a ${config.esp_platform.toUpperCase()} device.`
     );
   }
 

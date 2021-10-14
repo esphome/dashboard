@@ -149,7 +149,7 @@ class ESPHomeInstallDialog extends LitElement {
         html`
           Installing<br /><br />
           This will take
-          ${this._configuration!.esp_platform === "ESP8266"
+          ${this._configuration!.esp_platform === "esp8266"
             ? "a minute"
             : "2 minutes"}.<br />
           Keep this page visible to prevent slow down
