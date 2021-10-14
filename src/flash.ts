@@ -1,5 +1,9 @@
 import { ESPLoader } from "esp-web-flasher";
-import { getConfiguration } from "./api/configuration";
+import {
+  getConfiguration,
+  getConfigurationManifest,
+  Manifest,
+} from "./api/configuration";
 import { chipFamilyToPlatform } from "./const";
 
 export const flashConfiguration = async (
@@ -16,14 +20,13 @@ export const flashConfiguration = async (
     );
   }
 
-  const manifest_resp = await fetch(`./manifest.json?configuration=${filename}`)
-  if (!manifest_resp.ok) {
-    throw new Error(
-      `Error fetching manifest.json for ${filename}: ${manifest_resp.status}`,
-    )
-  }
+  let toFlash: Manifest;
 
-  const toFlash: { path: string; offset: number }[] = await manifest_resp.json()
+  try {
+    toFlash = await getConfigurationManifest(filename);
+  } catch (err) {
+    throw new Error(`Error fetching manifest.json for ${filename}: ${err}`);
+  }
 
   const filePromises = toFlash.map(async (part) => {
     const url = new URL(part.path, location.href).toString();
