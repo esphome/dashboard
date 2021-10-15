@@ -96,7 +96,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                   </paper-tooltip>
                 </div>
               `}
-
           ${this.onlineStatus === true
             ? ""
             : html`
