@@ -42,7 +42,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             ? html`
                 <div class="tooltip-container">
                   <a href=${`http://${this.device.address}`} target="_blank">
-                    <mwc-icon>launch</mwc-icon>
+                    <mwc-icon-button
+                      icon="launch"
+                      label="Open web UI"
+                    ></mwc-icon-button>
                   </a>
                   <paper-tooltip>
                     Open device web server interface
@@ -53,7 +56,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           ${this.device.deployed_version != this.device.current_version
             ? html`
                 <div class="tooltip-container">
-                  <mwc-icon class="update-available">system_update</mwc-icon>
+                  <mwc-icon-button
+                    @click=${this._handleInstall}
+                    class="update-available"
+                    icon="system_update"
+                    label="Install Update"
+                  ></mwc-icon-button>
                   <paper-tooltip>
                     Update Available: ${this.device.deployed_version}
                     ${UPDATE_TO_ICON} ${this.device.current_version}
