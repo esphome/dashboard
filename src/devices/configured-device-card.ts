@@ -84,12 +84,18 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         </div>
 
         <div class="card-content">
-          <div class="device-config-path tooltip-container">
-            <code class="inlinecode">${this.device.configuration}</code>
-            <paper-tooltip>
-              Full Path: <code class="inlinecode">${this.device.path}</code>
-            </paper-tooltip>
-          </div>
+          ${this.device.configuration === `${this.device.name}.yaml` ||
+          this.device.configuration === `${this.device.name}.yml`
+            ? ""
+            : html`
+                <div class="device-config-path tooltip-container">
+                  <code class="inlinecode">${this.device.configuration}</code>
+                  <paper-tooltip>
+                    Full Path:
+                    <code class="inlinecode">${this.device.path}</code>
+                  </paper-tooltip>
+                </div>
+              `}
 
           <div class="online-status">
             <span class="indicator"></span>
