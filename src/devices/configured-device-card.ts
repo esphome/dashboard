@@ -97,10 +97,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 </div>
               `}
 
-          <div class="online-status">
-            <span class="indicator"></span>
-          </div>
-
+          ${this.onlineStatus === true
+            ? ""
+            : html`
+                <div class="online-status">
+                  <span class="indicator"></span>
+                </div>
+              `}
           ${this.device.comment ? html`<div>${this.device.comment}</div>` : ""}
         </div>
 
