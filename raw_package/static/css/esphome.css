@@ -216,6 +216,9 @@ ul.browser-default li {
   max-height: 90%;
   height: 85% !important;
 }
+.modal .modal-footer mwc-button {
+  margin: 6px 0;
+}
 
 .page-footer {
   display: flex;
