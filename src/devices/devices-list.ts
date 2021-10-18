@@ -105,6 +105,9 @@ class ESPHomeDevicesList extends LitElement {
         grid-template-columns: 1fr;
         grid-column-gap: 0;
       }
+      .container {
+        width: 100%;
+      }
     }
     esphome-configured-device-card,
     esphome-importable-device-card {
