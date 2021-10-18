@@ -170,13 +170,6 @@ nav {
   color: black;
 }
 
-main .container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 90%;
-  max-width: 1920px;
-}
-
 #js-loading-indicator {
   position: absolute;
   top: 50%;
@@ -237,9 +230,26 @@ ul.browser-default li {
 }
 
 @media only screen and (max-width: 992px) {
+  .page-footer {
+    padding-bottom: 72px; /* allow reading footer while fab hovers */
+  }
   .page-footer .left,
   .page-footer .right {
     width: 100%;
     text-align: center;
+  }
+  .modal {
+    top: 0 !important;
+    width: 100vw;
+    height: 100vh !important;
+    max-height: initial;
+  }
+  .modal h4 {
+    padding: 8px;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  .modal .modal-content {
+    padding: 0;
   }
 }

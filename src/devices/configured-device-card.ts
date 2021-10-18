@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, svg, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ConfiguredDevice } from "../api/devices";
@@ -26,42 +26,59 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public highlight = false;
 
   protected render() {
+    const content: TemplateResult[] = [];
+
+    if (
+      this.device.configuration !== `${this.device.name}.yaml` &&
+      this.device.configuration !== `${this.device.name}.yml`
+    ) {
+      content.push(html`
+        <div class="device-config-path tooltip-container">
+          <code class="inlinecode">${this.device.configuration}</code>
+          <paper-tooltip>
+            Full Path:
+            <code class="inlinecode">${this.device.path}</code>
+          </paper-tooltip>
+        </div>
+      `);
+    }
+    if (this.device.comment) {
+      content.push(html`<div>${this.device.comment}</div>`);
+    }
+
+    const updateAvailable =
+      this.device.deployed_version != this.device.current_version;
+
     return html`
       <esphome-card
         class=${classMap({
-          "status-online": this.onlineStatus === true,
+          "status-online": this.onlineStatus,
           "status-offline": this.onlineStatus === false,
-          "status-unknown":
-            this.onlineStatus === null || this.onlineStatus === undefined,
           highlight: this.highlight,
         })}
       >
+        <div class="status-bar"></div>
         <div class="card-header">
-          ${this.device.name}
-          ${this.device.loaded_integrations.includes("web_server")
+          <div class="flex">${this.device.name}</div>
+          ${this.onlineStatus !== false
+            ? ""
+            : html`<div class="status-text">OFFLINE</div>`}
+        </div>
+
+        ${content.length
+          ? html`<div class="card-content">${content}</div>`
+          : ""}
+
+        <div class="card-actions">
+          ${updateAvailable
             ? html`
                 <div class="tooltip-container">
-                  <a href=${`http://${this.device.address}`} target="_blank">
-                    <mwc-icon-button
-                      icon="launch"
-                      label="Open web UI"
-                    ></mwc-icon-button>
-                  </a>
-                  <paper-tooltip>
-                    Open device web server interface
-                  </paper-tooltip>
-                </div>
-              `
-            : ""}
-          ${this.device.deployed_version != this.device.current_version
-            ? html`
-                <div class="tooltip-container">
-                  <mwc-icon-button
+                  <mwc-button
                     @click=${this._handleInstall}
                     class="update-available"
                     icon="system_update"
-                    label="Install Update"
-                  ></mwc-icon-button>
+                    label="Update"
+                  ></mwc-button>
                   <paper-tooltip>
                     Update Available: ${this.device.deployed_version}
                     ${UPDATE_TO_ICON} ${this.device.current_version}
@@ -69,12 +86,24 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 </div>
               `
             : ""}
+          ${this.device.loaded_integrations.includes("web_server")
+            ? html`
+                <a href=${`http://${this.device.address}`} target="_blank"
+                  ><mwc-button label="Open"></mwc-button
+                ></a>
+              `
+            : ""}
 
+          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
+          <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
+          <div class="flex"></div>
           <esphome-button-menu
             corner="TOP_START"
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+            <mwc-list-item>Validate</mwc-list-item>
+            <mwc-list-item>Install</mwc-list-item>
             <mwc-list-item>Clean Build Files</mwc-list-item>
             <mwc-list-item>Delete</mwc-list-item>
             ${"mqtt" in this.device.loaded_integrations
@@ -82,49 +111,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               : ""}
           </esphome-button-menu>
         </div>
-
-        <div class="card-content">
-          ${this.device.configuration === `${this.device.name}.yaml` ||
-          this.device.configuration === `${this.device.name}.yml`
-            ? ""
-            : html`
-                <div class="device-config-path tooltip-container">
-                  <code class="inlinecode">${this.device.configuration}</code>
-                  <paper-tooltip>
-                    Full Path:
-                    <code class="inlinecode">${this.device.path}</code>
-                  </paper-tooltip>
-                </div>
-              `}
-          ${this.onlineStatus === true
-            ? ""
-            : html`
-                <div class="online-status">
-                  <span class="indicator"></span>
-                </div>
-              `}
-          ${this.device.comment ? html`<div>${this.device.comment}</div>` : ""}
-        </div>
-
-        <div class="card-actions">
-          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
-          <mwc-button
-            label="Validate"
-            @click=${this._handleValidate}
-          ></mwc-button>
-          <mwc-button
-            label="Install"
-            @click=${this._handleInstall}
-          ></mwc-button>
-          <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
-        </div>
       </esphome-card>
     `;
   }
 
   static styles = css`
     .device-config-path {
-      margin-top: -8px;
       margin-bottom: 8px;
       font-size: 14px;
     }
@@ -138,67 +130,55 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
         monospace;
     }
+    .card-header {
+      display: flex;
+    }
     .card-actions {
+      display: flex;
       padding: 4px;
+    }
+    .flex {
+      flex: 1;
+    }
+    .card-actions a {
+      text-decoration: none;
     }
     mwc-button {
       --mdc-theme-primary: #ffab40;
     }
     esphome-button-menu {
-      float: right;
       cursor: pointer;
     }
     mwc-icon-button {
       --mdc-icon-button-size: 32px;
     }
     .update-available {
-      color: #3f51b5;
+      --mdc-theme-primary: #3f51b5;
     }
 
-    .online-status {
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: bold;
-      display: flex;
-      align-items: baseline;
+    .status-bar,
+    .status-text {
+      display: none;
     }
-
-    .online-status .indicator {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background-color: grey;
-      margin-right: 5px;
-      border-radius: 50%;
-    }
-
-    .status-unknown .online-status:after {
-      content: "Unknown status";
-    }
-
-    .status-online .online-status:after {
-      content: "Online";
-    }
-    .status-online .online-status .indicator {
-      background-color: var(--alert-success-color);
-    }
-
-    .status-offline .online-status:after {
-      content: "Offline";
-    }
-    .status-offline .online-status .indicator {
+    .status-offline .status-bar {
+      display: block;
       background-color: var(--alert-error-color);
+      position: absolute;
+      height: 4px;
+      left: 0;
+      right: 0;
+      top: 0;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+    .status-offline .status-text {
+      display: block;
+      color: var(--alert-error-color);
+      font-weight: bold;
+      font-size: 12px;
+      margin-left: 4px;
     }
 
-    esphome-card.status-offline {
-      border-top: 4px solid var(--alert-error-color);
-    }
-    esphome-card.status-online {
-      border-top: 4px solid var(--alert-success-color);
-    }
-    esphome-card.status-unknown {
-      border-top: 4px solid var(--alert-standard-color);
-    }
     .tooltip-container {
       display: inline-block;
     }
@@ -229,9 +209,15 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        openCleanDialog(this.device.configuration);
+        openValidateDialog(this.device.configuration);
         break;
       case 1:
+        this._handleInstall();
+        break;
+      case 2:
+        openCleanDialog(this.device.configuration);
+        break;
+      case 3:
         console.log(this.device);
         const dialog = document.createElement("esphome-delete-device-dialog");
         dialog.name = this.device.name;
@@ -239,7 +225,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         dialog.addEventListener("deleted", () => fireEvent(this, "deleted"));
         document.body.append(dialog);
         break;
-      case 2:
+      case 4:
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
@@ -247,9 +233,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
   private _handleEdit() {
     openEditDialog(this.device.configuration);
-  }
-  private _handleValidate() {
-    openValidateDialog(this.device.configuration);
   }
   private _handleInstall() {
     openInstallDialog(this.device.configuration);
