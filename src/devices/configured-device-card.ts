@@ -93,7 +93,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           ${this.device.loaded_integrations.includes("web_server")
             ? html`
                 <a href=${`http://${this.device.address}`} target="_blank"
-                  ><mwc-button label="Open"></mwc-button
+                  ><mwc-button
+                    label="Open"
+                    .disabled=${!this.onlineStatus}
+                  ></mwc-button
                 ></a>
               `
             : ""}
