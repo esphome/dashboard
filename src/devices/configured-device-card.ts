@@ -49,6 +49,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     return html`
       <esphome-card
         class=${classMap({
+          "status-online": this.onlineStatus,
           "status-offline": this.onlineStatus === false,
           highlight: this.highlight,
         })}
@@ -175,6 +176,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       top: 0;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px;
+    }
+    .status-online .status-bar {
       background-color: var(--alert-success-color);
     }
     .status-offline .status-bar {
