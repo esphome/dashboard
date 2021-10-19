@@ -23,7 +23,7 @@ import {
 } from "../api/configuration";
 import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
-import { subscribeOnlineStatus } from "../online_status";
+import { subscribeOnlineStatus } from "../api/online-status";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";

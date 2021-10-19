@@ -7,7 +7,7 @@ import {
 } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
-import { subscribeOnlineStatus } from "../online_status";
+import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
 
