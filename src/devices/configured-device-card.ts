@@ -66,7 +66,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
         ${content.length
           ? html`<div class="card-content flex">${content}</div>`
-          : ""}
+          : html`<div class="flex"></div>`}
 
         <div class="card-actions">
           ${updateAvailable
