@@ -84,6 +84,7 @@ class ESPHomeDevicesList extends LitElement {
       margin: 20px auto;
       width: 90%;
       max-width: 1920px;
+      justify-content: stretch;
     }
     .import-container {
       border-bottom: 1px solid black;
