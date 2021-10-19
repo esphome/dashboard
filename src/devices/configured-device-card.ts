@@ -1,4 +1,4 @@
-import { LitElement, html, css, svg, TemplateResult } from "lit";
+import { LitElement, html, css, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ConfiguredDevice } from "../api/devices";
