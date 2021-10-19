@@ -74,10 +74,10 @@ export const openEditDialog = (filename) => {
     editorActiveFilename === "secrets.yaml" ||
     editorActiveFilename === "secrets.yml"
   ) {
-    uploadButton.classList.add("disabled");
+    uploadButton.style.display = "none";
     editorActiveSecrets = true;
   } else {
-    uploadButton.classList.remove("disabled");
+    uploadButton.style.display = "";
     editorActiveSecrets = false;
   }
   closeButton.setAttribute("data-filename", editorActiveFilename);
