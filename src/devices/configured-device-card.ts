@@ -97,7 +97,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
-            corner="TOP_START"
+            corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
