@@ -24,6 +24,7 @@ import {
 import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
+import { refreshDevices, subscribeDevices } from "../api/devices";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -426,8 +427,9 @@ export class ESPHomeWizardDialog extends LitElement {
 
     try {
       await createConfiguration(this._data as CreateConfigParams);
+      refreshDevices();
       this._state = "done";
-    } catch (err) {
+    } catch (err: any) {
       this._error = err.message || err;
     } finally {
       this._busy = false;
@@ -575,9 +577,6 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handleClose() {
     this.parentNode!.removeChild(this);
-    if (this._state === "done" || this._state === "wait_come_online") {
-      location.reload();
-    }
   }
 
   static styles = css`

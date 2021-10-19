@@ -1,4 +1,5 @@
 import { fetchApiJson, fetchApiText } from ".";
+import { createPollingCollection } from "../util/polling-collection";
 
 export interface ConfiguredDevice {
   name: string;
@@ -31,3 +32,11 @@ export const importDevice = (params: ImportableDevice) =>
     method: "post",
     body: JSON.stringify(params),
   });
+
+export const subscribeDevices = createPollingCollection(getDevices, 5000);
+
+export const refreshDevices = () => {
+  const unsub = subscribeDevices(() => undefined);
+  unsub.refresh();
+  unsub();
+};

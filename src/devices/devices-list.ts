@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import {
-  getDevices,
+  subscribeDevices,
   ImportableDevice,
   ListDevicesResult,
 } from "../api/devices";
@@ -17,8 +17,8 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _onlineStatus?: Record<string, boolean>;
   @state() private _highlightedName?: string;
 
-  private _updateDevicesInterval?: number;
-  private _onlineStatusUnsub?: () => void;
+  private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
+  private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
 
   protected render() {
     if (this._devices === undefined) {
@@ -66,7 +66,7 @@ class ESPHomeDevicesList extends LitElement {
 
         <div class="grid">
           ${this._devices.configured.map(
-            (device) => html` <esphome-configured-device-card
+            (device) => html`<esphome-configured-device-card
               .device=${device}
               @deleted=${this._updateDevices}
               .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
@@ -134,12 +134,12 @@ class ESPHomeDevicesList extends LitElement {
   `;
 
   private async _updateDevices() {
-    this._devices = await getDevices();
+    await this._devicesUnsub!.refresh();
   }
 
   private async _handleImported(entry: ImportableDevice) {
     this._highlightedName = entry.name;
-    await this._updateDevices();
+    await this._devicesUnsub!.refresh();
     const elem = this.renderRoot!.querySelector(
       `esphome-configured-device-card[data-name='${entry.name}']`
     );
@@ -150,13 +150,9 @@ class ESPHomeDevicesList extends LitElement {
 
   public connectedCallback() {
     super.connectedCallback();
-    const updateAndSchedule = async () => {
-      await this._updateDevices();
-      this._updateDevicesInterval = window.setInterval(async () => {
-        await this._updateDevices();
-      }, 5000);
-    };
-    updateAndSchedule();
+    this._devicesUnsub = subscribeDevices((devices) => {
+      this._devices = devices;
+    });
     this._onlineStatusUnsub = subscribeOnlineStatus((res) => {
       this._onlineStatus = res;
     });
@@ -164,8 +160,8 @@ class ESPHomeDevicesList extends LitElement {
 
   public disconnectedCallback() {
     super.disconnectedCallback();
-    if (this._updateDevicesInterval) {
-      window.clearInterval(this._updateDevicesInterval);
+    if (this._devicesUnsub) {
+      this._devicesUnsub();
     }
     if (this._onlineStatusUnsub) {
       this._onlineStatusUnsub();
