@@ -24,7 +24,7 @@ import {
 import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
-import { refreshDevices, subscribeDevices } from "../api/devices";
+import { refreshDevices } from "../api/devices";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
