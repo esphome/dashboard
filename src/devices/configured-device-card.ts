@@ -1,7 +1,7 @@
 import { LitElement, html, css, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ConfiguredDevice } from "../api/devices";
+import { canUpdateDevice, ConfiguredDevice } from "../api/devices";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
@@ -47,8 +47,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       content.push(html`<div>${this.device.comment}</div>`);
     }
 
-    const updateAvailable =
-      this.device.deployed_version != this.device.current_version;
+    const updateAvailable = canUpdateDevice(this.device);
 
     return html`
       <esphome-card

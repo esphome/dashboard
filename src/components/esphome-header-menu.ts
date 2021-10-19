@@ -1,15 +1,44 @@
 import { css, html, LitElement, TemplateResult } from "lit";
-import { customElement } from "lit/decorators.js";
+import { property, state, customElement } from "lit/decorators.js";
 import "./esphome-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
+import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../legacy";
 import { openUpdateAllDialog } from "../update-all";
 
+const isWideListener = window.matchMedia("(min-width: 601px)");
+
 @customElement("esphome-header-menu")
 export class ESPHomeHeaderMenu extends LitElement {
+  @property({ type: String, attribute: "logout-url" }) logoutUrl?: string;
+
+  @state() private _isWide = isWideListener.matches;
+
   protected render(): TemplateResult {
+    if (this._isWide) {
+      return html`
+        <mwc-button
+          icon="system_update"
+          label="Update All"
+          @click=${this._handleUpdateAll}
+        ></mwc-button>
+        <mwc-button
+          icon="lock"
+          label="Secrets"
+          @click=${this._handleEditSecrets}
+        ></mwc-button>
+        ${this.logoutUrl
+          ? html`
+              <a href=${this.logoutUrl}
+                ><mwc-button label="Log out"></mwc-button
+              ></a>
+            `
+          : ""}
+      `;
+    }
+
     return html`
       <esphome-button-menu
         corner="BOTTOM_START"
@@ -18,18 +47,50 @@ export class ESPHomeHeaderMenu extends LitElement {
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
         <mwc-list-item>Update All</mwc-list-item>
         <mwc-list-item>Secrets Editor</mwc-list-item>
+        ${this.logoutUrl
+          ? html`
+              <a href=${this.logoutUrl}
+                ><mwc-list-item>Log Out</mwc-list-item></a
+              >
+            `
+          : ""}
         <slot></slot>
       </esphome-button-menu>
     `;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    isWideListener.addEventListener("change", this._isWideUpdated);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    isWideListener.removeEventListener("change", this._isWideUpdated);
+  }
+
+  private _isWideUpdated = () => {
+    this._isWide = isWideListener.matches;
+  };
+
+  private _handleUpdateAll() {
+    if (!confirm(`Do you wan to update all devices?`)) {
+      return;
+    }
+    openUpdateAllDialog();
+  }
+
+  private _handleEditSecrets() {
+    openEditDialog("secrets.yaml");
+  }
+
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        openUpdateAllDialog();
+        this._handleUpdateAll();
         break;
       case 1:
-        openEditDialog("secrets.yaml");
+        this._handleEditSecrets();
         break;
     }
   }
@@ -37,6 +98,12 @@ export class ESPHomeHeaderMenu extends LitElement {
   static styles = css`
     esphome-button-menu {
       z-index: 1;
+    }
+    mwc-button {
+      margin-left: 16px;
+    }
+    a {
+      text-decoration: none;
     }
   `;
 }
