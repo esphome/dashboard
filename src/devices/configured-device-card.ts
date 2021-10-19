@@ -57,13 +57,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           highlight: this.highlight,
         })}
       >
-        <div class="status-bar"></div>
-        <div class="card-header">
-          <div class="flex">${this.device.name}</div>
+        <div class="status-bar">
           ${this.onlineStatus !== false
             ? ""
             : html`<div class="status-text">OFFLINE</div>`}
         </div>
+        <div class="card-header">${this.device.name}</div>
 
         ${content.length
           ? html`<div class="card-content">${content}</div>`
@@ -156,8 +155,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       --mdc-theme-primary: #3f51b5;
     }
 
-    .status-bar,
-    .status-text {
+    .status-bar {
       display: none;
     }
     .status-offline .status-bar {
@@ -172,11 +170,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       border-top-right-radius: 2px;
     }
     .status-offline .status-text {
-      display: block;
+      position: absolute;
+      right: 4px;
+      top: 5px;
       color: var(--alert-error-color);
       font-weight: bold;
       font-size: 12px;
-      margin-left: 4px;
     }
 
     .tooltip-container {
