@@ -1,5 +1,5 @@
 import { css, html, LitElement, TemplateResult } from "lit";
-import { state, customElement } from "lit/decorators.js";
+import { property, state, customElement } from "lit/decorators.js";
 import "./esphome-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
@@ -7,39 +7,35 @@ import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../legacy";
 import { openUpdateAllDialog } from "../update-all";
-import {
-  canUpdateDevice,
-  ListDevicesResult,
-  subscribeDevices,
-} from "../api/devices";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
 @customElement("esphome-header-menu")
 export class ESPHomeHeaderMenu extends LitElement {
-  @state() private _devices?: ListDevicesResult["configured"];
+  @property({ type: String, attribute: "logout-url" }) logoutUrl?: string;
 
   @state() private _isWide = isWideListener.matches;
 
-  private _unsubDevices?: ReturnType<typeof subscribeDevices>;
-
   protected render(): TemplateResult {
-    const updateCount = this._updateCount;
-
     if (this._isWide) {
       return html`
-        ${updateCount === 0
-          ? ""
-          : html`
-              <mwc-button
-                label="Update All"
-                @click=${this._handleUpdateAll}
-              ></mwc-button>
-            `}
         <mwc-button
-          label="Secrets Editor"
+          icon="system_update"
+          label="Update All"
+          @click=${this._handleUpdateAll}
+        ></mwc-button>
+        <mwc-button
+          icon="lock"
+          label="Secrets"
           @click=${this._handleEditSecrets}
         ></mwc-button>
+        ${this.logoutUrl
+          ? html`
+              <a href=${this.logoutUrl}
+                ><mwc-button label="Log out"></mwc-button
+              ></a>
+            `
+          : ""}
       `;
     }
 
@@ -51,34 +47,25 @@ export class ESPHomeHeaderMenu extends LitElement {
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
         <mwc-list-item>Update All</mwc-list-item>
         <mwc-list-item>Secrets Editor</mwc-list-item>
+        ${this.logoutUrl
+          ? html`
+              <a href=${this.logoutUrl}
+                ><mwc-list-item>Log Out</mwc-list-item></a
+              >
+            `
+          : ""}
         <slot></slot>
       </esphome-button-menu>
     `;
   }
 
-  private get _updateCount() {
-    return this._devices
-      ? this._devices.reduce(
-          (prev, device) => prev + (canUpdateDevice(device) ? 1 : 0),
-          0
-        )
-      : 0;
-  }
-
   connectedCallback() {
     super.connectedCallback();
-    this._unsubDevices = subscribeDevices((result) => {
-      this._devices = result.configured;
-    });
     isWideListener.addEventListener("change", this._isWideUpdated);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this._unsubDevices) {
-      this._unsubDevices();
-      this._unsubDevices = undefined;
-    }
     isWideListener.removeEventListener("change", this._isWideUpdated);
   }
 
@@ -87,10 +74,7 @@ export class ESPHomeHeaderMenu extends LitElement {
   };
 
   private _handleUpdateAll() {
-    if (
-      this._isWide &&
-      !confirm(`Do you wan to update ${this._updateCount} devices?`)
-    ) {
+    if (!confirm(`Do you wan to update all devices?`)) {
       return;
     }
     openUpdateAllDialog();
@@ -117,6 +101,9 @@ export class ESPHomeHeaderMenu extends LitElement {
     }
     mwc-button {
       margin-left: 16px;
+    }
+    a {
+      text-decoration: none;
     }
   `;
 }

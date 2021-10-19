@@ -100,12 +100,9 @@
           alt="ESPHome Logo"
         />
       </div>
-      <esphome-header-menu>
-        {% if login_enabled %}
-        <a href="{{ relative_url }}logout"
-          ><mwc-list-item>Logout</mwc-list-item></a
-        >
-        {% end %}
+      <esphome-header-menu
+        logout-url="{% if login_enabled %}{{ relative_url }}logout{% end %}"
+      >
       </esphome-header-menu>
     </div>
 
