@@ -40,3 +40,6 @@ export const refreshDevices = () => {
   unsub.refresh();
   unsub();
 };
+
+export const canUpdateDevice = (device: ConfiguredDevice) =>
+  device.current_version !== device.deployed_version;
