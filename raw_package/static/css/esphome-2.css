@@ -38,7 +38,29 @@ body {
 }
 
 main {
+  margin-top: 64px;
   flex: 1 0 auto;
+}
+
+.esphome-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  background-color: #e0e0e0;
+  padding: 0 24px;
+}
+
+.esphome-header > div {
+  flex: 1;
+}
+
+.esphome-header img {
+  width: auto;
+  height: 48px;
 }
 
 /* Alerts & Errors */
@@ -125,51 +147,6 @@ main {
   margin-block-end: 0px;
 }
 
-/* Dashboard */
-.logo-wrapper {
-  height: 64px;
-  height: 100%;
-  width: 0;
-  margin-left: 24px;
-}
-
-.logo {
-  width: auto;
-  height: 48px;
-  margin: 8px 0;
-}
-
-.nav-icons {
-  margin-right: 24px;
-}
-
-@media only screen and (max-width: 601px) {
-  .logo {
-    height: 38px;
-    margin: 9px 0;
-  }
-  .logo-wrapper {
-    margin-left: 12px;
-  }
-  .nav-icons {
-    margin-right: 0px;
-  }
-}
-
-.nav-icons i {
-  color: black;
-}
-
-nav {
-  height: auto;
-  line-height: normal;
-}
-
-#nav-dropdown li a,
-.node-dropdown li a {
-  color: black;
-}
-
 #js-loading-indicator {
   position: absolute;
   top: 50%;
@@ -233,6 +210,16 @@ ul.browser-default li {
 }
 
 @media only screen and (max-width: 992px) {
+  .esphome-header {
+    height: 52px;
+    padding: 0 8px;
+  }
+  .esphome-header img {
+    height: 38px;
+  }
+  main {
+    margin-top: 52px;
+  }
   .page-footer {
     padding-bottom: 72px; /* allow reading footer while fab hovers */
   }
