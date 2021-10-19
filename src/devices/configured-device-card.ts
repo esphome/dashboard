@@ -1,8 +1,9 @@
-import { LitElement, html, css, svg, TemplateResult } from "lit";
+import { LitElement, html, css, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ConfiguredDevice } from "../api/devices";
-import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
+import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
+import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import "../components/esphome-button-menu";
@@ -57,13 +58,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           highlight: this.highlight,
         })}
       >
-        <div class="status-bar"></div>
-        <div class="card-header">
-          <div class="flex">${this.device.name}</div>
+        <div class="status-bar">
           ${this.onlineStatus !== false
             ? ""
             : html`<div class="status-text">OFFLINE</div>`}
         </div>
+        <div class="card-header">${this.device.name}</div>
 
         ${content.length
           ? html`<div class="card-content flex">${content}</div>`
@@ -98,7 +98,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
-            corner="TOP_START"
+            corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
@@ -161,8 +161,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       --mdc-theme-primary: #3f51b5;
     }
 
-    .status-bar,
-    .status-text {
+    .status-bar {
       display: none;
     }
     .status-offline .status-bar {
@@ -177,11 +176,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       border-top-right-radius: 2px;
     }
     .status-offline .status-text {
-      display: block;
+      position: absolute;
+      right: 4px;
+      top: 5px;
       color: var(--alert-error-color);
       font-weight: bold;
       font-size: 12px;
-      margin-left: 4px;
     }
 
     .tooltip-container {
