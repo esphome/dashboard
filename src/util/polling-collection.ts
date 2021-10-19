@@ -24,7 +24,7 @@ export const createPollingCollection = <T>(
     }
   };
 
-  return (onUpdate: (data: T) => unknown): (() => void) => {
+  return (onUpdate: (data: T) => unknown) => {
     subscribers.push(onUpdate);
 
     const unsubscribe = () => {
@@ -42,6 +42,12 @@ export const createPollingCollection = <T>(
         // Clear last result as it will be stale
         lastResult = undefined;
       }
+    };
+
+    unsubscribe.refresh = async () => {
+      clearTimeout(pollSubscription);
+      pollSubscription = undefined;
+      await updateData();
     };
 
     // First subscriber, start subscription
