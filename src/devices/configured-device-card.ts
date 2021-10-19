@@ -66,7 +66,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         </div>
 
         ${content.length
-          ? html`<div class="card-content">${content}</div>`
+          ? html`<div class="card-content flex">${content}</div>`
           : ""}
 
         <div class="card-actions">
@@ -116,6 +116,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   static styles = css`
+    esphome-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
     .device-config-path {
       margin-bottom: 8px;
       font-size: 14px;
