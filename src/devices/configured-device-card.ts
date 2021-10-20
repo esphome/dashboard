@@ -8,7 +8,6 @@ import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import "../components/esphome-button-menu";
 import "../components/esphome-card";
-import "./delete-device-dialog";
 import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
