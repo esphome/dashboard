@@ -23,7 +23,7 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
           dialogAction="close"
           @click=${this._handleDelete}
         >
-          Confirm
+          Delete
         </mwc-button>
         <mwc-button slot="secondaryAction" dialogAction="cancel">
           Cancel

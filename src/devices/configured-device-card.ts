@@ -1,6 +1,6 @@
-import { LitElement, html, css, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { LitElement, html, css, TemplateResult, PropertyValues } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+import { styleMap } from "lit/directives/style-map.js";
 import { canUpdateDevice, ConfiguredDevice } from "../api/devices";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
@@ -8,7 +8,6 @@ import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import "../components/esphome-button-menu";
 import "../components/esphome-card";
-import "./delete-device-dialog";
 import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
@@ -17,14 +16,29 @@ import { openEditDialog } from "../legacy";
 import { openInstallDialog } from "../install-update";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
+import { openDeleteDeviceDialog } from "../delete-device";
 
 const UPDATE_TO_ICON = "➡️";
+const STATUS_COLORS = {
+  NEW: "rgb(255, 165, 0)",
+  OFFLINE: "var(--alert-error-color)",
+  "UPDATE AVAILABLE": "var(--update-available-color)",
+};
 
 @customElement("esphome-configured-device-card")
 class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
   @property() public onlineStatus = false;
-  @property() public highlight = false;
+  @property() public highlightOnAdd = false;
+  @state() private _highlight = false;
+
+  public async highlight() {
+    this._highlight = true;
+    await this.updateComplete;
+    await this.shadowRoot!.querySelector("esphome-card")!.getAttention();
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+    this._highlight = false;
+  }
 
   protected render() {
     const content: TemplateResult[] = [];
@@ -48,16 +62,20 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     }
 
     const updateAvailable = canUpdateDevice(this.device);
-
+    const status = this._highlight
+      ? "NEW"
+      : this.onlineStatus === false
+      ? "OFFLINE"
+      : updateAvailable
+      ? "UPDATE AVAILABLE"
+      : undefined;
     return html`
       <esphome-card
-        class=${classMap({
-          "status-update-available": updateAvailable,
-          "status-offline": this.onlineStatus === false,
-          highlight: this.highlight,
+        .status=${status}
+        style=${styleMap({
+          "--status-color": status === undefined ? "" : STATUS_COLORS[status],
         })}
       >
-        <div class="status-bar"></div>
         <div class="card-header">${this.device.name}</div>
 
         ${content.length
@@ -110,7 +128,17 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     `;
   }
 
+  firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    if (this.highlightOnAdd) {
+      this.highlight();
+    }
+  }
+
   static styles = css`
+    :host {
+      --update-available-color: #2e3dd4;
+    }
     esphome-card {
       height: 100%;
       display: flex;
@@ -129,9 +157,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       border-radius: 3px;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
         monospace;
-    }
-    .card-header {
-      display: flex;
     }
     .card-actions {
       display: flex;
@@ -153,68 +178,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       --mdc-icon-button-size: 32px;
     }
     .update-available {
-      --mdc-theme-primary: #3f51b5;
-    }
-
-    .status-bar {
-      display: none;
-      position: absolute;
-      height: 4px;
-      left: 0;
-      right: 0;
-      top: 0;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-    .status-bar::after {
-      display: block;
-      position: absolute;
-      right: 4px;
-      top: 5px;
-      font-weight: bold;
-      font-size: 12px;
-    }
-    .status-update-available .status-bar {
-      display: block;
-      background-color: #3f51b5;
-      color: #3f51b5;
-    }
-    .status-update-available .status-bar::after {
-      content: "UPDATE AVAILABLE";
-    }
-    .status-offline .status-bar {
-      display: block;
-      color: var(--alert-error-color);
-      background-color: var(--alert-error-color);
-    }
-    .status-offline .status-bar::after {
-      content: "OFFLINE";
+      --mdc-theme-primary: var(--update-available-color);
     }
 
     .tooltip-container {
       display: inline-block;
-    }
-
-    .highlight {
-      animation: higlight-bg 3s ease-in;
-    }
-
-    @keyframes higlight-bg {
-      0% {
-        background: rgba(255, 165, 0, 1);
-      }
-      20% {
-        background: rgba(255, 165, 0, 0.8);
-      }
-      50% {
-        background: rgba(255, 165, 0, 0.5);
-      }
-      70% {
-        background: rgba(255, 165, 0, 0.5);
-      }
-      100% {
-        background: rgba(255, 165, 0, 0);
-      }
     }
   `;
 
@@ -230,12 +198,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 3:
-        console.log(this.device);
-        const dialog = document.createElement("esphome-delete-device-dialog");
-        dialog.name = this.device.name;
-        dialog.configuration = this.device.configuration;
-        dialog.addEventListener("deleted", () => fireEvent(this, "deleted"));
-        document.body.append(dialog);
+        openDeleteDeviceDialog(
+          this.device.name,
+          this.device.configuration,
+          () => fireEvent(this, "deleted")
+        );
         break;
       case 4:
         openCleanMQTTDialog(this.device.configuration);

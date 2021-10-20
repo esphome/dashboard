@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ImportableDevice, importDevice } from "../api/devices";
 import "@material/mwc-button";
@@ -8,27 +8,38 @@ import { fireEvent } from "../util/fire-event";
 @customElement("esphome-importable-device-card")
 class ESPHomeImportableDeviceCard extends LitElement {
   @property() public device!: ImportableDevice;
+  @property() public highlightOnAdd = false;
 
   protected render() {
     return html`
-      <esphome-card>
-        <div class="status-bar"></div>
+      <esphome-card status="DISCOVERED">
         <div class="card-header">${this.device.name}</div>
         <div class="card-content flex">${this.device.project_name}</div>
 
         <div class="card-actions">
           <mwc-button
             icon="file_download"
-            label="Import"
-            @click=${this._handleImport}
+            label="Adopt"
+            @click=${this._handleAdopt}
           ></mwc-button>
         </div>
       </esphome-card>
     `;
   }
 
+  firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    if (!this.highlightOnAdd) {
+      return;
+    }
+    setTimeout(() => {
+      this.shadowRoot!.querySelector("esphome-card")!.getAttention();
+    }, 1000);
+  }
+
   static styles = css`
     esphome-card {
+      --status-color: #4caf50;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -39,37 +50,11 @@ class ESPHomeImportableDeviceCard extends LitElement {
     mwc-button {
       --mdc-theme-primary: #4caf50;
     }
-    .status-bar {
-      display: none;
-      position: absolute;
-      height: 4px;
-      left: 0;
-      right: 0;
-      top: 0;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-    .status-bar::after {
-      display: block;
-      position: absolute;
-      right: 4px;
-      top: 5px;
-      font-weight: bold;
-      font-size: 12px;
-    }
-    .status-bar {
-      display: block;
-      background-color: #4caf50;
-      color: #4caf50;
-    }
-    .status-bar::after {
-      content: "DISCOVERED";
-    }
   `;
 
-  private async _handleImport() {
+  private async _handleAdopt() {
     await importDevice(this.device);
-    fireEvent(this, "imported");
+    fireEvent(this, "adopted");
   }
 }
 

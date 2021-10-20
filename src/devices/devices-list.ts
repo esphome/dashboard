@@ -1,10 +1,8 @@
+import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import {
-  subscribeDevices,
-  ImportableDevice,
-  ListDevicesResult,
-} from "../api/devices";
+import { repeat } from "lit/directives/repeat.js";
+import { subscribeDevices, ListDevicesResult } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -15,10 +13,10 @@ import "./importable-device-card";
 class ESPHomeDevicesList extends LitElement {
   @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
-  @state() private _highlightedName?: string;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
+  private _highlightOnAdd = false;
 
   protected render() {
     if (this._devices === undefined) {
@@ -50,23 +48,34 @@ class ESPHomeDevicesList extends LitElement {
       <div class="grid">
         ${importable.length
           ? html`
-              ${importable.map(
+              ${repeat(
+                importable,
+                (device) => device.name,
                 (device) => html`
                   <esphome-importable-device-card
+                    ${animate({ id: device.name, skipInitial: true })}
                     .device=${device}
-                    @imported=${() => this._handleImported(device)}
+                    @adopted=${this._updateDevices}
+                    .highlightOnAdd=${this._highlightOnAdd}
                   ></esphome-importable-device-card>
                 `
               )}
             `
           : ""}
-        ${this._devices.configured.map(
+        ${repeat(
+          this._devices.configured,
+          (device) => device.name,
           (device) => html`<esphome-configured-device-card
+            ${animate({
+              id: device.name,
+              inId: device.name,
+              skipInitial: true,
+            })}
             .device=${device}
             @deleted=${this._updateDevices}
             .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-            .highlight=${device.name === this._highlightedName}
             data-name=${device.name}
+            .highlightOnAdd=${this._highlightOnAdd}
           ></esphome-configured-device-card>`
         )}
       </div>
@@ -126,12 +135,10 @@ class ESPHomeDevicesList extends LitElement {
     await this._devicesUnsub!.refresh();
   }
 
-  private async _handleImported(entry: ImportableDevice) {
-    this._highlightedName = entry.name;
-    await this._devicesUnsub!.refresh();
+  private _scrollToDevice(name: string) {
     const elem = this.renderRoot!.querySelector(
-      `esphome-configured-device-card[data-name='${entry.name}']`
-    );
+      `esphome-configured-device-card[data-name='${name}']`
+    ) as HTMLElementTagNameMap["esphome-configured-device-card"];
     if (elem) {
       elem.scrollIntoView({ behavior: "smooth" });
     }
@@ -139,8 +146,27 @@ class ESPHomeDevicesList extends LitElement {
 
   public connectedCallback() {
     super.connectedCallback();
-    this._devicesUnsub = subscribeDevices((devices) => {
+    this._devicesUnsub = subscribeDevices(async (devices) => {
+      let newName: string | undefined;
+
+      if (this._devices !== undefined) {
+        this._highlightOnAdd = true;
+        const oldNames = new Set(this._devices.configured.map((d) => d.name));
+
+        for (const device of devices.configured) {
+          if (!oldNames.has(device.name)) {
+            newName = device.name;
+            break;
+          }
+        }
+      }
       this._devices = devices;
+
+      if (!newName) {
+        return;
+      }
+      await this.updateComplete;
+      this._scrollToDevice(newName);
     });
     this._onlineStatusUnsub = subscribeOnlineStatus((res) => {
       this._onlineStatus = res;
