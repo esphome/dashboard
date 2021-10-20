@@ -12,22 +12,58 @@ class ESPHomeImportableDeviceCard extends LitElement {
   protected render() {
     return html`
       <esphome-card>
+        <div class="status-bar"></div>
         <div class="card-header">${this.device.name}</div>
-        <div class="card-content">${this.device.project_name}</div>
+        <div class="card-content flex">${this.device.project_name}</div>
 
         <div class="card-actions">
-          <mwc-button label="Import" @click=${this._handleImport}></mwc-button>
+          <mwc-button
+            icon="file_download"
+            label="Import"
+            @click=${this._handleImport}
+          ></mwc-button>
         </div>
       </esphome-card>
     `;
   }
 
   static styles = css`
-    .card-actions {
-      padding: 4px;
+    esphome-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .flex {
+      flex: 1;
     }
     mwc-button {
-      --mdc-theme-primary: rgba(0, 0, 0, 0.88);
+      --mdc-theme-primary: #4caf50;
+    }
+    .status-bar {
+      display: none;
+      position: absolute;
+      height: 4px;
+      left: 0;
+      right: 0;
+      top: 0;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+    .status-bar::after {
+      display: block;
+      position: absolute;
+      right: 4px;
+      top: 5px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .status-bar {
+      display: block;
+      background-color: #4caf50;
+      color: #4caf50;
+    }
+    .status-bar::after {
+      content: "DISCOVERED";
     }
   `;
 
