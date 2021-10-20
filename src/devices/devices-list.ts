@@ -55,7 +55,7 @@ class ESPHomeDevicesList extends LitElement {
                   <esphome-importable-device-card
                     ${animate({ id: device.name, skipInitial: true })}
                     .device=${device}
-                    @imported=${this._updateDevices}
+                    @adopted=${this._updateDevices}
                     .highlightOnAdd=${this._highlightOnAdd}
                   ></esphome-importable-device-card>
                 `

@@ -19,8 +19,8 @@ class ESPHomeImportableDeviceCard extends LitElement {
         <div class="card-actions">
           <mwc-button
             icon="file_download"
-            label="Import"
-            @click=${this._handleImport}
+            label="Adopt"
+            @click=${this._handleAdopt}
           ></mwc-button>
         </div>
       </esphome-card>
@@ -52,9 +52,9 @@ class ESPHomeImportableDeviceCard extends LitElement {
     }
   `;
 
-  private async _handleImport() {
+  private async _handleAdopt() {
     await importDevice(this.device);
-    fireEvent(this, "imported");
+    fireEvent(this, "adopted");
   }
 }
 
