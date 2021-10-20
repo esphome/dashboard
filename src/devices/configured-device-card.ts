@@ -35,7 +35,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   public async highlight() {
     this._highlight = true;
     await this.updateComplete;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.shadowRoot!.querySelector("esphome-card")!.getAttention();
     await new Promise((resolve) => setTimeout(resolve, 4000));
     this._highlight = false;

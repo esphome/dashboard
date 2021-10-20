@@ -64,17 +64,25 @@ export class ESPHomeCard extends LitElement {
       font-size: 12px;
       content: attr(data-status);
     }
+
+    :host(.highlight) {
+      animation: highlight 0.7s alternate infinite ease-in;
+    }
+
+    @keyframes highlight {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.1);
+      }
+    }
   `;
 
   public async getAttention() {
-    if (!this.status) {
-      return;
-    }
-    await this.updateComplete;
-    const bar = this.shadowRoot!.querySelector(".status-bar") as HTMLDivElement;
-    bar.style.height = "100%";
-    await new Promise((resolve) => setTimeout(resolve, 750));
-    bar.style.height = "";
+    this.classList.add("highlight");
+    await new Promise((resolve) => setTimeout(resolve, 4200));
+    this.classList.remove("highlight");
   }
 
   protected render(): TemplateResult {
