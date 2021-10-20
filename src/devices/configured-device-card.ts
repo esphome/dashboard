@@ -17,6 +17,7 @@ import { openEditDialog } from "../legacy";
 import { openInstallDialog } from "../install-update";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
+import { openDeleteDeviceDialog } from "../delete-device";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -198,11 +199,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 3:
-        const dialog = document.createElement("esphome-delete-device-dialog");
-        dialog.name = this.device.name;
-        dialog.configuration = this.device.configuration;
-        dialog.addEventListener("deleted", () => fireEvent(this, "deleted"));
-        document.body.append(dialog);
+        openDeleteDeviceDialog(
+          this.device.name,
+          this.device.configuration,
+          () => fireEvent(this, "deleted")
+        );
         break;
       case 4:
         openCleanMQTTDialog(this.device.configuration);
