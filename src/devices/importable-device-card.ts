@@ -27,7 +27,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
       padding: 4px;
     }
     mwc-button {
-      --mdc-theme-primary: #ffab40;
+      --mdc-theme-primary: rgba(0, 0, 0, 0.88);
     }
   `;
 
