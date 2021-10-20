@@ -1,11 +1,8 @@
+import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import {
-  subscribeDevices,
-  ImportableDevice,
-  ListDevicesResult,
-} from "../api/devices";
+import { subscribeDevices, ListDevicesResult } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -56,6 +53,7 @@ class ESPHomeDevicesList extends LitElement {
                 (device) => device.name,
                 (device) => html`
                   <esphome-importable-device-card
+                    ${animate({ id: device.name, skipInitial: true })}
                     .device=${device}
                     @imported=${this._updateDevices}
                     .highlightOnAdd=${this._highlightOnAdd}
@@ -68,6 +66,11 @@ class ESPHomeDevicesList extends LitElement {
           this._devices.configured,
           (device) => device.name,
           (device) => html`<esphome-configured-device-card
+            ${animate({
+              id: device.name,
+              inId: device.name,
+              skipInitial: true,
+            })}
             .device=${device}
             @deleted=${this._updateDevices}
             .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
