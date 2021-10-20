@@ -70,6 +70,7 @@ export class ESPHomeCard extends LitElement {
     if (!this.status) {
       return;
     }
+    await this.updateComplete;
     const bar = this.shadowRoot!.querySelector(".status-bar") as HTMLDivElement;
     bar.style.height = "100%";
     await new Promise((resolve) => setTimeout(resolve, 750));

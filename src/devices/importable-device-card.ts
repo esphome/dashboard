@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ImportableDevice, importDevice } from "../api/devices";
 import "@material/mwc-button";
@@ -8,11 +8,11 @@ import { fireEvent } from "../util/fire-event";
 @customElement("esphome-importable-device-card")
 class ESPHomeImportableDeviceCard extends LitElement {
   @property() public device!: ImportableDevice;
+  @property() public highlightOnAdd = false;
 
   protected render() {
     return html`
       <esphome-card status="DISCOVERED">
-        <div class="status-bar"></div>
         <div class="card-header">${this.device.name}</div>
         <div class="card-content flex">${this.device.project_name}</div>
 
@@ -25,6 +25,16 @@ class ESPHomeImportableDeviceCard extends LitElement {
         </div>
       </esphome-card>
     `;
+  }
+
+  firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    if (!this.highlightOnAdd) {
+      return;
+    }
+    setTimeout(() => {
+      this.shadowRoot!.querySelector("esphome-card")!.getAttention();
+    }, 1000);
   }
 
   static styles = css`

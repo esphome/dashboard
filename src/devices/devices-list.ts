@@ -51,11 +51,14 @@ class ESPHomeDevicesList extends LitElement {
       <div class="grid">
         ${importable.length
           ? html`
-              ${importable.map(
+              ${repeat(
+                importable,
+                (device) => device.name,
                 (device) => html`
                   <esphome-importable-device-card
                     .device=${device}
                     @imported=${this._updateDevices}
+                    .highlightOnAdd=${this._highlightOnAdd}
                   ></esphome-importable-device-card>
                 `
               )}
