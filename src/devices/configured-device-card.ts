@@ -52,16 +52,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     return html`
       <esphome-card
         class=${classMap({
-          "status-online": this.onlineStatus,
+          "status-update-available": updateAvailable,
           "status-offline": this.onlineStatus === false,
           highlight: this.highlight,
         })}
       >
-        <div class="status-bar">
-          ${this.onlineStatus !== false
-            ? ""
-            : html`<div class="status-text">OFFLINE</div>`}
-        </div>
+        <div class="status-bar"></div>
         <div class="card-header">${this.device.name}</div>
 
         ${content.length
@@ -162,10 +158,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
     .status-bar {
       display: none;
-    }
-    .status-offline .status-bar {
-      display: block;
-      background-color: var(--alert-error-color);
       position: absolute;
       height: 4px;
       left: 0;
@@ -174,13 +166,29 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       border-top-left-radius: 2px;
       border-top-right-radius: 2px;
     }
-    .status-offline .status-text {
+    .status-bar::after {
+      display: block;
       position: absolute;
       right: 4px;
       top: 5px;
-      color: var(--alert-error-color);
       font-weight: bold;
       font-size: 12px;
+    }
+    .status-update-available .status-bar {
+      display: block;
+      background-color: #3f51b5;
+      color: #3f51b5;
+    }
+    .status-update-available .status-bar::after {
+      content: "UPDATE AVAILABLE";
+    }
+    .status-offline .status-bar {
+      display: block;
+      color: var(--alert-error-color);
+      background-color: var(--alert-error-color);
+    }
+    .status-offline .status-bar::after {
+      content: "OFFLINE";
     }
 
     .tooltip-container {
