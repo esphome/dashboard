@@ -42,4 +42,4 @@ export const refreshDevices = () => {
 };
 
 export const canUpdateDevice = (device: ConfiguredDevice) =>
-  device.current_version !== device.deployed_version;
+  device.current_version > device.deployed_version
