@@ -22,7 +22,7 @@ const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
   NEW: "rgb(255, 165, 0)",
   OFFLINE: "var(--alert-error-color)",
-  "UPDATE AVAILABLE": "#3f51b5",
+  "UPDATE AVAILABLE": "var(--update-available-color)",
 };
 
 @customElement("esphome-configured-device-card")
@@ -136,6 +136,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   static styles = css`
+    :host {
+      --update-available-color: #2e3dd4;
+    }
     esphome-card {
       height: 100%;
       display: flex;
@@ -175,7 +178,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       --mdc-icon-button-size: 32px;
     }
     .update-available {
-      --mdc-theme-primary: #3f51b5;
+      --mdc-theme-primary: var(--update-available-color);
     }
 
     .tooltip-container {
