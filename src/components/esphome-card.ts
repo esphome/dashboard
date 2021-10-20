@@ -66,7 +66,7 @@ export class ESPHomeCard extends LitElement {
     }
 
     :host(.highlight) {
-      animation: highlight 0.7s alternate infinite ease-in;
+      animation: highlight 0.5s alternate infinite ease-in;
     }
 
     @keyframes highlight {
@@ -81,7 +81,7 @@ export class ESPHomeCard extends LitElement {
 
   public async getAttention() {
     this.classList.add("highlight");
-    await new Promise((resolve) => setTimeout(resolve, 4200));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     this.classList.remove("highlight");
   }
 
