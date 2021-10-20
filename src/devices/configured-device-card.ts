@@ -148,7 +148,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       text-decoration: none;
     }
     mwc-button {
-      --mdc-theme-primary: #ffab40;
+      --mdc-theme-primary: rgba(0, 0, 0, 0.88);
     }
     esphome-button-menu {
       cursor: pointer;
