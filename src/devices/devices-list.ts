@@ -47,53 +47,42 @@ class ESPHomeDevicesList extends LitElement {
     const importable = this._devices.importable;
 
     return html`
-      <div class="container">
+      <div class="grid">
         ${importable.length
           ? html`
-              <h5>Discovered ESPHome devices</h5>
-              <div class="grid import-container">
-                ${importable.map(
-                  (device) => html`
-                    <esphome-importable-device-card
-                      .device=${device}
-                      @imported=${() => this._handleImported(device)}
-                    ></esphome-importable-device-card>
-                  `
-                )}
-              </div>
+              ${importable.map(
+                (device) => html`
+                  <esphome-importable-device-card
+                    .device=${device}
+                    @imported=${() => this._handleImported(device)}
+                  ></esphome-importable-device-card>
+                `
+              )}
             `
           : ""}
-
-        <div class="grid">
-          ${this._devices.configured.map(
-            (device) => html`<esphome-configured-device-card
-              .device=${device}
-              @deleted=${this._updateDevices}
-              .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-              .highlight=${device.name === this._highlightedName}
-              data-name=${device.name}
-            ></esphome-configured-device-card>`
-          )}
-        </div>
+        ${this._devices.configured.map(
+          (device) => html`<esphome-configured-device-card
+            .device=${device}
+            @deleted=${this._updateDevices}
+            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
+            .highlight=${device.name === this._highlightedName}
+            data-name=${device.name}
+          ></esphome-configured-device-card>`
+        )}
       </div>
     `;
   }
 
   static styles = css`
-    .container {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
-      justify-content: stretch;
-    }
-    .import-container {
-      border-bottom: 1px solid black;
-    }
     .grid {
       display: grid;
       grid-template-columns: 1fr;
       grid-template-columns: 1fr 1fr 1fr;
       grid-column-gap: 1.5rem;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1920px;
+      justify-content: stretch;
     }
     @media only screen and (max-width: 1100px) {
       .grid {
