@@ -537,11 +537,6 @@ export class ESPHomeWizardDialog extends LitElement {
       try {
         await new Promise((resolve, reject) => {
           const unsub = subscribeOnlineStatus((status) => {
-            console.log(
-              this._configFilename,
-              status[this._configFilename],
-              status
-            );
             if (status[this._configFilename]) {
               unsub();
               clearTimeout(timeout);

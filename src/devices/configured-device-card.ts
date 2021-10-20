@@ -198,7 +198,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 3:
-        console.log(this.device);
         const dialog = document.createElement("esphome-delete-device-dialog");
         dialog.name = this.device.name;
         dialog.configuration = this.device.configuration;
