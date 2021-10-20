@@ -20,7 +20,7 @@ import { fireEvent } from "../util/fire-event";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
-  HIGHLIGHT: "rgb(255, 165, 0)",
+  NEW: "rgb(255, 165, 0)",
   OFFLINE: "var(--alert-error-color)",
   "UPDATE AVAILABLE": "#3f51b5",
 };
@@ -64,7 +64,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
     const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
-      ? "HIGHLIGHT"
+      ? "NEW"
       : this.onlineStatus === false
       ? "OFFLINE"
       : updateAvailable
