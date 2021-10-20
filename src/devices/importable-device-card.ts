@@ -11,7 +11,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
 
   protected render() {
     return html`
-      <esphome-card>
+      <esphome-card status="DISCOVERED">
         <div class="status-bar"></div>
         <div class="card-header">${this.device.name}</div>
         <div class="card-content flex">${this.device.project_name}</div>
@@ -29,6 +29,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
 
   static styles = css`
     esphome-card {
+      --status-color: #4caf50;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -38,32 +39,6 @@ class ESPHomeImportableDeviceCard extends LitElement {
     }
     mwc-button {
       --mdc-theme-primary: #4caf50;
-    }
-    .status-bar {
-      display: none;
-      position: absolute;
-      height: 4px;
-      left: 0;
-      right: 0;
-      top: 0;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-    .status-bar::after {
-      display: block;
-      position: absolute;
-      right: 4px;
-      top: 5px;
-      font-weight: bold;
-      font-size: 12px;
-    }
-    .status-bar {
-      display: block;
-      background-color: #4caf50;
-      color: #4caf50;
-    }
-    .status-bar::after {
-      content: "DISCOVERED";
     }
   `;
 

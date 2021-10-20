@@ -1,8 +1,10 @@
 import { css, html, LitElement, TemplateResult } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 @customElement("esphome-card")
 export class ESPHomeCard extends LitElement {
+  @property() public status?: string;
+
   static styles = css`
     :host {
       background: var(--card-background-color, white);
@@ -39,10 +41,48 @@ export class ESPHomeCard extends LitElement {
       border-top: 1px solid var(--divider-color, #e8e8e8);
       padding: 5px 16px;
     }
+
+    .status-bar {
+      display: block;
+      background-color: var(--status-color);
+      color: var(--status-color);
+      position: absolute;
+      height: 4px;
+      left: 0;
+      right: 0;
+      top: 0;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+      transition: all 0.2s ease-in-out;
+    }
+    .status-bar::after {
+      display: block;
+      position: absolute;
+      right: 2px;
+      top: 3px;
+      font-weight: bold;
+      font-size: 12px;
+      content: attr(data-status);
+    }
   `;
 
+  public async getAttention() {
+    if (!this.status) {
+      return;
+    }
+    const bar = this.shadowRoot!.querySelector(".status-bar") as HTMLDivElement;
+    bar.style.height = "100%";
+    await new Promise((resolve) => setTimeout(resolve, 750));
+    bar.style.height = "";
+  }
+
   protected render(): TemplateResult {
-    return html`<slot></slot>`;
+    return html`
+      ${this.status
+        ? html`<div class="status-bar" data-status=${this.status}></div>`
+        : ""}
+      <slot></slot>
+    `;
   }
 }
 
