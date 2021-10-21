@@ -74,7 +74,7 @@ export class ESPHomeHeaderMenu extends LitElement {
   };
 
   private _handleUpdateAll() {
-    if (!confirm(`Do you wan to update all devices?`)) {
+    if (!confirm(`Do you want to update all devices?`)) {
       return;
     }
     openUpdateAllDialog();
