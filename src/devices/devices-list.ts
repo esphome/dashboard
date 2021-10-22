@@ -8,6 +8,7 @@ import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import {classMap} from 'lit/directives/class-map.js';
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -43,9 +44,10 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const importable = this._devices.importable;
-
+    const numCards = importable.length + this._devices.configured.length;
+    const classes = {'grid-narrow': (numCards <= 12)}
     return html`
-      <div class="grid">
+      <div class="grid ${classMap(classes)}">
         ${importable.length
           ? html`
               ${repeat(
@@ -85,28 +87,29 @@ class ESPHomeDevicesList extends LitElement {
   static styles = css`
     .grid {
       display: grid;
-      grid-template-columns: 1fr;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-column-gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, 500px);
+      grid-column-gap: 12px;
       margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
-      justify-content: stretch;
+      width: 96%;
+      justify-content: center;
     }
     @media only screen and (max-width: 1100px) {
       .grid {
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 1.5rem;
+        grid-template-columns: minmax(auto, 500px) minmax(auto, 500px);
+        grid-column-gap: 12px;
       }
     }
     @media only screen and (max-width: 750px) {
       .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(auto, 500px);
         grid-column-gap: 0;
       }
       .container {
         width: 100%;
       }
+    }
+    .grid-narrow {
+      max-width: 1920px;
     }
     esphome-configured-device-card,
     esphome-importable-device-card {
