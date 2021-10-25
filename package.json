@@ -27,7 +27,7 @@
     "@material/mwc-formfield": "^0.25.2",
     "@material/mwc-icon-button": "^0.25.2",
     "@material/mwc-list": "^0.25.2",
-    "@material/mwc-menu": "^0.25.2",
+    "@material/mwc-menu": "^0.25.3",
     "@material/mwc-radio": "^0.25.2",
     "@material/mwc-textfield": "^0.25.2",
     "@polymer/paper-tooltip": "^3.0.1",
