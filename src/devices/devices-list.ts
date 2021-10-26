@@ -8,7 +8,7 @@ import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
-import {classMap} from 'lit/directives/class-map.js';
+import { classMap } from "lit/directives/class-map.js";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -45,7 +45,7 @@ class ESPHomeDevicesList extends LitElement {
 
     const importable = this._devices.importable;
     const numCards = importable.length + this._devices.configured.length;
-    const classes = {'grid-narrow': (numCards <= 12)}
+    const classes = { "grid-narrow": numCards <= 12 };
     return html`
       <div class="grid ${classMap(classes)}">
         ${importable.length
