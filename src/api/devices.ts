@@ -10,6 +10,7 @@ export interface ConfiguredDevice {
   path: string;
   comment: string;
   address: string;
+  web_port: number;
   target_platform: string;
 }
 
