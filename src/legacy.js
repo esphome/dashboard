@@ -71,6 +71,8 @@ export const openEditDialog = (filename) => {
   uploadButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.onclick = () => saveFile(editorActiveFilename);
   if (
+    editorActiveFilename === ".secrets.yaml" ||
+    editorActiveFilename === ".secrets.yml" ||
     editorActiveFilename === "secrets.yaml" ||
     editorActiveFilename === "secrets.yml"
   ) {
