@@ -26,6 +26,11 @@ export class ESPHomeHeaderMenu extends LitElement {
         ></mwc-button>
         <mwc-button
           icon="lock"
+          label=".Secrets"
+          @click=${this._handleEditDotSecrets}
+        ></mwc-button>
+        <mwc-button
+          icon="lock"
           label="Secrets"
           @click=${this._handleEditSecrets}
         ></mwc-button>
@@ -46,6 +51,7 @@ export class ESPHomeHeaderMenu extends LitElement {
       >
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
         <mwc-list-item>Update All</mwc-list-item>
+        <mwc-list-item>.Secrets Editor</mwc-list-item>
         <mwc-list-item>Secrets Editor</mwc-list-item>
         ${this.logoutUrl
           ? html`
@@ -80,6 +86,10 @@ export class ESPHomeHeaderMenu extends LitElement {
     openUpdateAllDialog();
   }
 
+  private _handleEditDotSecrets() {
+    openEditDialog(".secrets.yaml");
+  }
+
   private _handleEditSecrets() {
     openEditDialog("secrets.yaml");
   }
@@ -88,6 +98,9 @@ export class ESPHomeHeaderMenu extends LitElement {
     switch (ev.detail.index) {
       case 0:
         this._handleUpdateAll();
+        break;
+      case 1:
+        this._handleEditDotSecrets();
         break;
       case 1:
         this._handleEditSecrets();
