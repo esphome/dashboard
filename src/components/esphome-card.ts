@@ -5,6 +5,9 @@ import { customElement, property } from "lit/decorators.js";
 export class ESPHomeCard extends LitElement {
   @property() public status?: string;
 
+  @property({ attribute: "no-status-bar", reflect: true, type: Boolean })
+  public noStatusBar = false;
+
   static styles = css`
     :host {
       background: var(--card-background-color, white);
@@ -63,6 +66,12 @@ export class ESPHomeCard extends LitElement {
       font-weight: bold;
       font-size: 12px;
       content: attr(data-status);
+    }
+    :host([no-status-bar]) .status-bar {
+      height: 0px;
+    }
+    :host([no-status-bar]) .status-bar::after {
+      top: -1px;
     }
 
     :host(.highlight) {
