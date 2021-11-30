@@ -358,6 +358,7 @@ class ESPHomeInstallDialog extends LitElement {
       if (esploader?.connected) {
         console.log("Disconnecting esp");
         await esploader.disconnect();
+        await esploader.port.close();
       }
     }
   }
