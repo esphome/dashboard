@@ -30,7 +30,7 @@
     "@material/mwc-radio": "^0.25.3",
     "@material/mwc-textfield": "^0.25.3",
     "@polymer/paper-tooltip": "^3.0.1",
-    "esp-web-flasher": "^3.2.0",
+    "esp-web-flasher": "^4.0.0",
     "lit": "^2.0.2",
     "tslib": "^2.3.1"
   }
