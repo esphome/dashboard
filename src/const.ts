@@ -2,8 +2,7 @@ import { CHIP_FAMILY_ESP32, CHIP_FAMILY_ESP8266 } from "esp-web-flasher";
 import { svg } from "lit";
 
 export const supportsWebSerial = "serial" in navigator;
-export const allowsWebSerial =
-  location.protocol === "https:" || location.hostname === "localhost";
+export const allowsWebSerial = window.isSecureContext;
 
 // Platforms supported by ESPHome
 export const chipFamilyToPlatform = {
