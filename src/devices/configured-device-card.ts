@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   NEW: "rgb(255, 165, 0)",
   OFFLINE: "var(--alert-error-color)",
   "UPDATE AVAILABLE": "var(--update-available-color)",
+  ONLINE: "rgba(0,0,0,.5)",
 };
 
 @customElement("esphome-configured-device-card")
@@ -68,10 +69,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       ? "OFFLINE"
       : updateAvailable
       ? "UPDATE AVAILABLE"
-      : undefined;
+      : "ONLINE";
     return html`
       <esphome-card
         .status=${status}
+        .noStatusBar=${status === "ONLINE"}
         style=${styleMap({
           "--status-color": status === undefined ? "" : STATUS_COLORS[status],
         })}
@@ -108,7 +110,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                       : ``
                   }`}
                   target="_blank"
-                >
                   ><mwc-button label="Open"></mwc-button
                 ></a>
               `
