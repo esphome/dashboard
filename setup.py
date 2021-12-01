@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="esphome-dashboard",
-    version="20211021.1",
+    version="20211201.0",
     description="ESPHome dashboard",
     url="https://github.com/esphome/dashboard",
     author="Nabu Casa",
