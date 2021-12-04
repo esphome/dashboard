@@ -110,7 +110,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                       : ``
                   }`}
                   target="_blank"
-                  ><mwc-button label="Open"></mwc-button
+                  ><mwc-button label="Visit"></mwc-button
                 ></a>
               `
             : ""}
