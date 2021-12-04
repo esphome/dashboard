@@ -17,6 +17,7 @@ class ESPHomeLogsDialog extends LitElement {
   protected render() {
     return html`
       <esphome-process-dialog
+        always-show-close
         .heading=${`Logs ${this.configuration}`}
         .type=${"logs"}
         .spawnParams=${{ configuration: this.configuration, port: this.target }}

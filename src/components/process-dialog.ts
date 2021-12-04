@@ -11,6 +11,9 @@ export class ESPHomeProcessDialog extends LitElement {
   @property() public spawnParams?: Record<string, any>;
   @property() public type!: string;
 
+  @property({ type: Boolean, attribute: "always-show-close" })
+  public alwaysShowClose = false;
+
   @state() private _result?: number;
 
   protected render() {
@@ -32,7 +35,9 @@ export class ESPHomeProcessDialog extends LitElement {
         <mwc-button
           slot="primaryAction"
           dialogAction="close"
-          .label=${this._result === undefined ? "Stop" : "Close"}
+          .label=${this._result === undefined && !this.alwaysShowClose
+            ? "Stop"
+            : "Close"}
         ></mwc-button>
       </mwc-dialog>
     `;
