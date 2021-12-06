@@ -25,7 +25,12 @@ import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
 import { refreshDevices } from "../api/devices";
-import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
+import {
+  checkHasWifiSecrets,
+  SECRET_WIFI_PASSWORD,
+  SECRET_WIFI_SSID,
+  storeWifiSecrets,
+} from "../api/wifi";
 import { openInstallDialog } from "../install-update";
 
 const OK_ICON = "🎉";
@@ -51,7 +56,10 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _customBoard = "";
 
-  private _data: Partial<CreateConfigParams> = {};
+  private _data: Partial<CreateConfigParams> = {
+    ssid: `!secret ${SECRET_WIFI_SSID}`,
+    psk: `!secret ${SECRET_WIFI_PASSWORD}`,
+  };
 
   private _wifi?: { ssid: string; password: string };
 

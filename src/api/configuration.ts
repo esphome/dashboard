@@ -2,6 +2,8 @@ import { fetchApiJson, fetchApiText, streamLogs } from ".";
 
 export interface CreateConfigParams {
   name: string;
+  ssid: string;
+  psk: string;
   board: string;
   platform: "ESP8266" | "ESP32";
 }
