@@ -4,6 +4,7 @@ import { ImportableDevice, importDevice } from "../api/devices";
 import "@material/mwc-button";
 import "../components/esphome-card";
 import { fireEvent } from "../util/fire-event";
+import { openAdoptDialog } from "../adopt";
 
 @customElement("esphome-importable-device-card")
 class ESPHomeImportableDeviceCard extends LitElement {
@@ -53,8 +54,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
   `;
 
   private async _handleAdopt() {
-    await importDevice(this.device);
-    fireEvent(this, "adopted");
+    openAdoptDialog(this.device, () => fireEvent(this, "adopted"));
   }
 }
 
