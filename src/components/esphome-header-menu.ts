@@ -7,6 +7,7 @@ import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../legacy";
 import { openUpdateAllDialog } from "../update-all";
+import { SECRETS_FILE } from "../api/secrets";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
@@ -81,7 +82,7 @@ export class ESPHomeHeaderMenu extends LitElement {
   }
 
   private _handleEditSecrets() {
-    openEditDialog("secrets.yaml");
+    openEditDialog(SECRETS_FILE);
   }
 
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {

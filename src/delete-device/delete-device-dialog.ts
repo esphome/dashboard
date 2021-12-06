@@ -20,14 +20,15 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
         <div>Are you sure you want to delete ${this.name}?</div>
         <mwc-button
           slot="primaryAction"
+          label="Delete"
           dialogAction="close"
           @click=${this._handleDelete}
-        >
-          Delete
-        </mwc-button>
-        <mwc-button slot="secondaryAction" dialogAction="cancel">
-          Cancel
-        </mwc-button>
+        ></mwc-button>
+        <mwc-button
+          slot="secondaryAction"
+          label="Cancel"
+          dialogAction="cancel"
+        ></mwc-button>
       </mwc-dialog>
     `;
   }
