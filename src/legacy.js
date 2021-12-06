@@ -19,6 +19,10 @@ const wsUrl = wsLoc.href;
 /**
  *  Node Editing
  */
+const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
+wifi_ssid: "REPLACEME"
+wifi_password: "REPLACEME"
+`;
 
 let editorActiveFilename = null;
 let editorActiveSecrets = false;
@@ -53,6 +57,7 @@ editor.commands.addCommand({
 
 export const openEditDialog = (filename) => {
   editorActiveFilename = filename;
+  const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
   const filenameField = document.querySelector(
     "#js-editor-modal #js-node-filename"
   );
@@ -70,10 +75,7 @@ export const openEditDialog = (filename) => {
   saveButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.setAttribute("data-filename", editorActiveFilename);
   uploadButton.onclick = () => saveFile(editorActiveFilename);
-  if (
-    editorActiveFilename === "secrets.yaml" ||
-    editorActiveFilename === "secrets.yml"
-  ) {
+  if (isSecrets) {
     uploadButton.style.display = "none";
     editorActiveSecrets = true;
   } else {
@@ -96,6 +98,9 @@ export const openEditDialog = (filename) => {
   })
     .then((res) => res.text())
     .then((response) => {
+      if (response === "" && isSecrets) {
+        response = EMPTY_SECRETS;
+      }
       editor.setValue(response, -1);
       editor.setOption("readOnly", false);
       loadingIndicator.style.display = "none";
