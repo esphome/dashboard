@@ -25,6 +25,8 @@ import { flashConfiguration } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
 import { refreshDevices } from "../api/devices";
+import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
+import { openInstallDialog } from "../install-update";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -44,9 +46,14 @@ export class ESPHomeWizardDialog extends LitElement {
 
   @state() private _board: "ESP32" | "ESP8266" | "CUSTOM" = "ESP32";
 
+  // undefined = not loaded
+  @state() private _hasWifiSecrets: undefined | boolean = undefined;
+
   private _customBoard = "";
 
   private _data: Partial<CreateConfigParams> = {};
+
+  private _wifi?: { ssid: string; password: string };
 
   @state() private _writeProgress = 0;
 
@@ -72,8 +79,7 @@ export class ESPHomeWizardDialog extends LitElement {
     let hideActions = false;
 
     if (this._state === "basic_config") {
-      heading = "Create configuration";
-      content = this._renderBasicConfig();
+      [heading, content, hideActions] = this._renderBasicConfig();
     } else if (this._state === "pick_board") {
       heading = "Select your ESP device";
       content = this._renderPickBoard();
@@ -102,11 +108,7 @@ export class ESPHomeWizardDialog extends LitElement {
       content = this._renderProgress("Finding device on network");
       hideActions = true;
     } else if (this._state === "done") {
-      if (this._error) {
-        content = this._renderMessage(WARNING_ICON, this._error, true);
-      } else {
-        content = this._renderMessage(OK_ICON, `Configuration created!`, true);
-      }
+      content = this._renderDone();
     }
 
     return html`
@@ -157,8 +159,13 @@ export class ESPHomeWizardDialog extends LitElement {
     `;
   }
 
-  private _renderBasicConfig() {
-    return html`
+  private _renderBasicConfig(): [string | undefined, TemplateResult, boolean] {
+    if (this._hasWifiSecrets === undefined) {
+      return [undefined, this._renderProgress("Initializing"), true];
+    }
+    const heading = "Create configuration";
+    let hideActions = false;
+    const content = html`
       ${supportsWebSerial
         ? ""
         : html`
@@ -188,24 +195,38 @@ export class ESPHomeWizardDialog extends LitElement {
         @blur=${this._cleanNameBlur}
       ></mwc-textfield>
 
-      <div>
-        Enter your Wi-Fi information so your device can connect to your wireless
-        network.
-      </div>
+      ${this._hasWifiSecrets
+        ? html`
+            <div>
+              This device will be configured to connect to the Wi-Fi network
+              stored in your secrets.
+            </div>
+          `
+        : html`
+            <div>
+              Enter the credentials of the Wi-Fi network that you want your
+              device to connect to.
+            </div>
+            <div>
+              This information will be stored in your secrets and used for this
+              and future devices. You can edit the information later by editing
+              your secrets at the top of the page.
+            </div>
 
-      <mwc-textfield
-        label="Wi-Fi SSID"
-        name="ssid"
-        required
-        @blur=${this._cleanSSIDBlur}
-      ></mwc-textfield>
+            <mwc-textfield
+              label="Network name"
+              name="ssid"
+              required
+              @blur=${this._cleanSSIDBlur}
+            ></mwc-textfield>
 
-      <mwc-textfield
-        label="Wi-Fi password"
-        name="password"
-        type="password"
-        helper="Leave blank if no password"
-      ></mwc-textfield>
+            <mwc-textfield
+              label="Password"
+              name="password"
+              type="password"
+              helper="Leave blank if no password"
+            ></mwc-textfield>
+          `}
 
       <mwc-button
         slot="primaryAction"
@@ -220,6 +241,8 @@ export class ESPHomeWizardDialog extends LitElement {
         label="Cancel"
       ></mwc-button>
     `;
+
+    return [heading, content, hideActions];
   }
 
   private _renderPickBoard() {
@@ -321,8 +344,43 @@ export class ESPHomeWizardDialog extends LitElement {
     `;
   }
 
+  private _renderDone() {
+    if (this._error) {
+      return this._renderMessage(WARNING_ICON, this._error, true);
+    }
+    return html`
+      <div class="center">
+        <div class="icon">${OK_ICON}</div>
+        Configuration created!
+      </div>
+
+      ${
+        // Users that have webserial got offered the installation step
+        supportsWebSerial
+          ? html`
+              <mwc-button
+                slot="primaryAction"
+                dialogAction="ok"
+                label="Close"
+              ></mwc-button>
+            `
+          : html`
+              <mwc-button
+                slot="primaryAction"
+                dialogAction="ok"
+                label="Install"
+                @click=${() => openInstallDialog(this._data.name!)}
+              ></mwc-button>
+            `
+      }
+    `;
+  }
+
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
+    checkHasWifiSecrets().then((hasWifiSecrets) => {
+      this._hasWifiSecrets = hasWifiSecrets;
+    });
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -367,16 +425,17 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handleBasicConfigSubmit() {
     const nameInput = this._inputName;
-    const ssidInput = this._inputSSID;
 
     const nameValid = nameInput.reportValidity();
-    const ssidValid = ssidInput.reportValidity();
+    const ssidValid = this._hasWifiSecrets
+      ? true
+      : this._inputSSID.reportValidity();
 
     if (!nameValid || !ssidValid) {
       if (!nameValid) {
         nameInput.focus();
       } else {
-        ssidInput.focus();
+        this._inputSSID.focus();
       }
       return;
     }
@@ -392,8 +451,13 @@ export class ESPHomeWizardDialog extends LitElement {
     }
 
     this._data.name = name;
-    this._data.ssid = ssidInput.value;
-    this._data.psk = this._inputPassword.value;
+
+    if (!this._hasWifiSecrets) {
+      this._wifi = {
+        ssid: this._inputSSID.value,
+        password: this._inputPassword.value,
+      };
+    }
 
     // Use set timeout to avoid dialog keydown handler pressing next button too
     setTimeout(() => {
@@ -426,6 +490,9 @@ export class ESPHomeWizardDialog extends LitElement {
     this._busy = true;
 
     try {
+      if (this._wifi) {
+        await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
+      }
       await createConfiguration(this._data as CreateConfigParams);
       refreshDevices();
       this._state = "done";
@@ -449,10 +516,11 @@ export class ESPHomeWizardDialog extends LitElement {
     try {
       try {
         esploader = await connect(console);
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        // User pressed enter.
-        this._error = "Press skip step if you don't want to install it now.";
+        if ((err as DOMException).name !== "NotFoundError") {
+          this._error = err.message || String(err);
+        }
         return;
       }
 

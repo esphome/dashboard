@@ -1,3 +1,10 @@
+export class APIError extends Error {
+  constructor(message: string, public status: number) {
+    super(message);
+    this.name = "APIError";
+  }
+}
+
 const fetchApiBase = async (
   path: Parameters<typeof fetch>[0],
   options?: Parameters<typeof fetch>[1]
@@ -8,7 +15,7 @@ const fetchApiBase = async (
   options.credentials = "same-origin";
   const resp = await fetch(path, options);
   if (!resp.ok) {
-    throw new Error(`Request not successful (${resp.status})`);
+    throw new APIError(`Request not successful (${resp.status})`, resp.status);
   }
   return resp;
 };
