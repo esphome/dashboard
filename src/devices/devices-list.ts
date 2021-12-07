@@ -22,7 +22,6 @@ class ESPHomeDevicesList extends LitElement {
     if (this._devices === undefined) {
       return html``;
     }
-    this._devices = { configured: [], importable: [] };
     if (
       this._devices.configured.length === 0 &&
       this._devices.importable.length === 0
