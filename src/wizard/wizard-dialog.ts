@@ -171,7 +171,7 @@ export class ESPHomeWizardDialog extends LitElement {
     if (this._hasWifiSecrets === undefined) {
       return [undefined, this._renderProgress("Initializing"), true];
     }
-    const heading = "Create configuration";
+    const heading = "New device";
     let hideActions = false;
     const content = html`
       ${supportsWebSerial

@@ -22,6 +22,7 @@ class ESPHomeDevicesList extends LitElement {
     if (this._devices === undefined) {
       return html``;
     }
+    this._devices = { configured: [], importable: [] };
     if (
       this._devices.configured.length === 0 &&
       this._devices.importable.length === 0
@@ -33,9 +34,9 @@ class ESPHomeDevicesList extends LitElement {
           <p>
             <mwc-button
               raised
-              label="Add device"
+              label="New device"
               icon="add"
-              @click=${openWizardDialog}
+              @click=${this._handleOpenWizardClick}
             ></mwc-button>
           </p>
         </div>
@@ -80,6 +81,10 @@ class ESPHomeDevicesList extends LitElement {
         )}
       </div>
     `;
+  }
+
+  private _handleOpenWizardClick() {
+    openWizardDialog();
   }
 
   static styles = css`
