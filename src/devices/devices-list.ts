@@ -33,9 +33,9 @@ class ESPHomeDevicesList extends LitElement {
           <p>
             <mwc-button
               raised
-              label="Add device"
+              label="New device"
               icon="add"
-              @click=${openWizardDialog}
+              @click=${this._handleOpenWizardClick}
             ></mwc-button>
           </p>
         </div>
@@ -80,6 +80,10 @@ class ESPHomeDevicesList extends LitElement {
         )}
       </div>
     `;
+  }
+
+  private _handleOpenWizardClick() {
+    openWizardDialog();
   }
 
   static styles = css`
