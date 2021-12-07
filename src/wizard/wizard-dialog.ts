@@ -657,6 +657,10 @@ export class ESPHomeWizardDialog extends LitElement {
     a {
       color: var(--mdc-theme-primary);
     }
+    mwc-textfield:first-child,
+    div:first-child {
+      margin-top: 0;
+    }
     mwc-textfield,
     mwc-formfield {
       display: block;
@@ -666,7 +670,7 @@ export class ESPHomeWizardDialog extends LitElement {
       margin-bottom: 16px;
     }
     mwc-textfield,
-    mwc-textfield + div {
+    mwc-textfield:not([required]) + div {
       margin-top: 16px;
     }
     .center {
