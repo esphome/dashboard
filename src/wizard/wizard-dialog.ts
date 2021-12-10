@@ -606,7 +606,6 @@ export class ESPHomeWizardDialog extends LitElement {
 
       // Reset the device so it can load new firmware and come online
       await esploader.hardReset();
-      await esploader.disconnect();
 
       this._state = "wait_come_online";
 
@@ -633,8 +632,13 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "done";
     } finally {
       this._busy = false;
-      if (esploader?.connected) {
-        await esploader.disconnect();
+      if (esploader) {
+        if (esploader.connected) {
+          console.log("Disconnecting esp");
+          await esploader.disconnect();
+        }
+        console.log("Closing port");
+        await esploader.port.close();
       }
       if (removeConfig) {
         await deleteConfiguration(this._configFilename);
