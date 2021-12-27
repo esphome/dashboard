@@ -25,8 +25,6 @@ export class ESPHomeFab extends LitElement {
       position: fixed;
       right: 23px;
       bottom: 23px;
-      padding-top: 15px;
-      margin-bottom: 0;
       z-index: 997;
       --mdc-theme-secondary: var(--alert-success-color);
     }
