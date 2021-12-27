@@ -358,33 +358,27 @@ export class ESPHomeWizardDialog extends LitElement {
     return html`
       <div class="center">
         <div class="icon">${OK_ICON}</div>
-        Configuration created!
+        <b>Configuration created!</b>
       </div>
-
-      ${
-        // Users that have webserial got offered the installation step
-        supportsWebSerial
-          ? html`
-              <mwc-button
-                slot="primaryAction"
-                dialogAction="ok"
-                label="Close"
-              ></mwc-button>
-            `
-          : html`
-              <mwc-button
-                slot="secondaryAction"
-                dialogAction="close"
-                label="Skip"
-              ></mwc-button>
-              <mwc-button
-                slot="primaryAction"
-                dialogAction="ok"
-                label="Install"
-                @click=${() => openInstallDialog(this._data.name!)}
-              ></mwc-button>
-            `
-      }
+      <div>
+        You can now install the configuration to your device. The first time
+        this requires a cable.
+      </div>
+      <div>
+        Once the device is installed and connected to your network, you will be
+        able to manage it wirelessly.
+      </div>
+      <mwc-button
+        slot="secondaryAction"
+        dialogAction="close"
+        label="Skip"
+      ></mwc-button>
+      <mwc-button
+        slot="primaryAction"
+        dialogAction="ok"
+        label="Install"
+        @click=${() => openInstallDialog(`${this._data.name!}.yaml`)}
+      ></mwc-button>
     `;
   }
 
