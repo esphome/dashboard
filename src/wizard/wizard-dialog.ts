@@ -343,7 +343,6 @@ export class ESPHomeWizardDialog extends LitElement {
         @click=${this._handleConnectSerialSubmit}
       ></mwc-button>
       <mwc-button
-        no-attention
         slot="secondaryAction"
         label="Skip this step"
         .disabled=${this._busy}
@@ -373,6 +372,11 @@ export class ESPHomeWizardDialog extends LitElement {
               ></mwc-button>
             `
           : html`
+              <mwc-button
+                slot="secondaryAction"
+                dialogAction="close"
+                label="Skip"
+              ></mwc-button>
               <mwc-button
                 slot="primaryAction"
                 dialogAction="ok"
@@ -716,7 +720,8 @@ export class ESPHomeWizardDialog extends LitElement {
       text-decoration: underline;
       cursor: pointer;
     }
-    mwc-button[no-attention] {
+
+    mwc-button[slot="secondaryAction"] {
       --mdc-theme-primary: #444;
       --mdc-theme-on-primary: white;
     }
