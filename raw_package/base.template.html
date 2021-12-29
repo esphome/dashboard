@@ -45,7 +45,7 @@
     <footer class="page-footer grey darken-4">
       <div class="container">
         <div class="left">
-          Copyright © 2019-2021 ESPHome |
+          Copyright © 2019-2022 ESPHome |
           <a href="https://esphome.io/guides/supporters.html" target="_blank"
             >Fund development</a
           >
@@ -57,51 +57,6 @@
       </div>
     </footer>
 
-    <div id="js-editor-modal" class="modal modal-fixed-footer no-autoinit">
-      <div class="modal-content">
-        <h4>Editing: <code id="js-node-filename" class="inlinecode"></code></h4>
-
-        <div id="js-loading-indicator">
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div>
-              <div class="gap-patch">
-                <div class="circle"></div>
-              </div>
-              <div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="js-editor-area" class="editor"></div>
-      </div>
-      <div class="modal-footer">
-        <mwc-button label="Save" data-action="save"></mwc-button>
-        <mwc-button
-          class="modal-close"
-          label="Install"
-          data-action="upload"
-        ></mwc-button>
-        <mwc-button
-          class="modal-close"
-          label="Close"
-          data-action="close"
-        ></mwc-button>
-      </div>
-    </div>
-
-    <script
-      src="{{ get_static_file_url('js/vendor/ace/ace.js') }}"
-      type="text/javascript"
-      charset="utf-8"
-    ></script>
-    <script
-      src="{{ get_static_file_url('js/esphome/index.js') }}"
-      type="module"
-    ></script>
+    {% block footer %}{% end %}
   </body>
 </html>
