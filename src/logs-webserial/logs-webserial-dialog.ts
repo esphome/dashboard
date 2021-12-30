@@ -1,15 +1,12 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import "@material/mwc-dialog";
 import "@material/mwc-button";
-import "@material/mwc-list/mwc-list-item.js";
-import "../components/remote-process";
-import { openEditDialog } from "../legacy";
-import "../components/process-dialog";
 import "./ewt-console";
 
 @customElement("esphome-logs-webserial-dialog")
 class ESPHomeLogsWebSerialDialog extends LitElement {
-  @property() public configuration!: string;
+  @property() public configuration?: string;
 
   @property() public port!: SerialPort;
 
@@ -17,7 +14,7 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        .heading=${`Logs ${this.configuration}`}
+        .heading=${this.configuration ? `Logs ${this.configuration}` : "Logs"}
         scrimClickAction
         @closed=${this._handleClose}
       >
@@ -26,12 +23,16 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
           .logger=${console}
           .allowInput=${false}
         ></ewt-console>
-        <mwc-button
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Edit"
-          @click=${this._openEdit}
-        ></mwc-button>
+        ${this.configuration
+          ? html`
+              <mwc-button
+                slot="secondaryAction"
+                dialogAction="close"
+                label="Edit"
+                @click=${this._openEdit}
+              ></mwc-button>
+            `
+          : ""}
         <mwc-button
           slot="secondaryAction"
           label="Reset Device"
@@ -46,8 +47,9 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
     `;
   }
 
-  private _openEdit() {
-    openEditDialog(this.configuration);
+  private async _openEdit() {
+    const mod = await import("../legacy");
+    mod.openEditDialog(this.configuration);
   }
 
   private async _handleClose() {

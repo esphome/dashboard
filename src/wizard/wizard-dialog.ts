@@ -31,7 +31,7 @@ import {
   SECRET_WIFI_SSID,
   storeWifiSecrets,
 } from "../api/wifi";
-import { openInstallDialog } from "../install-update";
+import { openInstallChooseDialog } from "../install-choose";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -377,7 +377,7 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         dialogAction="ok"
         label="Install"
-        @click=${() => openInstallDialog(`${this._data.name!}.yaml`)}
+        @click=${() => openInstallChooseDialog(`${this._data.name!}.yaml`)}
       ></mwc-button>
     `;
   }

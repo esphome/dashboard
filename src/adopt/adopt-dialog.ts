@@ -7,7 +7,7 @@ import type { TextField } from "@material/mwc-textfield";
 import { fireEvent } from "../util/fire-event";
 import { ImportableDevice, importDevice } from "../api/devices";
 import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
-import { openInstallDialog } from "../install-update";
+import { openInstallChooseDialog } from "../install-choose";
 
 @customElement("esphome-adopt-dialog")
 class ESPHomeAdoptDialog extends LitElement {
@@ -39,7 +39,8 @@ class ESPHomeAdoptDialog extends LitElement {
                 slot="primaryAction"
                 dialogAction="install"
                 label="Install"
-                @click=${() => openInstallDialog(`${this.device.name}.yaml`)}
+                @click=${() =>
+                  openInstallChooseDialog(`${this.device.name}.yaml`)}
               ></mwc-button>
               <mwc-button
                 slot="secondaryAction"

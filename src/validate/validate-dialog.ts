@@ -2,7 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
-import { openInstallDialog } from "../install-update";
+import { openInstallChooseDialog } from "../install-choose";
 import { openEditDialog } from "../legacy";
 import "../components/process-dialog";
 
@@ -44,7 +44,7 @@ class ESPHomeValidateDialog extends LitElement {
   }
 
   private _openInstall() {
-    openInstallDialog(this.configuration);
+    openInstallChooseDialog(this.configuration);
   }
 
   private _handleProcessDone(ev: { detail: number }) {
