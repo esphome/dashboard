@@ -1,126 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - ESPHome</title>
+// prettier-ignore
+{% extends base.template.html %}
 
-    <link
-      rel="shortcut icon"
-      href="{{ get_static_file_url('images/favicon.ico') }}"
-    />
+{% block title %}Dashboard{% end %}
 
-    <link
-      rel="stylesheet"
-      href="{{ get_static_file_url('fonts/material-icons/material-icons.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ get_static_file_url('css/vendor/materialize/materialize.min.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ get_static_file_url('css/esphome-2.css') }}"
-    />
+{% block header %}
+<esphome-header-menu
+  logout-url="{% if login_enabled %}{{ relative_url }}logout{% end %}"
+></esphome-header-menu>
+{% end %}
 
-    <script src="{{ get_static_file_url('js/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
+{% block main %}
+<esphome-devices-list></esphome-devices-list>
+<esphome-fab></esphome-fab>
+{% end %}
 
-    {% if streamer_mode %}
-    <style>
-      .log-secret {
-        visibility: hidden !important;
-      }
-    </style>
-    {% end %}
-  </head>
+{% block footer %}
+<div id="js-editor-modal" class="modal modal-fixed-footer no-autoinit">
+  <div class="modal-content">
+    <h4>Editing: <code id="js-node-filename" class="inlinecode"></code></h4>
 
-  <body>
-    <main>
-      <esphome-devices-list></esphome-devices-list>
-
-      <!-- Config Editor Modal -->
-      <div id="js-editor-modal" class="modal modal-fixed-footer no-autoinit">
-        <div class="modal-content">
-          <h4>
-            Editing: <code id="js-node-filename" class="inlinecode"></code>
-          </h4>
-
-          <div id="js-loading-indicator">
-            <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                  <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div>
+    <div id="js-loading-indicator">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
           </div>
-
-          <div id="js-editor-area" class="editor"></div>
-        </div>
-        <div class="modal-footer">
-          <mwc-button label="Save" data-action="save"></mwc-button>
-          <mwc-button
-            class="modal-close"
-            label="Install"
-            data-action="upload"
-          ></mwc-button>
-          <mwc-button
-            class="modal-close"
-            label="Close"
-            data-action="close"
-          ></mwc-button>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
         </div>
       </div>
-
-      <!-- Add New Node / Launch Wizard Button -->
-      <esphome-fab></esphome-fab>
-    </main>
-
-    <div class="esphome-header">
-      <div>
-        <img
-          src="https://esphome.io/_static/logo-text.svg"
-          alt="ESPHome Logo"
-        />
-      </div>
-      <esphome-header-menu
-        logout-url="{% if login_enabled %}{{ relative_url }}logout{% end %}"
-      >
-      </esphome-header-menu>
     </div>
 
-    <footer class="page-footer grey darken-4">
-      <div class="container">
-        <div class="left">
-          Copyright © 2019-2021 ESPHome |
-          <a href="https://esphome.io/guides/supporters.html" target="_blank"
-            >Fund development</a
-          >
-          |
-          <a href="{{ docs_link }}" target="_blank" rel="noreferrer"
-            >v{{ version }} Documentation</a
-          >
-        </div>
-      </div>
-    </footer>
+    <div id="js-editor-area" class="editor"></div>
+  </div>
+  <div class="modal-footer">
+    <mwc-button label="Save" data-action="save"></mwc-button>
+    <mwc-button
+      class="modal-close"
+      label="Install"
+      data-action="upload"
+    ></mwc-button>
+    <mwc-button
+      class="modal-close"
+      label="Close"
+      data-action="close"
+    ></mwc-button>
+  </div>
+</div>
 
-    <script
-      src="{{ get_static_file_url('js/vendor/ace/ace.js') }}"
-      type="text/javascript"
-      charset="utf-8"
-    ></script>
-    <script
-      src="{{ get_static_file_url('js/esphome/index.js') }}"
-      type="module"
-    ></script>
-  </body>
-</html>
+<script
+  src="{{ get_static_file_url('js/vendor/ace/ace.js') }}"
+  type="text/javascript"
+  charset="utf-8"
+></script>
+<script
+  src="{{ get_static_file_url('js/esphome/index.js') }}"
+  type="module"
+></script>
+{% end %}
