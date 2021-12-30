@@ -76,6 +76,7 @@ class EWDashboard extends LitElement {
     }
     .text {
       margin-left: 16px;
+      padding-right: 8px;
       flex: 1;
     }
     .arrow svg {
