@@ -13,7 +13,7 @@ import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
 import { openValidateDialog } from "../validate";
 import { openEditDialog } from "../legacy";
-import { openInstallDialog } from "../install-update";
+import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
 import { openDeleteDeviceDialog } from "../delete-device";
@@ -222,7 +222,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     openEditDialog(this.device.configuration);
   }
   private _handleInstall() {
-    openInstallDialog(this.device.configuration);
+    openInstallChooseDialog(this.device.configuration);
   }
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);

@@ -1,8 +1,8 @@
 const preload = () => import("./logs-webserial-dialog");
 
 export const openLogsWebSerialDialog = (
-  configuration: string,
-  port: SerialPort
+  port: SerialPort,
+  configuration?: string
 ) => {
   preload();
   const dialog = document.createElement("esphome-logs-webserial-dialog");
