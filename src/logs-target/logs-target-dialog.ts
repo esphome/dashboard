@@ -6,7 +6,7 @@ import "@material/mwc-list/mwc-list-item.js";
 import "../components/remote-process";
 import "../components/process-dialog";
 import { openLogsDialog } from "../logs";
-import { getSerialPorts, SerialPort } from "../api/serial-ports";
+import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
 import {
   allowsWebSerial,
   metaChevronRight,
@@ -19,7 +19,7 @@ import { openLogsWebSerialDialog } from "../logs-webserial";
 class ESPHomeLogsTargetDialog extends LitElement {
   @property() public configuration!: string;
 
-  @state() private _ports?: SerialPort[];
+  @state() private _ports?: ServerSerialPort[];
 
   @state() private _show: "options" | "server_ports" = "options";
 
@@ -144,7 +144,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
       const port = await navigator.serial.requestPort();
       await port.open({ baudRate: 115200 });
       this.shadowRoot!.querySelector("mwc-dialog")!.close();
-      openLogsWebSerialDialog(this.configuration, port);
+      openLogsWebSerialDialog(port, this.configuration);
     } catch (err) {
       console.error(err);
     }

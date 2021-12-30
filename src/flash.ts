@@ -1,10 +1,5 @@
 import { ESPLoader } from "esp-web-flasher";
-import {
-  getConfiguration,
-  getConfigurationManifest,
-  Manifest,
-} from "./api/configuration";
-import { chipFamilyToPlatform } from "./const";
+import { getConfigurationManifest, Manifest } from "./api/configuration";
 
 export const flashConfiguration = async (
   esploader: ESPLoader,
@@ -12,17 +7,6 @@ export const flashConfiguration = async (
   erase: boolean,
   writeProgress: (pct: number) => void
 ) => {
-  const config = await getConfiguration(filename);
-
-  if (
-    chipFamilyToPlatform[esploader.chipFamily] !==
-    config.esp_platform.toUpperCase()
-  ) {
-    throw new Error(
-      `Configuration does not match the platform of the connected device. Expected a ${config.esp_platform.toUpperCase()} device.`
-    );
-  }
-
   let toFlash: Manifest;
 
   try {

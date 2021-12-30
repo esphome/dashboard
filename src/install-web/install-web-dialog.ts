@@ -1,49 +1,37 @@
-// On pick and it's OTA or serial on host
-// Then set window.SELECTED_UPLOAD_PORT to a string.
-
 import { LitElement, html, PropertyValues, css, TemplateResult } from "lit";
-import { customElement, state } from "lit/decorators.js";
-import { getSerialPorts, SerialPort } from "../api/serial-ports";
+import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
-import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
 import { connect, ESPLoader } from "esp-web-flasher";
-import {
-  allowsWebSerial,
-  metaChevronRight,
-  metaHelp,
-  supportsWebSerial,
-} from "../const";
 import {
   compileConfiguration,
   Configuration,
   getConfiguration,
 } from "../api/configuration";
 import { flashConfiguration } from "../flash";
-import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
+import { openInstallWebDialog } from ".";
+import { chipFamilyToPlatform } from "../const";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
 
-@customElement("esphome-install-dialog")
-class ESPHomeInstallDialog extends LitElement {
-  @state() public configuration!: string;
+@customElement("esphome-install-web-dialog")
+class ESPHomeInstallWebDialog extends LitElement {
+  @property() public configuration!: string;
 
-  @state() private _ports?: SerialPort[];
+  @property() public esploader!: ESPLoader;
 
   @state() private _writeProgress = 0;
 
   @state() private _configuration?: Configuration;
 
   @state() private _state:
-    | "pick_option"
-    | "pick_server_port"
     | "connecting_webserial"
     | "prepare_installation"
     | "installing"
-    | "done" = "pick_option";
+    | "done" = "connecting_webserial";
 
   @state() private _error?: string | TemplateResult;
 
@@ -54,88 +42,7 @@ class ESPHomeInstallDialog extends LitElement {
     let content;
     let hideActions = false;
 
-    if (this._state === "pick_option") {
-      heading = "How do you want to install this on your ESP device?";
-      content = html`
-        <mwc-list-item
-          twoline
-          hasMeta
-          .port=${"OTA"}
-          @click=${this._handleLegacyOption}
-        >
-          <span>Wirelessly</span>
-          <span slot="secondary">Requires the device to be online</span>
-          ${metaChevronRight}
-        </mwc-list-item>
-
-        ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-
-        <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
-          <span>Plug into this computer</span>
-          <span slot="secondary">
-            ${supportsWebSerial
-              ? "For devices connected via USB to this computer"
-              : allowsWebSerial
-              ? "Your browser is not supported"
-              : "Dashboard needs to opened via HTTPS"}
-          </span>
-          ${supportsWebSerial ? metaChevronRight : metaHelp}
-        </mwc-list-item>
-
-        <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
-          <span>Plug into the computer running ESPHome Dashboard</span>
-          <span slot="secondary">
-            For devices connected via USB to the server
-          </span>
-          ${metaChevronRight}
-        </mwc-list-item>
-
-        <mwc-list-item twoline hasMeta @click=${this._showCompileDialog}>
-          <span>Manual download</span>
-          <span slot="secondary">
-            Install it yourself using ESPHome Flasher or other tools
-          </span>
-          ${metaChevronRight}
-        </mwc-list-item>
-
-        <mwc-button
-          no-attention
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Cancel"
-        ></mwc-button>
-      `;
-    } else if (this._state === "pick_server_port") {
-      heading = "Pick Server Port";
-      content =
-        this._ports === undefined
-          ? this._renderProgress("Loading serial devices")
-          : this._ports.length === 0
-          ? this._renderMessage(WARNING_ICON, "No serial devices found.", true)
-          : html`
-              ${this._ports.map(
-                (port) => html`
-                  <mwc-list-item
-                    twoline
-                    hasMeta
-                    .port=${port.port}
-                    @click=${this._handleLegacyOption}
-                  >
-                    <span>${port.desc}</span>
-                    <span slot="secondary">${port.port}</span>
-                    ${metaChevronRight}
-                  </mwc-list-item>
-                `
-              )}
-
-              <mwc-button
-                no-attention
-                slot="secondaryAction"
-                dialogAction="close"
-                label="Cancel"
-              ></mwc-button>
-            `;
-    } else if (this._state === "connecting_webserial") {
+    if (this._state === "connecting_webserial") {
       content = this._renderProgress("Connecting");
       hideActions = true;
     } else if (this._state === "prepare_installation") {
@@ -157,7 +64,19 @@ class ESPHomeInstallDialog extends LitElement {
       hideActions = true;
     } else if (this._state === "done") {
       if (this._error) {
-        content = this._renderMessage(WARNING_ICON, this._error, true);
+        content = content = html`
+          ${this._renderMessage(WARNING_ICON, this._error, false)}
+          <mwc-button
+            slot="secondaryAction"
+            dialogAction="ok"
+            label="Close"
+          ></mwc-button>
+          <mwc-button
+            slot="primaryAction"
+            label="Retry"
+            @click=${this._handleRetry}
+          ></mwc-button>
+        `;
       } else {
         content = this._renderMessage(
           OK_ICON,
@@ -209,52 +128,21 @@ class ESPHomeInstallDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose &&
-      html`
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="ok"
-          label="Close"
-        ></mwc-button>
-      `}
+      ${showClose
+        ? html`
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Close"
+            ></mwc-button>
+          `
+        : ""}
     `;
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
-    this._updateSerialPorts();
-  }
-
-  private async _updateSerialPorts() {
-    this._ports = await getSerialPorts();
-  }
-
-  protected updated(changedProps: PropertyValues) {
-    super.updated(changedProps);
-    if (!changedProps.has("_state")) {
-      return;
-    }
-    if (this._state === "pick_server_port") {
-      const updateAndSchedule = async () => {
-        await this._updateSerialPorts();
-        this._updateSerialInterval = window.setTimeout(async () => {
-          await updateAndSchedule();
-        }, 5000);
-      };
-      updateAndSchedule();
-    } else if (changedProps.get("_state") === "pick_server_port") {
-      clearTimeout(this._updateSerialInterval);
-      this._updateSerialInterval = undefined;
-    }
-  }
-
-  private _showServerPorts() {
-    // Set the min width to avoid the dialog shrinking
-    this.style.setProperty(
-      "--mdc-dialog-min-width",
-      `${this.shadowRoot!.querySelector("mwc-list-item")!.clientWidth + 4}px`
-    );
-    this._state = "pick_server_port";
+    this._handleInstall();
   }
 
   private _showCompileDialog() {
@@ -262,22 +150,7 @@ class ESPHomeInstallDialog extends LitElement {
     this._close();
   }
 
-  private _handleLegacyOption(ev: Event) {
-    this._close();
-    openInstallServerDialog(this.configuration, (ev.currentTarget as any).port);
-  }
-
-  private async _handleBrowserInstall() {
-    if (!supportsWebSerial || !allowsWebSerial) {
-      window.open(
-        "https://esphome.io/guides/getting_started_hassio.html#webserial",
-        "_blank"
-      );
-      return;
-    }
-    this._error = undefined;
-    const configProm = getConfiguration(this.configuration);
-
+  private async _handleRetry() {
     let esploader: ESPLoader;
     try {
       esploader = await connect(console);
@@ -286,9 +159,22 @@ class ESPHomeInstallDialog extends LitElement {
       return;
     }
 
+    openInstallWebDialog(this.configuration, esploader);
+    this._close();
+  }
+
+  private async _handleInstall() {
+    const esploader = this.esploader;
+
+    esploader.port.addEventListener("disconnect", async () => {
+      this._state = "done";
+      this._error = "Device disconnected";
+      await esploader.port.close();
+    });
+
     try {
       try {
-        this._configuration = await configProm;
+        this._configuration = await getConfiguration(this.configuration);
       } catch (err) {
         this._state = "done";
         this._error = "Error fetching configuration information";
@@ -297,18 +183,25 @@ class ESPHomeInstallDialog extends LitElement {
 
       const compileProm = compileConfiguration(this.configuration);
 
-      this._state = "connecting_webserial";
-
       try {
         await esploader.initialize();
       } catch (err) {
         console.error(err);
-        this._state = "pick_option";
+        this._state = "done";
         this._error = "Failed to initialize.";
         if (esploader.connected) {
           this._error +=
             " Try resetting your device or holding the BOOT button while selecting your serial port until it starts preparing the installation.";
         }
+        return;
+      }
+
+      if (
+        chipFamilyToPlatform[esploader.chipFamily] !==
+        this._configuration.esp_platform.toUpperCase()
+      ) {
+        this._state = "done";
+        this._error = `Configuration does not match the platform of the connected device. Expected an ${this._configuration.esp_platform.toUpperCase()} device.`;
         return;
       }
 
@@ -327,6 +220,12 @@ class ESPHomeInstallDialog extends LitElement {
         return;
       }
 
+      // It is "done" if disconnected while compiling
+      // @ts-ignore
+      if (this._state === "done") {
+        return;
+      }
+
       this._state = "installing";
 
       try {
@@ -339,21 +238,27 @@ class ESPHomeInstallDialog extends LitElement {
           }
         );
       } catch (err) {
-        this._error = `Installation failed: ${err}`;
-        this._state = "done";
+        // It is "done" if disconnected
+        // @ts-ignore
+        if (this._state !== "done") {
+          this._error = `Installation failed: ${err}`;
+          this._state = "done";
+        }
         return;
       }
 
       await esploader.hardReset();
       this._state = "done";
     } finally {
-      if (esploader) {
-        if (esploader.connected) {
-          console.log("Disconnecting esp");
-          await esploader.disconnect();
-        }
-        console.log("Closing port");
-        await esploader?.port.close();
+      if (esploader.connected) {
+        console.log("Disconnecting esp");
+        await esploader.disconnect();
+      }
+      console.log("Closing port");
+      try {
+        await esploader.port.close();
+      } catch (err) {
+        // can happen if we already closed in disconnect
       }
     }
   }
@@ -424,6 +329,6 @@ class ESPHomeInstallDialog extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-install-dialog": ESPHomeInstallDialog;
+    "esphome-install-web-dialog": ESPHomeInstallWebDialog;
   }
 }
