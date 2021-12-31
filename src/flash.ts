@@ -1,12 +1,14 @@
 import { ESPLoader } from "esp-web-flasher";
 import { getConfigurationManifest, Manifest } from "./api/configuration";
 
-export const flashConfiguration = async (
-  esploader: ESPLoader,
-  filename: string,
-  erase: boolean,
-  writeProgress: (pct: number) => void
-) => {
+export interface FileToFlash {
+  data: ArrayBuffer;
+  offset: number;
+}
+
+export const getConfigurationFiles = async (
+  filename: string
+): Promise<FileToFlash[]> => {
   let toFlash: Manifest;
 
   try {
@@ -26,29 +28,39 @@ export const flashConfiguration = async (
     return resp.arrayBuffer();
   });
 
-  const files: ArrayBuffer[] = [];
-  let totalSize = 0;
+  const files: FileToFlash[] = [];
 
-  for (const prom of filePromises) {
-    const data = await prom;
-    files.push(data);
-    totalSize += data.byteLength;
+  for (const part of toFlash) {
+    const data = await filePromises.shift()!;
+    files.push({ data, offset: part.offset });
   }
 
+  return files;
+};
+
+export const flashFiles = async (
+  esploader: ESPLoader,
+  files: FileToFlash[],
+  erase: boolean,
+  writeProgress: (pct: number) => void
+) => {
   const espStub = await esploader.runStub();
 
   if (erase) {
     await espStub.eraseFlash();
   }
 
+  let totalSize = 0;
+  for (const file of files) {
+    totalSize += file.data.byteLength;
+  }
   let lastPct = 0;
   let totalWritten = 0;
   writeProgress(0);
 
-  for (const part of toFlash) {
-    const file = files.shift()!;
+  for (const file of files) {
     await espStub.flashData(
-      file,
+      file.data,
       (bytesWritten: number) => {
         const newPct = Math.floor(
           ((totalWritten + bytesWritten) / totalSize) * 100
@@ -59,10 +71,10 @@ export const flashConfiguration = async (
         lastPct = newPct;
         writeProgress(newPct);
       },
-      part.offset,
+      file.offset,
       true
     );
-    totalWritten += file.byteLength;
+    totalWritten += file.data.byteLength;
   }
 
   writeProgress(100);

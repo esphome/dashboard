@@ -21,7 +21,7 @@ import {
   deleteConfiguration,
   getConfiguration,
 } from "../api/configuration";
-import { flashConfiguration } from "../flash";
+import { getConfigurationFiles, flashFiles } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
 import { refreshDevices } from "../api/devices";
@@ -63,7 +63,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _wifi?: { ssid: string; password: string };
 
-  @state() private _writeProgress = 0;
+  @state() private _writeProgress?: number;
 
   @state() private _state:
     | "basic_config"
@@ -76,6 +76,8 @@ export class ESPHomeWizardDialog extends LitElement {
     | "done" = "basic_config";
 
   @state() private _error?: string;
+
+  private _installed = false;
 
   @query("mwc-textfield[name=name]") private _inputName!: TextField;
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
@@ -101,16 +103,19 @@ export class ESPHomeWizardDialog extends LitElement {
       content = this._renderProgress("Preparing installation");
       hideActions = true;
     } else if (this._state === "flashing") {
-      content = this._renderProgress(
-        html`
-          Installing<br /><br />
-          This will take
-          ${this._board === "ESP8266" ? "a minute" : "2 minutes"}.<br />
-          Keep this page visible to prevent slow down
-        `,
-        // Show as undeterminate under 3% or else we don't show any pixels
-        this._writeProgress > 3 ? this._writeProgress : undefined
-      );
+      content =
+        this._writeProgress === undefined
+          ? this._renderProgress("Erasing")
+          : this._renderProgress(
+              html`
+                Installing<br /><br />
+                This will take
+                ${this._board === "ESP8266" ? "a minute" : "2 minutes"}.<br />
+                Keep this page visible to prevent slow down
+              `,
+              // Show as undeterminate under 3% or else we don't show any pixels
+              this._writeProgress > 3 ? this._writeProgress : undefined
+            );
       hideActions = true;
     } else if (this._state === "wait_come_online") {
       content = this._renderProgress("Finding device on network");
@@ -356,29 +361,31 @@ export class ESPHomeWizardDialog extends LitElement {
       return this._renderMessage(WARNING_ICON, this._error, true);
     }
     return html`
-      <div class="center">
-        <div class="icon">${OK_ICON}</div>
-        <b>Configuration created!</b>
-      </div>
-      <div>
-        You can now install the configuration to your device. The first time
-        this requires a cable.
-      </div>
-      <div>
-        Once the device is installed and connected to your network, you will be
-        able to manage it wirelessly.
-      </div>
-      <mwc-button
-        slot="secondaryAction"
-        dialogAction="close"
-        label="Skip"
-      ></mwc-button>
-      <mwc-button
-        slot="primaryAction"
-        dialogAction="ok"
-        label="Install"
-        @click=${() => openInstallChooseDialog(`${this._data.name!}.yaml`)}
-      ></mwc-button>
+      ${this._renderMessage(OK_ICON, "Configuration created!", this._installed)}
+      ${this._installed
+        ? ""
+        : html`
+            <div>
+              You can now install the configuration to your device. The first
+              time this requires a cable.
+            </div>
+            <div>
+              Once the device is installed and connected to your network, you
+              will be able to manage it wirelessly.
+            </div>
+            <mwc-button
+              slot="secondaryAction"
+              dialogAction="close"
+              label="Skip"
+            ></mwc-button>
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Install"
+              @click=${() =>
+                openInstallChooseDialog(`${this._data.name!}.yaml`)}
+            ></mwc-button>
+          `}
     `;
   }
 
@@ -391,7 +398,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
-    if (changedProps.has("_state")) {
+    if (changedProps.has("_state") || changedProps.has("_hasWifiSecrets")) {
       const formEl: any = this.shadowRoot!.querySelector(
         "mwc-textfield, mwc-radio, mwc-button"
       );
@@ -584,14 +591,10 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "flashing";
 
       try {
-        await flashConfiguration(
-          esploader,
-          this._configFilename,
-          true,
-          (pct) => {
-            this._writeProgress = pct;
-          }
-        );
+        const files = await getConfigurationFiles(this._configFilename);
+        await flashFiles(esploader, files, true, (pct) => {
+          this._writeProgress = pct;
+        });
       } catch (err) {
         console.error(err);
         this._state = "connect_webserial";
@@ -601,6 +604,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       // Configuration installed, don't delete it anymore.
       removeConfig = false;
+      this._installed = true;
 
       // Reset the device so it can load new firmware and come online
       await esploader.hardReset();
