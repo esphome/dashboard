@@ -1,0 +1,22 @@
+# Stop on errors
+set -e
+
+cd "$(dirname "$0")/.."
+
+rm -rf dist
+
+mkdir dist
+cp -r ../raw_package/static dist/
+cp -r static dist/static_web
+
+node build/render-index.mjs
+
+# Quit all background tasks when script exits
+trap "kill 0" EXIT
+
+npm exec -- serve -p 5006 dist &
+
+cd ..
+
+npm exec -- rollup -c web.esphome.io/rollup.config.js --watch &
+wait

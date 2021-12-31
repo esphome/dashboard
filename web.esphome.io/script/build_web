@@ -1,0 +1,16 @@
+# Stop on errors
+set -e
+
+cd "$(dirname "$0")/.."
+
+rm -rf dist
+
+mkdir dist
+cp -r ../raw_package/static dist/
+cp -r static dist/static_web
+
+cd ..
+
+NODE_ENV=production npm exec -- rollup -c web.esphome.io/rollup.config.js
+
+NODE_ENV=production node web.esphome.io/build/render-index.mjs
