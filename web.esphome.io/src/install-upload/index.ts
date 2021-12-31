@@ -1,7 +1,8 @@
-const preload = () => import("./install-upload-dialog");
+export const preloadInstallUploadDialog = () =>
+  import("./install-upload-dialog");
 
 export const openInstallUploadDialog = (port: SerialPort) => {
-  preload();
+  preloadInstallUploadDialog();
   const dialog = document.createElement("esphome-install-upload-dialog");
   dialog.port = port;
   document.body.append(dialog);
