@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+      - run: tsc
       - run: script/build
       - run: web.esphome.io/script/build_web
       - run: npm exec -- prettier --check src
