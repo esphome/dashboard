@@ -24,8 +24,8 @@ class EWDashboard extends LitElement {
           <div class="text">
             <p><b>Welcome to ESPHome Web!</b></p>
             <p>
-              ESPHome Web allows you to check the logs of your ESP device and
-              install new versions directly from your browser.
+              ESPHome Web allows you to install new versions and check the logs
+              of your ESP device directly from your browser.
             </p>
             <p>
               This page is a lite variant of ESPHome. If you want to create and
