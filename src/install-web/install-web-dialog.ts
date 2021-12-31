@@ -40,8 +40,6 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   @state() private _writeProgress?: number;
 
-  @state() private _configuration?: Configuration;
-
   @state() private _state:
     | "connecting_webserial"
     | "prepare_installation"
@@ -50,7 +48,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   @state() private _error?: string | TemplateResult;
 
-  private _updateSerialInterval?: number;
+  private _platform: ValueOf<typeof chipFamilyToPlatform>;
 
   protected render() {
     let heading;
@@ -71,9 +69,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
               html`
                 Installing<br /><br />
                 This will take
-                ${this._configuration?.esp_platform === "esp8266"
-                  ? "a minute"
-                  : "2 minutes"}.<br />
+                ${this._platform === "ESP8266" ? "a minute" : "2 minutes"}.<br />
                 Keep this page visible to prevent slow down
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
@@ -198,6 +194,8 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
+      this._platform = chipFamilyToPlatform[esploader.chipFamily];
+
       const filesCallback =
         this.params.filesCallback ||
         ((platform: string) =>
@@ -206,7 +204,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
       let files: FileToFlash[] | undefined = [];
 
       try {
-        files = await filesCallback(chipFamilyToPlatform[esploader.chipFamily]);
+        files = await filesCallback(this._platform);
       } catch (err) {
         this._state = "done";
         this._error = String(err);
@@ -306,10 +304,6 @@ export class ESPHomeInstallWebDialog extends LitElement {
   }
 
   private async _handleClose() {
-    if (this._updateSerialInterval) {
-      clearTimeout(this._updateSerialInterval);
-      this._updateSerialInterval = undefined;
-    }
     if (this.params.onClose) {
       this.params.onClose(this._state === "done" && this._error === undefined);
     }
