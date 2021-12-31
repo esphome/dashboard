@@ -1,11 +1,14 @@
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import { openInstallWebDialog } from "../../../src/install-web";
 
 @customElement("esphome-install-upload-dialog")
 class ESPHomeInstallUploadDialog extends LitElement {
   public port!: SerialPort;
+
+  @query("input") private _input!: HTMLInputElement;
 
   protected render() {
     return html`
@@ -22,7 +25,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
           manual download.
         </p>
         <p>
-          <input type="file" accept=".bin" />
+          <input type="file" accept=".bin" @change=${this._fileChanged} />
         </p>
         <mwc-button
           slot="secondaryAction"
@@ -38,8 +41,33 @@ class ESPHomeInstallUploadDialog extends LitElement {
     `;
   }
 
-  private _handleInstall() {
-    alert("Not implemented yet!");
+  private _fileChanged() {
+    this._input.classList.remove("error");
+  }
+
+  private async _handleInstall() {
+    const input = this._input;
+
+    if (!input.files || input.files.length === 0) {
+      input.classList.add("error");
+      return;
+    }
+
+    const files = [
+      {
+        data: await input.files[0].arrayBuffer(),
+        offset: 0,
+      },
+    ];
+
+    if (
+      await openInstallWebDialog({
+        port: this.port,
+        filesCallback: async () => files,
+      })
+    ) {
+      this._close();
+    }
   }
 
   private _close() {
@@ -54,6 +82,14 @@ class ESPHomeInstallUploadDialog extends LitElement {
     mwc-button[slot="secondaryAction"] {
       --mdc-theme-primary: #444;
       --mdc-theme-on-primary: white;
+    }
+
+    input {
+      border: 1px solid transparent;
+    }
+
+    input.error {
+      border-color: var(--alert-error-color);
     }
   `;
 }

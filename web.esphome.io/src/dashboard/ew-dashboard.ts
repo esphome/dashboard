@@ -43,36 +43,31 @@ class EWDashboard extends LitElement {
 
   static styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       margin: 20px auto;
       width: 90%;
       max-width: 1920px;
-    }
-    @media only screen and (max-width: 750px) {
-      :host {
-        width: 100%;
-      }
+      align-items: center;
     }
     a {
       color: var(--mdc-theme-primary);
     }
-    ew-connect-card,
-    ew-unsupported-card,
-    .intro {
+    :host > * {
       display: block;
       box-sizing: border-box;
+      width: 100%;
       max-width: 450px;
-    }
-    ew-connect-card[connected] + .intro {
-      opacity: 0;
-      margin-top: -50px;
-      pointer-events: none;
     }
     .intro {
       position: relative;
-      transition: all 0.3s;
+      transition: opacity 0.3s;
       display: flex;
       padding: 32px 0 0 32px;
+    }
+    ew-connect-card[connected] + .intro {
+      opacity: 0;
+      pointer-events: none;
     }
     .text {
       margin-left: 16px;
@@ -82,6 +77,14 @@ class EWDashboard extends LitElement {
     .arrow svg {
       position: relative;
       top: -11px;
+    }
+    @media only screen and (max-width: 550px) {
+      :host {
+        width: 100%;
+      }
+      :host > * {
+        max-width: initial;
+      }
     }
   `;
 }

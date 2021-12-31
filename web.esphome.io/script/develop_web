@@ -7,6 +7,7 @@ rm -rf dist
 
 mkdir dist
 cp -r ../raw_package/static dist/
+cp -r static dist/static_web
 
 node build/render-index.mjs
 

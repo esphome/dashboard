@@ -2,6 +2,8 @@ import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import { openInstallWebDialog } from "../../../src/install-web";
+import { FileToFlash } from "../../../src/flash";
 
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
@@ -39,8 +41,26 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     `;
   }
 
-  private _handleInstall() {
-    alert("Not implemented yet!");
+  private async _handleInstall() {
+    if (
+      await openInstallWebDialog({
+        port: this.port,
+        filesCallback: async (platform: string): Promise<FileToFlash[]> => {
+          if (platform !== "ESP8266") {
+            throw new Error("Only ESP8266 is supported");
+          }
+          const resp = await fetch("/static_web/firmware/esp8266.bin");
+          if (!resp.ok) {
+            throw new Error(
+              `Downlading ESPHome firmware for ${platform} failed (${resp.status})`
+            );
+          }
+          return [{ data: await resp.arrayBuffer(), offset: 0 }];
+        },
+      })
+    ) {
+      this._close();
+    }
   }
 
   private _close() {
