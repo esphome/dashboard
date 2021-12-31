@@ -48,7 +48,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   @state() private _error?: string | TemplateResult;
 
-  private _platform: ValueOf<typeof chipFamilyToPlatform>;
+  private _platform?: ValueOf<typeof chipFamilyToPlatform>;
 
   protected render() {
     let heading;
