@@ -15,7 +15,6 @@ import {
 import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
-import { connect, ESPLoader } from "esp-web-flasher";
 
 const WARNING_ICON = "👀";
 
@@ -225,16 +224,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
       return;
     }
 
-    let esploader: ESPLoader;
-    try {
-      esploader = await connect(console);
-    } catch (err) {
-      // User aborted
-      return;
+    if (await openInstallWebDialog({ configuration: this.configuration })) {
+      this._close();
     }
-
-    openInstallWebDialog(this.configuration, esploader);
-    this._close();
   }
 
   private _close() {

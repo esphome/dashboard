@@ -3,13 +3,13 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
-import { connect, ESPLoader } from "esp-web-flasher";
+import type { ESPLoader } from "esp-web-flasher";
 import {
   compileConfiguration,
   Configuration,
   getConfiguration,
 } from "../api/configuration";
-import { flashConfiguration } from "../flash";
+import { FileToFlash, flashFiles, getConfigurationFiles } from "../flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
 import { chipFamilyToPlatform } from "../const";
@@ -17,13 +17,22 @@ import { chipFamilyToPlatform } from "../const";
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
 
+type ValueOf<T> = T[keyof T];
+
 @customElement("esphome-install-web-dialog")
-class ESPHomeInstallWebDialog extends LitElement {
-  @property() public configuration!: string;
+export class ESPHomeInstallWebDialog extends LitElement {
+  @property() public params!: {
+    configuration?: string;
+    port?: SerialPort;
+    filesCallback?: (
+      platform: ValueOf<typeof chipFamilyToPlatform>
+    ) => Promise<FileToFlash[]>;
+    erase?: boolean;
+  };
 
   @property() public esploader!: ESPLoader;
 
-  @state() private _writeProgress = 0;
+  @state() private _writeProgress?: number;
 
   @state() private _configuration?: Configuration;
 
@@ -49,18 +58,21 @@ class ESPHomeInstallWebDialog extends LitElement {
       content = this._renderProgress("Preparing installation");
       hideActions = true;
     } else if (this._state === "installing") {
-      content = this._renderProgress(
-        html`
-          Installing<br /><br />
-          This will take
-          ${this._configuration!.esp_platform === "esp8266"
-            ? "a minute"
-            : "2 minutes"}.<br />
-          Keep this page visible to prevent slow down
-        `,
-        // Show as undeterminate under 3% or else we don't show any pixels
-        this._writeProgress > 3 ? this._writeProgress : undefined
-      );
+      content =
+        this._writeProgress === undefined
+          ? this._renderProgress("Erasing")
+          : this._renderProgress(
+              html`
+                Installing<br /><br />
+                This will take
+                ${this._configuration?.esp_platform === "esp8266"
+                  ? "a minute"
+                  : "2 minutes"}.<br />
+                Keep this page visible to prevent slow down
+              `,
+              // Show as undeterminate under 3% or else we don't show any pixels
+              this._writeProgress > 3 ? this._writeProgress : undefined
+            );
       hideActions = true;
     } else if (this._state === "done") {
       if (this._error) {
@@ -146,43 +158,27 @@ class ESPHomeInstallWebDialog extends LitElement {
   }
 
   private _showCompileDialog() {
-    openCompileDialog(this.configuration);
+    openCompileDialog(this.params.configuration!);
     this._close();
   }
 
   private async _handleRetry() {
-    let esploader: ESPLoader;
-    try {
-      esploader = await connect(console);
-    } catch (err) {
-      // User aborted
-      return;
+    if (await openInstallWebDialog(this.params)) {
+      this._close();
     }
-
-    openInstallWebDialog(this.configuration, esploader);
-    this._close();
   }
 
   private async _handleInstall() {
     const esploader = this.esploader;
-
     esploader.port.addEventListener("disconnect", async () => {
       this._state = "done";
       this._error = "Device disconnected";
-      await esploader.port.close();
+      if (!this.params.port) {
+        await esploader.port.close();
+      }
     });
 
     try {
-      try {
-        this._configuration = await getConfiguration(this.configuration);
-      } catch (err) {
-        this._state = "done";
-        this._error = "Error fetching configuration information";
-        return;
-      }
-
-      const compileProm = compileConfiguration(this.configuration);
-
       try {
         await esploader.initialize();
       } catch (err) {
@@ -196,43 +192,33 @@ class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      if (
-        chipFamilyToPlatform[esploader.chipFamily] !==
-        this._configuration.esp_platform.toUpperCase()
-      ) {
-        this._state = "done";
-        this._error = `Configuration does not match the platform of the connected device. Expected an ${this._configuration.esp_platform.toUpperCase()} device.`;
-        return;
-      }
+      const filesCallback =
+        this.params.filesCallback ||
+        ((platform: string) =>
+          this._getFilesForConfiguration(this.params.configuration!, platform));
 
-      this._state = "prepare_installation";
+      let files: FileToFlash[] | undefined = [];
 
       try {
-        await compileProm;
+        files = await filesCallback(chipFamilyToPlatform[esploader.chipFamily]);
       } catch (err) {
-        this._error = html`
-          Failed to prepare configuration<br /><br />
-          <button class="link" @click=${this._showCompileDialog}>
-            See what went wrong.
-          </button>
-        `;
         this._state = "done";
+        this._error = String(err);
         return;
       }
 
-      // It is "done" if disconnected while compiling
-      // @ts-ignore
-      if (this._state === "done") {
+      // If getFilesForConfiguration already did some error handling.
+      if (!files) {
         return;
       }
 
       this._state = "installing";
 
       try {
-        await flashConfiguration(
+        await flashFiles(
           esploader,
-          this.configuration,
-          false,
+          files,
+          this.params.erase === true,
           (pct) => {
             this._writeProgress = pct;
           }
@@ -254,13 +240,59 @@ class ESPHomeInstallWebDialog extends LitElement {
         console.log("Disconnecting esp");
         await esploader.disconnect();
       }
-      console.log("Closing port");
-      try {
-        await esploader.port.close();
-      } catch (err) {
-        // can happen if we already closed in disconnect
+      if (!this.params.port) {
+        console.log("Closing port");
+        try {
+          await esploader.port.close();
+        } catch (err) {
+          // can happen if we already closed in disconnect
+        }
       }
     }
+  }
+
+  private async _getFilesForConfiguration(
+    configuration: string,
+    platform: ValueOf<typeof chipFamilyToPlatform>
+  ): Promise<FileToFlash[] | undefined> {
+    let info: Configuration;
+
+    try {
+      info = await getConfiguration(configuration);
+    } catch (err) {
+      this._state = "done";
+      this._error = "Error fetching configuration information";
+      return;
+    }
+
+    if (platform !== info.esp_platform.toUpperCase()) {
+      this._state = "done";
+      this._error = `Configuration does not match the platform of the connected device. Expected an ${info.esp_platform.toUpperCase()} device.`;
+      return;
+    }
+
+    this._state = "prepare_installation";
+
+    try {
+      await compileConfiguration(configuration);
+    } catch (err) {
+      this._error = html`
+        Failed to prepare configuration<br /><br />
+        <button class="link" @click=${this._showCompileDialog}>
+          See what went wrong.
+        </button>
+      `;
+      this._state = "done";
+      return;
+    }
+
+    // It is "done" if disconnected while compiling
+    // @ts-ignore
+    if (this._state === "done") {
+      return;
+    }
+
+    return await getConfigurationFiles(configuration);
   }
 
   private _close() {

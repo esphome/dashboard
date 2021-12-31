@@ -1,6 +1,6 @@
 import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ImportableDevice, importDevice } from "../api/devices";
+import { ImportableDevice } from "../api/devices";
 import "@material/mwc-button";
 import "../components/esphome-card";
 import { fireEvent } from "../util/fire-event";
