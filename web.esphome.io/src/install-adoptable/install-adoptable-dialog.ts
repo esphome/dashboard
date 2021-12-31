@@ -45,7 +45,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     if (
       await openInstallWebDialog({
         port: this.port,
-        filesCallback: async (platform: string): Promise<FileToFlash[]> => {
+        async filesCallback(platform: string): Promise<FileToFlash[]> {
           if (platform !== "ESP8266") {
             throw new Error("Only ESP8266 is supported");
           }
@@ -56,6 +56,17 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
             );
           }
           return [{ data: await resp.arrayBuffer(), offset: 0 }];
+        },
+        onClose(success) {
+          if (!success) {
+            return;
+          }
+          import("improv-wifi-serial-sdk/dist/serial-provision-dialog");
+          const improv = document.createElement(
+            "improv-wifi-serial-provision-dialog"
+          );
+          improv.port = this.port;
+          document.body.appendChild(improv);
         },
       })
     ) {

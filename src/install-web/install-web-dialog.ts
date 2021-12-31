@@ -22,12 +22,18 @@ type ValueOf<T> = T[keyof T];
 @customElement("esphome-install-web-dialog")
 export class ESPHomeInstallWebDialog extends LitElement {
   @property() public params!: {
-    configuration?: string;
+    // If a port was passed in, the port will not be closed when dialog closes
     port?: SerialPort;
+    // Pass either a configuration or a filesCallback. filesCallback receives platform of ESP device.
+    configuration?: string;
     filesCallback?: (
       platform: ValueOf<typeof chipFamilyToPlatform>
     ) => Promise<FileToFlash[]>;
+    // Should the device be erased before installation
     erase?: boolean;
+    // Callback when the dialog is closed. Note that if success is false,
+    // some other dialog might be opened when the dialog is closed.
+    onClose?: (success: boolean) => void;
   };
 
   @property() public esploader!: ESPLoader;
@@ -303,6 +309,9 @@ export class ESPHomeInstallWebDialog extends LitElement {
     if (this._updateSerialInterval) {
       clearTimeout(this._updateSerialInterval);
       this._updateSerialInterval = undefined;
+    }
+    if (this.params.onClose) {
+      this.params.onClose(this._state === "done" && this._error === undefined);
     }
     this.parentNode!.removeChild(this);
   }
