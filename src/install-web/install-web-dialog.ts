@@ -204,7 +204,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
       let files: FileToFlash[] | undefined = [];
 
       try {
-        files = await filesCallback(this._platform);
+        files = await filesCallback(this._platform!);
       } catch (err) {
         this._state = "done";
         this._error = String(err);
