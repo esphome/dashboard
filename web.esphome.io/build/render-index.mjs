@@ -24,7 +24,7 @@ const VARS = {
 
     return `/static/${path}`;
   },
-  version: "1.0.0-WEB",
+  version: "WEB",
 };
 
 class CustomLoader extends nunjucks.FileSystemLoader {
