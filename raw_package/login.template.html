@@ -59,69 +59,66 @@
   border-top: 4px solid var(--alert-error-color);
 }
 </style>
-<!-- <div class="valign-wrapper">
-  <div class="valign">
-    <div class="container">
-      <div class="row">
-        <div class="col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3"> -->
-        <div class='container'>
-          <div class="card" id="login-card">
-            <div class="card-content">
-              <span class="card-title black-text center"
-                >Dashboard Login</span
-              >
-              <p class="center">
-                {% if hassio %} Login by entering your Home Assistant login
-                credentials. {% else %} Login by entering your ESPHome login
-                credentials. {% end %}
-              </p>
+<div class='container'>
+  <div class="card" id="login-card">
+    <div class="card-content">
+      <span class="card-title black-text center"
+        >Dashboard Login</span
+      >
+      <p class="center">
+        {% if hassio %} Login by entering your Home Assistant login
+        credentials. {% else %} Login by entering your ESPHome login
+        credentials. {% end %}
+      </p>
 
-              {% if error is not None %}
-              <div class="alert alert-error">
-                <span class="title">Error!</span>
-                {{ escape(error) }}
-              </div>
+      {% if error is not None %}
+      <div class="alert alert-error">
+        <span class="title">Error!</span>
+        {{ escape(error) }}
+      </div>
 
-              <script>
-                $("#login-card").addClass("card-error");
-              </script>
-              {% end %}
+      <script>
+        $("#login-card").addClass("card-error");
+      </script>
+      {% end %}
 
-              <form action="./login" method="post" id="login-form">
-                {% if has_username or hassio %}
-                <div class="row no-bottom-margin">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix">person</i>
-                    <input name="username" id="username" type="text" />
-                    <label for="username">Username</label>
-                  </div>
-                </div>
-                {% end %}
-
-                <div class="row no-bottom-margin">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix">lock</i>
-                    <input name="password" id="password" type="password" />
-                    <label for="password">Password</label>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div class="card-action center">
-              <input
-                type="submit"
-                class="btn blue-grey darken-2"
-                name="action"
-                form="login-form"
-                value="Login"
-              />
-            </div>
+      <form action="./login" method="post" id="login-form">
+        {% if has_username or hassio %}
+        <div class="row no-bottom-margin">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">person</i>
+            <input name="username" id="username" type="text" />
+            <label for="username">Username</label>
           </div>
         </div>
-        <!-- </div>
-      </div>
+        {% end %}
+
+        <div class="row no-bottom-margin">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock</i>
+            <input name="password" id="password" type="password" />
+            <label for="password">Password</label>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="card-action center">
+      <input
+        type="submit"
+        class="btn blue-grey darken-2"
+        name="action"
+        form="login-form"
+        value="Login"
+      />
     </div>
   </div>
-</div> -->
+</div>
+{% end %}
+
+{% block footer %}
+<script src="{{ get_static_file_url('js/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ get_static_file_url('js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
+<script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
 {% end %}

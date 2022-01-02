@@ -15,6 +15,12 @@
       href="{{ get_static_file_url('fonts/material-icons/material-icons.css') }}"
     />
     <link
+      rel="preload"
+      href="{{ get_static_file_url('fonts/material-icons/MaterialIcons-Regular.woff2') }}"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
       rel="stylesheet"
       href="{{ get_static_file_url('css/vendor/materialize/materialize.min.css') }}"
     />
@@ -22,11 +28,6 @@
       rel="stylesheet"
       href="{{ get_static_file_url('css/esphome-2.css') }}"
     />
-
-    <script src="{{ get_static_file_url('js/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
-    <script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
   </head>
 
   <body>
@@ -45,7 +46,7 @@
     <footer class="page-footer grey darken-4">
       <div class="container">
         <div class="left">
-          Copyright © 2019-2022 ESPHome |
+          ESPHome by Nabu Casa |
           <a href="https://esphome.io/guides/supporters.html" target="_blank"
             >Fund development</a
           >

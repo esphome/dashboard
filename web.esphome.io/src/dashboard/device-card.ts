@@ -2,14 +2,23 @@ import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import type { ActionDetail } from "@material/mwc-list";
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
 import "../../../src/components/esphome-button-menu";
-import { openLogsWebSerialDialog } from "../../../src/logs-webserial";
 import { fireEvent } from "../../../src/util/fire-event";
-import { openInstallUploadDialog } from "../install-upload";
-import { openInstallAdoptableDialog } from "../install-adoptable";
+import {
+  preloadLogsWebSerialDialog,
+  openLogsWebSerialDialog,
+} from "../../../src/logs-webserial";
+import {
+  preloadInstallUploadDialog,
+  openInstallUploadDialog,
+} from "../install-upload";
+import {
+  preloadInstallAdoptableDialog,
+  openInstallAdoptableDialog,
+} from "../install-adoptable";
 
 @customElement("ew-device-card")
 class EWDeviceCard extends LitElement {
@@ -44,6 +53,13 @@ class EWDeviceCard extends LitElement {
           </esphome-button-menu>
       </esphome-card>
     `;
+  }
+
+  firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    preloadLogsWebSerialDialog();
+    preloadInstallUploadDialog();
+    preloadInstallAdoptableDialog();
   }
 
   private showLogs() {
