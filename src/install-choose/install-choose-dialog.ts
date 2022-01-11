@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues, css, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { until } from "lit/directives/until.js";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
 import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
@@ -9,6 +10,7 @@ import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
+import { compileConfiguration, getDownloadUrl } from "../api/configuration";
 
 const WARNING_ICON = "👀";
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
@@ -27,6 +29,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @state() private _error?: string | TemplateResult;
 
   private _updateSerialInterval?: number;
+
+  private _compileConfiguration?: Promise<unknown>;
+
+  private _abortCompilation?: AbortController;
 
   protected render() {
     let heading;
@@ -127,17 +133,29 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <li>Your browser supports WebSerial</li>
         </ul>
         <p>
-          Not all requirements are currently met. The easiest solution is to do
-          the installation with
-          <a href=${ESPHOME_WEB_URL} target="_blank" rel="noopener"
-            >ESPHome Web</a
-          >. ESPHome Web works 100% in your browser and no data will be shared
-          with the ESPHome project.
+          Not all requirements are currently met. The easiest solution is to
+          download your project and do the installation with ESPHome Web.
+          ESPHome Web works 100% in your browser and no data will be shared with
+          the ESPHome project.
         </p>
-        <p>
-          Press the DOWNLOAD button to download your project to use it with
-          ESPHome Web.
-        </p>
+        <ol>
+          <li>
+            ${until(
+              this._compileConfiguration,
+              html`<a download disabled href="#">Download project</a> preparing
+                download…
+                <mwc-circular-progress
+                  density="-8"
+                  indeterminate
+                ></mwc-circular-progress>`
+            )}
+          </li>
+          <li>
+            <a href=${ESPHOME_WEB_URL} target="_blank" rel="noopener"
+              >Open ESPHome Web</a
+            >
+          </li>
+        </ol>
 
         <mwc-button
           no-attention
@@ -145,16 +163,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
           dialogAction="close"
           label="Cancel"
         ></mwc-button>
-
-        <a
-          slot="primaryAction"
-          href=${ESPHOME_WEB_URL}
-          target="_blank"
-          rel="noopener"
-          @click=${this._handleWebDownload}
-        >
-          <mwc-button dialogAction="close" label="Download"></mwc-button>
-        </a>
       `;
     }
 
@@ -220,6 +228,39 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._ports = await getSerialPorts();
   }
 
+  protected willUpdate(changedProps: PropertyValues) {
+    super.willUpdate(changedProps);
+    if (
+      changedProps.has("_state") &&
+      this._state === "web_instructions" &&
+      !this._compileConfiguration
+    ) {
+      this._abortCompilation = new AbortController();
+      this._compileConfiguration = compileConfiguration(this.configuration)
+        .then(
+          () => html`
+            <a download href="${getDownloadUrl(this.configuration, true)}"
+              >Download project</a
+            >
+          `,
+          () => html`
+            <a download disabled href="#">Download project</a>
+            <span class="prepare-error">preparation failed:</span>
+            <button
+              class="link"
+              dialogAction="close"
+              @click=${this._handleWebDownload}
+            >
+              see what went wrong
+            </button>
+          `
+        )
+        .finally(() => {
+          this._abortCompilation = undefined;
+        });
+    }
+  }
+
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
     if (!changedProps.has("_state")) {
@@ -282,6 +323,8 @@ class ESPHomeInstallChooseDialog extends LitElement {
   }
 
   private async _handleClose() {
+    this._abortCompilation?.abort();
+
     if (this._updateSerialInterval) {
       clearTimeout(this._updateSerialInterval);
       this._updateSerialInterval = undefined;
@@ -309,6 +352,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
     mwc-circular-progress {
       margin-bottom: 16px;
     }
+    li mwc-circular-progress {
+      margin: 0;
+    }
     .progress-pct {
       position: absolute;
       top: 50px;
@@ -327,6 +373,27 @@ class ESPHomeInstallChooseDialog extends LitElement {
       padding: 8px 24px;
       background-color: #fff59d;
       margin: 0 -24px;
+    }
+    .prepare-error {
+      color: var(--alert-error-color);
+    }
+    li a {
+      display: inline-block;
+      margin-right: 8px;
+    }
+    a[disabled] {
+      pointer-events: none;
+      color: #999;
+    }
+    button.link {
+      background: none;
+      color: var(--mdc-theme-primary);
+      border: none;
+      padding: 0;
+      font: inherit;
+      text-align: left;
+      text-decoration: underline;
+      cursor: pointer;
     }
   `;
 }

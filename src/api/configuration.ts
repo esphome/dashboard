@@ -39,8 +39,22 @@ export const deleteConfiguration = (configuration: string) =>
     method: "post",
   });
 
-export const compileConfiguration = (configuration: string) =>
-  streamLogs("compile", { configuration });
+export const compileConfiguration = (
+  configuration: string,
+  abortController?: AbortController
+) => new Promise((_, reject) => setTimeout(reject, 2000));
+// ) => streamLogs("compile", { configuration }, undefined, abortController);
 
 export const getConfigurationManifest = (configuration: string) =>
   fetchApiJson<Manifest>(`./manifest.json?configuration=${configuration}`);
+
+export const getDownloadUrl = (
+  configuration: string,
+  factoryFirmware: boolean
+) => {
+  let url = `./download.bin?configuration=${encodeURIComponent(configuration)}`;
+  if (factoryFirmware) {
+    url += "&type=firmware-factory.bin";
+  }
+  return url;
+};
