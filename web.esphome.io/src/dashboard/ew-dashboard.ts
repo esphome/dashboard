@@ -118,7 +118,8 @@ class EWDashboard extends LitElement {
     .promote-logs {
       padding-left: 20px;
     }
-    ew-connect-card ~ .promote {
+    ew-connect-card ~ .promote,
+    ew-unsupported-card ~ .promote {
       display: none;
     }
     :host([dashboard_logs]) ew-connect-card[connected] ~ .promote-logs {
