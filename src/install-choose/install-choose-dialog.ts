@@ -5,18 +5,13 @@ import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
-import {
-  allowsWebSerial,
-  DOCS_WEBSERIAL,
-  metaChevronRight,
-  metaHelp,
-  supportsWebSerial,
-} from "../const";
+import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
 
 const WARNING_ICON = "👀";
+const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
 
 @customElement("esphome-install-choose-dialog")
 class ESPHomeInstallChooseDialog extends LitElement {
@@ -24,7 +19,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   @state() private _ports?: ServerSerialPort[];
 
-  @state() private _state: "pick_option" | "pick_server_port" = "pick_option";
+  @state() private _state:
+    | "pick_option"
+    | "web_instructions"
+    | "pick_server_port" = "pick_option";
 
   @state() private _error?: string | TemplateResult;
 
@@ -54,13 +52,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
         <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
           <span>Plug into this computer</span>
           <span slot="secondary">
-            ${supportsWebSerial
-              ? "For devices connected via USB to this computer"
-              : allowsWebSerial
-              ? "Your browser is not supported"
-              : "Dashboard needs to opened via HTTPS"}
+            For devices connected via USB to this computer
           </span>
-          ${supportsWebSerial ? metaChevronRight : metaHelp}
+          ${metaChevronRight}
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
@@ -71,7 +65,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
-        <mwc-list-item twoline hasMeta @click=${this._showCompileDialog}>
+        <mwc-list-item
+          twoline
+          hasMeta
+          dialogAction="close"
+          @click=${this._showCompileDialog}
+        >
           <span>Manual download</span>
           <span slot="secondary">
             Install it yourself using ESPHome Flasher or other tools
@@ -116,6 +115,47 @@ class ESPHomeInstallChooseDialog extends LitElement {
                 label="Cancel"
               ></mwc-button>
             `;
+    } else if (this._state === "web_instructions") {
+      heading = "Install ESPHome via the browser";
+      content = html`
+        <p>
+          ESPHome can install ${this.configuration} on your device via the
+          browser if certain requirements are met:
+        </p>
+        <ul>
+          <li>ESPHome is visited over HTTPS</li>
+          <li>Your browser supports WebSerial</li>
+        </ul>
+        <p>
+          Not all requirements are currently met. The easiest solution is to do
+          the installation with
+          <a href=${ESPHOME_WEB_URL} target="_blank" rel="noopener"
+            >ESPHome Web</a
+          >. ESPHome Web works 100% in your browser and no data will be shared
+          with the ESPHome project.
+        </p>
+        <p>
+          Press the DOWNLOAD button to download your project to use it with
+          ESPHome Web.
+        </p>
+
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          dialogAction="close"
+          label="Cancel"
+        ></mwc-button>
+
+        <a
+          slot="primaryAction"
+          href=${ESPHOME_WEB_URL}
+          target="_blank"
+          rel="noopener"
+          @click=${this._showCompileDialog}
+        >
+          <mwc-button dialogAction="close" label="Download"></mwc-button>
+        </a>
+      `;
     }
 
     return html`
@@ -199,18 +239,21 @@ class ESPHomeInstallChooseDialog extends LitElement {
     }
   }
 
-  private _showServerPorts() {
+  private _storeDialogWidth() {
     // Set the min width to avoid the dialog shrinking
     this.style.setProperty(
       "--mdc-dialog-min-width",
       `${this.shadowRoot!.querySelector("mwc-list-item")!.clientWidth + 4}px`
     );
+  }
+
+  private _showServerPorts() {
+    this._storeDialogWidth();
     this._state = "pick_server_port";
   }
 
   private _showCompileDialog() {
     openCompileDialog(this.configuration);
-    this._close();
   }
 
   private _handleLegacyOption(ev: Event) {
@@ -220,7 +263,8 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   private async _handleBrowserInstall() {
     if (!supportsWebSerial || !allowsWebSerial) {
-      window.open(DOCS_WEBSERIAL, "_blank");
+      this._storeDialogWidth();
+      this._state = "web_instructions";
       return;
     }
 
