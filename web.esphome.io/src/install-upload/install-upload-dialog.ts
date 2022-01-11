@@ -14,7 +14,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Select project that you want to install"
+        heading="Select the project that you want to install"
         scrimClickAction
         @closed=${this._handleClose}
       >
@@ -63,6 +63,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
     if (
       await openInstallWebDialog({
         port: this.port,
+        erase: true,
         filesCallback: async () => files,
       })
     ) {
