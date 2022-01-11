@@ -316,16 +316,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
       line-height: 80px;
       color: black;
     }
-    button.link {
-      background: none;
-      color: var(--mdc-theme-primary);
-      border: none;
-      padding: 0;
-      font: inherit;
-      text-align: left;
-      text-decoration: underline;
-      cursor: pointer;
-    }
     .show-ports {
       margin-top: 16px;
     }
