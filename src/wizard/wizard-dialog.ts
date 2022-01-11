@@ -35,6 +35,7 @@ import { openInstallChooseDialog } from "../install-choose";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
+const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_wizard";
 
 /*
 Flow:
@@ -66,6 +67,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @state() private _writeProgress?: number;
 
   @state() private _state:
+    | "ask_esphome_web"
     | "basic_config"
     | "connect_webserial"
     | "pick_board"
@@ -73,7 +75,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "prepare_flash"
     | "flashing"
     | "wait_come_online"
-    | "done" = "basic_config";
+    | "done" = supportsWebSerial ? "basic_config" : "ask_esphome_web";
 
   @state() private _error?: string;
 
@@ -88,7 +90,9 @@ export class ESPHomeWizardDialog extends LitElement {
     let content;
     let hideActions = false;
 
-    if (this._state === "basic_config") {
+    if (this._state === "ask_esphome_web") {
+      [heading, content, hideActions] = this._renderAskESPHomeWeb();
+    } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
     } else if (this._state === "pick_board") {
       heading = "Select your ESP device";
@@ -170,6 +174,52 @@ export class ESPHomeWizardDialog extends LitElement {
         ></mwc-button>
       `}
     `;
+  }
+
+  private _renderAskESPHomeWeb(): [
+    string | undefined,
+    TemplateResult,
+    boolean
+  ] {
+    const heading = "New device";
+    let hideActions = false;
+    const content = html`
+      <div>
+        ${allowsWebSerial
+          ? "Your browser does not support WebSerial."
+          : "You are not browsing the dashboard over a secure connection (HTTPS)."}
+        This prevents ESPHome wizard from offering the easiest experience to add
+        a new device.
+      </div>
+      <div>
+        We recommend to visit ESPHome Web to create an adoptable device using
+        your browser.
+      </div>
+      <div>
+        You can also choose to create a configuration and try one of the other
+        installation methods.
+      </div>
+
+      <a
+        slot="primaryAction"
+        href=${ESPHOME_WEB_URL}
+        target="_blank"
+        rel="noopener"
+      >
+        <mwc-button dialogAction="close" label="Open ESPHome Web"></mwc-button>
+      </a>
+
+      <mwc-button
+        no-attention
+        slot="secondaryAction"
+        label="Create Configuration"
+        @click=${() => {
+          this._state = "basic_config";
+        }}
+      ></mwc-button>
+    `;
+
+    return [heading, content, hideActions];
   }
 
   private _renderBasicConfig(): [string | undefined, TemplateResult, boolean] {
