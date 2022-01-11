@@ -46,10 +46,12 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
       await openInstallWebDialog({
         port: this.port,
         async filesCallback(platform: string): Promise<FileToFlash[]> {
-          if (platform !== "ESP8266") {
-            throw new Error("Only ESP8266 is supported");
+          if (platform !== "ESP8266" && platform !== "ESP32") {
+            throw new Error("Only ESP8266 and ESP32 are currently supported");
           }
-          const resp = await fetch("/static_web/firmware/esp8266.bin");
+          const resp = await fetch(
+            `/static_web/firmware/${platform.toLowerCase()}.bin`
+          );
           if (!resp.ok) {
             throw new Error(
               `Downlading ESPHome firmware for ${platform} failed (${resp.status})`
