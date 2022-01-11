@@ -69,7 +69,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           twoline
           hasMeta
           dialogAction="close"
-          @click=${this._showCompileDialog}
+          @click=${this._handleManualDownload}
         >
           <span>Manual download</span>
           <span slot="secondary">
@@ -151,7 +151,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           href=${ESPHOME_WEB_URL}
           target="_blank"
           rel="noopener"
-          @click=${this._showCompileDialog}
+          @click=${this._handleWebDownload}
         >
           <mwc-button dialogAction="close" label="Download"></mwc-button>
         </a>
@@ -252,8 +252,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._state = "pick_server_port";
   }
 
-  private _showCompileDialog() {
-    openCompileDialog(this.configuration);
+  private _handleManualDownload() {
+    openCompileDialog(this.configuration, false);
+  }
+
+  private _handleWebDownload() {
+    openCompileDialog(this.configuration, true);
   }
 
   private _handleLegacyOption(ev: Event) {

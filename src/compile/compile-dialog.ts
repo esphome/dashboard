@@ -9,6 +9,8 @@ import { openCompileDialog } from ".";
 class ESPHomeCompileDialog extends LitElement {
   @property() public configuration!: string;
 
+  @property() public downloadFactoryFirmware = true;
+
   @state() private _result?: number;
 
   protected render() {
@@ -24,12 +26,7 @@ class ESPHomeCompileDialog extends LitElement {
           ? ""
           : this._result === 0
           ? html`
-              <a
-                slot="secondaryAction"
-                href="${`./download.bin?configuration=${encodeURIComponent(
-                  this.configuration
-                )}`}"
-              >
+              <a slot="secondaryAction" href="${this.downloadUrl}">
                 <mwc-button label="Download"></mwc-button>
               </a>
             `
@@ -45,6 +42,16 @@ class ESPHomeCompileDialog extends LitElement {
     `;
   }
 
+  private get downloadUrl() {
+    let url = `./download.bin?configuration=${encodeURIComponent(
+      this.configuration
+    )}`;
+    if (this.downloadFactoryFirmware) {
+      url += "&type=firmware-factory.bin";
+    }
+    return url;
+  }
+
   private _handleProcessDone(ev: { detail: number }) {
     this._result = ev.detail;
 
@@ -54,16 +61,14 @@ class ESPHomeCompileDialog extends LitElement {
 
     const link = document.createElement("a");
     link.download = this.configuration + ".bin";
-    link.href = `./download.bin?configuration=${encodeURIComponent(
-      this.configuration
-    )}`;
+    link.href = this.downloadUrl;
     document.body.appendChild(link);
     link.click();
     link.remove();
   }
 
   private _handleRetry() {
-    openCompileDialog(this.configuration);
+    openCompileDialog(this.configuration, this.downloadFactoryFirmware);
   }
 
   private _handleClose() {
