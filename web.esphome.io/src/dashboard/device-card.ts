@@ -49,6 +49,7 @@ class EWDeviceCard extends LitElement {
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+            <mwc-list-item>Configure Wi-Fi</mwc-list-item>
             <mwc-list-item>Disconnect</mwc-list-item>
           </esphome-button-menu>
       </esphome-card>
@@ -77,6 +78,14 @@ class EWDeviceCard extends LitElement {
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
+        import("improv-wifi-serial-sdk/dist/serial-provision-dialog");
+        const improv = document.createElement(
+          "improv-wifi-serial-provision-dialog"
+        );
+        improv.port = this.port;
+        document.body.appendChild(improv);
+        break;
+      case 1:
         this.port.close();
         fireEvent(this, "close");
         break;
