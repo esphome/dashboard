@@ -4,10 +4,13 @@ import "@material/mwc-button";
 import "../components/remote-process";
 import "../components/process-dialog";
 import { openCompileDialog } from ".";
+import { getDownloadUrl } from "../api/configuration";
 
 @customElement("esphome-compile-dialog")
 class ESPHomeCompileDialog extends LitElement {
   @property() public configuration!: string;
+
+  @property() public downloadFactoryFirmware = true;
 
   @state() private _result?: number;
 
@@ -26,9 +29,10 @@ class ESPHomeCompileDialog extends LitElement {
           ? html`
               <a
                 slot="secondaryAction"
-                href="${`./download.bin?configuration=${encodeURIComponent(
-                  this.configuration
-                )}`}"
+                href="${getDownloadUrl(
+                  this.configuration,
+                  this.downloadFactoryFirmware
+                )}"
               >
                 <mwc-button label="Download"></mwc-button>
               </a>
@@ -54,16 +58,17 @@ class ESPHomeCompileDialog extends LitElement {
 
     const link = document.createElement("a");
     link.download = this.configuration + ".bin";
-    link.href = `./download.bin?configuration=${encodeURIComponent(
-      this.configuration
-    )}`;
+    link.href = getDownloadUrl(
+      this.configuration,
+      this.downloadFactoryFirmware
+    );
     document.body.appendChild(link);
     link.click();
     link.remove();
   }
 
   private _handleRetry() {
-    openCompileDialog(this.configuration);
+    openCompileDialog(this.configuration, this.downloadFactoryFirmware);
   }
 
   private _handleClose() {
