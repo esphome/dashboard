@@ -60,15 +60,14 @@ class ESPHomeInstallUploadDialog extends LitElement {
       },
     ];
 
-    if (
-      await openInstallWebDialog({
+    openInstallWebDialog(
+      {
         port: this.port,
         erase: true,
         filesCallback: async () => files,
-      })
-    ) {
-      this._close();
-    }
+      },
+      () => this._close()
+    );
   }
 
   private _close() {
