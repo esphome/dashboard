@@ -186,35 +186,42 @@ export class ESPHomeWizardDialog extends LitElement {
     let hideActions = false;
     const content = html`
       <div>
+        A device needs to be connected to a computer using a USB cable to be
+        added to ESPHome. Once added, ESPHome will interact with the device
+        wirelessly.
+      </div>
+      <div>
         ${allowsWebSerial
           ? "Your browser does not support WebSerial."
           : "You are not browsing the dashboard over a secure connection (HTTPS)."}
-        This prevents ESPHome wizard from offering the easiest experience to add
-        a new device.
+        This prevents ESPHome from being able to install this on devices
+        connected to this computer.
       </div>
       <div>
-        We recommend to visit ESPHome Web to create an adoptable device using
-        your browser.
+        You will still be able to install ESPHome by connecting the device to
+        the computer that runs the ESPHome dashboard.
       </div>
       <div>
-        Alternatively, you can use the wizard to create a configuration and
-        install it by connecting your device to the computer that runs the
-        ESPHome dashboard.
+        Alternatively, you can use ESPHome Web to prepare a device for being
+        used with ESPHome using this computer.
       </div>
 
       <a
-        slot="primaryAction"
+        slot="secondaryAction"
         href=${ESPHOME_WEB_URL}
         target="_blank"
         rel="noopener"
       >
-        <mwc-button dialogAction="close" label="Open ESPHome Web"></mwc-button>
+        <mwc-button
+          no-attention
+          dialogAction="close"
+          label="Open ESPHome Web"
+        ></mwc-button>
       </a>
 
       <mwc-button
-        no-attention
-        slot="secondaryAction"
-        label="Create Configuration"
+        slot="primaryAction"
+        label="Continue"
         @click=${() => {
           this._state = "basic_config";
         }}
@@ -749,7 +756,7 @@ export class ESPHomeWizardDialog extends LitElement {
       cursor: pointer;
     }
 
-    mwc-button[slot="secondaryAction"] {
+    mwc-button[no-attention] {
       --mdc-theme-primary: #444;
       --mdc-theme-on-primary: white;
     }
