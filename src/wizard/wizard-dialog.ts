@@ -196,8 +196,9 @@ export class ESPHomeWizardDialog extends LitElement {
         your browser.
       </div>
       <div>
-        You can also choose to create a configuration and try one of the other
-        installation methods.
+        Alternatively, you can use the wizard to create a configuration and
+        install it by connecting your device to the computer that runs the
+        ESPHome dashboard.
       </div>
 
       <a
