@@ -60,6 +60,12 @@ class ESPHomeLogsTargetDialog extends LitElement {
           </span>
           ${metaChevronRight}
         </mwc-list-item>
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          dialogAction="close"
+          label="Cancel"
+        ></mwc-button>
       `;
     } else if (this._show === "web_instructions") {
       heading = "View logs in the browser";
@@ -89,11 +95,18 @@ class ESPHomeLogsTargetDialog extends LitElement {
             label="OPEN ESPHOME WEB"
           ></mwc-button>
         </a>
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          label="Back"
+          @click=${() => {
+            this._show = "options";
+          }}
+        ></mwc-button>
       `;
     } else {
       heading = "Pick server port";
-      content =
-        this._ports === undefined
+      content = html`${this._ports === undefined
           ? html`
               <mwc-list-item>
                 <span>Loading ports…</span>
@@ -119,7 +132,16 @@ class ESPHomeLogsTargetDialog extends LitElement {
                   ${metaChevronRight}
                 </mwc-list-item>
               `
-            );
+            )}
+
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          label="Back"
+          @click=${() => {
+            this._show = "options";
+          }}
+        ></mwc-button>`;
     }
 
     return html`
@@ -130,13 +152,6 @@ class ESPHomeLogsTargetDialog extends LitElement {
         @closed=${this._handleClose}
       >
         ${content}
-
-        <mwc-button
-          no-attention
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Cancel"
-        ></mwc-button>
       </mwc-dialog>
     `;
   }

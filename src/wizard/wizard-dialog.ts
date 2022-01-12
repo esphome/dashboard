@@ -35,6 +35,7 @@ import { openInstallChooseDialog } from "../install-choose";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
+const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_wizard";
 
 /*
 Flow:
@@ -66,6 +67,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @state() private _writeProgress?: number;
 
   @state() private _state:
+    | "ask_esphome_web"
     | "basic_config"
     | "connect_webserial"
     | "pick_board"
@@ -73,7 +75,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "prepare_flash"
     | "flashing"
     | "wait_come_online"
-    | "done" = "basic_config";
+    | "done" = supportsWebSerial ? "basic_config" : "ask_esphome_web";
 
   @state() private _error?: string;
 
@@ -88,7 +90,9 @@ export class ESPHomeWizardDialog extends LitElement {
     let content;
     let hideActions = false;
 
-    if (this._state === "basic_config") {
+    if (this._state === "ask_esphome_web") {
+      [heading, content, hideActions] = this._renderAskESPHomeWeb();
+    } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
     } else if (this._state === "pick_board") {
       heading = "Select your ESP device";
@@ -161,41 +165,79 @@ export class ESPHomeWizardDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose &&
-      html`
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="ok"
-          label="Close"
-        ></mwc-button>
-      `}
+      ${showClose
+        ? html`
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Close"
+            ></mwc-button>
+          `
+        : ""}
     `;
+  }
+
+  private _renderAskESPHomeWeb(): [
+    string | undefined,
+    TemplateResult,
+    boolean
+  ] {
+    const heading = "New device";
+    let hideActions = false;
+    const content = html`
+      <div>
+        A device needs to be connected to a computer using a USB cable to be
+        added to ESPHome. Once added, ESPHome will interact with the device
+        wirelessly.
+      </div>
+      <div>
+        ${allowsWebSerial
+          ? "Your browser does not support WebSerial."
+          : "You are not browsing the dashboard over a secure connection (HTTPS)."}
+        This prevents ESPHome from being able to install this on devices
+        connected to this computer.
+      </div>
+      <div>
+        You will still be able to install ESPHome by connecting the device to
+        the computer that runs the ESPHome dashboard.
+      </div>
+      <div>
+        Alternatively, you can use ESPHome Web to prepare a device for being
+        used with ESPHome using this computer.
+      </div>
+
+      <a
+        slot="secondaryAction"
+        href=${ESPHOME_WEB_URL}
+        target="_blank"
+        rel="noopener"
+      >
+        <mwc-button
+          no-attention
+          dialogAction="close"
+          label="Open ESPHome Web"
+        ></mwc-button>
+      </a>
+
+      <mwc-button
+        slot="primaryAction"
+        label="Continue"
+        @click=${() => {
+          this._state = "basic_config";
+        }}
+      ></mwc-button>
+    `;
+
+    return [heading, content, hideActions];
   }
 
   private _renderBasicConfig(): [string | undefined, TemplateResult, boolean] {
     if (this._hasWifiSecrets === undefined) {
       return [undefined, this._renderProgress("Initializing"), true];
     }
-    const heading = "New device";
+    const heading = supportsWebSerial ? "New device" : "Create configuration";
     let hideActions = false;
     const content = html`
-      ${supportsWebSerial
-        ? ""
-        : html`
-            <div class="notice">
-              Limited functionality because
-              ${allowsWebSerial
-                ? html`
-                    your browser does not support WebSerial.
-                    <a
-                      href="https://esphome.io/guides/getting_started_hassio.html#webserial"
-                      target="_blank"
-                      >Learn more</a
-                    >
-                  `
-                : "you're not browsing the dashboard over a secure connection (HTTPS)."}
-            </div>
-          `}
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
       <mwc-textfield
@@ -696,11 +738,6 @@ export class ESPHomeWizardDialog extends LitElement {
       line-height: 80px;
       color: black;
     }
-    .notice {
-      padding: 8px 24px;
-      background-color: #fff59d;
-      margin: 0 -24px;
-    }
     .error {
       color: #db4437;
       margin-bottom: 16px;
@@ -719,7 +756,7 @@ export class ESPHomeWizardDialog extends LitElement {
       cursor: pointer;
     }
 
-    mwc-button[slot="secondaryAction"] {
+    mwc-button[no-attention] {
       --mdc-theme-primary: #444;
       --mdc-theme-on-primary: white;
     }
