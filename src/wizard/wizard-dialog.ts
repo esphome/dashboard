@@ -165,14 +165,15 @@ export class ESPHomeWizardDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose &&
-      html`
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="ok"
-          label="Close"
-        ></mwc-button>
-      `}
+      ${showClose
+        ? html`
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Close"
+            ></mwc-button>
+          `
+        : ""}
     `;
   }
 
