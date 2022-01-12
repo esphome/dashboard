@@ -20,9 +20,11 @@ class EWDashboard extends LitElement {
   protected render() {
     return html`
       <div class="container">
-        ${supportsWebSerial
-          ? html`<ew-connect-card></ew-connect-card>`
-          : html`<ew-unsupported-card></ew-unsupported-card>`}
+        ${
+          supportsWebSerial
+            ? html`<ew-connect-card></ew-connect-card>`
+            : html`<ew-unsupported-card></ew-unsupported-card>`
+        }
 
         <div class="intro">
           ${ARROW}
@@ -70,6 +72,21 @@ class EWDashboard extends LitElement {
             </p>
           </div>
         </div>
+
+        <div class="promote promote-adopt">
+          </svg>
+          <div class="text">
+            <p><b>Make Adoptable</b>
+            <svg width="48" height="48" viewBox="0 0 24 24"><path d="M21.5 9.5L20.09 10.92L17 7.83V13.5C17 17.09 14.09 20 10.5 20H4V18H10.5C13 18 15 16 15 13.5V7.83L11.91 10.91L10.5 9.5L16 4L21.5 9.5Z" /></svg>
+
+          </p>
+            <p>
+              This action will prepare your device to be adopted by your ESPHome
+              dashboard. Once adopted, a device can be configured and updated
+              wirelessly.
+            </p>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -77,7 +94,11 @@ class EWDashboard extends LitElement {
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
     const highlight = location.search.substring(1);
-    if (highlight === "dashboard_install" || highlight === "dashboard_logs") {
+    if (
+      highlight === "dashboard_install" ||
+      highlight === "dashboard_logs" ||
+      highlight === "dashboard_wizard"
+    ) {
       this.toggleAttribute(highlight);
     }
   }
@@ -128,6 +149,9 @@ class EWDashboard extends LitElement {
     :host([dashboard_install]) ew-connect-card[connected] ~ .promote-install {
       display: flex;
     }
+    :host([dashboard_wizard]) ew-connect-card[connected] ~ .promote-adopt {
+      display: flex;
+    }
     .text {
       margin-left: 16px;
       padding-right: 8px;
@@ -136,6 +160,14 @@ class EWDashboard extends LitElement {
     .arrow svg {
       position: relative;
       top: -13px;
+    }
+    .promote-adopt p:first-child {
+      margin-top: 0;
+    }
+    .promote-adopt svg {
+      position: relative;
+      left: 32px;
+      bottom: -5px;
     }
     @media only screen and (max-width: 550px) {
       :host {
