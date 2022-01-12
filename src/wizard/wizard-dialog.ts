@@ -229,23 +229,6 @@ export class ESPHomeWizardDialog extends LitElement {
     const heading = "New device";
     let hideActions = false;
     const content = html`
-      ${supportsWebSerial
-        ? ""
-        : html`
-            <div class="notice">
-              Limited functionality because
-              ${allowsWebSerial
-                ? html`
-                    your browser does not support WebSerial.
-                    <a
-                      href="https://esphome.io/guides/getting_started_hassio.html#webserial"
-                      target="_blank"
-                      >Learn more</a
-                    >
-                  `
-                : "you're not browsing the dashboard over a secure connection (HTTPS)."}
-            </div>
-          `}
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
       <mwc-textfield
@@ -745,11 +728,6 @@ export class ESPHomeWizardDialog extends LitElement {
       font-size: 50px;
       line-height: 80px;
       color: black;
-    }
-    .notice {
-      padding: 8px 24px;
-      background-color: #fff59d;
-      margin: 0 -24px;
     }
     .error {
       color: #db4437;
