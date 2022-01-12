@@ -116,9 +116,11 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
               <mwc-button
                 no-attention
-                slot="secondaryAction"
-                dialogAction="close"
-                label="Cancel"
+                slot="primaryAction"
+                label="Back"
+                @click=${() => {
+                  this._state = "pick_option";
+                }}
               ></mwc-button>
             `;
     } else if (this._state === "web_instructions") {
@@ -160,8 +162,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
         <mwc-button
           no-attention
           slot="secondaryAction"
-          dialogAction="close"
-          label="Cancel"
+          label="Back"
+          @click=${() => {
+            this._state = "pick_option";
+          }}
         ></mwc-button>
       `;
     }
