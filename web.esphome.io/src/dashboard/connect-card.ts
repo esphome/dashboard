@@ -2,6 +2,7 @@ import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
 import { DOCS_WEBSERIAL } from "../../../src/const";
+import { openNoPortPickedDialog } from "../../../src/no-port-picked";
 import "./device-card";
 
 @customElement("ew-connect-card")
@@ -45,6 +46,7 @@ class EWConnectCard extends LitElement {
       port = await navigator.serial.requestPort();
     } catch (err: any) {
       if ((err as DOMException).name === "NotFoundError") {
+        openNoPortPickedDialog();
         return;
       }
       alert(`Error: ${err.message}`);

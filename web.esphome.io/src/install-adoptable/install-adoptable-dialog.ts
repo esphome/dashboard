@@ -42,8 +42,8 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
   }
 
   private async _handleInstall() {
-    if (
-      await openInstallWebDialog({
+    openInstallWebDialog(
+      {
         port: this.port,
         async filesCallback(platform: string): Promise<FileToFlash[]> {
           if (platform !== "ESP8266" && platform !== "ESP32") {
@@ -70,10 +70,9 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           improv.port = this.port;
           document.body.appendChild(improv);
         },
-      })
-    ) {
-      this._close();
-    }
+      },
+      () => this._close()
+    );
   }
 
   private _close() {
