@@ -164,10 +164,8 @@ export class ESPHomeInstallWebDialog extends LitElement {
     this._close();
   }
 
-  private async _handleRetry() {
-    if (await openInstallWebDialog(this.params)) {
-      this._close();
-    }
+  private _handleRetry() {
+    openInstallWebDialog(this.params, () => this._close());
   }
 
   private async _handleInstall() {

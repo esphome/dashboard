@@ -306,16 +306,16 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._close();
   }
 
-  private async _handleBrowserInstall() {
+  private _handleBrowserInstall() {
     if (!supportsWebSerial || !allowsWebSerial) {
       this._storeDialogWidth();
       this._state = "web_instructions";
       return;
     }
 
-    if (await openInstallWebDialog({ configuration: this.configuration })) {
-      this._close();
-    }
+    openInstallWebDialog({ configuration: this.configuration }, () =>
+      this._close()
+    );
   }
 
   private _close() {
