@@ -32,6 +32,8 @@ import {
   storeWifiSecrets,
 } from "../api/wifi";
 import { openInstallChooseDialog } from "../install-choose";
+import { esphomeDialogStyles } from "../styles";
+import { openNoPortPickedDialog } from "../no-port-picked";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -95,7 +97,7 @@ export class ESPHomeWizardDialog extends LitElement {
     } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
     } else if (this._state === "pick_board") {
-      heading = "Select your ESP device";
+      heading = "Select your device type";
       content = this._renderPickBoard();
     } else if (this._state === "connect_webserial") {
       heading = "Installation";
@@ -206,6 +208,14 @@ export class ESPHomeWizardDialog extends LitElement {
         used with ESPHome using this computer.
       </div>
 
+      <mwc-button
+        slot="primaryAction"
+        label="Continue"
+        @click=${() => {
+          this._state = "basic_config";
+        }}
+      ></mwc-button>
+
       <a
         slot="secondaryAction"
         href=${ESPHOME_WEB_URL}
@@ -218,14 +228,6 @@ export class ESPHomeWizardDialog extends LitElement {
           label="Open ESPHome Web"
         ></mwc-button>
       </a>
-
-      <mwc-button
-        slot="primaryAction"
-        label="Continue"
-        @click=${() => {
-          this._state = "basic_config";
-        }}
-      ></mwc-button>
     `;
 
     return [heading, content, hideActions];
@@ -245,7 +247,7 @@ export class ESPHomeWizardDialog extends LitElement {
         name="name"
         required
         pattern="^[a-z0-9-]+$"
-        helper="Only use lowercase letters (a-z), numbers (0-9) or dash (-)"
+        helper="Lowercase letters (a-z), numbers (0-9) or dash (-)"
         @input=${this._cleanNameInput}
         @blur=${this._cleanNameBlur}
       ></mwc-textfield>
@@ -305,7 +307,7 @@ export class ESPHomeWizardDialog extends LitElement {
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
       <div>
-        Select the device type that this configuration will be installed on.
+        Select the type of device that this configuration will be installed on.
       </div>
       <mwc-formfield label="ESP32" checked>
         <mwc-radio
@@ -390,6 +392,7 @@ export class ESPHomeWizardDialog extends LitElement {
         @click=${this._handleConnectSerialSubmit}
       ></mwc-button>
       <mwc-button
+        no-attention
         slot="secondaryAction"
         label="Skip this step"
         .disabled=${this._busy}
@@ -416,16 +419,17 @@ export class ESPHomeWizardDialog extends LitElement {
               will be able to manage it wirelessly.
             </div>
             <mwc-button
-              slot="secondaryAction"
-              dialogAction="close"
-              label="Skip"
-            ></mwc-button>
-            <mwc-button
               slot="primaryAction"
               dialogAction="ok"
               label="Install"
               @click=${() =>
                 openInstallChooseDialog(`${this._data.name!}.yaml`)}
+            ></mwc-button>
+            <mwc-button
+              no-attention
+              slot="secondaryAction"
+              dialogAction="close"
+              label="Skip"
             ></mwc-button>
           `}
     `;
@@ -573,7 +577,9 @@ export class ESPHomeWizardDialog extends LitElement {
         esploader = await connect(console);
       } catch (err: any) {
         console.error(err);
-        if ((err as DOMException).name !== "NotFoundError") {
+        if ((err as DOMException).name === "NotFoundError") {
+          openNoPortPickedDialog();
+        } else {
           this._error = err.message || String(err);
         }
         return;
@@ -698,69 +704,38 @@ export class ESPHomeWizardDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    :host {
-      --mdc-dialog-max-width: 390px;
-    }
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    mwc-textfield:first-child,
-    div:first-child {
-      margin-top: 0;
-    }
-    mwc-textfield,
-    mwc-formfield {
-      display: block;
-    }
-    .formfield-extra {
-      margin-left: 52px;
-      margin-bottom: 16px;
-    }
-    mwc-textfield,
-    mwc-textfield:not([required]) + div {
-      margin-top: 16px;
-    }
-    .center {
-      text-align: center;
-    }
-    mwc-circular-progress {
-      margin-bottom: 16px;
-    }
-    .progress-pct {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      right: 0;
-    }
-    .icon {
-      font-size: 50px;
-      line-height: 80px;
-      color: black;
-    }
-    .error {
-      color: #db4437;
-      margin-bottom: 16px;
-    }
-    div + div {
-      margin-top: 16px;
-    }
-    button.link {
-      background: none;
-      color: var(--mdc-theme-primary);
-      border: none;
-      padding: 0;
-      font: inherit;
-      text-align: left;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      :host {
+        --mdc-dialog-max-width: 390px;
+      }
+      mwc-textfield[name="name"] + div {
+        margin-top: 18px;
+      }
+      .center {
+        text-align: center;
+      }
+      mwc-circular-progress {
+        margin-bottom: 16px;
+      }
+      .progress-pct {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        right: 0;
+      }
+      .icon {
+        font-size: 50px;
+        line-height: 80px;
+        color: black;
+      }
+      .error {
+        color: var(--alert-error-color);
+        margin-bottom: 16px;
+      }
+    `,
+  ];
 }
 
 declare global {

@@ -27,6 +27,3 @@ export interface Logger {
   error(msg: string, ...args: any[]): void;
   debug(msg: string, ...args: any[]): void;
 }
-
-export const DOCS_WEBSERIAL =
-  "https://esphome.io/guides/getting_started_hassio.html#webserial";

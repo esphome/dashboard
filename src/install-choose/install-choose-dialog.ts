@@ -11,6 +11,7 @@ import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
 import { compileConfiguration, getDownloadUrl } from "../api/configuration";
+import { esphomeDialogStyles } from "../styles";
 
 const WARNING_ICON = "👀";
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
@@ -40,7 +41,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     let hideActions = false;
 
     if (this._state === "pick_option") {
-      heading = "How do you want to install this on your ESP device?";
+      heading = "How do you want to install this on your device?";
       content = html`
         <mwc-list-item
           twoline
@@ -126,26 +127,26 @@ class ESPHomeInstallChooseDialog extends LitElement {
     } else if (this._state === "web_instructions") {
       heading = "Install ESPHome via the browser";
       content = html`
-        <p>
+        <div>
           ESPHome can install ${this.configuration} on your device via the
           browser if certain requirements are met:
-        </p>
+        </div>
         <ul>
           <li>ESPHome is visited over HTTPS</li>
           <li>Your browser supports WebSerial</li>
         </ul>
-        <p>
+        <div>
           Not all requirements are currently met. The easiest solution is to
           download your project and do the installation with ESPHome Web.
           ESPHome Web works 100% in your browser and no data will be shared with
           the ESPHome project.
-        </p>
+        </div>
         <ol>
           <li>
             ${until(
               this._compileConfiguration,
-              html`<a download disabled href="#">Download project</a> preparing
-                download…
+              html`<a download disabled href="#">Download project</a>
+                preparing&nbsp;download…
                 <mwc-circular-progress
                   density="-8"
                   indeterminate
@@ -166,6 +167,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
           @click=${() => {
             this._state = "pick_option";
           }}
+        ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          dialogAction="close"
+          label="Close"
         ></mwc-button>
       `;
     }
@@ -336,70 +343,59 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-    mwc-list-item {
-      margin: 0 -20px;
-    }
-    svg {
-      fill: currentColor;
-    }
-    .center {
-      text-align: center;
-    }
-    mwc-circular-progress {
-      margin-bottom: 16px;
-    }
-    li mwc-circular-progress {
-      margin: 0;
-    }
-    .progress-pct {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      right: 0;
-    }
-    .icon {
-      font-size: 50px;
-      line-height: 80px;
-      color: black;
-    }
-    .show-ports {
-      margin-top: 16px;
-    }
-    .error {
-      padding: 8px 24px;
-      background-color: #fff59d;
-      margin: 0 -24px;
-    }
-    .prepare-error {
-      color: var(--alert-error-color);
-    }
-    li a {
-      display: inline-block;
-      margin-right: 8px;
-    }
-    a[disabled] {
-      pointer-events: none;
-      color: #999;
-    }
-    button.link {
-      background: none;
-      color: var(--mdc-theme-primary);
-      border: none;
-      padding: 0;
-      font: inherit;
-      text-align: left;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      mwc-list-item {
+        margin: 0 -20px;
+      }
+      svg {
+        fill: currentColor;
+      }
+      .center {
+        text-align: center;
+      }
+      mwc-circular-progress {
+        margin-bottom: 16px;
+      }
+      li mwc-circular-progress {
+        margin: 0;
+      }
+      .progress-pct {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        right: 0;
+      }
+      .icon {
+        font-size: 50px;
+        line-height: 80px;
+        color: black;
+      }
+      .show-ports {
+        margin-top: 16px;
+      }
+      .error {
+        padding: 8px 24px;
+        background-color: #fff59d;
+        margin: 0 -24px;
+      }
+      .prepare-error {
+        color: var(--alert-error-color);
+      }
+      li a {
+        display: inline-block;
+        margin-right: 8px;
+      }
+      a[disabled] {
+        pointer-events: none;
+        color: #999;
+      }
+      ol {
+        margin-bottom: 0;
+      }
+    `,
+  ];
 }
 
 declare global {

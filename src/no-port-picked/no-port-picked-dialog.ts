@@ -4,6 +4,7 @@ import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-no-port-picked-dialog")
 class ESPHomeNoPortPickedDialog extends LitElement {
@@ -17,18 +18,18 @@ class ESPHomeNoPortPickedDialog extends LitElement {
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>
+        <div>
           If you didn't select a port because you didn't see your device listed,
           try the following steps:
-        </p>
+        </div>
         <ol>
           <li>
             Make sure that the device is connected to this computer (the one
             that runs the browser that shows this website)
           </li>
           <li>
-            Most devices have a tiny light when it is powered on. Make sure it
-            is on.
+            Most devices have a tiny light when it is powered on. If yours has
+            one, make sure it is on.
           </li>
           <li>
             Make sure you have the right drivers installed. Below are the
@@ -86,19 +87,18 @@ class ESPHomeNoPortPickedDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-    li + li,
-    li > ul {
-      margin-top: 8px;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      li + li,
+      li > ul {
+        margin-top: 8px;
+      }
+      ol {
+        margin-bottom: 0;
+      }
+    `,
+  ];
 }
 
 declare global {

@@ -19,7 +19,12 @@ class ESPHomeRemoteProcess extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: "open" });
 
     shadowRoot.innerHTML = `
-      <style>${coloredConsoleStyles}</style>
+      <style>
+        :host {
+          display: flex;
+        }
+        ${coloredConsoleStyles}
+      </style>
       <div class="log"></div>
     `;
 

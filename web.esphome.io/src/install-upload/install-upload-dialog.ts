@@ -2,7 +2,9 @@ import { LitElement, html, css } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import "@material/mwc-icon";
 import { openInstallWebDialog } from "../../../src/install-web";
+import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-upload-dialog")
 class ESPHomeInstallUploadDialog extends LitElement {
@@ -14,28 +16,34 @@ class ESPHomeInstallUploadDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Select the project that you want to install"
+        heading="Install your existing ESPHome project"
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>Install your existing ESPHome project to your ESP device.</p>
-        <p>
-          To get the installable file of your ESPHome project, open the ESPHome
-          dashboard and on your project card click on menu (3 dots), install,
-          manual download.
-        </p>
-        <p>
+        <div>Select the project that you want to install on your device.</div>
+        <div>
           <input type="file" accept=".bin" @change=${this._fileChanged} />
-        </p>
-        <mwc-button
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Close"
-        ></mwc-button>
+        </div>
+        <div>To get the factory file of your ESPHome project:</div>
+        <ol>
+          <li>Open your ESPHome dashboard</li>
+          <li>
+            Find your device card click on menu (<mwc-icon>more_vert</mwc-icon>)
+          </li>
+          <li>Click on Install</li>
+          <li>Click on "Plug into this computer"</li>
+          <li>Click on download project.</li>
+        </ol>
         <mwc-button
           slot="primaryAction"
           label="Install"
           @click=${this._handleInstall}
+        ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          dialogAction="close"
+          label="Close"
         ></mwc-button>
       </mwc-dialog>
     `;
@@ -78,20 +86,26 @@ class ESPHomeInstallUploadDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-button[slot="secondaryAction"] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      input {
+        border: 1px solid transparent;
+      }
 
-    input {
-      border: 1px solid transparent;
-    }
+      mwc-icon {
+        vertical-align: middle;
+      }
 
-    input.error {
-      border-color: var(--alert-error-color);
-    }
-  `;
+      ol {
+        margin-bottom: 0;
+      }
+
+      input.error {
+        border-color: var(--alert-error-color);
+      }
+    `,
+  ];
 }
 
 declare global {

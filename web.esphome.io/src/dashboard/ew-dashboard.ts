@@ -31,8 +31,7 @@ class EWDashboard extends LitElement {
           <div class="text">
             <p><b>Welcome to ESPHome Web!</b></p>
             <p>
-              ESPHome Web allows you to install new versions and check the logs
-              of your ESP device directly from your browser.
+              ESPHome Web allows you to install new versions and check the device logs directly from your browser.
             </p>
             <p>
               ESPHome Web runs 100% in your browser. No data will leave your
@@ -57,7 +56,7 @@ class EWDashboard extends LitElement {
             <p><b>Install downloaded project</b></p>
             <p>
               If you have a downloaded version of your project, you can install
-              it on your ESP device here.
+              it on your device here.
             </p>
           </div>
         </div>
@@ -67,7 +66,7 @@ class EWDashboard extends LitElement {
           <div class="text">
             <p><b>Check logs</b></p>
             <p>
-              Click here to check the logs of your device. If you don't see logs
+              Click here to check the device logs. If you don't see logs
               output, press the reset device button.
             </p>
           </div>

@@ -1,9 +1,10 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import { openInstallWebDialog } from "../../../src/install-web";
 import { FileToFlash } from "../../../src/flash";
+import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
@@ -13,29 +14,30 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Prepare your ESP device for adoption"
+        heading="Prepare your device for adoption"
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>
+        <div>
           This will install a basic version of ESPHome to your device and help
           you connect it to your network.
-        </p>
-        <p>
+        </div>
+        <div>
           Once installed, your ESPHome dashboard will prompt you to adopt the
           device. This will set up a configuration for the device and allows you
           to further manage it wirelessly.
-        </p>
+        </div>
 
-        <mwc-button
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Close"
-        ></mwc-button>
         <mwc-button
           slot="primaryAction"
           label="Make Adoptable"
           @click=${this._handleInstall}
+        ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          dialogAction="close"
+          label="Close"
         ></mwc-button>
       </mwc-dialog>
     `;
@@ -83,12 +85,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-button[slot="secondaryAction"] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-  `;
+  static styles = esphomeDialogStyles;
 }
 
 declare global {

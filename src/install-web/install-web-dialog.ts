@@ -13,6 +13,7 @@ import { FileToFlash, flashFiles, getConfigurationFiles } from "../flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
 import { chipFamilyToPlatform } from "../const";
+import { esphomeDialogStyles } from "../styles";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -159,7 +160,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
     this._handleInstall();
   }
 
-  private _showCompileDialog() {
+  private _openCompileDialog() {
     openCompileDialog(this.params.configuration!, false);
     this._close();
   }
@@ -280,7 +281,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
     } catch (err) {
       this._error = html`
         Failed to prepare configuration<br /><br />
-        <button class="link" @click=${this._showCompileDialog}>
+        <button class="link" @click=${this._openCompileDialog}>
           See what went wrong.
         </button>
       `;
@@ -308,56 +309,42 @@ export class ESPHomeInstallWebDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-    mwc-list-item {
-      margin: 0 -20px;
-    }
-    svg {
-      fill: currentColor;
-    }
-    .center {
-      text-align: center;
-    }
-    mwc-circular-progress {
-      margin-bottom: 16px;
-    }
-    .progress-pct {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      right: 0;
-    }
-    .icon {
-      font-size: 50px;
-      line-height: 80px;
-      color: black;
-    }
-    button.link {
-      background: none;
-      color: var(--mdc-theme-primary);
-      border: none;
-      padding: 0;
-      font: inherit;
-      text-align: left;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-    .show-ports {
-      margin-top: 16px;
-    }
-    .error {
-      padding: 8px 24px;
-      background-color: #fff59d;
-      margin: 0 -24px;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      mwc-list-item {
+        margin: 0 -20px;
+      }
+      svg {
+        fill: currentColor;
+      }
+      .center {
+        text-align: center;
+      }
+      mwc-circular-progress {
+        margin-bottom: 16px;
+      }
+      .progress-pct {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        right: 0;
+      }
+      .icon {
+        font-size: 50px;
+        line-height: 80px;
+        color: black;
+      }
+      .show-ports {
+        margin-top: 16px;
+      }
+      .error {
+        padding: 8px 24px;
+        background-color: #fff59d;
+        margin: 0 -24px;
+      }
+    `,
+  ];
 }
 
 declare global {
