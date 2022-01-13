@@ -28,8 +28,8 @@ class ESPHomeNoPortPickedDialog extends LitElement {
             that runs the browser that shows this website)
           </li>
           <li>
-            Most devices have a tiny light when it is powered on. Make sure it
-            is on.
+            Most devices have a tiny light when it is powered on. If yours has
+            one, make sure it is on.
           </li>
           <li>
             Make sure you have the right drivers installed. Below are the

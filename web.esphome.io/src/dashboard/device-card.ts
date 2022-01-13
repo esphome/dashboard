@@ -19,6 +19,7 @@ import {
   preloadInstallAdoptableDialog,
   openInstallAdoptableDialog,
 } from "../install-adoptable";
+import { esphomeCardStyles } from "../../../src/styles";
 
 @customElement("ew-device-card")
 class EWDeviceCard extends LitElement {
@@ -92,36 +93,14 @@ class EWDeviceCard extends LitElement {
     }
   }
 
-  static styles = css`
-    esphome-card {
-      --status-color: rgba(0, 0, 0, 0.5);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    .card-actions {
-      display: flex;
-      padding: 4px;
-    }
-    .flex {
-      flex: 1;
-    }
-    .card-actions a {
-      text-decoration: none;
-    }
-    mwc-button {
-      --mdc-theme-primary: rgba(0, 0, 0, 0.88);
-    }
-    esphome-button-menu {
-      cursor: pointer;
-    }
-    mwc-icon-button {
-      --mdc-icon-button-size: 32px;
-    }
-  `;
+  static styles = [
+    esphomeCardStyles,
+    css`
+      esphome-card {
+        --status-color: rgba(0, 0, 0, 0.5);
+      }
+    `,
+  ];
 }
 
 declare global {

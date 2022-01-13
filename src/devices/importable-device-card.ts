@@ -5,6 +5,7 @@ import "@material/mwc-button";
 import "../components/esphome-card";
 import { fireEvent } from "../util/fire-event";
 import { openAdoptDialog } from "../adopt";
+import { esphomeCardStyles } from "../styles";
 
 @customElement("esphome-importable-device-card")
 class ESPHomeImportableDeviceCard extends LitElement {
@@ -38,20 +39,17 @@ class ESPHomeImportableDeviceCard extends LitElement {
     }, 1000);
   }
 
-  static styles = css`
-    esphome-card {
-      --status-color: #4caf50;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .flex {
-      flex: 1;
-    }
-    mwc-button {
-      --mdc-theme-primary: #4caf50;
-    }
-  `;
+  static styles = [
+    esphomeCardStyles,
+    css`
+      esphome-card {
+        --status-color: #4caf50;
+      }
+      .card-actions mwc-button {
+        --mdc-theme-primary: #4caf50;
+      }
+    `,
+  ];
 
   private async _handleAdopt() {
     openAdoptDialog(this.device, () => fireEvent(this, "adopted"));

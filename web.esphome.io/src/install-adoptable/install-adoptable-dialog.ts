@@ -4,6 +4,7 @@ import "@material/mwc-dialog";
 import "@material/mwc-button";
 import { openInstallWebDialog } from "../../../src/install-web";
 import { FileToFlash } from "../../../src/flash";
+import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
@@ -28,14 +29,15 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
         </p>
 
         <mwc-button
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Close"
-        ></mwc-button>
-        <mwc-button
           slot="primaryAction"
           label="Make Adoptable"
           @click=${this._handleInstall}
+        ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          dialogAction="close"
+          label="Close"
         ></mwc-button>
       </mwc-dialog>
     `;
@@ -83,12 +85,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-button[slot="secondaryAction"] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-  `;
+  static styles = esphomeDialogStyles;
 }
 
 declare global {

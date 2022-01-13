@@ -3,6 +3,7 @@ import { customElement, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import { openInstallWebDialog } from "../../../src/install-web";
+import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-upload-dialog")
 class ESPHomeInstallUploadDialog extends LitElement {
@@ -28,14 +29,15 @@ class ESPHomeInstallUploadDialog extends LitElement {
           <input type="file" accept=".bin" @change=${this._fileChanged} />
         </p>
         <mwc-button
-          slot="secondaryAction"
-          dialogAction="close"
-          label="Close"
-        ></mwc-button>
-        <mwc-button
           slot="primaryAction"
           label="Install"
           @click=${this._handleInstall}
+        ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="secondaryAction"
+          dialogAction="close"
+          label="Close"
         ></mwc-button>
       </mwc-dialog>
     `;
@@ -78,20 +80,18 @@ class ESPHomeInstallUploadDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-button[slot="secondaryAction"] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      input {
+        border: 1px solid transparent;
+      }
 
-    input {
-      border: 1px solid transparent;
-    }
-
-    input.error {
-      border-color: var(--alert-error-color);
-    }
-  `;
+      input.error {
+        border-color: var(--alert-error-color);
+      }
+    `,
+  ];
 }
 
 declare global {

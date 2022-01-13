@@ -17,6 +17,7 @@ import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
 import { openDeleteDeviceDialog } from "../delete-device";
+import { esphomeCardStyles } from "../styles";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -145,56 +146,34 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     }
   }
 
-  static styles = css`
-    :host {
-      --update-available-color: #2e3dd4;
-    }
-    esphome-card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .device-config-path {
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    .inlinecode {
-      box-sizing: border-box;
-      padding: 0.2em 0.4em;
-      margin: 0;
-      font-size: 85%;
-      background-color: rgba(27, 31, 35, 0.05);
-      border-radius: 3px;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
-        monospace;
-    }
-    .card-actions {
-      display: flex;
-      padding: 4px;
-    }
-    .flex {
-      flex: 1;
-    }
-    .card-actions a {
-      text-decoration: none;
-    }
-    mwc-button {
-      --mdc-theme-primary: rgba(0, 0, 0, 0.88);
-    }
-    esphome-button-menu {
-      cursor: pointer;
-    }
-    mwc-icon-button {
-      --mdc-icon-button-size: 32px;
-    }
-    .update-available {
-      --mdc-theme-primary: var(--update-available-color);
-    }
-
-    .tooltip-container {
-      display: inline-block;
-    }
-  `;
+  static styles = [
+    esphomeCardStyles,
+    css`
+      :host {
+        --update-available-color: #2e3dd4;
+      }
+      .device-config-path {
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+      .inlinecode {
+        box-sizing: border-box;
+        padding: 0.2em 0.4em;
+        margin: 0;
+        font-size: 85%;
+        background-color: rgba(27, 31, 35, 0.05);
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+          Courier, monospace;
+      }
+      .card-actions mwc-button.update-available {
+        --mdc-theme-primary: var(--update-available-color);
+      }
+      .tooltip-container {
+        display: inline-block;
+      }
+    `,
+  ];
 
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
