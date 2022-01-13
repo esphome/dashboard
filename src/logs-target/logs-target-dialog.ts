@@ -188,7 +188,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
       const port = await navigator.serial.requestPort();
       await port.open({ baudRate: 115200 });
       this.shadowRoot!.querySelector("mwc-dialog")!.close();
-      openLogsWebSerialDialog(port, this.configuration);
+      openLogsWebSerialDialog(port, true, this.configuration);
     } catch (err) {
       console.error(err);
     }

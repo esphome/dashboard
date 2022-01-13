@@ -10,6 +10,8 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
 
   @property() public port!: SerialPort;
 
+  @property() public closePortOnClose!: boolean;
+
   protected render() {
     return html`
       <mwc-dialog
@@ -54,7 +56,9 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
 
   private async _handleClose() {
     await this.shadowRoot!.querySelector("ewt-console")!.disconnect();
-    await this.port.close();
+    if (this.closePortOnClose) {
+      await this.port.close();
+    }
     this.parentNode!.removeChild(this);
   }
 

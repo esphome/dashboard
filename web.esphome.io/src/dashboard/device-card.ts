@@ -65,7 +65,7 @@ class EWDeviceCard extends LitElement {
   }
 
   private showLogs() {
-    openLogsWebSerialDialog(this.port);
+    openLogsWebSerialDialog(this.port, false);
   }
 
   private showInstall() {
