@@ -52,8 +52,8 @@ class ESPHomeAdoptDialog extends LitElement {
           : html`
               <div>
                 Adopting ${this.device.name} will create an ESPHome
-                configuration for this device allowing you to install updates
-                and customize the original firmware.
+                configuration for this device. This allows you to install
+                updates and customize the original firmware.
               </div>
 
               ${this._error
@@ -104,6 +104,7 @@ class ESPHomeAdoptDialog extends LitElement {
                 ? ""
                 : html`
                     <mwc-button
+                      no-attention
                       slot="secondaryAction"
                       label="Cancel"
                       dialogAction="cancel"
