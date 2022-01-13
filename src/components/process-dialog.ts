@@ -58,7 +58,7 @@ export class ESPHomeProcessDialog extends LitElement {
     }
 
     esphome-remote-process {
-      --remote-process-height: calc(90vh - 128px);
+      height: calc(90vh - 128px);
     }
   `;
 }

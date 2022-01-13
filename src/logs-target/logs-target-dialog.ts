@@ -9,6 +9,7 @@ import { openLogsDialog } from "../logs";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openLogsWebSerialDialog } from "../logs-webserial";
+import { esphomeDialogStyles } from "../styles";
 
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_logs";
 
@@ -26,7 +27,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
     let content;
 
     if (this._show === "options") {
-      heading = "How to get the logs for your ESP device?";
+      heading = "How to get the logs for your device?";
       content = html`
         <mwc-list-item
           twoline
@@ -54,7 +55,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
-          <span>Plug into the computer running ESPHome Dashboard</span>
+          <span>Plug into computer running ESPHome Dashboard</span>
           <span slot="secondary">
             For devices connected via USB to the server
           </span>
@@ -70,19 +71,19 @@ class ESPHomeLogsTargetDialog extends LitElement {
     } else if (this._show === "web_instructions") {
       heading = "View logs in the browser";
       content = html`
-        <p>
+        <div>
           ESPHome can view the logs of your device via the browser if certain
           requirements are met:
-        </p>
+        </div>
         <ul>
           <li>ESPHome is visited over HTTPS</li>
           <li>Your browser supports WebSerial</li>
         </ul>
-        <p>
+        <div>
           Not all requirements are currently met. The easiest solution is to
           view the logs with ESPHome Web. ESPHome Web works 100% in your browser
           and no data will be shared with the ESPHome project.
-        </p>
+        </div>
 
         <a
           slot="primaryAction"
@@ -187,7 +188,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
       const port = await navigator.serial.requestPort();
       await port.open({ baudRate: 115200 });
       this.shadowRoot!.querySelector("mwc-dialog")!.close();
-      openLogsWebSerialDialog(port, this.configuration);
+      openLogsWebSerialDialog(port, true, this.configuration);
     } catch (err) {
       console.error(err);
     }
@@ -197,16 +198,14 @@ class ESPHomeLogsTargetDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-list-item {
-      margin: 0 -20px;
-    }
-
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      mwc-list-item {
+        margin: 0 -20px;
+      }
+    `,
+  ];
 }
 
 declare global {

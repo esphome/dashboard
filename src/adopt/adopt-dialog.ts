@@ -8,6 +8,7 @@ import { fireEvent } from "../util/fire-event";
 import { ImportableDevice, importDevice } from "../api/devices";
 import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
 import { openInstallChooseDialog } from "../install-choose";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-adopt-dialog")
 class ESPHomeAdoptDialog extends LitElement {
@@ -51,8 +52,8 @@ class ESPHomeAdoptDialog extends LitElement {
           : html`
               <div>
                 Adopting ${this.device.name} will create an ESPHome
-                configuration for this device allowing you to install updates
-                and customize the original firmware.
+                configuration for this device. This allows you to install
+                updates and customize the original firmware.
               </div>
 
               ${this._error
@@ -103,6 +104,7 @@ class ESPHomeAdoptDialog extends LitElement {
                 ? ""
                 : html`
                     <mwc-button
+                      no-attention
                       slot="secondaryAction"
                       label="Cancel"
                       dialogAction="cancel"
@@ -163,22 +165,18 @@ class ESPHomeAdoptDialog extends LitElement {
     }
   }
 
-  static styles = css`
-    :host {
-      --mdc-dialog-max-width: 390px;
-    }
-    mwc-textfield {
-      display: block;
-      margin-top: 16px;
-    }
-    div + div {
-      margin-top: 16px;
-    }
-    .error {
-      color: #db4437;
-      margin-bottom: 16px;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      :host {
+        --mdc-dialog-max-width: 390px;
+      }
+      .error {
+        color: var(--alert-error-color);
+        margin-bottom: 16px;
+      }
+    `,
+  ];
 }
 
 declare global {
