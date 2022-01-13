@@ -4,6 +4,7 @@ import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-no-port-picked-dialog")
 class ESPHomeNoPortPickedDialog extends LitElement {
@@ -86,19 +87,15 @@ class ESPHomeNoPortPickedDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-    li + li,
-    li > ul {
-      margin-top: 8px;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      li + li,
+      li > ul {
+        margin-top: 8px;
+      }
+    `,
+  ];
 }
 
 declare global {

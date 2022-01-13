@@ -29,7 +29,7 @@ const STATUS_COLORS = {
 @customElement("esphome-configured-device-card")
 class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
-  @property() public onlineStatus = false;
+  @property() public onlineStatus?: boolean;
   @property() public highlightOnAdd = false;
   @state() private _highlight = false;
 
@@ -69,7 +69,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       ? "OFFLINE"
       : updateAvailable
       ? "UPDATE AVAILABLE"
-      : "ONLINE";
+      : this.onlineStatus === true
+      ? "ONLINE"
+      : undefined;
     return html`
       <esphome-card
         .status=${status}

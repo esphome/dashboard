@@ -9,6 +9,7 @@ import { openLogsDialog } from "../logs";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openLogsWebSerialDialog } from "../logs-webserial";
+import { esphomeDialogStyles } from "../styles";
 
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_logs";
 
@@ -26,7 +27,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
     let content;
 
     if (this._show === "options") {
-      heading = "How to get the logs for your ESP device?";
+      heading = "How to get the logs for your device?";
       content = html`
         <mwc-list-item
           twoline
@@ -54,7 +55,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
-          <span>Plug into the computer running ESPHome Dashboard</span>
+          <span>Plug into computer running ESPHome Dashboard</span>
           <span slot="secondary">
             For devices connected via USB to the server
           </span>
@@ -197,16 +198,14 @@ class ESPHomeLogsTargetDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    mwc-list-item {
-      margin: 0 -20px;
-    }
-
-    mwc-button[no-attention] {
-      --mdc-theme-primary: #444;
-      --mdc-theme-on-primary: white;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      mwc-list-item {
+        margin: 0 -20px;
+      }
+    `,
+  ];
 }
 
 declare global {
