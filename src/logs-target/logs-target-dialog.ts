@@ -71,19 +71,19 @@ class ESPHomeLogsTargetDialog extends LitElement {
     } else if (this._show === "web_instructions") {
       heading = "View logs in the browser";
       content = html`
-        <p>
+        <div>
           ESPHome can view the logs of your device via the browser if certain
           requirements are met:
-        </p>
+        </div>
         <ul>
           <li>ESPHome is visited over HTTPS</li>
           <li>Your browser supports WebSerial</li>
         </ul>
-        <p>
+        <div>
           Not all requirements are currently met. The easiest solution is to
           view the logs with ESPHome Web. ESPHome Web works 100% in your browser
           and no data will be shared with the ESPHome project.
-        </p>
+        </div>
 
         <a
           slot="primaryAction"

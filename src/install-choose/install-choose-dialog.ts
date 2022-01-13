@@ -41,7 +41,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     let hideActions = false;
 
     if (this._state === "pick_option") {
-      heading = "How do you want to install this on your ESP device?";
+      heading = "How do you want to install this on your device?";
       content = html`
         <mwc-list-item
           twoline
@@ -127,20 +127,20 @@ class ESPHomeInstallChooseDialog extends LitElement {
     } else if (this._state === "web_instructions") {
       heading = "Install ESPHome via the browser";
       content = html`
-        <p>
+        <div>
           ESPHome can install ${this.configuration} on your device via the
           browser if certain requirements are met:
-        </p>
+        </div>
         <ul>
           <li>ESPHome is visited over HTTPS</li>
           <li>Your browser supports WebSerial</li>
         </ul>
-        <p>
+        <div>
           Not all requirements are currently met. The easiest solution is to
           download your project and do the installation with ESPHome Web.
           ESPHome Web works 100% in your browser and no data will be shared with
           the ESPHome project.
-        </p>
+        </div>
         <ol>
           <li>
             ${until(
@@ -390,6 +390,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
       a[disabled] {
         pointer-events: none;
         color: #999;
+      }
+      ol {
+        margin-bottom: 0;
       }
     `,
   ];

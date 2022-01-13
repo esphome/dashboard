@@ -33,6 +33,7 @@ import {
 } from "../api/wifi";
 import { openInstallChooseDialog } from "../install-choose";
 import { esphomeDialogStyles } from "../styles";
+import { openNoPortPickedDialog } from "../no-port-picked";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -96,7 +97,7 @@ export class ESPHomeWizardDialog extends LitElement {
     } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
     } else if (this._state === "pick_board") {
-      heading = "Select your ESP device";
+      heading = "Select your device type";
       content = this._renderPickBoard();
     } else if (this._state === "connect_webserial") {
       heading = "Installation";
@@ -306,7 +307,7 @@ export class ESPHomeWizardDialog extends LitElement {
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
       <div>
-        Select the device type that this configuration will be installed on.
+        Select the type of device that this configuration will be installed on.
       </div>
       <mwc-formfield label="ESP32" checked>
         <mwc-radio
@@ -391,6 +392,7 @@ export class ESPHomeWizardDialog extends LitElement {
         @click=${this._handleConnectSerialSubmit}
       ></mwc-button>
       <mwc-button
+        no-attention
         slot="secondaryAction"
         label="Skip this step"
         .disabled=${this._busy}
@@ -417,16 +419,17 @@ export class ESPHomeWizardDialog extends LitElement {
               will be able to manage it wirelessly.
             </div>
             <mwc-button
-              slot="secondaryAction"
-              dialogAction="close"
-              label="Skip"
-            ></mwc-button>
-            <mwc-button
               slot="primaryAction"
               dialogAction="ok"
               label="Install"
               @click=${() =>
                 openInstallChooseDialog(`${this._data.name!}.yaml`)}
+            ></mwc-button>
+            <mwc-button
+              no-attention
+              slot="secondaryAction"
+              dialogAction="close"
+              label="Skip"
             ></mwc-button>
           `}
     `;
@@ -574,7 +577,9 @@ export class ESPHomeWizardDialog extends LitElement {
         esploader = await connect(console);
       } catch (err: any) {
         console.error(err);
-        if ((err as DOMException).name !== "NotFoundError") {
+        if ((err as DOMException).name === "NotFoundError") {
+          openNoPortPickedDialog();
+        } else {
           this._error = err.message || String(err);
         }
         return;
@@ -705,22 +710,6 @@ export class ESPHomeWizardDialog extends LitElement {
       :host {
         --mdc-dialog-max-width: 390px;
       }
-      mwc-textfield:first-child,
-      div:first-child {
-        margin-top: 0;
-      }
-      mwc-textfield,
-      mwc-formfield {
-        display: block;
-      }
-      .formfield-extra {
-        margin-left: 52px;
-        margin-bottom: 16px;
-      }
-      mwc-textfield,
-      mwc-textfield:not([required]) + div {
-        margin-top: 16px;
-      }
       mwc-textfield[name="name"] + div {
         margin-top: 18px;
       }
@@ -744,9 +733,6 @@ export class ESPHomeWizardDialog extends LitElement {
       .error {
         color: var(--alert-error-color);
         margin-bottom: 16px;
-      }
-      div + div {
-        margin-top: 16px;
       }
     `,
   ];

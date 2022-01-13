@@ -41,6 +41,30 @@ export const esphomeDialogStyles = css`
     text-decoration: none;
   }
 
+  mwc-textfield:first-child,
+  div:first-child {
+    margin-top: 0;
+  }
+
+  div + div {
+    margin-top: 16px;
+  }
+
+  mwc-textfield,
+  mwc-formfield {
+    display: block;
+  }
+
+  mwc-textfield,
+  mwc-textfield:not([required]) + div {
+    margin-top: 16px;
+  }
+
+  .formfield-extra {
+    margin-left: 52px;
+    margin-bottom: 16px;
+  }
+
   button.link {
     background: none;
     color: var(--mdc-theme-primary);

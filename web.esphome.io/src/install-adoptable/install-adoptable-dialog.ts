@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
@@ -14,19 +14,19 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Prepare your ESP device for adoption"
+        heading="Prepare your device for adoption"
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>
+        <div>
           This will install a basic version of ESPHome to your device and help
           you connect it to your network.
-        </p>
-        <p>
+        </div>
+        <div>
           Once installed, your ESPHome dashboard will prompt you to adopt the
           device. This will set up a configuration for the device and allows you
           to further manage it wirelessly.
-        </p>
+        </div>
 
         <mwc-button
           slot="primaryAction"

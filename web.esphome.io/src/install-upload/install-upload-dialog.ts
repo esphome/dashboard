@@ -2,6 +2,7 @@ import { LitElement, html, css } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import "@material/mwc-icon";
 import { openInstallWebDialog } from "../../../src/install-web";
 import { esphomeDialogStyles } from "../../../src/styles";
 
@@ -15,19 +16,24 @@ class ESPHomeInstallUploadDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Select the project that you want to install"
+        heading="Install your existing ESPHome project"
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>Install your existing ESPHome project to your ESP device.</p>
-        <p>
-          To get the installable file of your ESPHome project, open the ESPHome
-          dashboard and on your project card click on menu (3 dots), install,
-          manual download.
-        </p>
-        <p>
+        <div>Select the project that you want to install on your device.</div>
+        <div>
           <input type="file" accept=".bin" @change=${this._fileChanged} />
-        </p>
+        </div>
+        <div>To get the factory file of your ESPHome project:</div>
+        <ol>
+          <li>Open your ESPHome dashboard</li>
+          <li>
+            Find your device card click on menu (<mwc-icon>more_vert</mwc-icon>)
+          </li>
+          <li>Click on Install</li>
+          <li>Click on "Plug into this computer"</li>
+          <li>Click on download project.</li>
+        </ol>
         <mwc-button
           slot="primaryAction"
           label="Install"
@@ -85,6 +91,14 @@ class ESPHomeInstallUploadDialog extends LitElement {
     css`
       input {
         border: 1px solid transparent;
+      }
+
+      mwc-icon {
+        vertical-align: middle;
+      }
+
+      ol {
+        margin-bottom: 0;
       }
 
       input.error {

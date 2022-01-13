@@ -1,7 +1,6 @@
 import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
-import { DOCS_WEBSERIAL } from "../../../src/const";
 import { openNoPortPickedDialog } from "../../../src/no-port-picked";
 import { esphomeCardStyles } from "../../../src/styles";
 import "./device-card";
@@ -22,9 +21,8 @@ class EWConnectCard extends LitElement {
       <esphome-card status="NOT CONNECTED">
         <div class="card-header">ESP Device</div>
         <div class="card-content flex">
-          Connect the ESP8266 or ESP32 to your computer and click on connect. If
-          you don't see your device in the list, make sure you have the
-          <a href=${DOCS_WEBSERIAL} target="_blank">right drivers</a>.
+          Connect the ESP8266 or ESP32 to your computer and click on connect to
+          be able to manage your device.
         </div>
 
         <div class="card-actions">

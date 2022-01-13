@@ -18,10 +18,10 @@ class ESPHomeNoPortPickedDialog extends LitElement {
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <p>
+        <div>
           If you didn't select a port because you didn't see your device listed,
           try the following steps:
-        </p>
+        </div>
         <ol>
           <li>
             Make sure that the device is connected to this computer (the one
@@ -93,6 +93,9 @@ class ESPHomeNoPortPickedDialog extends LitElement {
       li + li,
       li > ul {
         margin-top: 8px;
+      }
+      ol {
+        margin-bottom: 0;
       }
     `,
   ];
