@@ -67,9 +67,8 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
       --mdc-dialog-max-width: 90vw;
     }
     ewt-console {
-      display: block;
       width: calc(80vw - 48px);
-      height: 80vh;
+      height: calc(90vh - 128px);
     }
   `;
 }
