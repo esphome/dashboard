@@ -44,7 +44,7 @@ main {
   padding: 0 24px;
 }
 
-.esphome-header > div {
+.flex {
   flex: 1;
 }
 
@@ -137,7 +137,8 @@ ul.browser-default li {
   .modal {
     top: 0 !important;
     width: 100vw;
-    height: 100vh !important;
+    height: 90vh !important;
+    height: calc(90vh - env(safe-area-inset-bottom)) !important;
     max-height: initial;
   }
   .modal h4 {

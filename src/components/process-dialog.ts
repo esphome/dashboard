@@ -4,6 +4,7 @@ import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "../components/remote-process";
 import { fireEvent } from "../util/fire-event";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-process-dialog")
 export class ESPHomeProcessDialog extends LitElement {
@@ -51,16 +52,33 @@ export class ESPHomeProcessDialog extends LitElement {
     fireEvent(this, "closed");
   }
 
-  static styles = css`
-    mwc-dialog {
-      --mdc-dialog-min-width: 95vw;
-      --mdc-dialog-max-width: 95vw;
-    }
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      :host {
+        --height-header-footer-padding: 152px;
+      }
+      mwc-dialog {
+        --mdc-dialog-min-width: 95vw;
+        --mdc-dialog-max-width: 95vw;
+      }
 
-    esphome-remote-process {
-      height: calc(90vh - 128px);
-    }
-  `;
+      esphome-remote-process {
+        height: calc(90vh - var(--height-header-footer-padding));
+      }
+
+      @media only screen and (max-width: 450px) {
+        esphome-remote-process {
+          height: calc(
+            90vh - var(--height-header-footer-padding) -
+              env(safe-area-inset-bottom)
+          );
+          margin-left: -24px;
+          margin-right: -24px;
+        }
+      }
+    `,
+  ];
 }
 
 declare global {
