@@ -80,4 +80,15 @@ export const esphomeDialogStyles = css`
     --mdc-theme-primary: #444;
     --mdc-theme-on-primary: white;
   }
+
+  @media only screen and (max-width: 450px) {
+    mwc-dialog {
+      --mdc-dialog-min-width: 100vw !important;
+      --mdc-dialog-max-width: 100vw !important;
+      --mdc-dialog-max-height: 100vh !important;
+      --mdc-dialog-max-height: calc(
+        90vh - env(safe-area-inset-bottom)
+      ) !important;
+    }
+  }
 `;
