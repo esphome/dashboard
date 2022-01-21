@@ -5,6 +5,8 @@ import "@material/mwc-button";
 import "../components/remote-process";
 import { fireEvent } from "../util/fire-event";
 import { esphomeDialogStyles } from "../styles";
+import { textDownload } from "../util/file-download";
+import { basename } from "../util/basename";
 
 @customElement("esphome-process-dialog")
 export class ESPHomeProcessDialog extends LitElement {
@@ -31,6 +33,12 @@ export class ESPHomeProcessDialog extends LitElement {
           @process-done=${this._handleProcessDone}
         ></esphome-remote-process>
 
+        <mwc-button
+          slot="secondaryAction"
+          label="Download Logs"
+          @click=${this._downloadLogs}
+        ></mwc-button>
+
         <slot name="secondaryAction" slot="secondaryAction"></slot>
 
         <mwc-button
@@ -50,6 +58,20 @@ export class ESPHomeProcessDialog extends LitElement {
 
   private _handleClose() {
     fireEvent(this, "closed");
+  }
+
+  private _downloadLogs() {
+    let filename = "logs";
+    if (this.spawnParams?.configuration) {
+      // Append filename without extension
+      filename += `_${basename(this.spawnParams.configuration)}`;
+    }
+    filename += `_${this.type}.txt`;
+
+    textDownload(
+      this.shadowRoot!.querySelector("esphome-remote-process")!.logs(),
+      filename
+    );
   }
 
   static styles = [

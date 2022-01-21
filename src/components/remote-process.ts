@@ -11,6 +11,10 @@ class ESPHomeRemoteProcess extends HTMLElement {
   private _abortController?: AbortController;
   private _setup = false;
 
+  public logs(): string {
+    return this.shadowRoot!.querySelector("div")!.innerText;
+  }
+
   public connectedCallback() {
     if (this._setup) {
       return;
