@@ -1,8 +1,11 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "./ewt-console";
+import { textDownload } from "../util/file-download";
+import type { EwtConsole } from "./ewt-console";
+import { basename } from "../util/basename";
 
 @customElement("esphome-logs-webserial-dialog")
 class ESPHomeLogsWebSerialDialog extends LitElement {
@@ -11,6 +14,8 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
   @property() public port!: SerialPort;
 
   @property() public closePortOnClose!: boolean;
+
+  @query("ewt-console") private _console!: EwtConsole;
 
   protected render() {
     return html`
@@ -25,6 +30,11 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
           .logger=${console}
           .allowInput=${false}
         ></ewt-console>
+        <mwc-button
+          slot="secondaryAction"
+          label="Download Logs"
+          @click=${this._downloadLogs}
+        ></mwc-button>
         ${this.configuration
           ? html`
               <mwc-button
@@ -55,7 +65,7 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
   }
 
   private async _handleClose() {
-    await this.shadowRoot!.querySelector("ewt-console")!.disconnect();
+    await this._console.disconnect();
     if (this.closePortOnClose) {
       await this.port.close();
     }
@@ -63,7 +73,16 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
   }
 
   private async _resetDevice() {
-    await this.shadowRoot!.querySelector("ewt-console")!.reset();
+    await this._console.reset();
+  }
+
+  private _downloadLogs() {
+    textDownload(
+      this._console.logs(),
+      `${
+        this.configuration ? `${basename(this.configuration)}_logs` : "logs"
+      }.txt`
+    );
   }
 
   static styles = css`

@@ -8,14 +8,17 @@ class ESPHomeRemoteProcess extends HTMLElement {
   public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
   public spawnParams!: Record<string, any>;
 
+  private _coloredConsole?: ColoredConsole;
   private _abortController?: AbortController;
-  private _setup = false;
+
+  public logs(): string {
+    return this._coloredConsole?.logs() || "";
+  }
 
   public connectedCallback() {
-    if (this._setup) {
+    if (this._coloredConsole) {
       return;
     }
-    this._setup = true;
     const shadowRoot = this.attachShadow({ mode: "open" });
 
     shadowRoot.innerHTML = `
@@ -29,6 +32,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
     `;
 
     const coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);
+    this._coloredConsole = coloredConsole;
     this._abortController = new AbortController();
 
     streamLogs(
@@ -51,6 +55,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
   public disconnectedCallback() {
     if (this._abortController) {
       this._abortController.abort();
+      this._abortController = undefined;
     }
   }
 }
