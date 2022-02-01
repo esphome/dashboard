@@ -12,7 +12,7 @@ import {
 import { FileToFlash, flashFiles, getConfigurationFiles } from "../flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
-import { chipFamilyToPlatform } from "../const";
+import { chipFamilyToPlatform, chipFamilyToVariant } from "../const";
 import { esphomeDialogStyles } from "../styles";
 
 const OK_ICON = "🎉";
@@ -71,7 +71,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
                 Installing<br /><br />
                 This will take
                 ${this._platform === "ESP8266" ? "a minute" : "2 minutes"}.<br />
-                Keep this page visible to prevent slow down
+                Keep this page visible to prevent slowdown
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
               this._writeProgress > 3 ? this._writeProgress : undefined
@@ -256,7 +256,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _getFilesForConfiguration(
     configuration: string,
-    platform: ValueOf<typeof chipFamilyToPlatform>
+    platform: ValueOf<typeof chipFamilyToPlatform>,
   ): Promise<FileToFlash[] | undefined> {
     let info: Configuration;
 

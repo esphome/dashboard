@@ -12,6 +12,8 @@ import {
   ESPLoader,
   CHIP_FAMILY_ESP32,
   CHIP_FAMILY_ESP8266,
+  CHIP_FAMILY_ESP32C3,
+  CHIP_FAMILY_ESP32S2,
 } from "esp-web-flasher";
 import { allowsWebSerial, supportsWebSerial } from "../const";
 import {
@@ -47,12 +49,14 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 
 const GENERIC_ESP32 = "esp32dev";
 const GENERIC_ESP8266 = "esp01_1m";
+const GENERIC_ESP32S2 = "esp32-s2-saola-1";
+const GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
-  @state() private _board: "ESP32" | "ESP8266" | "CUSTOM" = "ESP32";
+  @state() private _board: "ESP32" | "ESP8266" | "ESP32S2" | "ESP32C3" | "CUSTOM" = "ESP32";
 
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
@@ -117,7 +121,7 @@ export class ESPHomeWizardDialog extends LitElement {
                 Installing<br /><br />
                 This will take
                 ${this._board === "ESP8266" ? "a minute" : "2 minutes"}.<br />
-                Keep this page visible to prevent slow down
+                Keep this page visible to prevent slowdown
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
               this._writeProgress > 3 ? this._writeProgress : undefined
@@ -318,6 +322,25 @@ export class ESPHomeWizardDialog extends LitElement {
         ></mwc-radio>
       </mwc-formfield>
 
+      <mwc-formfield label="ESP32-S2">
+        <mwc-radio
+          name="board"
+          value="ESP32S2"
+          @click=${this._handlePickBoardRadio}
+          ?checked=${this._board === "ESP32S2"}
+        ></mwc-radio>
+      </mwc-formfield>
+      
+      <mwc-formfield label="ESP32-C3">
+        <mwc-radio
+          name="board"
+          value="ESP32C3"
+          @click=${this._handlePickBoardRadio}
+          ?checked=${this._board === "ESP32C3"}
+        ></mwc-radio>
+      </mwc-formfield>
+
+
       <mwc-formfield label="ESP8266">
         <mwc-radio
           name="board"
@@ -373,7 +396,7 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <div>
-        Connect your ESP32 or ESP8266 board with a USB cable to your computer
+        Connect your ESP board with a USB cable to your computer
         and click on connect. You need to do this once. Later updates install
         wirelessly.
         <a
@@ -542,6 +565,12 @@ export class ESPHomeWizardDialog extends LitElement {
     } else if (this._board === "ESP8266") {
       this._data.platform = "ESP8266";
       this._data.board = GENERIC_ESP8266;
+    } else if (this._board === "ESP32S2") {
+      this._data.platform = "ESP32S2";
+      this._data.board = GENERIC_ESP32S2;
+    } else if (this._board === "ESP32C3") {
+      this._data.platform = "ESP32C3";
+      this._data.board = GENERIC_ESP32C3;
     } else {
       this._data.board = this._customBoard;
     }
@@ -607,6 +636,14 @@ export class ESPHomeWizardDialog extends LitElement {
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP8266) {
         this._board = "ESP8266";
         this._data.board = GENERIC_ESP8266;
+      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S2) {
+        this._board = "ESP32S2";
+        this._data.board = GENERIC_ESP32S2;
+        this._data.platform = "ESP32S2";
+      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32C3) {
+        this._board = "ESP32C3";
+        this._data.board = GENERIC_ESP32C3;
+        this._data.platform = "ESP32C3";
       } else {
         this._state = "connect_webserial";
         this._error = `Unable to identify the connected device (${esploader.chipFamily}).`;
