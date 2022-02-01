@@ -71,7 +71,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
                 Installing<br /><br />
                 This will take
                 ${this._platform === "ESP8266" ? "a minute" : "2 minutes"}.<br />
-                Keep this page visible to prevent slowdown
+                Keep this page visible to prevent slow down
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
               this._writeProgress > 3 ? this._writeProgress : undefined
