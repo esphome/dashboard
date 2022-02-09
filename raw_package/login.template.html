@@ -66,7 +66,7 @@
         >Dashboard Login</span
       >
       <p class="center">
-        {% if hassio %} Login by entering your Home Assistant login
+        {% if ha_addon %} Login by entering your Home Assistant login
         credentials. {% else %} Login by entering your ESPHome login
         credentials. {% end %}
       </p>
@@ -83,7 +83,7 @@
       {% end %}
 
       <form action="./login" method="post" id="login-form">
-        {% if has_username or hassio %}
+        {% if has_username or ha_addon %}
         <div class="row no-bottom-margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">person</i>
