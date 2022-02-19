@@ -16,7 +16,13 @@ export interface Configuration {
   src_version: number;
   arduino_version: string;
   address: string;
-  esp_platform: "ESP8266" | "ESP32" | "ESP32S2" | "ESP32S3" | "ESP32C3" | "ESP32H2";
+  esp_platform:
+    | "ESP8266"
+    | "ESP32"
+    | "ESP32S2"
+    | "ESP32S3"
+    | "ESP32C3"
+    | "ESP32H2";
   board: string;
   build_path: string;
   firmware_bin_path: string;

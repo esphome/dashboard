@@ -56,7 +56,12 @@ const GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
-  @state() private _board: "ESP32" | "ESP8266" | "ESP32S2" | "ESP32C3" | "CUSTOM" = "ESP32";
+  @state() private _board:
+    | "ESP32"
+    | "ESP8266"
+    | "ESP32S2"
+    | "ESP32C3"
+    | "CUSTOM" = "ESP32";
 
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
@@ -330,7 +335,7 @@ export class ESPHomeWizardDialog extends LitElement {
           ?checked=${this._board === "ESP32S2"}
         ></mwc-radio>
       </mwc-formfield>
-      
+
       <mwc-formfield label="ESP32-C3">
         <mwc-radio
           name="board"
@@ -339,7 +344,6 @@ export class ESPHomeWizardDialog extends LitElement {
           ?checked=${this._board === "ESP32C3"}
         ></mwc-radio>
       </mwc-formfield>
-
 
       <mwc-formfield label="ESP8266">
         <mwc-radio
@@ -396,9 +400,8 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <div>
-        Connect your ESP board with a USB cable to your computer
-        and click on connect. You need to do this once. Later updates install
-        wirelessly.
+        Connect your ESP board with a USB cable to your computer and click on
+        connect. You need to do this once. Later updates install wirelessly.
         <a
           href="https://esphome.io/guides/getting_started_hassio.html#webserial"
           target="_blank"

@@ -256,7 +256,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _getFilesForConfiguration(
     configuration: string,
-    platform: ValueOf<typeof chipFamilyToPlatform>,
+    platform: ValueOf<typeof chipFamilyToPlatform>
   ): Promise<FileToFlash[] | undefined> {
     let info: Configuration;
 
