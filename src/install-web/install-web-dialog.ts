@@ -12,7 +12,7 @@ import {
 import { FileToFlash, flashFiles, getConfigurationFiles } from "../flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
-import { chipFamilyToPlatform, chipFamilyToVariant } from "../const";
+import { chipFamilyToPlatform } from "../const";
 import { esphomeDialogStyles } from "../styles";
 
 const OK_ICON = "🎉";
