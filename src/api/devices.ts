@@ -1,5 +1,6 @@
 import { fetchApiJson, fetchApiText } from ".";
 import { createPollingCollection } from "../util/polling-collection";
+import { SupportedPlatforms } from "./configuration";
 
 export interface ConfiguredDevice {
   name: string;
@@ -11,7 +12,7 @@ export interface ConfiguredDevice {
   comment: string;
   address: string;
   web_port: number;
-  target_platform: string;
+  target_platform: SupportedPlatforms;
 }
 
 export interface ImportableDevice {
