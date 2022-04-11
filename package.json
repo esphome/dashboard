@@ -33,7 +33,7 @@
     "@material/mwc-textfield": "^0.25.3",
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.2",
-    "esp-web-flasher": "^5.1.1",
+    "esp-web-flasher": "^5.1.2",
     "improv-wifi-serial-sdk": "^2.2.1",
     "lit": "^2.2.1",
     "tslib": "^2.3.1"
