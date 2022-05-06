@@ -18,6 +18,7 @@ import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
 import { openDeleteDeviceDialog } from "../delete-device";
 import { esphomeCardStyles } from "../styles";
+import { openRenameDialog } from "../rename";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -128,6 +129,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item>Validate</mwc-list-item>
             <mwc-list-item>Install</mwc-list-item>
+            <mwc-list-item>Rename</mwc-list-item>
             <mwc-list-item>Clean Build Files</mwc-list-item>
             <mwc-list-item>Delete</mwc-list-item>
             ${"mqtt" in this.device.loaded_integrations
@@ -184,16 +186,19 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         this._handleInstall();
         break;
       case 2:
-        openCleanDialog(this.device.configuration);
+        openRenameDialog(this.device.configuration, this.device.name);
         break;
       case 3:
+        openCleanDialog(this.device.configuration);
+        break;
+      case 4:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted")
         );
         break;
-      case 4:
+      case 5:
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
