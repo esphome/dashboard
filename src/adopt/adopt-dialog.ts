@@ -7,8 +7,10 @@ import type { TextField } from "@material/mwc-textfield";
 import { fireEvent } from "../util/fire-event";
 import { ImportableDevice, importDevice } from "../api/devices";
 import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
-import { openInstallChooseDialog } from "../install-choose";
 import { esphomeDialogStyles } from "../styles";
+import { cleanName, stripDash } from "../util/name-validator";
+import { openRenameProcessDialog } from "../rename-process";
+import { openInstallServerDialog } from "../install-server";
 
 @customElement("esphome-adopt-dialog")
 class ESPHomeAdoptDialog extends LitElement {
@@ -16,101 +18,142 @@ class ESPHomeAdoptDialog extends LitElement {
 
   @state() private _hasWifiSecrets: boolean | undefined;
 
-  @state() private _adopted = false;
+  @state() private _state: "ask" | "adopted" | "skipped" = "ask";
   @state() private _busy = false;
   @state() private _error?: string;
 
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
+  @query("mwc-textfield[name=name]") private _inputName!: TextField;
 
   protected render() {
-    return html`
-      <mwc-dialog
-        .heading=${this._adopted ? "Configuration created" : `Adopt device`}
-        @closed=${this._handleClose}
-        open
-      >
-        ${this._adopted
+    let heading;
+    let content;
+
+    if (this._state === "ask") {
+      heading = "Adopt device";
+      content = html`
+        <div>
+          Adopting ${this.device.name} will create an ESPHome configuration for
+          this device. This allows you to install updates and customize the
+          original firmware.
+        </div>
+
+        ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+        ${this._hasWifiSecrets !== false
           ? html`
               <div>
-                To finish adoption, the new configuration needs to be installed
-                on the device. This can be done wirelessly.
+                This device will be configured to connect to the Wi-Fi network
+                stored in your secrets.
               </div>
-              <mwc-button
-                slot="primaryAction"
-                dialogAction="install"
-                label="Install"
-                @click=${() =>
-                  openInstallChooseDialog(`${this.device.name}.yaml`)}
-              ></mwc-button>
-              <mwc-button
-                slot="secondaryAction"
-                dialogAction="skip"
-                label="skip"
-              ></mwc-button>
             `
           : html`
               <div>
-                Adopting ${this.device.name} will create an ESPHome
-                configuration for this device. This allows you to install
-                updates and customize the original firmware.
+                Enter the credentials of the Wi-Fi network that you want your
+                device to connect to.
+              </div>
+              <div>
+                This information will be stored in your secrets and used for
+                this and future devices. You can edit the information later by
+                editing your secrets at the top of the page.
               </div>
 
-              ${this._error
-                ? html`<div class="error">${this._error}</div>`
-                : ""}
-              ${this._hasWifiSecrets !== false
-                ? html`
-                    <div>
-                      This device will be configured to connect to the Wi-Fi
-                      network stored in your secrets.
-                    </div>
-                  `
-                : html`
-                    <div>
-                      Enter the credentials of the Wi-Fi network that you want
-                      your device to connect to.
-                    </div>
-                    <div>
-                      This information will be stored in your secrets and used
-                      for this and future devices. You can edit the information
-                      later by editing your secrets at the top of the page.
-                    </div>
+              <mwc-textfield
+                label="Network name"
+                name="ssid"
+                required
+                @blur=${this._cleanSSIDBlur}
+                .disabled=${this._busy}
+              ></mwc-textfield>
 
-                    <mwc-textfield
-                      label="Network name"
-                      name="ssid"
-                      required
-                      @blur=${this._cleanSSIDBlur}
-                      .disabled=${this._busy}
-                    ></mwc-textfield>
-
-                    <mwc-textfield
-                      label="Password"
-                      name="password"
-                      type="password"
-                      helper="Leave blank if no password"
-                      .disabled=${this._busy}
-                    ></mwc-textfield>
-                  `}
-
-              <mwc-button
-                slot="primaryAction"
-                .label=${this._busy ? "Adopting…" : "Adopt"}
-                @click=${this._handleAdopt}
-                .disabled=${this._hasWifiSecrets === undefined}
-              ></mwc-button>
-              ${this._busy
-                ? ""
-                : html`
-                    <mwc-button
-                      no-attention
-                      slot="secondaryAction"
-                      label="Cancel"
-                      dialogAction="cancel"
-                    ></mwc-button>
-                  `}
+              <mwc-textfield
+                label="Password"
+                name="password"
+                type="password"
+                helper="Leave blank if no password"
+                .disabled=${this._busy}
+              ></mwc-textfield>
             `}
+
+        <mwc-button
+          slot="primaryAction"
+          .label=${this._busy ? "Adopting…" : "Adopt"}
+          @click=${this._handleAdopt}
+          .disabled=${this._hasWifiSecrets === undefined}
+        ></mwc-button>
+        ${this._busy
+          ? ""
+          : html`
+              <mwc-button
+                no-attention
+                slot="secondaryAction"
+                label="Cancel"
+                dialogAction="cancel"
+              ></mwc-button>
+            `}
+      `;
+    } else if (this._state === "adopted") {
+      heading = "Configuration created";
+      content = html`
+        <div>
+          To finish adoption of ${this.device.name}, the new configuration needs
+          to be installed on the device.
+        </div>
+
+        ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+
+        <mwc-textfield
+          label="New Name"
+          name="name"
+          required
+          dialogInitialFocus
+          spellcheck="false"
+          pattern="^[a-z0-9-]+$"
+          helper="Lowercase letters (a-z), numbers (0-9) or dash (-)"
+          @input=${this._cleanNameInput}
+          @blur=${this._cleanNameBlur}
+        ></mwc-textfield>
+
+        <mwc-button
+          slot="primaryAction"
+          label="Install"
+          @click=${this._handleInstall}
+        ></mwc-button>
+        <mwc-button
+          slot="secondaryAction"
+          no-attention
+          label="skip"
+          @click=${() => {
+            this._state = "skipped";
+          }}
+        ></mwc-button>
+      `;
+    } else if (this._state === "skipped") {
+      heading = "Installation skipped";
+      content = html`
+        <div>
+          You will be able to rename the device and install the configuration at
+          a later point from the three-dot menu on the device card.
+        </div>
+        <mwc-button
+          slot="primaryAction"
+          dialogAction="close"
+          label="Close"
+        ></mwc-button>
+        <mwc-button
+          slot="secondaryAction"
+          no-attention
+          label="back"
+          @click=${() => {
+            this._state = "adopted";
+          }}
+        ></mwc-button>
+      `;
+    }
+
+    return html`
+      <mwc-dialog .heading=${heading} @closed=${this._handleClose} open>
+        ${content}
       </mwc-dialog>
     `;
   }
@@ -121,6 +164,26 @@ class ESPHomeAdoptDialog extends LitElement {
       this._hasWifiSecrets = hasWifiSecrets;
     });
   }
+
+  protected updated(changedProps: PropertyValues) {
+    super.updated(changedProps);
+    if (changedProps.has("_state") && this._state === "adopted") {
+      const nameEl = this.shadowRoot!.querySelector("mwc-textfield")!;
+      nameEl.value = this.device.name;
+      nameEl.updateComplete.then(() => nameEl.focus());
+    }
+  }
+
+  private _cleanNameInput = (ev: InputEvent) => {
+    this._error = undefined;
+    const input = ev.target as TextField;
+    input.value = cleanName(input.value);
+  };
+
+  private _cleanNameBlur = (ev: Event) => {
+    const input = ev.target as TextField;
+    input.value = stripDash(input.value);
+  };
 
   private _cleanSSIDBlur = (ev: Event) => {
     const input = ev.target as TextField;
@@ -158,11 +221,33 @@ class ESPHomeAdoptDialog extends LitElement {
     try {
       await importDevice(this.device);
       fireEvent(this, "adopted");
-      this._adopted = true;
+      this._state = "adopted";
     } catch (err) {
       this._busy = false;
       this._error = "Failed to import device";
     }
+  }
+
+  private async _handleInstall() {
+    const nameInput = this._inputName;
+
+    const nameValid = nameInput.reportValidity();
+
+    if (!nameValid) {
+      nameInput.focus();
+      return;
+    }
+
+    const name = nameInput.value;
+
+    // If name is the same, it's the existing configuration. Trigger OTA
+    if (name === this.device.name) {
+      openInstallServerDialog(`${this.device.name}.yaml`, "OTA");
+    } else {
+      openRenameProcessDialog(`${this.device.name}.yaml`, name);
+    }
+
+    this.shadowRoot!.querySelector("mwc-dialog")!.close();
   }
 
   static styles = [

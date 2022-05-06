@@ -26,6 +26,7 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
         ></mwc-button>
         <mwc-button
           slot="secondaryAction"
+          no-attention
           label="Cancel"
           dialogAction="cancel"
         ></mwc-button>

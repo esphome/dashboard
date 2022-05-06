@@ -2,17 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/process-dialog";
-import { openRenameDialog } from ".";
-
-export const openRenameProcessDialog = (
-  configuration: string,
-  newName: string
-) => {
-  const dialog = document.createElement("esphome-rename-process-dialog");
-  dialog.configuration = configuration;
-  dialog.newName = newName;
-  document.body.append(dialog);
-};
+import { openRenameDialog } from "../rename";
 
 @customElement("esphome-rename-process-dialog")
 class ESPHomeRenameProcessDialog extends LitElement {

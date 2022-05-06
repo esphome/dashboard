@@ -5,7 +5,11 @@ import "@material/mwc-textfield";
 import type { TextField } from "@material/mwc-textfield";
 import "@material/mwc-dialog";
 import { esphomeDialogStyles } from "../styles";
-import { getConfiguration } from "../api/configuration";
+import { cleanName, stripDash } from "../util/name-validator";
+import {
+  openRenameProcessDialog,
+  preloadRenameProcessDialog,
+} from "../rename-process";
 
 @customElement("esphome-rename-dialog")
 class ESPHomeRenameDialog extends LitElement {
@@ -28,10 +32,11 @@ class ESPHomeRenameDialog extends LitElement {
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
         <mwc-textfield
-          label="Name"
+          label="New Name"
           name="name"
           required
           dialogInitialFocus
+          spellcheck="false"
           pattern="^[a-z0-9-]+$"
           helper="Lowercase letters (a-z), numbers (0-9) or dash (-)"
           @input=${this._cleanNameInput}
@@ -62,23 +67,16 @@ class ESPHomeRenameDialog extends LitElement {
   private _cleanNameInput = (ev: InputEvent) => {
     this._error = undefined;
     const input = ev.target as TextField;
-    input.value = input.value
-      // Convert uppercase to lower
-      .toLowerCase()
-      // Replace seperator characters with -
-      .replace(/[ \._]/g, "-")
-      // Remove the rest
-      .replace(/[^a-z0-9-]/g, "");
+    input.value = cleanName(input.value);
   };
 
   private _cleanNameBlur = (ev: Event) => {
     const input = ev.target as TextField;
-    // Remove starting and trailing -
-    input.value = input.value.replace(/^-+/, "").replace(/-+$/, "");
+    input.value = stripDash(input.value);
   };
 
   private async _handleRename(ev: Event) {
-    const processDialogImport = import("./rename-process-dialog");
+    preloadRenameProcessDialog();
 
     const nameInput = this._inputName;
 
@@ -91,16 +89,9 @@ class ESPHomeRenameDialog extends LitElement {
 
     const name = nameInput.value;
 
-    try {
-      await getConfiguration(`${name}.yaml`);
-      this._error = "Name already in use";
-      return;
-    } catch (err) {
-      // This is expected.
+    if (name !== this.suggestedName) {
+      openRenameProcessDialog(this.configuration, name);
     }
-
-    const mod = await processDialogImport;
-    mod.openRenameProcessDialog(this.configuration, name);
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
   }
 
