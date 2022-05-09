@@ -29,7 +29,7 @@
     "@material/mwc-icon-button": "^0.25.3",
     "@material/mwc-list": "^0.25.3",
     "@material/mwc-menu": "^0.25.3",
-    "@material/mwc-radio": "^0.25.3",
+    "@material/mwc-radio": "^0.26.1",
     "@material/mwc-textfield": "^0.25.3",
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.2",
