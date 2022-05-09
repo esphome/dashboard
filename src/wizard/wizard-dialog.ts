@@ -36,6 +36,7 @@ import {
 import { openInstallChooseDialog } from "../install-choose";
 import { esphomeDialogStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
+import { cleanName, stripDash } from "../util/name-validator";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -487,19 +488,12 @@ export class ESPHomeWizardDialog extends LitElement {
   private _cleanNameInput = (ev: InputEvent) => {
     this._error = undefined;
     const input = ev.target as TextField;
-    input.value = input.value
-      // Convert uppercase to lower
-      .toLowerCase()
-      // Replace seperator characters with -
-      .replace(/[ \._]/g, "-")
-      // Remove the rest
-      .replace(/[^a-z0-9-]/g, "");
+    input.value = cleanName(input.value);
   };
 
   private _cleanNameBlur = (ev: Event) => {
     const input = ev.target as TextField;
-    // Remove starting and trailing -
-    input.value = input.value.replace(/^-+/, "").replace(/-+$/, "");
+    input.value = stripDash(input.value);
   };
 
   private _cleanSSIDBlur = (ev: Event) => {
