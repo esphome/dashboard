@@ -185,11 +185,8 @@ export class ESPHomeInstallWebDialog extends LitElement {
       } catch (err) {
         console.error(err);
         this._state = "done";
-        this._error = "Failed to initialize.";
-        if (esploader.connected) {
-          this._error +=
-            " Try resetting your device or holding the BOOT button while selecting your serial port until it starts preparing the installation.";
-        }
+        this._error =
+          "Failed to initialize. Try resetting your device or holding the BOOT button while selecting your serial port until it starts preparing the installation.";
         return;
       }
 
