@@ -12,7 +12,7 @@
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-typescript": "^8.3.2",
+    "@rollup/plugin-typescript": "^8.3.3",
     "nunjucks": "^3.2.3",
     "prettier": "^2.6.2",
     "rollup": "^2.75.5",
