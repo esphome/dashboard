@@ -48,21 +48,21 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 
 */
 
-const GENERIC_ESP32 = "esp32dev";
-const GENERIC_ESP8266 = "esp01_1m";
-const GENERIC_ESP32S2 = "esp32-s2-saola-1";
-const GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
+const BOARD_GENERIC_ESP32 = "esp32dev";
+const BOARD_GENERIC_ESP8266 = "esp01_1m";
+const BOARD_GENERIC_ESP32S2 = "esp32-s2-saola-1";
+const BOARD_GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
   @state() private _board:
-    | "ESP32"
-    | "ESP8266"
-    | "ESP32S2"
-    | "ESP32C3"
-    | "CUSTOM" = "ESP32";
+    | typeof BOARD_GENERIC_ESP32
+    | typeof BOARD_GENERIC_ESP8266
+    | typeof BOARD_GENERIC_ESP32S2
+    | typeof BOARD_GENERIC_ESP32C3
+    | "CUSTOM" = BOARD_GENERIC_ESP32;
 
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
@@ -126,7 +126,9 @@ export class ESPHomeWizardDialog extends LitElement {
               html`
                 Installing<br /><br />
                 This will take
-                ${this._board === "ESP8266" ? "a minute" : "2 minutes"}.<br />
+                ${this._board === BOARD_GENERIC_ESP8266
+                  ? "a minute"
+                  : "2 minutes"}.<br />
                 Keep this page visible to prevent slow down
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
@@ -322,36 +324,36 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-formfield label="ESP32" checked>
         <mwc-radio
           name="board"
-          value="ESP32"
+          .value=${BOARD_GENERIC_ESP32}
           @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === "ESP32"}
+          ?checked=${this._board === BOARD_GENERIC_ESP32}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP32-S2">
         <mwc-radio
           name="board"
-          value="ESP32S2"
+          .value=${BOARD_GENERIC_ESP32S2}
           @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === "ESP32S2"}
+          ?checked=${this._board === BOARD_GENERIC_ESP32S2}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP32-C3">
         <mwc-radio
           name="board"
-          value="ESP32C3"
+          .value=${BOARD_GENERIC_ESP32C3}
           @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === "ESP32C3"}
+          ?checked=${this._board === BOARD_GENERIC_ESP32C3}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP8266">
         <mwc-radio
           name="board"
-          value="ESP8266"
+          .value=${BOARD_GENERIC_ESP8266}
           @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === "ESP8266"}
+          ?checked=${this._board === BOARD_GENERIC_ESP8266}
         ></mwc-radio>
       </mwc-formfield>
 
@@ -556,21 +558,8 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private async _handlePickBoardSubmit() {
-    if (this._board === "ESP32") {
-      this._data.platform = "ESP32";
-      this._data.board = GENERIC_ESP32;
-    } else if (this._board === "ESP8266") {
-      this._data.platform = "ESP8266";
-      this._data.board = GENERIC_ESP8266;
-    } else if (this._board === "ESP32S2") {
-      this._data.platform = "ESP32S2";
-      this._data.board = GENERIC_ESP32S2;
-    } else if (this._board === "ESP32C3") {
-      this._data.platform = "ESP32C3";
-      this._data.board = GENERIC_ESP32C3;
-    } else {
-      this._data.board = this._customBoard;
-    }
+    this._data.board =
+      this._board === "CUSTOM" ? this._customBoard : this._board;
 
     this._busy = true;
 
@@ -626,19 +615,13 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "prepare_flash";
 
       if (esploader.chipFamily === CHIP_FAMILY_ESP32) {
-        this._board = "ESP32";
-        this._data.board = GENERIC_ESP32;
+        this._data.board = BOARD_GENERIC_ESP32;
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP8266) {
-        this._board = "ESP8266";
-        this._data.board = GENERIC_ESP8266;
+        this._data.board = BOARD_GENERIC_ESP8266;
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S2) {
-        this._board = "ESP32S2";
-        this._data.board = GENERIC_ESP32S2;
-        this._data.platform = "ESP32S2";
+        this._data.board = BOARD_GENERIC_ESP32S2;
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32C3) {
-        this._board = "ESP32C3";
-        this._data.board = GENERIC_ESP32C3;
-        this._data.platform = "ESP32C3";
+        this._data.board = BOARD_GENERIC_ESP32C3;
       } else {
         this._state = "connect_webserial";
         this._error = `Unable to identify the connected device (${esploader.chipFamily}).`;
