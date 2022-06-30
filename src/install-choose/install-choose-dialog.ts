@@ -25,6 +25,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @property() public configuration!: string;
 
   @state() private _ethernet = false;
+  @state() private _platformSupportsWebSerial = true;
 
   @state() private _ports?: ServerSerialPort[];
 
@@ -63,10 +64,17 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
-        <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
+        <mwc-list-item
+          twoline
+          hasMeta
+          ?disabled=${!this._platformSupportsWebSerial}
+          @click=${this._handleBrowserInstall}
+        >
           <span>Plug into this computer</span>
           <span slot="secondary">
-            For devices connected via USB to this computer
+            ${this._platformSupportsWebSerial
+              ? "For devices connected via USB to this computer"
+              : "This platform does not support web installation"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -88,7 +96,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
         >
           <span>Manual download</span>
           <span slot="secondary">
-            Install it yourself using ESPHome Web or other tools
+            Install it yourself
+            ${this._platformSupportsWebSerial
+              ? "using ESPHome Web or other tools"
+              : ""}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -159,13 +170,17 @@ class ESPHomeInstallChooseDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
-        <a
-          href="https://web.esphome.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bottom-left"
-          >Open ESPHome Web</a
-        >
+        ${this._platformSupportsWebSerial
+          ? html`
+              <a
+                href="https://web.esphome.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bottom-left"
+                >Open ESPHome Web</a
+              >
+            `
+          : ""}
         <mwc-button
           no-attention
           slot="primaryAction"
@@ -286,6 +301,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._updateSerialPorts();
     getConfiguration(this.configuration).then((config) => {
       this._ethernet = config.loaded_integrations.includes("ethernet");
+      this._platformSupportsWebSerial = config.esp_platform !== "RP2040";
     });
   }
 
