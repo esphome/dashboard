@@ -20,6 +20,7 @@ import { openDeleteDeviceDialog } from "../delete-device";
 import { esphomeCardStyles } from "../styles";
 import { openRenameDialog } from "../rename";
 import { openShowApiKeyDialog } from "../show-api-key";
+import { openEditorDialog } from "../editor";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -120,7 +121,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               `
             : ""}
 
-          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
+          <mwc-button label="Edit Ace" @click=${this._handleEdit}></mwc-button>
+          <mwc-button
+            label="Edit Monaco"
+            @click=${this._handleEditMonaco}
+          ></mwc-button>
           <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
@@ -211,6 +216,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
   private _handleEdit() {
     openEditDialog(this.device.configuration);
+  }
+  private _handleEditMonaco() {
+    openEditorDialog(this.device.configuration);
   }
   private _handleInstall() {
     openInstallChooseDialog(this.device.configuration);

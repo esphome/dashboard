@@ -42,7 +42,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     let hideActions = false;
 
     if (this._state === "pick_option") {
-      heading = "How do you want to install this on your device?";
+      heading = `How do you want to install ${this.configuration} on your device?`;
       content = html`
         <mwc-list-item
           twoline
