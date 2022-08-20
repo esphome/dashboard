@@ -4,6 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
 // @ts-ignore
 import styles from "monaco-editor/min/vs/editor/editor.main.css";
+import { fireEvent } from "../util/fire-event";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -157,6 +158,15 @@ export class ESPHomeEditor extends LitElement {
         console.log("editor model changed", editorValidationScheduled);
       }, 250)
     );
+
+    this.editor.addAction({
+      id: "action-save-file",
+      label: "Save file",
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
+      run: () => {
+        fireEvent(this, "save");
+      },
+    });
   }
 
   // Editor WebSocket Validation

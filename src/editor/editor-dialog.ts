@@ -25,6 +25,7 @@ class ESPHomeEditorDialog extends LitElement {
       <esphome-editor
         configuration=${this.fileName}
         ${ref(this.editorRef)}
+        @save=${this._saveFile}
       ></esphome-editor>
       <mwc-button
         slot="secondaryAction"
