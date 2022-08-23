@@ -15,16 +15,15 @@ if (loc.protocol === "https:") {
 }
 const wsUrl = wsLoc.href;
 
-let editorActiveFilename: string | null = null;
-let editorActiveSecrets = false;
-let editorActiveWebSocket: WebSocket | null = null;
-let editorValidationScheduled = false;
-let editorValidationRunning = false;
-
 @customElement("esphome-editor")
 export class ESPHomeEditor extends LitElement {
   private container: Ref<HTMLElement> = createRef();
   editor?: monaco.editor.IStandaloneCodeEditor;
+  editorActiveWebSocket: WebSocket | null = null;
+  editorValidationScheduled = false;
+  editorValidationRunning = false;
+  editorActiveSecrets = false;
+
   @property() theme?: string;
   @property() language?: string;
 
@@ -103,7 +102,7 @@ export class ESPHomeEditor extends LitElement {
     //     monaco.editor.setTheme(this.getTheme());
     //   });
     const filename = this.configuration;
-    editorActiveFilename = filename;
+    const editorActiveFilename = filename;
     const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
     const filenameField = document.querySelector(
       "#js-editor-modal #js-node-filename"
@@ -154,8 +153,8 @@ export class ESPHomeEditor extends LitElement {
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
-        editorValidationScheduled = !editorActiveSecrets;
-        console.log("editor model changed", editorValidationScheduled);
+        this.editorValidationScheduled = !this.editorActiveSecrets;
+        console.log("editor model changed", this.editorValidationScheduled);
       }, 250)
     );
 
@@ -167,13 +166,34 @@ export class ESPHomeEditor extends LitElement {
         fireEvent(this, "save");
       },
     });
+
+    setInterval(() => {
+      if (!this.editorValidationScheduled || this.editorValidationRunning)
+        return;
+      if (this.editorActiveWebSocket == null) return;
+
+      this.sendAceStdin({
+        type: "validate",
+        file: editorActiveFilename,
+      });
+      this.editorValidationRunning = true;
+      this.editorValidationScheduled = false;
+    }, 100);
+  }
+
+  sendAceStdin(data: any) {
+    let send = JSON.stringify({
+      type: "stdin",
+      data: JSON.stringify(data) + "\n",
+    });
+    this.editorActiveWebSocket!.send(send);
   }
 
   // Editor WebSocket Validation
   startAceWebsocket() {
-    editorActiveWebSocket = new WebSocket(`${wsUrl}ace`);
+    this.editorActiveWebSocket = new WebSocket(`${wsUrl}ace`);
 
-    editorActiveWebSocket.addEventListener("message", (event) => {
+    this.editorActiveWebSocket.addEventListener("message", (event) => {
       const raw = JSON.parse(event.data);
       if (raw.event === "line") {
         const msg = JSON.parse(raw.data);
@@ -219,9 +239,9 @@ export class ESPHomeEditor extends LitElement {
           monaco.editor.setModelMarkers(model!, "esphome", markers);
           console.log("Setting markers", markers);
 
-          editorValidationRunning = false;
+          this.editorValidationRunning = false;
         } else if (msg.type === "read_file") {
-          sendAceStdin({
+          this.sendAceStdin({
             type: "file_response",
             content: this.editor?.getValue(),
           });
@@ -229,13 +249,13 @@ export class ESPHomeEditor extends LitElement {
       }
     });
 
-    editorActiveWebSocket.addEventListener("open", () => {
+    this.editorActiveWebSocket.addEventListener("open", () => {
       const msg = JSON.stringify({ type: "spawn" });
-      editorActiveWebSocket!.send(msg);
+      this.editorActiveWebSocket!.send(msg);
     });
 
-    editorActiveWebSocket.addEventListener("close", () => {
-      editorActiveWebSocket = null;
+    this.editorActiveWebSocket.addEventListener("close", () => {
+      this.editorActiveWebSocket = null;
       setTimeout(this.startAceWebsocket, 5000);
     });
   }
@@ -256,26 +276,6 @@ const debounce = (func: Function, wait: number) => {
     timeout = setTimeout(later, wait);
   };
 };
-
-const sendAceStdin = (data: any) => {
-  let send = JSON.stringify({
-    type: "stdin",
-    data: JSON.stringify(data) + "\n",
-  });
-  editorActiveWebSocket!.send(send);
-};
-
-setInterval(() => {
-  if (!editorValidationScheduled || editorValidationRunning) return;
-  if (editorActiveWebSocket == null) return;
-
-  sendAceStdin({
-    type: "validate",
-    file: editorActiveFilename,
-  });
-  editorValidationRunning = true;
-  editorValidationScheduled = false;
-}, 100);
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
 wifi_ssid: "REPLACEME"
