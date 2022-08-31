@@ -8,6 +8,7 @@ import "./esphome-editor";
 import { esphomeDialogStyles } from "../styles";
 import { ESPHomeEditor } from "./esphome-editor";
 import { openInstallChooseDialog } from "../install-choose";
+import { writeFile } from "../api/files";
 
 @customElement("esphome-editor-dialog")
 class ESPHomeEditorDialog extends LitElement {
@@ -77,37 +78,30 @@ class ESPHomeEditorDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  private handleInstall() {
-    this._saveFile();
+  private async handleInstall() {
+    await this._saveFile();
     this._handleClose();
     openInstallChooseDialog(this.fileName);
   }
 
-  private _saveFile() {
+  private async _saveFile() {
     const code = this.editorRef.value!.getValue();
 
-    fetch(`./edit?configuration=${this.fileName}`, {
-      credentials: "same-origin",
-      method: "POST",
-      body: code,
-    })
-      .then((response) => {
-        response.text();
-      })
-      .then(() => {
-        // @ts-ignore
-        M.toast({
-          html: `✅ Saved <code class="inlinecode">${this.fileName}</code>`,
-          displayLength: 10000,
-        });
-      })
-      .catch((error) => {
-        // @ts-ignore
-        M.toast({
-          html: `❌ An error occured saving <code class="inlinecode">${this.fileName}</code>`,
-          displayLength: 10000,
-        });
+    try {
+      await writeFile(this.fileName, code ?? "");
+
+      // @ts-ignore
+      M.toast({
+        html: `✅ Saved <code class="inlinecode">${this.fileName}</code>`,
+        displayLength: 10000,
       });
+    } catch (error) {
+      // @ts-ignore
+      M.toast({
+        html: `❌ An error occured saving <code class="inlinecode">${this.fileName}</code>`,
+        displayLength: 10000,
+      });
+    }
   }
 }
 

@@ -5,6 +5,9 @@ import { createRef, Ref, ref } from "lit/directives/ref.js";
 // @ts-ignore
 import styles from "monaco-editor/min/vs/editor/editor.main.css";
 import { fireEvent } from "../util/fire-event";
+import { debounce } from "../util/debounce";
+import "./hover-provider";
+import { getFile } from "../api/files";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -50,7 +53,6 @@ export class ESPHomeEditor extends LitElement {
         ${styles}
         ${ESPHomeEditor.styles}
       </style>
-      <div>start</div>
       <div id="js-loading-indicator">
         <div class="preloader-wrapper big active">
           <div class="spinner-layer spinner-blue-only">
@@ -66,7 +68,6 @@ export class ESPHomeEditor extends LitElement {
           </div>
         </div>
       </div>
-      <div>end</div>
       <main ${ref(this.container)}></main>
     `;
   }
@@ -75,18 +76,6 @@ export class ESPHomeEditor extends LitElement {
     // @ts-ignore
     self.MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
-        // if (label === 'json') {
-        //   return './json.worker.bundle.js';
-        // }
-        // if (label === 'css' || label === 'scss' || label === 'less') {
-        //   return './css.worker.bundle.js';
-        // }
-        // if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        //   return './html.worker.bundle.js';
-        // }
-        // if (label === 'typescript' || label === 'javascript') {
-        //   return './ts.worker.bundle.js';
-
         return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
@@ -95,6 +84,8 @@ export class ESPHomeEditor extends LitElement {
       language: "yaml",
       theme: "dark",
       automaticLayout: true,
+      // This is to have the popups above other stuff around the editor, otherwise they are hidden
+      fixedOverflowWidgets: true,
     });
     // window
     //   .matchMedia("(prefers-color-scheme: dark)")
@@ -104,9 +95,7 @@ export class ESPHomeEditor extends LitElement {
     const filename = this.configuration;
     const editorActiveFilename = filename;
     const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
-    const filenameField = document.querySelector(
-      "#js-editor-modal #js-node-filename"
-    );
+
     // filenameField.innerHTML = editorActiveFilename;
 
     // saveButton.setAttribute("data-filename", editorActiveFilename);
@@ -121,33 +110,31 @@ export class ESPHomeEditor extends LitElement {
     }
     // closeButton.setAttribute("data-filename", editorActiveFilename);
 
-    const loadingIndicator = document.querySelector(
+    const loadingIndicator = this.shadowRoot!.querySelector(
       "#js-editor-modal #js-loading-indicator"
     );
-    const editorArea = document.querySelector(
+    const editorArea = this.shadowRoot!.querySelector(
       "#js-editor-modal #js-editor-area"
     );
 
-    // loadingIndicator.style.display = "block";
-    // editorArea.style.display = "none";
+    if (loadingIndicator)
+      // @ts-ignore
+      loadingIndicator.style.display = "block";
+    //editorArea.style.display = "none";
 
     // editor.setOption("readOnly", true);
-    fetch(`./edit?configuration=${editorActiveFilename}`, {
-      credentials: "same-origin",
-    })
-      .then((res) => res.text())
-      .then((response) => {
-        if (response === "" && isSecrets) {
-          response = EMPTY_SECRETS;
-        }
-        this.editor?.setValue(response);
+    getFile(editorActiveFilename).then((response) => {
+      if (response === null && isSecrets) {
+        response = EMPTY_SECRETS;
+      }
+      this.editor?.setValue(response ?? "");
 
-        //editor.setOption("readOnly", false);
-        //loadingIndicator.style.display = "none";
-        //editorArea.style.display = "block";
+      //editor.setOption("readOnly", false);
+      //loadingIndicator.style.display = "none";
+      //editorArea.style.display = "block";
 
-        this.startAceWebsocket();
-      });
+      this.startAceWebsocket();
+    });
 
     this.editor.focus();
 
@@ -260,22 +247,6 @@ export class ESPHomeEditor extends LitElement {
     });
   }
 }
-
-const debounce = (func: Function, wait: number) => {
-  let timeout: number | null;
-  return function () {
-    // @ts-ignore
-    let context = this,
-      args = arguments;
-    let later = function () {
-      timeout = null;
-      func.apply(context, args);
-    };
-    clearTimeout(timeout!);
-    // @ts-ignore
-    timeout = setTimeout(later, wait);
-  };
-};
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
 wifi_ssid: "REPLACEME"

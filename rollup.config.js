@@ -7,6 +7,7 @@ import postcss from "rollup-plugin-postcss";
 import postcssUrl from "postcss-url";
 import commonjs from "@rollup/plugin-commonjs";
 import monaco from "rollup-plugin-monaco-editor";
+import copy from 'rollup-plugin-copy'
 import fs from "fs-extra";
 import path from "path";
 
@@ -47,6 +48,10 @@ const config = {
           },
         }),
       ],
+    }), copy({
+      targets: [
+        { src: 'schema/*.json', dest: 'esphome_dashboard/static/schema' },
+      ]
     }),
     monaco({
       languages: ["yaml"],

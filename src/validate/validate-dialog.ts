@@ -3,8 +3,8 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
 import { openInstallChooseDialog } from "../install-choose";
-import { openEditDialog } from "../legacy";
 import "../components/process-dialog";
+import { openEditDialog } from "../editor";
 
 @customElement("esphome-validate-dialog")
 class ESPHomeValidateDialog extends LitElement {
