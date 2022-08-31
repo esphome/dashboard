@@ -1,0 +1,34 @@
+{
+  "sntp.time": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "time.TIME_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "sntp::SNTPComponent",
+                "parents": [
+                  "time::RealTimeClock",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "servers": {
+              "key": "Optional",
+              "default": "['0.pool.ntp.org', '1.pool.ntp.org', '2.pool.ntp.org']",
+              "is_list": true,
+              "docs": "**list of strings**: Choose up to 3 NTP servers that are used for the clock source. Defaults to `0.pool.ntp.org`, `1.pool.ntp.org` and `2.pool.ntp.org`\n\n*See also: [SNTP Time Source](https://esphome.io/components/time.html#sntp-time-source)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

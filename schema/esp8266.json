@@ -1,0 +1,182 @@
+{
+  "esp8266": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "board": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "d1",
+                "d1_mini",
+                "d1_mini_lite",
+                "d1_mini_pro",
+                "esp01",
+                "esp01_1m",
+                "esp07",
+                "esp12e",
+                "esp210",
+                "esp8285",
+                "esp_wroom_02",
+                "espduino",
+                "espectro",
+                "espino",
+                "espinotee",
+                "espmxdevkit",
+                "espresso_lite_v1",
+                "espresso_lite_v2",
+                "gen4iod",
+                "heltec_wifi_kit_8",
+                "huzzah",
+                "inventone",
+                "modwifi",
+                "nodemcu",
+                "nodemcuv2",
+                "oak",
+                "phoenix_v1",
+                "phoenix_v2",
+                "sonoff_basic",
+                "sonoff_s20",
+                "sonoff_sv",
+                "sonoff_th",
+                "sparkfunBlynk",
+                "thing",
+                "thingdev",
+                "wifi_slot",
+                "wifiduino",
+                "wifinfo",
+                "wio_link",
+                "wio_node",
+                "xinabox_cw01"
+              ],
+              "docs": "**string**: The PlatformIO board ID that should be used. Choose the appropriate board from [this list](https://registry.platformio.org/platforms/platformio/espressif8266/boards) (the icon next to the name can be used to copy the board ID). *This only affects pin aliases, flash size and some internal settings*, if unsure choose a generic board from Espressif such as `esp01_1m`.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+            },
+            "framework": {
+              "key": "Optional",
+              "default": "{}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "version": {
+                    "key": "Optional",
+                    "default": "recommended",
+                    "type": "string",
+                    "docs": "**string**: The base framework version number to use, from [esp8266 arduino releases](https://github.com/esp8266/Arduino/releases). Defaults to `recommended`. Additional values\n  * `dev`: Use the latest commit from [https://github.com/esp8266/Arduino](https://github.com/esp8266/Arduino), note this may break at any time\n  \n  * `latest`: Use the latest *release* from [https://github.com/esp8266/Arduino/releases](https://github.com/esp8266/Arduino/releases), even if it hasn\u2019t been recommended yet.\n  \n  * `recommended`: Use the recommended framework version.\n  \n  \n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+                  },
+                  "source": {
+                    "key": "Optional",
+                    "type": "string",
+                    "docs": "**string**: The PlatformIO package or repository to use for the framework. This can be used to use a custom or patched version of the framework.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+                  },
+                  "platform_version": {
+                    "key": "Optional",
+                    "docs": "**string**: The version of the [platformio/espressif8266](https://github.com/platformio/platform-espressif8266/releases/) package to use.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Options for the underlying framework used by ESPHome.\n  * **version** (*Optional*, string): The base framework version number to use, from [esp8266 arduino releases](https://github.com/esp8266/Arduino/releases). Defaults to `recommended`. Additional values\n    * `dev`: Use the latest commit from [https://github.com/esp8266/Arduino](https://github.com/esp8266/Arduino), note this may break at any time\n    \n    * `latest`: Use the latest *release* from [https://github.com/esp8266/Arduino/releases](https://github.com/esp8266/Arduino/releases), even if it hasn\u2019t been recommended yet.\n    \n    * `recommended`: Use the recommended framework version.\n    \n    \n  \n  * **source** (*Optional*, string): The PlatformIO package or repository to use for the framework. This can be used to use a custom or patched version of the framework.\n  \n  * **platform_version** (*Optional*, string): The version of the [platformio/espressif8266](https://github.com/platformio/platform-espressif8266/releases/) package to use.\n  \n  \n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+            },
+            "restore_from_flash": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to store some persistent preferences in flash memory. Defaults to `false`.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+            },
+            "early_pin_init": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Specifies whether pins should be initialised as early as possible to known values. Recommended value is `false` where switches are involved, as these will toggle when updating the firmware or when restarting the device. Defaults to `true`.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+            },
+            "board_flash_mode": {
+              "key": "Optional",
+              "default": "dout",
+              "type": "enum",
+              "values": [
+                "qio",
+                "qout",
+                "dio",
+                "dout"
+              ],
+              "docs": "**string**: The SPI mode of the flash chip. One of `qio`, `qout`, `dio` and `dout`. Defaults to `dout` for compatibility with all chips. Note: on the next OTA update the actual flash mode is automatically detected and changed to the appropriate one.\n\n*See also: [ESP8266 Platform](https://esphome.io/components/esp8266.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "config_vars": {
+          "id": {
+            "key": "GeneratedID",
+            "id_type": {
+              "class": "esphome::esp8266::ESP8266GPIOPin",
+              "parents": [
+                "InternalGPIOPin",
+                "GPIOPin"
+              ]
+            }
+          },
+          "number": {
+            "key": "Required",
+            "docs": "**pin**: The pin number.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+          },
+          "mode": {
+            "key": "Optional",
+            "default": "{}",
+            "type": "schema",
+            "schema": {
+              "config_vars": {
+                "analog": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "input": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean",
+                  "docs": "**boolean**: If true, configure the pin as an input.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+                },
+                "output": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean",
+                  "docs": "**boolean**: If true, configure the pin as an output.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+                },
+                "open_drain": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean",
+                  "docs": "**boolean**: Set the pin to open-drain (as opposed to push-pull). The active pin state will then result in a high-impedance state.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+                },
+                "pullup": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean",
+                  "docs": "**boolean**: Activate internal pullup resistors on the pin.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+                },
+                "pulldown": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean",
+                  "docs": "**boolean**: Activate internal pulldown resistors on the pin.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+                }
+              }
+            },
+            "docs": "**string or mapping**: Configures the pin to behave in different modes like input or output. The default value depends on the context. Accepts either a shorthand string or a mapping where each feature can be individually enabled/disabled:\n  * **input** (*Optional*, boolean): If true, configure the pin as an input.\n  \n  * **output** (*Optional*, boolean): If true, configure the pin as an output.\n  \n  * **pullup** (*Optional*, boolean): Activate internal pullup resistors on the pin.\n  \n  * **pulldown** (*Optional*, boolean): Activate internal pulldown resistors on the pin.\n  \n  * **open_drain** (*Optional*, boolean): Set the pin to open-drain (as opposed to push-pull). The active pin state will then result in a high-impedance state.\n  \n  For compatibility some shorthand modes can also be used.\n  * `INPUT`\n  \n  * `OUTPUT`\n  \n  * `OUTPUT_OPEN_DRAIN`\n  \n  * `ANALOG`\n  \n  * `INPUT_PULLUP`\n  \n  * `INPUT_PULLDOWN`\n  \n  \n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+          },
+          "inverted": {
+            "key": "Optional",
+            "default": "False",
+            "type": "boolean",
+            "docs": "**boolean**: If all read and written values should be treated as inverted. Defaults to `false`.\n\n*See also: [Configuration Types](https://esphome.io/guides/configuration-types.html#pin-schema)*"
+          }
+        }
+      }
+    }
+  }
+}

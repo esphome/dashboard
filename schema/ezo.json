@@ -1,0 +1,45 @@
+{
+  "ezo.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ezo::EZOSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [EZO sensor circuits](https://esphome.io/components/sensor/ezo.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [EZO sensor circuits](https://esphome.io/components/sensor/ezo.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Required",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Specify the I\u00b2C address of the sensor.\n\n*See also: [EZO sensor circuits](https://esphome.io/components/sensor/ezo.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

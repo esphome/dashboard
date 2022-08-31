@@ -1,0 +1,65 @@
+{
+  "globals": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "globals::GlobalsComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Give the global variable an ID so that you can refer to it later in [lambdas](https://esphome.io/guides/automations.html#config-lambda).\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
+            },
+            "type": {
+              "key": "Required",
+              "type": "string",
+              "docs": "**string**: The C++ type of the global variable, for example `bool` (for `true`/`false`), `int` (for integers), `float` (for decimal numbers), `int[50]` for an array of 50 integers, etc.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
+            },
+            "initial_value": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The value with which to initialize this variable if the state can not be restored or if state restoration is not enabled. This needs to be wrapped in quotes! Defaults to the C++ default value for this type (for example `0` for integers).\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
+            },
+            "restore_value": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to try to restore the state on boot up. Be careful: on the ESP8266, you only have a total of 96 bytes available for this! Defaults to `no`. This will use storage in \u201cRTC memory\u201d, so it won\u2019t survive a power-cycle unless you use the `esp8266_restore_from_flash` option to save to flash. See [esp8266_restore_from_flash](https://esphome.io/components/esphome.html) for details.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "action": {
+      "set": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "globals::GlobalsComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [ID](https://esphome.io/guides/configuration-types.html#config-id) of the global variable to set.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#globals-set-action)*"
+            },
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: The value to set the global variable to.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#globals-set-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to change the value of a [global](https://esphome.io/guides/automations.html#config-globals) variable without having to go through the lambda syntax.\n\n*See also: [`globals.set` Action](https://esphome.io/guides/automations.html#globals-set-action)*"
+      }
+    }
+  }
+}

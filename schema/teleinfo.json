@@ -1,0 +1,120 @@
+{
+  "teleinfo": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "teleinfo::TeleInfo",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "historical_mode": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "Whether to use historical mode or standard mode. With historical mode, baudrate of 1200 must be used whereas 9600 must be used in standard mode. Defaults to `false`.\n\n*See also: [teleinfo Component/Hub](https://esphome.io/components/sensor/teleinfo.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [teleinfo Component/Hub](https://esphome.io/components/sensor/teleinfo.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [UART Component](https://esphome.io/components/uart.html#uart) if you want to use multiple UART buses.\n\n*See also: [teleinfo Component/Hub](https://esphome.io/components/sensor/teleinfo.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      },
+      "TELEINFO_LISTENER_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "teleinfo_id": {
+              "key": "GeneratedID",
+              "use_id_type": "teleinfo::TeleInfo",
+              "type": "use_id"
+            },
+            "tag_name": {
+              "key": "Required",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "teleinfo.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "teleinfo.TELEINFO_LISTENER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "teleinfo::TeleInfoSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "Wh"
+            },
+            "icon": {
+              "default": "mdi:flash"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            }
+          }
+        }
+      }
+    }
+  },
+  "teleinfo.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "text_sensor.TEXT_SENSOR_SCHEMA",
+            "teleinfo.TELEINFO_LISTENER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "teleinfo::TeleInfoTextSensor",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

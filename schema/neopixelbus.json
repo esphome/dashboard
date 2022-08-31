@@ -1,0 +1,100 @@
+{
+  "neopixelbus.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.ADDRESSABLE_LIGHT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "neopixelbus::NeoPixelBusLightOutputBase",
+                "parents": [
+                  "light::AddressableLight",
+                  "light::LightOutput",
+                  "Component"
+                ]
+              }
+            },
+            "type": {
+              "key": "Optional",
+              "default": "GRB",
+              "docs": "**string**: The type of light. This is used to specify if it is an RGBW or RGB light and in which order the colors are. Defaults to `GRB`. Change this if you have lights with white channel and/or the colors are in the wrong order.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "variant": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "ws2811",
+                "ws2812",
+                "ws2812x",
+                "ws2813",
+                "sk6812",
+                "tm1814",
+                "tm1829",
+                "tm1914",
+                "800kbps",
+                "400kbps",
+                "apa106",
+                "lc8812",
+                "dotstar",
+                "ws2801",
+                "lpd6803",
+                "lpd8806",
+                "p9813"
+              ],
+              "docs": "**string**: The chipset of the light.The following options are supported:\n  * `800KBPS` (generic option, recommended for chipsets without explicit support)\n  \n  * `400KBPS`\n  \n  * `WS2811`\n  \n  * `WS2812`\n  \n  * `WS2812X`\n  \n  * `WS2813`\n  \n  * `SK6812`\n  \n  * `TM1814`\n  \n  * `TM1829`\n  \n  * `TM1914`\n  \n  * `APA106`\n  \n  * `LC8812`\n  \n  Additionally the following two-wire chipsets (set `data_pin` and `clock_pin`) are supported:\n  * `WS2801`\n  \n  * `DotStar`\n  \n  * `LPD6803`\n  \n  * `LPD8806`\n  \n  * `P9813`\n  \n  \n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "method": {
+              "key": "Optional",
+              "docs": "**string**: The method used to transmit the data. By default, ESPHome will try to use the best method available for this chipset, ESP platform, and the given pin. See [methods](https://esphome.io/components/light/neopixelbus.html#neopixelbus-methods) for more information.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "invert": {
+              "key": "Optional",
+              "default": "no",
+              "type": "boolean",
+              "docs": "**boolean**: Invert data output, for use with n-type transistors. Defaults to `no`.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Optional",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the data line of the light.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "clock_pin": {
+              "key": "Optional",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the clock line of the light, for two-wire lights.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "data_pin": {
+              "key": "Optional",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the data line of the light, for two-wire lights.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            },
+            "num_leds": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The number of LEDs attached.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

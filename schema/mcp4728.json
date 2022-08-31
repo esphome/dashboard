@@ -1,0 +1,119 @@
+{
+  "mcp4728": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "mcp4728::MCP4728Component",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [MCP4728 Component](https://esphome.io/components/output/mcp4728.html#configuration-variables)*"
+            },
+            "store_in_eeprom": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Use SEQ_WRITE mode to also write to EEPROM sequentially. Defaults to `false`.\n\n*See also: [MCP4728 Component](https://esphome.io/components/output/mcp4728.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "96",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I2C address of the DAC. Defaults to `0x60`.\n\n*See also: [MCP4728 Component](https://esphome.io/components/output/mcp4728.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "mcp4728.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "mcp4728::MCP4728Channel",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            },
+            "mcp4728_id": {
+              "key": "GeneratedID",
+              "use_id_type": "mcp4728::MCP4728Component",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [MCP4728](https://esphome.io/components/output/mcp4728.html#id1). Use this if you have multiple MCP4728 chains you want to use at the same time.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            },
+            "channel": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "docs": "**string**: Chose the channel of the MCP4728 chain of this output component. One of `A`, `B`, `C` or `D`.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            },
+            "vref": {
+              "key": "Optional",
+              "default": "vdd",
+              "type": "enum",
+              "values": [
+                "vdd",
+                "internal"
+              ],
+              "docs": "**string**: Chose the VREF source. One of `vdd` or `internal`. Defaults to `vdd`.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            },
+            "power_down": {
+              "key": "Optional",
+              "default": "normal",
+              "type": "enum",
+              "values": [
+                "normal",
+                "gnd_1k",
+                "gnd_100k",
+                "gnd_500k"
+              ],
+              "docs": "**string**: Chose the power down mode. In power down mode (value different from `normal`) the output pin will be connected to GND using a resistor (1kOhm, 100kOhm or 500kOhm). One of `normal`, `gnd_1k`, `gnd_100k` or `gnd_500k`. Defaults to `normal`.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            },
+            "gain": {
+              "key": "Optional",
+              "default": "X1",
+              "type": "enum",
+              "values": [
+                "X1",
+                "X2"
+              ],
+              "docs": "**string**: Chose the GAIN multiplier for internal VREF. One of `X1` or `X2`. Only useful when `vdd=internal`. Defaults to `X1`.\n\n*See also: [MCP4728 Output](https://esphome.io/components/output/mcp4728.html#id2)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

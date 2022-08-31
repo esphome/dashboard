@@ -1,0 +1,114 @@
+{
+  "ads1115": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ads1115::ADS1115Component",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this ADS1115 Hub. Use this if you want to use multiple ADS1115 hubs at once.\n\n*See also: [ads1115 Component/Hub](https://esphome.io/components/sensor/ads1115.html#configuration-variables)*"
+            },
+            "continuous_mode": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Set if the ADS1115 should continuously measure voltages or only measure them when an update is called. Please enable this for the [CT Clamp Current Sensor](https://esphome.io/components/sensor/ct_clamp.html) integration. Defaults to `off`.\n\n*See also: [ads1115 Component/Hub](https://esphome.io/components/sensor/ads1115.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Required",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The i\u00b2c address of the sensor. See [I\u00b2C Addresses](https://esphome.io/components/sensor/ads1115.html#ads1115-i2c-addresses) for more information.\n\n*See also: [ads1115 Component/Hub](https://esphome.io/components/sensor/ads1115.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "ads1115.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ads1115::ADS1115Sensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "voltage_sampler::VoltageSampler"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+            },
+            "unit_of_measurement": {
+              "default": "V"
+            },
+            "accuracy_decimals": {
+              "default": "3"
+            },
+            "device_class": {
+              "default": "voltage"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "ads1115_id": {
+              "key": "GeneratedID",
+              "use_id_type": "ads1115::ADS1115Component",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [ADS1115 Hub](https://esphome.io/components/sensor/ads1115.html#ads1115-component) you want to use this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+            },
+            "multiplexer": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "A0_A1",
+                "A0_A3",
+                "A1_A3",
+                "A2_A3",
+                "A0_GND",
+                "A1_GND",
+                "A2_GND",
+                "A3_GND"
+              ],
+              "docs": "The multiplexer channel of this sensor. Effectively means between which pins you want to measure voltage.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+            },
+            "gain": {
+              "key": "Required",
+              "docs": "**float**: The gain of this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

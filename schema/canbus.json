@@ -1,0 +1,161 @@
+{
+  "canbus": {
+    "components": {
+      "esp32_can": {
+        "dependencies": [
+          "esp32"
+        ],
+        "docs": "The ESP32 has an integrated CAN controller and therefore doesn\u2019t need an external controller necessarily. You only need to specify the RX and TX pins. Any GPIO will work.\n\n*See also: [ESP32 CAN Component](https://esphome.io/components/canbus.html#esp32-can-component)*"
+      },
+      "mcp2515": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The MCP2515 is a spi device and therefore you must first add the configuration for the spi bus to your file. You need to have an [SPI bus](https://esphome.io/components/spi.html#spi) in your configuration with both the **mosi_pin** and **miso_pin** set.\n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#mcp2515-component)*"
+      }
+    },
+    "schemas": {
+      "CANBUS_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "canbus::CanbusComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*"
+            },
+            "can_id": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: default *can id* used for transmitting frames.\n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*"
+            },
+            "bit_rate": {
+              "key": "Optional",
+              "default": "125KBPS",
+              "type": "enum",
+              "values": [
+                "5KBPS",
+                "10KBPS",
+                "20KBPS",
+                "31K25BPS",
+                "33KBPS",
+                "40KBPS",
+                "50KBPS",
+                "80KBPS",
+                "83K3BPS",
+                "95KBPS",
+                "100KBPS",
+                "125KBPS",
+                "200KBPS",
+                "250KBPS",
+                "500KBPS",
+                "1000KBPS"
+              ],
+              "docs": "**enum**: One of the supported bitrates. Defaults to `125KBPS`.\n  * `5KBPS` - Not supported by `esp32_can`\n  \n  * `10KBPS` - Not supported by `esp32_can`\n  \n  * `20KBPS` - Not supported by `esp32_can`\n  \n  * `31K25BPS` - Not supported by `esp32_can`\n  \n  * `33KBPS` - Not supported by `esp32_can`\n  \n  * `40KBPS` - Not supported by `esp32_can`\n  \n  * `50KBPS`\n  \n  * `80KBPS` - Not supported by `esp32_can`\n  \n  * `83K3BPS` - Not supported by `esp32_can`\n  \n  * `95KBPS` - Not supported by `esp32_can`\n  \n  * `100KBPS`\n  \n  * `125KBPS` - (Default)\n  \n  * `200KBPS` - Not supported by `esp32_can`\n  \n  * `250KBPS`\n  \n  * `500KBPS`\n  \n  * `1000KBPS`\n  \n  \n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*",
+              "values_docs": {
+                "5KBPS": "Not supported by `esp32_can`",
+                "10KBPS": "Not supported by `esp32_can`",
+                "20KBPS": "Not supported by `esp32_can`",
+                "31K25BPS": "Not supported by `esp32_can`",
+                "33KBPS": "Not supported by `esp32_can`",
+                "40KBPS": "Not supported by `esp32_can`",
+                "80KBPS": "Not supported by `esp32_can`",
+                "83K3BPS": "Not supported by `esp32_can`",
+                "95KBPS": "Not supported by `esp32_can`",
+                "125KBPS": "(Default)",
+                "200KBPS": "Not supported by `esp32_can`"
+              }
+            },
+            "use_extended_id": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: default *false* identifies the type of *can_id*: *false*: Standard 11 bits IDs, *true*: Extended 29 bits ID\n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*"
+            },
+            "on_frame": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "can_id": {
+                    "key": "Required",
+                    "type": "integer",
+                    "docs": "**int**: The received CAN id to trigger this automation on.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#id1)*"
+                  },
+                  "can_id_mask": {
+                    "key": "Optional",
+                    "default": "536870911",
+                    "type": "integer",
+                    "docs": "**int**: The bit mask to apply to the received CAN id before trying to match it with *can_id*, defaults to `0x1fffffff` (all bits of received CAN id are compared with *can_id*).\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#id1)*"
+                  },
+                  "use_extended_id": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean",
+                    "docs": "**boolean**: Identifies the type of *can_id* to match on, defaults to *false*.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#id1)*"
+                  },
+                  "remote_transmission_request": {
+                    "key": "Optional",
+                    "type": "boolean",
+                    "docs": "**boolean**: Whether to run for CAN frames with the \u201cremote transmission request\u201d bit set or not set, defaults to not checking, i.e. to run for both cases.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#id1)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    },
+    "action": {
+      "send": {
+        "type": "schema",
+        "maybe": "data",
+        "schema": {
+          "config_vars": {
+            "canbus_id": {
+              "key": "GeneratedID",
+              "use_id_type": "canbus::CanbusComponent",
+              "type": "use_id",
+              "docs": "Optionally set the can bus id to use for transmitting the frame. Not needed if you are using only 1 can bus.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#canbus-send-action)*"
+            },
+            "can_id": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: Allows to override the can id configured in the can bus device.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#canbus-send-action)*"
+            },
+            "use_extended_id": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: default *false* identifies the type of *can_id*: *false*: Standard 11 Bit IDs, *true*: Extended 29Bit ID\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#canbus-send-action)*"
+            },
+            "remote_transmission_request": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Set to send CAN bus frame to request data from another node (defaults to *false*). If a certain data length code needs to be sent, provide as many (dummy) bytes in *data*.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#canbus-send-action)*"
+            },
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**binary data**: Data to transmit, up to 8 bytes or characters are supported by can bus per frame.\n\n*See also: [on_frame Trigger](https://esphome.io/components/canbus.html#canbus-send-action)*"
+            }
+          }
+        },
+        "docs": "The can bus can transmit frames by means of the `canbus.send` action. There are several forms to use it:\n\n*See also: [`canbus.send` Action](https://esphome.io/components/canbus.html#canbus-send-action)*"
+      }
+    }
+  }
+}

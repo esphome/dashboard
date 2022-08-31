@@ -1,0 +1,666 @@
+{
+  "daly_bms": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "daly_bms::DalyBmsComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "address": {
+              "key": "Optional",
+              "default": "128",
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int**: Address to use, defaults to `0x80`.\n\n*See also: [daly_bms Component/Hub](https://esphome.io/components/sensor/daly_bms.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "30s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Delay between data requests.\n\n*See also: [daly_bms Component/Hub](https://esphome.io/components/sensor/daly_bms.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "daly_bms.sensor": {
+    "schemas": {
+      "CELL_VOLTAGE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "unit_of_measurement": {
+              "default": "V"
+            },
+            "icon": {
+              "default": "mdi:flash"
+            },
+            "accuracy_decimals": {
+              "default": "3"
+            },
+            "device_class": {
+              "default": "voltage"
+            },
+            "state_class": {
+              "default": "measurement"
+            }
+          }
+        }
+      },
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bms_daly_id": {
+              "key": "GeneratedID",
+              "use_id_type": "daly_bms::DalyBmsComponent",
+              "type": "use_id"
+            },
+            "voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "icon": {
+                    "default": "mdi:flash"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Voltage of the battery pack connected to Daly BMS.\n  * **name** (**Required**, string): The name for the voltage sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "current": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "A"
+                  },
+                  "icon": {
+                    "default": "mdi:current-dc"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "current"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Current flowing trough the BMS (input or output from batttery).\n  * **name** (**Required**, string): The name for the current sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "battery_level": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "icon": {
+                    "default": "mdi:percent"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "battery"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Battery level in % (SoC).\n  * **name** (**Required**, string): The name for the SoC sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "max_cell_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "icon": {
+                    "default": "mdi:flash"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The cell of the battery with the higher voltage.\n  * **name** (**Required**, string): The name for the Max Cell Voltage sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "max_cell_voltage_number": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  }
+                }
+              },
+              "docs": "The cell number of the battery with the higher voltage.\n  * **name** (**Required**, string): The name for the Max Cell Voltage Number sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "min_cell_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "icon": {
+                    "default": "mdi:flash"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The cell of the battery with the lower voltage.\n  * **name** (**Required**, string): The name for the Min Cell Voltage sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "min_cell_voltage_number": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  }
+                }
+              },
+              "docs": "The cell number of the battery with the lower voltage.\n  * **name** (**Required**, string): The name for the Min Cell Voltage Number sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "max_temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer-chevron-up"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The higher temperature measured from the temperature sensors.\n  * **name** (**Required**, string): The name for the Max Temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "max_temperature_probe_number": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  }
+                }
+              },
+              "docs": "The sensor number which has measured the higher temperature.\n  * **name** (**Required**, string): The name for the Max Temperature Probe Number sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "min_temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer-chevron-down"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The lower temperature measured from the temperature sensors.\n  * **name** (**Required**, string): The name for the Min Temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "min_temperature_probe_number": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  }
+                }
+              },
+              "docs": "The sensor number which has measured the lower temperature.\n  * **name** (**Required**, string): The name for the Min Temperature Probe Number sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "remaining_capacity": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "Ah"
+                  },
+                  "icon": {
+                    "default": "mdi:gauge"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The capacity in Ah left in the battery.\n  * **name** (**Required**, string): The name for the Remaining Capacity sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "cells_number": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  }
+                }
+              },
+              "docs": "The number of cells in series in the battery pack.\n  * **name** (**Required**, string): The name for the Cells Number sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "temperature_1": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The first temperature sensor.\n  * **name** (**Required**, string): The name for the first temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "temperature_2": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The second temperature sensor.\n  * **name** (**Required**, string): The name for the second temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "cell_1_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              },
+              "docs": "The voltage of cell number 1. Cell number can be from 1 to 16.\n  * **name** (**Required**, string): The name for the cell voltage sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [daly_bms Sensor](https://esphome.io/components/sensor/daly_bms.html#id1)*"
+            },
+            "cell_2_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_3_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_4_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_5_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_6_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_7_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_8_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_9_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_10_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_11_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_12_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_13_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_14_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_15_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            },
+            "cell_16_voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "daly_bms.sensor.CELL_VOLTAGE_SCHEMA"
+                ]
+              }
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "daly_bms.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bms_daly_id": {
+              "key": "GeneratedID",
+              "use_id_type": "daly_bms::DalyBmsComponent",
+              "type": "use_id"
+            },
+            "charging_mos_enabled": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ]
+              },
+              "docs": "The BMS charging MOS status to enable the recharge of the battery.\n  * **name** (**Required**, string): The name for the charging MOS binary sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor).\n  \n  \n\n*See also: [daly_bms Binary Sensor](https://esphome.io/components/sensor/daly_bms.html#id3)*"
+            },
+            "discharging_mos_enabled": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ]
+              },
+              "docs": "The BMS discharging mos status to enable the load.\n  * **name** (**Required**, string): The name for the discharging MOS binary sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor).\n  \n  \n\n*See also: [daly_bms Binary Sensor](https://esphome.io/components/sensor/daly_bms.html#id3)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "daly_bms.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bms_daly_id": {
+              "key": "GeneratedID",
+              "use_id_type": "daly_bms::DalyBmsComponent",
+              "type": "use_id"
+            },
+            "status": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:car-battery"
+                  }
+                }
+              },
+              "docs": "The BMS Status (Charging, Discharging, Stationary).\n  * **name** (**Required**, string): The name for the BMS status text sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [daly_bms Text Sensor](https://esphome.io/components/sensor/daly_bms.html#id2)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

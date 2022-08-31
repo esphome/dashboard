@@ -1,0 +1,12 @@
+{
+  "mcp23xxx": {
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "mcp23xxx_base.MCP23XXX_PIN_SCHEMA"
+        ]
+      }
+    }
+  }
+}

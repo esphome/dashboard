@@ -1,0 +1,79 @@
+{
+  "integration.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "integration::IntegrationSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
+            },
+            "sensor": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the sensor to integrate over time.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
+            },
+            "time_unit": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "ms",
+                "s",
+                "min",
+                "h",
+                "d"
+              ],
+              "docs": "**string**: The time unit to integrate with, one of `ms`, `s`, `min`, `h` or `d`.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
+            },
+            "integration_method": {
+              "key": "Optional",
+              "default": "trapezoid",
+              "type": "enum",
+              "values": [
+                "trapezoid",
+                "left",
+                "right"
+              ],
+              "docs": "**string**: The integration method to use. One of `trapezoid`, `left` or `right`. Defaults to `trapezoid`.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
+            },
+            "restore": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to store the intermediate result on the device so that the value can be restored upon power cycle or reboot. Warning: this option can wear out your flash. Defaults to `false`.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "reset": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "integration::IntegrationSensor",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to reset the value of the integration sensor to zero. For example this can be used to reset the integration sensor to zero at midnight with a time-based automation.\n\n*See also: [`sensor.integration.reset` Action](https://esphome.io/components/sensor/integration.html#sensor-integration-reset-action)*"
+      }
+    }
+  }
+}

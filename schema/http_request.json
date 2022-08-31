@@ -1,0 +1,206 @@
+{
+  "http_request": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "http_request::HttpRequestComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            },
+            "useragent": {
+              "key": "Optional",
+              "default": "ESPHome",
+              "type": "string",
+              "docs": "**string**: User-Agent header for requests. Defaults to `ESPHome`.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            },
+            "follow_redirects": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Enable following HTTP redirects. Defaults to `true`.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            },
+            "redirect_limit": {
+              "key": "Optional",
+              "default": "3",
+              "type": "integer",
+              "docs": "**integer**: Maximum amount of redirects to follow when enabled. Defaults to `3`.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            },
+            "timeout": {
+              "key": "Optional",
+              "default": "5s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Timeout for request. Defaults to `5s`.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            },
+            "esp8266_disable_ssl_support": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to include SSL support on ESP8266s. Defaults to `no`. See [esp8266_disable_ssl_support](https://esphome.io/components/http_request.html#esphome-esp8266-disable-ssl-support) for more info\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      },
+      "HTTP_REQUEST_ACTION_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "http_request::HttpRequestComponent",
+              "type": "use_id"
+            },
+            "url": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: URL to send request.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-get-action)*"
+            },
+            "headers": {
+              "key": "String",
+              "key_type": "string",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "string": {
+                    "templatable": true,
+                    "type": "string"
+                  }
+                }
+              },
+              "docs": "**mapping**: Map of HTTP headers. Values are [templatable](https://esphome.io/guides/automations.html#config-templatable).\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-get-action)*"
+            },
+            "verify_ssl": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Verify the SSL certificate of the endpoint. Defaults to `true`.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-get-action)*"
+            },
+            "on_response": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the request is finished.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-get-action)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "send": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "http_request.HTTP_REQUEST_ACTION_SCHEMA"
+          ],
+          "config_vars": {
+            "method": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH"
+              ],
+              "docs": "**string**: HTTP method to use (`GET`, `POST`, `PUT`, `DELETE`, `PATCH`).\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-send-action)*"
+            },
+            "body": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string"
+            },
+            "json": {
+              "key": "String",
+              "key_type": "string",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "string": {
+                    "templatable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a request.\n\n*See also: [`http_request.send` Action](https://esphome.io/components/http_request.html#http-request-send-action)*"
+      },
+      "post": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "http_request.HTTP_REQUEST_ACTION_SCHEMA"
+          ],
+          "config_vars": {
+            "method": {
+              "key": "Optional",
+              "default": "POST",
+              "type": "enum",
+              "values": [
+                "POST"
+              ]
+            },
+            "body": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: A HTTP body string to send with request.\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-post-action)*"
+            },
+            "json": {
+              "key": "String",
+              "key_type": "string",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "string": {
+                    "templatable": true,
+                    "type": "string"
+                  }
+                }
+              },
+              "docs": "**mapping**: A HTTP body in JSON format. Values are [templatable](https://esphome.io/guides/automations.html#config-templatable). See [Examples](https://esphome.io/components/http_request.html#http-request-examples).\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-post-action)*"
+            }
+          }
+        },
+        "maybe": "url",
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a POST request.\n\n*See also: [`http_request.post` Action](https://esphome.io/components/http_request.html#http-request-post-action)*"
+      },
+      "get": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "http_request.HTTP_REQUEST_ACTION_SCHEMA"
+          ],
+          "config_vars": {
+            "method": {
+              "key": "Optional",
+              "default": "GET",
+              "type": "enum",
+              "values": [
+                "GET"
+              ]
+            }
+          }
+        },
+        "maybe": "url",
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a GET request.\n\n*See also: [`http_request.get` Action](https://esphome.io/components/http_request.html#http-request-get-action)*"
+      }
+    }
+  }
+}

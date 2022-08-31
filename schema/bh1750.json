@@ -1,0 +1,58 @@
+{
+  "bh1750.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "bh1750::BH1750Sensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [BH1750 Ambient Light Sensor](https://esphome.io/components/sensor/bh1750.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "lx"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "device_class": {
+              "default": "illuminance"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [BH1750 Ambient Light Sensor](https://esphome.io/components/sensor/bh1750.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "35",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x23` (address if address pin is pulled low). If the address pin is pulled high, the address is `0x5C`.\n\n*See also: [BH1750 Ambient Light Sensor](https://esphome.io/components/sensor/bh1750.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

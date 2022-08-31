@@ -1,0 +1,149 @@
+{
+  "uart": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "uart::UARTComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this UART hub if you need multiple UART hubs.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "baud_rate": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The baud rate of the UART bus.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "tx_pin": {
+              "key": "Optional",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to send data to from the ESP\u2019s perspective. Use the full pin schema and set `inverted: true` to invert logic levels.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "rx_pin": {
+              "key": "Optional",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to receive data on from the ESP\u2019s perspective. Use the full pin schema and set `inverted: true` to invert logic levels.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "rx_buffer_size": {
+              "key": "Optional",
+              "default": "256",
+              "docs": "**int**: The size of the buffer used for receiving UART messages. Increase if you use an integration that needs to read big payloads from UART. Defaults to `256`.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "stop_bits": {
+              "key": "Optional",
+              "default": "1",
+              "type": "enum",
+              "values": [
+                1,
+                2
+              ],
+              "docs": "**int**: The number of stop bits to send. Options: 1, 2. Defaults to 1.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "data_bits": {
+              "key": "Optional",
+              "default": "8",
+              "type": "integer",
+              "docs": "**int**: The number of data bits used on the UART bus. Options: 5 to 8. Defaults to 8.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "parity": {
+              "key": "Optional",
+              "default": "NONE",
+              "type": "enum",
+              "values": [
+                "NONE",
+                "EVEN",
+                "ODD"
+              ],
+              "docs": "The parity used on the UART bus. Options: `NONE`, `EVEN`, `ODD`. Defaults to `NONE`.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            },
+            "debug": {
+              "key": "Optional",
+              "docs": "**mapping**: Options for debugging communication on the UART hub, see [Debugging](https://esphome.io/components/uart.html#uart-debugging).\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "action": {
+      "write": {
+        "type": "schema",
+        "maybe": "data",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            },
+            "data": {
+              "key": "Required",
+              "templatable": true
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) sends a defined UART signal to the given UART bus.\n\n*See also: [`uart.write` Action](https://esphome.io/components/uart.html#uart-write-action)*"
+      }
+    }
+  },
+  "uart.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "uart::UARTSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "uart::UARTDevice",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            },
+            "data": {
+              "key": "Required",
+              "docs": "**string or list of bytes**: The data to send via UART. Either an ASCII string or a list of bytes.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            },
+            "send_every": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Sends recurring data instead of sending once.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            },
+            "name": {
+              "docs": "**string**: The name for the switch.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

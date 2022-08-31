@@ -1,0 +1,59 @@
+{
+  "st7920.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "st7920::ST7920",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "display::DisplayBuffer",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#configuration-variables)*"
+            },
+            "width": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The \u201cwidth\u201d of a screen. Defaults to 128.\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#configuration-variables)*"
+            },
+            "height": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The \u201cheight\u201d of a screen. Defaults to 64;\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `60s`.\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Sometimes also called `RS`. For ST7920 should be inverted.\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

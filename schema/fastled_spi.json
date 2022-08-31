@@ -1,0 +1,53 @@
+{
+  "fastled_spi.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fastled_base.BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "chipset": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "LPD8806",
+                "WS2801",
+                "WS2803",
+                "SM16716",
+                "P9813",
+                "APA102",
+                "SK9822",
+                "DOTSTAR"
+              ],
+              "docs": "**string**: Set a chipset to use. See [Supported Chipsets](https://esphome.io/components/light/fastled.html#fastled-spi-chipsets) for options.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            },
+            "data_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the data line of the FastLED light.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            },
+            "clock_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the clock line of the FastLED light.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            },
+            "data_rate": {
+              "key": "Optional",
+              "docs": "**frequency**: The data rate to use for shifting data to the light. Can help if you have long cables or slow level-shifters.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

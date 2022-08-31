@@ -1,0 +1,83 @@
+{
+  "climate_ir_lg.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_WITH_RECEIVER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "climate_ir_lg::LgIrClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "header_high": {
+              "key": "Optional",
+              "default": "8000us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: time for the high part of the header for the LG protocol. Defaults to `8000us`\n\n*See also: [climate_ir_lg Climate](https://esphome.io/components/climate/climate_ir.html#climate-ir-lg-climate)*"
+            },
+            "header_low": {
+              "key": "Optional",
+              "default": "4000us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: time for the low part of the header for the LG protocol. Defaults to `4000us`\n\n*See also: [climate_ir_lg Climate](https://esphome.io/components/climate/climate_ir.html#climate-ir-lg-climate)*"
+            },
+            "bit_high": {
+              "key": "Optional",
+              "default": "600us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: time for the high part of any bit in the LG protocol. Defaults to `600us`\n\n*See also: [climate_ir_lg Climate](https://esphome.io/components/climate/climate_ir.html#climate-ir-lg-climate)*"
+            },
+            "bit_one_low": {
+              "key": "Optional",
+              "default": "1600us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: time for the low part of a \u20181\u2019 bit in the LG protocol. Defaults to `1600us`\n\n*See also: [climate_ir_lg Climate](https://esphome.io/components/climate/climate_ir.html#climate-ir-lg-climate)*"
+            },
+            "bit_zero_low": {
+              "key": "Optional",
+              "default": "550us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: time for the low part of a \u20180\u2019 bit in the LG protocol. Defaults to `550us`\n\n*See also: [climate_ir_lg Climate](https://esphome.io/components/climate/climate_ir.html#climate-ir-lg-climate)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

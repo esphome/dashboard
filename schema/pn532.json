@@ -1,0 +1,95 @@
+{
+  "pn532": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "is_list": true
+      },
+      "PN532_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "pn532::PN532",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "on_tag": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is read. See [Over I\u00b2C](https://esphome.io/components/binary_sensor/pn532.html#pn532-on-tag).\n\n*See also: [pn532 Over I\u00b2C](https://esphome.io/components/binary_sensor/pn532.html#id1)*"
+            },
+            "on_finished_write": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_tag_removed": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is removed. See [on_tag_removed](https://esphome.io/components/binary_sensor/pn532.html#pn532-on-tag-removed).\n\n*See also: [pn532 Over SPI](https://esphome.io/components/binary_sensor/pn532.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration of each scan on the PN532. This affects the duration that the individual binary sensors stay active when they\u2019re found. If a device is not found within this time window, it will be marked as not present. Defaults to 1s.\n\n*See also: [pn532 Over I\u00b2C](https://esphome.io/components/binary_sensor/pn532.html#id1)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "is_writing": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "pn532::PN532",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  },
+  "pn532.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "pn532::PN532BinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [pn532 Binary Sensor](https://esphome.io/components/binary_sensor/pn532.html#id2)*"
+            },
+            "pn532_id": {
+              "key": "GeneratedID",
+              "use_id_type": "pn532::PN532",
+              "type": "use_id"
+            },
+            "uid": {
+              "key": "Required",
+              "docs": "**string**: The unique ID of the NFC/RFID tag. This is a hyphen-separated list of hexadecimal values. For example `74-10-37-94`.\n\n*See also: [pn532 Binary Sensor](https://esphome.io/components/binary_sensor/pn532.html#id2)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

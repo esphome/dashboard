@@ -1,0 +1,52 @@
+{
+  "binary_sensor_map.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "typed",
+        "types": {
+          "group": {
+            "extends": [
+              "sensor.SENSOR_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "id_type": {
+                  "class": "binary_sensor_map::BinarySensorMap",
+                  "parents": [
+                    "Component",
+                    "sensor::Sensor",
+                    "EntityBase"
+                  ]
+                }
+              },
+              "icon": {
+                "default": "mdi:check-circle-outline"
+              },
+              "accuracy_decimals": {
+                "default": "0"
+              },
+              "channels": {
+                "key": "Required",
+                "is_list": true,
+                "type": "schema",
+                "schema": {
+                  "config_vars": {
+                    "binary_sensor": {
+                      "key": "Required",
+                      "use_id_type": "binary_sensor::BinarySensor",
+                      "type": "use_id"
+                    },
+                    "value": {
+                      "key": "Required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "typed_key": "type"
+      }
+    }
+  }
+}

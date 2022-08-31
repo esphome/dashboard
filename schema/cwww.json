@@ -1,0 +1,54 @@
+{
+  "cwww.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.RGB_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "cwww::CWWWLightOutput",
+                "parents": [
+                  "light::LightOutput"
+                ]
+              }
+            },
+            "cold_white": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the float [Output Component](https://esphome.io/components/output/index.html#output) to use for the cold white channel.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            },
+            "warm_white": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the float [Output Component](https://esphome.io/components/output/index.html#output) to use for the warm white channel.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            },
+            "cold_white_color_temperature": {
+              "key": "Optional",
+              "docs": "**float**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the cold white channel. Note that this option is required to control the mixing from Home Assistant.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            },
+            "warm_white_color_temperature": {
+              "key": "Optional",
+              "docs": "**float**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the warm white channel. Note that this option is required to control the mixing from Home Assistant.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            },
+            "constant_brightness": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: When enabled, this will keep the overall brightness of the cold and warm white channels constant by limiting the combined output to 100% of a single channel. This reduces the possible overall brightness but is necessary for some power supplies that are not able to run both channels at full brightness at once. Defaults to `false`.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            },
+            "effects": {
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

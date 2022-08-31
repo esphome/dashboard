@@ -1,0 +1,41 @@
+{
+  "as3935_spi": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "as3935.AS3935_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "as3935_spi::SPIAS3935Component",
+                "parents": [
+                  "as3935::AS3935Component",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              }
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The chip select pin.\n\n*See also: [as3935 Over SPI](https://esphome.io/components/sensor/as3935.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

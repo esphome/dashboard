@@ -1,0 +1,104 @@
+{
+  "heatpumpir.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_WITH_RECEIVER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "heatpumpir::HeatpumpIRClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "protocol": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "aux",
+                "ballu",
+                "carrier_mca",
+                "carrier_nqv",
+                "daikin_arc417",
+                "daikin_arc480",
+                "daikin",
+                "electroluxyal",
+                "fuego",
+                "fujitsu_awyz",
+                "gree",
+                "greeya",
+                "greeyan",
+                "greeyac",
+                "hisense_aud",
+                "hitachi",
+                "hyundai",
+                "ivt",
+                "midea",
+                "mitsubishi_fa",
+                "mitsubishi_fd",
+                "mitsubishi_fe",
+                "mitsubishi_heavy_fdtc",
+                "mitsubishi_heavy_zj",
+                "mitsubishi_heavy_zm",
+                "mitsubishi_heavy_zmp",
+                "mitsubishi_heavy_kj",
+                "mitsubishi_msc",
+                "mitsubishi_msy",
+                "mitsubishi_sez",
+                "panasonic_ckp",
+                "panasonic_dke",
+                "panasonic_jke",
+                "panasonic_lke",
+                "panasonic_nke",
+                "samsung_aqv",
+                "samsung_fjm",
+                "sharp",
+                "toshiba_daiseikai",
+                "toshiba"
+              ]
+            },
+            "horizontal_default": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "auto",
+                "middle",
+                "left",
+                "mleft",
+                "mright",
+                "right"
+              ]
+            },
+            "vertical_default": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "auto",
+                "up",
+                "mup",
+                "middle",
+                "mdown",
+                "down"
+              ]
+            },
+            "min_temperature": {
+              "key": "Required"
+            },
+            "max_temperature": {
+              "key": "Required"
+            }
+          }
+        }
+      }
+    }
+  }
+}

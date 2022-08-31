@@ -1,0 +1,161 @@
+{
+  "xpt2046": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "xpt2046::XPT2046Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "irq_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The touch detection pin. Often marked `T_IRQ` on the board. If not specified the component will use polling via SPI.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "calibration_x_min": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: The raw value corresponding to the left (or top if `swap_x_y` is specified) edge of the display. See [Calibration](https://esphome.io/components/binary_sensor/xpt2046.html#xpt2046-calibration) for the process to calibrate the touch screen. Defaults to `0`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "calibration_x_max": {
+              "key": "Optional",
+              "default": "4095",
+              "type": "integer",
+              "docs": "**int**: The raw value corresponding to the right (or bottom if `swap_x_y` is specified) edge of the display. Defaults to `4095`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "calibration_y_min": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: The raw value corresponding to the top (or left if `swap_x_y` is specified) edge of the display. Defaults to `0`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "calibration_y_max": {
+              "key": "Optional",
+              "default": "4095",
+              "type": "integer",
+              "docs": "**int**: The raw value corresponding to the bottom (or right if `swap_x_y` is specified) edge of the display. Defaults to `4095`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "dimension_x": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The dimension of the display in the horizontal direction. Usually in pixels but a percentage can be useful as well. Defaults to `100`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "dimension_y": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The dimension of the display in the vertical direction. Usually in pixels but a percentage can be useful as well. Defaults to `100`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "threshold": {
+              "key": "Optional",
+              "default": "400",
+              "type": "integer",
+              "docs": "**int**: The value to detect the touch or release. Defaults to `400`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "report_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to periodically report the coordinates while the touch screen is touched. Defaults to `never`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "swap_x_y": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: If true the x and y axes are swapped. Defaults to `false`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "on_state": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the touch screen is pressed or released. See [on_state Action](https://esphome.io/components/binary_sensor/xpt2046.html#xpt2046-on-state).\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "50ms",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. If `irq_pin` is specified the touch will be detected nearly instantaneously and this setting will be used only for the release detection. Defaults to `50ms`.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The chip select pin. Often marked `T_CS` on the board.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "xpt2046.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "xpt2046::XPT2046Button",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              }
+            },
+            "xpt2046_id": {
+              "key": "GeneratedID",
+              "use_id_type": "xpt2046::XPT2046Component",
+              "type": "use_id"
+            },
+            "x_min": {
+              "key": "Required",
+              "type": "integer"
+            },
+            "x_max": {
+              "key": "Required",
+              "type": "integer"
+            },
+            "y_min": {
+              "key": "Required",
+              "type": "integer"
+            },
+            "y_max": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

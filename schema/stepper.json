@@ -1,0 +1,134 @@
+{
+  "stepper": {
+    "components": {
+      "a4988": {
+        "docs": "Put this code into the configuration file on ESPHome for this device.\n\n*See also: [A4988 Component](https://esphome.io/components/stepper/index.html#a4988-component)*"
+      },
+      "uln2003": {
+        "docs": "Put this code into the configuration file on ESPHome for this device.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#uln2003-component)*"
+      }
+    },
+    "schemas": {
+      "STEPPER_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "max_speed": {
+              "key": "Required",
+              "docs": "**float**: The maximum speed in `steps/s` (steps per seconds) to drive the stepper at. Note most steppers can\u2019t step properly with speeds higher than 250 steps/s.\n\n*See also: [Stepper Component](https://esphome.io/components/stepper/index.html#base-stepper-configuration)*"
+            },
+            "acceleration": {
+              "key": "Optional",
+              "default": "inf",
+              "docs": "**float**: The acceleration in `steps/s^2` (steps per seconds squared) to use when starting to move. The default is `inf` which means infinite acceleration, so the stepper will try to drive with the full speed immediately. This value is helpful if that first motion of the motor is too jerky for what it\u2019s moving.  If you make this a small number, it will take the motor a moment to get up  to speed.\n\n*See also: [Stepper Component](https://esphome.io/components/stepper/index.html#base-stepper-configuration)*"
+            },
+            "deceleration": {
+              "key": "Optional",
+              "default": "inf",
+              "docs": "**float**: The same as `acceleration`, but for when the motor is decelerating shortly before reaching the set position. Defaults to `inf` (immediate deceleration).\n\n*See also: [Stepper Component](https://esphome.io/components/stepper/index.html#base-stepper-configuration)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "set_target": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "stepper::Stepper",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the stepper.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-target-action)*"
+            },
+            "target": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The target position in steps.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-target-action)*"
+            }
+          }
+        },
+        "docs": "To use your stepper motor in [automations](https://esphome.io/guides/automations.html#automation) or templates, you can use this action to set the target position (in steps). The stepper will always run towards the target position and stop once it has reached the target.\n\n*See also: [`stepper.set_target` Action](https://esphome.io/components/stepper/index.html#stepper-set-target-action)*"
+      },
+      "report_position": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "stepper::Stepper",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the stepper.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-report-position-action)*"
+            },
+            "position": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The position to report in steps.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-report-position-action)*"
+            }
+          }
+        },
+        "docs": "All steppers start out with a target and current position of `0` on boot. However, if you for example want to home a stepper motor, it can be useful to **report** the stepper where it is currently at.\n\n*See also: [`stepper.report_position` Action](https://esphome.io/components/stepper/index.html#stepper-report-position-action)*"
+      },
+      "set_speed": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "stepper::Stepper",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the stepper.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-speed-action)*"
+            },
+            "speed": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), float**: The speed in `steps/s` (steps per seconds) to drive the stepper at.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-speed-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to set the speed of a stepper at runtime.\n\n*See also: [`stepper.set_speed` Action](https://esphome.io/components/stepper/index.html#stepper-set-speed-action)*"
+      },
+      "set_acceleration": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "stepper::Stepper",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the stepper.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-acceleration-action)*"
+            },
+            "acceleration": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), float**: The acceleration in `steps/s^2` (steps per seconds squared) to use when starting to move.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-acceleration-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to set the acceleration of a stepper at runtime.\n\n*See also: [`stepper.set_acceleration` Action](https://esphome.io/components/stepper/index.html#stepper-set-acceleration-action)*"
+      },
+      "set_deceleration": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "stepper::Stepper",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the stepper.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-deceleration-action)*"
+            },
+            "deceleration": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), float**: The same as `acceleration`, but for when the motor is decelerating shortly before reaching the set position.\n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#stepper-set-deceleration-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to set the deceleration of a stepper at runtime.\n\n*See also: [`stepper.set_deceleration` Action](https://esphome.io/components/stepper/index.html#stepper-set-deceleration-action)*"
+      }
+    }
+  }
+}

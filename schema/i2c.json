@@ -1,0 +1,58 @@
+{
+  "i2c": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "i2c::I2CBus",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this I\u00b2C bus if you need multiple I\u00b2C buses.\n\n*See also: [I\u00b2C Bus](https://esphome.io/components/i2c.html#configuration-variables)*"
+            },
+            "sda": {
+              "key": "Optional",
+              "default": "SDA",
+              "data_type": "pin_with_input_and_output_support",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the data line of the I\u00b2C bus. Defaults to the default of your board (usually GPIO21 for ESP32 and GPIO4 for ESP8266).\n\n*See also: [I\u00b2C Bus](https://esphome.io/components/i2c.html#configuration-variables)*"
+            },
+            "sda_pullup_enabled": {
+              "key": "Optional",
+              "type": "boolean"
+            },
+            "scl": {
+              "key": "Optional",
+              "default": "SCL",
+              "data_type": "pin_with_input_and_output_support",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the clock line of the I\u00b2C bus. Defaults to the default of your board (usually GPIO22 for ESP32 and GPIO5 for ESP8266).\n\n*See also: [I\u00b2C Bus](https://esphome.io/components/i2c.html#configuration-variables)*"
+            },
+            "scl_pullup_enabled": {
+              "key": "Optional",
+              "type": "boolean"
+            },
+            "frequency": {
+              "key": "Optional",
+              "default": "50kHz",
+              "docs": "**float**: Set the frequency the I\u00b2C bus should operate on. Defaults to `50kHz`. Values are `10kHz`, `50kHz`, `100kHz`, `200kHz`, \u2026 `800kHz`\n\n*See also: [I\u00b2C Bus](https://esphome.io/components/i2c.html#configuration-variables)*"
+            },
+            "scan": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: If ESPHome should do a search of the I\u00b2C address space on startup. Defaults to `true`.\n\n*See also: [I\u00b2C Bus](https://esphome.io/components/i2c.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  }
+}

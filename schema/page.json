@@ -1,0 +1,48 @@
+{
+  "page.display": {
+    "action": {
+      "show": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "templatable": true,
+              "use_id_type": "display::DisplayPage",
+              "type": "use_id"
+            }
+          }
+        }
+      },
+      "show_next": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "templatable": true,
+              "use_id_type": "display::DisplayBuffer",
+              "type": "use_id"
+            }
+          }
+        }
+      },
+      "show_previous": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "templatable": true,
+              "use_id_type": "display::DisplayBuffer",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

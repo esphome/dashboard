@@ -1,0 +1,40 @@
+{
+  "version.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "text_sensor.TEXT_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "icon": {
+              "default": "mdi:new-box"
+            },
+            "entity_category": {
+              "default": "diagnostic"
+            },
+            "id": {
+              "id_type": {
+                "class": "version::VersionTextSensor",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Version Text Sensor](https://esphome.io/components/text_sensor/version.html#configuration-variables)*"
+            },
+            "hide_timestamp": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Allows you to hide the compilation timestamp from the version string. Defaults to `false`.\n\n*See also: [Version Text Sensor](https://esphome.io/components/text_sensor/version.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

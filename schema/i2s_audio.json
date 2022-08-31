@@ -1,0 +1,99 @@
+{
+  "i2s_audio.media_player": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "typed",
+        "types": {
+          "internal": {
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "i2s_audio::I2SAudioMediaPlayer",
+                  "parents": [
+                    "Component",
+                    "media_player::MediaPlayer"
+                  ]
+                }
+              },
+              "mode": {
+                "key": "Required",
+                "type": "enum",
+                "values": [
+                  "left",
+                  "right",
+                  "stereo"
+                ]
+              }
+            },
+            "extends": [
+              "media_player.MEDIA_PLAYER_SCHEMA",
+              "core.COMPONENT_SCHEMA"
+            ]
+          },
+          "external": {
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "i2s_audio::I2SAudioMediaPlayer",
+                  "parents": [
+                    "Component",
+                    "media_player::MediaPlayer"
+                  ]
+                }
+              },
+              "i2s_dout_pin": {
+                "key": "Required",
+                "internal": true,
+                "modes": [
+                  "output"
+                ],
+                "type": "pin"
+              },
+              "i2s_bclk_pin": {
+                "key": "Required",
+                "internal": true,
+                "modes": [
+                  "output"
+                ],
+                "type": "pin"
+              },
+              "i2s_lrclk_pin": {
+                "key": "Required",
+                "internal": true,
+                "modes": [
+                  "output"
+                ],
+                "type": "pin"
+              },
+              "mute_pin": {
+                "key": "Optional",
+                "schema": true,
+                "modes": [
+                  "output"
+                ],
+                "type": "pin"
+              },
+              "mode": {
+                "key": "Optional",
+                "default": "mono",
+                "type": "enum",
+                "values": [
+                  "mono",
+                  "stereo"
+                ]
+              }
+            },
+            "extends": [
+              "media_player.MEDIA_PLAYER_SCHEMA",
+              "core.COMPONENT_SCHEMA"
+            ]
+          }
+        },
+        "typed_key": "dac_type",
+        "docs": "**enum**: Use an external DAC, for example the NS4168, or UDA1334A.\n  \n  * `internal`: Use the internal DAC\n  \n  \n\n*See also: [I2S Audio Media Player](https://esphome.io/components/media_player/i2s_audio.html#configuration-variables)*"
+      }
+    }
+  }
+}

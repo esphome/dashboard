@@ -1,0 +1,39 @@
+{
+  "pn532_i2c": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "pn532.PN532_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "pn532_i2c::PN532I2C",
+                "parents": [
+                  "pn532::PN532",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this component.\n\n*See also: [pn532 Over I\u00b2C](https://esphome.io/components/binary_sensor/pn532.html#id1)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [I\u00b2C Component](https://esphome.io/components/i2c.html#i2c) if you want to use multiple I\u00b2C buses.\n\n*See also: [pn532 Over I\u00b2C](https://esphome.io/components/binary_sensor/pn532.html#id1)*"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "36",
+              "data_type": "hex_uint8_t"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "esp32_ble_server": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "esp32_ble_server::BLEServer",
+                "parents": [
+                  "Component"
+                ]
+              }
+            },
+            "ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble::ESP32BLE",
+              "type": "use_id"
+            },
+            "manufacturer": {
+              "key": "Optional",
+              "default": "ESPHome",
+              "type": "string",
+              "docs": "**string**: The name of the manufacturer/firmware creator. Defaults to `ESPHome`.\n\n*See also: [BLE Server](https://esphome.io/components/esp32_ble_server.html#configuration-variables)*"
+            },
+            "model": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The model name of the device. Defaults to the friendly name of the `board` chosen in the [core configuration](https://esphome.io/components/esphome.html#esphome-configuration-variables).\n\n*See also: [BLE Server](https://esphome.io/components/esp32_ble_server.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

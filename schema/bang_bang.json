@@ -1,0 +1,73 @@
+{
+  "bang_bang.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "bang_bang::BangBangClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "sensor": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that is used to measure the current temperature.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "default_target_temperature_low": {
+              "key": "Required",
+              "docs": "**float**: The default low target temperature for the control algorithm. This can be dynamically set in the frontend later.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "default_target_temperature_high": {
+              "key": "Required",
+              "docs": "**float**: The default high target temperature for the control algorithm. This can be dynamically set in the frontend later.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "idle_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action to call when the climate device wants to enter idle mode.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "cool_action": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action to call when the climate device wants to cooling mode and decrease the current temperature.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "heat_action": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action to call when the climate device wants to heating mode and increase the current temperature. At least one of `heat_action` and `cool_action` need to be specified.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            },
+            "away_config": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "default_target_temperature_low": {
+                    "key": "Required",
+                    "docs": "**float**: The default low target temperature for the control algorithm during away mode.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+                  },
+                  "default_target_temperature_high": {
+                    "key": "Required",
+                    "docs": "**float**: The default high target temperature for the control algorithm during away mode.\n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Additionally specify target temperature range settings for away mode. Away mode can be used to have a second set of target temperatures (for example while the user is away or during nighttime)\n  * **default_target_temperature_low** (**Required**, float): The default low target temperature for the control algorithm during away mode.\n  \n  * **default_target_temperature_high** (**Required**, float): The default high target temperature for the control algorithm during away mode.\n  \n  \n\n*See also: [Bang Bang Climate Controller](https://esphome.io/components/climate/bang_bang.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

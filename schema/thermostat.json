@@ -1,0 +1,386 @@
+{
+  "thermostat.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "thermostat::ThermostatClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "sensor": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id"
+            },
+            "idle_action": {
+              "key": "Required",
+              "type": "trigger"
+            },
+            "cool_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "supplemental_cooling_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "dry_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_only_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "heat_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "supplemental_heating_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "auto_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "cool_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "dry_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_only_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "heat_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "off_mode": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_on_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_off_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_auto_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_low_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_medium_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_high_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_middle_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_focus_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "fan_mode_diffuse_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "swing_both_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "swing_horizontal_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "swing_off_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "swing_vertical_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "target_temperature_change_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "default_mode": {
+              "key": "Optional",
+              "default": "OFF",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "OFF",
+                "HEAT_COOL",
+                "COOL",
+                "HEAT",
+                "DRY",
+                "FAN_ONLY",
+                "AUTO"
+              ]
+            },
+            "default_target_temperature_high": {
+              "key": "Optional"
+            },
+            "default_target_temperature_low": {
+              "key": "Optional"
+            },
+            "set_point_minimum_differential": {
+              "key": "Optional",
+              "default": "0.5"
+            },
+            "cool_deadband": {
+              "key": "Optional",
+              "default": "0.5"
+            },
+            "cool_overrun": {
+              "key": "Optional",
+              "default": "0.5"
+            },
+            "heat_deadband": {
+              "key": "Optional",
+              "default": "0.5"
+            },
+            "heat_overrun": {
+              "key": "Optional",
+              "default": "0.5"
+            },
+            "max_cooling_run_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "max_heating_run_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_cooling_off_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_cooling_run_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_fan_mode_switching_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_fanning_off_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_fanning_run_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_heating_off_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_heating_run_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "min_idle_time": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "supplemental_cooling_delta": {
+              "key": "Optional"
+            },
+            "supplemental_heating_delta": {
+              "key": "Optional"
+            },
+            "fan_only_action_uses_fan_mode_timer": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "fan_only_cooling": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "fan_with_cooling": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "fan_with_heating": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "startup_delay": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "away_config": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "default_target_temperature_high": {
+                    "key": "Optional"
+                  },
+                  "default_target_temperature_low": {
+                    "key": "Optional"
+                  }
+                }
+              }
+            },
+            "preset": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "id": {
+                    "key": "GeneratedID",
+                    "id_type": {
+                      "class": "thermostat::ThermostatClimateTargetTempConfig",
+                      "parents": []
+                    }
+                  },
+                  "name": {
+                    "key": "Required",
+                    "type": "string"
+                  },
+                  "mode": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "OFF",
+                      "HEAT_COOL",
+                      "COOL",
+                      "HEAT",
+                      "DRY",
+                      "FAN_ONLY",
+                      "AUTO"
+                    ]
+                  },
+                  "default_target_temperature_high": {
+                    "key": "Optional"
+                  },
+                  "default_target_temperature_low": {
+                    "key": "Optional"
+                  },
+                  "fan_mode": {
+                    "key": "Optional",
+                    "templatable": true,
+                    "type": "enum",
+                    "values": [
+                      "ON",
+                      "OFF",
+                      "AUTO",
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "MIDDLE",
+                      "FOCUS",
+                      "DIFFUSE"
+                    ]
+                  },
+                  "swing_mode": {
+                    "key": "Optional",
+                    "templatable": true,
+                    "type": "enum",
+                    "values": [
+                      "OFF",
+                      "BOTH",
+                      "VERTICAL",
+                      "HORIZONTAL"
+                    ]
+                  }
+                }
+              }
+            },
+            "preset_change": {
+              "key": "Optional",
+              "type": "trigger"
+            }
+          }
+        }
+      }
+    }
+  }
+}

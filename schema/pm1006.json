@@ -1,0 +1,66 @@
+{
+  "pm1006.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "pm1006::PM1006Component",
+                "parents": [
+                  "uart::UARTDevice",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "pm_2_5": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b5g/m\u00b3"
+                  },
+                  "icon": {
+                    "default": "mdi:blur"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "pm25"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the concentration of particulates of size less than 2.5\u00b5m in \u00b5g per cubic meter. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PM1006 Particulate Matter Sensor](https://esphome.io/components/sensor/pm1006.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [UART Component](https://esphome.io/components/uart.html#uart) if you want to use multiple UART buses.\n\n*See also: [PM1006 Particulate Matter Sensor](https://esphome.io/components/sensor/pm1006.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If you need to actively request measurements to the sensor, set this to some sensible interval. The IKEA VINDRIKTNING does measurements every 20 seconds. Defaults to never.\n\n*See also: [PM1006 Particulate Matter Sensor](https://esphome.io/components/sensor/pm1006.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

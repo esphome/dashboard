@@ -1,0 +1,45 @@
+{
+  "hrxl_maxsonar_wr.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "hrxl_maxsonar_wr::HrxlMaxsonarWrComponent",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "m"
+            },
+            "icon": {
+              "default": "mdi:arrow-expand-vertical"
+            },
+            "accuracy_decimals": {
+              "default": "3"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [UART bus](https://esphome.io/components/uart.html#uart) you wish to use for this sensor. Use this if you want to use multiple UART buses at once.\n\n*See also: [HRXL MaxSonar WR Series](https://esphome.io/components/sensor/hrxl_maxsonar_wr.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "modbus": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "modbus::Modbus",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "flow_control_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin used to switch flow control. This is useful for RS485 transceivers that do not have automatic flow control switching, like the common MAX485.\n\n*See also: [Modbus Component](https://esphome.io/components/modbus.html#configuration-variables)*"
+            },
+            "send_wait_time": {
+              "key": "Optional",
+              "default": "250ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Time in milliseconds before a new modbus command is sent if an answer from a previous command is pending. Defaults to 250 ms. If multiple modbus devices are attached increasing this value can help avoiding to to overlapping reads. When 2 devices are sending a command at the same the response read from uart can\u2019t be assigned to the proper design. This value defines the maximum queuing time for a command before it is send anyways.\n\n*See also: [Modbus Component](https://esphome.io/components/modbus.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  }
+}

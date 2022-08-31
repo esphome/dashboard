@@ -1,0 +1,169 @@
+{
+  "as3935": {
+    "schemas": {
+      "AS3935_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "as3935::AS3935Component",
+                "parents": [
+                  "Component"
+                ]
+              }
+            },
+            "irq_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The IRQ pin, which indicates if a lightning strike has been detected.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "indoor": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Indicates if the sensor is used indoor. Defaults to `true`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "noise_level": {
+              "key": "Optional",
+              "default": "2",
+              "type": "integer",
+              "docs": "**int**: Noise floor level is compared to known reference voltage. If this level is exceeded the chip will issue an interrupt to the IRQ pin, broadcasting that it can not operate properly due to noise (INT_NH). Defaults to `2`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "watchdog_threshold": {
+              "key": "Optional",
+              "default": "2",
+              "type": "integer",
+              "docs": "**int**: Determines the threshold for events that trigger the IRQ pin. Defaults to `2`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "spike_rejection": {
+              "key": "Optional",
+              "default": "2",
+              "type": "integer",
+              "docs": "**int**: Helps to differentiate between false events and actual lightning. Increasing this value increases robustness at the cost of sensitivity to distant events. Defaults to `2`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "lightning_threshold": {
+              "key": "Optional",
+              "default": "1",
+              "type": "enum",
+              "values": [
+                1,
+                5,
+                9,
+                16
+              ],
+              "docs": "**int**: The number of lightnings that must appear in a 15-minute time window before a lightning storm is detected. 15 minutes is the window of time before the number of detected lightning events is reset. The number of lightning strikes can be set to 1,5,9, or 16. Defaults to `1`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "mask_disturber": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: This setting will return whether or not disturbers trigger the IRQ Pin. Defaults to `false`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "div_ratio": {
+              "key": "Optional",
+              "default": "0",
+              "type": "enum",
+              "values": [
+                0,
+                16,
+                32,
+                64,
+                128
+              ],
+              "docs": "**int**: The antenna is designed to resonate at 500kHz and so can be tuned with the following setting. The accuracy of the antenna must be within 3.5 percent of that value for proper signal validation and distance estimation. Defaults to `0`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            },
+            "capacitance": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: This setting will add capacitance to the series RLC antenna on the product to help tune its resonance. The datasheet specifies being within 3.5 percent of 500kHz to get optimal lightning detection and distance sensing. It\u2019s possible to add up to 120pF in steps of 8pF to the antenna. Defaults to `0`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "as3935.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "as3935_id": {
+              "key": "GeneratedID",
+              "use_id_type": "as3935::AS3935Component",
+              "type": "use_id"
+            },
+            "distance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "km"
+                  },
+                  "icon": {
+                    "default": "mdi:signal"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  }
+                }
+              },
+              "docs": "Distance in km to the front of the storm and not the distance to a lightning strike.\n  * **name** (**Required**, string): The name for the distance sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [as3935 Sensor](https://esphome.io/components/sensor/as3935.html#sensor)*"
+            },
+            "lightning_energy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:flash"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  }
+                }
+              },
+              "docs": "Lightning energy value. According to the datasheet this is only a pure value that doesn\u2019t have any physical meaning.\n  * **name** (**Required**, string): The name for the lightning energy sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [as3935 Sensor](https://esphome.io/components/sensor/as3935.html#sensor)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "as3935.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "as3935_id": {
+              "key": "GeneratedID",
+              "use_id_type": "as3935::AS3935Component",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

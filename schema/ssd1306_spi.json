@@ -1,0 +1,56 @@
+{
+  "ssd1306_spi.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "ssd1306_base.SSD1306_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ssd1306_spi::SPISSD1306",
+                "parents": [
+                  "ssd1306_base::SSD1306",
+                  "PollingComponent",
+                  "Component",
+                  "display::DisplayBuffer",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "dc_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The DC pin.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [SPI Component](https://esphome.io/components/spi.html#spi) if you want to use multiple SPI buses.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The Chip Select (CS) pin.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            }
+          }
+        },
+        "docs": "The `ssd1306_spi` display platform allows you to use SSD1306 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf), [Adafruit](https://www.adafruit.com/product/326)) and SH1106 ([datasheet](https://www.elecrow.com/download/SH1106%20datasheet.pdf), [electrodragon](https://www.electrodragon.com/product/1-3-12864-blue-oled-display-iicspi/)) displays with ESPHome. Note that this component is for displays that are connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi). If your SSD1306 or SH1106 is connected via the [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c), see [Over I\u00b2C](https://esphome.io/components/display/ssd1306.html#ssd1306-i2c).\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#over-spi)*"
+      }
+    }
+  }
+}

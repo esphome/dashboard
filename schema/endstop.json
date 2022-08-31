@@ -1,0 +1,85 @@
+{
+  "endstop.cover": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "cover.COVER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "endstop::EndstopCover",
+                "parents": [
+                  "cover::Cover",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "stop_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be closed or an endstop is reached.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "open_endstop": {
+              "key": "Required",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor) that turns on when the open position is reached.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "open_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be opened.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "open_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to open up from the fully-closed state.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "close_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be closed.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "close_endstop": {
+              "key": "Required",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor) that turns on when the closed position is reached.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "close_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to close from the fully-open state.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            },
+            "max_duration": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The maximum duration the cover should be opening or closing. Useful for protecting from dysfunctional endstops.\n\n*See also: [Endstop Cover](https://esphome.io/components/cover/endstop.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

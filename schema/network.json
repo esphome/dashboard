@@ -1,0 +1,18 @@
+{
+  "network": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "enable_ipv6": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Enables IPv6 support. Defaults to `false`. Only available on ESP32 with ESP-IDF framework.\n\n*See also: [Network component](https://esphome.io/components/network.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

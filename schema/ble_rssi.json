@@ -1,0 +1,54 @@
+{
+  "ble_rssi.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ble_rssi::BLERSSISensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component",
+                  "esp32_ble_tracker::ESPBTDeviceListener"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ESP32 Bluetooth Low Energy RSSI Sensor](https://esphome.io/components/sensor/ble_rssi.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "dB"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            },
+            "device_class": {
+              "default": "signal_strength"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "mac_address": {
+              "key": "Optional",
+              "docs": "**MAC Address**: The MAC address to track for this sensor. Either this or \u2018\u2019service_uuid\u2019\u2019 has to be present.\n\n*See also: [ESP32 Bluetooth Low Energy RSSI Sensor](https://esphome.io/components/sensor/ble_rssi.html#configuration-variables)*"
+            },
+            "service_uuid": {
+              "key": "Optional",
+              "docs": "**16 bit, 32 bit, or 128 bit BLE Service UUID**: The BLE Service UUID which can be tracked if the device randomizes the MAC address. Either this or \u2018\u2019mac_address\u2019\u2019 has to be present.\n\n*See also: [ESP32 Bluetooth Low Energy RSSI Sensor](https://esphome.io/components/sensor/ble_rssi.html#configuration-variables)*"
+            },
+            "esp32_ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

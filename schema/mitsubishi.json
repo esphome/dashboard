@@ -1,0 +1,31 @@
+{
+  "mitsubishi.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "mitsubishi::MitsubishiClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "receiver_id": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the remote_receiver if this platform supports receiver. see: [Using a Receiver](https://esphome.io/components/climate/climate_ir.html#ir-receiver-id).\n\n*See also: [None](https://esphome.io/components/climate/climate_ir.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

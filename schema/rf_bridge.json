@@ -1,0 +1,204 @@
+{
+  "rf_bridge": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "rf_bridge::RFBridgeComponent",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [RF Bridge Component](https://esphome.io/components/rf_bridge.html#configuration-variables)*"
+            },
+            "on_code_received": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when a code is received. See [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-on-code-received).\n\n*See also: [RF Bridge Component](https://esphome.io/components/rf_bridge.html#configuration-variables)*"
+            },
+            "on_advanced_code_received": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [RF Bridge Component](https://esphome.io/components/rf_bridge.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      },
+      "RFBRIDGE_ID_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "rf_bridge::RFBridgeComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the RF Bridge if you have multiple components.\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-start-bucket-sniffing-action)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "send_code": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "rf_bridge::RFBridgeComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the RF Bridge if you have multiple components.\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+            },
+            "sync": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF Sync timing\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+            },
+            "low": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF Low timing\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+            },
+            "high": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF high timing\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+            },
+            "code": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF code\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+            }
+          }
+        },
+        "docs": "Send an RF code using this action in automations.\n\n*See also: [`rf_bridge.send_code` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-send-code-action)*"
+      },
+      "learn": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "rf_bridge.RFBRIDGE_ID_SCHEMA"
+          ]
+        },
+        "docs": "Tell the RF Bridge to learn new protocol timings using this action in automations. A new code with timings will be returned to [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-on-code-received)\n\n*See also: [`rf_bridge.learn` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-learn-action)*"
+      },
+      "start_advanced_sniffing": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "rf_bridge.RFBRIDGE_ID_SCHEMA"
+          ]
+        },
+        "docs": "Tell the RF Bridge to listen for the advanced/extra protocols defined in the portisch firmware. The decoded codes with length and protocol will be returned to [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-on-advanced-code-received)\n\n*See also: [`rf_bridge.start_advanced_sniffing` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-start-advanced-sniffing-action)*"
+      },
+      "stop_advanced_sniffing": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "rf_bridge.RFBRIDGE_ID_SCHEMA"
+          ]
+        },
+        "docs": "Tell the RF Bridge to stop listening for the advanced/extra protocols defined in the portisch firmware.\n\n*See also: [`rf_bridge.stop_advanced_sniffing` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-stop-advanced-sniffing-action)*"
+      },
+      "start_bucket_sniffing": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "rf_bridge.RFBRIDGE_ID_SCHEMA"
+          ]
+        },
+        "docs": "Tell the RF Bridge to dump raw sniffing data. Useful for getting codes for unsupported protocols. The raw data will be available in the log and can later be used with [rf_bridge.send_raw Action](https://esphome.io/components/rf_bridge.html#rf-bridge-send-raw-action) action.\n\n*See also: [`rf_bridge.start_bucket_sniffing` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-start-bucket-sniffing-action)*"
+      },
+      "send_advanced_code": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "rf_bridge::RFBridgeComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the RF Bridge if you have multiple components.\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-advanced-code-action)*"
+            },
+            "length": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Length of code plus protocol\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-advanced-code-action)*"
+            },
+            "protocol": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF Protocol\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-advanced-code-action)*"
+            },
+            "code": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF code\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-advanced-code-action)*"
+            }
+          }
+        },
+        "docs": "Send an  RF code using this action in automations.\n\n*See also: [`rf_bridge.send_advanced_code` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-send-advanced-code-action)*"
+      },
+      "send_raw": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "rf_bridge::RFBridgeComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the RF Bridge if you have multiple components.\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-raw-action)*"
+            },
+            "raw": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: RF raw string\n\n*See also: [on_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-send-raw-action)*"
+            }
+          }
+        },
+        "docs": "Send a raw command to the onboard EFM8BB1 chip. You can see a list of available commands and format in the [Portisch Wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki/Commands)\n\n*See also: [`rf_bridge.send_raw` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-send-raw-action)*"
+      },
+      "beep": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "rf_bridge::RFBridgeComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the RF Bridge if you have multiple components.\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-beep-action)*"
+            },
+            "duration": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "uint16_t",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: beep duration in milliseconds.\n\n*See also: [on_advanced_code_received Trigger](https://esphome.io/components/rf_bridge.html#rf-bridge-beep-action)*"
+            }
+          }
+        },
+        "docs": "Activate the internal buzzer to make a beep.\n\n*See also: [`rf_bridge.beep` Action](https://esphome.io/components/rf_bridge.html#rf-bridge-beep-action)*"
+      }
+    }
+  }
+}

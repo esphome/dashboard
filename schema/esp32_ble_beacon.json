@@ -1,0 +1,52 @@
+{
+  "esp32_ble_beacon": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "esp32_ble_beacon::ESP32BLEBeacon",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for code generation.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "type": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "IBEACON"
+              ],
+              "docs": "The type of beacon to create, currently only supports `iBeacon`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "uuid": {
+              "key": "Required",
+              "docs": "The [universally unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) to identify the beacon.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "major": {
+              "key": "Optional",
+              "default": "10167",
+              "type": "integer",
+              "data_type": "uint16_t",
+              "docs": "**int**: The iBeacon major identifier of this beacon. Usually used to group beacons, for example for grouping all beacons in the same building, but has no effect if the BLE receiver doesn\u2019t use it. Defaults to `10167`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "minor": {
+              "key": "Optional",
+              "default": "61958",
+              "type": "integer",
+              "data_type": "uint16_t",
+              "docs": "**int**: The iBeacon minor identifier of this beacon. Usually used to identify beacons within an iBeacon group. Defaults to `61958`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

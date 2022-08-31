@@ -1,0 +1,65 @@
+{
+  "external_components": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "is_list": true,
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "source": {
+              "key": "Required",
+              "type": "typed",
+              "types": {
+                "git": {
+                  "config_vars": {
+                    "url": {
+                      "key": "Required",
+                      "docs": "**url**: HTTP git repository url. See [Git](https://esphome.io/components/external_components.html#external-components-git).\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+                    },
+                    "ref": {
+                      "key": "Optional",
+                      "docs": "**string**: Git ref (branch or tag). If not specified the default branch is used.\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+                    },
+                    "username": {
+                      "key": "Optional",
+                      "type": "string",
+                      "docs": "**string**: Username for the Git server, if one is required\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+                    },
+                    "password": {
+                      "key": "Optional",
+                      "type": "string",
+                      "docs": "**string**: Password for the Git server, if one is required\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+                    }
+                  }
+                },
+                "local": {
+                  "config_vars": {
+                    "path": {
+                      "key": "Required",
+                      "docs": "Path to use when using local components. See [Local](https://esphome.io/components/external_components.html#external-components-local).\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+                    }
+                  }
+                }
+              },
+              "typed_key": "type",
+              "docs": "Repository type. One of `local`, `git`.\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+            },
+            "refresh": {
+              "key": "Optional",
+              "default": "1d",
+              "type": "string",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval the source will be checked. Has no effect on `local`. See [Refresh](https://esphome.io/components/external_components.html#external-components-refresh). for more info. Defaults to `1day`.\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+            },
+            "components": {
+              "key": "Optional",
+              "default": "all",
+              "is_list": true,
+              "type": "string",
+              "docs": "**list**: The list of components to use from the external source. By default, all available components are used.\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

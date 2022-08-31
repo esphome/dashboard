@@ -1,0 +1,309 @@
+{
+  "dfplayer": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "dfplayer::DFPlayer",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#configuration-variables)*"
+            },
+            "on_finished_playback": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when playback is finished.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#configuration-variables)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    },
+    "action": {
+      "play_next": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Starts playback of next track or skips to the next track.\n\n*See also: [`dfplayer.play_next` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-next-action)*"
+      },
+      "play_previous": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Plays the previously played track.\n\n*See also: [`dfplayer.play_previous` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-previous-action)*"
+      },
+      "play": {
+        "type": "schema",
+        "maybe": "file",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "file": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The global track number (from all tracks in the device). If not specified plays the first track.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-action)*"
+            },
+            "loop": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Repeats playing the same track. Defaults to `false`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-action)*"
+            }
+          }
+        },
+        "docs": "Plays a track.\n\n*See also: [`dfplayer.play` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-action)*"
+      },
+      "play_folder": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "folder": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The folder number.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-folder-action)*"
+            },
+            "file": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The file number inside the folder to play. Optional only if `loop` is not set.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-folder-action)*"
+            },
+            "loop": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Repeats playing all files in the folder. Causes `file` to be ignored. Defaults to `false`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-folder-action)*"
+            }
+          }
+        },
+        "docs": "Plays files inside numbered folders, folders must be numbered from 1 and with leading zeros. Like `01`, `02`, \u2026 etc. Files inside the folders must be numbered with two leading zeros, like `001.mp3`, `002.mp3`, \u2026 etc. Folder numbers can range from 1 to 99 and file name from 1 to 255 or folder number from 1 to 10 and file number from 1 to 1000.\n\n*See also: [`dfplayer.play_folder` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-folder-action)*"
+      },
+      "set_device": {
+        "type": "schema",
+        "maybe": "device",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "device": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "USB",
+                "TF_CARD"
+              ]
+            }
+          }
+        },
+        "docs": "Changes the device in use. Valid values are `TF_CARD` and `USB`.\n\n*See also: [`dfplayer.set_device` Action](https://esphome.io/components/dfplayer.html#dfplayer-set-device-action)*"
+      },
+      "set_volume": {
+        "type": "schema",
+        "maybe": "volume",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "volume": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The volume value. Valid values goes from `0` to `30`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-set-volume-action)*"
+            }
+          }
+        },
+        "docs": "Changes volume.\n\n*See also: [`dfplayer.set_volume` Action](https://esphome.io/components/dfplayer.html#dfplayer-set-volume-action)*"
+      },
+      "volume_up": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Turn volume up.\n\n*See also: [`dfplayer.volume_up` Action](https://esphome.io/components/dfplayer.html#dfplayer-volume-up-action)*"
+      },
+      "volume_down": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Turn volume down.\n\n*See also: [`dfplayer.volume_down` Action](https://esphome.io/components/dfplayer.html#dfplayer-volume-down-action)*"
+      },
+      "set_eq": {
+        "type": "schema",
+        "maybe": "eq_preset",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "eq_preset": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "NORMAL",
+                "POP",
+                "ROCK",
+                "JAZZ",
+                "CLASSIC",
+                "BASS"
+              ],
+              "docs": "Eq Preset value. Valid values are `NORMAL`, `POP`, `ROCK`, `JAZZ`, `CLASSIC` and `BASS`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-set-eq-action)*"
+            }
+          }
+        },
+        "docs": "Changes audio equalization preset.\n\n*See also: [`dfplayer.set_eq` Action](https://esphome.io/components/dfplayer.html#dfplayer-set-eq-action)*"
+      },
+      "sleep": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Enters sleep mode. Playback is stopped and the action `dfplayer.set_device: TF_CARD` should be send for playback to be enabled again.\n\n*See also: [`dfplayer.sleep` Action](https://esphome.io/components/dfplayer.html#dfplayer-sleep-action)*"
+      },
+      "reset": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Module reset.\n\n*See also: [`dfplayer.reset` Action](https://esphome.io/components/dfplayer.html#dfplayer-reset-action)*"
+      },
+      "start": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Starts playing a track or resumes paused playback.\n\n*See also: [`dfplayer.start` Action](https://esphome.io/components/dfplayer.html#dfplayer-start-action)*"
+      },
+      "pause": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Pauses playback, playback can be resumed from the same position with `dfplayer.start`.\n\n*See also: [`dfplayer.pause` Action](https://esphome.io/components/dfplayer.html#dfplayer-pause-action)*"
+      },
+      "stop": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Stops playback.\n\n*See also: [`dfplayer.stop` Action](https://esphome.io/components/dfplayer.html#dfplayer-stop-action)*"
+      },
+      "random": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Randomly plays all tracks.\n\n*See also: [`dfplayer.random` Action](https://esphome.io/components/dfplayer.html#dfplayer-random-action)*"
+      }
+    },
+    "condition": {
+      "is_playing": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This Condition returns true while playback is active.\n\n*See also: [`dfplayer.is_playing` Condition](https://esphome.io/components/dfplayer.html#dfplayer-is-playing-condition)*"
+      }
+    }
+  }
+}
