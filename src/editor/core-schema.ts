@@ -20,7 +20,7 @@ export interface ConfigVarRegistry extends ConfigVarBase {
 
 export interface ConfigVarTrigger extends ConfigVarBase {
   type: "trigger";
-  schema: Schema;
+  schema: Schema | undefined;
   has_required_var: Boolean;
 }
 
@@ -117,11 +117,11 @@ class CoreSchema {
   schema: SchemaSet | undefined;
   loaded_schemas: string[] = ["core", "esphome"];
 
-  constructor() {}
+  constructor(private schemaLoader: (schemaName: string) => Promise<any>) {}
 
   async getSchema(): Promise<SchemaSet> {
     if (this.schema) return this.schema;
-    this.schema = await this.readFile("esphome");
+    this.schema = await this.schemaLoader("esphome");
     return this.schema!;
   }
 
@@ -139,7 +139,7 @@ class CoreSchema {
     if (!this.loaded_schemas.includes(domain)) {
       this.schema = {
         ...this.schema,
-        ...(await this.readFile(domain)),
+        ...(await this.schemaLoader(domain)),
       };
       this.loaded_schemas.push(domain);
     }
@@ -159,14 +159,6 @@ class CoreSchema {
   ): Promise<ConfigVar> {
     const component = await this.getComponent(domain, platform);
     return component.schemas.CONFIG_SCHEMA;
-  }
-
-  private async readFile(name: string) {
-    // const jsonPath = path.join(__dirname, `schema/${name}.json`);
-    //const fileContents = fs.readFileSync(jsonPath, "utf-8");
-    const response = await fetch(`static/schema/${name}.json`);
-    const fileContents = await response.text();
-    return JSON.parse(fileContents);
   }
 
   async getExtendedConfigVar(name: string): Promise<ConfigVar> {
@@ -553,4 +545,10 @@ class CoreSchema {
   }
 }
 
-export const coreSchema = new CoreSchema();
+export const coreSchema = new CoreSchema(async (name: string) => {
+  // const jsonPath = path.join(__dirname, `schema/${name}.json`);
+  //const fileContents = fs.readFileSync(jsonPath, "utf-8");
+  const response = await fetch(`static/schema/${name}.json`);
+  const fileContents = await response.text();
+  return JSON.parse(fileContents);
+});

@@ -1,117 +1,41 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-
-import { parse } from "./parser";
 import {
-  isDocument,
-  isMap,
-  visit,
-  Node,
-  isNode,
-  Document,
-  isScalar,
-  isPair,
-  isSeq,
-} from "yaml";
+  getNodeFromPosition,
+  getPath,
+  isNumber,
+  isString,
+  parse,
+} from "./parser";
+import { isMap, Node, Document, isScalar, isSeq } from "yaml";
 import { ConfigVar, coreSchema } from "./core-schema";
 
-function isNumber(val: unknown): val is number {
-  return typeof val === "number";
-}
-function isString(val: unknown): val is string {
-  return typeof val === "string";
-}
-
 monaco.languages.registerHoverProvider("yaml", {
-  provideHover: function (
+  provideHover: async function (
     model,
     position //: monaco.languages.ProviderResult<monaco.languages.Hover>
   ) {
     var doc = parse(model.getValue());
     if (!doc) return;
 
-    // Get offset from beginning of file of this line / column
-    let offset = position.column - 1;
-    for (var line = 1; line < position.lineNumber; line++)
-      offset += model.getLineLength(line) + 1;
-
-    // Get node in this offset
+    const offset = model.getOffsetAt(position);
     const node = getNodeFromPosition(doc, offset);
+    const startPos = model.getPositionAt(node.range?.[0]!);
+    const endPos = model.getPositionAt(node.range?.[1]!);
 
-    console.log(
-      position.lineNumber,
-      position.column,
-      model.getOffsetAt(position),
-      offset,
-      node.toString()
-    );
+    const docs = await getHover(node, doc);
 
-    // Get monaco range of this node
-    let startLine = 1;
-    let startColumn = 1;
-    let endLine = 1;
-    let endColumn = 1;
-    if (node.range?.length) {
-      offset = node.range?.[0] + 1;
-      while (offset > model.getLineLength(startLine)) {
-        offset -= model.getLineLength(startLine) + 1;
-        startLine++;
-      }
-      startColumn = offset;
-      offset += node.range?.[1] - node.range?.[0];
-      endLine = startLine;
-      while (offset > model.getLineLength(endLine)) {
-        offset -= model.getLineLength(endLine);
-        endLine++;
-      }
-      endColumn = offset;
-    }
-
-    return getHover(node, doc).then((docs) => {
-      if (!docs) return undefined;
-      return {
-        range: new monaco.Range(startLine, startColumn, endLine, endColumn),
-        contents: [{ value: docs }],
-      };
-    });
+    if (!docs) return undefined;
+    return {
+      range: new monaco.Range(
+        startPos.lineNumber,
+        startPos.column,
+        endPos.lineNumber,
+        endPos.column
+      ),
+      contents: [{ value: docs }],
+    };
   },
 });
-
-const getParent = (nodeToFind: Node, doc: Document): Node | undefined => {
-  let parentNode: Node | undefined;
-  visit(doc, (_, node, path) => {
-    if (node === nodeToFind) {
-      parentNode = path[path.length - 1] as Node;
-      return visit.BREAK;
-    }
-    return undefined;
-  });
-
-  if (isDocument(parentNode)) {
-    return undefined;
-  }
-
-  return parentNode;
-};
-
-const getPath = (pathNode: Node, doc: Document): (string | number)[] => {
-  const path: (string | number)[] = [];
-  let child: Node | undefined = undefined;
-  let node: Node | undefined = pathNode;
-  while (node) {
-    if (isPair(node)) {
-      if (isScalar(node.key)) {
-        // @ts-ignore
-        path.push(node.key.value);
-      }
-    }
-    if (isSeq(node) && child !== undefined) {
-      path.push(node.items.indexOf(child));
-    }
-    child = node;
-    node = getParent(node, doc);
-  }
-  return path.reverse();
-};
 
 const getHover = async (
   node: Node,
@@ -155,33 +79,6 @@ const getHover = async (
   } catch (error) {
     console.log("Hover:" + error);
   }
-};
-
-const getNodeFromPosition = (doc: Document, positionOffset: number) => {
-  let closestNode: Node = doc.contents!;
-  visit(doc, (key, node) => {
-    console.log(key, node);
-    if (!node) return;
-    if (!isNode(node)) {
-      return;
-    }
-
-    const range = node?.range;
-    if (!range) {
-      return;
-    }
-    if (range[0] <= positionOffset && range[1] >= positionOffset) {
-      console.log("**", range[0], range[1], positionOffset, node.toString());
-      closestNode = node;
-    } else {
-      console.log("--", range[0], range[1], positionOffset, node.toString());
-      if (range[0] > positionOffset) return visit.BREAK;
-      return visit.SKIP;
-    }
-    return;
-  });
-
-  return closestNode;
 };
 
 const getConfigVarAndPathNode = async (

@@ -7,6 +7,7 @@ import styles from "monaco-editor/min/vs/editor/editor.main.css";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./hover-provider";
+import "./completion-provider";
 import { getFile } from "../api/files";
 
 // WebSocket URL Helper
@@ -141,7 +142,6 @@ export class ESPHomeEditor extends LitElement {
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
         this.editorValidationScheduled = !this.editorActiveSecrets;
-        console.log("editor model changed", this.editorValidationScheduled);
       }, 250)
     );
 
@@ -224,7 +224,6 @@ export class ESPHomeEditor extends LitElement {
 
           const model = this.editor!.getModel();
           monaco.editor.setModelMarkers(model!, "esphome", markers);
-          console.log("Setting markers", markers);
 
           this.editorValidationRunning = false;
         } else if (msg.type === "read_file") {
