@@ -1,5 +1,5 @@
 import { isScalar } from "yaml";
-import { coreSchema, Position, Range } from "./editor-shims";
+import { coreSchema, Position } from "./editor-shims";
 import { ESPHomeDocuments } from "./esphome-document";
 
 export class DefinitionHandler {
