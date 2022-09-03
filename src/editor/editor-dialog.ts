@@ -17,10 +17,14 @@ class ESPHomeEditorDialog extends LitElement {
   editorRef: Ref<ESPHomeEditor> = createRef();
 
   protected render() {
+    const isSecrets =
+      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+
     return html`<mwc-dialog
       open
       heading=${`Edit ${this.fileName}`}
       scrimClickAction
+      escapeKeyAction
       @closed=${this._handleClose}
     >
       <esphome-editor
@@ -33,11 +37,13 @@ class ESPHomeEditorDialog extends LitElement {
         label="Save"
         @click=${this._saveFile}
       ></mwc-button>
-      <mwc-button
-        slot="secondaryAction"
-        label="Install"
-        @click=${this.handleInstall}
-      ></mwc-button>
+      ${isSecrets
+        ? ""
+        : html` <mwc-button
+            slot="secondaryAction"
+            label="Install"
+            @click=${this.handleInstall}
+          ></mwc-button>`}
       <mwc-button
         slot="secondaryAction"
         dialogAction="close"

@@ -1,4 +1,4 @@
-import { Document, isMap, isPair, isScalar, isSeq, YAMLMap, Node } from "yaml";
+import { Document, isMap, isPair, isScalar, isSeq, Node, YAMLMap } from "yaml";
 import { Range } from "yaml/dist/nodes/Node";
 
 export interface SchemaSet {
@@ -113,14 +113,16 @@ interface CoreComponent extends Component {
   pins: string[];
 }
 
-class CoreSchema {
+export class ESPHomeSchema {
   schema: SchemaSet | undefined;
   loaded_schemas: string[] = ["core", "esphome"];
 
   constructor(private schemaLoader: (schemaName: string) => Promise<any>) {}
 
   async getSchema(): Promise<SchemaSet> {
-    if (this.schema) return this.schema;
+    if (this.schema) {
+      return this.schema;
+    }
     this.schema = await this.schemaLoader("esphome");
     return this.schema!;
   }
@@ -312,12 +314,12 @@ class CoreSchema {
     return cv;
   }
 
-  getConfigVarComplete2(cv: ConfigVar): ConfigVar {
+  async getConfigVarComplete2(cv: ConfigVar): Promise<ConfigVar> {
     var ret = { ...cv };
 
     if (cv.type === "schema" && cv.schema.extends !== undefined) {
       for (const extended of cv.schema.extends) {
-        const s_cv = this.getExtendedConfigVar(extended);
+        const s_cv = await this.getExtendedConfigVar(extended);
         ret = {
           ...s_cv,
           ...ret,
@@ -544,11 +546,3 @@ class CoreSchema {
     return ret;
   }
 }
-
-export const coreSchema = new CoreSchema(async (name: string) => {
-  // const jsonPath = path.join(__dirname, `schema/${name}.json`);
-  //const fileContents = fs.readFileSync(jsonPath, "utf-8");
-  const response = await fetch(`static/schema/${name}.json`);
-  const fileContents = await response.text();
-  return JSON.parse(fileContents);
-});

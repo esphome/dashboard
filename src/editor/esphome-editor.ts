@@ -6,9 +6,8 @@ import { createRef, Ref, ref } from "lit/directives/ref.js";
 import styles from "monaco-editor/min/vs/editor/editor.main.css";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
-import "./hover-provider";
-import "./completion-provider";
 import { getFile } from "../api/files";
+import "./monaco-provider";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -102,13 +101,7 @@ export class ESPHomeEditor extends LitElement {
     // saveButton.setAttribute("data-filename", editorActiveFilename);
     // uploadButton.setAttribute("data-filename", editorActiveFilename);
     // uploadButton.onclick = () => saveFile(editorActiveFilename);
-    if (isSecrets) {
-      //   uploadButton.style.display = "none";
-      // editorActiveSecrets = true;
-    } else {
-      // uploadButton.style.display = "";
-      // editorActiveSecrets = false;
-    }
+
     // closeButton.setAttribute("data-filename", editorActiveFilename);
 
     const loadingIndicator = this.shadowRoot!.querySelector(
@@ -153,6 +146,10 @@ export class ESPHomeEditor extends LitElement {
         fireEvent(this, "save");
       },
     });
+
+    if (isSecrets) {
+      return;
+    }
 
     setInterval(() => {
       if (!this.editorValidationScheduled || this.editorValidationRunning)
