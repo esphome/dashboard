@@ -87,28 +87,13 @@ export class ESPHomeEditor extends LitElement {
       // This is to have the popups above other stuff around the editor, otherwise they are hidden
       fixedOverflowWidgets: true,
     });
-    // window
-    //   .matchMedia("(prefers-color-scheme: dark)")
-    //   .addEventListener("change", () => {
-    //     monaco.editor.setTheme(this.getTheme());
-    //   });
+
     const filename = this.configuration;
     const editorActiveFilename = filename;
     const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
 
-    // filenameField.innerHTML = editorActiveFilename;
-
-    // saveButton.setAttribute("data-filename", editorActiveFilename);
-    // uploadButton.setAttribute("data-filename", editorActiveFilename);
-    // uploadButton.onclick = () => saveFile(editorActiveFilename);
-
-    // closeButton.setAttribute("data-filename", editorActiveFilename);
-
     const loadingIndicator = this.shadowRoot!.querySelector(
       "#js-editor-modal #js-loading-indicator"
-    );
-    const editorArea = this.shadowRoot!.querySelector(
-      "#js-editor-modal #js-editor-area"
     );
 
     if (loadingIndicator)
