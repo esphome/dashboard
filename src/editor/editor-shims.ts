@@ -99,7 +99,6 @@ export const createCompletion = (
     label: label,
     insertText: insertText,
     kind,
-    documentation,
     range: null!,
     preselect,
     sortText,
@@ -111,6 +110,8 @@ export const createCompletion = (
       id: "editor.action.triggerSuggest",
     };
   }
+  // use IMarkdownString
+  if (documentation) completion.documentation = { value: documentation };
   if (snippet) {
     completion.insertTextRules = CompletionItemInsertTextRule.InsertAsSnippet;
   }
