@@ -61,29 +61,23 @@ export class CompletionsHandler {
       start: this.document.text.getPosition(node.range?.[0]!),
       end: this.document.text.getPosition(node.range?.[1]!),
     };
+    if (range.start.character === 0) {
+      return this.getCoreComponents();
+    }
 
-    //const word = this.document.text.getWordUntilPosition(position);
+    const p1 = this.document.getParent(node);
+    const p2 = p1 !== undefined ? this.document.getParent(p1) : undefined;
 
-    if (node) {
-      // Are we in the value side of a map? (this fix for when the cursor is at the right of : and sometimes (depending whitespace after the caret)
-      // the returned node is not the value node of the pair but the map itself)
-      if (
-        isMap(node) &&
-        isPair(node.items[0]) &&
-        isScalar(node.items[0].key) &&
-        isScalar(node.items[0].value) &&
-        node.items[0].key.range![2] < offset &&
-        node.items[0].value.range![0] > offset
-      ) {
-        // are we at the right side of :
-        console.log("we are in the scalar null? value");
-        node = node.items[0].value;
+    if (!findByClosest && isScalar(node)) {
+      if (isPair(p1) && p1.value === null) {
+        // seems to be writing on a key still without value
+        if (isMap(p2)) {
+          node = p2;
+        }
       }
     }
-    const p1 = this.document.getParent(node);
-    const path = this.document.getPath(node);
 
-    console.log(position, lineContent, findByClosest, offset, node, path);
+    const path = this.document.getPath(node);
     // At this point node and path should be meaningful and consistent
     // Path is were completions need to be listed, it really doesn't matter where the cursor is, cursor shouldn't be checked
     // to see what completions are need
@@ -91,7 +85,6 @@ export class CompletionsHandler {
     // List items under - platform: |
     if (isPair(p1) && isScalar(p1.key)) {
       if (p1.key.value === "platform") {
-        const p2 = this.document.getParent(p1);
         if (isMap(p2)) {
           const p3 = this.document.getParent(p2);
           if (isSeq(p3)) {
@@ -104,6 +97,8 @@ export class CompletionsHandler {
         }
       }
     }
+
+    console.log(node, path, path.length, `'${path[0]}'`);
 
     let pathElement;
     // First get the root component
@@ -153,18 +148,13 @@ export class CompletionsHandler {
       }
     }
 
-    // console.log("path " + path.join(" - ")); //+ ' found by closest: ' + foundByClosest);
-    if (path.length === 0) {
-      return this.getCoreComponents();
-    } else {
-      return this.resolveConfigVar(
-        path,
-        pathIndex,
-        cv!,
-        pathElement as YAMLMap,
-        node
-      );
-    }
+    return this.resolveConfigVar(
+      path,
+      pathIndex,
+      cv!,
+      pathElement as YAMLMap,
+      node
+    );
   }
 
   private async getPlatformNames(platform_name: string, range: Range) {

@@ -104,7 +104,15 @@ export class ESPHomeDocument {
         return;
       }
 
-      if (range[0] <= offset && range[1] >= offset) {
+      if (
+        (range[0] <= offset && range[2] >= offset) ||
+        // handle edge case of null node values
+        (isScalar(node) &&
+          node.value === null &&
+          range[0] > offset &&
+          range[1] > offset &&
+          !isScalar(closestNode))
+      ) {
         closestNode = node;
       } else {
         return visit.SKIP;
