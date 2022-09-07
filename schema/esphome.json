@@ -400,6 +400,13 @@
         ],
         "docs": "The `ble_client` component enables connections to Bluetooth Low Energy devices in order to query and control them. This component does not expose any sensors or output components itself, but merely manages connections to them for use by other components.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client)*"
       },
+      "bluetooth_proxy": {
+        "dependencies": [
+          "esp32",
+          "esp32_ble_tracker"
+        ],
+        "docs": "Home Assistant can expand it\u2019s Bluetooth reach by communicating through the Bluetooth proxy component in ESPHome. Place your ESPHome devices close to the Bluetooth devices that you want to interact with for the best experience.\n\n*See also: [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy.html#bluetooth-proxy)*"
+      },
       "bme680_bsec": {
         "dependencies": [
           "i2c"

@@ -68,18 +68,23 @@
             "id": {
               "key": "Required",
               "use_id_type": "ble_client::BLEClient",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
             },
             "service_uuid": {
-              "key": "Required"
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service to write to.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
             },
             "characteristic_uuid": {
-              "key": "Required"
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service\u2019s characteristic to write to.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
             },
             "value": {
               "key": "Required",
+              "templatable": true,
               "is_list": true,
-              "data_type": "hex_uint8_t"
+              "data_type": "hex_uint8_t",
+              "docs": "**Array of bytes or [lambda](https://esphome.io/guides/automations.html#config-lambda)**: The value to be written.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
             }
           }
         },

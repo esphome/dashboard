@@ -50,6 +50,7 @@
         ],
         "docs": "The `pcd8544` display platform allows you to use PCD8544 ([Adafruit](https://www.adafruit.com/product/338)) displays with ESPHome. Connection to this display is made using the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#pcd-8544-display-nokia-5110-3310)*"
       },
+      "pvvx_mithermometer": {},
       "ssd1306_i2c": {
         "dependencies": [
           "i2c"

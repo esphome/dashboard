@@ -864,7 +864,8 @@
               "values": [
                 "",
                 "measurement",
-                "total_increasing"
+                "total_increasing",
+                "total"
               ],
               "docs": "**string**: The state class for the sensor. See [https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes](https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes) for a list of available options. Set to `\"\"` to remove the default state class of a sensor.\n\n*See also: [Sensor Component](https://esphome.io/components/sensor/index.html#base-sensor-configuration)*"
             },

@@ -660,6 +660,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "bluetooth_proxy": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "bme280.sensor": {
                     "type": "enum",
                     "values": [
