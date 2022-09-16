@@ -408,7 +408,7 @@ export class CompletionsHandler {
         }
       }
     } else if (cv.type === "string") {
-      if (cv["templatable"]) {
+      if (cv.templatable) {
         return [
           createCompletionSnippet(
             "!lambda",
@@ -487,7 +487,7 @@ export class CompletionsHandler {
       );
     } else if (cv.type === "boolean") {
       let result: CompletionItem[] = [];
-      if (cv["templatable"]) {
+      if (cv.templatable) {
         result.push(
           createCompletionSnippet(
             "!lambda ",
@@ -571,7 +571,7 @@ export class CompletionsHandler {
       let sortText: string | undefined = undefined;
       let detail: string | undefined = undefined;
 
-      if (config["templatable"] !== undefined) {
+      if (config.templatable) {
         detail = "lambda";
         triggerSuggest = true;
       } else {
@@ -579,14 +579,10 @@ export class CompletionsHandler {
           sortText = "00" + prop;
           detail = "Required";
         } else {
-          if (
-            config.type === "integer" ||
-            config.type === "string" ||
-            config.type === undefined
-          ) {
-            if (config["default"] !== undefined) {
+          if (config.type === "integer" || config.type === "string") {
+            if (config.default) {
               snippet = true;
-              insertText = prop + ": ${0:" + config["default"] + "}";
+              insertText = prop + ": ${0:" + config.default + "}";
             }
           }
         }
@@ -632,7 +628,7 @@ export class CompletionsHandler {
           break;
       }
 
-      if (config["use_id_type"] || config["maybe"]) {
+      if (config.type === "use_id" || config.maybe) {
         triggerSuggest = true;
       }
 
@@ -677,7 +673,7 @@ export class CompletionsHandler {
   private async addEnums(cv: ConfigVarEnum): Promise<CompletionItem[]> {
     const result: CompletionItem[] = [];
 
-    if (cv["templatable"]) {
+    if (cv.templatable) {
       result.push(
         createCompletionSnippet(
           "!lambda",
@@ -695,12 +691,11 @@ export class CompletionsHandler {
           value,
           value,
           CompletionItemKind.EnumMember,
-          cv["values_docs"] !== undefined &&
-            cv["values_docs"][value] !== undefined
-            ? cv["values_docs"][value]
+          cv.values_docs !== undefined && cv.values_docs[value] !== undefined
+            ? cv.values_docs[value]
             : undefined,
           false,
-          cv["default"] === value
+          cv.default === value
         )
       );
     }
@@ -866,7 +861,7 @@ export class CompletionsHandler {
       }
       let insertText = "- " + value + ": ";
       const completeCv = await coreSchema.getConfigVarComplete2(props);
-      if (!completeCv["maybe"]) {
+      if (!completeCv.maybe) {
         insertText += "\n    ";
       }
 

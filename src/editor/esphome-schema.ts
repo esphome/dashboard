@@ -10,6 +10,8 @@ interface ConfigVarBase {
   key: string;
   is_list?: boolean;
   docs?: string;
+  maybe?: string;
+  templatable?: boolean;
 }
 
 export interface ConfigVarRegistry extends ConfigVarBase {
@@ -27,6 +29,8 @@ export interface ConfigVarTrigger extends ConfigVarBase {
 export interface ConfigVarEnum extends ConfigVarBase {
   type: "enum";
   values: string[];
+  values_docs?: { [key: string]: string };
+  default?: string;
 }
 
 export interface ConfigVarSchema extends ConfigVarBase {
@@ -89,23 +93,22 @@ export interface Schema {
   extends: string[];
 }
 
+interface Registry {
+  [name: string]: ConfigVar;
+}
 interface Component {
   schemas: {
     [name: string]: ConfigVar;
-    CONFIG_SCHEMA: ConfigVar;
+    CONFIG_SCHEMA: ConfigVarSchema;
   };
   // These are the components e.g. of sensor, binary_sensor
   components: { docs?: string };
 
-  action: {
-    [name: string]: ConfigVar;
-  };
-  condition: {
-    [name: string]: ConfigVar;
-  };
-  filter: {
-    [name: string]: ConfigVar;
-  };
+  action: Registry;
+  condition: Registry;
+  filter: Registry;
+  effects: Registry;
+  pin?: ConfigVar;
 }
 interface CoreComponent extends Component {
   platforms: { [name: string]: { docs?: string } };
@@ -177,36 +180,65 @@ export class ESPHomeSchema {
     doc: Document
   ): AsyncGenerator<[string, Component, Node?]> {
     const docMap = doc.contents as YAMLMap;
+    let addPollingComponent = false;
     for (const k of docMap.items) {
       if (isPair(k) && isScalar(k.key)) {
         const componentName = k.key.value as string;
+        const isPlatformComponent = await this.isPlatform(componentName);
         if (
-          componentName in (await this.getSchema()).core.components ||
-          (await this.isPlatform(componentName))
+          !isPlatformComponent &&
+          !(componentName in (await this.getSchema()).core.components)
         ) {
-          const component = await this.getComponent(componentName);
-          yield [componentName, component, k.value as Node];
+          // invalid or unknown name
+          continue;
+        }
+        const component = await this.getComponent(componentName);
+        yield [componentName, component, k.value as Node];
 
-          if (await this.isPlatform(componentName)) {
-            // iterate elements and lookup platform to load components
-            const platList = docMap.get(componentName);
-            if (isSeq(platList)) {
-              for (const plat of platList.items) {
-                if (isMap(plat)) {
-                  const platCompName = plat.get("platform") as string;
-                  if (platCompName in component.components) {
-                    yield [
-                      platCompName + "." + componentName,
-                      await this.getComponent(platCompName, componentName),
-                      plat,
-                    ];
+        if (isPlatformComponent) {
+          // iterate elements and lookup platform to load components
+          const platList = docMap.get(componentName);
+          if (isSeq(platList)) {
+            for (const plat of platList.items) {
+              if (isMap(plat)) {
+                const platCompName = plat.get("platform") as string;
+                if (platCompName in component.components) {
+                  if (!addPollingComponent) {
+                    const platComponent = await this.getComponent(
+                      platCompName,
+                      componentName
+                    );
+                    if (
+                      platComponent.schemas.CONFIG_SCHEMA?.schema?.config_vars.id?.id_type?.parents?.includes(
+                        "PollingComponent"
+                      )
+                    ) {
+                      addPollingComponent = true;
+                    }
                   }
+                  yield [
+                    platCompName,
+                    await this.getComponent(platCompName),
+                    plat,
+                  ];
                 }
               }
             }
           }
+        } else {
+          if (
+            !addPollingComponent &&
+            component.schemas.CONFIG_SCHEMA?.schema?.config_vars.id?.id_type?.parents?.includes(
+              "PollingComponent"
+            )
+          ) {
+            addPollingComponent = true;
+          }
         }
       }
+    }
+    if (addPollingComponent) {
+      yield ["component", await this.getComponent("component"), undefined];
     }
     yield ["core", (await this.getSchema()).core, undefined];
   }
@@ -218,27 +250,30 @@ export class ESPHomeSchema {
     if (registry.includes(".")) {
       // e.g. sensor.filter only items from one component
       const [domain, registryName] = registry.split(".");
-      for (const name in (await this.getSchema())[domain][registryName]) {
-        yield [name, (await this.getSchema())[domain][registryName][name]];
-      }
+      if (this.isRegistry(registryName))
+        for (const name in (await this.getSchema())[domain][registryName]) {
+          yield [name, (await this.getSchema())[domain][registryName][name]];
+        }
     } else {
       // e.g. action, condition: search in all domains
-      for await (const [componentName, component] of this.getDocComponents(
-        doc
-      )) {
-        if (component[registry] !== undefined) {
-          for (const name in component[registry]) {
-            if (componentName === "core") {
-              yield [name, component[registry][name]];
-            } else {
-              yield [
-                componentName.split(".").reverse().join(".") + "." + name,
-                component[registry][name],
-              ];
+      if (this.isRegistry(registry))
+        for await (const [componentName, component] of this.getDocComponents(
+          doc
+        )) {
+          // component might be undefined if this component has no registries
+          if (component && component[registry] !== undefined) {
+            for (const name in component[registry]) {
+              if (componentName === "core") {
+                yield [name, component[registry][name]];
+              } else {
+                yield [
+                  componentName.split(".").reverse().join(".") + "." + name,
+                  component[registry][name],
+                ];
+              }
             }
           }
         }
-      }
     }
   }
 
@@ -248,31 +283,42 @@ export class ESPHomeSchema {
   ): Promise<ConfigVar | undefined> {
     if (registry.includes(".")) {
       const [domain, registryName] = registry.split(".");
-      return (await this.getComponent(domain))[registryName][entry];
+      if (this.isRegistry(registryName))
+        return (await this.getComponent(domain))[registryName][entry];
     } else {
-      if (entry.includes(".")) {
-        const parts = entry.split(".");
-        if (parts.length === 3) {
-          const [domain, platform, actionName] = parts;
-          return (await this.getComponent(platform, domain))[registry][
-            actionName
-          ];
-        } else {
-          const [domain, actionName] = parts;
-          return (await this.getComponent(domain))[registry][actionName];
+      if (this.isRegistry(registry)) {
+        if (entry.includes(".")) {
+          const parts = entry.split(".");
+          if (parts.length === 3) {
+            const [domain, platform, actionName] = parts;
+            return (await this.getComponent(platform, domain))[registry][
+              actionName
+            ];
+          } else {
+            const [domain, actionName] = parts;
+            return (await this.getComponent(domain))[registry][actionName];
+          }
         }
-      }
-      for (const c in this.schema) {
-        const schema = await this.getComponent(c);
-        if (
-          schema[registry] !== undefined &&
-          schema[registry][entry] !== undefined
-        ) {
-          return schema[registry][entry];
+        for (const c in this.schema) {
+          const schema = await this.getComponent(c);
+          if (
+            schema[registry] !== undefined &&
+            schema[registry][entry] !== undefined
+          ) {
+            return schema[registry][entry];
+          }
         }
       }
     }
     return undefined;
+  }
+  isRegistry(name: string) {
+    return (
+      name === "filter" ||
+      name === "effects" ||
+      name === "condition" ||
+      name === "action"
+    );
   }
   async getActionConfigVar(entry: string): Promise<ConfigVarTrigger> {
     return (await this.getRegistryConfigVar(
@@ -281,7 +327,9 @@ export class ESPHomeSchema {
     )) as ConfigVarTrigger;
   }
   async getPinConfigVar(component: string): Promise<ConfigVar> {
-    return (await this.getComponent(component))["pin"];
+    var c = await this.getComponent(component);
+    if (!c.pin) throw new Error("Attempt to get pin from not pin component.");
+    return c.pin;
   }
   async getPins(): Promise<string[]> {
     return (await this.getSchema()).core.pins;
