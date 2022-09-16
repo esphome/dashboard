@@ -29,7 +29,7 @@
             "dump": {
               "key": "Optional",
               "default": "[]",
-              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **aeha**: Decode and dump AEHA infrared codes.\n  \n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
             },
             "tolerance": {
               "key": "Optional",
@@ -390,6 +390,23 @@
                 }
               },
               "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Midea remote code has been decoded. A variable `x` of type [remote_base::MideaData](https://esphome.io/api/classesphome_1_1remote__base_1_1_midea_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+            },
+            "on_aeha": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "receiver_id": {
+                    "key": "GeneratedID",
+                    "use_id_type": "remote_base::RemoteReceiverBase",
+                    "type": "use_id"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a AEHA remote code has been decoded. A variable `x` of type [remote_base::AEHAData](https://esphome.io/api/classesphome_1_1remote__base_1_1_a_e_h_a_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
             }
           },
           "extends": [
@@ -1073,6 +1090,23 @@
                 }
               },
               "docs": "Trigger on a Midea remote code with the given code.\n  * **code** (**Required**, 5-bytes list): The code to listen for, see [remote_transmitter.transmit_midea Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-midea) for more info. Usually you only need to copy first 5 bytes directly from the dumper output.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
+            "aeha": {
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "address": {
+                    "key": "Required",
+                    "data_type": "hex_uint16_t",
+                    "docs": "**int**: The address to trigger on, see dumper output for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+                  },
+                  "data": {
+                    "key": "Required",
+                    "docs": "**3-35 bytes list**: The code to listen for, see [remote_transmitter.transmit_aeha Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha) for more info. Usually you only need to copy this directly from the dumper output.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+                  }
+                }
+              },
+              "docs": "Trigger on a decoded AEHA remote code with the given data.\n  * **address** (**Required**, int): The address to trigger on, see dumper output for more info.\n  \n  * **data** (**Required**, 3-35 bytes list): The code to listen for, see [remote_transmitter.transmit_aeha Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha) for more info. Usually you only need to copy this directly from the dumper output.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
             },
             "receiver_id": {
               "key": "GeneratedID",

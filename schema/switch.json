@@ -10,6 +10,9 @@
       "custom": {
         "docs": "This integration can be used to create custom switches in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Switch](https://esphome.io/components/switch/custom.html#custom-switch)*"
       },
+      "factory_reset": {
+        "docs": "The `factory_reset` switch allows you to remotely invalidate (reset) all ESPHome [preferences](https://esphome.io/components/esphome.html#preferences-flash-write-interval) stored in flash memory and reboot your node. After reboot all states, parameters and variables will be reinitialized with their default values. This is useful:\n\n*See also: [Factory Reset Switch](https://esphome.io/components/switch/factory_reset.html#factory-reset-switch)*"
+      },
       "gpio": {
         "docs": "The `gpio` switch platform allows you to use any pin on your node as a switch. You can for example hook up a relay to a GPIO pin and use it through this platform.\n\n*See also: [GPIO Switch](https://esphome.io/components/switch/gpio.html#gpio-switch)*"
       },
@@ -46,6 +49,7 @@
       "template": {
         "docs": "The `template` switch platform allows you to create simple switches out of just actions and an optional value lambda. Once defined, it will automatically appear in Home Assistant as a switch and can be controlled through the frontend.\n\n*See also: [Template Switch](https://esphome.io/components/switch/template.html#template-switch)*"
       },
+      "tm1638": {},
       "tuya": {
         "dependencies": [
           "tuya"

@@ -13,7 +13,7 @@
       },
       "bedjet": {
         "dependencies": [
-          "ble_client"
+          "bedjet"
         ],
         "docs": "The `climate` platform exposes the BedJet\u2019s climate-related functionality, including setting the mode and target temperature.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#bedjet-climate)*"
       },

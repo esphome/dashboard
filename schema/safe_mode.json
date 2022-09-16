@@ -62,16 +62,16 @@
               },
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Safe Mode Switch](https://esphome.io/components/switch/safe_mode.html#configuration-variables)*"
             },
-            "ota": {
-              "key": "GeneratedID",
-              "use_id_type": "ota::OTAComponent",
-              "type": "use_id"
+            "entity_category": {
+              "default": "config"
             },
             "icon": {
               "default": "mdi:restart-alert"
             },
-            "entity_category": {
-              "default": "config"
+            "ota": {
+              "key": "GeneratedID",
+              "use_id_type": "ota::OTAComponent",
+              "type": "use_id"
             }
           }
         }

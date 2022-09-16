@@ -116,7 +116,8 @@
           "tlc5947"
         ],
         "docs": "The tlc5947 output component exposes a tlc5947 channel of a global [Component/Hub](https://esphome.io/components/output/tlc5947.html#tlc5947-component) as a float output.\n\n*See also: [tlc5947 Output](https://esphome.io/components/output/tlc5947.html#output)*"
-      }
+      },
+      "tm1638": {}
     },
     "schemas": {
       "BINARY_OUTPUT_SCHEMA": {

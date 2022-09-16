@@ -133,6 +133,7 @@
       "tm1637": {
         "docs": "The TM1637 LED display controller also includes a special circuit with keyboard scan interface and enhanced identification circuit with anti-interference keys. This circuit uses the 8 segment lines that also drive the LED display. But combined with the K1 and K2 pins we can add 16 keys that can be used as binary sensors in esphome.\n\n*See also: [tm1637 Binary Sensor](https://esphome.io/components/display/tm1637.html#binary-sensor)*"
       },
+      "tm1638": {},
       "touchscreen": {
         "dependencies": [
           "touchscreen"

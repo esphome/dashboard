@@ -1,0 +1,146 @@
+{
+  "ufire_ec.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ufire_ec::UFireECComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the onboard temperature sensor configuration. Can\u2019t be used together with `temperature_sensor`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "ec": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "mS/cm"
+                  },
+                  "icon": {
+                    "default": ""
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": ""
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the EC sensor configuration.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "temperature_sensor": {
+              "key": "Optional",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of the temperature sensor. Only needed if the onboard temperature sensor is not used.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "temperature_compensation": {
+              "key": "Optional",
+              "default": "21.0",
+              "docs": "**float**: Set the temperature compensation for the EC sensor. Defaults to `21.0`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "temperature_coefficient": {
+              "key": "Optional",
+              "default": "0.019",
+              "docs": "**float**: Set the temperature coefficient for the EC sensor. Defaults to `0.019`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "60",
+              "data_type": "hex_uint8_t"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "ufire_ec": {
+    "action": {
+      "calibrate_probe": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "ufire_ec::UFireECComponent",
+              "type": "use_id"
+            },
+            "solution": {
+              "key": "Required",
+              "templatable": true
+            },
+            "temperature": {
+              "key": "Required",
+              "templatable": true
+            }
+          }
+        }
+      },
+      "reset": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "ufire_ec::UFireECComponent",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

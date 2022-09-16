@@ -552,6 +552,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "bl0942": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "ble_client.automation": {
                     "type": "enum",
                     "values": [
@@ -1260,6 +1272,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "dps310": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "ds1307": {
                     "type": "enum",
                     "values": [
@@ -1609,6 +1633,30 @@
                     ]
                   },
                   "ezo.sensor": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "factory_reset.button": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "factory_reset.switch": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -2556,6 +2604,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "mcp9600": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "mcp9808": {
                     "type": "enum",
                     "values": [
@@ -2761,6 +2821,18 @@
                     ]
                   },
                   "mopeka_pro_check": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "mpl3115a2": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -3588,6 +3660,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "display.pvvx_mithermometer": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "pzem004t": {
                     "type": "enum",
                     "values": [
@@ -3721,6 +3805,18 @@
                     ]
                   },
                   "rdm6300": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "remote.aeha": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -5196,7 +5292,43 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "tm1621": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "display.tm1637": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "display.tm1638": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "tm1638.led": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -5557,6 +5689,30 @@
                     ]
                   },
                   "uart.switch": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "ufire_ec": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "ufire_ise": {
                     "type": "enum",
                     "values": [
                       "NONE",

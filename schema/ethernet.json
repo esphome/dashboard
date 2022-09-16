@@ -20,9 +20,10 @@
               "type": "enum",
               "values": [
                 "LAN8720",
-                "TLK110"
+                "TLK110",
+                "IP101"
               ],
-              "docs": "**string**: The type of LAN chipset. Must be one of `LAN8720` or `TLK110` (see datasheet for more details).\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+              "docs": "**string**: The type of LAN chipset/phy. Must be one of `LAN8720`, `TLK110` or `IP101` (see datasheet for more details).\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
             },
             "mdc_pin": {
               "key": "Required",
@@ -52,7 +53,7 @@
                 "GPIO16_OUT",
                 "GPIO17_OUT"
               ],
-              "docs": "**string**: The clock mode of the data lines, this must be one of these values: (see datasheet of your board for more details)\n  * `GPIO0_IN` (Default) - External clock\n  \n  * `GPIO0_OUT` - Internal clock\n  \n  * `GPIO16_OUT` - Internal clock\n  \n  * `GPIO17_OUT` - Internal clock\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*",
+              "docs": "**string**: The clock mode of the data lines. See your board\u2019s datasheet for more details. Must be one of the following values:\n  * `GPIO0_IN` (Default) - External clock\n  \n  * `GPIO0_OUT` - Internal clock\n  \n  * `GPIO16_OUT` - Internal clock\n  \n  * `GPIO17_OUT` - Internal clock\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*",
               "values_docs": {
                 "GPIO0_OUT": "Internal clock",
                 "GPIO16_OUT": "Internal clock",
@@ -63,7 +64,7 @@
               "key": "Optional",
               "default": "0",
               "type": "integer",
-              "docs": "**int**: The PHY addr type of the ethernet controller. Defaults to 0.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+              "docs": "**int**: The PHY addr type of the Ethernet controller. Defaults to 0.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
             },
             "power_pin": {
               "key": "Optional",
@@ -72,7 +73,7 @@
                 "output"
               ],
               "type": "pin",
-              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin with which to control the power of the board. Leave unspecified for no power pin (default)\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin controlling the power/reset status of the Ethernet controller. Leave unspecified for no power pin (default).\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
             },
             "manual_ip": {
               "key": "Optional",

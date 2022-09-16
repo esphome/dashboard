@@ -67,10 +67,21 @@
               },
               "docs": "Configure how the counter should behave on a detected rising edge/falling edge.\n  * **rising_edge** (*Optional*): What to do when a rising edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `INCREMENT`.\n  \n  * **falling_edge** (*Optional*): What to do when a falling edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `DISABLE`.\n  \n  \n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
             },
+            "use_pcnt": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Use hardware `PCNT` pulse counter. Only supported on ESP32. Defaults to `true`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
             "internal_filter": {
               "key": "Optional",
               "default": "13us",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If a pulse shorter than this time is detected, it\u2019s discarded and no pulse is counted. Defaults to `13us`. On the ESP32, this value can not be higher than `13us`, for the ESP8266 you can use larger intervals too. If you enable this, set up the `count_mode` to increase on the falling edge, not leading edge. For S0 pulse meters that are used to meter power consumption 50-100 ms is a reasonable value.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If a pulse shorter than this time is detected, it\u2019s discarded and no pulse is counted. Defaults to `13us`. On the ESP32, when using the hardware pulse counter this value can not be higher than `13us`, for the ESP8266 or with `use_pcnt: false` you can use larger intervals too. If you enable this, set up the `count_mode` to increase on the falling edge, not leading edge. For S0 pulse meters that are used to meter power consumption 50-100 ms is a reasonable value.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
             },
             "total": {
               "key": "Optional",

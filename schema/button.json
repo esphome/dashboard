@@ -4,6 +4,9 @@
       "copy": {
         "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The button that should be mirrored.\n\n*See also: [Copy Button](https://esphome.io/components/copy.html#copy-button)*"
       },
+      "factory_reset": {
+        "docs": "The `factory_reset` button allows you to remotely invalidate (reset) all ESPHome [preferences](https://esphome.io/components/esphome.html#preferences-flash-write-interval) stored in flash memory and reboot your node. After reboot all states, parameters and variables will be reinitialized with their default values. This is useful:\n\n*See also: [Factory Reset Button](https://esphome.io/components/button/factory_reset.html#factory-reset-button)*"
+      },
       "output": {
         "docs": "The `output` button platform allows you to use any output component as a button. This can for example be used to momentarily set a GPIO pin using a button.\n\n*See also: [Generic Output Button](https://esphome.io/components/button/output.html#generic-output-button)*"
       },

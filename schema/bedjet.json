@@ -84,7 +84,6 @@
                 "parents": [
                   "climate::Climate",
                   "EntityBase",
-                  "ble_client::BLEClientNode",
                   "PollingComponent",
                   "Component"
                 ]
@@ -102,6 +101,37 @@
               "docs": "**string**: The primary heating mode to use for `HVACMode.HEAT`:\n  * `heat` (Default) - Setting `hvac_mode=heat` uses the BedJet \u201cHEAT\u201d mode.\n  \n  * `extended` - Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode.\n  \n  Whichever is not selected will be made available as a custom preset.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*",
               "values_docs": {
                 "extended": "Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode."
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            }
+          }
+        }
+      }
+    }
+  },
+  "bedjet.fan": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fan.FAN_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "bedjet.BEDJET_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "bedjet::BedJetFan",
+                "parents": [
+                  "fan::Fan",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
               }
             },
             "update_interval": {

@@ -941,6 +941,28 @@
           ]
         },
         "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a 40-bit Midea code to a remote transmitter. 8-bits of checksum added automatically.\n\n*See also: [`remote_transmitter.transmit_midea` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-midea-action)*"
+      },
+      "transmit_aeha": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The address to send the command to, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
+            },
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**list**: The command to send, A length of 2-35 bytes can be specified for one packet.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a AEHA code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_aeha` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
       }
     }
   }

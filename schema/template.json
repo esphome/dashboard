@@ -117,8 +117,7 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "button.BUTTON_SCHEMA",
-            "core.COMPONENT_SCHEMA"
+            "button.BUTTON_SCHEMA"
           ],
           "config_vars": {
             "id": {

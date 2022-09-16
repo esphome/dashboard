@@ -1,5 +1,5 @@
 {
-  "restart.button": {
+  "factory_reset.button": {
     "schemas": {
       "CONFIG_SCHEMA": {
         "type": "schema",
@@ -9,6 +9,9 @@
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "icon": {
+              "default": "mdi:restart-alert"
+            },
             "entity_category": {
               "default": "config"
             },
@@ -18,21 +21,21 @@
             "id": {
               "key": "GeneratedID",
               "id_type": {
-                "class": "restart::RestartButton",
+                "class": "factory_reset::FactoryResetButton",
                 "parents": [
                   "button::Button",
                   "EntityBase",
                   "Component"
                 ]
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Restart Button](https://esphome.io/components/button/restart.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Factory Reset Button](https://esphome.io/components/button/factory_reset.html#configuration-variables)*"
             }
           }
         }
       }
     }
   },
-  "restart.switch": {
+  "factory_reset.switch": {
     "schemas": {
       "CONFIG_SCHEMA": {
         "type": "schema",
@@ -45,20 +48,20 @@
             "id": {
               "key": "GeneratedID",
               "id_type": {
-                "class": "restart::RestartSwitch",
+                "class": "factory_reset::FactoryResetSwitch",
                 "parents": [
                   "switch_::Switch",
                   "EntityBase",
                   "Component"
                 ]
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Restart Switch](https://esphome.io/components/switch/restart.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Factory Reset Switch](https://esphome.io/components/switch/factory_reset.html#configuration-variables)*"
+            },
+            "icon": {
+              "default": "mdi:restart-alert"
             },
             "entity_category": {
               "default": "config"
-            },
-            "icon": {
-              "default": "mdi:restart"
             }
           }
         }

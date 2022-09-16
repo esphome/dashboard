@@ -86,6 +86,12 @@
         ],
         "docs": "This page is incomplete and could some work. If you want to contribute, please read the [contributing guide](https://esphome.io/guides/contributing.html). This page is missing:\n\n*See also: [Belling BL0940 Energy Monitor](https://esphome.io/components/sensor/bl0940.html#belling-bl0940-energy-monitor)*"
       },
+      "bl0942": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "The `bl0942` sensor platform allows you to use BL0942 energy monitors sensors with ESPHome. These are used in some Tuya-devices (e.g. Aubess Tuya WiFi Mini Smart Switch With Energy Monitor)\n\n*See also: [Belling BL0942 Energy Monitor](https://esphome.io/components/sensor/bl0942.html#belling-bl0942-energy-monitor)*"
+      },
       "ble_client": {
         "dependencies": [
           "ble_client"
@@ -199,6 +205,12 @@
           "i2c"
         ],
         "docs": "The `dht12` Temperature+Humidity sensor allows you to use your DHT12 ([datasheet](http://www.robototehnika.ru/file/DHT12.pdf), [electrodragon](http://www.electrodragon.com/product/dht12/)) I\u00b2C-based sensor with ESPHome. This sensor is also called AM2320 by some sellers.\n\n*See also: [DHT12 Temperature+Humidity Sensor](https://esphome.io/components/sensor/dht12.html#dht12-temperature-humidity-sensor)*"
+      },
+      "dps310": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `dps310` sensor platform allows you to use both the temperature and pressure sensors on your DPS310 atmospheric pressure sensor ([Adafruit](https://www.adafruit.com/product/4494)) with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) component is required to be set up in your configuration.\n\n*See also: [DPS310 Atmospheric Pressure Sensor](https://esphome.io/components/sensor/dps310.html#dps310-atmospheric-pressure-sensor)*"
       },
       "dsmr": {
         "docs": "Not all sensors are available on all devices.\n\n*See also: [dsmr Sensor](https://esphome.io/components/sensor/dsmr.html#sensor)*"
@@ -368,6 +380,12 @@
         ],
         "docs": "The `mcp3204` sensor allows you to use your MCP3204 or MCP3208 12-Bit A/D Converter sensors with ESPHome. First, setup a [MCP3204 Hub](https://esphome.io/components/sensor/mcp3204.html#mcp3204-component) for your MCP3204/8 sensor and then use this sensor platform to create individual sensors that will report the voltage to Home Assistant.\n\n*See also: [mcp3204 Sensor](https://esphome.io/components/sensor/mcp3204.html#sensor)*"
       },
+      "mcp9600": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `mcp9600` sensor platform allows you to use your MCP9600 and MCP9601 ([datasheet](https://cdn-learn.adafruit.com/assets/assets/000/105/040/original/MCP960X-Data-Sheet-20005426%281%29.pdf), [Adafruit](https://www.adafruit.com/product/4101)) to measure the temperature of a connected thermocouple while also measuring the ambient temperature around the sensor with ESPHome. [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [MCP9600 Thermocouple Amplifier](https://esphome.io/components/sensor/mcp9600.html#mcp9600-thermocouple-amplifier)*"
+      },
       "mcp9808": {
         "dependencies": [
           "i2c"
@@ -397,6 +415,12 @@
           "esp32_ble_tracker"
         ],
         "docs": "The `mopeka_pro_check` sensor platform lets you track the output of Mopeka Pro Check LP and Mopeka Pro Plus Bluetooth Low Energy devices using the [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html). This component will track the tank level, distance, temperature, and battery percentage of a Mopeka Pro Check LP or Mopeka Pro Plus Residential BLE device every time the sensor sends out a BLE broadcast.\n\n*See also: [Mopeka Pro Check BLE Sensor](https://esphome.io/components/sensor/mopeka_pro_check.html#mopeka-pro-check-ble-sensor)*"
+      },
+      "mpl3115a2": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `mpl3115a2` sensor platform allows you to use your MPL3115A2 atmospheric pressure sensors ([datasheet](https://www.nxp.com/docs/en/data-sheet/MPL3115A2.pdf), [Adafruit](https://www.adafruit.com/product/1893))  temperature and pressure sensors with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#mpl3115a2-barometric-pressure-altitude-temperature-sensor)*"
       },
       "mpu6050": {
         "dependencies": [
@@ -685,6 +709,18 @@
       },
       "tx20": {
         "docs": "The `tx20` sensor platform allows you to use your TX20/TX23 ([Amazon](https://www.amazon.de/Technoline-Tx-20/dp/B01HXZ3KLA), [lacrosse_tx23](https://www.lacrossetechnology.com/tx23-wind-sensor)) wind direction and speed sensors with ESPHome. The only required pin is the black or brown cable (which is used to transmit data.) The red cable should be connected to VCC (3.3V), green initiates the data transfer when connected to GND and should therefore be directly connected to GND and the yellow cable should be always connected to ground. The difference from the TX20 to the TX23 seems to be that the green cable does not matter any more and the wind sensor is just sending a datagram every 2 seconds - pretty much the same as when the green cable was connected to GND in the TX20.\n\n*See also: [TX20/TX23 Wind Speed/Direction Sensor](https://esphome.io/components/sensor/tx20.html#tx20-tx23-wind-speed-direction-sensor)*"
+      },
+      "ufire_ec": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `ufire_ec` sensor platform allows you to use your uFire Isolated EC sensor with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. It required also to have an temperature sensor in the liquit tank; this can be on the same board or external sensor linked to the uFire EC configuration.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-isolated-ec-sensor)*"
+      },
+      "ufire_ise": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `ufire_ise` sensor platform allows you to use your uFire ISE pH sensor with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. It required also to have an temperature sensor in the liquit tank; this can be on the same board or external sensor linked to the uFire ISE pH configuration.\n\n*See also: [uFire ISE pH sensor](https://esphome.io/components/sensor/ufire_ise.html#ufire-ise-ph-sensor)*"
       },
       "ultrasonic": {
         "docs": "The ultrasonic distance sensor allows you to use simple ultrasonic sensors like the HC-SR04 ([datasheet](https://www.electroschematics.com/wp-content/uploads/2013/07/HC-SR04-datasheet-version-2.pdf), [SparkFun](https://www.sparkfun.com/products/13959)) with ESPHome to measure distances. These sensors usually can\u2019t measure anything more than about two meters and may sometimes make some annoying clicking sounds.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#ultrasonic-distance-sensor)*"

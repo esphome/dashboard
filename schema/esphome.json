@@ -543,7 +543,7 @@
         "dependencies": [
           "esp32"
         ],
-        "docs": "This core ESPHome component sets up ethernet connections for ESP32s. Ethernet for ESP8266 is not supported. This component can\u2019t be used in same time than Wifi one, even if your ESP32\u00a0has both wired.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#ethernet-component)*"
+        "docs": "This ESPHome component enables *wired* Ethernet connections for ESP32s.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#ethernet-component)*"
       },
       "exposure_notifications": {
         "dependencies": [
@@ -564,7 +564,7 @@
         "dependencies": [
           "display"
         ],
-        "docs": "The rendering engine also has a powerful font drawer which integrates seamlessly into ESPHome. Whereas in most Arduino display projects you have to use one of a few pre-defined fonts in very specific sizes, with ESPHome you have the option to use **any** TrueType (`.ttf`) font file at **any** size! Granted the reason for it is actually not having to worry about the licensing of font files :)\n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
+        "docs": "The rendering engine also has a powerful font drawer which integrates seamlessly into ESPHome. Whereas in most Arduino display projects you have to use one of a few pre-defined fonts in very specific sizes, with ESPHome you have the option to use **any** TrueType (`.ttf`) font file at **any** size, as well as fixed-size [PCF](https://en.wikipedia.org/wiki/Portable_Compiled_Format) and [BDF](https://en.wikipedia.org/wiki/Glyph_Bitmap_Distribution_Format) bitmap fonts! Granted the reason for it is actually not having to worry about the licensing of font files :)\n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
       },
       "globals": {
         "docs": "In some cases you might require to share a global variable across multiple lambdas. For example, global variables can be used to store the state of a garage door.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
@@ -802,7 +802,7 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `SIM800L` Component provides the ability to dial, send and receive SMS text messages. The device must be connected via a [UART bus](https://esphome.io/components/uart.html) supporting both receiving and transmitting line. The UART bus must be configured at the same speed of the module which is by default 9600bps. The required connection wires are `+VCC`, `GND`, `RX` and `TX`.\n\n*See also: [sim800l Component/Hub](https://esphome.io/components/sim800l.html#component-hub)*"
+        "docs": "The `SIM800L` Component provides the ability to dial, answer calls, send/receive SMS text messages and send/receive USSD codes. The device must be connected via a [UART bus](https://esphome.io/components/uart.html) supporting both receiving and transmitting line. The UART bus must be configured at the same speed of the module which is by default 9600bps. The required connection wires are `+VCC`, `GND`, `RX` and `TX`.\n\n*See also: [sim800l Component/Hub](https://esphome.io/components/sim800l.html#component-hub)*"
       },
       "sm16716": {
         "docs": "The SM16716 component represents a SM16716 LED diver chain ([SM16716 description](https://github.com/sowbug/sm16716/blob/master/SM16716%20Datasheet%20%5BChinese%5D.pdf), [SM16716 description](https://github.com/sowbug/sm16716/blob/master/SM16716%20Datasheet%20%5BChinese%5D.pdf)) in ESPHome. Communication is done with two GPIO pins (MOSI and SCLK) and multiple driver chips can be chained. It is used in some smart light bulbs:\n\n*See also: [sm16716 Component/Hub](https://esphome.io/components/output/sm16716.html#component-hub)*"

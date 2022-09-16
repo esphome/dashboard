@@ -16,6 +16,82 @@
                 ]
               }
             },
+            "led_drive": {
+              "key": "Optional",
+              "default": "100mA",
+              "type": "enum",
+              "values": [
+                "100ma",
+                "50ma",
+                "25ma",
+                "12.5ma"
+              ],
+              "docs": "**int**: The LED drive level in mA. One of 100mA, 50mA, 25mA, 12.5mA. Defaults to `100mA`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
+            "proximity_gain": {
+              "key": "Optional",
+              "default": "4x",
+              "type": "enum",
+              "values": [
+                "1x",
+                "2x",
+                "4x",
+                "8x"
+              ],
+              "docs": "**int**: The proximity gain level. One of 1x, 2x, 4x, 8x. Defaults to `4x`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
+            "ambient_light_gain": {
+              "key": "Optional",
+              "default": "4x",
+              "type": "enum",
+              "values": [
+                "1x",
+                "4x",
+                "16x",
+                "64x"
+              ],
+              "docs": "**int**: The ambient light gain level. One of 1x, 4x, 16x, 64x. Defaults to `4x`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
+            "gesture_led_drive": {
+              "key": "Optional",
+              "default": "100mA",
+              "type": "enum",
+              "values": [
+                "100ma",
+                "50ma",
+                "25ma",
+                "12.5ma"
+              ],
+              "docs": "**int**: The gesture LED drive level in mA. One of 100mA, 50mA, 25mA, 12.5mA. Defaults to `100mA`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
+            "gesture_gain": {
+              "key": "Optional",
+              "default": "4x",
+              "type": "enum",
+              "values": [
+                "1x",
+                "2x",
+                "4x",
+                "8x"
+              ],
+              "docs": "**int**: The proximity gain level. One of 1x, 2x, 4x, 8x. Defaults to `4x`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
+            "gesture_wait_time": {
+              "key": "Optional",
+              "default": "2.8ms",
+              "type": "enum",
+              "values": [
+                "0ms",
+                "2.8ms",
+                "5.6ms",
+                "8.4ms",
+                "14ms",
+                "22.4ms",
+                "30.8ms",
+                "39.2ms"
+              ],
+              "docs": "**int**: The gesture wait time in ms. One of 0ms, 2.8ms, 5.6ms, 8.4ms, 14ms, 22.4ms, 30.8ms, 39.2ms. Defaults to `2.8ms`.\n\n*See also: [apds9960 Component/Hub](https://esphome.io/components/sensor/apds9960.html#configuration-variables)*"
+            },
             "update_interval": {
               "key": "Optional",
               "default": "60s",

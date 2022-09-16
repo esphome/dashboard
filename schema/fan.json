@@ -1,6 +1,11 @@
 {
   "fan": {
     "components": {
+      "bedjet": {
+        "dependencies": [
+          "bedjet"
+        ]
+      },
       "binary": {
         "docs": "The `binary` fan platform lets you represent any binary [Output Component](https://esphome.io/components/output/index.html#output) as a fan.\n\n*See also: [Binary Fan](https://esphome.io/components/fan/binary.html#binary-fan)*"
       },

@@ -125,6 +125,16 @@
               "key": "Optional",
               "default": "20.0",
               "docs": "**string**: The amount of TX power for the WiFi interface from 8.5dB to 20.5dB. Default for ESP8266 is 20dB, 20.5dB might cause unexpected restarts.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
+            },
+            "enable_btm": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**bool**: Only on `esp32` with `esp-idf`. Enable 802.11v BSS Transition Management support.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
+            },
+            "enable_rrm": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**bool**: Only on `esp32` with `esp-idf`. Enable 802.11k Radio Resource Management support.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
             }
           }
         }
