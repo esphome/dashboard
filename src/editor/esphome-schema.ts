@@ -181,6 +181,7 @@ export class ESPHomeSchema {
   ): AsyncGenerator<[string, Component, Node?]> {
     const docMap = doc.contents as YAMLMap;
     let addPollingComponent = false;
+    const yieldedComponents: string[] = [];
     for (const k of docMap.items) {
       if (isPair(k) && isScalar(k.key)) {
         const componentName = k.key.value as string;
@@ -193,7 +194,10 @@ export class ESPHomeSchema {
           continue;
         }
         const component = await this.getComponent(componentName);
-        yield [componentName, component, k.value as Node];
+        if (!yieldedComponents.includes(componentName)) {
+          yield [componentName, component, k.value as Node];
+          yieldedComponents.push(componentName);
+        }
 
         if (isPlatformComponent) {
           // iterate elements and lookup platform to load components
@@ -216,11 +220,14 @@ export class ESPHomeSchema {
                       addPollingComponent = true;
                     }
                   }
-                  yield [
-                    platCompName,
-                    await this.getComponent(platCompName),
-                    plat,
-                  ];
+                  if (!yieldedComponents.includes(platCompName)) {
+                    yield [
+                      platCompName,
+                      await this.getComponent(platCompName),
+                      plat,
+                    ];
+                    yieldedComponents.push(platCompName);
+                  }
                 }
               }
             }
@@ -233,6 +240,16 @@ export class ESPHomeSchema {
             )
           ) {
             addPollingComponent = true;
+          }
+          if (
+            componentName === "api" &&
+            !yieldedComponents.includes("homeassistant")
+          ) {
+            yield [
+              "homeassistant",
+              await this.getComponent("homeassistant"),
+              k.value as Node,
+            ];
           }
         }
       }

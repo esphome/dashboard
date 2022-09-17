@@ -40,7 +40,7 @@ export class DefinitionHandler {
           document.yaml
         );
         if (!range) {
-          return;
+          return null;
         }
         const definition = {
           uri: uri,
@@ -54,6 +54,6 @@ export class DefinitionHandler {
     } catch (error) {
       console.log("Definition:" + error);
     }
-    return;
+    return null;
   }
 }

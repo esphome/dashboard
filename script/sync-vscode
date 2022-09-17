@@ -1,0 +1,18 @@
+# Copies all files which are shared between vscode and dashboard editor
+
+# Stop on errors
+set -e
+
+cd "$(dirname "$0")/.."
+
+cp ../esphome-vscode/server/src/esphome-schema.ts ./src/editor
+cp ../esphome-vscode/server/src/completions-handler.ts ./src/editor
+cp ../esphome-vscode/server/src/hover-handler.ts ./src/editor
+cp ../esphome-vscode/server/src/definition-handler.ts ./src/editor
+cp ../esphome-vscode/server/src/esphome-document.ts ./src/editor
+
+npm exec -- prettier ./src/editor/esphome-schema.ts -w
+npm exec -- prettier ./src/editor/completions-handler.ts -w
+npm exec -- prettier ./src/editor/hover-handler.ts -w
+npm exec -- prettier ./src/editor/definition-handler.ts -w
+npm exec -- prettier ./src/editor/esphome-document.ts -w
