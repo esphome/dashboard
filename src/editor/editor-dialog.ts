@@ -1,20 +1,23 @@
 import { LitElement, html, css } from "lit";
-import { createRef, Ref, ref } from "lit/directives/ref.js";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import "@material/mwc-snackbar";
 import "@material/mwc-list/mwc-list-item.js";
 import "./esphome-editor";
 import { esphomeDialogStyles } from "../styles";
 import { ESPHomeEditor } from "./esphome-editor";
 import { openInstallChooseDialog } from "../install-choose";
 import { writeFile } from "../api/files";
+import type { Snackbar } from "@material/mwc-snackbar";
 
 @customElement("esphome-editor-dialog")
 class ESPHomeEditorDialog extends LitElement {
   @property() public fileName!: string;
 
-  editorRef: Ref<ESPHomeEditor> = createRef();
+  @query("esphome-editor", true) private _editor!: ESPHomeEditor;
+
+  @query("mwc-snackbar", true) private _snackbar!: Snackbar;
 
   protected render() {
     const isSecrets =
@@ -27,9 +30,9 @@ class ESPHomeEditorDialog extends LitElement {
       escapeKeyAction
       @closed=${this._handleClose}
     >
+      <mwc-snackbar leading></mwc-snackbar>
       <esphome-editor
         configuration=${this.fileName}
-        ${ref(this.editorRef)}
         @save=${this._saveFile}
       ></esphome-editor>
       <mwc-button
@@ -91,23 +94,22 @@ class ESPHomeEditorDialog extends LitElement {
   }
 
   private async _saveFile() {
-    const code = this.editorRef.value!.getValue();
+    const code = this._editor.getValue();
+    if (this._snackbar.open) {
+      this._snackbar.close();
+    }
 
     try {
       await writeFile(this.fileName, code ?? "");
-
-      // @ts-ignore
-      M.toast({
-        html: `✅ Saved <code class="inlinecode">${this.fileName}</code>`,
-        displayLength: 10000,
-      });
+      this._showSnackbar(`✅ Saved ${this.fileName}`);
     } catch (error) {
-      // @ts-ignore
-      M.toast({
-        html: `❌ An error occured saving <code class="inlinecode">${this.fileName}</code>`,
-        displayLength: 10000,
-      });
+      this._showSnackbar(`❌ An error occured saving ${this.fileName}`);
     }
+  }
+
+  private _showSnackbar(message: string) {
+    this._snackbar.labelText = message;
+    this._snackbar.show();
   }
 }
 
