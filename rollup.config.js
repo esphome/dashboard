@@ -41,9 +41,7 @@ const config = {
               asset.pathname
             );
             fs.copySync(asset.absolutePath, targetFontPath);
-            const relativePath = path.relative(process.cwd(), targetFontPath);
-            const publicPath = "/";
-            return "/static/fonts/" + asset.pathname;
+            return "./static/fonts/" + asset.pathname;
           },
         }),
       ],

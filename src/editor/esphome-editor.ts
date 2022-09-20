@@ -47,7 +47,7 @@ export class ESPHomeEditor extends LitElement {
     // @ts-ignore
     self.MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
-        return "/static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
+        return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
     this.editor = monaco.editor.create(this.container, {
