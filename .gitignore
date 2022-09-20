@@ -3,3 +3,4 @@ esphome_dashboard
 esphome_dashboard.egg-info
 dist
 .vscode/settings.json
+venv
