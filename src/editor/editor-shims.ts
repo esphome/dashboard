@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import { ESPHomeSchema } from "./esphome-schema";
 
 export const coreSchema = new ESPHomeSchema(async (name: string) => {

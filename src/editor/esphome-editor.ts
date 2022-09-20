@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import { LitElement, html, css } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 // @ts-ignore
