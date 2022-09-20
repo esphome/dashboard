@@ -10,7 +10,11 @@ import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
-import { compileConfiguration, getDownloadUrl } from "../api/configuration";
+import {
+  compileConfiguration,
+  getConfiguration,
+  getDownloadUrl,
+} from "../api/configuration";
 import { esphomeDialogStyles } from "../styles";
 
 const WARNING_ICON = "👀";
@@ -19,6 +23,8 @@ const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
 @customElement("esphome-install-choose-dialog")
 class ESPHomeInstallChooseDialog extends LitElement {
   @property() public configuration!: string;
+
+  @state() private _ethernet = false;
 
   @state() private _ports?: ServerSerialPort[];
 
@@ -50,7 +56,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           .port=${"OTA"}
           @click=${this._handleLegacyOption}
         >
-          <span>Wirelessly</span>
+          <span>${this._ethernet ? "Via the network" : "Wirelessly"}</span>
           <span slot="secondary">Requires the device to be online</span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -278,6 +284,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     this._updateSerialPorts();
+    getConfiguration(this.configuration).then((config) => {
+      this._ethernet = config.loaded_integrations.includes("ethernet");
+    });
   }
 
   private async _updateSerialPorts() {
