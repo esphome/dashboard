@@ -30,7 +30,7 @@ class ESPHomeEditorDialog extends LitElement {
       escapeKeyAction
       @closed=${this._handleClose}
     >
-      <mwc-snackbar></mwc-snackbar>
+      <mwc-snackbar leading></mwc-snackbar>
       <esphome-editor
         configuration=${this.fileName}
         @save=${this._saveFile}
