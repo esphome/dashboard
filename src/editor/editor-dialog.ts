@@ -31,7 +31,7 @@ class ESPHomeEditorDialog extends LitElement {
       escapeKeyAction
       @closed=${this._handleClose}
     >
-    <!--Success message-->
+      <!--Success message-->
       <mwc-snackbar
         labeltext="✅ Saved ${this.fileName}"
         .open="${this.successSnackbarOpened}"
@@ -39,7 +39,7 @@ class ESPHomeEditorDialog extends LitElement {
       >
         <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
       </mwc-snackbar>
-    <!--Error message-->
+      <!--Error message-->
       <mwc-snackbar
         labeltext="❌ An error occured saving ${this.fileName}"
         .open="${this.errorSnackbarOpened}"
@@ -47,7 +47,6 @@ class ESPHomeEditorDialog extends LitElement {
       >
         <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
       </mwc-snackbar>
-
       <esphome-editor
         configuration=${this.fileName}
         ${ref(this.editorRef)}
@@ -117,7 +116,6 @@ class ESPHomeEditorDialog extends LitElement {
     try {
       await writeFile(this.fileName, code ?? "");
       this.successSnackbarOpened = true;
-
     } catch (error) {
       this.errorSnackbarOpened = true;
     }
