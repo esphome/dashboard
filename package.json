@@ -15,7 +15,7 @@
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "fs-extra": "^10.1.0",
-    "monaco-editor": "^0.34.0",
+    "monaco-editor": "^0.31.1",
     "nunjucks": "^3.2.3",
     "postcss": "^8.4.16",
     "postcss-url": "^10.1.3",
