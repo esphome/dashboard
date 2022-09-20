@@ -1,0 +1,51 @@
+{
+  "spi": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "spi::SPIComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this SPI hub if you need multiple SPI hubs.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
+            },
+            "clk_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for the clock line of the SPI bus.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
+            },
+            "miso_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for the MISO line of the SPI bus.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
+            },
+            "mosi_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for the MOSI line of the SPI bus.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

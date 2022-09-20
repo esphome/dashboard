@@ -1,0 +1,75 @@
+{
+  "time_based.cover": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "cover.COVER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "time_based::TimeBasedCover",
+                "parents": [
+                  "cover::Cover",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "stop_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed to stop the cover when the remote requests the cover to be stopped or when the cover has been opening/closing for the given durations.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "open_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be opened.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "open_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to open up from the fully-closed state.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "close_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be closed.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "close_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to close from the fully-open state.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "has_built_in_endstop": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Indicates that the cover has built in end stop detectors. In this configuration the `stop_action` is not performed when the open or close time is completed and if the cover is commanded to open or close the corresponding actions will be performed without checking current state. Defaults to `false`.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
+            "assumed_state": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether the true state of the cover is not known. This will make the Home Assistant frontend show buttons for both OPEN and CLOSE actions, instead of hiding or disabling one of them. Defaults to `true`.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

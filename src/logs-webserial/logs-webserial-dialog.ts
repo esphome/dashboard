@@ -6,6 +6,7 @@ import "./ewt-console";
 import { textDownload } from "../util/file-download";
 import type { EwtConsole } from "./ewt-console";
 import { basename } from "../util/basename";
+import { openEditDialog } from "../editor";
 
 @customElement("esphome-logs-webserial-dialog")
 class ESPHomeLogsWebSerialDialog extends LitElement {
@@ -60,8 +61,7 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
   }
 
   private async _openEdit() {
-    const mod = await import("../legacy");
-    mod.openEditDialog(this.configuration);
+    if (this.configuration) openEditDialog(this.configuration);
   }
 
   private async _handleClose() {

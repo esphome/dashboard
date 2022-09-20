@@ -1,0 +1,127 @@
+{
+  "ethernet": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ethernet::EthernetComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "type": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "LAN8720",
+                "TLK110",
+                "IP101"
+              ],
+              "docs": "**string**: The type of LAN chipset/phy. Must be one of `LAN8720`, `TLK110` or `IP101` (see datasheet for more details).\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "mdc_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The MDC pin of the board. Usually this is `GPIO23`.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "mdio_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The MDIO pin of the board. Usually this is `GPIO18`.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "clk_mode": {
+              "key": "Optional",
+              "default": "GPIO0_IN",
+              "type": "enum",
+              "values": [
+                "GPIO0_IN",
+                "GPIO0_OUT",
+                "GPIO16_OUT",
+                "GPIO17_OUT"
+              ],
+              "docs": "**string**: The clock mode of the data lines. See your board\u2019s datasheet for more details. Must be one of the following values:\n  * `GPIO0_IN` (Default) - External clock\n  \n  * `GPIO0_OUT` - Internal clock\n  \n  * `GPIO16_OUT` - Internal clock\n  \n  * `GPIO17_OUT` - Internal clock\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*",
+              "values_docs": {
+                "GPIO0_OUT": "Internal clock",
+                "GPIO16_OUT": "Internal clock",
+                "GPIO17_OUT": "Internal clock"
+              }
+            },
+            "phy_addr": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: The PHY addr type of the Ethernet controller. Defaults to 0.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "power_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin controlling the power/reset status of the Ethernet controller. Leave unspecified for no power pin (default).\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "manual_ip": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "static_ip": {
+                    "key": "Required",
+                    "docs": "**IPv4 address**: The static IP of your node.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+                  },
+                  "gateway": {
+                    "key": "Required",
+                    "docs": "**IPv4 address**: The gateway of the local network.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+                  },
+                  "subnet": {
+                    "key": "Required",
+                    "docs": "**IPv4 address**: The subnet of the local network.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+                  },
+                  "dns1": {
+                    "key": "Optional",
+                    "default": "0.0.0.0",
+                    "docs": "**IPv4 address**: The main DNS server to use.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+                  },
+                  "dns2": {
+                    "key": "Optional",
+                    "default": "0.0.0.0",
+                    "docs": "**IPv4 address**: The backup DNS server to use.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Manually configure the static IP of the node.\n  * **static_ip** (**Required**, IPv4 address): The static IP of your node.\n  \n  * **gateway** (**Required**, IPv4 address): The gateway of the local network.\n  \n  * **subnet** (**Required**, IPv4 address): The subnet of the local network.\n  \n  * **dns1** (*Optional*, IPv4 address): The main DNS server to use.\n  \n  * **dns2** (*Optional*, IPv4 address): The backup DNS server to use.\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "domain": {
+              "key": "Optional",
+              "default": ".local",
+              "docs": "**string**: Set the domain of the node hostname used for uploading. For example, if it\u2019s set to `.local`, all uploads will be sent to `<HOSTNAME>.local`. Defaults to `.local`.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            },
+            "use_address": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Manually override what address to use to connect to the ESP. Defaults to auto-generated value. For example, if you have changed your static IP and want to flash OTA to the previously configured IP address.\n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

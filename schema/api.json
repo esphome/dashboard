@@ -1,0 +1,122 @@
+{
+  "api": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "api::APIServer",
+                "parents": [
+                  "Component",
+                  "Controller"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            },
+            "port": {
+              "key": "Optional",
+              "default": "6053",
+              "type": "integer",
+              "data_type": "port",
+              "docs": "**int**: The port to run the API Server on. Defaults to `6053`.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            },
+            "password": {
+              "key": "Optional",
+              "default": "",
+              "type": "string",
+              "docs": "**string**: The password to protect the API Server with. Defaults to no password.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            },
+            "reboot_timeout": {
+              "key": "Optional",
+              "default": "15min",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time to wait before rebooting when no client connects to the API. This is needed because sometimes the low level ESP functions report that the ESP is connected to the network, when in fact it is not - only a full reboot fixes it. Can be disabled by setting this to `0s`. Defaults to `15min`.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            },
+            "services": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "service": {
+                    "key": "Required",
+                    "type": "string"
+                  },
+                  "variables": {
+                    "key": "String",
+                    "default": "{}",
+                    "key_type": "validate_id_name",
+                    "type": "schema",
+                    "schema": {
+                      "config_vars": {
+                        "string": {
+                          "type": "enum",
+                          "values": [
+                            "bool",
+                            "int",
+                            "float",
+                            "string",
+                            "bool[]",
+                            "int[]",
+                            "float[]",
+                            "string[]"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**list**: A list of user-defined services. See [User-defined Services](https://esphome.io/components/api.html#api-services).\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            },
+            "encryption": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "key": {
+                    "key": "Required",
+                    "docs": "**string**: The pre-shared key for the encryption. This is a 32-byte base64 encoded string. Below you can copy a key randomly generated in your browser:<input type=\"text\" id=\"api-key\" onclick=\"this.focus();this.select()\" style=\"width: 240px;\" readonly=\"readonly\"> <script>   // https://stackoverflow.com/a/62362724   function bytesArrToBase64(arr) {     const abc = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\"; // base64 alphabet     const bin = n => n.toString(2).padStart(8,0); // convert num to 8-bit binary string     const l = arr.length     let result = '';      for(let i=0; i<=(l-1)/3; i++) {       let c1 = i*3+1>=l; // case when \"=\" is on end       let c2 = i*3+2>=l; // case when \"=\" is on end       let chunk = bin(arr[3*i]) + bin(c1? 0:arr[3*i+1]) + bin(c2? 0:arr[3*i+2]);       let r = chunk.match(/.{1,6}/g).map((x,j)=> j==3&&c2 ? '=' :(j==2&&c1 ? '=':abc[+('0b'+x)]));       result += r.join('');     }      return result;   }    let array = new Uint8Array(32);   window.crypto.getRandomValues(array);   document.getElementById(\"api-key\").value = bytesArrToBase64(array); </script>\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Enable transport encryption of the API layer.\n  * **key** (**Required**, string): The pre-shared key for the encryption. This is a 32-byte base64 encoded string. Below you can copy a key randomly generated in your browser:<input type=\"text\" id=\"api-key\" onclick=\"this.focus();this.select()\" style=\"width: 240px;\" readonly=\"readonly\"> <script>   // https://stackoverflow.com/a/62362724   function bytesArrToBase64(arr) {     const abc = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\"; // base64 alphabet     const bin = n => n.toString(2).padStart(8,0); // convert num to 8-bit binary string     const l = arr.length     let result = '';      for(let i=0; i<=(l-1)/3; i++) {       let c1 = i*3+1>=l; // case when \"=\" is on end       let c2 = i*3+2>=l; // case when \"=\" is on end       let chunk = bin(arr[3*i]) + bin(c1? 0:arr[3*i+1]) + bin(c2? 0:arr[3*i+2]);       let r = chunk.match(/.{1,6}/g).map((x,j)=> j==3&&c2 ? '=' :(j==2&&c1 ? '=':abc[+('0b'+x)]));       result += r.join('');     }      return result;   }    let array = new Uint8Array(32);   window.crypto.getRandomValues(array);   document.getElementById(\"api-key\").value = bytesArrToBase64(array); </script>\n  \n  \n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      },
+      "KEY_VALUE_SCHEMA": {
+        "key": "String",
+        "key_type": "string",
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "string": {
+              "templatable": true,
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "condition": {
+      "connected": {
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if at least one client is connected to the ESPHome native API. Please note client not only includes Home Assistant, but also ESPHome\u2019s OTA log output if logs are shown remotely.\n\n*See also: [`api.connected` Condition](https://esphome.io/components/api.html#api-connected-condition)*"
+      }
+    }
+  }
+}

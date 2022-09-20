@@ -1,0 +1,73 @@
+{
+  "pcd8544.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "pcd8544::PCD8544",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "display::DisplayBuffer",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "dc_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The DC pin.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "reset_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The RESET pin.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "contrast": {
+              "key": "Optional",
+              "default": "127",
+              "type": "integer",
+              "docs": "**int**: Set screen contrast (0-255). Defaults to `0x7f`.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `5s`.\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

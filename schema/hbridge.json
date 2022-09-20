@@ -1,0 +1,115 @@
+{
+  "hbridge.fan": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fan.FAN_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "hbridge::HBridgeFan",
+                "parents": [
+                  "Component",
+                  "fan::Fan",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            },
+            "pin_a": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the [float output](https://esphome.io/components/output/index.html#output) connected to Pin A (alternatively IN1, etc.) of the h-bridge.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            },
+            "pin_b": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the [float output](https://esphome.io/components/output/index.html#output) connected to Pin B (alternatively IN2, etc.) of the h-bridge.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            },
+            "decay_mode": {
+              "key": "Optional",
+              "default": "SLOW",
+              "type": "enum",
+              "values": [
+                "SLOW",
+                "FAST"
+              ],
+              "docs": "**string**: The decay mode you want to use with the h-bridge. Either `slow` (braking) or `fast` (coasting). Defaults to `slow`.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            },
+            "speed_count": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer",
+              "docs": "**int**: Set the number of supported discrete speed levels. The value is used to calculate the percentages for each speed. E.g. `2` means that you have 50% and 100% while `100` will allow 1% increments in the output. Defaults to `100`.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            },
+            "enable_pin": {
+              "key": "Optional",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the [float output](https://esphome.io/components/output/index.html#output) connected to the Enable pin of the h-bridge (if h-bridge uses enable).\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "brake": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "hbridge::HBridgeFan",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "Set all h-bridge pins high, shorting the fan/motor\u2019s windings and forcing the motor to actively stop.\n\n*See also: [`fan.hbridge.brake` Action](https://esphome.io/components/fan/hbridge.html#fan-hbridge-brake-action)*"
+      }
+    }
+  },
+  "hbridge.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.RGB_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "hbridge::HBridgeLightOutput",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "light::LightOutput"
+                ]
+              }
+            },
+            "pin_a": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the first float [Output Component](https://esphome.io/components/output/index.html#output) to use for this light.\n\n*See also: [H-bridge Light](https://esphome.io/components/light/hbridge.html#configuration-variables)*"
+            },
+            "pin_b": {
+              "key": "Required",
+              "use_id_type": "output::FloatOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the second float [Output Component](https://esphome.io/components/output/index.html#output) to use for this light.\n\n*See also: [H-bridge Light](https://esphome.io/components/light/hbridge.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "qr_code": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "qr_code::QrCode",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID with which you will be able to reference the QR-code later in your display code.\n\n*See also: [QR Code Component](https://esphome.io/components/display/index.html#qr-code-component)*"
+            },
+            "value": {
+              "key": "Required",
+              "type": "string",
+              "docs": "**string**: The string which you want to encode in the QR-code.\n\n*See also: [QR Code Component](https://esphome.io/components/display/index.html#qr-code-component)*"
+            },
+            "ecc": {
+              "key": "Optional",
+              "default": "LOW",
+              "type": "enum",
+              "values": [
+                "LOW",
+                "MEDIUM",
+                "QUARTILE",
+                "HIGH"
+              ],
+              "docs": "**string**: The error correction code level you want to use. Defaults to `LOW`. You can use one of the following values:\n  * `LOW`: The QR Code can tolerate about 7% erroneous codewords\n  \n  * `MEDIUM`: The QR Code can tolerate about 15% erroneous codewords\n  \n  * `QUARTILE`: The QR Code can tolerate about 25% erroneous codewords\n  \n  * `HIGH`: The QR Code can tolerate about 30% erroneous codewords\n  \n  \n\n*See also: [QR Code Component](https://esphome.io/components/display/index.html#qr-code-component)*",
+              "values_docs": {
+                "LOW": "The QR Code can tolerate about 7% erroneous codewords",
+                "MEDIUM": "The QR Code can tolerate about 15% erroneous codewords",
+                "QUARTILE": "The QR Code can tolerate about 25% erroneous codewords",
+                "HIGH": "The QR Code can tolerate about 30% erroneous codewords"
+              }
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

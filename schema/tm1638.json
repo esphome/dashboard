@@ -1,0 +1,167 @@
+{
+  "tm1638.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tm1638::TM1638Key",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              }
+            },
+            "tm1638_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tm1638::TM1638Component",
+              "type": "use_id"
+            },
+            "key": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tm1638.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tm1638::TM1638Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            },
+            "clk_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the CLK line hooked up to.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            },
+            "stb_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the STB line hooked up to.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            },
+            "dio_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the DIO line hooked up to.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "7",
+              "type": "integer",
+              "docs": "**int**: The intensity with which the TM1638 should drive the outputs. Range is from 0 (least intense) to 7 (the default).  This setting will affect the 7 segment display and the 8 individual LED lights.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tm1638.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.BINARY_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tm1638::TM1638OutputLed",
+                "parents": [
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              }
+            },
+            "tm1638_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tm1638::TM1638Component",
+              "type": "use_id"
+            },
+            "led": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tm1638.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tm1638::TM1638SwitchLed",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "tm1638_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tm1638::TM1638Component",
+              "type": "use_id"
+            },
+            "led": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

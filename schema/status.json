@@ -1,0 +1,34 @@
+{
+  "status.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "status::StatusBinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Status Binary Sensor](https://esphome.io/components/binary_sensor/status.html#configuration-variables)*"
+            },
+            "entity_category": {
+              "default": "diagnostic"
+            },
+            "device_class": {
+              "default": "connectivity"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "ledc.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "ledc::LEDCOutput",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to use LEDC on. Can only be GPIO0-GPIO33.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#configuration-variables)*"
+            },
+            "frequency": {
+              "key": "Optional",
+              "default": "1kHz",
+              "docs": "**float**: At which frequency to run the LEDC channel\u2019s timer. Defaults to 1000Hz.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#configuration-variables)*"
+            },
+            "channel": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: Manually set the [LEDC channel](https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/peripherals/ledc.html#configure-channel) to use. Two adjacent channels share the same timer. Defaults to an automatic selection.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "set_frequency": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "ledc::LEDCOutput",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the LEDC output to change.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#output-ledc-set-frequency-action)*"
+            },
+            "frequency": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), float**: The frequency to set in hertz.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#output-ledc-set-frequency-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to manually change the frequency of an LEDC channel at runtime. Use cases include controlling a passive buzzer (for pitch control).\n\n*See also: [`output.ledc.set_frequency` Action](https://esphome.io/components/output/ledc.html#output-ledc-set-frequency-action)*"
+      }
+    }
+  }
+}

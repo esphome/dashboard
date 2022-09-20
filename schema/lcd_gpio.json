@@ -1,0 +1,59 @@
+{
+  "lcd_gpio.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "lcd_base.LCD_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "lcd_gpio::GPIOLCDDisplay",
+                "parents": [
+                  "lcd_base::LCDDisplay",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#id1)*"
+            },
+            "data_pins": {
+              "key": "Required",
+              "docs": "**list of [Pin Schemas](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: A list of the data pins you have hooked up to the LCD. The list can either be 8 items long (when you have connected all 8 data pins), or 4 items long (if you\u2019re operating in 4-bit mode with either the first 4 data pins connected or the last 4 data pins connected).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#id1)*"
+            },
+            "enable_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have `EN` hooked up to.\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#id1)*"
+            },
+            "rs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have `RS` hooked up to.\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#id1)*"
+            },
+            "rw_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Optionally set the pin you have `RW` hooked up to. You can also just permanently connect that pin to GND.\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

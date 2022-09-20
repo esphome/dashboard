@@ -1,0 +1,134 @@
+{
+  "cd74hc4067": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "cd74hc4067::CD74HC4067Component",
+                "parents": [
+                  "Component",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "pin_s0": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            },
+            "pin_s1": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            },
+            "pin_s2": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            },
+            "pin_s3": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            },
+            "delay": {
+              "key": "Optional",
+              "default": "2ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "cd74hc4067.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "cd74hc4067::CD74HC4067Sensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "voltage_sampler::VoltageSampler"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "V"
+            },
+            "icon": {
+              "default": "mdi:flash"
+            },
+            "accuracy_decimals": {
+              "default": "3"
+            },
+            "device_class": {
+              "default": "voltage"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "cd74hc4067_id": {
+              "key": "GeneratedID",
+              "use_id_type": "cd74hc4067::CD74HC4067Component",
+              "type": "use_id"
+            },
+            "number": {
+              "key": "Required",
+              "type": "integer"
+            },
+            "sensor": {
+              "key": "Required",
+              "use_id_type": "voltage_sampler::VoltageSampler",
+              "type": "use_id"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            }
+          }
+        }
+      }
+    }
+  }
+}

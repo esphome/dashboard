@@ -1,0 +1,72 @@
+{
+  "ttp229_lsf": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ttp229_lsf::TTP229LSFComponent",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually set the ID of this sensor.\n\n*See also: [ttp229_lsf Component](https://esphome.io/components/binary_sensor/ttp229.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "87",
+              "data_type": "hex_uint8_t"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "ttp229_lsf.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ttp229_lsf::TTP229Channel",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ttp229_lsf Binary Sensor](https://esphome.io/components/binary_sensor/ttp229.html#ttp229-lsf-binary-sensor)*"
+            },
+            "ttp229_id": {
+              "key": "GeneratedID",
+              "use_id_type": "ttp229_lsf::TTP229LSFComponent",
+              "type": "use_id"
+            },
+            "channel": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The channel number at the TTP229 the touchkey is connected to.\n\n*See also: [ttp229_lsf Binary Sensor](https://esphome.io/components/binary_sensor/ttp229.html#ttp229-lsf-binary-sensor)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

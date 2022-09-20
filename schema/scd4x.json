@@ -1,0 +1,206 @@
+{
+  "scd4x.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "scd4x::SCD4XComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "sensirion_common::SensirionI2CDevice",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "co2": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "ppm"
+                  },
+                  "icon": {
+                    "default": "mdi:molecule-co2"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "carbon_dioxide"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the CO\u2082 sensor.\n  * **name** (**Required**, string): The name for the CO\u2082eq sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the Temperature sensor.\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "humidity": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "icon": {
+                    "default": "mdi:water-percent"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "humidity"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the Humidity sensor.\n  * **name** (**Required**, string): The name for the humidity sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "automatic_self_calibration": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to enable automatic self calibration (ASC). Defaults to `true`.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "altitude_compensation": {
+              "key": "Optional",
+              "default": "0m",
+              "type": "integer",
+              "docs": "**int**: Enable compensating deviations due to current altitude (in metres). Notice: setting *altitude_compensation* is ignored if *ambient_pressure_compensation* is set.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "ambient_pressure_compensation": {
+              "key": "Optional",
+              "docs": "**int**: Enable compensation of measured CO\u2082 values based on given ambient pressure in mBar.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "temperature_offset": {
+              "key": "Optional",
+              "default": "4\u00b0C",
+              "docs": "**float**: The temperature offset can depend on various factors such as the SCD4x measurement mode, self-heating of close components, the ambient temperature and air flow. This variable allows the compensation of those effects by setting a temperature offset. Defaults to `4\u00b0C`.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "ambient_pressure_compensation_source": {
+              "key": "Optional",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set an external pressure sensor ID used for ambient pressure compensation. The pressure sensor must report pressure in hPa. the correction is applied before updating the state of the co2 sensor.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "measurement_mode": {
+              "key": "Optional",
+              "default": "periodic",
+              "type": "enum",
+              "values": [
+                "periodic",
+                "low_power_periodic",
+                "single_shot",
+                "single_shot_rht_only"
+              ],
+              "docs": "Set measurement mode for scd4x.\n  * `periodic`: The sensor takes a new measurement every 5 seconds. This is the default mode.\n  \n  * `low_power_periodic`: The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds.\n  \n  * `single_shot`: A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters).\n  \n  * `single_shot_rht_only`: A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required.\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*",
+              "values_docs": {
+                "periodic": "The sensor takes a new measurement every 5 seconds. This is the default mode.",
+                "low_power_periodic": "The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds.",
+                "single_shot": "A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters).",
+                "single_shot_rht_only": "A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required."
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "98",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x62`.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "scd4x": {
+    "action": {
+      "perform_forced_calibration": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "scd4x::SCD4XComponent",
+              "type": "use_id"
+            },
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "positive_int"
+            }
+          }
+        },
+        "maybe": "id"
+      },
+      "factory_reset": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "scd4x::SCD4XComponent",
+              "type": "use_id"
+            }
+          }
+        },
+        "maybe": "id"
+      }
+    }
+  }
+}

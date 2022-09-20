@@ -1,0 +1,1310 @@
+{
+  "light": {
+    "components": {
+      "binary": {
+        "docs": "The `binary` light platform creates a simple ON/OFF-only light from a [binary output component](https://esphome.io/components/output/index.html#output).\n\n*See also: [Binary Light](https://esphome.io/components/light/binary.html#binary-light)*"
+      },
+      "color_temperature": {
+        "docs": "The `color_temperature` light platform creates a Color Temperature light from 2 [float output components](https://esphome.io/components/output/index.html#output). One channel controls the LED temperature, and the other channel controls the brightness.\n\n*See also: [Color Temperature Light](https://esphome.io/components/light/color_temperature.html#color-temperature-light)*"
+      },
+      "custom": {
+        "docs": "This integration can be used to create custom lights in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Light Output](https://esphome.io/components/light/custom.html#custom-light-output)*"
+      },
+      "cwww": {
+        "docs": "The `cwww` light platform creates a cold white + warm white light from 2 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel). The two channels can be controlled individually or together.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#cold-white-warm-white-light)*"
+      },
+      "fastled_clockless": {
+        "docs": "The `fastled_clockless` light platform allows you to create RGB lights in ESPHome for a [number of supported chipsets](https://esphome.io/components/light/fastled.html#fastled-clockless-chipsets).\n\n*See also: [Clockless](https://esphome.io/components/light/fastled.html#clockless)*"
+      },
+      "fastled_spi": {
+        "docs": "The `fastled_spi` light platform allows you to create RGB lights in ESPHome for a [number of supported chipsets](https://esphome.io/components/light/fastled.html#fastled-spi-chipsets).\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#spi)*"
+      },
+      "hbridge": {
+        "docs": "The `hbridge` light platform creates a dual color brightness controlled light from two [float output component](https://esphome.io/components/output/index.html#output).\n\n*See also: [H-bridge Light](https://esphome.io/components/light/hbridge.html#h-bridge-light)*"
+      },
+      "monochromatic": {
+        "docs": "The `monochromatic` light platform creates a simple brightness-only light from an [float output component](https://esphome.io/components/output/index.html#output).\n\n*See also: [Monochromatic Light](https://esphome.io/components/light/monochromatic.html#monochromatic-light)*"
+      },
+      "neopixelbus": {
+        "docs": "The `neopixelbus` light platform allows you to create RGB lights in ESPHome for an individually addressable lights like NeoPixel or WS2812.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#neopixelbus-light)*"
+      },
+      "partition": {
+        "docs": "The `partition` light platform allows you to combine multiple addressable light segments (like [FastLED Light](https://esphome.io/components/light/fastled.html) or [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html)) and/or individual lights (like [RGB Light](https://esphome.io/components/light/rgb.html)) into a single addressable light. This platform also allows splitting up an addressable light into multiple segments, so that segments can be individually controlled.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#light-partition)*"
+      },
+      "rgb": {
+        "docs": "The `rgb` light platform creates an RGB light from 3 [float output components](https://esphome.io/components/output/index.html#output) (one for each color channel).\n\n*See also: [RGB Light](https://esphome.io/components/light/rgb.html#rgb-light)*"
+      },
+      "rgbct": {
+        "docs": "The `rgbct` light platform creates an RGBWT (color temperature + white brightness) light from 5 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel).\n\n*See also: [RGBCT Light](https://esphome.io/components/light/rgbct.html#rgbct-light)*"
+      },
+      "rgbw": {
+        "docs": "The `rgbw` light platform creates an RGBW light from 4 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel).\n\n*See also: [RGBW Light](https://esphome.io/components/light/rgbw.html#rgbw-light)*"
+      },
+      "rgbww": {
+        "docs": "The `rgbww` light platform creates an RGBWW (cold white + warm white) light from 5 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel). The cold and warm white channels can be controlled individually or together, see [Mixing](https://esphome.io/components/light/cwww.html#cwww-mixing) for more information.\n\n*See also: [RGBWW Light](https://esphome.io/components/light/rgbww.html#rgbww-light)*"
+      },
+      "shelly_dimmer": {
+        "dependencies": [
+          "sensor",
+          "uart"
+        ],
+        "docs": "The `shelly_dimmer` component adds support for the dimming and power-metering functionality that can be found the [Shelly Dimmer 2](https://shelly.cloud/knowledge-base/devices/shelly-dimmer-2/). The interaction with mains is done via an STM32 microcontroller that is flashed with an [open source firmware](https://github.com/jamesturton/shelly-dimmer-stm32). A detailed analysis of the Shelly Dimmer 2 hardware is given [here](https://github.com/arendst/Tasmota/issues/6914).\n\n*See also: [Shelly Dimmer](https://esphome.io/components/light/shelly_dimmer.html#shelly-dimmer)*"
+      },
+      "sonoff_d1": {
+        "dependencies": [
+          "uart",
+          "light"
+        ],
+        "docs": "The `sonoff_d1` light platform creates a simple brightness-only light for the hardware found in [Sonoff D1 dimmer](https://itead.cc/product/sonoff-d1-smart-dimmer-switch/). Installations with Sonoff RM433 433MHz radio remotes are also supported. Use this component to integrate Sonoff D1 dimmer into ESPHome / Home Assistant ecosystem.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#sonoff-d1-dimmer)*"
+      },
+      "status_led": {
+        "docs": "The `status_led` light platform allows to share a single LED for indicating the status of the device (when on error/warning state) or as binary light (when on OK state). This is useful for devices with only one LED available.\n\n*See also: [Status LED Light](https://esphome.io/components/light/status_led.html#status-led-light)*"
+      },
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` light platform creates a simple brightness-only light from a tuya serial component.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#tuya-dimmer)*"
+      }
+    },
+    "schemas": {
+      "LIGHT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMMAND_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "light::LightState",
+                "parents": [
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTJSONLightComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "restore_mode": {
+              "key": "Optional",
+              "default": "restore_default_off",
+              "type": "enum",
+              "values": [
+                "RESTORE_DEFAULT_OFF",
+                "RESTORE_DEFAULT_ON",
+                "ALWAYS_OFF",
+                "ALWAYS_ON",
+                "RESTORE_INVERTED_DEFAULT_OFF",
+                "RESTORE_INVERTED_DEFAULT_ON",
+                "RESTORE_AND_OFF",
+                "RESTORE_AND_ON"
+              ],
+              "docs": "Control how the light attempts to restore state on bootup. For restoring on ESP8266s, also see `esp8266_restore_from_flash` in the [esphome section](https://esphome.io/components/esphome.html).\n  * `RESTORE_DEFAULT_OFF` (Default) - Attempt to restore state and default to OFF if not possible to restore.\n  \n  * `RESTORE_DEFAULT_ON` - Attempt to restore state and default to ON.\n  \n  * `RESTORE_INVERTED_DEFAULT_OFF` - Attempt to restore state inverted from the previous state and default to OFF.\n  \n  * `RESTORE_INVERTED_DEFAULT_ON` - Attempt to restore state inverted from the previous state and default to ON.\n  \n  * `RESTORE_AND_OFF` - Attempt to restore state but initialize the light as OFF.\n  \n  * `RESTORE_AND_ON` - Attempt to restore state but initialize the light as ON.\n  \n  * `ALWAYS_OFF` - Always initialize the light as OFF on bootup.\n  \n  * `ALWAYS_ON` - Always initialize the light as ON on bootup.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*",
+              "values_docs": {
+                "RESTORE_DEFAULT_ON": "Attempt to restore state and default to ON.",
+                "RESTORE_INVERTED_DEFAULT_OFF": "Attempt to restore state inverted from the previous state and default to OFF.",
+                "RESTORE_INVERTED_DEFAULT_ON": "Attempt to restore state inverted from the previous state and default to ON.",
+                "RESTORE_AND_OFF": "Attempt to restore state but initialize the light as OFF.",
+                "RESTORE_AND_ON": "Attempt to restore state but initialize the light as ON.",
+                "ALWAYS_OFF": "Always initialize the light as OFF on bootup.",
+                "ALWAYS_ON": "Always initialize the light as ON on bootup."
+              }
+            },
+            "on_turn_on": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the light is turned on. See [light.on_turn_on / light.on_turn_off Trigger](https://esphome.io/components/light/index.html#light-on-turn-on-off-trigger).\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "on_turn_off": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the light is turned off. See [light.on_turn_on / light.on_turn_off Trigger](https://esphome.io/components/light/index.html#light-on-turn-on-off-trigger).\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "on_state": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the light\u2019s set state is changed. See [light.on_state Trigger](https://esphome.io/components/light/index.html#light-on-state-trigger).\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "effects": {
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "gamma_correct": {
+              "docs": "**float**: Apply a [gamma correction factor](https://en.wikipedia.org/wiki/Gamma_correction) to the light channels. Defaults to `2.8`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "default_transition_length": {
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The default transition length to use when no transition length is set in the light call. Defaults to `1s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "flash_transition_length": {
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The transition length to use when flash is called. Defaults to `0s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "color_correct": {
+              "docs": "**list of float**: Apply a color correction to each color channel. This defines the maximum brightness of each channel. For example `[100%, 50%, 100%]` would set the green channel to be at most at 50% brightness.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "power_supply": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [Power Supply Component](https://esphome.io/components/power_supply.html) to connect to this light. When the light is turned on, the power supply will automatically be switched on too.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            }
+          }
+        }
+      },
+      "BINARY_LIGHT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "effects": {
+              "key": "Optional",
+              "type": "registry",
+              "registry": "light.effects",
+              "filter": [
+                "lambda",
+                "automation",
+                "strobe"
+              ],
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light, though binary lights only support very few of them.\n\n*See also: [Status LED Light](https://esphome.io/components/light/status_led.html#configuration-variables)*"
+            },
+            "gamma_correct": {
+              "docs": "**float**: Apply a [gamma correction factor](https://en.wikipedia.org/wiki/Gamma_correction) to the light channels. Defaults to `2.8`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "default_transition_length": {
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The default transition length to use when no transition length is set in the light call. Defaults to `1s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "flash_transition_length": {
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The transition length to use when flash is called. Defaults to `0s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "color_correct": {
+              "docs": "**list of float**: Apply a color correction to each color channel. This defines the maximum brightness of each channel. For example `[100%, 50%, 100%]` would set the green channel to be at most at 50% brightness.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "power_supply": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [Power Supply Component](https://esphome.io/components/power_supply.html) to connect to this light. When the light is turned on, the power supply will automatically be switched on too.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            }
+          }
+        }
+      },
+      "BRIGHTNESS_ONLY_LIGHT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "gamma_correct": {
+              "key": "Optional",
+              "default": "2.8",
+              "data_type": "positive_float",
+              "docs": "**float**: Apply a [gamma correction factor](https://en.wikipedia.org/wiki/Gamma_correction) to the light channels. Defaults to `2.8`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "default_transition_length": {
+              "key": "Optional",
+              "default": "1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The default transition length to use when no transition length is set in the light call. Defaults to `1s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "flash_transition_length": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The transition length to use when flash is called. Defaults to `0s`.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "effects": {
+              "key": "Optional",
+              "type": "registry",
+              "registry": "light.effects",
+              "filter": [
+                "lambda",
+                "automation",
+                "pulse",
+                "random",
+                "strobe",
+                "flicker"
+              ],
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [Monochromatic Light](https://esphome.io/components/light/monochromatic.html#configuration-variables)*"
+            },
+            "color_correct": {
+              "docs": "**list of float**: Apply a color correction to each color channel. This defines the maximum brightness of each channel. For example `[100%, 50%, 100%]` would set the green channel to be at most at 50% brightness.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "power_supply": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [Power Supply Component](https://esphome.io/components/power_supply.html) to connect to this light. When the light is turned on, the power supply will automatically be switched on too.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            }
+          }
+        }
+      },
+      "RGB_LIGHT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.BRIGHTNESS_ONLY_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "effects": {}
+          }
+        }
+      },
+      "ADDRESSABLE_LIGHT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.RGB_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "light::AddressableLightState",
+                "parents": [
+                  "light::LightState",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#configuration-variables)*"
+            },
+            "effects": {
+              "filter": [
+                "lambda",
+                "automation",
+                "pulse",
+                "random",
+                "strobe",
+                "flicker",
+                "addressable_lambda",
+                "addressable_rainbow",
+                "addressable_color_wipe",
+                "addressable_scan",
+                "addressable_twinkle",
+                "addressable_random_twinkle",
+                "addressable_fireworks",
+                "addressable_flicker",
+                "adalight",
+                "e131",
+                "wled"
+              ],
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#configuration-variables)*"
+            },
+            "color_correct": {
+              "key": "Optional",
+              "docs": "**list of float**: Apply a color correction to each color channel. This defines the maximum brightness of each channel. For example `[100%, 50%, 100%]` would set the green channel to be at most at 50% brightness.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            },
+            "power_supply": {
+              "key": "Optional",
+              "use_id_type": "power_supply::PowerSupply",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [Power Supply Component](https://esphome.io/components/power_supply.html) to connect to this light. When the light is turned on, the power supply will automatically be switched on too.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "toggle": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-toggle-action)*"
+            },
+            "transition_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time), [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The length of the transition if the light supports it.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-toggle-action)*"
+            }
+          }
+        },
+        "docs": "This action toggles a light with the given ID when executed.\n\n*See also: [`light.toggle` Action](https://esphome.io/components/light/index.html#light-toggle-action)*"
+      },
+      "control": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-control-action)*"
+            },
+            "color_mode": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "ON_OFF",
+                "BRIGHTNESS",
+                "WHITE",
+                "COLOR_TEMPERATURE",
+                "COLD_WARM_WHITE",
+                "RGB",
+                "RGB_WHITE",
+                "RGB_COLOR_TEMPERATURE",
+                "RGB_COLD_WARM_WHITE"
+              ]
+            },
+            "state": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), boolean**: Change the ON/OFF state of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-control-action)*"
+            },
+            "transition_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "flash_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "effect": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string"
+            },
+            "brightness": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "color_brightness": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "red": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "green": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "blue": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "white": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "color_temperature": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "cold_white": {
+              "key": "Optional",
+              "templatable": true
+            },
+            "warm_white": {
+              "key": "Optional",
+              "templatable": true
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) is a generic call to change the state of a light - it is essentially just a combination of the turn_on and turn_off calls.\n\n*See also: [`light.control` Action](https://esphome.io/components/light/index.html#light-control-action)*"
+      },
+      "turn_on": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "color_mode": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "ON_OFF",
+                "BRIGHTNESS",
+                "WHITE",
+                "COLOR_TEMPERATURE",
+                "COLD_WARM_WHITE",
+                "RGB",
+                "RGB_WHITE",
+                "RGB_COLOR_TEMPERATURE",
+                "RGB_COLD_WARM_WHITE"
+              ],
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: For lights that support more than one color mode, the color mode that will be activated. The color mode determines which outputs of the light are active, and which parameters can be used. This can for example be used to switch between colored and white light. Must be a color mode that is supported by the light. Valid color modes are:\n  * `ON_OFF`: Only on/off control.\n  \n  * `BRIGHTNESS`: Only brightness control. Accepts *brightness* parameter.\n  \n  * `WHITE`: Single white channel only. Accepts *brightness* and *white* parameters.\n  \n  * `COLOR_TEMPERATURE`: Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters.\n  \n  * `COLD_WARM_WHITE`: Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters.\n  \n  * `RGB`: RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters.\n  \n  * `RGB_WHITE`: RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes.\n  \n  * `RGB_COLOR_TEMPERATURE`: RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes.\n  \n  * `RGB_COLD_WARM_WHITE`: RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*",
+              "values_docs": {
+                "ON_OFF": "Only on/off control.",
+                "BRIGHTNESS": "Only brightness control. Accepts *brightness* parameter.",
+                "WHITE": "Single white channel only. Accepts *brightness* and *white* parameters.",
+                "COLOR_TEMPERATURE": "Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters.",
+                "COLD_WARM_WHITE": "Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters.",
+                "RGB": "RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters.",
+                "RGB_WHITE": "RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes.",
+                "RGB_COLOR_TEMPERATURE": "RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes.",
+                "RGB_COLD_WARM_WHITE": "RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes."
+              }
+            },
+            "state": {
+              "key": "Optional",
+              "default": "True"
+            },
+            "transition_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time), [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The length of the transition if the light supports it.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "flash_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time), [templatable](https://esphome.io/guides/automations.html#config-templatable)**: If set, will flash the given color for this period of time and then go back to the previous state.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "effect": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: If set, will attempt to start an effect with the given name.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "brightness": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The master brightness of the light, that applies to all channels (both color and white) of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "color_brightness": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The brightness of the color lights. Useful to control brightness of colored and white lights separately for RGBW lights.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "red": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The red channel of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "green": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The green channel of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "blue": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The blue channel of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "white": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The brightness of the white channel.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "color_temperature": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**float, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the white channel.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "cold_white": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The brightness of the cold white channel. Cannot be used at the same time as *color_temperature*.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            },
+            "warm_white": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**percentage, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The brightness of the warm white channel. Cannot be used at the same time as *color_temperature*.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+            }
+          }
+        },
+        "docs": "This action turns a light with the given ID on when executed.\n\n*See also: [`light.turn_on` Action](https://esphome.io/components/light/index.html#light-turn-on-action)*"
+      },
+      "turn_off": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-off-action)*"
+            },
+            "transition_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time), [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The length of the transition if the light supports it.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-off-action)*"
+            },
+            "state": {
+              "key": "Optional",
+              "default": "False"
+            }
+          }
+        },
+        "docs": "This action turns a light with the given ID off when executed.\n\n*See also: [`light.turn_off` Action](https://esphome.io/components/light/index.html#light-turn-off-action)*"
+      },
+      "dim_relative": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the light.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-dim-relative-action)*"
+            },
+            "relative_brightness": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The relative brightness to dim the light by.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-dim-relative-action)*"
+            },
+            "transition_length": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time), [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The length of the transition.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-dim-relative-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to dim a light that supports brightness by a relative amount.\n\n*See also: [`light.dim_relative` Action](https://esphome.io/components/light/index.html#light-dim-relative-action)*"
+      },
+      "addressable_set": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::AddressableLightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the addressable light to control.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "range_from": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), int**: The beginning of the range of LEDs to control, inclusive, using zero-based indexing. Defaults to 0 (the beginning of the strip).\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "range_to": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), int**: The end of the range of LEDs to control, inclusive, using zero-based indexing. Defaults to the end of the strip (`num_leds` - 1).\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "color_brightness": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The brightness to set the color channel to.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "red": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The value to set the red channel to.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "green": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The value to set the green channel to.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "blue": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The value to set the blue channel to.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            },
+            "white": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), percentage**: The brightness to set the white channel to.\n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) allows you to manually set a range of LEDs on an addressable light to a specific color.\n\n*See also: [`light.addressable_set` Action](https://esphome.io/components/light/index.html#light-addressable-set-action)*"
+      }
+    },
+    "condition": {
+      "is_off": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id"
+            }
+          }
+        }
+      },
+      "is_on": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "light::LightState",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "effects": {
+      "lambda": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "lambda": {
+              "key": "Required",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The code to execute. `static` variables are especially useful.\n\n*See also: [Lambda Effect](https://esphome.io/components/light/index.html#lambda-effect)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "0ms",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which the lambda code is executed. A value of `0ms` means that the lambda is always executed, without a cool-down. Defaults to `0ms`.\n\n*See also: [Lambda Effect](https://esphome.io/components/light/index.html#lambda-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Lambda",
+              "type": "string",
+              "docs": "**string**: The name of the custom effect.\n\n*See also: [Lambda Effect](https://esphome.io/components/light/index.html#lambda-effect)*"
+            }
+          }
+        },
+        "docs": "This effect allows you to write completely custom light effects yourself using [lambdas](https://esphome.io/guides/automations.html#config-lambda).\n\n*See also: [Lambda Effect](https://esphome.io/components/light/index.html#lambda-effect)*"
+      },
+      "automation": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "sequence": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The actions to perform in sequence until the effect is stopped.\n\n*See also: [Automation Light Effect](https://esphome.io/components/light/index.html#automation-light-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Automation",
+              "type": "string",
+              "docs": "**string**: The name of the effect.\n\n*See also: [Automation Light Effect](https://esphome.io/components/light/index.html#automation-light-effect)*"
+            }
+          }
+        },
+        "docs": "Additionally to the `lambda` and `addressable_lambda` light effects, effects can also be written through ESPHome\u2019s [Automation](https://esphome.io/guides/automations.html#automation) system with the `automation` effect type.\n\n*See also: [Automation Light Effect](https://esphome.io/components/light/index.html#automation-light-effect)*"
+      },
+      "pulse": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "transition_length": {
+              "key": "Optional",
+              "default": "1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration of each transition. Defaults to `1s`.\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval when the new transition is started. Defaults to `1s`.\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Pulse",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Pulse`.\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+            }
+          }
+        },
+        "docs": "This effect makes a pulsating light. The period can be defined by `update_interval`, the transition length with `transition_length`. `transition_length` should be set to less than `update_interval`, setting `transition_length` to `1s` and `update_interval` to `2s` will result in a transition from 0% to 100% lasting 1 second, 1 second full light, a transition from 100% to 0% for 1 second and off for 1 second.\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+      },
+      "random": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "transition_length": {
+              "key": "Optional",
+              "default": "7.5s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration of each transition to start. Defaults to `5s`.\n\n*See also: [Random Effect](https://esphome.io/components/light/index.html#random-effect)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "10s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which a new color is selected and transitioned to.\n\n*See also: [Random Effect](https://esphome.io/components/light/index.html#random-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Random",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Random`.\n\n*See also: [Random Effect](https://esphome.io/components/light/index.html#random-effect)*"
+            }
+          }
+        },
+        "docs": "This effect makes a transition (of length `transition_length`) to a randomly-chosen color every `update_interval`.\n\n*See also: [Random Effect](https://esphome.io/components/light/index.html#random-effect)*"
+      },
+      "strobe": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "colors": {
+              "key": "Optional",
+              "default": "[{'state': True, 'duration': '0.5s'}, {'state': False, 'duration': '0.5s'}]",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "state": {
+                    "key": "Optional",
+                    "default": "True",
+                    "type": "boolean",
+                    "docs": "**boolean**: The on/off state to show. Defaults to `true`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "brightness": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The brightness of the light. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "color_mode": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "ON_OFF",
+                      "BRIGHTNESS",
+                      "WHITE",
+                      "COLOR_TEMPERATURE",
+                      "COLD_WARM_WHITE",
+                      "RGB",
+                      "RGB_WHITE",
+                      "RGB_COLOR_TEMPERATURE",
+                      "RGB_COLD_WARM_WHITE"
+                    ],
+                    "docs": "**string**: The color mode of the light. Defaults to the current color mode.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "color_brightness": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The brightness of the RGB lights, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "red": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The red channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "green": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The green channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "blue": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The blue channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "white": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The white channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "color_temperature": {
+                    "key": "Optional",
+                    "docs": "**percentage**: The color temperature of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "cold_white": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The cold white channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "warm_white": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The warm white channel of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  },
+                  "duration": {
+                    "key": "Required",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration this color should be active.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                  }
+                }
+              },
+              "docs": "**list**: A list of colors to cycle through. Defaults to a quick cycle between ON and OFF.\n  * **state** (*Optional*, boolean): The on/off state to show. Defaults to `true`.\n  \n  * **color_mode** (*Optional*, string): The color mode of the light. Defaults to the current color mode.\n  \n  * **brightness** (*Optional*, percentage): The brightness of the light. Defaults to `100%`.\n  \n  * **color_brightness** (*Optional*, percentage): The brightness of the RGB lights, if applicable. Defaults to `100%`.\n  \n  * **red** (*Optional*, percentage): The red channel of the light, if applicable. Defaults to `100%`.\n  \n  * **green** (*Optional*, percentage): The green channel of the light, if applicable. Defaults to `100%`.\n  \n  * **blue** (*Optional*, percentage): The blue channel of the light, if applicable. Defaults to `100%`.\n  \n  * **white** (*Optional*, percentage): The white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **color_temperature** (*Optional*, percentage): The color temperature of the light, if applicable. Defaults to `100%`.\n  \n  * **cold_white** (*Optional*, percentage): The cold white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **warm_white** (*Optional*, percentage): The warm white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **duration** (**Required**, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The duration this color should be active.\n  \n  \n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Strobe",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Strobe`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+            }
+          }
+        },
+        "docs": "This effect cycles through a list of colors with specific durations.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+      },
+      "flicker": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "alpha": {
+              "key": "Optional",
+              "default": "0.95",
+              "docs": "**percentage**: The percentage that the last color value should affect the light. More or less the \u201cforget-factor\u201d of an exponential moving average. Defaults to `95%`.\n\n*See also: [Flicker Effect](https://esphome.io/components/light/index.html#flicker-effect)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "0.015",
+              "docs": "**percentage**: The intensity of the flickering, basically the maximum amplitude of the random offsets. Defaults to `1.5%`.\n\n*See also: [Flicker Effect](https://esphome.io/components/light/index.html#flicker-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Flicker",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Flicker`.\n\n*See also: [Flicker Effect](https://esphome.io/components/light/index.html#flicker-effect)*"
+            }
+          }
+        },
+        "docs": "This effect \u201chovers\u201d around the active color of the light and flickers each color channel a bit.\n\n*See also: [Flicker Effect](https://esphome.io/components/light/index.html#flicker-effect)*"
+      },
+      "addressable_lambda": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "lambda": {
+              "key": "Required"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "0ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Addressable Lambda",
+              "type": "string"
+            }
+          }
+        },
+        "docs": "This effect allows you to access each LED individually in a custom light effect.\n\n*See also: [Addressable Lambda Effect](https://esphome.io/components/light/index.html#addressable-lambda-effect)*"
+      },
+      "addressable_rainbow": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "speed": {
+              "key": "Optional",
+              "default": "10",
+              "type": "integer",
+              "data_type": "uint32_t",
+              "docs": "**int**: The speed of the effect, unitless. Defaults to `10`.\n\n*See also: [Addressable Rainbow Effect](https://esphome.io/components/light/index.html#addressable-rainbow-effect)*"
+            },
+            "width": {
+              "key": "Optional",
+              "default": "50",
+              "type": "integer",
+              "data_type": "uint32_t",
+              "docs": "**int**: The \u201cwidth\u201d of a full-scale rainbow, unitless. Defaults to `50`.\n\n*See also: [Addressable Rainbow Effect](https://esphome.io/components/light/index.html#addressable-rainbow-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Rainbow",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Rainbow`.\n\n*See also: [Addressable Rainbow Effect](https://esphome.io/components/light/index.html#addressable-rainbow-effect)*"
+            }
+          }
+        },
+        "docs": "A light effect for individually-addressable LEDs that creates a moving rainbow over the whole LED strip using the HSV color wheel.\n\n*See also: [Addressable Rainbow Effect](https://esphome.io/components/light/index.html#addressable-rainbow-effect)*"
+      },
+      "addressable_color_wipe": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "colors": {
+              "key": "Optional",
+              "default": "[{'num_leds': 1, 'random': True}]",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "red": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The percentage the red color channel should be on. Defaults to `100%`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+                  },
+                  "green": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The percentage the green color channel should be on. Defaults to `100%`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+                  },
+                  "blue": {
+                    "key": "Optional",
+                    "default": "1.0",
+                    "docs": "**percentage**: The percentage the blue color channel should be on. Defaults to `100%`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+                  },
+                  "white": {
+                    "key": "Optional",
+                    "default": "1.0"
+                  },
+                  "random": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean",
+                    "docs": "**boolean**: If set to `true`, will overwrite the RGB colors by a new, randomly-chosen color each time. Defaults to `false`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+                  },
+                  "num_leds": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t",
+                    "docs": "**int**: The number of leds of this type to have before moving on to the next color.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+                  }
+                }
+              },
+              "docs": "**list**: The colors to shift in at the beginning of the strip. Defaults to shifting in random colors.\n  * **red** (*Optional*, percentage): The percentage the red color channel should be on. Defaults to `100%`.\n  \n  * **green** (*Optional*, percentage): The percentage the green color channel should be on. Defaults to `100%`.\n  \n  * **blue** (*Optional*, percentage): The percentage the blue color channel should be on. Defaults to `100%`.\n  \n  * **random** (*Optional*, boolean): If set to `true`, will overwrite the RGB colors by a new, randomly-chosen color each time. Defaults to `false`.\n  \n  * **num_leds** (*Optional*, int): The number of leds of this type to have before moving on to the next color.\n  \n  \n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+            },
+            "add_led_interval": {
+              "key": "Optional",
+              "default": "0.1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which to shift in new leds at the beginning of the strip. Defaults to `100ms`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+            },
+            "reverse": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to reverse the direction of the color wipe. Defaults to `false`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Color Wipe",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Color Wipe`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+            }
+          }
+        },
+        "docs": "A light effect for individually-addressable LEDs that continuously introduces new colors at the beginning of the strip and shifts them forward every `add_led_interval`.\n\n*See also: [Addressable Color Wipe Effect](https://esphome.io/components/light/index.html#addressable-color-wipe-effect)*"
+      },
+      "addressable_scan": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "move_interval": {
+              "key": "Optional",
+              "default": "0.1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which to move the dot/line one LED forward. Defaults to `100ms`.\n\n*See also: [Addressable Scan Effect](https://esphome.io/components/light/index.html#addressable-scan-effect)*"
+            },
+            "scan_width": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "docs": "**int**: The number of LEDs to use. Defaults to `1`.\n\n*See also: [Addressable Scan Effect](https://esphome.io/components/light/index.html#addressable-scan-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Scan",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Scan`.\n\n*See also: [Addressable Scan Effect](https://esphome.io/components/light/index.html#addressable-scan-effect)*"
+            }
+          }
+        },
+        "docs": "Create a single, fast-moving dot moving back and forth an individually-addressable LED strip. The color is chosen by the currently active light color.\n\n*See also: [Addressable Scan Effect](https://esphome.io/components/light/index.html#addressable-scan-effect)*"
+      },
+      "addressable_twinkle": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "twinkle_probability": {
+              "key": "Optional",
+              "default": "5%",
+              "docs": "**percentage**: The percentage with which, at any time step, a randomly-chosen LED should start its twinkle animation.\n\n*See also: [Addressable Twinkle Effect](https://esphome.io/components/light/index.html#addressable-twinkle-effect)*"
+            },
+            "progress_interval": {
+              "key": "Optional",
+              "default": "4ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which to progress the effect. This affects the duration of a twinkle animation. Defaults to `4ms`.\n\n*See also: [Addressable Twinkle Effect](https://esphome.io/components/light/index.html#addressable-twinkle-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Twinkle",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Twinkle`.\n\n*See also: [Addressable Twinkle Effect](https://esphome.io/components/light/index.html#addressable-twinkle-effect)*"
+            }
+          }
+        },
+        "docs": "A light effect for individually-addressable LED strips that randomly chooses some LEDs and let\u2019s them bright up for a moment, like a stars twinkling in the night\u2019s sky. The color of the pixels will be chosen by the currently active light color.\n\n*See also: [Addressable Twinkle Effect](https://esphome.io/components/light/index.html#addressable-twinkle-effect)*"
+      },
+      "addressable_random_twinkle": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "twinkle_probability": {
+              "key": "Optional",
+              "default": "5%",
+              "docs": "**percentage**: The percentage with which, at any time step, a randomly-chosen LED should start its twinkle animation.\n\n*See also: [Addressable Random Twinkle Effect](https://esphome.io/components/light/index.html#addressable-random-twinkle-effect)*"
+            },
+            "progress_interval": {
+              "key": "Optional",
+              "default": "32ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which to progress the effect. This affects the duration of a twinkle animation. Defaults to `4ms`.\n\n*See also: [Addressable Random Twinkle Effect](https://esphome.io/components/light/index.html#addressable-random-twinkle-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Random Twinkle",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Random Twinkle`.\n\n*See also: [Addressable Random Twinkle Effect](https://esphome.io/components/light/index.html#addressable-random-twinkle-effect)*"
+            }
+          }
+        },
+        "docs": "A light effect similar to `addressable_twinkle`, but using random colors for each twinkle animation.\n\n*See also: [Addressable Random Twinkle Effect](https://esphome.io/components/light/index.html#addressable-random-twinkle-effect)*"
+      },
+      "addressable_fireworks": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "update_interval": {
+              "key": "Optional",
+              "default": "32ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval with which to progress the effect. Defaults to `32ms`.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+            },
+            "spark_probability": {
+              "key": "Optional",
+              "default": "10%",
+              "docs": "**percentage**: The probability to start a new firework spark at a randomly-chosen LED at any given time step. Defaults to `10%`.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+            },
+            "use_random_color": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to use random colors for new firework sparks. Defaults to using the currently active light color.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+            },
+            "fade_out_rate": {
+              "key": "Optional",
+              "default": "120",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The rate with which to fade out the LED strip, unitless. Needs to be carefully chosen so that the whole strip doesn\u2019t light up forever if the fade out rate is too low or that the firework sparks do not propagate for a long time. Defaults to `120`.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Fireworks",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Fireworks`.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+            }
+          }
+        },
+        "docs": "A light effect for individually-addressable LED strips that randomly sparks some fireworks at random positions and lets the sparkles cascade over the LED strip.\n\n*See also: [Addressable Fireworks Effect](https://esphome.io/components/light/index.html#addressable-fireworks-effect)*"
+      },
+      "addressable_flicker": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "update_interval": {
+              "key": "Optional",
+              "default": "16ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time interval for updating the random offsets. Defaults to `16ms`.\n\n*See also: [Addressable Flicker Effect](https://esphome.io/components/light/index.html#addressable-flicker-effect)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "5%",
+              "docs": "**percentage**: The intensity of the effect, basically how much the random values can offset the currently active light color. Defaults to `5%`.\n\n*See also: [Addressable Flicker Effect](https://esphome.io/components/light/index.html#addressable-flicker-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Addressable Flicker",
+              "type": "string",
+              "docs": "**string**: The name of the effect. Defaults to `Addressable Flicker`.\n\n*See also: [Addressable Flicker Effect](https://esphome.io/components/light/index.html#addressable-flicker-effect)*"
+            }
+          }
+        },
+        "docs": "An effect similar to the `flicker` effect, but for individually-addressable LED strips. This effect flickers each LED by its own random amount around the currently active light color.\n\n*See also: [Addressable Flicker Effect](https://esphome.io/components/light/index.html#addressable-flicker-effect)*"
+      },
+      "adalight": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [UART Component](https://esphome.io/components/uart.html#uart) if you want to use multiple UART buses.\n\n*See also: [Adalight Effect](https://esphome.io/components/light/index.html#adalight-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "Adalight",
+              "type": "string"
+            }
+          }
+        },
+        "docs": "This effect enables controlling addressable lights using UART-based [Adalight](https://learn.adafruit.com/adalight-diy-ambient-tv-lighting) protocol, allowing to create realtime ambient lighting effects.\n\n*See also: [Adalight Effect](https://esphome.io/components/light/index.html#adalight-effect)*"
+      },
+      "e131": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "e131_id": {
+              "key": "GeneratedID",
+              "use_id_type": "e131::E131Component",
+              "type": "use_id"
+            },
+            "universe": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The value of universe, between 1 to 512.\n\n*See also: [E1.31 Effect](https://esphome.io/components/light/index.html#e1-31-effect)*"
+            },
+            "channels": {
+              "key": "Optional",
+              "default": "RGB",
+              "type": "enum",
+              "values": [
+                "MONO",
+                "RGB",
+                "RGBW"
+              ],
+              "docs": "The type of data. This is used to specify if it is a `MONO`, `RGB` or `RGBW` light and in which order the colors are. Defaults to `RGB`.\n\n*See also: [E1.31 Effect](https://esphome.io/components/light/index.html#e1-31-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "E1.31",
+              "type": "string"
+            }
+          }
+        },
+        "docs": "This effect enables controlling addressable lights using UDP-based [E1.31](https://www.doityourselfchristmas.com/wiki/index.php?title=E1.31_(Streaming-ACN)_Protocol) protocol.\n\n*See also: [E1.31 Effect](https://esphome.io/components/light/index.html#e1-31-effect)*"
+      },
+      "wled": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "port": {
+              "key": "Optional",
+              "default": "21324",
+              "type": "integer",
+              "data_type": "port",
+              "docs": "**int**: The port to run the UDP server on. Defaults to `21324`.\n\n*See also: [WLED Effect](https://esphome.io/components/light/index.html#wled-effect)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "WLED",
+              "type": "string"
+            }
+          }
+        },
+        "docs": "This effect enables controlling addressable lights using UDP-based [UDP Realtime Control](https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control) protocol used by [WLED](https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control), allowing to create realtime ambient lighting effects.\n\n*See also: [WLED Effect](https://esphome.io/components/light/index.html#wled-effect)*"
+      }
+    }
+  }
+}

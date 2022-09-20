@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-list/mwc-list-item.js";
 import "../components/remote-process";
-import { openEditDialog } from "../legacy";
+import { openEditDialog } from "../editor";
 import "../components/process-dialog";
 import { openLogsDialog } from ".";
 

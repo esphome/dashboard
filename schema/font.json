@@ -1,0 +1,53 @@
+{
+  "font": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "display::Font",
+                "parents": []
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID with which you will be able to reference the font later in your display code.\n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
+            },
+            "file": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {},
+              "docs": "The path (relative to where the .yaml file is) of the font file. You can use the `gfonts://` short form to use Google Fonts, or use the below structure:\n  * **type** (**Required**, string): Can be `gfonts` or `local`.**Google Fonts**:Each Google Font will be downloaded once and cached for future use.\n  \n  * **family** (**Required**, string): The name of the Google Font family.\n  \n  * **weight** (*Optional*, enum): The weight of the font. Can be either the text name or the integer value:\n    * **thin**: 100\n    \n    * **extra-light**: 200\n    \n    * **light**: 300\n    \n    * **regular**: 400 (**default**)\n    \n    * **medium**: 500\n    \n    * **semi-bold**: 600\n    \n    * **bold**: 700\n    \n    * **extra-bold**: 800\n    \n    * **black**: 900\n    \n    \n  \n  * **italic** (*Optional*, boolean): Whether the font should be italic.**Local Fonts**:\n  \n  * **path** (**Required**, string): The path (relative to where the .yaml file is) of the TrueType or bitmap font file.\n  \n  \n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
+            },
+            "glyphs": {
+              "key": "Optional",
+              "default": " !\"%()+=,-.:/0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz\u00b0",
+              "docs": "**list**: A list of characters you plan to use. Only the characters you specify here will be compiled into the binary. Adjust this if you need some special characters or want to reduce the size of the binary if you don\u2019t plan to use some glyphs. The items in the list can also be more than one character long if you for example want to use font ligatures. Defaults to `!\"%()+=,-_.:\u00b00123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz`.\n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
+            },
+            "size": {
+              "key": "Optional",
+              "default": "20",
+              "type": "integer",
+              "docs": "**int**: The size of the font in pt (not pixel!). If you want to use the same font in different sizes, create two font objects. Note: *size* is ignored by bitmap fonts. Defaults to `20`.\n\n*See also: [Fonts](https://esphome.io/components/display/index.html#fonts)*"
+            },
+            "raw_data_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "uint8_t",
+                "parents": null
+              }
+            },
+            "raw_glyph_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "display::GlyphData",
+                "parents": []
+              }
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

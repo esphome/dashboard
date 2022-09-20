@@ -1,0 +1,43 @@
+{
+  "ssd1306_i2c.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "ssd1306_base.SSD1306_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ssd1306_i2c::I2CSSD1306",
+                "parents": [
+                  "ssd1306_base::SSD1306",
+                  "PollingComponent",
+                  "Component",
+                  "display::DisplayBuffer",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ssd1306 Over I\u00b2C](https://esphome.io/components/display/ssd1306.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "60",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the [I\u00b2C](https://esphome.io/components/i2c.html#i2c) address of the display. Defaults to 0x3C.\n\n*See also: [ssd1306 Over I\u00b2C](https://esphome.io/components/display/ssd1306.html#configuration-variables)*"
+            }
+          }
+        },
+        "docs": "The `ssd1306_i2c` display platform allows you to use SSD1306 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf), [Adafruit](https://www.adafruit.com/product/326)), SSD1305 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1305.pdf)) and SH1106 ([datasheet](https://www.elecrow.com/download/SH1106%20datasheet.pdf), [electrodragon](https://www.electrodragon.com/product/1-3-12864-blue-oled-display-iicspi/)) displays with ESPHome. Note that this component is for displays that are connected via the [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c). If your SSD1306/SSD1305 or SH1106 is connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi), see [Over SPI](https://esphome.io/components/display/ssd1306.html#ssd1306-spi).\n\n*See also: [ssd1306 Over I\u00b2C](https://esphome.io/components/display/ssd1306.html#over-i2c)*"
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "web_server": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "web_server::WebServer",
+                "parents": [
+                  "Component",
+                  "Controller"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "port": {
+              "key": "Optional",
+              "default": "80",
+              "type": "integer",
+              "data_type": "port",
+              "docs": "**int**: The port the web server should open its socket on.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "version": {
+              "key": "Optional",
+              "default": "2",
+              "type": "enum",
+              "values": [
+                1,
+                2
+              ],
+              "docs": "**string**: `1` or `2`. Version 1 displays as a table. Version 2 uses web components and has more functionality. Defaults to `2`.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "css_url": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**url**: The URL that should be used for the CSS stylesheet. Defaults to [https://esphome.io/_static/webserver-v1.min.css](https://esphome.io/_static/webserver-v1.min.css) (updates will go to `v2`, `v3`, etc). Can be set to empty string.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "css_include": {
+              "key": "Optional",
+              "docs": "**local file**: Path to local file to be included in web server index page. Contents of this file will be served as `/0.css` and used as CSS stylesheet by internal webserver. Useful when building device without internet access, where you want to use built-in AP and webserver.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "js_url": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**url**: The URL that should be used for the JS script. Defaults to [https://esphome.io/_static/webserver-v1.min.js](https://esphome.io/_static/webserver-v1.min.js). Can be set to empty string.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "js_include": {
+              "key": "Optional",
+              "docs": "**local file**: Path to local file to be included in web server index page. Contents of this file will be served as `/0.js` and used as JS script by internal webserver. Useful when building device without internet access, where you want to use built-in AP and webserver.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "auth": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "username": {
+                    "key": "Required",
+                    "type": "string",
+                    "docs": "**string**: The username to use for authentication.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+                  },
+                  "password": {
+                    "key": "Required",
+                    "type": "string",
+                    "docs": "**string**: The password to check for authentication.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Enables basic authentication with username and password.\n  * **username** (**Required**, string): The username to use for authentication.\n  \n  * **password** (**Required**, string): The password to check for authentication.\n  \n  \n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "web_server_base_id": {
+              "key": "GeneratedID",
+              "use_id_type": "web_server_base::WebServerBase",
+              "type": "use_id"
+            },
+            "include_internal": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether `internal` entities should be displayed on the web interface. Defaults to `false`.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "ota": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Turn on or off the OTA feature inside webserver. Strongly not suggested without enabled authentication settings. Defaults to `true`.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            },
+            "local": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Include supporting javascript locally allowing it to work without internet access. Defaults to `false`.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

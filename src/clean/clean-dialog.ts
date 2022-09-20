@@ -3,8 +3,8 @@ import { customElement, property } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
 import { openInstallChooseDialog } from "../install-choose";
-import { openEditDialog } from "../legacy";
 import "../components/process-dialog";
+import { openEditDialog } from "../editor";
 
 @customElement("esphome-clean-dialog")
 class ESPHomeCleanDialog extends LitElement {

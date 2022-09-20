@@ -1,0 +1,136 @@
+{
+  "waveshare_epaper.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "waveshare_epaper::WaveshareEPaper",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "spi::SPIDevice",
+                  "display::DisplayBuffer"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "dc_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The DC pin.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "model": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "1.54in",
+                "1.54inv2",
+                "2.13in",
+                "2.13in-ttgo",
+                "2.13in-ttgo-b1",
+                "2.13in-ttgo-b73",
+                "2.13in-ttgo-b74",
+                "2.90in",
+                "2.90inv2",
+                "2.70in",
+                "2.90in-b",
+                "4.20in",
+                "4.20in-bv2",
+                "5.83in",
+                "7.50in",
+                "7.50in-bv2",
+                "7.50in-bc",
+                "7.50inv2",
+                "7.50inv2alt",
+                "7.50in-hd-b",
+                "2.13in-ttgo-dke"
+              ],
+              "docs": "The model of the E-Paper display. Options are:\n  * `1.54in`\n  \n  * `1.54inv2`\n  \n  * `2.13in` - not tested\n  \n  * `2.13in-ttgo` - T5_V2.3 tested. Also works for Wemos D1 Mini ePaper Shield 2.13 1.0.0 \u201cLOLIN\u201d\n  \n  * `2.13in-ttgo-b73` - T5_V2.3 with B73 display tested\n  \n  * `2.13in-ttgo-b74` - T5_V2.3.1 with B74 display tested\n  \n  * `2.13in-ttgo-b1` - T5_V2.3 with B1 display tested\n  \n  * `2.13in-ttgo-dke` - T5_V2.3 with DKE group display (DEPG0213BN) tested\n  \n  * `2.70in` - currently not working with the HAT Rev 2.1 version\n  \n  * `2.90in`\n  \n  * `2.90inv2`\n  \n  * `2.90in-b` - B/W rendering only\n  \n  * `4.20in`\n  \n  * `4.20in-bV2` - B/W rendering only\n  \n  * `5.83in`\n  \n  * `7.50in`\n  \n  * `7.50in-bV2` - also supports v3, B/W rendering only\n  \n  * `7.50in-bc` - display with version sticker \u2018(C)\u2019 on the back, B/W rendering only\n  \n  * `7.50inV2` - Can\u2019t use with an ESP8266 as it runs out of RAM\n  \n  * `7.50inV2alt` (alternative version to the above `7.50inV2`)\n  \n  * `7.50in-hd-b` - Can\u2019t use with an ESP8266 as it runs out of RAM\n  \n  \n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*",
+              "values_docs": {
+                "2.13in": "not tested",
+                "2.13in-ttgo": "T5_V2.3 tested. Also works for Wemos D1 Mini ePaper Shield 2.13 1.0.0 \u201cLOLIN\u201d",
+                "2.13in-ttgo-b73": "T5_V2.3 with B73 display tested",
+                "2.13in-ttgo-b74": "T5_V2.3.1 with B74 display tested",
+                "2.13in-ttgo-b1": "T5_V2.3 with B1 display tested",
+                "2.13in-ttgo-dke": "T5_V2.3 with DKE group display (DEPG0213BN) tested",
+                "2.70in": "currently not working with the HAT Rev 2.1 version",
+                "2.90in-b": "B/W rendering only",
+                "4.20in-bv2": "B/W rendering only",
+                "7.50in-bv2": "also supports v3, B/W rendering only",
+                "7.50in-bc": "display with version sticker \u2018(C)\u2019 on the back, B/W rendering only",
+                "7.50inv2": "Can\u2019t use with an ESP8266 as it runs out of RAM",
+                "7.50in-hd-b": "Can\u2019t use with an ESP8266 as it runs out of RAM"
+              }
+            },
+            "reset_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The RESET pin. Defaults to not connected. Make sure you pull this pin high (by connecting it to 3.3V with a resistor) if not connected to a GPIO pin. The B74 display variant requires the reset pin.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "busy_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The BUSY pin. Defaults to not connected.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "full_update_every": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint32_t",
+              "docs": "**int**: E-Paper displays have two modes of switching to the next image: A partial update that only changes the pixels that have changed and a full update mode that first clears the entire display and then re-draws the image. The former is much quicker and nicer, but every so often a full update needs to happen because artifacts accumulate. On the `1.54in`, `1.54inv2`, `2.13in`, `2.90in` and `2.90inv2` models you have the option to switch only do a full-redraw every x-th time using this option. Defaults to `30` on the described models and a full update for all other models.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "reset_duration": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Duration for the display reset operation. Defaults to `200ms`. Setting this value to `2ms` may resolve issues with newer e-Paper Driver modules (e.g. Rev 2.1).\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`, use `never` to only manually update the screen via `component.update`.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [SPI Component](https://esphome.io/components/spi.html#spi) if you want to use multiple SPI buses.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

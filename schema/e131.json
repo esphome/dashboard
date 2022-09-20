@@ -1,0 +1,32 @@
+{
+  "e131": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "e131::E131Component",
+                "parents": [
+                  "Component"
+                ]
+              }
+            },
+            "method": {
+              "key": "Optional",
+              "default": "MULTICAST",
+              "type": "enum",
+              "values": [
+                "UNICAST",
+                "MULTICAST"
+              ],
+              "docs": "Listening method, one of `multicast` or `unicast`. Defaults to `multicast`.\n\n*See also: [E1.31 Component](https://esphome.io/components/light/index.html#e1-31-component)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

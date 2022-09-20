@@ -1,0 +1,192 @@
+{
+  "esp32_ble_tracker": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "esp32_ble_tracker::ESP32BLETracker",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this ESP32 BLE Hub.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "scan_parameters": {
+              "key": "Optional",
+              "default": "{}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "duration": {
+                    "key": "Optional",
+                    "default": "5min",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_seconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration of each complete scan. This has no real impact on the device but can be used to debug the BLE stack. Defaults to `5min`.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+                  },
+                  "interval": {
+                    "key": "Optional",
+                    "default": "320ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval between each consecutive scan window. This is the time the ESP spends on each of the 3 BLE advertising channels. Defaults to `320ms`.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+                  },
+                  "window": {
+                    "key": "Optional",
+                    "default": "30ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time the ESP is actively listening for packets on a channel during each scan interval. If this is close to the `interval` value, the ESP will spend more time listening to packets (but also consume more power). Defaults to `30ms`\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+                  },
+                  "active": {
+                    "key": "Optional",
+                    "default": "True",
+                    "type": "boolean",
+                    "docs": "**boolean**: Whether to actively send scan requests to request more data after having received an advertising packet. With some devices this is necessary to receive all data, but also drains those devices\u2019 power a bit more. Some devices don\u2019t need this, in that case you can save power and RF pollution by setting it to `false`. Defaults to `true`.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+                  },
+                  "continuous": {
+                    "key": "Optional",
+                    "default": "True",
+                    "type": "boolean",
+                    "docs": "**boolean**: Whether to scan continuously (forever) or to only scan when asked to start a scan (with start_scan action). Defaults to `true`.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Advanced parameters for configuring the scan behavior of the ESP32. See also [this guide by Texas Instruments](https://dev.ti.com/tirex/explore/content/simplelink_academy_cc2640r2sdk_5_10_02_00/modules/blestack/ble_scan_adv_basic/ble_scan_adv_basic.html#scanning-basics) for reference.\n  * **interval** (*Optional*, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The interval between each consecutive scan window. This is the time the ESP spends on each of the 3 BLE advertising channels. Defaults to `320ms`.\n  \n  * **window** (*Optional*, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The time the ESP is actively listening for packets on a channel during each scan interval. If this is close to the `interval` value, the ESP will spend more time listening to packets (but also consume more power). Defaults to `30ms`\n  \n  * **duration** (*Optional*, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The duration of each complete scan. This has no real impact on the device but can be used to debug the BLE stack. Defaults to `5min`.\n  \n  * **active** (*Optional*, boolean): Whether to actively send scan requests to request more data after having received an advertising packet. With some devices this is necessary to receive all data, but also drains those devices\u2019 power a bit more. Some devices don\u2019t need this, in that case you can save power and RF pollution by setting it to `false`. Defaults to `true`.\n  \n  * **continuous** (*Optional*, boolean): Whether to scan continuously (forever) or to only scan when asked to start a scan (with start_scan action). Defaults to `true`.\n  \n  \n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "on_ble_advertise": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "mac_address": {
+                    "key": "Optional",
+                    "docs": "**MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-advertise-trigger)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Bluetooth advertising is received. See [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-on-ble-advertise).\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "on_ble_service_data_advertise": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "mac_address": {
+                    "key": "Optional",
+                    "docs": "**MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_service_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-service-data-advertise-trigger)*"
+                  },
+                  "service_uuid": {
+                    "key": "Required",
+                    "docs": "**string**: 16 bit, 32 bit, or 128 bit BLE Service UUID.\n\n*See also: [on_ble_service_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-service-data-advertise-trigger)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Bluetooth advertising with service data is received. See [on_ble_service_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-on-ble-service-data-advertise).\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "on_ble_manufacturer_data_advertise": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "mac_address": {
+                    "key": "Optional",
+                    "docs": "**MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_manufacturer_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger)*"
+                  },
+                  "manufacturer_id": {
+                    "key": "Required",
+                    "docs": "**string**: 16 bit, 32 bit, or 128 bit BLE Manufacturer ID.\n\n*See also: [on_ble_manufacturer_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Bluetooth advertising with manufacturer data is received. See [on_ble_manufacturer_data_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-on-ble-manufacturer-data-advertise).\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "on_scan_end": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a BLE scan has completed (the duration of the scan). This works with continuous set to true or false.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      },
+      "ESP_BLE_DEVICE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "esp32_ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "start_scan": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            },
+            "continuous": {
+              "key": "Optional",
+              "default": "False",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: Whether to start the scan in continuous mode. Defaults to `false`\n\n*See also: [on_scan_end Trigger](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-start-scan-action)*"
+            }
+          }
+        },
+        "docs": "Start a Bluetooth scan. If there is a scan already in progress, then the action is ignored.\n\n*See also: [`esp32_ble_tracker.start_scan` Action](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-start-scan-action)*"
+      },
+      "stop_scan": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            }
+          }
+        },
+        "maybe": "id",
+        "docs": "Stops the bluetooth scanning. It can be started again with the above start scan action.\n\n*See also: [`esp32_ble_tracker.stop_scan` Action](https://esphome.io/components/esp32_ble_tracker.html#esp32-ble-tracker-stop-scan-action)*"
+      }
+    }
+  }
+}

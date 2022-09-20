@@ -5,7 +5,7 @@ import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
-import { openEditDialog } from "../legacy";
+import { openEditDialog } from "../editor";
 import { openUpdateAllDialog } from "../update-all";
 import { SECRETS_FILE } from "../api/secrets";
 

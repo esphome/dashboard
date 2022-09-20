@@ -1,0 +1,495 @@
+{
+  "binary_sensor": {
+    "components": {
+      "analog_threshold": {
+        "docs": "The `analog_threshold` binary sensor platform allows you to convert analog values (i.e. [sensor](https://esphome.io/components/sensor/index.html) readings) into boolean values, using a threshold as a reference. When the signal is above or equal to the threshold the binary sensor is `true` (this behavior can be changed by adding an `invert` filter).\n\n*See also: [Analog Threshold Binary Sensor](https://esphome.io/components/binary_sensor/analog_threshold.html#analog-threshold-binary-sensor)*"
+      },
+      "apds9960": {
+        "dependencies": [
+          "apds9960"
+        ],
+        "docs": "The `apds9960` binary sensor allows you to use your [APDS9960 Sensor to perform different measurements.\n\n*See also: [apds9960 Binary Sensor](https://esphome.io/components/sensor/apds9960.html#binary-sensor)*"
+      },
+      "as3935": {
+        "dependencies": [
+          "as3935"
+        ],
+        "docs": "Binary sensor that indicates if a lightning strike was detected.\n\n*See also: [as3935 Binary Sensor](https://esphome.io/components/sensor/as3935.html#binary-sensor)*"
+      },
+      "ble_presence": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ],
+        "docs": "The `ble_presence` binary sensor platform lets you track the presence of a Bluetooth Low Energy device.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#esp32-bluetooth-low-energy-device)*"
+      },
+      "cap1188": {
+        "dependencies": [
+          "cap1188"
+        ],
+        "docs": "The `cap1188` binary sensor allows you to use your CAP1188 with ESPHome. First, setup a [Component/Hub](https://esphome.io/components/binary_sensor/cap1188.html#cap1188-component) and then use this binary sensor platform to create individual binary sensors for each touch sensor.\n\n*See also: [cap1188 Binary Sensor](https://esphome.io/components/binary_sensor/cap1188.html#binary-sensor)*"
+      },
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The binary sensor that should be mirrored.\n\n*See also: [Copy Binary Sensor](https://esphome.io/components/copy.html#copy-binary-sensor)*"
+      },
+      "custom": {
+        "docs": "This integration can be used to create custom binary sensors in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Binary Sensor](https://esphome.io/components/binary_sensor/custom.html#custom-binary-sensor)*"
+      },
+      "daly_bms": {
+        "docs": "Binary sensor that indicates the status of MOS.\n\n*See also: [daly_bms Binary Sensor](https://esphome.io/components/sensor/daly_bms.html#binary-sensor)*"
+      },
+      "esp32_touch": {
+        "dependencies": [
+          "esp32_touch",
+          "esp32"
+        ],
+        "docs": "The `esp32_touch` binary sensor platform lets you use the touch peripheral of the ESP32 to detect if a certain pin is being \u201ctouched\u201d.\n\n*See also: [esp32_touch Binary Sensor](https://esphome.io/components/binary_sensor/esp32_touch.html#binary-sensor)*"
+      },
+      "fingerprint_grow": {
+        "dependencies": [
+          "fingerprint_grow"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [fingerprint_grow Binary Sensor](https://esphome.io/components/fingerprint_grow.html#binary-sensor)*"
+      },
+      "gpio": {
+        "docs": "The GPIO Binary Sensor platform allows you to use any input pin on your device as a binary sensor.\n\n*See also: [GPIO Binary Sensor](https://esphome.io/components/binary_sensor/gpio.html#gpio-binary-sensor)*"
+      },
+      "homeassistant": {
+        "dependencies": [
+          "api"
+        ],
+        "docs": "The `homeassistant` binary sensor platform allows you to create binary sensors that **import** states from your Home Assistant instance using the [native API](https://esphome.io/components/api.html).\n\n*See also: [Home Assistant Binary Sensor](https://esphome.io/components/binary_sensor/homeassistant.html#home-assistant-binary-sensor)*"
+      },
+      "hydreon_rgxx": {
+        "docs": "The `hydreon_rgxx` binary sensor platform gives access to information provided by a Hydreon Rain Sensor. For this sensor to work, a [Hydreon Rain Sensor](https://esphome.io/components/sensor/hydreon_rgxx.html) must be set up.\n\n*See also: [Hydreon Rain Sensor Binary Sensor](https://esphome.io/components/binary_sensor/hydreon_rgxx.html#hydreon-rain-sensor-binary-sensor)*"
+      },
+      "modbus_controller": {
+        "dependencies": [
+          "modbus_controller"
+        ],
+        "docs": "The `modbus_controller` binary sensor platform creates a binary sensor from a modbus_controller component and requires [Modbus Controller](https://esphome.io/components/modbus_controller.html) to be configured.\n\n*See also: [Modbus Controller Binary Sensor](https://esphome.io/components/binary_sensor/modbus_controller.html#modbus-controller-binary-sensor)*"
+      },
+      "mpr121": {
+        "dependencies": [
+          "mpr121"
+        ],
+        "docs": "The `mpr121` binary sensor allows you to use your MPR121 with ESPHome. First, setup a [Component/Hub](https://esphome.io/components/binary_sensor/mpr121.html#mpr121-component) and then use this binary sensor platform to create individual binary sensors for each touch sensor.\n\n*See also: [mpr121 Binary Sensor](https://esphome.io/components/binary_sensor/mpr121.html#binary-sensor)*"
+      },
+      "nextion": {
+        "docs": "The `nextion` binary sensor platform supports the many switched components in the Nextion as well as integer variables (>0 == true). It can be a component or variable in the Nextion display. It is best to set the components vscope to global in the Nextion Editor. This way the component will be available if the page is shown or not.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#nextion-binary-sensor-component)*"
+      },
+      "pipsolar": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "All sensors are normal binary sensors\u2026 so all binary sensor variables are working to.\n\n*See also: [pipsolar Binary Sensor](https://esphome.io/components/pipsolar.html#binary-sensor)*"
+      },
+      "pn532": {
+        "dependencies": [
+          "pn532"
+        ],
+        "docs": "The `pn532` binary sensor platform lets you track if an NFC/RFID tag with a given unique id (`uid`) is currently being detected by the PN532 or not.\n\n*See also: [pn532 Binary Sensor](https://esphome.io/components/binary_sensor/pn532.html#pn532-binary-sensor)*"
+      },
+      "rc522": {
+        "dependencies": [
+          "rc522"
+        ],
+        "docs": "The `rc522` binary sensor platform lets you track if an RFID tag with a given unique id (`uid`) is currently being detected by the RC522 or not.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor)*"
+      },
+      "rc522_spi": {
+        "dependencies": [
+          "rc522"
+        ]
+      },
+      "rdm6300": {
+        "dependencies": [
+          "rdm6300"
+        ],
+        "docs": "The `rdm6300` binary sensor platform lets you track if an NFC/RFID tag with a given unique id (`uid`) is currently being detected by the RDM6300 or not.\n\n*See also: [rdm6300 Binary Sensor](https://esphome.io/components/binary_sensor/rdm6300.html#rdm6300-binary-sensor)*"
+      },
+      "remote_receiver": {
+        "dependencies": [
+          "remote_receiver"
+        ],
+        "docs": "The `remote_receiver` binary sensor lets you track when a button on a remote control is pressed.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#binary-sensor)*"
+      },
+      "sim800l": {
+        "dependencies": [
+          "sim800l"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [sim800l Binary Sensor](https://esphome.io/components/sim800l.html#binary-sensor)*"
+      },
+      "status": {
+        "docs": "The Status Binary Sensor exposes the node state (if it\u2019s connected to via MQTT/native API) for Home Assistant.\n\n*See also: [Status Binary Sensor](https://esphome.io/components/binary_sensor/status.html#status-binary-sensor)*"
+      },
+      "sx1509": {
+        "dependencies": [
+          "sx1509"
+        ],
+        "docs": "To use the individual keys on the keypad you need to add individual binary_sensor entries in the config.\n\n*See also: [sx1509 Binary Sensor](https://esphome.io/components/sx1509.html#binary-sensor)*"
+      },
+      "template": {
+        "docs": "The `template` binary sensor platform allows you to define any [lambda template](https://esphome.io/guides/automations.html#config-lambda) and construct a binary sensor out if it. The lambda will run continuously; it isn\u2019t possible to specify an interval at which the lambda runs.\n\n*See also: [Template Binary Sensor](https://esphome.io/components/binary_sensor/template.html#template-binary-sensor)*"
+      },
+      "tm1637": {
+        "docs": "The TM1637 LED display controller also includes a special circuit with keyboard scan interface and enhanced identification circuit with anti-interference keys. This circuit uses the 8 segment lines that also drive the LED display. But combined with the K1 and K2 pins we can add 16 keys that can be used as binary sensors in esphome.\n\n*See also: [tm1637 Binary Sensor](https://esphome.io/components/display/tm1637.html#binary-sensor)*"
+      },
+      "tm1638": {},
+      "touchscreen": {
+        "dependencies": [
+          "touchscreen"
+        ],
+        "docs": "The `touchscreen` binary sensor allows you to setup areas on the touch screen as virtual buttons.\n\n*See also: [touchscreen Binary Sensor](https://esphome.io/components/touchscreen/index.html#binary-sensor)*"
+      },
+      "ttp229_bsf": {
+        "dependencies": [
+          "ttp229_bsf"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [ttp229_bsf Binary Sensor](https://esphome.io/components/binary_sensor/ttp229.html#ttp229-bsf-binary-sensor)*"
+      },
+      "ttp229_lsf": {
+        "dependencies": [
+          "ttp229_lsf"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [ttp229_lsf Binary Sensor](https://esphome.io/components/binary_sensor/ttp229.html#ttp229-lsf-binary-sensor)*"
+      },
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` binary sensor platform creates a binary sensor from a tuya component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Binary Sensor](https://esphome.io/components/binary_sensor/tuya.html#tuya-binary-sensor)*"
+      },
+      "xiaomi_cgpr1": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ]
+      },
+      "xiaomi_mjyd02yla": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ]
+      },
+      "xiaomi_mue4094rt": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ]
+      },
+      "xiaomi_rtcgq02lm": {
+        "dependencies": [
+          "xiaomi_rtcgq02lm"
+        ]
+      },
+      "xiaomi_wx08zm": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ]
+      },
+      "xpt2046": {
+        "dependencies": [
+          "xpt2046"
+        ],
+        "docs": "The `xpt2046` binary sensor allows you to setup areas on the touch screen as virtual buttons. First, setup a [Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#xpt2046-component) and then use this binary sensor platform to create individual binary sensors for each virtual button.\n\n*See also: [xpt2046 Binary Sensor](https://esphome.io/components/binary_sensor/xpt2046.html#binary-sensor)*"
+      }
+    },
+    "schemas": {
+      "BINARY_SENSOR_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "binary_sensor::BinarySensor",
+                "parents": [
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [sim800l Binary Sensor](https://esphome.io/components/sim800l.html#binary-sensor)*"
+            },
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTBinarySensorComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "publish_initial_state": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: If true, then the sensor will publish its initial state at boot or when HA first connects, depending on the platform.  This means that any applicable triggers will be run. Defaults to `false`.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "device_class": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "",
+                "battery",
+                "battery_charging",
+                "carbon_monoxide",
+                "cold",
+                "connectivity",
+                "door",
+                "garage_door",
+                "gas",
+                "heat",
+                "light",
+                "lock",
+                "moisture",
+                "motion",
+                "moving",
+                "occupancy",
+                "opening",
+                "plug",
+                "power",
+                "presence",
+                "problem",
+                "running",
+                "safety",
+                "smoke",
+                "sound",
+                "tamper",
+                "update",
+                "vibration",
+                "window"
+              ],
+              "docs": "**string**: The device class for the sensor. See [https://developers.home-assistant.io/docs/core/entity/binary-sensor/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/binary-sensor/#available-device-classes) for a list of available options.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "filters": {
+              "key": "Optional",
+              "type": "registry",
+              "schema": {},
+              "is_list": true,
+              "registry": "binary_sensor.filter",
+              "docs": "**list**: A list of filters to apply on the binary sensor values such as inverting signals. See [Binary Sensor Filters](https://esphome.io/components/binary_sensor/index.html#binary-sensor-filters).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_press": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is pressed. See [on_press](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-press).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_release": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is released. See [on_release](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-release).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_click": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "min_length": {
+                    "key": "Optional",
+                    "default": "50ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The minimum duration the click should last. Defaults to `50ms`.\n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-click)*"
+                  },
+                  "max_length": {
+                    "key": "Optional",
+                    "default": "350ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The maximum duration the click should last. Defaults to `350ms`.\n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-click)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is held down for a specified period of time. See [on_click](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-click).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_double_click": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "min_length": {
+                    "key": "Optional",
+                    "default": "50ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The minimum duration the click should last. Defaults to `50ms`.\n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-double-click)*"
+                  },
+                  "max_length": {
+                    "key": "Optional",
+                    "default": "350ms",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The maximum duration the click should last. Defaults to `350ms`.\n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-double-click)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is pressed twice for specified periods of time. See [on_double_click](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-double-click).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_multi_click": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "timing": {
+                    "key": "Required",
+                    "docs": "The timing of the multi click. This uses a language-based grammar using these styles:\n  * `<ON/OFF> for <TIME> to <TIME>`\n  \n  * `<ON/OFF> for at least <TIME>`\n  \n  * `<ON/OFF> for at most <TIME>`\n  \n  \n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-multi-click)*"
+                  },
+                  "invalid_cooldown": {
+                    "key": "Optional",
+                    "default": "1s",
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_milliseconds"
+                      ]
+                    },
+                    "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If a multi click is started, but the timing set in `timing` does not match, a \u201ccool down\u201d period will be activated during which no timing will be matched. Defaults to `1s`.\n\n*See also: [lambda](https://esphome.io/components/binary_sensor/index.html#on-multi-click)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is pressed in a specific sequence. See [on_multi_click](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-multi-click).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            },
+            "on_state": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a state change is published. See [on_state](https://esphome.io/components/binary_sensor/index.html#binary-sensor-on-state).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
+            }
+          }
+        }
+      },
+      "BINARY_SENSOR_CONDITION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "condition": {
+      "is_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_CONDITION_SCHEMA"
+          ]
+        }
+      },
+      "is_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_CONDITION_SCHEMA"
+          ]
+        }
+      }
+    },
+    "filter": {
+      "invert": {
+        "docs": "Simple filter that just inverts every value from the binary sensor.\n\n*See also: [`invert`](https://esphome.io/components/binary_sensor/index.html#invert)*"
+      },
+      "delayed_on_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.positive_time_period_milliseconds"
+          ]
+        },
+        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Only send an ON or OFF value if the binary sensor has stayed in the same state for at least the specified time period. **Useful for debouncing binary switches**.\n\n*See also: [`delayed_on_off`](https://esphome.io/components/binary_sensor/index.html#delayed-on-off)*"
+      },
+      "delayed_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.positive_time_period_milliseconds"
+          ]
+        },
+        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: When a signal ON is received, wait for the specified time period until publishing an ON state. If an OFF value is received while waiting, the ON action is discarded. Or in other words: Only send an ON value if the binary sensor has stayed ON for at least the specified time period. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_on`](https://esphome.io/components/binary_sensor/index.html#delayed-on)*"
+      },
+      "delayed_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.positive_time_period_milliseconds"
+          ]
+        },
+        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: When a signal OFF is received, wait for the specified time period until publishing an OFF state. If an ON value is received while waiting, the OFF action is discarded. Or in other words: Only send an OFF value if the binary sensor has stayed OFF for at least the specified time period. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_off`](https://esphome.io/components/binary_sensor/index.html#delayed-off)*"
+      },
+      "autorepeat": {
+        "is_list": true,
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "delay": {
+              "key": "Optional",
+              "default": "1s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Delay to proceed to the next timing. Defaults to `1s`.\n\n*See also: [autorepeat](https://esphome.io/components/binary_sensor/index.html#autorepeat)*"
+            },
+            "time_off": {
+              "key": "Optional",
+              "default": "100ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Interval to hold the output at OFF. Defaults to `100ms`.\n\n*See also: [autorepeat](https://esphome.io/components/binary_sensor/index.html#autorepeat)*"
+            },
+            "time_on": {
+              "key": "Optional",
+              "default": "900ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Interval to hold the output at ON. Defaults to `900ms`.\n\n*See also: [autorepeat](https://esphome.io/components/binary_sensor/index.html#autorepeat)*"
+            }
+          }
+        },
+        "docs": "A filter implementing the autorepeat behavior. The filter is parametrized by a list of timing descriptions. When a signal ON is received it is passed to the output and the first `delay` is started. When this interval expires the output is turned OFF and toggles using the `time_off` and `time_on` durations for the OFF and ON state respectively. At the same time the `delay` of the second timing description is started and the process is repeated until the list is exhausted, in which case the timing of the last description remains in use. Receiving an OFF signal stops the whole process and immediately outputs OFF.\n\n*See also: [`autorepeat`](https://esphome.io/components/binary_sensor/index.html#autorepeat)*"
+      },
+      "lambda": {
+        "docs": "Specify any [lambda](https://esphome.io/guides/automations.html#config-lambda) for more complex filters. The input value from the binary sensor is `x` and you can return `true` for ON, `false` for OFF, and `{}` to stop the filter chain.\n\n*See also: [`lambda`](https://esphome.io/components/binary_sensor/index.html#lambda)*"
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "packages": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "key": "String",
+        "key_type": "<class 'str'>",
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "string": {
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "url": {
+                    "key": "Required"
+                  },
+                  "username": {
+                    "key": "Optional",
+                    "type": "string"
+                  },
+                  "password": {
+                    "key": "Optional",
+                    "type": "string"
+                  },
+                  "file": {
+                    "key": "Optional"
+                  },
+                  "files": {
+                    "key": "Optional",
+                    "is_list": true
+                  },
+                  "ref": {
+                    "key": "Optional"
+                  },
+                  "refresh": {
+                    "key": "Optional",
+                    "default": "1d",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

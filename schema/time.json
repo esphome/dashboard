@@ -1,0 +1,118 @@
+{
+  "time": {
+    "components": {
+      "ds1307": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "You first need to set up the [I2C](https://esphome.io/components/i2c.html) component.\n\n*See also: [DS1307 Time Source](https://esphome.io/components/time.html#ds1307-time-source)*"
+      },
+      "gps": {
+        "dependencies": [
+          "gps"
+        ],
+        "docs": "You first need to set up the [GPS](https://esphome.io/components/gps.html) component.\n\n*See also: [GPS Time Source](https://esphome.io/components/time.html#gps-time-source)*"
+      },
+      "homeassistant": {
+        "dependencies": [
+          "api"
+        ],
+        "docs": "The preferred way to get time in ESPHome is using Home Assistant. With the `homeassistant` time platform, the [native API](https://esphome.io/components/api.html) connection to Home Assistant will be used to periodically synchronize the current time.\n\n*See also: [Home Assistant Time Source](https://esphome.io/components/time.html#home-assistant-time-source)*"
+      },
+      "sntp": {
+        "dependencies": [
+          "network"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [SNTP Time Source](https://esphome.io/components/time.html#sntp-time-source)*"
+      }
+    },
+    "schemas": {
+      "TIME_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "timezone": {
+              "key": "Optional",
+              "default": "<-03>3",
+              "docs": "**string**: Manually tell ESPHome what time zone to use with [this format](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html) (warning: the format is quite complicated) or the simpler [TZ database name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) in the form <Region>/<City>. ESPHome tries to automatically infer the time zone string based on the time zone of the computer that is running ESPHome, but this might not always be accurate.\n\n*See also: [Base Time Configuration](https://esphome.io/components/time.html#configuration-variables)*"
+            },
+            "on_time": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "seconds": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which seconds of the minute the automation will trigger. Defaults to `*` (all seconds). Range is from 0 to 59.\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "minutes": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which minutes of the hour the automation will trigger. Defaults to `*` (all minutes). Range is from 0 to 59.\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "hours": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which hours of the day the automation will trigger. Defaults to `*` (all hours). Range is from 0 to 23.\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "days_of_month": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which days of the month the automation will trigger. Defaults to `*` (all days). Range is from 1 to 31.\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "months": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which months of the year to trigger. Defaults to `*` (all months). The month names JAN to DEC are automatically substituted. Range is from 1 (January) to 12 (December).\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "days_of_week": {
+                    "key": "Optional",
+                    "docs": "**string**: Specify for which days of the week to trigger. Defaults to `*` (all days). The names SUN to SAT are automatically substituted. Range is from 1 (Sunday) to 7 (Saturday).\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "cron": {
+                    "key": "Optional",
+                    "docs": "**string**: Alternatively, you can specify a whole cron expression like `* /5 * * * *`. Please note years and some special characters like `L`, `#` are currently not supported.\n\n*See also: [on_time Trigger](https://esphome.io/components/time.html#on-time-trigger)*"
+                  },
+                  "at": {
+                    "key": "Optional"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: Automation to run at specific intervals using a cron-like syntax. See [on_time Trigger](https://esphome.io/components/time.html#time-on-time).\n\n*See also: [Base Time Configuration](https://esphome.io/components/time.html#configuration-variables)*"
+            },
+            "on_time_sync": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: Automation to run when the time source could be (re-)synchronized.. See [on_time_sync Trigger](https://esphome.io/components/time.html#time-on-time-sync).\n\n*See also: [Base Time Configuration](https://esphome.io/components/time.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "15min"
+            },
+            "id": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Specify the ID of the time for use in lambdas.\n\n*See also: [Base Time Configuration](https://esphome.io/components/time.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "has_time": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "time::RealTimeClock",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if time has been set and is valid.\n\n*See also: [`time.has_time` Condition](https://esphome.io/components/time.html#time-has-time-condition)*"
+      }
+    }
+  }
+}

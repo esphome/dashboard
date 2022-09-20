@@ -1,0 +1,290 @@
+{
+  "ble_client": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ble_client::BLEClient",
+                "parents": [
+                  "Component",
+                  "esp32_ble_tracker::ESPBTClient"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
+            },
+            "mac_address": {
+              "key": "Required",
+              "docs": "**MAC Address**: The MAC address of the BLE device to connect to.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
+            },
+            "name": {
+              "key": "Optional",
+              "type": "string"
+            },
+            "on_connect": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the client connects to a device. See [on_connect](https://esphome.io/components/ble_client.html#ble-client-on-connect).\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
+            },
+            "on_disconnect": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the client disconnects from a device. See [on_disconnect](https://esphome.io/components/ble_client.html#ble-client-on-disconnect).\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
+            },
+            "esp32_ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      },
+      "BLE_CLIENT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "ble_client_id": {
+              "key": "Required",
+              "use_id_type": "ble_client::BLEClient",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "ble_write": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "ble_client::BLEClient",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
+            },
+            "service_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service to write to.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
+            },
+            "characteristic_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service\u2019s characteristic to write to.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
+            },
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "is_list": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**Array of bytes or [lambda](https://esphome.io/guides/automations.html#config-lambda)**: The value to be written.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
+            }
+          }
+        },
+        "docs": "This action triggers a write to a specified BLE characteristic. The write is attempted in a best-effort fashion and will only succeed if the `ble_client`\u2019s  connection has been established and the peripheral exposes the expected BLE service and characteristic.\n\n*See also: [`ble_client.ble_write` Action](https://esphome.io/components/ble_client.html#ble-client-ble-write-action)*"
+      }
+    }
+  },
+  "ble_client.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "ble_client.BLE_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ble_client::BLESensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "ble_client::BLEClientNode"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            },
+            "service_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service on the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "characteristic_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service\u2019s characteristic to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "descriptor_uuid": {
+              "key": "Optional",
+              "docs": "**UUID**: UUID of the characteristic\u2019s descriptor to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "lambda": {
+              "key": "Optional",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The lambda to use for converting a raw data reading to a sensor value. See [Raw Data Parsing Lambda](https://esphome.io/components/sensor/ble_client.html#ble-sensor-lambda) for more information.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "notify": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Instruct the server to send notifications for this characteristic.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "on_notify": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a notify message is received from the device. See [on_notify](https://esphome.io/components/sensor/ble_client.html#ble-sensor-on-notify).\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to poll the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "ble_client.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.BINARY_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "ble_client.BLE_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "ble_client::BLEBinaryOutput",
+                "parents": [
+                  "output::BinaryOutput",
+                  "ble_client::BLEClientNode",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Binary Output](https://esphome.io/components/output/ble_client.html#configuration-variables)*"
+            },
+            "service_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service on the device.\n\n*See also: [BLE Client Binary Output](https://esphome.io/components/output/ble_client.html#configuration-variables)*"
+            },
+            "characteristic_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service\u2019s characteristic to write to.\n\n*See also: [BLE Client Binary Output](https://esphome.io/components/output/ble_client.html#configuration-variables)*"
+            },
+            "require_response": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Control whether to require a remote response from the device when writing. Whether or not this is required will vary by device. Defaults to `false`\n\n*See also: [BLE Client Binary Output](https://esphome.io/components/output/ble_client.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "ble_client.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "ble_client.BLE_CLIENT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ble_client::BLEClientSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component",
+                  "ble_client::BLEClientNode"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Switch](https://esphome.io/components/switch/ble_client.html#configuration-variables)*"
+            },
+            "icon": {
+              "default": "mdi:bluetooth"
+            }
+          }
+        }
+      }
+    }
+  },
+  "ble_client.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "text_sensor.TEXT_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "ble_client.BLE_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ble_client::BLETextSensor",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "ble_client::BLEClientNode"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "service_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service on the device.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "characteristic_uuid": {
+              "key": "Required",
+              "docs": "**UUID**: UUID of the service\u2019s characteristic to query.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "descriptor_uuid": {
+              "key": "Optional",
+              "docs": "**UUID**: UUID of the characteristic\u2019s descriptor to query.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "notify": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Instruct the server to send notifications for this characteristic. Defaults to `false`.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "on_notify": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a notify message is received from the device. See [on_notify](https://esphome.io/components/text_sensor/ble_client.html#ble-text-sensor-on-notify).\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to poll the device. Defaults to `60s`.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

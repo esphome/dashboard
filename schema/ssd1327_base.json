@@ -1,0 +1,44 @@
+{
+  "ssd1327_base": {
+    "schemas": {
+      "SSD1327_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "model": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "SSD1327_128X128"
+              ],
+              "docs": "The model of the display. At present, only one option is available:\n  * `SSD1327 128x128`\n  \n  \n\n*See also: [ssd1327 Over SPI](https://esphome.io/components/display/ssd1327.html#id1)*"
+            },
+            "reset_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The RESET pin. Defaults to not connected.\n\n*See also: [ssd1327 Over SPI](https://esphome.io/components/display/ssd1327.html#id1)*"
+            },
+            "brightness": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**percentage**: Set display brightness in %. Defaults to `100%`\n\n*See also: [ssd1327 Over SPI](https://esphome.io/components/display/ssd1327.html#id1)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `5s`.\n\n*See also: [ssd1327 Over SPI](https://esphome.io/components/display/ssd1327.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "bedjet": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.COMPONENT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "bedjet::BedJetHub",
+                "parents": [
+                  "ble_client::BLEClientNode",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
+            },
+            "time_id": {
+              "key": "Optional",
+              "use_id_type": "time::RealTimeClock",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of a [Time Component](https://esphome.io/components/time.html#time) which can be used to set the time on the BedJet device.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
+            },
+            "receive_timeout": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "ble_client_id": {
+              "key": "Required",
+              "use_id_type": "ble_client::BLEClient",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the BLE Client.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "15s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to dispatch status changes to child components. Defaults to `5s`. Each child component can decide whether to publish its own updated state on this interval, or use another (longer) update interval to throttle its own updates.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
+            }
+          }
+        },
+        "is_list": true
+      },
+      "BEDJET_CLIENT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bedjet_id": {
+              "key": "Required",
+              "use_id_type": "bedjet::BedJetHub",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Bedjet component.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "bedjet.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "bedjet.BEDJET_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "bedjet::BedJetClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*"
+            },
+            "heat_mode": {
+              "key": "Optional",
+              "default": "heat",
+              "type": "enum",
+              "values": [
+                "heat",
+                "extended"
+              ],
+              "docs": "**string**: The primary heating mode to use for `HVACMode.HEAT`:\n  * `heat` (Default) - Setting `hvac_mode=heat` uses the BedJet \u201cHEAT\u201d mode.\n  \n  * `extended` - Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode.\n  \n  Whichever is not selected will be made available as a custom preset.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*",
+              "values_docs": {
+                "extended": "Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode."
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            }
+          }
+        }
+      }
+    }
+  },
+  "bedjet.fan": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fan.FAN_SCHEMA",
+            "core.COMPONENT_SCHEMA",
+            "bedjet.BEDJET_CLIENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "bedjet::BedJetFan",
+                "parents": [
+                  "fan::Fan",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            }
+          }
+        }
+      }
+    }
+  }
+}

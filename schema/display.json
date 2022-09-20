@@ -1,0 +1,232 @@
+{
+  "display": {
+    "components": {
+      "addressable_light": {
+        "docs": "The `addressable_light` display platform allows to display text and graphics on an addressable light that has been arranged in a display matrix.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#addressable-light)*"
+      },
+      "ili9341": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `ili9341` display platform allows you to use ILI9341 ([datasheet](https://cdn-shop.adafruit.com/datasheets/ILI9341.pdf), [Aliexpress](https://www.aliexpress.com/af/Ili9341.html)) displays with ESPHome. As this is a somewhat higher resolution display and may require pins beyond the typical SPI connections, it is better suited for use with the ESP32.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#ili9341-tft-lcd)*"
+      },
+      "inkplate6": {
+        "dependencies": [
+          "i2c",
+          "esp32"
+        ],
+        "docs": "All-in-one e-paper display `Inkplate 6`, `Inkplate 10` and `Inkplate 6 Plus`.\n\n*See also: [Inkplate 6, 10 and 6 Plus](https://esphome.io/components/display/inkplate6.html#inkplate-6-10-and-6-plus)*"
+      },
+      "lcd_gpio": {
+        "docs": "The `lcd_gpio` display platform allows you to use standard character-based LCD displays like [this one](https://www.adafruit.com/product/181) with ESPHome. This integration is only for LCD displays that display individual characters on a screen (usually 16-20 columns and 2-4 rows), and not for LCD displays that can control each pixel individually. Also, this is the GPIO version of the LCD integration where each of the data pins of the LCD needs a dedicated GPIO pin on the ESP. These LCD displays are also commonly sold with a PCF8574 chip which only need two lines to the ESP, for that see [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#lcd-pcf8574).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio-component)*"
+      },
+      "lcd_pcf8574": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `lcd_pcf8574` display platform allows you to use standard character-based LCD displays like [this one](https://docs.labs.mediatek.com/resource/linkit7697-arduino/en/tutorial/driving-1602-lcd-with-pcf8574-pcf8574a) with ESPHome. This integration is only for LCD displays that display individual characters on a screen (usually 16-20 columns and 2-4 rows), and not for LCD displays that can control each pixel individually.\n\n*See also: [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#lcd-pcf8574-component)*"
+      },
+      "max7219": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `max7219` display platform allows you to use MAX7219 7-segment display drivers ( [datasheet](https://datasheets.maximintegrated.com/en/ds/MAX7219-MAX7221.pdf), [hobbycomponents](https://hobbycomponents.com/displays/597-max7219-8-digit-seven-segment-display-module)) with ESPHome. Please note that this integration is *only* for 7-segment display, not matrix configurations.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#max7219-7-segment-display)*"
+      },
+      "max7219digit": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `max7219` display platform allows you to use MAX7219 digit with ESPHome. Please note that this integration is *only* for the digit \u201cmatrix\u201d display, for the 7 segment display see [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html).\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#max7219-digit-display)*"
+      },
+      "nextion": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "The `nextion` display platform allows you to use Nextion LCD displays ([datasheet](https://nextion.itead.cc/resources/datasheets/), [iTead](https://www.itead.cc/display/nextion.html)) with ESPHome.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#nextion-tft-lcd-display)*"
+      },
+      "pcd8544": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `pcd8544` display platform allows you to use PCD8544 ([Adafruit](https://www.adafruit.com/product/338)) displays with ESPHome. Connection to this display is made using the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [PCD 8544 Display (Nokia 5110/3310)](https://esphome.io/components/display/pcd8544.html#pcd-8544-display-nokia-5110-3310)*"
+      },
+      "pvvx_mithermometer": {
+        "dependencies": [
+          "ble_client"
+        ],
+        "docs": "The `pvvx_mithermometer` display platform allows you to use devices running the [ATC_MiThermometer firmware](https://github.com/pvvx/ATC_MiThermometer) by pvvx as display drivers with ESPHome.\n\n*See also: [PVVX MiThermometer Display](https://esphome.io/components/display/pvvx_mithermometer.html#pvvx-mithermometer-display)*"
+      },
+      "ssd1306_i2c": {
+        "dependencies": [
+          "i2c"
+        ]
+      },
+      "ssd1306_spi": {
+        "dependencies": [
+          "spi"
+        ]
+      },
+      "ssd1322_spi": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `ssd1322_spi` display platform allows you to use SSD1322 ([datasheet](https://www.newhavendisplay.com/specs/NHD-3.12-25664UCW2.pdf), [Newhaven Display](https://www.newhavendisplay.com/nhd31225664ucw2-p-9583.html)) displays with ESPHome. Note that this component is for displays that are connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [ssd1322_spi Component](https://esphome.io/components/display/ssd1322.html#ssd1322-spi-component)*"
+      },
+      "ssd1325_spi": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `ssd1325_spi` display platform allows you to use SSD1325 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1325.pdf), [Adafruit](https://www.adafruit.com/product/2674)) displays with ESPHome. Note that this component is for displays that are connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [ssd1325_spi Component](https://esphome.io/components/display/ssd1325.html#ssd1325-spi-component)*"
+      },
+      "ssd1327_i2c": {
+        "dependencies": [
+          "i2c"
+        ]
+      },
+      "ssd1327_spi": {
+        "dependencies": [
+          "spi"
+        ]
+      },
+      "ssd1331_spi": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `ssd1331_spi` display platform allows you to use SSD1331 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1331_1.2.pdf), [Adafruit](https://www.adafruit.com/product/684)) displays with ESPHome. This component is for displays that are connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [SSD1331 OLED Display](https://esphome.io/components/display/ssd1331.html#ssd1331-oled-display)*"
+      },
+      "ssd1351_spi": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `ssd1351_spi` display platform allows you to use SSD1351 ([datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1351-Revision+1.3.pdf), [Adafruit 128x128](https://www.adafruit.com/product/1431), [Adafruit 128x96](https://www.adafruit.com/product/1673), [Waveshare 128x128](https://www.waveshare.com/product/displays/lcd-oled/lcd-oled-3/1.5inch-rgb-oled-module.htm)) displays with ESPHome. This component is for displays that are connected via the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [ssd1351_spi Component](https://esphome.io/components/display/ssd1351.html#ssd1351-spi-component)*"
+      },
+      "st7735": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "ST7735 Display Driver.\n\n*See also: [ST7735 Display](https://esphome.io/components/display/st7735.html#st7735-display)*"
+      },
+      "st7789v": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `st7789v` display platform allows you to use ST7789V ([datasheet](https://github.com/Xinyuan-LilyGO/TTGO-T-Display), [Tindie](https://www.tindie.com/products/ttgo/lilygor-ttgo-t-display/)) displays with ESPHome. Note that this component utilizes the 4-Wire [SPI bus](https://esphome.io/components/spi.html#spi).\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#st7789v-tft-lcd)*"
+      },
+      "st7920": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `st7920` display platform allows you to use ST7920 ([datasheet](http://www.elecrow.com/download/SPE_IM120424014_EONE_12864_Graphic_LCD.pdf), [electrodragon](https://www.elecrow.com/128x64-graphic-lcd-p-1143.html)) displays with ESPHome. Note that this component is for displays that are connected via the 3-Wire [SPI bus](https://esphome.io/components/spi.html#spi). It\u2019s a monochrome LCD graphic display.\n\n*See also: [ST7920 LCD Graphic Display](https://esphome.io/components/display/st7920.html#st7920-lcd-graphic-display)*"
+      },
+      "tm1621": {
+        "docs": "The `tm1621` display platform allows you to use the popular TM1621 LCD display drivers with ESPHome, that can find in Sonoff device like THR316D, THR320D, POWR316D or POWR320D\n\n*See also: [TM1621 LCD Display](https://esphome.io/components/display/tm1621.html#tm1621-lcd-display)*"
+      },
+      "tm1637": {
+        "docs": "The `tm1637` display platform allows you to use the popular TM1637 7-segment display drivers with ESPHome.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#tm1637-7-segment-display)*"
+      },
+      "tm1638": {
+        "docs": "The `tm1638` display platform allows you to use the popular TM1638 7 Segment Display Keypad & LED Module with ESPHome.\n\n*See also: [TM1638 7 Segment Display Keypad & LED Module](https://esphome.io/components/display/tm1638.html#tm1638-7-segment-display-keypad-led-module)*"
+      },
+      "waveshare_epaper": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `waveshare_epaper` display platform allows you to use some E-Paper displays sold by [Waveshare](https://www.waveshare.com/product/displays/e-paper.htm) with ESPHome. The 2.13\u201d [TTGO module](https://github.com/lewisxhe/TTGO-EPaper-Series) with an ESP32 on the board is supported as well. Depending on your specific revision of the board you might need to try out the `-b73` or `-b1` version (see below). Similar modules sold by other vendors might also work but not have been tested yet. Currently only single-color E-Ink displays are implemented and of those only a few modules.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#waveshare-e-paper-display)*"
+      }
+    },
+    "schemas": {
+      "BASIC_DISPLAY_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "lambda": {
+              "key": "Optional",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The lambda to use for rendering the content on the display. See [Display Rendering Engine](https://esphome.io/components/display/index.html#display-engine) for more information.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            }
+          }
+        }
+      },
+      "FULL_DISPLAY_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA"
+          ],
+          "config_vars": {
+            "rotation": {
+              "key": "Optional",
+              "docs": "Set the rotation of the display. Everything you draw in `lambda:` will be rotated by this option. One of `0\u00b0` (default), `90\u00b0`, `180\u00b0`, `270\u00b0`.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "pages": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "id": {
+                    "key": "GeneratedID",
+                    "id_type": {
+                      "class": "display::DisplayPage",
+                      "parents": []
+                    }
+                  },
+                  "lambda": {
+                    "key": "Required"
+                  }
+                }
+              },
+              "docs": "**list**: Show pages instead of a single lambda. See [Display Pages](https://esphome.io/components/display/index.html#display-pages).\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#configuration-variables)*"
+            },
+            "on_page_change": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "from": {
+                    "key": "Optional",
+                    "use_id_type": "display::DisplayPage",
+                    "type": "use_id"
+                  },
+                  "to": {
+                    "key": "Optional",
+                    "use_id_type": "display::DisplayPage",
+                    "type": "use_id"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              }
+            },
+            "auto_clear_enabled": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to automatically clear the display in each loop (\u2018\u2019true\u2019\u2019, default), or to keep the existing display content (must overwrite explicitly, e.g., only on data change).\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "condition": {
+      "is_displaying_page": {
+        "type": "schema",
+        "maybe": "page_id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "display::DisplayBuffer",
+              "type": "use_id"
+            },
+            "page_id": {
+              "key": "Required",
+              "use_id_type": "display::DisplayPage",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

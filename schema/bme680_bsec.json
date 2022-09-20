@@ -1,0 +1,342 @@
+{
+  "bme680_bsec": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "bme680_bsec::BME680BSECComponent",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "temperature_offset": {
+              "key": "Optional",
+              "default": "0",
+              "docs": "**float**: Temperature offset if device is in enclosure and reads too high. Defaults to `0`.\n\n*See also: [bme680_bsec Component/Hub](https://esphome.io/components/sensor/bme680_bsec.html#component-hub)*"
+            },
+            "iaq_mode": {
+              "key": "Optional",
+              "default": "STATIC",
+              "type": "enum",
+              "values": [
+                "STATIC",
+                "MOBILE"
+              ],
+              "docs": "**string**: IAQ calculation mode. Default is `static` for static applications (e.g. fixed indoor devices). Can be `mobile` for mobile applications (e.g. carry-on devices).\n\n*See also: [bme680_bsec Component/Hub](https://esphome.io/components/sensor/bme680_bsec.html#component-hub)*"
+            },
+            "sample_rate": {
+              "key": "Optional",
+              "default": "LP",
+              "type": "enum",
+              "values": [
+                "LP",
+                "ULP"
+              ],
+              "docs": "**string**: Sample rate. Default is `lp` for low power consumption, sampling every 3 seconds. Can be `ulp` for ultra low power, sampling every 5 minutes. This controls the sampling rate for gas-dependant sensors and will govern the interval at which the sensor heater is operated. By default this rate will also be used for temperature, pressure and humidity sensors but these can be overridden on a per-sensor level if required.\n\n*See also: [bme680_bsec Component/Hub](https://esphome.io/components/sensor/bme680_bsec.html#component-hub)*"
+            },
+            "state_save_interval": {
+              "key": "Optional",
+              "default": "6hours",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_minutes"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The minimum interval at which to save calibrated BSEC algorithm state to flash so that calibration doesn\u2019t have to start from zero on device restart. Defaults to `6h`.\n\n*See also: [bme680_bsec Component/Hub](https://esphome.io/components/sensor/bme680_bsec.html#component-hub)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "118",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I^2C address of the sensor. Defaults to `0x76`. Another address can be `0x77`.\n\n*See also: [bme680_bsec Component/Hub](https://esphome.io/components/sensor/bme680_bsec.html#component-hub)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "bme680_bsec.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bme680_bsec_id": {
+              "key": "GeneratedID",
+              "use_id_type": "bme680_bsec::BME680BSECComponent",
+              "type": "use_id"
+            },
+            "temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "icon": {
+                    "default": "mdi:thermometer"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  },
+                  "sample_rate": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "LP",
+                      "ULP"
+                    ],
+                    "docs": "**string**: Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+                  }
+                }
+              },
+              "docs": "The information for the temperature sensor.\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * **sample_rate** (*Optional*, string): Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "pressure": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "hPa"
+                  },
+                  "icon": {
+                    "default": "mdi:gauge"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "pressure"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  },
+                  "sample_rate": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "LP",
+                      "ULP"
+                    ],
+                    "docs": "**string**: Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+                  }
+                }
+              },
+              "docs": "The information for the pressure sensor.\n  * **name** (**Required**, string): The name for the pressure sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * **sample_rate** (*Optional*, string): Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "humidity": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "icon": {
+                    "default": "mdi:water-percent"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "humidity"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  },
+                  "sample_rate": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "LP",
+                      "ULP"
+                    ],
+                    "docs": "**string**: Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+                  }
+                }
+              },
+              "docs": "The information for the humidity sensor.\n  * **name** (**Required**, string): The name for the humidity sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * **sample_rate** (*Optional*, string): Optional sample rate override for this sensor. Can be `lp` for low power consumption, sampling every 3 seconds or `ulp` for ultra low power, sampling every 5 minutes.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "gas_resistance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u03a9"
+                  },
+                  "icon": {
+                    "default": "mdi:gas-cylinder"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the gas sensor.\n  * **name** (**Required**, string): The name for the gas resistance sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "iaq": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "IAQ"
+                  },
+                  "icon": {
+                    "default": "mdi:gauge"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the IAQ sensor.\n  * **name** (**Required**, string): The name for the IAQ sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "iaq_accuracy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:checkbox-marked-circle-outline"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the numeric IAQ accuracy sensor.\n  * **name** (**Required**, string): The name for the IAQ accuracy sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "co2_equivalent": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "ppm"
+                  },
+                  "icon": {
+                    "default": "mdi:test-tube"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the CO2 equivalent sensor.\n  * **name** (**Required**, string): The name for the CO2 equivalent sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            },
+            "breath_voc_equivalent": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "ppm"
+                  },
+                  "icon": {
+                    "default": "mdi:test-tube"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the Breath VOC equivalent humidity sensor.\n  * **name** (**Required**, string): The name for the Breath VOC equivalent sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "bme680_bsec.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "bme680_bsec_id": {
+              "key": "GeneratedID",
+              "use_id_type": "bme680_bsec::BME680BSECComponent",
+              "type": "use_id"
+            },
+            "iaq_accuracy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:checkbox-marked-circle-outline"
+                  }
+                }
+              },
+              "docs": "The information for the IAQ accuracy sensor. Shows: Stabilizing, Uncertain, Calibrating, Calibrated.\n  * **name** (**Required**, string): The name for the IAQ accuracy sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [TextSensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [bme680_bsec Text Sensor](https://esphome.io/components/sensor/bme680_bsec.html#text-sensor)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

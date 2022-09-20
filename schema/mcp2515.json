@@ -1,0 +1,67 @@
+{
+  "mcp2515.canbus": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "canbus.CANBUS_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "mcp2515::MCP2515",
+                "parents": [
+                  "canbus::CanbusComponent",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              }
+            },
+            "clock": {
+              "key": "Optional",
+              "default": "8MHZ",
+              "type": "enum",
+              "values": [
+                "8MHZ",
+                "16MHZ",
+                "20MHZ"
+              ],
+              "docs": "One of `8MHZ`, `16MHZ` or `20MHZ`. Clock crystal used on the MCP2515 device. Defaults to `8MHZ`.\n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#id3)*"
+            },
+            "mode": {
+              "key": "Optional",
+              "default": "NORMAL",
+              "type": "enum",
+              "values": [
+                "NORMAL",
+                "LOOPBACK",
+                "LISTENONLY"
+              ],
+              "docs": "Operation mode. Default to `NORMAL`\n  * `NORMAL`: Normal operation\n  \n  * `LOOPBACK`: Loopback mode can be used to just test you spi connections to the device\n  \n  * `LISTENONLY`: only receive data\n  \n  \n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#id3)*",
+              "values_docs": {
+                "NORMAL": "Normal operation",
+                "LOOPBACK": "Loopback mode can be used to just test you spi connections to the device",
+                "LISTENONLY": "only receive data"
+              }
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Is used to tell the receiving SPI device when it should listen for data on the SPI bus. Each device has an individual `CS` line. Sometimes also called `SS`.\n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#id3)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

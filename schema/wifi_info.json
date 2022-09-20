@@ -1,0 +1,162 @@
+{
+  "wifi_info.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "ip_address": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA",
+                  "core.COMPONENT_SCHEMA"
+                ],
+                "config_vars": {
+                  "id": {
+                    "id_type": {
+                      "class": "wifi_info::IPAddressWiFiInfo",
+                      "parents": [
+                        "text_sensor::TextSensor",
+                        "EntityBase",
+                        "PollingComponent",
+                        "Component"
+                      ]
+                    }
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  },
+                  "update_interval": {
+                    "key": "Optional",
+                    "default": "1s"
+                  }
+                }
+              },
+              "docs": "Expose the IP Address of the ESP as a text sensor. All options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#configuration-variables)*"
+            },
+            "scan_results": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA",
+                  "core.COMPONENT_SCHEMA"
+                ],
+                "config_vars": {
+                  "id": {
+                    "id_type": {
+                      "class": "wifi_info::ScanResultsWiFiInfo",
+                      "parents": [
+                        "text_sensor::TextSensor",
+                        "EntityBase",
+                        "PollingComponent",
+                        "Component"
+                      ]
+                    }
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  },
+                  "update_interval": {
+                    "key": "Optional",
+                    "default": "60s"
+                  }
+                }
+              },
+              "docs": "Expose the latest networks found during the latest scan. All options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#configuration-variables)*"
+            },
+            "ssid": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA",
+                  "core.COMPONENT_SCHEMA"
+                ],
+                "config_vars": {
+                  "id": {
+                    "id_type": {
+                      "class": "wifi_info::SSIDWiFiInfo",
+                      "parents": [
+                        "text_sensor::TextSensor",
+                        "EntityBase",
+                        "PollingComponent",
+                        "Component"
+                      ]
+                    }
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  },
+                  "update_interval": {
+                    "key": "Optional",
+                    "default": "1s"
+                  }
+                }
+              },
+              "docs": "Expose the SSID of the currently connected WiFi network as a text sensor. All options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#configuration-variables)*"
+            },
+            "bssid": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA",
+                  "core.COMPONENT_SCHEMA"
+                ],
+                "config_vars": {
+                  "id": {
+                    "id_type": {
+                      "class": "wifi_info::BSSIDWiFiInfo",
+                      "parents": [
+                        "text_sensor::TextSensor",
+                        "EntityBase",
+                        "PollingComponent",
+                        "Component"
+                      ]
+                    }
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  },
+                  "update_interval": {
+                    "key": "Optional",
+                    "default": "1s"
+                  }
+                }
+              },
+              "docs": "Expose the BSSID of the currently connected WiFi network as a text sensor. All options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#configuration-variables)*"
+            },
+            "mac_address": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "id": {
+                    "id_type": {
+                      "class": "wifi_info::MacAddressWifiInfo",
+                      "parents": [
+                        "text_sensor::TextSensor",
+                        "EntityBase",
+                        "Component"
+                      ]
+                    }
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              },
+              "docs": "Expose the Mac Address of the WiFi card. All options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

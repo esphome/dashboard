@@ -1,0 +1,68 @@
+{
+  "shutdown.button": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "button.BUTTON_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "icon": {
+              "default": "mdi:power"
+            },
+            "entity_category": {
+              "default": "config"
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "shutdown::ShutdownButton",
+                "parents": [
+                  "button::Button",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Shutdown Button](https://esphome.io/components/button/shutdown.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "shutdown.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "shutdown::ShutdownSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Shutdown Switch](https://esphome.io/components/switch/shutdown.html#configuration-variables)*"
+            },
+            "entity_category": {
+              "default": "config"
+            },
+            "icon": {
+              "default": "mdi:power"
+            }
+          }
+        }
+      }
+    }
+  }
+}

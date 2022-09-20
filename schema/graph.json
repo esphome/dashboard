@@ -1,0 +1,217 @@
+{
+  "graph": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "graph::Graph",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID with which you will be able to reference the graph later in your display code.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The total graph history duration.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "width": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The graph width in pixels\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "height": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The graph height in pixels\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "x_grid": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              },
+              "docs": "Specifies the time per division. If not specified, no vertical grid will be drawn.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "y_grid": {
+              "key": "Optional",
+              "docs": "**float**: Specifies the number of units per division. If not specified, no horizontal grid will be drawn.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "border": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Specifies if a border will be drawn around the graph. Default is True.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "sensor": {
+              "key": "Optional",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id"
+            },
+            "line_thickness": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "positive_int"
+            },
+            "line_type": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "SOLID",
+                "DOTTED",
+                "DASHED"
+              ]
+            },
+            "color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id"
+            },
+            "min_value": {
+              "key": "Optional",
+              "docs": "Specifies the minimum Y-axis value.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "max_value": {
+              "key": "Optional",
+              "docs": "Specifies the maximum Y-axis value.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "min_range": {
+              "key": "Optional",
+              "docs": "Specifies the minimum Y-axis range.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "max_range": {
+              "key": "Optional",
+              "docs": "Specifies the maximum Y-axis range.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "traces": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "id": {
+                    "key": "GeneratedID",
+                    "id_type": {
+                      "class": "graph::GraphTrace",
+                      "parents": []
+                    }
+                  },
+                  "sensor": {
+                    "key": "Required",
+                    "use_id_type": "sensor::Sensor",
+                    "type": "use_id"
+                  },
+                  "name": {
+                    "key": "Optional",
+                    "type": "string"
+                  },
+                  "line_thickness": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "line_type": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "SOLID",
+                      "DOTTED",
+                      "DASHED"
+                    ]
+                  },
+                  "color": {
+                    "key": "Optional",
+                    "use_id_type": "Color",
+                    "type": "use_id"
+                  }
+                }
+              },
+              "docs": "Use this to specify more than a single trace.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
+            },
+            "legend": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "id": {
+                    "key": "GeneratedID",
+                    "id_type": {
+                      "class": "graph::GraphLegend",
+                      "parents": []
+                    }
+                  },
+                  "name_font": {
+                    "key": "Required",
+                    "use_id_type": "display::Font",
+                    "type": "use_id"
+                  },
+                  "value_font": {
+                    "key": "Optional",
+                    "use_id_type": "display::Font",
+                    "type": "use_id"
+                  },
+                  "width": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "data_type": "positive_not_null_int"
+                  },
+                  "height": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "data_type": "positive_not_null_int"
+                  },
+                  "border": {
+                    "key": "Optional",
+                    "type": "boolean"
+                  },
+                  "show_lines": {
+                    "key": "Optional",
+                    "type": "boolean"
+                  },
+                  "show_values": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "AUTO",
+                      "BESIDE",
+                      "BELOW"
+                    ]
+                  },
+                  "show_units": {
+                    "key": "Optional",
+                    "type": "boolean"
+                  },
+                  "direction": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "AUTO",
+                      "HORIZONTAL",
+                      "VERTICAL"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

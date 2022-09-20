@@ -1,0 +1,49 @@
+{
+  "uptime.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "uptime::UptimeSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [Uptime Sensor](https://esphome.io/components/sensor/uptime.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "s"
+            },
+            "icon": {
+              "default": "mdi:timer-outline"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            },
+            "state_class": {
+              "default": "total_increasing"
+            },
+            "entity_category": {
+              "default": "diagnostic"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [Uptime Sensor](https://esphome.io/components/sensor/uptime.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

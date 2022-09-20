@@ -1,0 +1,143 @@
+{
+  "feedback.cover": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "cover.COVER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "feedback::FeedbackCover",
+                "parents": [
+                  "cover::Cover",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "stop_action": {
+              "key": "Required",
+              "type": "trigger"
+            },
+            "open_action": {
+              "key": "Required",
+              "type": "trigger"
+            },
+            "open_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "open_endstop": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "open_sensor": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "open_obstacle_sensor": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "close_action": {
+              "key": "Required",
+              "type": "trigger"
+            },
+            "close_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "close_endstop": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "close_sensor": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "close_obstacle_sensor": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id"
+            },
+            "max_duration": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "has_built_in_endstop": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "assumed_state": {
+              "key": "Optional",
+              "type": "boolean"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1000ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "infer_endstop_from_movement": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "direction_change_wait_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "acceleration_wait_time": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "obstacle_rollback": {
+              "key": "Optional",
+              "default": "10%"
+            }
+          }
+        }
+      }
+    }
+  }
+}

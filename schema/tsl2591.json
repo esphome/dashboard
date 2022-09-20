@@ -1,0 +1,180 @@
+{
+  "tsl2591.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tsl2591::TSL2591Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "infrared": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:brightness-6"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The reading for the infrared sensor.\n  * **name** (**Required**, string): The name for the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "visible": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:brightness-6"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The reading for visible light.\n  * **name** (**Required**, string): The name for the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "full_spectrum": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:brightness-6"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The reading for the full spectrum sensor.\n  * **name** (**Required**, string): The name for the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "calculated_lux": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "lx"
+                  },
+                  "icon": {
+                    "default": "mdi:brightness-6"
+                  },
+                  "accuracy_decimals": {
+                    "default": "4"
+                  },
+                  "device_class": {
+                    "default": "illuminance"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The value of the calculated lux.\n  * **name** (**Required**, string): The name for the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "integration_time": {
+              "key": "Optional",
+              "default": "100ms",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time the device will use for each measurement. Longer means more accurate values. You cannot specify an arbitrary amount of time. It must be the equivalent of one of:\n  * `100ms`   *(default)*\n  \n  * `200ms`\n  \n  * `300ms`\n  \n  * `400ms`\n  \n  * `500ms`\n  \n  * `600ms`\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "name": {
+              "key": "Optional",
+              "default": "TLS2591",
+              "type": "string",
+              "docs": "**string**: A user-friendly name for this TSL2591 device.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "gain": {
+              "key": "Optional",
+              "default": "AUTO",
+              "type": "enum",
+              "values": [
+                "1X",
+                "LOW",
+                "25X",
+                "MED",
+                "MEDIUM",
+                "400X",
+                "HIGH",
+                "9500X",
+                "MAX",
+                "MAXIMUM",
+                "AUTO"
+              ],
+              "docs": "**string**: The gain the device will use. Higher values are better in low-light conditions. Multipliers here are approximate. Values below on the same line are aliases. You cannot specify an arbitrary gain multiplier. It must be one of:\n  * `low`, `1x`\n  \n  * `medium`, `med`, `25x`\n  \n  * `high`, `400x`\n  \n  * `maximum`, `max`, `9500x`\n  \n  * `auto` *(default)*\n  \n  \n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "power_save_mode": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Should the device be powered down between update intervals? Defaults to `True`.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "device_factor": {
+              "key": "Optional",
+              "default": "53.0",
+              "docs": "**float**: The default is `53.0`. The device factor to be used as part of the lux equation for `calculated_lux`.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "glass_attenuation_factor": {
+              "key": "Optional",
+              "default": "7.7",
+              "docs": "**float**: The default is `7.7`. The glass attenuation factor to be used as part of the lux equation for `calculated_lux`.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval for checking the sensors. Defaults to `60s`.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "41",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the device. Defaults to `0x29`. It is not possible to change this for this device without additional hardware. It also automatically uses a secondary address of `0x28` (see the datasheet), making that address unavailable for other devices on the same I\u00b2C bus.\n\n*See also: [TSL2591 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2591.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

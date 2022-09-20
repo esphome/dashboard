@@ -1,0 +1,90 @@
+{
+  "button": {
+    "components": {
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The button that should be mirrored.\n\n*See also: [Copy Button](https://esphome.io/components/copy.html#copy-button)*"
+      },
+      "factory_reset": {
+        "docs": "The `factory_reset` button allows you to remotely invalidate (reset) all ESPHome [preferences](https://esphome.io/components/esphome.html#preferences-flash-write-interval) stored in flash memory and reboot your node. After reboot all states, parameters and variables will be reinitialized with their default values. This is useful:\n\n*See also: [Factory Reset Button](https://esphome.io/components/button/factory_reset.html#factory-reset-button)*"
+      },
+      "output": {
+        "docs": "The `output` button platform allows you to use any output component as a button. This can for example be used to momentarily set a GPIO pin using a button.\n\n*See also: [Generic Output Button](https://esphome.io/components/button/output.html#generic-output-button)*"
+      },
+      "restart": {
+        "docs": "The `restart` button platform allows you to restart your node remotely through Home Assistant.\n\n*See also: [Restart Button](https://esphome.io/components/button/restart.html#restart-button)*"
+      },
+      "safe_mode": {
+        "dependencies": [
+          "ota"
+        ],
+        "docs": "The `safe_mode` button allows you to remotely reboot your node into [Safe Mode](https://esphome.io/components/ota.html#config-ota). This is useful in certain situations where a misbehaving component is preventing Over-The-Air updates from completing successfully.\n\n*See also: [Safe Mode Button](https://esphome.io/components/button/safe_mode.html#safe-mode-button)*"
+      },
+      "shutdown": {
+        "docs": "The `shutdown` button platform allows you to shutdown your node remotely through Home Assistant. It does this by putting the node into deep sleep mode with no wakeup source selected. After enabling, the only way to startup the ESP again is by pressing the reset button or restarting the power supply.\n\n*See also: [Shutdown Button](https://esphome.io/components/button/shutdown.html#shutdown-button)*"
+      },
+      "template": {
+        "docs": "The `template` button platform allows you to create simple buttons out of just actions. Once defined, it will automatically appear in Home Assistant as a button and can be controlled through the frontend.\n\n*See also: [Template Button](https://esphome.io/components/button/template.html#template-button)*"
+      },
+      "wake_on_lan": {
+        "dependencies": [
+          "network"
+        ],
+        "docs": "The `wake_on_lan` button platform allows you to send a Wake-on-LAN magic packet to a computer on the network by specifying its MAC address.\n\n*See also: [Wake-on-LAN Button](https://esphome.io/components/button/wake_on_lan.html#wake-on-lan-button)*"
+      }
+    },
+    "schemas": {
+      "BUTTON_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMMAND_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTButtonComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "device_class": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "restart",
+                "update"
+              ],
+              "docs": "**string**: The device class for the button. See [https://developers.home-assistant.io/docs/core/entity/button/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/button/#available-device-classes) for a list of available options.\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#base-button-configuration)*"
+            },
+            "on_press": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the button is pressed. See [on_press](https://esphome.io/components/button/index.html#button-on-press).\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#base-button-configuration)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "press": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "button::Button",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the button to set.\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#button-press-action)*"
+            }
+          }
+        },
+        "maybe": "id",
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for pressing a button in an Automation.\n\n*See also: [`button.press` Action](https://esphome.io/components/button/index.html#button-press-action)*"
+      }
+    }
+  }
+}
