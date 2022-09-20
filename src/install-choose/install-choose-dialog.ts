@@ -31,6 +31,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @state() private _state:
     | "pick_option"
     | "web_instructions"
+    | "pick_download_type"
     | "pick_server_port" = "pick_option";
 
   @state() private _error?: string | TemplateResult;
@@ -78,6 +79,20 @@ class ESPHomeInstallChooseDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
+        <mwc-list-item
+          twoline
+          hasMeta
+          @click=${() => {
+            this._state = "pick_download_type";
+          }}
+        >
+          <span>Manual download</span>
+          <span slot="secondary">
+            Install it yourself using ESPHome Web or other tools
+          </span>
+          ${metaChevronRight}
+        </mwc-list-item>
+
         <mwc-button
           no-attention
           slot="secondaryAction"
@@ -117,6 +132,49 @@ class ESPHomeInstallChooseDialog extends LitElement {
                 }}
               ></mwc-button>
             `;
+    } else if (this._state === "pick_download_type") {
+      heading = "What version do you want to download?";
+      content = html`
+        <mwc-list-item
+          twoline
+          hasMeta
+          dialogAction="close"
+          @click=${this._handleWebDownload}
+        >
+          <span>Modern format</span>
+          <span slot="secondary">
+            For use with ESPHome Web and other tools.
+          </span>
+          ${metaChevronRight}
+        </mwc-list-item>
+
+        <mwc-list-item
+          twoline
+          hasMeta
+          dialogAction="close"
+          @click=${this._handleManualDownload}
+        >
+          <span>Legacy format</span>
+          <span slot="secondary">For use with ESPHome Flasher.</span>
+          ${metaChevronRight}
+        </mwc-list-item>
+
+        <a
+          href="https://web.esphome.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bottom-left"
+          >Open ESPHome Web</a
+        >
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          label="Back"
+          @click=${() => {
+            this._state = "pick_option";
+          }}
+        ></mwc-button>
+      `;
     } else if (this._state === "web_instructions") {
       heading = "Install ESPHome via the browser";
       content = html`
@@ -298,6 +356,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
   private _showServerPorts() {
     this._storeDialogWidth();
     this._state = "pick_server_port";
+  }
+
+  private _handleManualDownload() {
+    openCompileDialog(this.configuration, false);
   }
 
   private _handleWebDownload() {

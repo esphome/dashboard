@@ -20,7 +20,8 @@ import { esphomeCardStyles } from "../styles";
 import { openRenameDialog } from "../rename";
 import { openShowApiKeyDialog } from "../show-api-key";
 import { openEditDialog } from "../editor";
-import { openDownloadChooseDialog } from "../download-choose";
+import { getFile } from "../api/files";
+import { textDownload } from "../util/file-download";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -131,8 +132,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item>Validate</mwc-list-item>
             <mwc-list-item>Install</mwc-list-item>
-            <mwc-list-item>Download</mwc-list-item>
             <mwc-list-item>Show API key</mwc-list-item>
+            <mwc-list-item>Download YAML</mwc-list-item>
             <mwc-list-item>Rename</mwc-list-item>
             <mwc-list-item>Clean Build Files</mwc-list-item>
             <mwc-list-item>Delete</mwc-list-item>
@@ -190,10 +191,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         this._handleInstall();
         break;
       case 2:
-        openDownloadChooseDialog(this.device.configuration);
+        openShowApiKeyDialog(this.device.configuration);
         break;
       case 3:
-        openShowApiKeyDialog(this.device.configuration);
+        this._handleDownloadYaml();
         break;
       case 4:
         openRenameDialog(this.device.configuration, this.device.name);
@@ -222,6 +223,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
+  }
+
+  private async _handleDownloadYaml() {
+    getFile(this.device.configuration).then((config) => {
+      textDownload(config!, this.device.configuration);
+    });
   }
 }
 
