@@ -6,12 +6,3 @@ export const openInstallChooseDialog = (configuration: string) => {
   dialog.configuration = configuration;
   document.body.append(dialog);
 };
-
-export const attachInstallChooseDialog = () => {
-  document.querySelectorAll("[data-action='upload']").forEach((btn) => {
-    btn.addEventListener("click", (ev) =>
-      openInstallChooseDialog((ev.target as HTMLElement).dataset.filename!)
-    );
-    btn.addEventListener("mouseover", preload, { once: true });
-  });
-};
