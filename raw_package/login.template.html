@@ -4,67 +4,65 @@
 
 {% block main %}
 <style>
-.container {
-  display: flex;
-  justify-content: center;
-}
-.card {
-  max-width: 500px;
-}
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+  .card {
+    max-width: 500px;
+  }
 
-/* Login Page */
-.row.no-bottom-margin {
-  margin-bottom: 0 !important;
-}
+  /* Login Page */
+  .row.no-bottom-margin {
+    margin-bottom: 0 !important;
+  }
 
-.input-field input:focus + label {
-  color: #000;
-}
+  .input-field input:focus + label {
+    color: #000;
+  }
 
-.input-field input:focus {
-  border-bottom: 1px solid #000;
-  box-shadow: 0 1px 0 0 #000;
-}
+  .input-field input:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
 
-.input-field .prefix.active {
-  color: #000;
-}
+  .input-field .prefix.active {
+    color: #000;
+  }
 
-/* Alerts & Errors */
-.alert {
-  width: 100%;
-  margin: 10px auto;
-  padding: 10px;
-  border-radius: 2px;
-  border-left-width: 4px;
-  border-left-style: solid;
-}
+  /* Alerts & Errors */
+  .alert {
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 2px;
+    border-left-width: 4px;
+    border-left-style: solid;
+  }
 
-.alert .title {
-  font-weight: bold;
-}
+  .alert .title {
+    font-weight: bold;
+  }
 
-.alert .title::after {
-  content: "\A";
-  white-space: pre;
-}
+  .alert .title::after {
+    content: "\A";
+    white-space: pre;
+  }
 
-.alert.alert-error {
-  color: var(--alert-error-color);
-  border-left-color: var(--alert-error-color);
-  background-color: var(--alert-error-color-bg);
-}
+  .alert.alert-error {
+    color: var(--alert-error-color);
+    border-left-color: var(--alert-error-color);
+    background-color: var(--alert-error-color-bg);
+  }
 
-.card.card-error {
-  border-top: 4px solid var(--alert-error-color);
-}
+  .card.card-error {
+    border-top: 4px solid var(--alert-error-color);
+  }
 </style>
-<div class='container'>
+<div class="container">
   <div class="card" id="login-card">
     <div class="card-content">
-      <span class="card-title black-text center"
-        >Dashboard Login</span
-      >
+      <span class="card-title black-text center">Dashboard Login</span>
       <p class="center">
         {% if ha_addon %} Login by entering your Home Assistant login
         credentials. {% else %} Login by entering your ESPHome login
@@ -78,7 +76,7 @@
       </div>
 
       <script>
-        $("#login-card").addClass("card-error");
+        document.getElementById("login-card").classList.add("card-error");
       </script>
       {% end %}
 
@@ -117,8 +115,5 @@
 {% end %}
 
 {% block footer %}
-<script src="{{ get_static_file_url('js/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ get_static_file_url('js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
-<script src="{{ get_static_file_url('js/vendor/jquery-validate/jquery.validate.min.js') }}"></script>
 <script src="{{ get_static_file_url('js/vendor/materialize/materialize.min.js') }}"></script>
 {% end %}
