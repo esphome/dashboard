@@ -38,6 +38,7 @@
     "@material/mwc-list": "^0.27.0",
     "@material/mwc-menu": "^0.27.0",
     "@material/mwc-radio": "^0.27.0",
+    "@material/mwc-snackbar": "^0.27.0",
     "@material/mwc-textfield": "^0.27.0",
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.2",

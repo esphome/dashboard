@@ -1,8 +1,9 @@
 import { LitElement, html, css } from "lit";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import "@material/mwc-snackbar";
 import "@material/mwc-list/mwc-list-item.js";
 import "./esphome-editor";
 import { esphomeDialogStyles } from "../styles";
@@ -16,6 +17,9 @@ class ESPHomeEditorDialog extends LitElement {
 
   editorRef: Ref<ESPHomeEditor> = createRef();
 
+  @state() private successSnackbarOpened = false;
+  @state() private errorSnackbarOpened = false;
+
   protected render() {
     const isSecrets =
       this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
@@ -27,6 +31,23 @@ class ESPHomeEditorDialog extends LitElement {
       escapeKeyAction
       @closed=${this._handleClose}
     >
+    <!--Success message-->
+      <mwc-snackbar
+        labeltext="✅ Saved ${this.fileName}"
+        .open="${this.successSnackbarOpened}"
+        @MDCSnackbar:closed=${() => (this.successSnackbarOpened = false)}
+      >
+        <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
+      </mwc-snackbar>
+    <!--Error message-->
+      <mwc-snackbar
+        labeltext="❌ An error occured saving ${this.fileName}"
+        .open="${this.errorSnackbarOpened}"
+        @MDCSnackbar:closed=${() => (this.errorSnackbarOpened = false)}
+      >
+        <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
+      </mwc-snackbar>
+
       <esphome-editor
         configuration=${this.fileName}
         ${ref(this.editorRef)}
@@ -95,18 +116,10 @@ class ESPHomeEditorDialog extends LitElement {
 
     try {
       await writeFile(this.fileName, code ?? "");
+      this.successSnackbarOpened = true;
 
-      // @ts-ignore
-      M.toast({
-        html: `✅ Saved <code class="inlinecode">${this.fileName}</code>`,
-        displayLength: 10000,
-      });
     } catch (error) {
-      // @ts-ignore
-      M.toast({
-        html: `❌ An error occured saving <code class="inlinecode">${this.fileName}</code>`,
-        displayLength: 10000,
-      });
+      this.errorSnackbarOpened = true;
     }
   }
 }
