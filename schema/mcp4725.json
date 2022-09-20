@@ -1,0 +1,41 @@
+{
+  "mcp4725.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "mcp4725::MCP4725",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [MCP4725 Output](https://esphome.io/components/output/mcp4725.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "96",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I2C address of the DAC. Defaults to `0x60`.\n\n*See also: [MCP4725 Output](https://esphome.io/components/output/mcp4725.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

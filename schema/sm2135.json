@@ -1,0 +1,82 @@
+{
+  "sm2135": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "sm2135::SM2135",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this `sm2135` component. Use this if you have multiple SM2135 chains connected at the same time.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
+            },
+            "data_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for MOSI.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
+            },
+            "clock_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin which SCLK is connected to.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "sm2135.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "sm2135_id": {
+              "key": "GeneratedID",
+              "use_id_type": "sm2135::SM2135",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [Component/Hub](https://esphome.io/components/output/sm2135.html#sm2135-component). Use this if you have multiple SM2135 chains you want to use at the same time.\n\n*See also: [sm2135 Output](https://esphome.io/components/output/sm2135.html#id1)*"
+            },
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "sm2135::SM2135::Channel",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [sm2135 Output](https://esphome.io/components/output/sm2135.html#id1)*"
+            },
+            "channel": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: Chose the channel of the SM2135 chain of this output component.\n\n*See also: [sm2135 Output](https://esphome.io/components/output/sm2135.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

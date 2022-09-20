@@ -1,0 +1,51 @@
+{
+  "sonoff_d1.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.BRIGHTNESS_ONLY_LIGHT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "sonoff_d1::SonoffD1Output",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice",
+                  "light::LightOutput"
+                ]
+              }
+            },
+            "use_rm433_remote": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Set to `True` if your setup uses Sonoff RM433 or any other radio remote control. Properly setting this parameter allows the platform to identify what to do with incoming UART commands. RF chip is known to catch random commands if not paired with a real remote (so called ghost commands). This problem is observed even with the stock firmware and most probably is a bug in the MCU firmware or in the RF chip firmware. Setting this to `False` instructs the platform to properly ignore such commands and thus prevent unexpected switches or light intensity changes.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#configuration-variables)*"
+            },
+            "min_value": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: The lowest dimmer value allowed. Acceptable value for your setup will depend on actual light bulbs installed and number of them. Start with the default value and check what will be the minimal brightness bulbs can render. Pay attention that for some dimmable LED lamps minimal turn-on brightness will be higher that the minimal achievable brightness if you just decrease it when lamp is already turned on. Defaults to 0.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#configuration-variables)*"
+            },
+            "max_value": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer",
+              "docs": "**int**: The highest dimmer value allowed. Use this to hard-limit light intensity for your setup. For some bulbs this parameter might be also useful to prevent flickering at high brightness values. Defaults to 100.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

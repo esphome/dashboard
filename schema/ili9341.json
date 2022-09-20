@@ -1,0 +1,103 @@
+{
+  "ili9341.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ili9341::ILI9341Display",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "spi::SPIDevice",
+                  "display::DisplayBuffer"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "model": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "M5STACK",
+                "TFT_2.4",
+                "TFT_2.4R"
+              ],
+              "docs": "The model of the display. Options are:\n  * `M5STACK`\n  \n  * `TFT 2.4`\n  \n  * `TFT 2.4R`  (ILI9342)\n  \n  \n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "dc_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The DC pin.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "reset_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The RESET pin.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "led_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The display\u2019s backlight pin. **Note:** Connect to a PWM-capable pin to switch/dim the display\u2019s backlight **or** save a pin by connecting it through a 3.3K resistor to the +3V supply.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "color_palette": {
+              "key": "Optional",
+              "default": "NONE",
+              "type": "enum",
+              "values": [
+                "NONE",
+                "GRAYSCALE"
+              ],
+              "docs": "The type of color pallet that will be used in the ESP\u2019s internal 8-bits-per-pixel buffer.  This can be used to improve color depth quality of the image.  For example if you know that the display will only be showing grayscale images, the clarity of the display can be improved by targeting the available colors to monochrome only.  Options are:\n  * `NONE` (default)\n  \n  * `GRAYSCALE`\n  \n  \n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "raw_data_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "uint8_t",
+                "parents": null
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `5s`.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

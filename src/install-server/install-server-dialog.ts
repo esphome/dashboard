@@ -2,9 +2,9 @@ import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../components/remote-process";
-import { openEditDialog } from "../legacy";
 import "../components/process-dialog";
 import { openInstallServerDialog } from ".";
+import { openEditDialog } from "../editor";
 
 @customElement("esphome-install-server-dialog")
 class ESPHomeInstallServerDialog extends LitElement {

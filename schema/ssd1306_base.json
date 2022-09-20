@@ -1,0 +1,98 @@
+{
+  "ssd1306_base": {
+    "schemas": {
+      "SSD1306_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "model": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "SSD1306_128X32",
+                "SSD1306_128X64",
+                "SSD1306_96X16",
+                "SSD1306_64X48",
+                "SSD1306_64X32",
+                "SH1106_128X32",
+                "SH1106_128X64",
+                "SH1106_96X16",
+                "SH1106_64X48",
+                "SH1107_128X64",
+                "SSD1305_128X32",
+                "SSD1305_128X64"
+              ],
+              "docs": "The model of the display. Options are:\n  * `SSD1306 128x32` (SSD1306 with 128 columns and 32 rows)\n  \n  * `SSD1306 128x64`\n  \n  * `SSD1306 96x16`\n  \n  * `SSD1306 64x48`\n  \n  * `SH1106 128x32`\n  \n  * `SH1106 128x64`\n  \n  * `SH1106 96x16`\n  \n  * `SH1106 64x48`\n  \n  * `SH1107 128x64`\n  \n  * `SSD1305 128x32`\n  \n  * `SSD1305 128x64`\n  \n  \n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*",
+              "values_docs": {
+                "SSD1306_128X32": "SSD1306 with 128 columns and 32 rows"
+              }
+            },
+            "reset_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The RESET pin. Defaults to not connected.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "brightness": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**percentage**: Set display brightness in %. Only can be used with SSD1305. Defaults to `100%`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "contrast": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**percentage**: Set display contrast in %. Defaults to `100%`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "external_vcc": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Set this to true if you have the VCC pin connected to an external power supply. Defaults to `false`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "flip_x": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Flip the horizontal axis on the screen. Defaults to `true`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "flip_y": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Flip the vertical axis on the screen. Defaults to `true`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "offset_x": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: Set this option if some horizontal pixel is missing. Numbers are only allowed between `-32~32`. Defaults to `0`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "offset_y": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: Set this option if some vertical pixel is missing. Numbers are only allowed between `-32~32`. Defaults to `0`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "invert": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Invert all pixel state on the display. Defaults to `false`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`.\n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

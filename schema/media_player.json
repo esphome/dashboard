@@ -1,0 +1,165 @@
+{
+  "media_player": {
+    "components": {
+      "i2s_audio": {
+        "dependencies": [
+          "esp32"
+        ],
+        "docs": "The `i2s_audio` media player platform allows you to play media from webservers and web streams via the I2S bus. This platform only works on ESP32 based chips.\n\n*See also: [I2S Audio Media Player](https://esphome.io/components/media_player/i2s_audio.html#i2s-audio-media-player)*"
+      }
+    },
+    "schemas": {
+      "MEDIA_PLAYER_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "on_state": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_idle": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_play": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_pause": {
+              "key": "Optional",
+              "type": "trigger"
+            }
+          }
+        }
+      },
+      "MEDIA_PLAYER_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "media_player::MediaPlayer",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "play_media": {
+        "type": "schema",
+        "maybe": "media_url",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "media_player::MediaPlayer",
+              "type": "use_id"
+            },
+            "media_url": {
+              "key": "Required",
+              "templatable": true
+            }
+          }
+        },
+        "docs": "This action will start playing the specified media.\n\n*See also: [`media_player.play_media` Action](https://esphome.io/components/media_player/index.html#media-player-play-media-action)*"
+      },
+      "volume_down": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action will decrease the volume of the media player.\n\n*See also: [`media_player.volume_down` Action](https://esphome.io/components/media_player/index.html#media-player-volume-down-action)*"
+      },
+      "volume_up": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action will increase the volume of the media player.\n\n*See also: [`media_player.volume_up` Action](https://esphome.io/components/media_player/index.html#media-player-volume-up-action)*"
+      },
+      "stop": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action stops the current playback.\n\n*See also: [`media_player.stop` Action](https://esphome.io/components/media_player/index.html#media-player-stop-action)*"
+      },
+      "pause": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action pauses the current playback.\n\n*See also: [`media_player.pause` Action](https://esphome.io/components/media_player/index.html#media-player-pause-action)*"
+      },
+      "toggle": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action will pause or resume the current playback.\n\n*See also: [`media_player.toggle` Action](https://esphome.io/components/media_player/index.html#media-player-toggle-action)*"
+      },
+      "play": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action will resume playing the media player.\n\n*See also: [`media_player.play` Action](https://esphome.io/components/media_player/index.html#media-player-play-action)*"
+      },
+      "volume_set": {
+        "type": "schema",
+        "maybe": "volume",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "media_player::MediaPlayer",
+              "type": "use_id"
+            },
+            "volume": {
+              "key": "Required",
+              "templatable": true
+            }
+          }
+        },
+        "docs": "This action will set the volume of the media player.\n\n*See also: [`media_player.volume_set` Action](https://esphome.io/components/media_player/index.html#media-player-volume-set-action)*"
+      }
+    },
+    "condition": {
+      "is_playing": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This condition checks if the media player is playing media.\n\n*See also: [`media_player.is_playing` Condition](https://esphome.io/components/media_player/index.html#media-player-is-playing-condition)*"
+      },
+      "is_idle": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "media_player.MEDIA_PLAYER_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This condition checks if the media player is idle.\n\n*See also: [`media_player.is_idle` Condition](https://esphome.io/components/media_player/index.html#media-player-is-idle-condition)*"
+      }
+    }
+  }
+}

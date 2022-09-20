@@ -1,0 +1,197 @@
+{
+  "hlw8012.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "hlw8012::HLW8012Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "sel_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin SEL is connected to.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "cf_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "input",
+                "pullup"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin CF is connected to.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "cf1_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "input",
+                "pullup"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin CF1 is connected to.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the voltage value of the sensor in V (RMS). All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "current": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "A"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "current"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the current value of the sensor in amperes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "power": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "W"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "power"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the (active) power value of the sensor in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "energy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "Wh"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "energy"
+                  },
+                  "state_class": {
+                    "default": "total_increasing"
+                  }
+                }
+              },
+              "docs": "Use the total energy value of the sensor in Wh. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "current_resistor": {
+              "key": "Optional",
+              "default": "0.001",
+              "docs": "**float**: The value of the shunt resistor for current measurement. Defaults to the Sonoff POW\u2019s value `0.001 ohm`.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "voltage_divider": {
+              "key": "Optional",
+              "default": "2351",
+              "data_type": "positive_float",
+              "docs": "**float**: The value of the voltage divider on the board as `(R_upstream + R_downstream) / R_downstream`. Defaults to the Sonoff POW\u2019s value `2351`.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "model": {
+              "key": "Optional",
+              "default": "HLW8012",
+              "type": "enum",
+              "values": [
+                "HLW8012",
+                "CSE7759",
+                "BL0937"
+              ],
+              "docs": "**string**: The sensor model on the board, to set internal constant factors to convert pulses to measurements. Possible values are `HLW8012`, `CSE7759`, `BL0937`. Defaults to `HLW8012`. CSE7759 uses same constants and it also works with default. Must be set for BL0937 to be able to calibrate all three measurements at the same time.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "change_mode_every": {
+              "key": "Optional",
+              "default": "8",
+              "type": "integer",
+              "data_type": "uint32_t",
+              "docs": "**int**: After how many updates to cycle between the current/voltage measurement mode. Note that the first value after switching is discarded because it is often inaccurate. Defaults to `8`.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "initial_mode": {
+              "key": "Optional",
+              "default": "voltage",
+              "type": "enum",
+              "values": [
+                "current",
+                "voltage"
+              ],
+              "docs": "**string**: The initial measurement mode. Defaults to `VOLTAGE`. Possible initial measurement modes are `VOLTAGE` or `CURRENT`.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [HLW8012 Power Sensor](https://esphome.io/components/sensor/hlw8012.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "toshiba.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_WITH_RECEIVER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "toshiba::ToshibaClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "model": {
+              "key": "Optional",
+              "default": "generic",
+              "type": "enum",
+              "values": [
+                "GENERIC",
+                "RAC-PT1411HWRU-C",
+                "RAC-PT1411HWRU-F"
+              ],
+              "docs": "**string**: There are two valid models\n  * `GENERIC`: Temperature range is from 17 to 30 (default)\n  \n  * `RAC-PT1411HWRU-C`: Temperature range is from 16 to 30; unit displays temperature in degrees Celsius\n  \n  * `RAC-PT1411HWRU-F`: Temperature range is from 16 to 30; unit displays temperature in degrees Fahrenheit\n  \n  \n\n*See also: [toshiba Climate](https://esphome.io/components/climate/climate_ir.html#toshiba-climate)*",
+              "values_docs": {
+                "GENERIC": "Temperature range is from 17 to 30 (default)",
+                "RAC-PT1411HWRU-C": "Temperature range is from 16 to 30; unit displays temperature in degrees Celsius",
+                "RAC-PT1411HWRU-F": "Temperature range is from 16 to 30; unit displays temperature in degrees Fahrenheit"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

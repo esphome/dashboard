@@ -1,0 +1,101 @@
+{
+  "dallas": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "dallas::DallasComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [dallas Component/Hub](https://esphome.io/components/sensor/dallas.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**number**: The pin the sensor bus is connected to. Please note that 1-wire is a bi-directional bus so it requires both input and output from the pin.\n\n*See also: [dallas Component/Hub](https://esphome.io/components/sensor/dallas.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval that the sensors should be checked. Defaults to 60 seconds.\n\n*See also: [dallas Component/Hub](https://esphome.io/components/sensor/dallas.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "dallas.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "dallas::DallasTemperatureSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+            },
+            "unit_of_measurement": {
+              "default": "\u00b0C"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "device_class": {
+              "default": "temperature"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "dallas_id": {
+              "key": "GeneratedID",
+              "use_id_type": "dallas::DallasComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [dallas hub](https://esphome.io/components/sensor/dallas.html#dallas-component). Use this if you have multiple dallas hubs.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+            },
+            "address": {
+              "key": "Optional",
+              "docs": "**int**: The address of the sensor. Use either this option or index.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+            },
+            "index": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int**: The index of the sensor starting with 0. So the first sensor will for example have index 0. [It\u2019s recommended to use address instead](https://esphome.io/components/sensor/dallas.html#dallas-getting-ids).\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+            },
+            "resolution": {
+              "key": "Optional",
+              "default": "12",
+              "type": "integer",
+              "docs": "**int**: An optional resolution from 8 to 12. Higher means more accurate. Defaults to the maximum for most Dallas temperature sensors: 12.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

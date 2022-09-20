@@ -1,0 +1,130 @@
+{
+  "inkbird_ibsth1_mini.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "inkbird_ibsth1_mini::InkbirdIbstH1Mini",
+                "parents": [
+                  "esp32_ble_tracker::ESPBTDeviceListener",
+                  "Component"
+                ]
+              }
+            },
+            "mac_address": {
+              "key": "Required",
+              "docs": "**MAC Address**: The MAC address of the Inkbird IBS-TH1 device.\n\n*See also: [Inkbird IBS-TH1, IBS-TH1 Mini, and IBS-TH2 BLE Sensor](https://esphome.io/components/sensor/inkbird_ibsth1_mini.html#configuration-variables)*"
+            },
+            "temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the temperature sensor.\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Inkbird IBS-TH1, IBS-TH1 Mini, and IBS-TH2 BLE Sensor](https://esphome.io/components/sensor/inkbird_ibsth1_mini.html#configuration-variables)*"
+            },
+            "external_temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the external temperature sensor.\n  * **name** (**Required**, string): The name for the external temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Inkbird IBS-TH1, IBS-TH1 Mini, and IBS-TH2 BLE Sensor](https://esphome.io/components/sensor/inkbird_ibsth1_mini.html#configuration-variables)*"
+            },
+            "humidity": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "humidity"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "The information for the humidity sensor\n  * **name** (**Required**, string): The name for the humidity sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Inkbird IBS-TH1, IBS-TH1 Mini, and IBS-TH2 BLE Sensor](https://esphome.io/components/sensor/inkbird_ibsth1_mini.html#configuration-variables)*"
+            },
+            "battery_level": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "battery"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              },
+              "docs": "The information for the battery level sensor\n  * **name** (**Required**, string): The name for the battery level sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Inkbird IBS-TH1, IBS-TH1 Mini, and IBS-TH2 BLE Sensor](https://esphome.io/components/sensor/inkbird_ibsth1_mini.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "esp32_ble_tracker.ESP_BLE_DEVICE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

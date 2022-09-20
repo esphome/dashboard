@@ -1,0 +1,30 @@
+{
+  "captive_portal": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "captive_portal::CaptivePortal",
+                "parents": [
+                  "Component"
+                ]
+              }
+            },
+            "web_server_base_id": {
+              "key": "GeneratedID",
+              "use_id_type": "web_server_base::WebServerBase",
+              "type": "use_id"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

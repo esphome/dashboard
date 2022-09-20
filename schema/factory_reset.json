@@ -1,0 +1,71 @@
+{
+  "factory_reset.button": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "button.BUTTON_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "icon": {
+              "default": "mdi:restart-alert"
+            },
+            "entity_category": {
+              "default": "config"
+            },
+            "device_class": {
+              "default": "restart"
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "factory_reset::FactoryResetButton",
+                "parents": [
+                  "button::Button",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Factory Reset Button](https://esphome.io/components/button/factory_reset.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "factory_reset.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "factory_reset::FactoryResetSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Factory Reset Switch](https://esphome.io/components/switch/factory_reset.html#configuration-variables)*"
+            },
+            "icon": {
+              "default": "mdi:restart-alert"
+            },
+            "entity_category": {
+              "default": "config"
+            }
+          }
+        }
+      }
+    }
+  }
+}

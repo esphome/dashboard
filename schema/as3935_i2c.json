@@ -1,0 +1,38 @@
+{
+  "as3935_i2c": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "as3935.AS3935_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "as3935_i2c::I2CAS3935Component",
+                "parents": [
+                  "as3935::AS3935Component",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "3",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x03` (`A0` and `A1` pins pulled high). The address is made up using the state of `A0` as bit 1 and the state of `A1` as bit 2, so a total of four addresses is possible.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

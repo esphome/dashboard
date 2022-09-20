@@ -1,0 +1,16 @@
+{
+  "dashboard_import": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "package_import_url": {
+              "key": "Required"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "fastled_base": {
+    "schemas": {
+      "BASE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.ADDRESSABLE_LIGHT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "fastled_base::FastLEDLightOutput",
+                "parents": [
+                  "light::AddressableLight",
+                  "light::LightOutput",
+                  "Component"
+                ]
+              }
+            },
+            "num_leds": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The number of LEDs attached.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            },
+            "rgb_order": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "RGB",
+                "RBG",
+                "GRB",
+                "GBR",
+                "BRG",
+                "BGR"
+              ],
+              "docs": "**string**: The order of the RGB channels. Use this if your light doesn\u2019t seem to map the RGB light channels correctly. For example if your light shows up green when you set a red color through the frontend. Valid values are `RGB`, `RBG`, `GRB`, `GBR`, `BRG` and `BGR`. Defaults to `RGB`.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            },
+            "max_refresh_rate": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: A time interval used to limit the number of commands a light can handle per second. For example 16ms will limit the light to a refresh rate of about 60Hz. Defaults to the default value for the used chipset.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

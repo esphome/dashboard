@@ -1,0 +1,61 @@
+{
+  "addressable_light.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.FULL_DISPLAY_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "addressable_light::AddressableLightDisplay",
+                "parents": [
+                  "display::DisplayBuffer",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            },
+            "addressable_light_id": {
+              "key": "Required",
+              "use_id_type": "light::AddressableLightState",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the addressable light component to use as a display.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            },
+            "width": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int**: The width of the LED matrix in pixels.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            },
+            "height": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int**: The height of the LED matrix in pixels.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "16ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to call the lambda to update the display. Defaults to `16ms`.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            },
+            "pixel_mapper": {
+              "key": "Optional",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: A lambda that returns the integer address of the LED given the supplied the `x` and `y` pixel coordinate. By default, a left-to-right direct pixel mapper is used.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

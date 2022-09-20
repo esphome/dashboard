@@ -1,0 +1,233 @@
+{
+  "select": {
+    "components": {
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The select that should be mirrored.\n\n*See also: [Copy Select](https://esphome.io/components/copy.html#copy-select)*"
+      },
+      "modbus_controller": {
+        "dependencies": [
+          "modbus_controller"
+        ],
+        "docs": "The `modbus_controller` Select platform allows you to create a Select from modbus registers.\n\n*See also: [Modbus Controller Select](https://esphome.io/components/select/modbus_controller.html#modbus-controller-select)*"
+      },
+      "template": {
+        "docs": "The `template` Select platform allows you to create a Select with templated values using [lambdas](https://esphome.io/guides/automations.html#config-lambda).\n\n*See also: [Template Select](https://esphome.io/components/select/template.html#template-select)*"
+      },
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` select platform creates a select from a tuya serial component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Select](https://esphome.io/components/select/tuya.html#tuya-select)*"
+      }
+    },
+    "schemas": {
+      "SELECT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMMAND_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTSelectComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "select::Select",
+                "parents": [
+                  "EntityBase"
+                ]
+              }
+            },
+            "on_value": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a new value is published. See [on_value](https://esphome.io/components/select/index.html#select-on-value).\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#base-select-configuration)*"
+            }
+          }
+        }
+      },
+      "OPERATION_BASE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "select::Select",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the select to set.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-operation-action)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "set": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "option": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The option to set the select to.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-set-action)*"
+            }
+          }
+        },
+        "docs": "You can also set an option for the template select from elsewhere in your YAML file with the [select.set Action](https://esphome.io/components/select/index.html#select-set-action).\n\n*See also: [`select.set` Action](https://esphome.io/components/select/template.html#select-set-action)*"
+      },
+      "set_index": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "index": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The index offset of the option to be activated.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-set-index-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for setting the active option using its index offset.\n\n*See also: [`select.set_index` Action](https://esphome.io/components/select/index.html#select-set-index-action)*"
+      },
+      "last": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "LAST",
+              "type": "enum",
+              "values": [
+                "LAST"
+              ]
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for selecting the last option in a select component.\n\n*See also: [`select.last` Action](https://esphome.io/components/select/index.html#select-last-action)*"
+      },
+      "first": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "FIRST",
+              "type": "enum",
+              "values": [
+                "FIRST"
+              ]
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for selecting the first option in a select component.\n\n*See also: [`select.first` Action](https://esphome.io/components/select/index.html#select-first-action)*"
+      },
+      "previous": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "PREVIOUS",
+              "type": "enum",
+              "values": [
+                "PREVIOUS"
+              ]
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether or not to jump to the last option of the select when the first option is currently selected. Defaults to `true`.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-previous-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for selecting the previous option in a select component.\n\n*See also: [`select.previous` Action](https://esphome.io/components/select/index.html#select-previous-action)*"
+      },
+      "next": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "NEXT",
+              "type": "enum",
+              "values": [
+                "NEXT"
+              ]
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether or not to jump back to the first option of the select when the last option is currently selected. Defaults to `true`.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-next-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for selecting the next option in a select component.\n\n*See also: [`select.next` Action](https://esphome.io/components/select/index.html#select-next-action)*"
+      },
+      "operation": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "select.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "operation": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "NEXT",
+                "PREVIOUS",
+                "FIRST",
+                "LAST"
+              ],
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The operation to perform. One of `FIRST`, `LAST`, `PREVIOUS` or `NEXT` (case insensitive). When writing a lambda for this field, then return one of the following enum values: `SELECT_OP_FIRST`, `SELECT_OP_LAST`, `SELECT_OP_PREVIOUS` or `SELECT_OP_NEXT`.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-operation-action)*"
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**bool, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Can be used for options `NEXT` and `PREVIOUS` to specify whether or not to wrap around the options list when respectively the last or first option in the select is currently active.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-operation-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) that can be used to change the active option in a select component (first, last, previous or next), using a generic templatable action call.\n\n*See also: [`select.operation` Action](https://esphome.io/components/select/index.html#select-operation-action)*"
+      }
+    }
+  }
+}

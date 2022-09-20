@@ -1,0 +1,53 @@
+{
+  "esp32_can.canbus": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "canbus.CANBUS_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "esp32_can::ESP32Can",
+                "parents": [
+                  "canbus::CanbusComponent",
+                  "Component"
+                ]
+              }
+            },
+            "bit_rate": {
+              "values": [
+                "50KBPS",
+                "100KBPS",
+                "125KBPS",
+                "250KBPS",
+                "500KBPS",
+                "1000KBPS"
+              ]
+            },
+            "rx_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: Receive pin.\n\n*See also: [ESP32 CAN Component](https://esphome.io/components/canbus.html#id2)*"
+            },
+            "tx_pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: Transmit pin.\n\n*See also: [ESP32 CAN Component](https://esphome.io/components/canbus.html#id2)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

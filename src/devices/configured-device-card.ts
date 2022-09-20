@@ -12,7 +12,6 @@ import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
 import { openValidateDialog } from "../validate";
-import { openEditDialog } from "../legacy";
 import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
 import { fireEvent } from "../util/fire-event";
@@ -20,6 +19,7 @@ import { openDeleteDeviceDialog } from "../delete-device";
 import { esphomeCardStyles } from "../styles";
 import { openRenameDialog } from "../rename";
 import { openShowApiKeyDialog } from "../show-api-key";
+import { openEditDialog } from "../editor";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {

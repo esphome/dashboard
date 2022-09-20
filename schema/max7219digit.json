@@ -1,0 +1,149 @@
+{
+  "max7219digit.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "max7219digit::MAX7219Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "spi::SPIDevice",
+                  "display::DisplayBuffer"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "num_chips": {
+              "key": "Optional",
+              "default": "4",
+              "type": "integer",
+              "docs": "**int**: The number of chips you wish to use for daisy chaining. Defaults to `4`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "num_chip_lines": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "docs": "**int**: Number of lines if you want to use the displays in Multiline Mode. Defaults to `1` Example: [https://github.com/esphome/esphome/pull/1622#issue-836179156](https://github.com/esphome/esphome/pull/1622#issue-836179156)\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "chip_lines_style": {
+              "key": "Optional",
+              "default": "SNAKE",
+              "type": "enum",
+              "values": [
+                "ZIGZAG",
+                "SNAKE"
+              ],
+              "docs": "How are the lines in Multiline Mode connected? Possible values are `zigzag` and `snake`. Defaults to `snake`\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "15",
+              "type": "integer",
+              "docs": "**int**: The intensity with which the MAX7219 should drive the outputs. Range is from `0`, least intense to `15` the brightest. Defaults to `15`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "rotate_chip": {
+              "key": "Optional",
+              "default": "0",
+              "type": "enum",
+              "values": [
+                "0",
+                "90",
+                "180",
+                "270"
+              ],
+              "docs": "Rotates every 8x8 chip. Valid values are `0`, `90`, `180` and `270`. Defaults to `0`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "scroll_mode": {
+              "key": "Optional",
+              "default": "CONTINUOUS",
+              "type": "enum",
+              "values": [
+                "CONTINUOUS",
+                "STOP"
+              ],
+              "docs": "Set the scroll mode. One of `CONTINUOUS` or `STOP`. Defaults to `CONTINUOUS`\n  * `CONTINUOUS`: Always scrolls and the text repeats continuously, you might need to add some separation at the end.\n  \n  * `STOP`: When text is over it waits the `scroll_dwell` time and scroll is set back to the start.\n  \n  \n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*",
+              "values_docs": {
+                "CONTINUOUS": "Always scrolls and the text repeats continuously, you might need to add some separation at the end.",
+                "STOP": "When text is over it waits the `scroll_dwell` time and scroll is set back to the start."
+              }
+            },
+            "scroll_enable": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Turn scroll mode on when content does not fit. Defaults to `true`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "scroll_speed": {
+              "key": "Optional",
+              "default": "250ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Set scroll speed. Defaults to `250ms`\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "scroll_delay": {
+              "key": "Optional",
+              "default": "1000ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Set delay time before scroll starts. Defaults to `1s`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "scroll_dwell": {
+              "key": "Optional",
+              "default": "1000ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Sets the wait time at the end of the scroll before starting over. This is only used in mode `STOP`. Defaults to `1s`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "reverse_enable": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: For some displays the order of the displays is reversed (\u201cDCBA\u201d). This option will reverse the display to (\u201cABCD\u201d) again. Defaults to  `false`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "500ms",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [SPI Component](https://esphome.io/components/spi.html#spi) if you want to use multiple SPI buses.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the CS line hooked up to.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

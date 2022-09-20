@@ -1,0 +1,79 @@
+{
+  "tsl2561.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tsl2561::TSL2561Sensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "lx"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "device_class": {
+              "default": "illuminance"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "integration_time": {
+              "key": "Optional",
+              "default": "402ms",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time the sensor will take for each measurement. Longer means more accurate values. One of `14ms`, `101ms`, `402ms`. Defaults to `402ms`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            },
+            "gain": {
+              "key": "Optional",
+              "default": "1X",
+              "type": "enum",
+              "values": [
+                "1X",
+                "16X"
+              ],
+              "docs": "**string**: The gain of the sensor. Higher values are better in low-light conditions. One of `1x` and `16x`. Defaults to `1x`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            },
+            "is_cs_package": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: The \u201cCS\u201d package of this sensor has a slightly different formula for calculating the illuminance in lx. Set this to `true` if you\u2019re working with a CS package. Defaults to `false`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "57",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x39`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "custom_component": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "custom_component::CustomComponentConstructor",
+                "parents": []
+              }
+            },
+            "lambda": {
+              "key": "Required",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The lambda to run for instantiating the binary sensor(s).\n\n*See also: [Generic Custom Component](https://esphome.io/custom/custom_component.html#generic-custom-component)*"
+            },
+            "components": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "id": {
+                    "key": "GeneratedID",
+                    "id_type": {
+                      "class": "Component",
+                      "parents": []
+                    }
+                  }
+                },
+                "extends": [
+                  "core.COMPONENT_SCHEMA"
+                ]
+              },
+              "docs": "**list**: A list of components to initialize. The length here must equal the number of items in the `return` statement of the `lambda`. This is useful if you need to give an `id` to the component you created.\n\n*See also: [Generic Custom Component](https://esphome.io/custom/custom_component.html#generic-custom-component)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

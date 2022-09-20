@@ -1,0 +1,57 @@
+{
+  "fastled_clockless.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fastled_base.BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "chipset": {
+              "key": "Required",
+              "type": "enum",
+              "values": [
+                "NEOPIXEL",
+                "TM1829",
+                "TM1809",
+                "TM1804",
+                "TM1803",
+                "UCS1903",
+                "UCS1903B",
+                "UCS1904",
+                "UCS2903",
+                "WS2812",
+                "WS2852",
+                "WS2812B",
+                "SK6812",
+                "SK6822",
+                "APA106",
+                "PL9823",
+                "WS2811",
+                "WS2813",
+                "APA104",
+                "WS2811_400",
+                "GW6205",
+                "GW6205_400",
+                "LPD1886",
+                "LPD1886_8BIT",
+                "SM16703"
+              ],
+              "docs": "**string**: Set a chipset to use. See [Supported Chipsets](https://esphome.io/components/light/fastled.html#fastled-clockless-chipsets) for options.\n\n*See also: [Clockless](https://esphome.io/components/light/fastled.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin for the data line of the FastLED light.\n\n*See also: [Clockless](https://esphome.io/components/light/fastled.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

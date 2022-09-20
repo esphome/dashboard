@@ -1,0 +1,49 @@
+{
+  "demo": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "binary_sensors": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Basement Floor Wet', 'device_class': 'moisture'}, {'name': 'Demo Movement Backyard', 'device_class': 'motion'}]"
+            },
+            "climates": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Heatpump', 'type': 1}, {'name': 'Demo HVAC', 'type': 2}, {'name': 'Demo Ecobee', 'type': 3}]"
+            },
+            "covers": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Kitchen Window', 'type': 1}, {'name': 'Demo Garage Door', 'type': 2, 'device_class': 'garage'}, {'name': 'Demo Living Room Window', 'type': 3}, {'name': 'Demo Hall Window', 'type': 4, 'device_class': 'window'}]"
+            },
+            "fans": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Living Room Fan', 'type': 1}, {'name': 'Demo Ceiling Fan', 'type': 2}, {'name': 'Demo Percentage Limited Fan', 'type': 3}, {'name': 'Demo Percentage Full Fan', 'type': 4}]"
+            },
+            "lights": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Binary Light', 'type': 1}, {'name': 'Demo Brightness Light', 'type': 2}, {'name': 'Demo RGB Light', 'type': 3}, {'name': 'Demo RGBW Light', 'type': 4}, {'name': 'Demo RGBWW Light', 'type': 5}, {'name': 'Demo CWWW Light', 'type': 6}, {'name': 'Demo RGBW interlock Light', 'type': 7}]"
+            },
+            "numbers": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Number 0-100', 'type': 1, 'min_value': 0, 'max_value': 100, 'step': 1}, {'name': 'Demo Number -50-50', 'type': 2, 'min_value': -50, 'max_value': 50, 'step': 5}, {'name': 'Demo Number 40-60', 'type': 3, 'min_value': 40, 'max_value': 60, 'step': 0.2}]"
+            },
+            "sensors": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Plain Sensor'}, {'name': 'Demo Temperature Sensor', 'unit_of_measurement': '\u00b0C', 'icon': 'mdi:thermometer', 'accuracy_decimals': 1, 'device_class': 'temperature', 'state_class': 'measurement'}, {'name': 'Demo Temperature Sensor', 'unit_of_measurement': '\u00b0C', 'icon': 'mdi:thermometer', 'accuracy_decimals': 1, 'device_class': 'temperature', 'state_class': 'measurement'}, {'name': 'Demo Force Update Sensor', 'unit_of_measurement': '%', 'accuracy_decimals': 0, 'device_class': 'humidity', 'state_class': 'measurement', 'force_update': True}, {'name': 'Demo Energy Sensor', 'unit_of_measurement': 'Wh', 'accuracy_decimals': 0, 'device_class': 'energy', 'state_class': 'total_increasing'}]"
+            },
+            "switches": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Switch 1'}, {'name': 'Demo Switch 2', 'inverted': True, 'icon': 'mdi:bluetooth'}]"
+            },
+            "text_sensors": {
+              "key": "Optional",
+              "default": "[{'name': 'Demo Text Sensor 1'}, {'name': 'Demo Text Sensor 2', 'icon': 'mdi:blur'}]"
+            }
+          }
+        }
+      }
+    }
+  }
+}

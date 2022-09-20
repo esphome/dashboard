@@ -1,0 +1,707 @@
+{
+  "tuya": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tuya::Tuya",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "time_id": {
+              "key": "Optional",
+              "use_id_type": "time::RealTimeClock",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Some Tuya devices support obtaining local time from ESPHome. Specify the ID of the [Time Component](https://esphome.io/components/time.html#time) which will be used.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
+            },
+            "ignore_mcu_update_on_datapoints": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**list**: A list of datapoints to ignore MCU updates for.  Useful for certain broken/erratic hardware and debugging.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
+            },
+            "status_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Some Tuya devices support WiFi status reporting ONLY through gpio pin. Specify the pin reported in the config dump or leave empty otherwise. More about this [here](https://developer.tuya.com/en/docs/iot/tuya-cloud-universal-serial-port-access-protocol?id=K9hhi0xxtn9cb#title-6-Query%20working%20mode).\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
+            },
+            "on_datapoint_update": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "sensor_datapoint": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint8_t",
+                    "docs": "**int**: The datapoint id number of the sensor.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#on-datapoint-update)*"
+                  },
+                  "datapoint_type": {
+                    "key": "Optional",
+                    "default": "any",
+                    "type": "enum",
+                    "values": [
+                      "any",
+                      "raw",
+                      "bool",
+                      "int",
+                      "uint",
+                      "string",
+                      "enum",
+                      "bitmask"
+                    ],
+                    "docs": "**string**: The datapoint type one of *raw*, *string*, *bool*, *int*, *uint*, *enum*, *bitmask* or *any*.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#on-datapoint-update)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "An automation to perform when a Tuya datapoint update is received. See [on_datapoint_update](https://esphome.io/components/tuya.html#tuya-on-datapoint-update).\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "tuya.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Sensor](https://esphome.io/components/sensor/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "sensor_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the sensor.\n\n*See also: [Tuya Sensor](https://esphome.io/components/sensor/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaBinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Binary Sensor](https://esphome.io/components/binary_sensor/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "sensor_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the binary sensor.\n\n*See also: [Tuya Binary Sensor](https://esphome.io/components/binary_sensor/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "supports_heat": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Specifies if the device has a heating mode. Defaults to `true`.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "supports_cool": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Specifies if the device has a cooling mode. Defaults to `false`.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "switch_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the climate switch (device on/off).\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "active_state_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the active state - [see below](https://esphome.io/components/climate/tuya.html#active-state-detection).\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "active_state_heating_value": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The active state datapoint value the device reports when heating. Defaults to `1` - [see below](https://esphome.io/components/climate/tuya.html#active-state-detection).\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "active_state_cooling_value": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The active state datapoint value the device reports when cooling - [see below](https://esphome.io/components/climate/tuya.html#active-state-detection).\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "heating_state_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The input pin indicating that the device is heating - [see below](https://esphome.io/components/climate/tuya.html#active-state-detection). Only used if **active_state_datapoint** is not configured.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "cooling_state_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The input pin indicating that the device is cooling - [see below](https://esphome.io/components/climate/tuya.html#active-state-detection). Only used if **active_state_datapoint** is not configured.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "target_temperature_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the target temperature.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "current_temperature_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the current temperature.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "temperature_multiplier": {
+              "key": "Optional",
+              "data_type": "positive_float",
+              "docs": "**float**: A multiplier to modify the incoming and outgoing temperature values - [see below](https://esphome.io/components/climate/tuya.html#temperature-multiplier).\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "current_temperature_multiplier": {
+              "key": "Optional",
+              "data_type": "positive_float",
+              "docs": "**float**: A multiplier to modify the current temperature value.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "target_temperature_multiplier": {
+              "key": "Optional",
+              "data_type": "positive_float",
+              "docs": "**float**: A multiplier to modify the target temperature value.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "eco_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the eco mode state.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "eco_temperature": {
+              "key": "Optional",
+              "docs": "**float**: The target temperature the controller uses while the eco mode is active.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.cover": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "cover.COVER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tuya::TuyaCover",
+                "parents": [
+                  "cover::Cover",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "control_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number for sending control commands.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "direction_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number for setting the direction of travel.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "position_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the cover position value.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "position_report_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the cover position report value, if separate from position_datapoint.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "min_value": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: The lowest position value, meaning cover closed. Defaults to 0.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "max_value": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer",
+              "docs": "**int**: the highest position value, meaning cover opened. Defaults to 255.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "invert_position": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Sets the direction of travel to be inverted, if direction_datapoint is configured.\n\n*See also: [Tuya Cover](https://esphome.io/components/cover/tuya.html#configuration-variables)*"
+            },
+            "restore_mode": {
+              "key": "Optional",
+              "default": "RESTORE",
+              "type": "enum",
+              "values": [
+                "NO_RESTORE",
+                "RESTORE",
+                "RESTORE_AND_CALL"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.fan": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "fan.FAN_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tuya::TuyaFan",
+                "parents": [
+                  "Component",
+                  "fan::Fan",
+                  "EntityBase"
+                ]
+              }
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "oscillation_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the oscillation switch. Probably not supported on any Tuya controllers currently, but it\u2019s there if need be.\n\n*See also: [Tuya Fan](https://esphome.io/components/fan/tuya.html#configuration-variables)*"
+            },
+            "speed_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the fan speed.\n\n*See also: [Tuya Fan](https://esphome.io/components/fan/tuya.html#configuration-variables)*"
+            },
+            "switch_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the fan switch.\n\n*See also: [Tuya Fan](https://esphome.io/components/fan/tuya.html#configuration-variables)*"
+            },
+            "direction_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the direction switch. Supported by some ceiling fans.\n\n*See also: [Tuya Fan](https://esphome.io/components/fan/tuya.html#configuration-variables)*"
+            },
+            "speed_count": {
+              "key": "Optional",
+              "default": "3",
+              "type": "integer",
+              "docs": "**int**: Set the number of supported discrete speed levels. Defaults to `3`.\n\n*See also: [Tuya Fan](https://esphome.io/components/fan/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.BRIGHTNESS_ONLY_LIGHT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tuya::TuyaLight",
+                "parents": [
+                  "light::LightOutput",
+                  "Component"
+                ]
+              }
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "dimmer_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the dimmer value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "min_value_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the MCU minimum value setting.  If this is set then ESPHome will sync the **min_value** to the MCU on startup.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "switch_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the power switch.  My dimmer required this to be able to turn the light on and off.  Without this you would only be able to change the brightness and would have to toggle the light using the physical buttons.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "rgb_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the RGB (red/green/blue) value. If this is set then ESPHome will set the color using a 6 digit hex RGB value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "hsv_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the HSV (hue/saturation/value) value. If this is set then ESPHome will set the color using a 12 digit hex HSV value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "color_interlock": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "color_temperature_datapoint": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the color temperature value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "color_temperature_invert": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Control how color temperature values are sent to the MCU. If this is set to true ESPHome will treat 0 as warm white and **color_temperature_max_value** as cool white when setting **color_temperature_datapoint**. Defaults to false.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "min_value": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: The lowest dimmer value allowed.  My dimmer had a minimum of 25 and wouldn\u2019t even accept anything lower, but this option is available if necessary. Defaults to 0.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "max_value": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: The highest dimmer value allowed.  Most dimmers have a maximum of 255, but dimmers with a maximum of 1000 can also be found. Try what works best. Defaults to 255.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "color_temperature_max_value": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: The highest color temperature value allowed. Some ceiling fans have a value of 100 (also for `max_value`). Defaults to 255.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "cold_white_color_temperature": {
+              "key": "Optional",
+              "docs": "**float**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the cold white channel.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "warm_white_color_temperature": {
+              "key": "Optional",
+              "docs": "**float**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the warm white channel.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+            },
+            "gamma_correct": {
+              "default": "1.0"
+            },
+            "default_transition_length": {
+              "default": "0s"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.number": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "number.NUMBER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaNumber",
+                "parents": [
+                  "number::Number",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "number_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the number.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            },
+            "max_value": {
+              "key": "Required",
+              "docs": "**float**: The maximum value this number can be.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            },
+            "min_value": {
+              "key": "Required",
+              "docs": "**float**: The minimum value this number can be.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            },
+            "step": {
+              "key": "Required",
+              "data_type": "positive_float",
+              "docs": "**float**: The granularity with which the number can be set.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.select": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "select.SELECT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaSelect",
+                "parents": [
+                  "select::Select",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Select](https://esphome.io/components/select/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "enum_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The enum datapoint id number for the select.\n\n*See also: [Tuya Select](https://esphome.io/components/select/tuya.html#configuration-variables)*"
+            },
+            "options": {
+              "key": "Required",
+              "docs": "**Map[int, str]**: Provide a mapping from values (int) of this Select to options (str) of the *enum_datapoint* and vice versa. All options and all values have to be unique.\n\n*See also: [Tuya Select](https://esphome.io/components/select/tuya.html#configuration-variables)*"
+            },
+            "optimistic": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to operate in optimistic mode - when in this mode, any command sent to the Select will immediately update the reported state.\n\n*See also: [Tuya Select](https://esphome.io/components/select/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tuya::TuyaSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Switch](https://esphome.io/components/switch/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "switch_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the switch.\n\n*See also: [Tuya Switch](https://esphome.io/components/switch/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tuya.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "text_sensor.TEXT_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tuya::TuyaTextSensor",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Tuya Text Sensor](https://esphome.io/components/text_sensor/tuya.html#configuration-variables)*"
+            },
+            "tuya_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tuya::Tuya",
+              "type": "use_id"
+            },
+            "sensor_datapoint": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The datapoint id number of the sensor.\n\n*See also: [Tuya Text Sensor](https://esphome.io/components/text_sensor/tuya.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

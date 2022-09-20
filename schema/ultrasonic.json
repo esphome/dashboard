@@ -1,0 +1,81 @@
+{
+  "ultrasonic.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ultrasonic::UltrasonicSensorComponent",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "m"
+            },
+            "icon": {
+              "default": "mdi:arrow-expand-vertical"
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "trigger_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The output pin to periodically send the trigger pulse to.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            },
+            "echo_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The input pin on which to wait for the echo.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            },
+            "timeout": {
+              "key": "Optional",
+              "default": "2m",
+              "docs": "**float**: The number of meters for the timeout. Most sensors can only sense up to 2 meters. Defaults to 2 meters.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            },
+            "pulse_time": {
+              "key": "Optional",
+              "default": "10us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration for which the trigger pin will be active. Defaults to `10us`.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [Ultrasonic Distance Sensor](https://esphome.io/components/sensor/ultrasonic.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

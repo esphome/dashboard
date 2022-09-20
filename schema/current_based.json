@@ -1,0 +1,128 @@
+{
+  "current_based.cover": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "cover.COVER_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "current_based::CurrentBasedCover",
+                "parents": [
+                  "cover::Cover",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "stop_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed to stop the cover.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "open_sensor": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The open current sensor.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "open_moving_current_threshold": {
+              "key": "Required",
+              "docs": "**float**: The amount of current in Amps the motor should drain to consider the cover is opening.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "open_obstacle_current_threshold": {
+              "key": "Optional",
+              "docs": "**float**: The amount of current in Amps the motor should drain to consider the cover is blocked during opening.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "open_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be opened.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "open_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to open up from the fully-closed state.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "close_sensor": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The close current sensor.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "close_moving_current_threshold": {
+              "key": "Required",
+              "docs": "**float**: The amount of current in Amps the motor should drain to consider the cover is closing.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "close_obstacle_current_threshold": {
+              "key": "Optional",
+              "docs": "**float**: The amount of current in Amps the motor should drain to consider the cover is blocked during closing.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "close_action": {
+              "key": "Required",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote requests the cover to be closed.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "close_duration": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time it takes the cover to close from the fully-open state.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "obstacle_rollback": {
+              "key": "Optional",
+              "default": "10%",
+              "docs": "**percentage**: The percentage of rollback the cover will perform in case of obstacle detection. Defaults to `10%`.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "max_duration": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The maximum duration the cover should be opening or closing. Useful for protecting from dysfunctional motor integrated endstops.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "malfunction_detection": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Enable to detect malfunction detection (Tipically welded realys). Defaults to `True`.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "malfunction_action": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when relay malfunction is detected. Malfunction may require device servicing. You can use this action to notify other systems about this situation\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            },
+            "start_sensing_delay": {
+              "key": "Optional",
+              "default": "500ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time the current sensing will be disabled when the movement starts. Motors can take some time before reaching their average consumption. Low values can cause an immediate stop because of the first current reading happening in the current-rising period. Defaults to `500ms`.\n\n*See also: [Current Based Cover](https://esphome.io/components/cover/current_based.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

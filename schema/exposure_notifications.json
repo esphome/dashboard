@@ -1,0 +1,30 @@
+{
+  "exposure_notifications": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "on_exposure_notification": {
+              "key": "Required",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "esp32_ble_id": {
+                    "key": "GeneratedID",
+                    "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+                    "type": "use_id"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to run when an exposure notification bluetooth message is received.A variable `x` of type [exposure_notifications::ExposureNotification](https://esphome.io/api/structesphome_1_1exposure__notifications_1_1_exposure_notification.html) is passed to the automation.\n\n*See also: [Exposure Notification Listener](https://esphome.io/components/exposure_notifications.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

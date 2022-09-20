@@ -1,0 +1,276 @@
+{
+  "number": {
+    "components": {
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The number that should be mirrored.\n\n*See also: [Copy Number](https://esphome.io/components/copy.html#copy-number)*"
+      },
+      "modbus_controller": {
+        "dependencies": [
+          "modbus_controller"
+        ],
+        "docs": "The `modbus_controller` platform creates a Number from a modbus_controller. When the Number is updated a modbus write command is created sent to the device.\n\n*See also: [Modbus Controller Number](https://esphome.io/components/number/modbus_controller.html#modbus-controller-number)*"
+      },
+      "template": {
+        "docs": "The `template` number platform allows you to create a number with templated values using [lambdas](https://esphome.io/guides/automations.html#config-lambda).\n\n*See also: [Template Number](https://esphome.io/components/number/template.html#template-number)*"
+      },
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` number platform allows you to create a number that controls a tuya serial component. This platform requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#tuya-number)*"
+      }
+    },
+    "schemas": {
+      "NUMBER_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMMAND_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTNumberComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "number::Number",
+                "parents": [
+                  "EntityBase"
+                ]
+              }
+            },
+            "on_value": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a new value is published. See [on_value](https://esphome.io/components/number/index.html#number-on-value).\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            },
+            "on_value_range": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "above": {
+                    "key": "Optional",
+                    "templatable": true,
+                    "docs": "**float**: The minimum for the trigger.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#on-value-range)*"
+                  },
+                  "below": {
+                    "key": "Optional",
+                    "templatable": true,
+                    "docs": "**float**: The maximum for the trigger.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#on-value-range)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a published value transition from outside to a range to inside. See [on_value_range](https://esphome.io/components/number/index.html#number-on-value-range).\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            },
+            "unit_of_measurement": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Manually set the unit of measurement for the number. Requires Home Assistant Core 2021.12 or newer.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            },
+            "mode": {
+              "key": "Optional",
+              "default": "AUTO",
+              "type": "enum",
+              "values": [
+                "AUTO",
+                "BOX",
+                "SLIDER"
+              ],
+              "docs": "**string**: Defines how the number should be displayed in the frontend. See [https://developers.home-assistant.io/docs/core/entity/number/#properties](https://developers.home-assistant.io/docs/core/entity/number/#properties) for a list of available options. Requires Home Assistant Core 2021.12 or newer. Defaults to `\"auto\"`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            }
+          }
+        }
+      },
+      "OPERATION_BASE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "number::Number",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the number to update.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-operation-action)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "set": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**float, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The value to set the number to.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-set-action)*"
+            }
+          }
+        },
+        "docs": "You can also set the number for the template number from elsewhere in your YAML file with the [number.set Action](https://esphome.io/components/number/index.html#number-set-action).\n\n*See also: [`number.set` Action](https://esphome.io/components/number/template.html#number-set-action)*"
+      },
+      "operation": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "operation": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "INCREMENT",
+                "DECREMENT",
+                "TO_MIN",
+                "TO_MAX"
+              ],
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: What operation to perform on the number component. One of `TO_MIN`, `TO_MAX`, `DECREMENT` or `INCREMENT` (case insensitive). When writing a lambda for this field, then return one of the following enum values: `NUMBER_OP_TO_MIN`, `NUMBER_OP_TO_MAX`, `NUMBER_OP_DECREMENT` or `NUMBER_OP_INCREMENT`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-operation-action)*"
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**bool, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Can be used with `DECREMENT` or `INCREMENT` to specify whether or not to wrap around the value when respectively the minimum or maximum value of the number is exceeded.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-operation-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) that can be used to perform an operation on a number component (set to minimum or maximum value, decrement, increment), using a generic templatable action call.\n\n*See also: [`number.operation` Action](https://esphome.io/components/number/index.html#number-operation-action)*"
+      },
+      "to_max": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "TO_MAX",
+              "type": "enum",
+              "values": [
+                "TO_MAX"
+              ]
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) seting a number to its maximum value (given a number component that has a maximum value defined for it.\n\n*See also: [`number.to_max` Action](https://esphome.io/components/number/index.html#number-to-max-action)*"
+      },
+      "to_min": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "TO_MIN",
+              "type": "enum",
+              "values": [
+                "TO_MIN"
+              ]
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) seting a number to its minimum value, given a number component that has a minimum value defined for it.\n\n*See also: [`number.to_min` Action](https://esphome.io/components/number/index.html#number-to-min-action)*"
+      },
+      "decrement": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "DECREMENT",
+              "type": "enum",
+              "values": [
+                "DECREMENT"
+              ]
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether or not to set the number to its maximum value when the decrement pushes the value below its minimum value. This will only work when the number component uses a minimum and maximum value. Defaults to `true`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-decrement-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for decrementing a number value by its step size (default: 1).\n\n*See also: [`number.decrement` Action](https://esphome.io/components/number/index.html#number-decrement-action)*"
+      },
+      "increment": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "extends": [
+            "number.OPERATION_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "mode": {
+              "key": "Optional",
+              "default": "INCREMENT",
+              "type": "enum",
+              "values": [
+                "INCREMENT"
+              ]
+            },
+            "cycle": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether or not to set the number to its minimum value when the increment pushes the value beyond its maximum value. This will only work when the number component uses a minimum and maximum value. Defaults to `true`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-increment-action)*"
+            }
+          }
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for incrementing a number value by its step size (default: 1).\n\n*See also: [`number.increment` Action](https://esphome.io/components/number/index.html#number-increment-action)*"
+      }
+    },
+    "condition": {
+      "in_range": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "number::Number",
+              "type": "use_id"
+            },
+            "above": {
+              "key": "Optional",
+              "docs": "**float**: The minimum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
+            },
+            "below": {
+              "key": "Optional",
+              "docs": "**float**: The maximum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
+            }
+          }
+        },
+        "docs": "This condition passes if the state of the given number is inside a range.\n\n*See also: [`number.in_range` Condition](https://esphome.io/components/number/index.html#number-in-range-condition)*"
+      }
+    }
+  }
+}

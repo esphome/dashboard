@@ -1,0 +1,45 @@
+{
+  "remote_base": {
+    "schemas": {
+      "BASE_REMOTE_TRANSMITTER_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "transmitter_id": {
+              "key": "GeneratedID",
+              "use_id_type": "remote_base::RemoteTransmitterBase",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The remote transmitter to send the remote code with. Defaults to the first one defined in the configuration.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-actions)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "docs": "Optionally set the code to be repeated a number of times. Defaults to sending the code only once.\n  * **times** (int): The number of times to repeat the code.\n  \n  * **wait_time** ([Time](https://esphome.io/guides/configuration-types.html#config-time)): The time to wait between repeats.\n  \n  \n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-actions)*"
+            }
+          }
+        }
+      }
+    },
+    "dumper": {
+      "coolix": {},
+      "dish": {},
+      "jvc": {},
+      "lg": {},
+      "magiquest": {},
+      "nec": {},
+      "pioneer": {},
+      "pronto": {},
+      "sony": {},
+      "raw": {},
+      "rc5": {},
+      "rc6": {},
+      "rc_switch": {},
+      "samsung": {},
+      "samsung36": {},
+      "toshiba_ac": {},
+      "panasonic": {},
+      "nexa": {},
+      "midea": {},
+      "aeha": {}
+    }
+  }
+}

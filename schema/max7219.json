@@ -1,0 +1,67 @@
+{
+  "max7219.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "max7219::MAX7219Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "num_chips": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "docs": "**int**: The number of chips you wish to use for daisy chaining. Defaults to `1`.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "15",
+              "type": "integer",
+              "docs": "**int**: The intensity with which the MAX7219 should drive the outputs. Range is from 0 (least intense) to 15 (the default).\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "reverse_enable": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: For some displays the order of the chips is reversed so you\u2019ll see \u201c56781234\u201d instead of \u201c12345678\u201d. This option will adjust the output to compensate. Defaults to `false`.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [SPI Component](https://esphome.io/components/spi.html#spi) if you want to use multiple SPI buses.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the CS line hooked up to.\n\n*See also: [MAX7219 7-Segment Display](https://esphome.io/components/display/max7219.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

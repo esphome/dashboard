@@ -1,0 +1,188 @@
+{
+  "text_sensor": {
+    "components": {
+      "ble_client": {
+        "dependencies": [
+          "ble_client"
+        ],
+        "docs": "The `ble_client` component is a text sensor platform that can query BLE devices for specific values of service characteristics.\n\n*See also: [BLE Client Text Sensor](https://esphome.io/components/text_sensor/ble_client.html#ble-client-text-sensor)*"
+      },
+      "ble_scanner": {
+        "dependencies": [
+          "esp32_ble_tracker"
+        ],
+        "docs": "The `ble_scanner` text sensor platform lets you track reachable BLE devices. See the [BLE Tracker Configuration variables](https://esphome.io/components/esp32_ble_tracker.html#config-esp32-ble-tracker) for instructions for setting up scan parameters. The sensor platform is similar to [ESP32 Bluetooth Low Energy RSSI Sensor](https://esphome.io/components/sensor/ble_rssi.html) but in contrast to that platform, this text sensor sends out all raw BLE scan information and does not filter devices.\n\n*See also: [ESP32 Bluetooth Low Energy Scanner](https://esphome.io/components/text_sensor/ble_scanner.html#esp32-bluetooth-low-energy-scanner)*"
+      },
+      "bme680_bsec": {
+        "dependencies": [
+          "bme680_bsec"
+        ],
+        "docs": "Accuracy can be reported in text format.\n\n*See also: [bme680_bsec Text Sensor](https://esphome.io/components/sensor/bme680_bsec.html#text-sensor)*"
+      },
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The text sensor that should be mirrored.\n\n*See also: [Copy Text Sensor](https://esphome.io/components/copy.html#copy-text-sensor)*"
+      },
+      "custom": {
+        "docs": "This integration can be used to create custom text sensors in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Text Sensor](https://esphome.io/components/text_sensor/custom.html#custom-text-sensor)*"
+      },
+      "daly_bms": {
+        "docs": "Text sensor that indicates the status of BMS.\n\n*See also: [daly_bms Text Sensor](https://esphome.io/components/sensor/daly_bms.html#text-sensor)*"
+      },
+      "debug": {
+        "dependencies": [
+          "debug"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
+      },
+      "dsmr": {
+        "docs": "Configuration variables:\n\n*See also: [dsmr Text Sensor](https://esphome.io/components/sensor/dsmr.html#text-sensor)*"
+      },
+      "homeassistant": {
+        "dependencies": [
+          "api"
+        ],
+        "docs": "The `homeassistant` text sensor platform allows you to create a sensors that import states from your Home Assistant instance using the [native API](https://esphome.io/components/api.html).\n\n*See also: [Home Assistant Text Sensor](https://esphome.io/components/text_sensor/homeassistant.html#home-assistant-text-sensor)*"
+      },
+      "modbus_controller": {
+        "dependencies": [
+          "modbus_controller"
+        ],
+        "docs": "The `modbus_controller` sensor platform creates a text sensor from a modbus_controller component and requires [Modbus Controller](https://esphome.io/components/modbus_controller.html) to be configured.\n\n*See also: [Modbus Controller Text Sensor](https://esphome.io/components/text_sensor/modbus_controller.html#modbus-controller-text-sensor)*"
+      },
+      "mqtt_subscribe": {
+        "dependencies": [
+          "mqtt"
+        ],
+        "docs": "The `mqtt_subscribe` text sensor platform allows you to get external data into ESPHome. The sensor will subscribe to messages on the given MQTT topic and save the most recent value in its `id(mysensor).state`.\n\n*See also: [MQTT Subscribe Text Sensor](https://esphome.io/components/text_sensor/mqtt_subscribe.html#mqtt-subscribe-text-sensor)*"
+      },
+      "nextion": {
+        "docs": "The `nextion` text sensor platform supports text strings. It can be a component or variable in the Nextion display. It is best to set the components vscope to global in the Nextion Editor. This way the component will be available if the page is shown or not.\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#nextion-text-sensor-component)*"
+      },
+      "pipsolar": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "All sensors are normal text sensors\u2026 so all text sensor variables are working to.\n\n*See also: [pipsolar Text Sensor](https://esphome.io/components/pipsolar.html#text-sensor)*"
+      },
+      "sml": {
+        "docs": "**obis_code** (*Required*, string): Specify the OBIS code you want to retrieve data for from the device. The format must be (A-B:C.D.E, e.g. 1-0:1.8.0)\n\n*See also: [sml Text Sensor](https://esphome.io/components/sml.html#text-sensor)*"
+      },
+      "sun": {
+        "dependencies": [
+          "sun"
+        ],
+        "docs": "Other properties like the next sunset time can be read out with the sun text_sensor platform.\n\n*See also: [sun Text Sensor](https://esphome.io/components/sun.html#sun-text-sensor)*"
+      },
+      "teleinfo": {
+        "docs": "**string**: Specify the tag you want to retrieve from the Teleinformation.\n\n*See also: [teleinfo Text Sensor](https://esphome.io/components/sensor/teleinfo.html#text-sensor)*"
+      },
+      "template": {
+        "docs": "The `template` text sensor platform allows you to create a text sensor with templated values using [lambdas](https://esphome.io/guides/automations.html#config-lambda).\n\n*See also: [Template Text Sensor](https://esphome.io/components/text_sensor/template.html#template-text-sensor)*"
+      },
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` text sensor platform creates a sensor from a tuya component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Text Sensor](https://esphome.io/components/text_sensor/tuya.html#tuya-text-sensor)*"
+      },
+      "version": {
+        "docs": "The `version` text sensor platform exposes the ESPHome version the firmware was compiled against as a text sensor.\n\n*See also: [Version Text Sensor](https://esphome.io/components/text_sensor/version.html#version-text-sensor)*"
+      },
+      "wifi_info": {
+        "dependencies": [
+          "wifi"
+        ],
+        "docs": "The `wifi_info` text sensor platform exposes different WiFi information via text sensors.\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#wifi-info-text-sensor)*"
+      }
+    },
+    "schemas": {
+      "TEXT_SENSOR_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTTextSensor",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "text_sensor::TextSensor",
+                "parents": [
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [dsmr Text Sensor](https://esphome.io/components/sensor/dsmr.html#text-sensor)*"
+            },
+            "filters": {
+              "key": "Optional",
+              "type": "registry",
+              "schema": {},
+              "is_list": true,
+              "registry": "text_sensor.filter"
+            },
+            "on_value": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a new value is published. See [on_value](https://esphome.io/components/text_sensor/index.html#text-sensor-on-value).\n\n*See also: [Text Sensor Component](https://esphome.io/components/text_sensor/index.html#base-text-sensor-configuration)*"
+            },
+            "on_raw_value": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a new value is received that hasn\u2019t passed through any filters. See [on_raw_value](https://esphome.io/components/text_sensor/index.html#text-sensor-on-raw-value).\n\n*See also: [Text Sensor Component](https://esphome.io/components/text_sensor/index.html#base-text-sensor-configuration)*"
+            }
+          }
+        }
+      }
+    },
+    "condition": {
+      "state": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "text_sensor::TextSensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The text sensor ID.\n\n*See also: [Text Sensor Component](https://esphome.io/components/text_sensor/index.html#text-sensor-state-condition)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), string**: The state to compare to.\n\n*See also: [Text Sensor Component](https://esphome.io/components/text_sensor/index.html#text-sensor-state-condition)*"
+            }
+          }
+        },
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) allows you to check if a given text sensor has a specific state.\n\n*See also: [`text_sensor.state` Condition](https://esphome.io/components/text_sensor/index.html#text-sensor-state-condition)*"
+      }
+    },
+    "filter": {
+      "lambda": {},
+      "to_upper": {},
+      "to_lower": {},
+      "append": {
+        "type": "string"
+      },
+      "prepend": {
+        "type": "string"
+      },
+      "substitute": {
+        "is_list": true
+      },
+      "map": {
+        "is_list": true
+      }
+    }
+  }
+}

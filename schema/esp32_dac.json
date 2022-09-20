@@ -1,0 +1,39 @@
+{
+  "esp32_dac.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "esp32_dac::ESP32DAC",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [ESP32 DAC](https://esphome.io/components/output/esp32_dac.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin to use DAC on. Only GPIO25 and GPIO26 are supported.\n\n*See also: [ESP32 DAC](https://esphome.io/components/output/esp32_dac.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

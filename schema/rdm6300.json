@@ -1,0 +1,73 @@
+{
+  "rdm6300": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "rdm6300::RDM6300Component",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this component.\n\n*See also: [rdm6300 Component/Hub](https://esphome.io/components/binary_sensor/rdm6300.html#configuration-variables)*"
+            },
+            "on_tag": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is read. See [on_tag](https://esphome.io/components/binary_sensor/rdm6300.html#rdm6300-on-tag).\n\n*See also: [rdm6300 Component/Hub](https://esphome.io/components/binary_sensor/rdm6300.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [UART Component](https://esphome.io/components/uart.html#uart) if you want to use multiple UART buses.\n\n*See also: [rdm6300 Component/Hub](https://esphome.io/components/binary_sensor/rdm6300.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "rdm6300.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "rdm6300::RDM6300BinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [rdm6300 Binary Sensor](https://esphome.io/components/binary_sensor/rdm6300.html#id1)*"
+            },
+            "rdm6300_id": {
+              "key": "GeneratedID",
+              "use_id_type": "rdm6300::RDM6300Component",
+              "type": "use_id"
+            },
+            "uid": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint32_t",
+              "docs": "**int**: The unique ID of the NFC/RFID tag.\n\n*See also: [rdm6300 Binary Sensor](https://esphome.io/components/binary_sensor/rdm6300.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

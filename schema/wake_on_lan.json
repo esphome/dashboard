@@ -1,0 +1,33 @@
+{
+  "wake_on_lan.button": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "button.BUTTON_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "target_mac_address": {
+              "key": "Required",
+              "docs": "**MAC Address**: The MAC Address of the target computer.\n\n*See also: [Wake-on-LAN Button](https://esphome.io/components/button/wake_on_lan.html#configuration-variables)*"
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "wake_on_lan::WakeOnLanButton",
+                "parents": [
+                  "button::Button",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Wake-on-LAN Button](https://esphome.io/components/button/wake_on_lan.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

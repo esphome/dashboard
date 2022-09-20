@@ -1,0 +1,43 @@
+{
+  "interval": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "trigger",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "interval::IntervalTrigger",
+                "parents": [
+                  "Trigger<>",
+                  "Trigger",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "interval": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to execute the action with.\n\n*See also: [interval Component](https://esphome.io/guides/automations.html#interval-component)*"
+            },
+            "setup_priority": {
+              "key": "Optional"
+            },
+            "then": {
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action to perform.\n\n*See also: [interval Component](https://esphome.io/guides/automations.html#interval-component)*"
+            }
+          }
+        },
+        "has_required_var": true
+      }
+    }
+  }
+}

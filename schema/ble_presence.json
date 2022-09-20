@@ -1,0 +1,58 @@
+{
+  "ble_presence.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "ble_presence::BLEPresenceDevice",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase",
+                  "Component",
+                  "esp32_ble_tracker::ESPBTDeviceListener"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "mac_address": {
+              "key": "Optional",
+              "docs": "**MAC Address**: The MAC address to track for this binary sensor. Note that exactly one of `mac_address`, `service_uuid` or `ibeacon_uuid` must be present.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "service_uuid": {
+              "key": "Optional",
+              "docs": "**string**: 16 bit, 32 bit, or 128 bit BLE Service UUID which can be tracked if the device randomizes the MAC address. Note that exactly one of `mac_address`, `service_uuid` or `ibeacon_uuid` must be present.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "ibeacon_major": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint16_t",
+              "docs": "**int**: The iBeacon major identifier of the beacon that needs to be tracked. Usually used to group beacons, for example for grouping all beacons in the same building.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "ibeacon_minor": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint16_t",
+              "docs": "**int**: The iBeacon minor identifier of the beacon that needs to be tracked. Usually used to identify beacons within an iBeacon group.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "ibeacon_uuid": {
+              "key": "Optional",
+              "docs": "**string**: The [universally unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) to identify the beacon that needs to be tracked. Note that exactly one of `mac_address`, `service_uuid` or `ibeacon_uuid` must be present.\n\n*See also: [ESP32 Bluetooth Low Energy Device](https://esphome.io/components/binary_sensor/ble_presence.html#configuration-variables)*"
+            },
+            "esp32_ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble_tracker::ESP32BLETracker",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

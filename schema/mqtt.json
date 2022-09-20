@@ -1,0 +1,384 @@
+{
+  "mqtt": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "mqtt::MQTTClientComponent",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "broker": {
+              "key": "Required",
+              "type": "string",
+              "docs": "**string**: The host of your MQTT broker.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "port": {
+              "key": "Optional",
+              "default": "1883",
+              "type": "integer",
+              "data_type": "port",
+              "docs": "**int**: The port to connect to. Defaults to 1883.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "username": {
+              "key": "Optional",
+              "default": "",
+              "type": "string",
+              "docs": "**string**: The username to use for authentication. Empty (the default) means no authentication.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "password": {
+              "key": "Optional",
+              "default": "",
+              "type": "string",
+              "docs": "**string**: The password to use for authentication. Empty (the default) means no authentication.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "client_id": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The client id to use for opening connections. See [Defaults](https://esphome.io/components/mqtt.html#mqtt-defaults) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "idf_send_async": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**bool**: Only with `esp-idf`. If true publishing the message happens from the internal mqtt task. The client only enqueues the message. Defaults to `false`. The advantage of asyncronous publishing is that it doesn\u2019t block the esphome main thread. The disadvantage is a delay (up to 1-2 seconds) until the messages are actually sent out. Set this to true if ypi send large amounts of of data over mqtt.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "certificate_authority": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Only with `esp-idf`. CA certificate in PEM format. See [TLS with esp-idf (esp32)](https://esphome.io/components/mqtt.html#mqtt-tls-idf) for more information\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "skip_cert_cn_check": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**bool**: Only with `esp-idf`. Don\u2019t verify if the common name in the server certificate matches the value of `broker`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "discovery": {
+              "key": "Optional",
+              "default": "True",
+              "type": "enum",
+              "values": [
+                "CLEAN"
+              ],
+              "docs": "**boolean**: If Home Assistant automatic discovery should be enabled. Defaults to `true`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "discovery_retain": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to retain MQTT discovery messages so that entities are added automatically on Home Assistant restart. Defaults to `true`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "discovery_prefix": {
+              "key": "Optional",
+              "default": "homeassistant",
+              "docs": "**string**: The prefix to use for Home Assistant\u2019s MQTT discovery. Should not contain trailing slash. Defaults to `homeassistant`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "discovery_unique_id_generator": {
+              "key": "Optional",
+              "default": "legacy",
+              "type": "enum",
+              "values": [
+                "legacy",
+                "mac"
+              ],
+              "docs": "**string**: The unique_id generator to use. Can be one of `legacy` or `mac`. Defaults to `legacy`, which generates unique_id in format `ESP<component_type><default_object_id>`. `mac` generator uses format `<mac_address>-<component_type>-<fnv1_hash(friendly_name)>`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "discovery_object_id_generator": {
+              "key": "Optional",
+              "default": "none",
+              "type": "enum",
+              "values": [
+                "none",
+                "device_name"
+              ],
+              "docs": "**string**: The object_id generator to use. Can be one of `none` or `device_name`. Defaults to `none` which does not generate object_id. `device_name` generator uses format `<device_name>_<friendly_name>`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "use_abbreviations": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to use [Abbreviations](https://www.home-assistant.io/docs/mqtt/discovery/) in discovery messages. Defaults to `true`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "birth_message": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "mqtt.MQTT_MESSAGE_BASE"
+                ],
+                "config_vars": {
+                  "payload": {
+                    "key": "Required"
+                  }
+                }
+              },
+              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when a connection to the broker is established. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "will_message": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "mqtt.MQTT_MESSAGE_BASE"
+                ],
+                "config_vars": {
+                  "payload": {
+                    "key": "Required"
+                  }
+                }
+              },
+              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when the MQTT connection is dropped. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "shutdown_message": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "mqtt.MQTT_MESSAGE_BASE"
+                ],
+                "config_vars": {
+                  "payload": {
+                    "key": "Required"
+                  }
+                }
+              },
+              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when the node shuts down and the connection is closed cleanly. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "topic_prefix": {
+              "key": "Optional",
+              "docs": "**string**: The prefix used for all MQTT messages. Should not contain trailing slash. Defaults to `<APP_NAME>`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "log_topic": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "mqtt.MQTT_MESSAGE_BASE"
+                ],
+                "config_vars": {
+                  "level": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ],
+                    "docs": "**string**: The log level to use for MQTT logs. See [Log Levels](https://esphome.io/components/logger.html#logger-log-levels) for options.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The topic to send MQTT log messages to.The `log_topic` has an additional configuration option:\n  * **level** (*Optional*, string): The log level to use for MQTT logs. See [Log Levels](https://esphome.io/components/logger.html#logger-log-levels) for options.\n  \n  \n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "ssl_fingerprints": {
+              "key": "Optional",
+              "is_list": true,
+              "docs": "**list**: Only on ESP8266. A list of SHA1 hashes used for verifying SSL connections. See [SSL Fingerprints](https://esphome.io/components/mqtt.html#mqtt-ssl-fingerprints). for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "keepalive": {
+              "key": "Optional",
+              "default": "15s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time to keep the MQTT socket alive, decreasing this can help with overall stability due to more WiFi traffic with more pings. Defaults to 15 seconds.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "reboot_timeout": {
+              "key": "Optional",
+              "default": "15min",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The amount of time to wait before rebooting when no MQTT connection exists. Can be disabled by setting this to `0s`. Defaults to `15min`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "on_connect": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when a connection to the broker is established.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "on_disconnect": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when the connection to the broker is dropped.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "on_message": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "topic": {
+                    "key": "Required",
+                    "docs": "**string**: The MQTT topic to subscribe to and listen for MQTT messages on. Every time a message with **this exact topic** is received, the automation will trigger.\n\n*See also: [on_message Trigger](https://esphome.io/components/mqtt.html#on-message-trigger)*"
+                  },
+                  "qos": {
+                    "key": "Optional",
+                    "default": "0",
+                    "docs": "**int**: The MQTT Quality of Service to subscribe to the topic with. Defaults to 0.\n\n*See also: [on_message Trigger](https://esphome.io/components/mqtt.html#on-message-trigger)*"
+                  },
+                  "payload": {
+                    "key": "Optional",
+                    "type": "string",
+                    "docs": "**string**: Optionally set a payload to match. Only if exactly the payload you specify with this option is received, the automation will be executed.\n\n*See also: [on_message Trigger](https://esphome.io/components/mqtt.html#on-message-trigger)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when a message on a specific MQTT topic is received. See [on_message Trigger](https://esphome.io/components/mqtt.html#mqtt-on-message).\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            },
+            "on_json_message": {
+              "key": "Optional",
+              "type": "trigger",
+              "schema": {
+                "config_vars": {
+                  "topic": {
+                    "key": "Required",
+                    "docs": "**string**: The MQTT topic to subscribe to and listen for MQTT messages on. Every time a message with **this exact topic** is received, the automation will trigger.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#on-json-message-trigger)*"
+                  },
+                  "qos": {
+                    "key": "Optional",
+                    "default": "0",
+                    "docs": "**int**: The MQTT Quality of Service to subscribe to the topic with. Defaults to 0.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#on-json-message-trigger)*"
+                  },
+                  "then": {
+                    "type": "trigger"
+                  }
+                }
+              },
+              "has_required_var": true,
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An action to be performed when a JSON message on a specific MQTT topic is received. See [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-on-json-message).\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+            }
+          }
+        }
+      },
+      "MQTT_MESSAGE_BASE": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "topic": {
+              "key": "Required",
+              "docs": "**string**: The MQTT topic to publish the message.\n\n*See also: [MQTTMessage](https://esphome.io/components/mqtt.html#mqttmessage)*"
+            },
+            "qos": {
+              "key": "Optional",
+              "default": "0",
+              "docs": "**int**: The [Quality of Service](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels) level of the topic. Defaults to 0.\n\n*See also: [MQTTMessage](https://esphome.io/components/mqtt.html#mqttmessage)*"
+            },
+            "retain": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: If the published message should have a retain flag on or not. Defaults to `true`.\n\n*See also: [MQTTMessage](https://esphome.io/components/mqtt.html#mqttmessage)*"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "publish": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "mqtt::MQTTClientComponent",
+              "type": "use_id"
+            },
+            "topic": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The MQTT topic to publish the message.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-action)*"
+            },
+            "payload": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The message content.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-action)*"
+            },
+            "qos": {
+              "key": "Optional",
+              "default": "0",
+              "templatable": true,
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The [Quality of Service](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels) level of the topic. Defaults to 0.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-action)*"
+            },
+            "retain": {
+              "key": "Optional",
+              "default": "False",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: If the published message should have a retain flag on or not. Defaults to `false`.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-action)*"
+            }
+          }
+        },
+        "docs": "Publish an MQTT message on a topic using this action in automations.\n\n*See also: [`mqtt.publish` Action](https://esphome.io/components/mqtt.html#mqtt-publish-action)*"
+      },
+      "publish_json": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "mqtt::MQTTClientComponent",
+              "type": "use_id"
+            },
+            "topic": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The MQTT topic to publish the message.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-json-action)*"
+            },
+            "payload": {
+              "key": "Required",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The message content.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-json-action)*"
+            },
+            "qos": {
+              "key": "Optional",
+              "default": "0",
+              "templatable": true,
+              "docs": "**int**: The [Quality of Service](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels) level of the topic. Defaults to 0.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-json-action)*"
+            },
+            "retain": {
+              "key": "Optional",
+              "default": "False",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: If the published message should have a retain flag on or not. Defaults to `false`.\n\n*See also: [on_json_message Trigger](https://esphome.io/components/mqtt.html#mqtt-publish-json-action)*"
+            }
+          }
+        },
+        "docs": "Publish a JSON-formatted MQTT message on a topic using this action in automations.\n\n*See also: [`mqtt.publish_json` Action](https://esphome.io/components/mqtt.html#mqtt-publish-json-action)*"
+      }
+    },
+    "condition": {
+      "connected": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "mqtt::MQTTClientComponent",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if the MQTT client is currently connected to the MQTT broker.\n\n*See also: [`mqtt.connected` Condition](https://esphome.io/components/mqtt.html#mqtt-connected-condition)*"
+      }
+    }
+  }
+}

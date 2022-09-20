@@ -1,0 +1,68 @@
+{
+  "restart.button": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "button.BUTTON_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "entity_category": {
+              "default": "config"
+            },
+            "device_class": {
+              "default": "restart"
+            },
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "restart::RestartButton",
+                "parents": [
+                  "button::Button",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Restart Button](https://esphome.io/components/button/restart.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "restart.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "restart::RestartSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Restart Switch](https://esphome.io/components/switch/restart.html#configuration-variables)*"
+            },
+            "entity_category": {
+              "default": "config"
+            },
+            "icon": {
+              "default": "mdi:restart"
+            }
+          }
+        }
+      }
+    }
+  }
+}

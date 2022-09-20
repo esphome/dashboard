@@ -1,0 +1,154 @@
+{
+  "sx1509": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "sx1509::SX1509Component",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this SX1509 component.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+            },
+            "keypad": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "key_rows": {
+                    "key": "Required",
+                    "type": "integer",
+                    "docs": "**int**: The number of keypad rows to use. This enables any number of the first 7 pins. So a value of 3 enables pins 0,1,2 to be used as the rows for the keypad matrix. This value must be between 1 and 8.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+                  },
+                  "key_columns": {
+                    "key": "Required",
+                    "type": "integer",
+                    "docs": "**int**: The number of keypad columns to use. This enables any number of the last 7 pins. So a value of 4 enables pins 8,9,10,11 to be used as the columns for the keypad matrix. This value must be between 1 and 8.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+                  },
+                  "sleep_time": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "docs": "**int**: No key press within this time will set keypad engine to sleep.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+                  },
+                  "scan_time": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "docs": "**int**: Scan time per row (must be set above debounce time).\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+                  },
+                  "debounce_time": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "docs": "**int**: The debounce time is common to all IOs.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Add this to enable the keypad.\n  * **key_rows** (**Required**, int): The number of keypad rows to use. This enables any number of the first 7 pins. So a value of 3 enables pins 0,1,2 to be used as the rows for the keypad matrix. This value must be between 1 and 8.\n  \n  * **key_columns** (**Required**, int): The number of keypad columns to use. This enables any number of the last 7 pins. So a value of 4 enables pins 8,9,10,11 to be used as the columns for the keypad matrix. This value must be between 1 and 8.\n  \n  * **sleep_time** (*Optional*, int): No key press within this time will set keypad engine to sleep.\n  \n  * **scan_time** (*Optional*, int): Scan time per row (must be set above debounce time).\n  \n  * **debounce_time** (*Optional*, int): The debounce time is common to all IOs.\n  \n  \n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "62",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The I\u00b2C address of the driver. Defaults to `0x3E`.\n\n*See also: [SX1509 16 channel I/O Expander with LED driver and keypad engine](https://esphome.io/components/sx1509.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "sx1509.SX1509_PIN_SCHEMA"
+        ]
+      }
+    }
+  },
+  "sx1509.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "sx1509::SX1509BinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              }
+            },
+            "sx1509_id": {
+              "key": "GeneratedID",
+              "use_id_type": "sx1509::SX1509Component",
+              "type": "use_id"
+            },
+            "row": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The row number for this key on the keypad.\n\n*See also: [sx1509 Binary Sensor](https://esphome.io/components/sx1509.html#id1)*"
+            },
+            "col": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: The column number for this key on the keypad.\n\n*See also: [sx1509 Binary Sensor](https://esphome.io/components/sx1509.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sx1509.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "sx1509::SX1509FloatOutputChannel",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              }
+            },
+            "sx1509_id": {
+              "key": "GeneratedID",
+              "use_id_type": "sx1509::SX1509Component",
+              "type": "use_id"
+            },
+            "pin": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

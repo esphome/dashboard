@@ -1,0 +1,404 @@
+{
+  "growatt_solar.sensor": {
+    "schemas": {
+      "PHASE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  }
+                }
+              },
+              "docs": "Use the voltage value of the sensor in volts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "current": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "A"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "current"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the current value of the sensor in amperes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "active_power": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "W"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "power"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the (active) power value of the sensor in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            }
+          }
+        }
+      },
+      "PV_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "voltage": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "V"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "voltage"
+                  }
+                }
+              },
+              "docs": "Use the voltage value of the sensor in volts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "current": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "A"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "current"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the current value of the sensor in amperes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "active_power": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "W"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "power"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the (active) power value of the sensor in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            }
+          }
+        }
+      },
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "growatt_solar::GrowattSolar",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "modbus::ModbusDevice"
+                ]
+              }
+            },
+            "protocol_version": {
+              "key": "Optional",
+              "default": "RTU",
+              "type": "enum",
+              "values": [
+                "RTU",
+                "RTU2"
+              ],
+              "docs": "Version of the protocol used by your inverter. Old inverters use RTU (default). Newer ones use RTU2 (e.g. MIC, MIN, MAX series)\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "phase_a": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "growatt_solar.sensor.PHASE_SCHEMA"
+                ]
+              },
+              "docs": "The group of exposed sensors for Phase A/1.\n  * **current** (*Optional*): Use the current value of the sensor in amperes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  * **voltage** (*Optional*): Use the voltage value of the sensor in volts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  * **active_power** (*Optional*): Use the (active) power value of the sensor in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "phase_b": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "growatt_solar.sensor.PHASE_SCHEMA"
+                ]
+              },
+              "docs": "The group of exposed sensors for Phase B/2 on applicable inverters.\n  * All options from **phase_a**\n  \n  \n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "phase_c": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "growatt_solar.sensor.PHASE_SCHEMA"
+                ]
+              },
+              "docs": "The group of exposed sensors for Phase C/3 on applicable inverters.\n  * All options from **phase_a**\n  \n  \n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "pv1": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "growatt_solar.sensor.PV_SCHEMA"
+                ]
+              },
+              "docs": "The group of exposed sensors for Photo Voltaic 1.\n  * **current** (*Optional*): Use the current value of the sensor in amperes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  * **voltage** (*Optional*): Use the voltage value of the sensor in volts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  * **active_power** (*Optional*): Use the (active) power value of the sensor in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "pv2": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "growatt_solar.sensor.PV_SCHEMA"
+                ]
+              },
+              "docs": "The group of exposed sensors for Photo Voltaic 2.\n  * All options from **pv1**\n  \n  \n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "inverter_status": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ]
+              },
+              "docs": "Status code of the inverter (0: waiting, 1: normal, 3:fault)\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "frequency": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "Hz"
+                  },
+                  "icon": {
+                    "default": "mdi:current-ac"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the frequency value of the sensor in hertz. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "active_power": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "W"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "power"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the (active) power value for the Grid in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "pv_active_power": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "W"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "power"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the (active) power value of PVs in total in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "energy_production_day": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "kWh"
+                  },
+                  "accuracy_decimals": {
+                    "default": "2"
+                  },
+                  "device_class": {
+                    "default": "energy"
+                  },
+                  "state_class": {
+                    "default": "total_increasing"
+                  }
+                }
+              },
+              "docs": "Use the export active energy value for same day of the sensor in kilo watt hours. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "total_energy_production": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "kWh"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "energy"
+                  },
+                  "state_class": {
+                    "default": "total_increasing"
+                  }
+                }
+              },
+              "docs": "Use the total exported energy value of the sensor in kilo watt hours. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "inverter_module_temp": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              },
+              "docs": "Use the inverter module temperature value of the sensor in degree celsius. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "10s"
+            },
+            "modbus_id": {
+              "key": "GeneratedID",
+              "use_id_type": "modbus::Modbus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "1",
+              "data_type": "hex_uint8_t"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

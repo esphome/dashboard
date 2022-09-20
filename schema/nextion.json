@@ -1,0 +1,377 @@
+{
+  "nextion.sensor": {
+    "schemas": {
+      "CONFIG_SENSOR_COMPONENT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "nextion_id": {
+              "key": "GeneratedID",
+              "use_id_type": "nextion::Nextion",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Nextion display.\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "background_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The background color\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "foreground_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The foreground color\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "visible": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Visible or not\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "component_name": {
+              "key": "Optional",
+              "docs": "**string**: The name of the Nextion component.\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "variable_name": {
+              "key": "Optional",
+              "docs": "**string**: The name of the Nextion variable. Any value over `0` is considered to be **on**\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "font_id": {
+              "key": "Optional",
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "nextion.sensor.CONFIG_SENSOR_COMPONENT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "nextion::NextionSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "precision": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "docs": "**int**: This is for Nextion float components. This sets the precision that the component is set to. This typically is the `vvs1` setting of the component.\n\n*See also: [Nextion Sensor Component](https://esphome.io/components/sensor/nextion.html#configuration-variables)*"
+            },
+            "wave_channel_id": {
+              "key": "Optional"
+            },
+            "component_id": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t"
+            },
+            "wave_max_length": {
+              "key": "Optional",
+              "default": "255",
+              "type": "integer"
+            },
+            "wave_max_value": {
+              "key": "Optional",
+              "default": "100",
+              "type": "integer"
+            },
+            "waveform_send_last_value": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration to update the sensor\n\n*See also: [Nextion Sensor Component](https://esphome.io/components/sensor/nextion.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "nextion.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "nextion::NextionBinarySensor",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "page_id": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**string**: The ID of the page the component is on. Use `0` for the default page.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "component_id": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**string**: The ID (the number, not name!) of the component to track.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration to update the sensor. If using a [Nextion Custom Binary Sensor Protocol](https://esphome.io/components/binary_sensor/nextion.html#nextion-custom-binary-sensor-protocol) this should not be used\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "nextion_id": {
+              "key": "GeneratedID",
+              "use_id_type": "nextion::Nextion",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Nextion display.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "background_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The background color\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "foreground_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The foreground color\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "visible": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Visible or not\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "component_name": {
+              "key": "Optional",
+              "docs": "**string**: The name of the Nextion component.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "variable_name": {
+              "key": "Optional",
+              "docs": "**string**: The name of the Nextion variable. Any value over `0` is considered to be **on**\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            },
+            "name": {
+              "docs": "**string**: The name of the sensor.\n\n*See also: [Nextion Binary Sensor Component](https://esphome.io/components/binary_sensor/nextion.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "nextion.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "nextion::Nextion",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "tft_url": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The URL to download the TFT file from for updates. See [Nextion Upload](https://esphome.io/components/display/nextion.html#nextion-upload-tft).\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "brightness": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**percentage**: Set display brightness in %. Defaults to `100%`\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "on_setup": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An action to be performed after ESPHome connects to the Nextion. See [Nextion Automation](https://esphome.io/components/display/nextion.html#nextion-on-setup).\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "on_sleep": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An action to be performed when the Nextion goes to sleep. See [Nextion Automation](https://esphome.io/components/display/nextion.html#nextion-on-sleep).\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "on_wake": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An action to be performed when the Nextion wakes up. See [Nextion Automation](https://esphome.io/components/display/nextion.html#nextion-on-sleep).\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "on_page": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An action to be performed after a page change. See [Nextion Automation](https://esphome.io/components/display/nextion.html#nextion-on-page).\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "touch_sleep_timeout": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: Sets internal No-touch-then-sleep timer in seconds.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "wake_up_page": {
+              "key": "Optional",
+              "type": "integer",
+              "data_type": "positive_int",
+              "docs": "**int**: Sets the page to display after waking up\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "auto_wake_on_touch": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Sets if Nextion should auto-wake from sleep when touch press occurs.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "5s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to call the lambda to update the display. Defaults to `5s`.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [UART bus](https://esphome.io/components/uart.html#uart) you wish to use for this display. Use this if you want to use multiple UART buses at once.\n\n*See also: [Nextion TFT LCD Display](https://esphome.io/components/display/nextion.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "nextion.switch": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "nextion::NextionSwitch",
+                "parents": [
+                  "switch_::Switch",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration to update the sensor. If using a [Nextion Custom Switch Protocol](https://esphome.io/components/switch/nextion.html#nextion-custom-switch-protocol) this should not be used\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "foreground_pressed_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The foreground color when pressed\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "background_pressed_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The background color when pressed\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            },
+            "name": {
+              "docs": "**string**: The name of the sensor.\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "nextion.sensor.CONFIG_SENSOR_COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "nextion.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "nextion::NextionTextSensor",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "never",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The duration to update the sensor. If using a [Nextion Custom Text Sensor Protocol](https://esphome.io/components/text_sensor/nextion.html#nextion-custom-text-sensor-protocol) this should not be used\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "nextion_id": {
+              "key": "GeneratedID",
+              "use_id_type": "nextion::Nextion",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Nextion display.\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "background_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The background color\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "foreground_color": {
+              "key": "Optional",
+              "use_id_type": "Color",
+              "type": "use_id",
+              "docs": "**[Color](https://esphome.io/components/display/index.html#config-color)**: The foreground color\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "visible": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Visible or not\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "component_name": {
+              "key": "Required",
+              "docs": "**string**: The name of the Nextion component.\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "font_id": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: The font id for the component\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            },
+            "name": {
+              "docs": "**string**: The name of the sensor.\n\n*See also: [Nextion Text Sensor Component](https://esphome.io/components/text_sensor/nextion.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

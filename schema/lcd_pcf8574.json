@@ -1,0 +1,40 @@
+{
+  "lcd_pcf8574.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "lcd_base.LCD_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "lcd_pcf8574::PCF8574LCDDisplay",
+                "parents": [
+                  "lcd_base::LCDDisplay",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "63",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) address of the PCF8574 chip, defaults to `0x3F`.\n\n*See also: [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

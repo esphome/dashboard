@@ -1,0 +1,53 @@
+{
+  "yashima.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "yashima::YashimaClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "transmitter_id": {
+              "key": "GeneratedID",
+              "use_id_type": "remote_transmitter::RemoteTransmitterComponent",
+              "type": "use_id"
+            },
+            "supports_cool": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Enables setting cooling mode for this climate device. Defaults to `true`.\n\n*See also: [None](https://esphome.io/components/climate/climate_ir.html#configuration-variables)*"
+            },
+            "supports_heat": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Enables setting heating mode for this climate device. Defaults to `true`.\n\n*See also: [None](https://esphome.io/components/climate/climate_ir.html#configuration-variables)*"
+            },
+            "sensor": {
+              "key": "Optional",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that is used to measure the ambient temperature. This is only for reporting the current temperature in the frontend.\n\n*See also: [None](https://esphome.io/components/climate/climate_ir.html#configuration-variables)*"
+            },
+            "receiver_id": {
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the remote_receiver if this platform supports receiver. see: [Using a Receiver](https://esphome.io/components/climate/climate_ir.html#ir-receiver-id).\n\n*See also: [None](https://esphome.io/components/climate/climate_ir.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

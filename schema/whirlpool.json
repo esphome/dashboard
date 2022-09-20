@@ -1,0 +1,42 @@
+{
+  "whirlpool.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_WITH_RECEIVER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "whirlpool::WhirlpoolClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "model": {
+              "key": "Optional",
+              "default": "DG11J1-3A",
+              "type": "enum",
+              "values": [
+                "DG11J1-3A",
+                "DG11J1-91"
+              ],
+              "docs": "**string**: There are two valid models\n  * `DG11J1-3A`: Temperature range is from 18 to 32 (default)\n  \n  * `DG11J1-91`: Temperature range is from 16 to 30\n  \n  \n\n*See also: [whirlpool Climate](https://esphome.io/components/climate/climate_ir.html#whirlpool-climate)*",
+              "values_docs": {
+                "DG11J1-3A": "Temperature range is from 18 to 32 (default)",
+                "DG11J1-91": "Temperature range is from 16 to 30"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

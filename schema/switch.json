@@ -1,0 +1,175 @@
+{
+  "switch": {
+    "components": {
+      "ble_client": {
+        "docs": "The `ble_client` component is a switch platform that is used to enable and disable a `ble_client`. This has several uses, such as minimizing battery usage or for allowing other clients (Eg phone apps) to connect to the device.\n\n*See also: [BLE Client Switch](https://esphome.io/components/switch/ble_client.html#ble-client-switch)*"
+      },
+      "copy": {
+        "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The switch that should be mirrored.\n\n*See also: [Copy Switch](https://esphome.io/components/copy.html#copy-switch)*"
+      },
+      "custom": {
+        "docs": "This integration can be used to create custom switches in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Switch](https://esphome.io/components/switch/custom.html#custom-switch)*"
+      },
+      "factory_reset": {
+        "docs": "The `factory_reset` switch allows you to remotely invalidate (reset) all ESPHome [preferences](https://esphome.io/components/esphome.html#preferences-flash-write-interval) stored in flash memory and reboot your node. After reboot all states, parameters and variables will be reinitialized with their default values. This is useful:\n\n*See also: [Factory Reset Switch](https://esphome.io/components/switch/factory_reset.html#factory-reset-switch)*"
+      },
+      "gpio": {
+        "docs": "The `gpio` switch platform allows you to use any pin on your node as a switch. You can for example hook up a relay to a GPIO pin and use it through this platform.\n\n*See also: [GPIO Switch](https://esphome.io/components/switch/gpio.html#gpio-switch)*"
+      },
+      "modbus_controller": {
+        "dependencies": [
+          "modbus_controller"
+        ],
+        "docs": "The `modbus_controller` switch platform creates a switch from a modbus_controller component and requires [Modbus Controller](https://esphome.io/components/modbus_controller.html) to be configured.\n\n*See also: [Modbus Controller Switch](https://esphome.io/components/switch/modbus_controller.html#modbus-controller-switch)*"
+      },
+      "nextion": {
+        "docs": "The `nextion` switch platform supports the many switched components in the Nextion as well as integer variables. It can be a component or variable in the Nextion display. It is best to set the components vscope to global in the Nextion Editor. This way the component will be available if the page is shown or not.\n\n*See also: [Nextion Switch Component](https://esphome.io/components/switch/nextion.html#nextion-switch-component)*"
+      },
+      "output": {
+        "docs": "The `output` switch platform allows you to use any output component as a switch.\n\n*See also: [Generic Output Switch](https://esphome.io/components/switch/output.html#generic-output-switch)*"
+      },
+      "pipsolar": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "Not all possible switches are exposed as they lead to the possibility to make serious damage. They should only be set at the physical device itself.\n\n*See also: [pipsolar Switch](https://esphome.io/components/pipsolar.html#switch)*"
+      },
+      "restart": {
+        "docs": "The `restart` switch platform allows you to restart your node remotely through Home Assistant.\n\n*See also: [Restart Switch](https://esphome.io/components/switch/restart.html#restart-switch)*"
+      },
+      "safe_mode": {
+        "dependencies": [
+          "ota"
+        ],
+        "docs": "The `safe_mode` switch allows you to remotely reboot your node into [Safe Mode](https://esphome.io/components/ota.html#config-ota). This is useful in certain situations where a misbehaving component is preventing Over-The-Air updates from completing successfully.\n\n*See also: [Safe Mode Switch](https://esphome.io/components/switch/safe_mode.html#safe-mode-switch)*"
+      },
+      "shutdown": {
+        "docs": "The `shutdown` switch platform allows you to shutdown your node remotely through Home Assistant. It does this by putting the node into deep sleep mode with no wakeup source selected. After enabling, the only way to startup the ESP again is by pressing the reset button or restarting the power supply.\n\n*See also: [Shutdown Switch](https://esphome.io/components/switch/shutdown.html#shutdown-switch)*"
+      },
+      "template": {
+        "docs": "The `template` switch platform allows you to create simple switches out of just actions and an optional value lambda. Once defined, it will automatically appear in Home Assistant as a switch and can be controlled through the frontend.\n\n*See also: [Template Switch](https://esphome.io/components/switch/template.html#template-switch)*"
+      },
+      "tm1638": {},
+      "tuya": {
+        "dependencies": [
+          "tuya"
+        ],
+        "docs": "The `tuya` switch platform creates a sensor from a tuya serial component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Switch](https://esphome.io/components/switch/tuya.html#tuya-switch)*"
+      },
+      "uart": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "The `uart` switch platform allows you to send a pre-defined sequence of bytes on a [UART bus](https://esphome.io/components/uart.html) when triggered.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#uart-switch)*"
+      }
+    },
+    "schemas": {
+      "SWITCH_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.ENTITY_BASE_SCHEMA",
+            "core.MQTT_COMMAND_COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "mqtt_id": {
+              "key": "Optional",
+              "id_type": {
+                "class": "mqtt::MQTTSwitchComponent",
+                "parents": [
+                  "mqtt::MQTTComponent",
+                  "Component"
+                ]
+              }
+            },
+            "inverted": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to invert the binary state, i.e.\u00a0report ON states as OFF and vice versa. Defaults to `false`.\n\n*See also: [Switch Component](https://esphome.io/components/switch/index.html#base-switch-configuration)*"
+            },
+            "on_turn_on": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the switch is turned on. See [switch.on_turn_on / switch.on_turn_off Trigger](https://esphome.io/components/switch/index.html#switch-on-turn-on-off-trigger).\n\n*See also: [Switch Component](https://esphome.io/components/switch/index.html#base-switch-configuration)*"
+            },
+            "on_turn_off": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the switch is turned off. See [switch.on_turn_on / switch.on_turn_off Trigger](https://esphome.io/components/switch/index.html#switch-on-turn-on-off-trigger).\n\n*See also: [Switch Component](https://esphome.io/components/switch/index.html#base-switch-configuration)*"
+            },
+            "device_class": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "",
+                "outlet",
+                "switch"
+              ],
+              "docs": "**string**: The device class for the switch. See [https://developers.home-assistant.io/docs/core/entity/switch/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/switch/#available-device-classes) for a list of available options. Requires Home Assistant 2022.3 or newer.\n\n*See also: [Switch Component](https://esphome.io/components/switch/index.html#base-switch-configuration)*"
+            }
+          }
+        }
+      },
+      "SWITCH_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "switch_::Switch",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "turn_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action turns a switch with the given ID on when executed.\n\n*See also: [`switch.turn_on` Action](https://esphome.io/components/switch/index.html#switch-turn-on-action)*"
+      },
+      "turn_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action turns a switch with the given ID off when executed.\n\n*See also: [`switch.turn_off` Action](https://esphome.io/components/switch/index.html#switch-turn-off-action)*"
+      },
+      "toggle": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This action toggles a switch with the given ID when executed.\n\n*See also: [`switch.toggle` Action](https://esphome.io/components/switch/index.html#switch-toggle-action)*"
+      }
+    },
+    "condition": {
+      "is_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "is_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "switch.SWITCH_ACTION_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

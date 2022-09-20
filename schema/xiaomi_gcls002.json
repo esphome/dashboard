@@ -1,0 +1,122 @@
+{
+  "xiaomi_gcls002.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "xiaomi_gcls002::XiaomiGCLS002",
+                "parents": [
+                  "esp32_ble_tracker::ESPBTDeviceListener",
+                  "Component"
+                ]
+              }
+            },
+            "mac_address": {
+              "key": "Required"
+            },
+            "temperature": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b0C"
+                  },
+                  "accuracy_decimals": {
+                    "default": "1"
+                  },
+                  "device_class": {
+                    "default": "temperature"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              }
+            },
+            "moisture": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "icon": {
+                    "default": "mdi:water-percent"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              }
+            },
+            "illuminance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "lx"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "device_class": {
+                    "default": "illuminance"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              }
+            },
+            "conductivity": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "\u00b5S/cm"
+                  },
+                  "icon": {
+                    "default": "mdi:flower"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "measurement"
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "esp32_ble_tracker.ESP_BLE_DEVICE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

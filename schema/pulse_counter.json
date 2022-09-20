@@ -1,0 +1,142 @@
+{
+  "pulse_counter.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "pulse_counter::PulseCounterSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "pulses/min"
+            },
+            "icon": {
+              "default": "mdi:pulse"
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "pin": {
+              "key": "Required",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to count pulses on.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "count_mode": {
+              "key": "Optional",
+              "default": "{'rising_edge': 'INCREMENT', 'falling_edge': 'DISABLE'}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "rising_edge": {
+                    "key": "Required",
+                    "type": "enum",
+                    "values": [
+                      "DISABLE",
+                      "INCREMENT",
+                      "DECREMENT"
+                    ],
+                    "docs": "What to do when a rising edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `INCREMENT`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+                  },
+                  "falling_edge": {
+                    "key": "Required",
+                    "type": "enum",
+                    "values": [
+                      "DISABLE",
+                      "INCREMENT",
+                      "DECREMENT"
+                    ],
+                    "docs": "What to do when a falling edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `DISABLE`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Configure how the counter should behave on a detected rising edge/falling edge.\n  * **rising_edge** (*Optional*): What to do when a rising edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `INCREMENT`.\n  \n  * **falling_edge** (*Optional*): What to do when a falling edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `DISABLE`.\n  \n  \n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "use_pcnt": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Use hardware `PCNT` pulse counter. Only supported on ESP32. Defaults to `true`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "internal_filter": {
+              "key": "Optional",
+              "default": "13us",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If a pulse shorter than this time is detected, it\u2019s discarded and no pulse is counted. Defaults to `13us`. On the ESP32, when using the hardware pulse counter this value can not be higher than `13us`, for the ESP8266 or with `use_pcnt: false` you can use larger intervals too. If you enable this, set up the `count_mode` to increase on the falling edge, not leading edge. For S0 pulse meters that are used to meter power consumption 50-100 ms is a reasonable value.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "total": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "pulses"
+                  },
+                  "icon": {
+                    "default": "mdi:pulse"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "total_increasing"
+                  }
+                }
+              },
+              "docs": "Report the total number of pulses.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "pulse_counter": {
+    "action": {
+      "set_total_pulses": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "pulse_counter::PulseCounterSensor",
+              "type": "use_id"
+            },
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "uint32_t"
+            }
+          }
+        }
+      }
+    }
+  }
+}

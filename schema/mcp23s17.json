@@ -1,0 +1,57 @@
+{
+  "mcp23s17": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "mcp23s17::MCP23S17",
+                "parents": [
+                  "mcp23x17_base::MCP23X17Base",
+                  "mcp23xxx_base::MCP23XXXBase",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this MCP23S17 component.\n\n*See also: [MCP23S17 Component](https://esphome.io/components/mcp23Sxx.html#id1)*"
+            },
+            "deviceaddress": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The address of the chip. Defaults to `0`.\n\n*See also: [MCP23S17 Component](https://esphome.io/components/mcp23Sxx.html#id1)*"
+            },
+            "open_drain_interrupt": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Configure interrupt pins to open-drain mode. Useful when the MCP23S17\u2019s power supply is greater than 3.3 volts. Note that these pins will require pull-up resistors (to 3.3 volts) when this mode is enabled.\n\n*See also: [MCP23S17 Component](https://esphome.io/components/mcp23Sxx.html#id1)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**int**: The SPI chip select pin to use.\n\n*See also: [MCP23S17 Component](https://esphome.io/components/mcp23Sxx.html#id1)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  }
+}

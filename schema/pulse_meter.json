@@ -1,0 +1,108 @@
+{
+  "pulse_meter.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "pulse_meter::PulseMeterSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "pulses/min"
+            },
+            "icon": {
+              "default": "mdi:pulse"
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "pin": {
+              "key": "Required",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to count pulses on.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
+            },
+            "internal_filter": {
+              "key": "Optional",
+              "default": "13us",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If a pulse shorter than this time is detected, it\u2019s discarded and no pulse is counted. Defaults to `13us`. For S0 pulse meters that are used to meter power consumption 50-100 ms is a reasonable value.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
+            },
+            "timeout": {
+              "key": "Optional",
+              "default": "5min",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: If we don\u2019t see a pulse for this length of time, we assume 0 pulses/sec. Defaults to `5 min`.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
+            },
+            "total": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "pulses"
+                  },
+                  "icon": {
+                    "default": "mdi:pulse"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "state_class": {
+                    "default": "total_increasing"
+                  }
+                }
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: An additional sensor that outputs the total number of pulses counted.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
+            },
+            "internal_filter_mode": {
+              "key": "Optional",
+              "default": "EDGE",
+              "type": "enum",
+              "values": [
+                "EDGE",
+                "PULSE"
+              ],
+              "docs": "**string**: Determines how the internal filter is applied. One of `EDGE` and `PULSE`. Defaults to `EDGE`. In `EDGE` mode subsequent rising edges are compared and if they fall into an interval lesser than the internal filter value, the last one is discarded. In `PULSE` mode the rising edge is discarded if any further interrupts are detected before the internal_filter time has passed. In other words, a high pulse must be at least internal_filter long to be counted. This is useful if you are detecting long pulses that may bounces before and/or after the main pulse.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "pulse_meter": {
+    "action": {
+      "set_total_pulses": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "pulse_meter::PulseMeterSensor",
+              "type": "use_id"
+            },
+            "value": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "data_type": "uint32_t"
+            }
+          }
+        }
+      }
+    }
+  }
+}

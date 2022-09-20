@@ -1,0 +1,969 @@
+{
+  "remote_transmitter": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "remote_transmitter::RemoteTransmitterComponent",
+                "parents": [
+                  "remote_base::RemoteTransmitterBase",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation. Use this if you have multiple remote transmitters.\n\n*See also: [Remote Transmitter](https://esphome.io/components/remote_transmitter.html#configuration-variables)*"
+            },
+            "pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to transmit the remote signal on.\n\n*See also: [Remote Transmitter](https://esphome.io/components/remote_transmitter.html#configuration-variables)*"
+            },
+            "carrier_duty_percent": {
+              "key": "Required",
+              "docs": "**int**: How much of the time the remote is on. For example, infrared protocols modulate the signal using a carrier signal. Set this is `50%` if you\u2019re working with IR LEDs and to `100%` if working with other things like 433MHz transmitters.\n\n*See also: [Remote Transmitter](https://esphome.io/components/remote_transmitter.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "action": {
+      "transmit_coolix": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The Coolix code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a 24-bit Coolix infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_coolix` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+      },
+      "transmit_dish": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The number of the receiver to target, between 1 and 16 inclusive. Defaults to `1`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-dish-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The command to send, between 0 and 63 inclusive.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-dish-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Dish Network infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_dish` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-dish-action)*"
+      },
+      "transmit_jvc": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The JVC code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-jvc-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a JVC infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_jvc` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-jvc-action)*"
+      },
+      "transmit_lg": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The LG code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-lg-action)*"
+            },
+            "nbits": {
+              "key": "Optional",
+              "default": "28",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                28,
+                32
+              ],
+              "docs": "**int**: The number of bits to send. Defaults to `28`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-lg-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends an LG infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_lg` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-lg-action)*"
+      },
+      "transmit_magiquest": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "wand_id": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The wand ID to send, as a hex integer.  See the dumper output for your wand ID.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-magiquest-action)*"
+            },
+            "magnitude": {
+              "key": "Optional",
+              "default": "65535",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The magnitude of swishes and swirls of the want to transmit.  See the dumper output for examples.  If omitted, sends 0xFFFF (which the real wand never uses).\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-magiquest-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a MagiQuest wand code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_magiquest` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-magiquest-action)*"
+      },
+      "transmit_nec": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The address to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nec-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The NEC command to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nec-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends an NEC infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_nec` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nec-action)*"
+      },
+      "transmit_pioneer": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "rc_code_1": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The remote control code to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-pioneer-action)*"
+            },
+            "rc_code_2": {
+              "key": "Optional",
+              "default": "0",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The secondary remote control code to send; some codes are sent in two parts.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-pioneer-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Pioneer infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_pioneer` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-pioneer-action)*"
+      },
+      "transmit_pronto": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "type": "string",
+              "docs": "**string**: The raw code to send specified as a string. A lot of remote control Pronto codes can be found on [http://remotecentral.com](http://remotecentral.com)\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-pronto-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a raw code to a remote transmitter specified in Pronto format.\n\n*See also: [`remote_transmitter.transmit_pronto` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-pronto-action)*"
+      },
+      "transmit_sony": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The Sony code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-sony-action)*"
+            },
+            "nbits": {
+              "key": "Optional",
+              "default": "12",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                12,
+                15,
+                20
+              ],
+              "docs": "**int**: The number of bits to send. Defaults to `12`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-sony-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) a Sony infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_sony` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-sony-action)*"
+      },
+      "transmit_raw": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "code": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**list**: The raw code to send as a list of integers. Positive numbers represent a digital high signal and negative numbers a digital low signal. The number itself encodes how long the signal should last (in microseconds).\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-raw-action)*"
+            },
+            "code_storage_id": {
+              "key": "GeneratedID",
+              "templatable": true,
+              "id_type": {
+                "class": "int32_t",
+                "parents": null
+              }
+            },
+            "carrier_frequency": {
+              "key": "Optional",
+              "default": "0Hz",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**float**: Optionally set a frequency to send the signal with for infrared signals. Defaults to `0Hz`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-raw-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a raw code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_raw` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-raw-action)*"
+      },
+      "transmit_rc5": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**int**: The address to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc5-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**int**: The RC5 command to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc5-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends an RC5 infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc5` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc5-action)*"
+      },
+      "transmit_rc6": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The address to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc6-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The RC6 command to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc6-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends an RC6 infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc6` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc6-action)*"
+      },
+      "transmit_rc_switch_raw": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "code": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string**: The raw code to send, copy this from the dump output.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-raw-action)*"
+            },
+            "protocol": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "pulse_length": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t"
+                  },
+                  "sync": {
+                    "key": "Optional",
+                    "default": "[1, 31]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "zero": {
+                    "key": "Optional",
+                    "default": "[1, 3]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "one": {
+                    "key": "Optional",
+                    "default": "[3, 1]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "inverted": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more information.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-raw-action)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "default": "{'times': 5}",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "times": {
+                    "key": "Required",
+                    "templatable": true,
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "wait_time": {
+                    "key": "Optional",
+                    "default": "0us",
+                    "templatable": true,
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_microseconds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a raw RC-Switch code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc_switch_raw` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-raw-action)*"
+      },
+      "transmit_rc_switch_type_a": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "group": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string**: The group to send the command to.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-a-action)*"
+            },
+            "device": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**string**: The device in the group to send the command to.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-a-action)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: The on/off state to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-a-action)*"
+            },
+            "protocol": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "pulse_length": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t"
+                  },
+                  "sync": {
+                    "key": "Optional",
+                    "default": "[1, 31]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "zero": {
+                    "key": "Optional",
+                    "default": "[1, 3]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "one": {
+                    "key": "Optional",
+                    "default": "[3, 1]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "inverted": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more information.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-a-action)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "default": "{'times': 5}",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "times": {
+                    "key": "Required",
+                    "templatable": true,
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "wait_time": {
+                    "key": "Optional",
+                    "default": "0us",
+                    "templatable": true,
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_microseconds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a type A RC-Switch code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc_switch_type_a` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-a-action)*"
+      },
+      "transmit_rc_switch_type_b": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The address to send the command to.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-b-action)*"
+            },
+            "channel": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The channel to send the command to.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-b-action)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: The on/off state to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-b-action)*"
+            },
+            "protocol": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "pulse_length": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t"
+                  },
+                  "sync": {
+                    "key": "Optional",
+                    "default": "[1, 31]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "zero": {
+                    "key": "Optional",
+                    "default": "[1, 3]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "one": {
+                    "key": "Optional",
+                    "default": "[3, 1]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "inverted": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more information.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-b-action)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "default": "{'times': 5}",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "times": {
+                    "key": "Required",
+                    "templatable": true,
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "wait_time": {
+                    "key": "Optional",
+                    "default": "0us",
+                    "templatable": true,
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_microseconds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a type B RC-Switch code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc_switch_type_b` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-b-action)*"
+      },
+      "transmit_rc_switch_type_c": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "family": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p"
+              ],
+              "docs": "**string**: The family to send the command to. Range is `a` to `p`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+            },
+            "group": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The group to send the command to. Range is 1 to 4.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+            },
+            "device": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The device to send the command to. Range is 1 to 4.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: The on/off state to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+            },
+            "protocol": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "pulse_length": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t"
+                  },
+                  "sync": {
+                    "key": "Optional",
+                    "default": "[1, 31]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "zero": {
+                    "key": "Optional",
+                    "default": "[1, 3]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "one": {
+                    "key": "Optional",
+                    "default": "[3, 1]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "inverted": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more information.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "default": "{'times': 5}",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "times": {
+                    "key": "Required",
+                    "templatable": true,
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "wait_time": {
+                    "key": "Optional",
+                    "default": "0us",
+                    "templatable": true,
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_microseconds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a type C RC-Switch code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc_switch_type_c` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-c-action)*"
+      },
+      "transmit_rc_switch_type_d": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "group": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": [
+                "a",
+                "b",
+                "c",
+                "d"
+              ],
+              "docs": "**int**: The group to send the command to. Range is 1 to 4.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-d-action)*"
+            },
+            "device": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The device to send the command to. Range is 1 to 3.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-d-action)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: The on/off state to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-d-action)*"
+            },
+            "protocol": {
+              "key": "Optional",
+              "default": "1",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "pulse_length": {
+                    "key": "Required",
+                    "type": "integer",
+                    "data_type": "uint32_t"
+                  },
+                  "sync": {
+                    "key": "Optional",
+                    "default": "[1, 31]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "zero": {
+                    "key": "Optional",
+                    "default": "[1, 3]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "one": {
+                    "key": "Optional",
+                    "default": "[3, 1]",
+                    "data_type": "RC_SWITCH_TIMING_SCHEMA"
+                  },
+                  "inverted": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more information.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-d-action)*"
+            },
+            "repeat": {
+              "key": "Optional",
+              "default": "{'times': 5}",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "times": {
+                    "key": "Required",
+                    "templatable": true,
+                    "type": "integer",
+                    "data_type": "positive_int"
+                  },
+                  "wait_time": {
+                    "key": "Optional",
+                    "default": "0us",
+                    "templatable": true,
+                    "type": "schema",
+                    "schema": {
+                      "extends": [
+                        "core.positive_time_period_microseconds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a type D RC-Switch code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_rc_switch_type_d` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-rc-switch-type-d-action)*"
+      },
+      "transmit_samsung": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint64_t",
+              "docs": "**int**: The data to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung-action)*"
+            },
+            "nbits": {
+              "key": "Optional",
+              "default": "32",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int**: The number of bits to send. Defaults to `32`.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Samsung infrared remote code to a remote transmitter. It transmits codes up to 64 bits in length in a single packet.\n\n*See also: [`remote_transmitter.transmit_samsung` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung-action)*"
+      },
+      "transmit_samsung36": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The address to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung36-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The Samsung36 command to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung36-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Samsung36 infrared remote code to a remote transmitter. It transmits the `address` and `command` in two packets separated by a \u201cspace\u201d.\n\n*See also: [`remote_transmitter.transmit_samsung36` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-samsung36-action)*"
+      },
+      "transmit_toshiba_ac": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "rc_code_1": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint64_t",
+              "docs": "**int**: The remote control code to send, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-toshiba-ac-action)*"
+            },
+            "rc_code_2": {
+              "key": "Optional",
+              "default": "0",
+              "templatable": true,
+              "data_type": "hex_uint64_t",
+              "docs": "**int**: The secondary remote control code to send; some codes are sent in two parts.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-toshiba-ac-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Toshiba AC infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_toshiba_ac` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-toshiba-ac-action)*"
+      },
+      "transmit_panasonic": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The address to send the command to, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-panasonic-action)*"
+            },
+            "command": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The command to send.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-panasonic-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a Panasonic infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_panasonic` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-panasonic-action)*"
+      },
+      "transmit_nexa": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "device": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint32_t",
+              "docs": "**int**: The Nexa device code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+            },
+            "group": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The Nexa group code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+            },
+            "state": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The Nexa state code to send (0-OFF, 1-ON, 2-DIMMER LEVEL), see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+            },
+            "channel": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The Nexa channel code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+            },
+            "level": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The Nexa level code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) a Nexa RF remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_nexa` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-nexa-action)*"
+      },
+      "transmit_midea": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "code": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**list**: The 40-bit Midea code to send as a list of hex or integers.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-midea-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a 40-bit Midea code to a remote transmitter. 8-bits of checksum added automatically.\n\n*See also: [`remote_transmitter.transmit_midea` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-midea-action)*"
+      },
+      "transmit_aeha": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "address": {
+              "key": "Required",
+              "templatable": true,
+              "data_type": "hex_uint16_t",
+              "docs": "**int**: The address to send the command to, see dumper output for more details.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
+            },
+            "data": {
+              "key": "Required",
+              "templatable": true,
+              "docs": "**list**: The command to send, A length of 2-35 bytes can be specified for one packet.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
+            }
+          },
+          "extends": [
+            "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
+          ]
+        },
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a AEHA code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_aeha` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-aeha-action)*"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "socket": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "implementation": {
+              "key": "Optional",
+              "default": "lwip_tcp",
+              "type": "enum",
+              "values": [
+                "lwip_tcp",
+                "bsd_sockets"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "tm1637.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tm1637::TM1637Key",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor.\n\n*See also: [tm1637 Binary Sensor](https://esphome.io/components/display/tm1637.html#id1)*"
+            },
+            "tm1637_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tm1637::TM1637Display",
+              "type": "use_id",
+              "docs": "**:[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the tm1637 that should be used to scan the keys in case you are using multiple devices.\n\n*See also: [tm1637 Binary Sensor](https://esphome.io/components/display/tm1637.html#id1)*"
+            },
+            "key": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**integer**: The keycode for the connected key (Seg0 = 0, Seg1 = 1 etc,). Range is from 0 to 15.\n\n*See also: [tm1637 Binary Sensor](https://esphome.io/components/display/tm1637.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tm1637.display": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display.BASIC_DISPLAY_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tm1637::TM1637Display",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "intensity": {
+              "key": "Optional",
+              "default": "7",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The intensity with which the TM1637 should drive the outputs. Range is from 0 (least intense) to 7 (the default).\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "inverted": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**bool**: Invert character rendering to the TM1637 so you can physically flip the display around.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "length": {
+              "key": "Optional",
+              "default": "6",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**int**: The amount of digits your TM1637 is driving. Only used when `inverted: true` Range is from 1 to 6 (the default).\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "clk_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the CLK line hooked up to.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "dio_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin you have the DIO line hooked up to.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "1s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to re-draw the screen. Defaults to `1s`.\n\n*See also: [TM1637 7-Segment Display](https://esphome.io/components/display/tm1637.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}
