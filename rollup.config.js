@@ -7,7 +7,7 @@ import postcss from "rollup-plugin-postcss";
 import postcssUrl from "postcss-url";
 import commonjs from "@rollup/plugin-commonjs";
 import monaco from "rollup-plugin-monaco-editor";
-import copy from 'rollup-plugin-copy'
+import copy from "rollup-plugin-copy";
 import fs from "fs-extra";
 import path from "path";
 
@@ -47,10 +47,11 @@ const config = {
           },
         }),
       ],
-    }), copy({
+    }),
+    copy({
       targets: [
-        { src: 'schema/*.json', dest: 'esphome_dashboard/static/schema' },
-      ]
+        { src: "schema/*.json", dest: "esphome_dashboard/static/schema" },
+      ],
     }),
     monaco({
       languages: ["yaml"],
@@ -60,13 +61,13 @@ const config = {
     json(),
     manifest(),
     isProdBuild &&
-    terser({
-      ecma: 2019,
-      toplevel: true,
-      output: {
-        comments: false,
-      },
-    }),
+      terser({
+        ecma: 2019,
+        toplevel: true,
+        output: {
+          comments: false,
+        },
+      }),
   ].filter(Boolean),
 };
 

@@ -1,9 +1,8 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { createRef, Ref, ref } from "lit/directives/ref.js";
+import { customElement, property, query } from "lit/decorators.js";
 // @ts-ignore
-import styles from "monaco-editor/min/vs/editor/editor.main.css";
+import editorStyles from "monaco-editor/min/vs/editor/editor.main.css";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import { getFile } from "../api/files";
@@ -20,28 +19,15 @@ const wsUrl = wsLoc.href;
 
 @customElement("esphome-editor")
 export class ESPHomeEditor extends LitElement {
-  private container: Ref<HTMLElement> = createRef();
-  editor?: monaco.editor.IStandaloneCodeEditor;
-  editorActiveWebSocket: WebSocket | null = null;
-  editorValidationScheduled = false;
-  editorValidationRunning = false;
-  editorActiveSecrets = false;
-
-  @property() theme?: string;
-  @property() language?: string;
-
   @property() public configuration!: string;
 
-  static styles = css`
-    :host {
-      --editor-width: 100%;
-      --editor-height: 70vh;
-    }
-    main {
-      width: var(--editor-width);
-      height: var(--editor-height);
-    }
-  `;
+  private editor?: monaco.editor.IStandaloneCodeEditor;
+  private editorActiveWebSocket: WebSocket | null = null;
+  private editorValidationScheduled = false;
+  private editorValidationRunning = false;
+  private editorActiveSecrets = false;
+
+  @query("main", true) private container!: HTMLElement;
 
   public getValue() {
     return this.editor!.getModel()?.getValue();
@@ -50,25 +36,10 @@ export class ESPHomeEditor extends LitElement {
   render() {
     return html`
       <style>
-        ${styles}
+        ${editorStyles}
         ${ESPHomeEditor.styles}
       </style>
-      <div id="js-loading-indicator">
-        <div class="preloader-wrapper big active">
-          <div class="spinner-layer spinner-blue-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div>
-            <div class="gap-patch">
-              <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <main ${ref(this.container)}></main>
+      <main></main>
     `;
   }
 
@@ -76,41 +47,30 @@ export class ESPHomeEditor extends LitElement {
     // @ts-ignore
     self.MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
-        return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
+        return "/static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
-    this.editor = monaco.editor.create(this.container.value!, {
+    this.editor = monaco.editor.create(this.container, {
       value: this.configuration,
       language: "yaml",
       theme: "dark",
       automaticLayout: true,
       // This is to have the popups above other stuff around the editor, otherwise they are hidden
       fixedOverflowWidgets: true,
+      minimap: {
+        enabled: false,
+      },
     });
 
     const filename = this.configuration;
     const editorActiveFilename = filename;
     const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
 
-    const loadingIndicator = this.shadowRoot!.querySelector(
-      "#js-editor-modal #js-loading-indicator"
-    );
-
-    if (loadingIndicator)
-      // @ts-ignore
-      loadingIndicator.style.display = "block";
-    //editorArea.style.display = "none";
-
-    // editor.setOption("readOnly", true);
     getFile(editorActiveFilename).then((response) => {
       if (response === null && isSecrets) {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
-
-      //editor.setOption("readOnly", false);
-      //loadingIndicator.style.display = "none";
-      //editorArea.style.display = "block";
 
       this.startAceWebsocket();
     });
@@ -227,6 +187,17 @@ export class ESPHomeEditor extends LitElement {
       setTimeout(this.startAceWebsocket, 5000);
     });
   }
+
+  static styles = css`
+    :host {
+      --editor-width: 100%;
+      --editor-height: 70vh;
+    }
+    main {
+      width: var(--editor-width);
+      height: var(--editor-height);
+    }
+  `;
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
