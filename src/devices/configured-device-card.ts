@@ -20,6 +20,8 @@ import { esphomeCardStyles } from "../styles";
 import { openRenameDialog } from "../rename";
 import { openShowApiKeyDialog } from "../show-api-key";
 import { openEditDialog } from "../editor";
+import { getFile } from "../api/files";
+import { textDownload } from "../util/file-download";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -131,6 +133,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-list-item>Validate</mwc-list-item>
             <mwc-list-item>Install</mwc-list-item>
             <mwc-list-item>Show API key</mwc-list-item>
+            <mwc-list-item>Download YAML</mwc-list-item>
             <mwc-list-item>Rename</mwc-list-item>
             <mwc-list-item>Clean Build Files</mwc-list-item>
             <mwc-list-item>Delete</mwc-list-item>
@@ -191,19 +194,22 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openShowApiKeyDialog(this.device.configuration);
         break;
       case 3:
-        openRenameDialog(this.device.configuration, this.device.name);
+        this._handleDownloadYaml();
         break;
       case 4:
-        openCleanDialog(this.device.configuration);
+        openRenameDialog(this.device.configuration, this.device.name);
         break;
       case 5:
+        openCleanDialog(this.device.configuration);
+        break;
+      case 6:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted")
         );
         break;
-      case 6:
+      case 7:
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
@@ -217,6 +223,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
+  }
+
+  private async _handleDownloadYaml() {
+    getFile(this.device.configuration).then((config) => {
+      textDownload(config!, this.device.configuration);
+    });
   }
 }
 
