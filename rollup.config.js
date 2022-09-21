@@ -53,6 +53,7 @@ const config = {
     }),
     monaco({
       languages: ["yaml"],
+      sourcemap: false,
     }),
     nodeResolve(),
     commonjs(),
