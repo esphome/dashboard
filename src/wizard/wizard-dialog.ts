@@ -191,11 +191,7 @@ export class ESPHomeWizardDialog extends LitElement {
     `;
   }
 
-  private _renderAskESPHomeWeb(): [
-    string,
-    TemplateResult,
-    boolean
-  ] {
+  private _renderAskESPHomeWeb(): [string, TemplateResult, boolean] {
     const heading = "New device";
     let hideActions = false;
     const content = html`
