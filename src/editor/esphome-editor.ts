@@ -53,13 +53,14 @@ export class ESPHomeEditor extends LitElement {
     this.editor = monaco.editor.create(this.container, {
       value: this.configuration,
       language: "yaml",
-      theme: "vs",
+      theme: "esphome",
       automaticLayout: true,
       // This is to have the popups above other stuff around the editor, otherwise they are hidden
       fixedOverflowWidgets: true,
       minimap: {
         enabled: false,
       },
+      tabSize: 2,
     });
 
     const filename = this.configuration;
