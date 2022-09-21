@@ -53,3 +53,13 @@ monaco.languages.registerDefinitionProvider("yaml", {
     };
   },
 });
+
+monaco.editor.defineTheme("esphome", {
+  base: "vs", // can also be vs-dark or hc-black
+  inherit: true, // can also be false to completely replace the builtin rules
+  rules: [{ token: "type", foreground: "000099", fontStyle: "" }],
+
+  colors: {
+    "editor.foreground": "#000000",
+  },
+});
