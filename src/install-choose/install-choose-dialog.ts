@@ -43,7 +43,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   private _abortCompilation?: AbortController;
 
   protected render() {
-    let heading;
+    let heading = "";
     let content;
     let hideActions = false;
 
@@ -232,7 +232,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
       <mwc-dialog
         open
         heading=${heading}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
         .hideActions=${hideActions}
       >
@@ -248,7 +248,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <mwc-circular-progress
             active
             ?indeterminate=${progress === undefined}
-            .progress=${progress !== undefined ? progress / 100 : undefined}
+            .progress=${progress !== undefined ? progress / 100 : 0}
             density="8"
           ></mwc-circular-progress>
           ${progress !== undefined

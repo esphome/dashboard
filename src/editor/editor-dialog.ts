@@ -26,8 +26,8 @@ class ESPHomeEditorDialog extends LitElement {
     return html`<mwc-dialog
       open
       heading=${`Edit ${this.fileName}`}
-      scrimClickAction
-      escapeKeyAction
+      scrimClickAction=""
+      escapeKeyAction=""
       @closed=${this._handleClose}
     >
       <mwc-snackbar leading></mwc-snackbar>

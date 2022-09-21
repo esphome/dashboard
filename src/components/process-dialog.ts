@@ -24,7 +24,7 @@ export class ESPHomeProcessDialog extends LitElement {
       <mwc-dialog
         open
         heading=${this.heading}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         <esphome-remote-process

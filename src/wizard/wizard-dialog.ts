@@ -98,7 +98,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
 
   protected render() {
-    let heading;
+    let heading="";
     let content;
     let hideActions = false;
 
@@ -146,7 +146,7 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-dialog
         open
         heading=${heading}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
         .hideActions=${hideActions}
         >${content}</mwc-dialog
@@ -161,7 +161,7 @@ export class ESPHomeWizardDialog extends LitElement {
           <mwc-circular-progress
             active
             ?indeterminate=${progress === undefined}
-            .progress=${progress !== undefined ? progress / 100 : undefined}
+            .progress=${progress !== undefined ? progress / 100 : 0}
             density="8"
           ></mwc-circular-progress>
           ${progress !== undefined
@@ -192,7 +192,7 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private _renderAskESPHomeWeb(): [
-    string | undefined,
+    string,
     TemplateResult,
     boolean
   ] {
@@ -245,9 +245,9 @@ export class ESPHomeWizardDialog extends LitElement {
     return [heading, content, hideActions];
   }
 
-  private _renderBasicConfig(): [string | undefined, TemplateResult, boolean] {
+  private _renderBasicConfig(): [string, TemplateResult, boolean] {
     if (this._hasWifiSecrets === undefined) {
-      return [undefined, this._renderProgress("Initializing"), true];
+      return ["", this._renderProgress("Initializing"), true];
     }
     const heading = supportsWebSerial ? "New device" : "Create configuration";
     let hideActions = false;

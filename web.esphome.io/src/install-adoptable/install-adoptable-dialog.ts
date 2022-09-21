@@ -15,7 +15,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
       <mwc-dialog
         open
         heading="Prepare your device for adoption"
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         <div>

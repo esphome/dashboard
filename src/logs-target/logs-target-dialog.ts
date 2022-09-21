@@ -149,7 +149,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
       <mwc-dialog
         open
         heading=${heading}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         ${content}

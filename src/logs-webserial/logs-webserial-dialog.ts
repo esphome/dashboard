@@ -23,7 +23,7 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
       <mwc-dialog
         open
         .heading=${this.configuration ? `Logs ${this.configuration}` : "Logs"}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         <ewt-console

@@ -34,7 +34,7 @@ class ESPHomeNoPortPickedDialog extends LitElement {
       <mwc-dialog
         open
         heading="No port selected"
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         <div>

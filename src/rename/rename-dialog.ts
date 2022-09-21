@@ -26,7 +26,7 @@ class ESPHomeRenameDialog extends LitElement {
       <mwc-dialog
         open
         heading=${`Rename ${this.configuration}`}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
