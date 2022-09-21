@@ -60,6 +60,7 @@ export class ESPHomeEditor extends LitElement {
       minimap: {
         enabled: false,
       },
+      tabSize: 2,
     });
 
     const filename = this.configuration;
