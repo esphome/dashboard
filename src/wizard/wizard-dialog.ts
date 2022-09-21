@@ -98,7 +98,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
 
   protected render() {
-    let heading="";
+    let heading = "";
     let content;
     let hideActions = false;
 

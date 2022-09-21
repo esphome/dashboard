@@ -27,7 +27,7 @@ class ESPHomeAdoptDialog extends LitElement {
   @query("mwc-textfield[name=name]") private _inputName!: TextField;
 
   protected render() {
-    let heading="";
+    let heading = "";
     let content;
 
     if (this._state === "ask") {

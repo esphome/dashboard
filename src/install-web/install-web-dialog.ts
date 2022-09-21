@@ -52,7 +52,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
   private _platform?: ValueOf<typeof chipFamilyToPlatform>;
 
   protected render() {
-    let heading="";
+    let heading = "";
     let content;
     let hideActions = false;
 
