@@ -7,7 +7,11 @@
   "author": "ESPHome maintainers",
   "license": "Apache-2.0",
   "scripts": {
-    "prepublishOnly": "script/build"
+    "prepublishOnly": "script/build",
+    "lint:prettier": "prettier \"src/**/*.{js,ts,json,css,md}\" --check",
+    "format:prettier": "prettier \"src/**/*.{js,ts,json,css,md}\" --write",
+    "lint:types": "tsc",
+    "lint:lit": "lit-analyzer \"src/**/*.ts\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
