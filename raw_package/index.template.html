@@ -19,41 +19,4 @@
   src="{{ get_static_file_url('js/esphome/index.js') }}"
   type="module"
 ></script>
-
-<div id="js-editor-modal" class="modal modal-fixed-footer no-autoinit">
-  <div class="modal-content">
-    <h4 id="js-node-filename"></h4>
-
-    <div id="js-loading-indicator">
-      <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div>
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-          <div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="js-editor-area" class="editor"></div>
-  </div>
-  <div class="modal-footer">
-    <mwc-button label="Save" data-action="save"></mwc-button>
-    <mwc-button
-      class="modal-close"
-      label="Install"
-      data-action="upload"
-    ></mwc-button>
-    <mwc-button
-      class="modal-close"
-      label="Close"
-      data-action="close"
-    ></mwc-button>
-  </div>
-</div>
 {% end %}
