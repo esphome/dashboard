@@ -30,6 +30,11 @@ body {
 main {
   margin-top: 64px;
   flex: 1 0 auto;
+  display: grid;
+}
+
+esphome-main {
+  display: grid;
 }
 
 .esphome-header {

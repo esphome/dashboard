@@ -1,11 +1,17 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
+import "@material/mwc-dialog";
+import "@material/mwc-button";
+import "@material/mwc-snackbar";
+import "@material/mwc-list/mwc-list-item.js";
+import { openInstallChooseDialog } from "../install-choose";
+import { getFile, writeFile } from "../api/files";
+import type { Snackbar } from "@material/mwc-snackbar";
+import { fireEvent } from "../util/fire-event";
 // @ts-ignore
 import editorStyles from "monaco-editor/min/vs/editor/editor.main.css";
-import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
-import { getFile } from "../api/files";
 import "./monaco-provider";
 
 // WebSocket URL Helper
@@ -18,29 +24,105 @@ if (loc.protocol === "https:") {
 const wsUrl = wsLoc.href;
 
 @customElement("esphome-editor")
-export class ESPHomeEditor extends LitElement {
-  @property() public configuration!: string;
-
+class ESPHomeEditor extends LitElement {
   private editor?: monaco.editor.IStandaloneCodeEditor;
   private editorActiveWebSocket: WebSocket | null = null;
   private editorValidationScheduled = false;
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
 
-  @query("main", true) private container!: HTMLElement;
+  @property() public fileName!: string;
+  @query("mwc-snackbar", true) private _snackbar!: Snackbar;
+  @query("editor-container", true) private container!: HTMLElement;
+
+  createRenderRoot() {
+    return this;
+  }
+
+  protected render() {
+    const isSecrets =
+      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+
+    return html`
+      <style>
+        editor-container {
+          flex: 1 0;
+        }
+        h2 {
+          line-height: 100%;
+          margin: 0.5rem;
+          font-size: 1.4rem;
+        }
+        .editor-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          align-content: stretch;
+        }
+      </style>
+      <mwc-snackbar leading></mwc-snackbar>
+
+      <div class="editor-header">
+        <h2>Edit ${this.fileName}</h2>
+        <div>
+          <mwc-button
+            slot="secondaryAction"
+            label="Save"
+            @click=${this._saveFile}
+          ></mwc-button>
+          ${isSecrets
+            ? ""
+            : html` <mwc-button
+                slot="secondaryAction"
+                label="Install"
+                @click=${this.handleInstall}
+              ></mwc-button>`}
+          <mwc-button
+            slot="secondaryAction"
+            label="Close"
+            @click=${this._handleClose}
+          ></mwc-button>
+        </div>
+      </div>
+      <editor-container>
+        <style>
+          ${editorStyles}
+        </style>
+      </editor-container>
+    `;
+  }
 
   public getValue() {
     return this.editor!.getModel()?.getValue();
   }
 
-  render() {
-    return html`
-      <style>
-        ${editorStyles}
-        ${ESPHomeEditor.styles}
-      </style>
-      <main></main>
-    `;
+  private _handleClose() {
+    fireEvent(this, "close");
+  }
+
+  private async handleInstall() {
+    await this._saveFile();
+    this._handleClose();
+    openInstallChooseDialog(this.fileName);
+  }
+
+  private async _saveFile() {
+    const code = this.getValue();
+    if (this._snackbar.open) {
+      this._snackbar.close();
+    }
+
+    try {
+      await writeFile(this.fileName, code ?? "");
+      this._showSnackbar(`✅ Saved ${this.fileName}`);
+    } catch (error) {
+      this._showSnackbar(`❌ An error occured saving ${this.fileName}`);
+    }
+  }
+
+  private _showSnackbar(message: string) {
+    this._snackbar.labelText = message;
+    this._snackbar.show();
   }
 
   firstUpdated() {
@@ -50,13 +132,11 @@ export class ESPHomeEditor extends LitElement {
         return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
+    //this.container.style.height = "70vh";
     this.editor = monaco.editor.create(this.container, {
-      value: this.configuration,
+      value: "",
       language: "yaml",
       theme: "esphome",
-      automaticLayout: true,
-      // This is to have the popups above other stuff around the editor, otherwise they are hidden
-      fixedOverflowWidgets: true,
       minimap: {
         enabled: false,
       },
@@ -65,11 +145,10 @@ export class ESPHomeEditor extends LitElement {
         "SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace",
     });
 
-    const filename = this.configuration;
-    const editorActiveFilename = filename;
-    const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
+    const isSecrets =
+      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
 
-    getFile(editorActiveFilename).then((response) => {
+    getFile(this.fileName).then((response) => {
       if (response === null && isSecrets) {
         response = EMPTY_SECRETS;
       }
@@ -106,7 +185,7 @@ export class ESPHomeEditor extends LitElement {
 
       this.sendAceStdin({
         type: "validate",
-        file: editorActiveFilename,
+        file: this.fileName,
       });
       this.editorValidationRunning = true;
       this.editorValidationScheduled = false;
@@ -190,17 +269,6 @@ export class ESPHomeEditor extends LitElement {
       setTimeout(this.startAceWebsocket, 5000);
     });
   }
-
-  static styles = css`
-    :host {
-      --editor-width: 100%;
-      --editor-height: 70vh;
-    }
-    main {
-      width: var(--editor-width);
-      height: var(--editor-height);
-    }
-  `;
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
