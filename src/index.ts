@@ -1,7 +1,6 @@
 import "./devices/devices-list";
 import "./components/esphome-header-menu";
 import "./components/esphome-fab";
-import "./editor/esphome-editor";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
@@ -35,6 +34,7 @@ class ESPHomeMainView extends LitElement {
     document.body.addEventListener("edit-file", (e) =>
       this._handleEdit(e as CustomEvent<string>)
     );
+    import("./editor/esphome-editor");
   }
 
   private _handleEdit(ev: { detail: string }) {
