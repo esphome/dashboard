@@ -62,7 +62,7 @@ export class ESPHomeEditor extends LitElement {
       },
       tabSize: 2,
       fontFamily:
-        "SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace",
+        "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
     });
 
     const filename = this.configuration;
