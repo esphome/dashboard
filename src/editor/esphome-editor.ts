@@ -132,7 +132,6 @@ class ESPHomeEditor extends LitElement {
         return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
-    //this.container.style.height = "70vh";
     this.editor = monaco.editor.create(this.container, {
       value: "",
       language: "yaml",
