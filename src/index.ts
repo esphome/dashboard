@@ -2,19 +2,12 @@ import "./devices/devices-list";
 import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import "./editor/esphome-editor";
-import { LitElement, html } from "lit";
+import { LitElement, html, PropertyValues } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { editCallback } from "./editor";
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
   @state() private editing?: string;
-  constructor() {
-    super();
-    editCallback.callback = (configuration: string) => {
-      this.editing = configuration;
-    };
-  }
 
   protected render() {
     if (this.editing) {
@@ -30,16 +23,24 @@ class ESPHomeMainView extends LitElement {
           fileName=${this.editing}
         ></esphome-editor>`;
     }
-    return html`<esphome-devices-list @edit=${this._handleEdit}>
-      </esphome-devices-list>
+    return html` <esphome-devices-list></esphome-devices-list>
       <esphome-fab></esphome-fab>`;
   }
   createRenderRoot() {
     return this;
   }
+
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+    document.body.addEventListener("edit-file", (e) =>
+      this._handleEdit(e as CustomEvent<string>)
+    );
+  }
+
   private _handleEdit(ev: { detail: string }) {
     this.editing = ev.detail;
   }
+
   private _handleEditorClose() {
     this.editing = undefined;
   }

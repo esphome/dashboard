@@ -1,5 +1,5 @@
-export const editCallback: { callback?: (configuration: string) => void } = {};
+import { fireEvent } from "../util/fire-event";
 
 export const openEditDialog = (configuration: string) => {
-  editCallback.callback?.(configuration);
+  fireEvent(document.body, "edit-file", configuration);
 };
