@@ -17,7 +17,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
       <mwc-dialog
         open
         heading="Install your existing ESPHome project"
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         <div>Select the project that you want to install on your device.</div>

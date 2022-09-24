@@ -24,7 +24,7 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
       <mwc-dialog
         open
         heading=${`API key for ${this.configuration}`}
-        scrimClickAction
+        scrimClickAction=""
         @closed=${this._handleClose}
       >
         ${this._apiKey === undefined
