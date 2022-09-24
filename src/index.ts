@@ -4,6 +4,12 @@ import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
+const esphome_globals: {
+  version: string;
+  docs_link: string;
+  logoutUrl: string;
+} = (window as any).esphome_globals;
+
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
   @state() private editing?: string;
@@ -22,8 +28,39 @@ class ESPHomeMainView extends LitElement {
           fileName=${this.editing}
         ></esphome-editor>`;
     }
-    return html` <esphome-devices-list></esphome-devices-list>
-      <esphome-fab></esphome-fab>`;
+    return html`
+      <main>
+        <esphome-devices-list></esphome-devices-list>
+      </main>
+      <div class="esphome-header">
+        <img
+          src="https://esphome.io/_static/logo-text.svg"
+          alt="ESPHome Logo"
+        />
+        <div class="flex"></div>
+        <esphome-header-menu
+          logout-url="${esphome_globals.logoutUrl}"
+        ></esphome-header-menu>
+      </div>
+      <esphome-fab></esphome-fab>
+      <footer class="page-footer grey darken-4">
+        <div class="container">
+          <div class="left">
+            ESPHome by Nabu Casa |
+            <a href="https://esphome.io/guides/supporters.html" target="_blank"
+              >Fund development</a
+            >
+            |
+            <a
+              href="${esphome_globals.docs_link}"
+              target="_blank"
+              rel="noreferrer"
+              >v${esphome_globals.version} Documentation</a
+            >
+          </div>
+        </div>
+      </footer>
+    `;
   }
   createRenderRoot() {
     return this;

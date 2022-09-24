@@ -17,6 +17,8 @@
 
   --mdc-theme-primary: #03a9f4;
   --mdc-dialog-z-index: 998;
+
+  --esphome-background-header: #e0e0e0;
 }
 
 body {
@@ -34,7 +36,9 @@ main {
 }
 
 esphome-main {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
 }
 
 .esphome-header {
@@ -45,7 +49,7 @@ esphome-main {
   display: flex;
   align-items: center;
   height: 56px;
-  background-color: #e0e0e0;
+  background-color: var(--esphome-background-header);
   padding: 0 24px;
 }
 

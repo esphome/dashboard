@@ -4,7 +4,9 @@ import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "@material/mwc-snackbar";
+import "@material/mwc-icon-button";
 import "@material/mwc-list/mwc-list-item.js";
+import "./editor-header-menu";
 import { openInstallChooseDialog } from "../install-choose";
 import { getFile, writeFile } from "../api/files";
 import type { Snackbar } from "@material/mwc-snackbar";
@@ -31,9 +33,15 @@ class ESPHomeEditor extends LitElement {
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
 
+  constructor() {
+    super();
+    this._handleResize = this._handleResize.bind(this);
+  }
+
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
-  @query("editor-container", true) private container!: HTMLElement;
+  @query("main", true) private container!: HTMLElement;
+  @query(".esphome-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -45,50 +53,60 @@ class ESPHomeEditor extends LitElement {
 
     return html`
       <style>
-        editor-container {
-          flex: 1 0;
+        html,
+        body {
+          height: 100vh;
+          overflow: hidden;
         }
-        h2 {
-          line-height: 100%;
-          margin: 0.5rem;
-          font-size: 1.4rem;
-        }
-        .editor-header {
+        .esphome-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           align-content: stretch;
         }
+        h2 {
+          line-height: 100%;
+          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+          padding: 0.8rem 0.5rem 1rem 0.5rem;
+          margin: 0px;
+          font-size: 1.4rem;
+          flex: 1 1 auto;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        mwc-icon-button {
+          --mdc-icon-button-size: 32px;
+        }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="editor-header">
-        <h2>Edit ${this.fileName}</h2>
-        <div>
-          <mwc-button
-            slot="secondaryAction"
-            label="Save"
-            @click=${this._saveFile}
-          ></mwc-button>
-          ${isSecrets
-            ? ""
-            : html` <mwc-button
-                slot="secondaryAction"
-                label="Install"
-                @click=${this.handleInstall}
-              ></mwc-button>`}
-          <mwc-button
-            slot="secondaryAction"
-            label="Close"
-            @click=${this._handleClose}
-          ></mwc-button>
-        </div>
+      <div class="esphome-header">
+        <mwc-icon-button
+          icon="clear"
+          @click=${this._handleClose}
+          aria-label="close"
+        ></mwc-icon-button>
+        <h2>${this.fileName}</h2>
+
+        <mwc-button
+          slot="secondaryAction"
+          label="Save"
+          @click=${this._saveFile}
+        ></mwc-button>
+        ${isSecrets
+          ? ""
+          : html` <mwc-button
+              slot="secondaryAction"
+              label="Install"
+              @click=${this.handleInstall}
+            ></mwc-button>`}
       </div>
-      <editor-container>
+      <main>
         <style>
           ${editorStyles}
         </style>
-      </editor-container>
+      </main>
     `;
   }
 
@@ -102,7 +120,6 @@ class ESPHomeEditor extends LitElement {
 
   private async handleInstall() {
     await this._saveFile();
-    this._handleClose();
     openInstallChooseDialog(this.fileName);
   }
 
@@ -116,7 +133,7 @@ class ESPHomeEditor extends LitElement {
       await writeFile(this.fileName, code ?? "");
       this._showSnackbar(`✅ Saved ${this.fileName}`);
     } catch (error) {
-      this._showSnackbar(`❌ An error occured saving ${this.fileName}`);
+      this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
     }
   }
 
@@ -140,6 +157,7 @@ class ESPHomeEditor extends LitElement {
         enabled: false,
       },
       tabSize: 2,
+      dimension: this.calcEditorSize(),
       fontFamily:
         "SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace",
     });
@@ -169,7 +187,7 @@ class ESPHomeEditor extends LitElement {
       label: "Save file",
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
       run: () => {
-        fireEvent(this, "save");
+        this._saveFile();
       },
     });
 
@@ -267,6 +285,24 @@ class ESPHomeEditor extends LitElement {
       this.editorActiveWebSocket = null;
       setTimeout(this.startAceWebsocket, 5000);
     });
+  }
+
+  calcEditorSize() {
+    return {
+      width: document.body.offsetWidth,
+      height: window.innerHeight - this.editor_header.offsetHeight,
+    };
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("resize", this._handleResize);
+  }
+  disconnectedCallback() {
+    window.removeEventListener("resize", this._handleResize);
+    super.disconnectedCallback();
+  }
+  _handleResize() {
+    this.editor?.layout(this.calcEditorSize());
   }
 }
 
