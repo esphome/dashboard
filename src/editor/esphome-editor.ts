@@ -6,7 +6,6 @@ import "@material/mwc-button";
 import "@material/mwc-snackbar";
 import "@material/mwc-icon-button";
 import "@material/mwc-list/mwc-list-item.js";
-import "./editor-header-menu";
 import { openInstallChooseDialog } from "../install-choose";
 import { getFile, writeFile } from "../api/files";
 import type { Snackbar } from "@material/mwc-snackbar";
