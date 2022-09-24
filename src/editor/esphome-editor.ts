@@ -159,7 +159,7 @@ class ESPHomeEditor extends LitElement {
       tabSize: 2,
       dimension: this.calcEditorSize(),
       fontFamily:
-        "SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace",
+        'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
 
     const isSecrets =
