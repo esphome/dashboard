@@ -63,6 +63,9 @@ class ESPHomeEditor extends LitElement {
           align-items: center;
           align-content: stretch;
         }
+        .esphome-header mwc-button {
+          --mdc-theme-primary: black;
+        }
         h2 {
           line-height: 100%;
           /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
@@ -300,9 +303,9 @@ class ESPHomeEditor extends LitElement {
     window.removeEventListener("resize", this._handleResize);
     super.disconnectedCallback();
   }
-  _handleResize() {
+  _handleResize = () => {
     this.editor?.layout(this.calcEditorSize());
-  }
+  };
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password

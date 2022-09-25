@@ -5,20 +5,11 @@
 {% end %}
 
 {% block main %}
-<script type="text/javascript">
-  var esphome_globals = {
-    version: "{{ version }}",
-    docs_link: "{{ docs_link }}",
-  };
-</script>
-
-{% if login_enabled %}
-<script type="text/javascript">
-  esphome_globals.logoutUrl = "{{ relative_url }}logout";
-</script>
-{% end %}
-
-<esphome-main></esphome-main>
+<esphome-main
+  version="{{ version }}"
+  docsLink="{{ docs_link }}"
+  {% if login_enabled %}logoutUrl="{{ relative_url }}logout"{% end %}
+></esphome-main>
 {% end %}
 
 {% block footer %}
