@@ -4,12 +4,6 @@ import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
-// const esphome_globals: {
-//   version: string;
-//   docs_link: string;
-//   logoutUrl: string;
-// } = (window as any).esphome_globals;
-
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
   @property() version = "unknown";
