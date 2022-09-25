@@ -1,11 +1,18 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
+import "@material/mwc-dialog";
+import "@material/mwc-button";
+import "@material/mwc-snackbar";
+import "@material/mwc-icon-button";
+import "@material/mwc-list/mwc-list-item.js";
+import { openInstallChooseDialog } from "../install-choose";
+import { getFile, writeFile } from "../api/files";
+import type { Snackbar } from "@material/mwc-snackbar";
+import { fireEvent } from "../util/fire-event";
 // @ts-ignore
 import editorStyles from "monaco-editor/min/vs/editor/editor.main.css";
-import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
-import { getFile } from "../api/files";
 import "./monaco-provider";
 
 // WebSocket URL Helper
@@ -18,29 +25,118 @@ if (loc.protocol === "https:") {
 const wsUrl = wsLoc.href;
 
 @customElement("esphome-editor")
-export class ESPHomeEditor extends LitElement {
-  @property() public configuration!: string;
-
+class ESPHomeEditor extends LitElement {
   private editor?: monaco.editor.IStandaloneCodeEditor;
   private editorActiveWebSocket: WebSocket | null = null;
   private editorValidationScheduled = false;
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
 
+  @property() public fileName!: string;
+  @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
+  @query(".esphome-header", true) private editor_header!: HTMLElement;
+
+  createRenderRoot() {
+    return this;
+  }
+
+  protected render() {
+    const isSecrets =
+      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+
+    return html`
+      <style>
+        html,
+        body {
+          height: 100vh;
+          overflow: hidden;
+        }
+        .esphome-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          align-content: stretch;
+        }
+        .esphome-header mwc-button {
+          --mdc-theme-primary: black;
+        }
+        h2 {
+          line-height: 100%;
+          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+          padding: 0.8rem 0.5rem 1rem 0.5rem;
+          margin: 0px;
+          font-size: 1.4rem;
+          flex: 1 1 auto;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        mwc-icon-button {
+          --mdc-icon-button-size: 32px;
+        }
+      </style>
+      <mwc-snackbar leading></mwc-snackbar>
+
+      <div class="esphome-header">
+        <mwc-icon-button
+          icon="clear"
+          @click=${this._handleClose}
+          aria-label="close"
+        ></mwc-icon-button>
+        <h2>${this.fileName}</h2>
+
+        <mwc-button
+          slot="secondaryAction"
+          label="Save"
+          @click=${this._saveFile}
+        ></mwc-button>
+        ${isSecrets
+          ? ""
+          : html` <mwc-button
+              slot="secondaryAction"
+              label="Install"
+              @click=${this.handleInstall}
+            ></mwc-button>`}
+      </div>
+      <main>
+        <style>
+          ${editorStyles}
+        </style>
+      </main>
+    `;
+  }
 
   public getValue() {
     return this.editor!.getModel()?.getValue();
   }
 
-  render() {
-    return html`
-      <style>
-        ${editorStyles}
-        ${ESPHomeEditor.styles}
-      </style>
-      <main></main>
-    `;
+  private _handleClose() {
+    fireEvent(this, "close");
+  }
+
+  private async handleInstall() {
+    await this._saveFile();
+    openInstallChooseDialog(this.fileName);
+  }
+
+  private async _saveFile() {
+    const code = this.getValue();
+    if (this._snackbar.open) {
+      this._snackbar.close();
+    }
+
+    try {
+      await writeFile(this.fileName, code ?? "");
+      this._showSnackbar(`✅ Saved ${this.fileName}`);
+    } catch (error) {
+      this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
+    }
+  }
+
+  private _showSnackbar(message: string) {
+    this._snackbar.labelText = message;
+    this._snackbar.show();
   }
 
   firstUpdated() {
@@ -51,25 +147,22 @@ export class ESPHomeEditor extends LitElement {
       },
     };
     this.editor = monaco.editor.create(this.container, {
-      value: this.configuration,
+      value: "",
       language: "yaml",
       theme: "esphome",
-      automaticLayout: true,
-      // This is to have the popups above other stuff around the editor, otherwise they are hidden
-      fixedOverflowWidgets: true,
       minimap: {
         enabled: false,
       },
       tabSize: 2,
+      dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
 
-    const filename = this.configuration;
-    const editorActiveFilename = filename;
-    const isSecrets = filename === "secrets.yaml" || filename === "secrets.yml";
+    const isSecrets =
+      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
 
-    getFile(editorActiveFilename).then((response) => {
+    getFile(this.fileName).then((response) => {
       if (response === null && isSecrets) {
         response = EMPTY_SECRETS;
       }
@@ -91,7 +184,7 @@ export class ESPHomeEditor extends LitElement {
       label: "Save file",
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
       run: () => {
-        fireEvent(this, "save");
+        this._saveFile();
       },
     });
 
@@ -106,7 +199,7 @@ export class ESPHomeEditor extends LitElement {
 
       this.sendAceStdin({
         type: "validate",
-        file: editorActiveFilename,
+        file: this.fileName,
       });
       this.editorValidationRunning = true;
       this.editorValidationScheduled = false;
@@ -191,16 +284,23 @@ export class ESPHomeEditor extends LitElement {
     });
   }
 
-  static styles = css`
-    :host {
-      --editor-width: 100%;
-      --editor-height: 70vh;
-    }
-    main {
-      width: var(--editor-width);
-      height: var(--editor-height);
-    }
-  `;
+  calcEditorSize() {
+    return {
+      width: document.body.offsetWidth,
+      height: window.innerHeight - this.editor_header.offsetHeight,
+    };
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("resize", this._handleResize);
+  }
+  disconnectedCallback() {
+    window.removeEventListener("resize", this._handleResize);
+    super.disconnectedCallback();
+  }
+  _handleResize = () => {
+    this.editor?.layout(this.calcEditorSize());
+  };
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
