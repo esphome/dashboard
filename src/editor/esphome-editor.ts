@@ -32,11 +32,6 @@ class ESPHomeEditor extends LitElement {
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
 
-  constructor() {
-    super();
-    this._handleResize = this._handleResize.bind(this);
-  }
-
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
