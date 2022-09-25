@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% end %} - ESPHome</title>
+
+    <link
+      rel="shortcut icon"
+      href="{{ get_static_file_url('images/favicon.ico') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ get_static_file_url('fonts/material-icons/material-icons.css') }}"
+    />
+    <link
+      rel="preload"
+      href="{{ get_static_file_url('fonts/material-icons/MaterialIcons-Regular.woff2') }}"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ get_static_file_url('css/vendor/materialize/materialize.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ get_static_file_url('css/esphome-2.css') }}"
+    />
+  </head>
+
+  <body>
+    <main>{% block main %}{% end %}</main>
+
+    <div class="esphome-header">
+      <img src="https://esphome.io/_static/logo-text.svg" alt="ESPHome Logo" />
+      <div class="flex"></div>
+      {% block header %}{% end %}
+    </div>
+
+    <footer class="page-footer grey darken-4">
+      <div class="container">
+        <div class="left">
+          ESPHome by Nabu Casa |
+          <a href="https://esphome.io/guides/supporters.html" target="_blank"
+            >Fund development</a
+          >
+          |
+          <a href="{{ docs_link }}" target="_blank" rel="noreferrer"
+            >v{{ version }} Documentation</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    {% block footer %}{% end %}
+  </body>
+</html>
