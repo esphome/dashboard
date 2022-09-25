@@ -1,17 +1,15 @@
 // prettier-ignore
 {% extends base.template.html %}
-
 {% block title %}Dashboard{% end %}
-
 {% block header %}
-<esphome-header-menu
-  logout-url="{% if login_enabled %}{{ relative_url }}logout{% end %}"
-></esphome-header-menu>
 {% end %}
 
 {% block main %}
-<esphome-devices-list></esphome-devices-list>
-<esphome-fab></esphome-fab>
+<esphome-main
+  version="{{ version }}"
+  docsLink="{{ docs_link }}"
+  {% if login_enabled %}logoutUrl="{{ relative_url }}logout"{% end %}
+></esphome-main>
 {% end %}
 
 {% block footer %}
@@ -20,3 +18,4 @@
   type="module"
 ></script>
 {% end %}
+<!-- prettier-ignore -->

@@ -1,9 +1,5 @@
-const preload = () => import("./editor-dialog");
+import { fireEvent } from "../util/fire-event";
 
 export const openEditDialog = (configuration: string) => {
-  preload();
-  const dialog = document.createElement("esphome-editor-dialog");
-  dialog.fileName = configuration;
-
-  document.body.append(dialog);
+  fireEvent(document.body, "edit-file", configuration);
 };
