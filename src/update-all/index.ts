@@ -1,6 +1,8 @@
-const preload = () => import("./update-all-dialog");
+const preload = () => import("./update-all-process-dialog");
 
-export const openUpdateAllDialog = () => {
+export const openUpdateAllProcessDialog = () => {
   preload();
-  document.body.append(document.createElement("esphome-update-all-dialog"));
+  document.body.append(
+    document.createElement("esphome-update-all-process-dialog")
+  );
 };

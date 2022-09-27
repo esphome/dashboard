@@ -1,8 +1,8 @@
 import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import "@material/mwc-button";
-import "../../components/remote-process";
-import "../../components/process-dialog";
+import "../components/remote-process";
+import "../components/process-dialog";
 
 @customElement("esphome-update-all-process-dialog")
 class ESPHomeUpdateAllProcessDialog extends LitElement {
