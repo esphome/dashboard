@@ -136,7 +136,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-list-item>Download YAML</mwc-list-item>
             <mwc-list-item>Rename</mwc-list-item>
             <mwc-list-item>Clean Build Files</mwc-list-item>
-            <mwc-list-item>Delete</mwc-list-item>
+            <mwc-list-item class="destructive">Delete</mwc-list-item>
             ${"mqtt" in this.device.loaded_integrations
               ? html`<mwc-list-item>Clean MQTT</mwc-list-item>`
               : ""}
@@ -178,6 +178,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       }
       .tooltip-container {
         display: inline-block;
+      }
+      .destructive {
+        color: var(--alert-error-color);
       }
     `,
   ];
