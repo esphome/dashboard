@@ -22,16 +22,11 @@
     />
     <link
       rel="stylesheet"
-      href="{{ get_static_file_url('css/vendor/materialize/materialize.min.css') }}"
-    />
-    <link
-      rel="stylesheet"
       href="{{ get_static_file_url('css/esphome-2.css') }}"
     />
   </head>
 
   <body>
-    {% block main %}{% end %}
-    {% block footer %}{% end %}
+    {% block main %}{% end %} {% block footer %}{% end %}
   </body>
 </html>
