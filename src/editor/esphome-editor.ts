@@ -10,8 +10,6 @@ import { openInstallChooseDialog } from "../install-choose";
 import { getFile, writeFile } from "../api/files";
 import type { Snackbar } from "@material/mwc-snackbar";
 import { fireEvent } from "../util/fire-event";
-// @ts-ignore
-import editorStyles from "monaco-editor/min/vs/editor/editor.main.css";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
 
@@ -99,11 +97,7 @@ class ESPHomeEditor extends LitElement {
               @click=${this.handleInstall}
             ></mwc-button>`}
       </div>
-      <main>
-        <style>
-          ${editorStyles}
-        </style>
-      </main>
+      <main></main>
     `;
   }
 
