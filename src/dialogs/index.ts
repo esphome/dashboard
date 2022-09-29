@@ -12,7 +12,7 @@ export interface ConfirmationDialogParams {
 
 export const showConfirmationDialog = (
   dialogParams: ConfirmationDialogParams
-) =>
+): Promise<boolean> =>
   new Promise((resolve) => {
     const origCancel = dialogParams.cancel;
     const origConfirm = dialogParams.confirm;
@@ -39,4 +39,4 @@ export const showConfirmationDialog = (
 
       dialog.showDialog(dp);
     });
-  }) as Promise<boolean>;
+  });
