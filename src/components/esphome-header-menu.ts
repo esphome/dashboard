@@ -96,7 +96,7 @@ export class ESPHomeHeaderMenu extends LitElement {
   private async _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        await this._handleUpdateAll();
+        this._handleUpdateAll();
         break;
       case 1:
         this._handleEditSecrets();
