@@ -8,9 +8,14 @@ import { classMap } from "lit/directives/class-map.js";
 @customElement("esphome-confirmation-dialog")
 class ESPHomeConfirmationDialog extends LitElement {
   @state() private _params?: ConfirmationDialogParams;
+  @state() private _resolve?: (value: boolean | PromiseLike<boolean>) => void;
 
-  public async showDialog(params: ConfirmationDialogParams): Promise<void> {
+  public async showDialog(
+    params: ConfirmationDialogParams,
+    resolve: (value: boolean | PromiseLike<boolean>) => void
+  ): Promise<void> {
     this._params = params;
+    this._resolve = resolve;
   }
 
   protected render(): TemplateResult {
@@ -44,26 +49,21 @@ class ESPHomeConfirmationDialog extends LitElement {
   }
 
   private _handleClose() {
-    if (this._params!.cancel) {
-      this._params!.cancel();
-    }
+    if (!this._resolve) return;
+    this._resolve(false);
     this.parentNode!.removeChild(this);
   }
 
   private async _confirm() {
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
-
-    if (this._params!.confirm) {
-      this._params!.confirm();
-    }
+    if (!this._resolve) return;
+    this._resolve(true);
   }
 
   private async _dismiss() {
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
-
-    if (this._params!.cancel) {
-      this._params!.cancel();
-    }
+    if (!this._resolve) return;
+    this._resolve(false);
   }
 
   static get styles(): CSSResultGroup {
