@@ -38,19 +38,5 @@ export const showConfirmationDialog = (
       };
 
       dialog.showDialog(dp);
-      // const dialog = document.createElement("esphome-confirmation-dialog");
-      // dialog.addEventListener("dialog-closed", (ev) => {
-      //   if (ev.detail.dialog === "confirm") {
-      //     origConfirm && origConfirm();
-      //   } else if (ev.detail.dialog === "cancel") {
-      //     origCancel && origCancel();
-      //   }
-      //   resolve();
-      // });
-      // document.body.appendChild(dialog);
-      // dialog.showDialog({
-      //   ...dialogParams,
-      //   ...extra,
-      // });
     });
   }) as Promise<boolean>;
