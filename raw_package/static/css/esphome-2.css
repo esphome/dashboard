@@ -3,6 +3,7 @@
 :root {
   /* Colors */
   --primary-bg-color: #fafafa;
+  --primary-footer-bg-color: #212121;
 
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
@@ -21,11 +22,21 @@
   --esphome-background-header: #e0e0e0;
 }
 
+html {
+  font-size: 15px;
+  line-height: 1.5;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
   background-color: var(--primary-bg-color);
+  margin: 0;
 }
 
 /* Layout */
@@ -118,10 +129,17 @@ ul.browser-default li {
   min-height: 50px;
   padding-top: 0;
   color: grey;
+  background-color: var(--primary-footer-bg-color);
 }
 
 .page-footer a {
   color: #afafaf;
+}
+
+@media only screen and (min-width: 993px) {
+  .page-footer {
+    padding-left: 10%;
+  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -137,25 +155,7 @@ ul.browser-default li {
   }
   .page-footer {
     padding-bottom: 72px; /* allow reading footer while fab hovers */
-  }
-  .page-footer .left,
-  .page-footer .right {
-    width: 100%;
-    text-align: center;
-  }
-  .modal {
-    top: 0 !important;
-    width: 100vw;
-    height: 90vh !important;
-    height: calc(90vh - env(safe-area-inset-bottom)) !important;
-    max-height: initial;
-  }
-  .modal h4 {
-    padding: 8px;
-    font-size: 1.5rem;
-    margin: 0;
-  }
-  .modal .modal-content {
-    padding: 0;
+    box-sizing: border-box;
+    justify-content: center;
   }
 }
