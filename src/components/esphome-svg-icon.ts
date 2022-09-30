@@ -26,7 +26,7 @@ export class ESPHomeSvgIcon extends LitElement {
   static get styles(): CSSResultGroup {
     return css`
       :host {
-        display: var(--ha-icon-display, inline-flex);
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         position: relative;
