@@ -6,8 +6,9 @@ import "@material/mwc-icon-button";
 import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../editor";
-import { openUpdateAllDialog } from "../update-all";
 import { SECRETS_FILE } from "../api/secrets";
+import { openUpdateAllDialog } from "../update-all";
+import { showConfirmationDialog } from "../dialogs";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
@@ -74,8 +75,15 @@ export class ESPHomeHeaderMenu extends LitElement {
     this._isWide = isWideListener.matches;
   };
 
-  private _handleUpdateAll() {
-    if (!confirm(`Do you want to update all devices?`)) {
+  private async _handleUpdateAll() {
+    if (
+      !(await showConfirmationDialog({
+        title: "Update All",
+        text: "Do you want to update all devices?",
+        confirmText: "Update All",
+        dismissText: "Cancel",
+      }))
+    ) {
       return;
     }
     openUpdateAllDialog();
@@ -85,7 +93,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     openEditDialog(SECRETS_FILE);
   }
 
-  private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
+  private async _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
         this._handleUpdateAll();
