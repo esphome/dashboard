@@ -28,7 +28,7 @@ class ESPHomeConfirmationDialog extends LitElement {
         @closed=${this._handleClose}
         open
       >
-        ${this._params.text && html`<div>${this._params.text}</div>`}
+        ${this._params.text ? html`<div>${this._params.text}</div>` : ""}
         <mwc-button
           slot="secondaryAction"
           no-attention
