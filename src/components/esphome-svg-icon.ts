@@ -8,7 +8,6 @@ export class ESPHomeSvgIcon extends LitElement {
   @property() public viewBox?: string;
 
   protected render(): SVGTemplateResult {
-    console.log(this.path);
     return svg`
     <svg
       viewBox=${this.viewBox || "0 0 24 24"}
