@@ -24,13 +24,13 @@ import { openEditDialog } from "../editor";
 import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
 import {
-  mdiAppleKeyboardCaps,
-  mdiCheck,
+  mdiBroom,
   mdiCodeBraces,
   mdiDelete,
   mdiKey,
-  mdiLayersOff,
   mdiRenameBox,
+  mdiSpellcheck,
+  mdiUploadNetwork,
 } from "@mdi/js";
 
 const UPDATE_TO_ICON = "➡️";
@@ -143,13 +143,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-list-item graphic="icon"
               >Validate<esphome-svg-icon
                 slot="graphic"
-                .path=${mdiCheck}
+                .path=${mdiSpellcheck}
               ></esphome-svg-icon
             ></mwc-list-item>
             <mwc-list-item graphic="icon"
               >Install<esphome-svg-icon
                 slot="graphic"
-                .path=${mdiAppleKeyboardCaps}
+                .path=${mdiUploadNetwork}
               ></esphome-svg-icon
             ></mwc-list-item>
             <mwc-list-item graphic="icon"
@@ -173,7 +173,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             <mwc-list-item graphic="icon"
               >Clean Build Files<esphome-svg-icon
                 slot="graphic"
-                .path=${mdiLayersOff}
+                .path=${mdiBroom}
               ></esphome-svg-icon
             ></mwc-list-item>
             <li divider role="separator"></li>
@@ -188,7 +188,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               ? html`<mwc-list-item graphic="icon"
                   >Clean MQTT<esphome-svg-icon
                     slot="graphic"
-                    .path=${mdiLayersOff}
+                    .path=${mdiBroom}
                   ></esphome-svg-icon
                 ></mwc-list-item>`
               : ""}
