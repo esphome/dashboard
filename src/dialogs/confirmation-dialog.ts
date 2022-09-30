@@ -33,7 +33,7 @@ class ESPHomeConfirmationDialog extends LitElement {
           slot="secondaryAction"
           no-attention
           .label=${this._params.dismissText || "Cancel"}
-          @click=${this._dismiss}
+          dialogAction="dismiss"
         ></mwc-button>
         <mwc-button
           slot="primaryAction"
@@ -41,29 +41,16 @@ class ESPHomeConfirmationDialog extends LitElement {
           class=${classMap({
             destructive: this._params.destructive || false,
           })}
-          dialogAction="close"
-          @click=${this._confirm}
+          dialogAction="confirm"
         ></mwc-button>
       </mwc-dialog>
     `;
   }
 
-  private _handleClose() {
+  private _handleClose(e: CustomEvent): void {
     if (!this._resolve) return;
-    this._resolve(false);
+    this._resolve(e.detail.action === "confirm");
     this.parentNode!.removeChild(this);
-  }
-
-  private async _confirm() {
-    this.shadowRoot!.querySelector("mwc-dialog")!.close();
-    if (!this._resolve) return;
-    this._resolve(true);
-  }
-
-  private async _dismiss() {
-    this.shadowRoot!.querySelector("mwc-dialog")!.close();
-    if (!this._resolve) return;
-    this._resolve(false);
   }
 
   static get styles(): CSSResultGroup {
