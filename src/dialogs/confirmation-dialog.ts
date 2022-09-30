@@ -48,7 +48,6 @@ class ESPHomeConfirmationDialog extends LitElement {
   }
 
   private _handleClose(e: CustomEvent): void {
-    if (!this._resolve) return;
     this._resolve(e.detail.action === "confirm");
     this.parentNode!.removeChild(this);
   }
