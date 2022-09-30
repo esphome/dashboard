@@ -7,8 +7,8 @@ import { classMap } from "lit/directives/class-map.js";
 
 @customElement("esphome-confirmation-dialog")
 class ESPHomeConfirmationDialog extends LitElement {
-  @state() private _params?: ConfirmationDialogParams;
-  @state() private _resolve?: (value: boolean | PromiseLike<boolean>) => void;
+  @state() private _params!: ConfirmationDialogParams;
+  @state() private _resolve!: (value: boolean | PromiseLike<boolean>) => void;
 
   public async showDialog(
     params: ConfirmationDialogParams,
