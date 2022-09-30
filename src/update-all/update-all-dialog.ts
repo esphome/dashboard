@@ -23,6 +23,6 @@ class ESPHomeUpdateAllDialog extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-update-all-process-dialog": ESPHomeUpdateAllDialog;
+    "esphome-update-all-dialog": ESPHomeUpdateAllDialog;
   }
 }

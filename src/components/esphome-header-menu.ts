@@ -7,7 +7,7 @@ import "@material/mwc-button";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
-import { openUpdateAllProcessDialog } from "../update-all";
+import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
@@ -86,7 +86,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     ) {
       return;
     }
-    openUpdateAllProcessDialog();
+    openUpdateAllDialog();
   }
 
   private _handleEditSecrets() {
