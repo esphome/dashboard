@@ -8,6 +8,7 @@ import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import "../components/esphome-button-menu";
 import "../components/esphome-card";
+import "../components/esphome-svg-icon";
 import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
@@ -22,6 +23,15 @@ import { openShowApiKeyDialog } from "../show-api-key";
 import { openEditDialog } from "../editor";
 import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
+import {
+  mdiAppleKeyboardCaps,
+  mdiCheck,
+  mdiCodeBraces,
+  mdiDelete,
+  mdiKey,
+  mdiLayersOff,
+  mdiRenameBox,
+} from "@mdi/js";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -130,15 +140,57 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-            <mwc-list-item>Validate</mwc-list-item>
-            <mwc-list-item>Install</mwc-list-item>
-            <mwc-list-item>Show API key</mwc-list-item>
-            <mwc-list-item>Download YAML</mwc-list-item>
-            <mwc-list-item>Rename</mwc-list-item>
-            <mwc-list-item>Clean Build Files</mwc-list-item>
-            <mwc-list-item>Delete</mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Validate<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiCheck}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Install<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiAppleKeyboardCaps}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Show API Key<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiKey}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Download YAML<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiCodeBraces}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Rename<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiRenameBox}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <mwc-list-item graphic="icon"
+              >Clean Build Files<esphome-svg-icon
+                slot="graphic"
+                .path=${mdiLayersOff}
+              ></esphome-svg-icon
+            ></mwc-list-item>
+            <li divider role="separator"></li>
+            <mwc-list-item class="warning" graphic="icon"
+              >Delete<esphome-svg-icon
+                class="warning"
+                slot="graphic"
+                .path=${mdiDelete}
+              ></esphome-svg-icon
+            ></mwc-list-item>
             ${"mqtt" in this.device.loaded_integrations
-              ? html`<mwc-list-item>Clean MQTT</mwc-list-item>`
+              ? html`<mwc-list-item graphic="icon"
+                  >Clean MQTT<esphome-svg-icon
+                    slot="graphic"
+                    .path=${mdiLayersOff}
+                  ></esphome-svg-icon
+                ></mwc-list-item>`
               : ""}
           </esphome-button-menu>
         </div>
@@ -178,6 +230,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       }
       .tooltip-container {
         display: inline-block;
+      }
+      .warning {
+        color: var(--alert-error-color);
       }
     `,
   ];
