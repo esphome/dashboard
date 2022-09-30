@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, CSSResultGroup, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
@@ -20,6 +20,7 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
         <div>Are you sure you want to delete ${this.name}?</div>
         <mwc-button
           slot="primaryAction"
+          class="warning"
           label="Delete"
           dialogAction="close"
           @click=${this._handleDelete}
@@ -41,6 +42,14 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
   private async _handleDelete() {
     await deleteConfiguration(this.configuration);
     fireEvent(this, "deleted");
+  }
+
+  static get styles(): CSSResultGroup {
+    return css`
+      .warning {
+        --mdc-theme-primary: var(--alert-error-color);
+      }
+    `;
   }
 }
 
