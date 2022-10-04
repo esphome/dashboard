@@ -62,7 +62,7 @@ export class ESPHomeCard extends LitElement {
       display: block;
       position: absolute;
       right: 6px;
-      top: 6px;
+      top: 4px;
       font-size: 12px;
       content: attr(data-status);
     }
