@@ -61,9 +61,8 @@ export class ESPHomeCard extends LitElement {
     .status-bar::after {
       display: block;
       position: absolute;
-      right: 2px;
-      top: 3px;
-      font-weight: bold;
+      right: 6px;
+      top: 6px;
       font-size: 12px;
       content: attr(data-status);
     }
