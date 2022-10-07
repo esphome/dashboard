@@ -40,7 +40,9 @@ class ESPHomeAdoptDialog extends LitElement {
         </div>
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-        ${this._hasWifiSecrets !== false
+        ${!this._needsWifiSecrets
+          ? ""
+          : this._hasWifiSecrets !== false
           ? html`
               <div>
                 This device will be configured to connect to the Wi-Fi network
@@ -79,7 +81,8 @@ class ESPHomeAdoptDialog extends LitElement {
           slot="primaryAction"
           .label=${this._busy ? "Adopting…" : "Adopt"}
           @click=${this._handleAdopt}
-          .disabled=${this._hasWifiSecrets === undefined}
+          .disabled=${this._needsWifiSecrets &&
+          this._hasWifiSecrets === undefined}
         ></mwc-button>
         ${this._busy
           ? ""
@@ -160,9 +163,11 @@ class ESPHomeAdoptDialog extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
-    checkHasWifiSecrets().then((hasWifiSecrets) => {
-      this._hasWifiSecrets = hasWifiSecrets;
-    });
+    if (this._needsWifiSecrets) {
+      checkHasWifiSecrets().then((hasWifiSecrets) => {
+        this._hasWifiSecrets = hasWifiSecrets;
+      });
+    }
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -172,6 +177,10 @@ class ESPHomeAdoptDialog extends LitElement {
       nameEl.value = this.device.name;
       nameEl.updateComplete.then(() => nameEl.focus());
     }
+  }
+
+  private get _needsWifiSecrets() {
+    return this.device.network === "wifi";
   }
 
   private _cleanNameInput = (ev: InputEvent) => {
@@ -198,7 +207,7 @@ class ESPHomeAdoptDialog extends LitElement {
   private async _handleAdopt() {
     this._error = undefined;
 
-    if (this._hasWifiSecrets === false) {
+    if (this._needsWifiSecrets && this._hasWifiSecrets === false) {
       if (!this._inputSSID.reportValidity()) {
         this._inputSSID.focus();
         return;
@@ -217,6 +226,7 @@ class ESPHomeAdoptDialog extends LitElement {
         return;
       }
     }
+
     this._busy = true;
     try {
       await importDevice(this.device);
