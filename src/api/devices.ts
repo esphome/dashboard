@@ -20,6 +20,7 @@ export interface ImportableDevice {
   package_import_url: string;
   project_name: string;
   project_version: string;
+  network: "ethernet" | "wifi";
 }
 
 export interface ListDevicesResult {
