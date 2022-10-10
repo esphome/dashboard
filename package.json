@@ -13,7 +13,7 @@
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
-    "@rollup/plugin-typescript": "^8.5.0",
+    "@rollup/plugin-typescript": "^9.0.0",
     "fs-extra": "^10.1.0",
     "monaco-editor": "^0.34.0",
     "nunjucks": "^3.2.3",
