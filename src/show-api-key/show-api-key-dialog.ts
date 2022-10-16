@@ -63,11 +63,7 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
     super.firstUpdated(changedProps);
 
     getJsonConfig(this.configuration).then(async (content) => {
-      if (!content) {
-        this._apiKey = null;
-        return;
-      }
-      this._apiKey = content["api"]["encryption"]["key"];
+      this._apiKey = content?.api?.encryption?.key;
     });
   }
 
