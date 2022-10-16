@@ -7,9 +7,6 @@ import { getFile } from "../api/files";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { openEditDialog } from "../editor";
 
-const API_KEY_START = `api:
-  encryption:
-    key: "`;
 
 @customElement("esphome-show-api-key-dialog")
 class ESPHomeShowApiKeyDialogDialog extends LitElement {
@@ -64,18 +61,13 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
-    getFile(this.configuration).then(async (content) => {
+
+    getJsonConfig(this.configuration).then(async (content) => {
       if (!content) {
         this._apiKey = null;
         return;
       }
-      let start = content.indexOf(API_KEY_START);
-      if (start === -1) {
-        this._apiKey = null;
-      } else {
-        start += API_KEY_START.length;
-        this._apiKey = content.substring(start, content.indexOf('"', start));
-      }
+      this._apiKey = content["api"]["encryption"]["key"];
     });
   }
 
