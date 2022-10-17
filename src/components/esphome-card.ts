@@ -4,6 +4,8 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("esphome-card")
 export class ESPHomeCard extends LitElement {
   @property() public status?: string;
+  @property({ attribute: "list", reflect: true, type: Boolean })
+  public list = false;
 
   @property({ attribute: "no-status-bar", reflect: true, type: Boolean })
   public noStatusBar = false;
@@ -30,10 +32,26 @@ export class ESPHomeCard extends LitElement {
       font-weight: normal;
     }
 
+    :host([list]) ::slotted(.card-header) {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
     :host ::slotted(.card-content:not(:first-child)),
     slot:not(:first-child)::slotted(.card-content) {
       padding-top: 0px;
       margin-top: -8px;
+    }
+
+    :host([list]) ::slotted(.card-content:not(:first-child)) {
+      margin-top: 0px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
     }
 
     :host ::slotted(.card-content) {
@@ -67,6 +85,16 @@ export class ESPHomeCard extends LitElement {
       font-size: 12px;
       content: attr(data-status);
     }
+
+    :host([list]) .status-bar {
+      height: unset;
+      width: 4px;
+      position: unset;
+    }
+    :host([list]) .status-bar::after {
+      display: none;
+    }
+
     :host([no-status-bar]) .status-bar {
       height: 0px;
     }

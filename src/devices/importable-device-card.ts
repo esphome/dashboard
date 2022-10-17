@@ -11,10 +11,14 @@ import { esphomeCardStyles } from "../styles";
 class ESPHomeImportableDeviceCard extends LitElement {
   @property() public device!: ImportableDevice;
   @property() public highlightOnAdd = false;
+  @property() public list = false;
 
   protected render() {
     return html`
-      <esphome-card status="DISCOVERED">
+      <esphome-card
+        class=${this.list ? 'list' : ''}
+        status="DISCOVERED"
+      >
         <div class="card-header">${this.device.name}</div>
         <div class="card-content flex">${this.device.project_name}</div>
 

@@ -3,6 +3,9 @@ import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import ViewMode from "./devices/viewMode"
+
+const isWideListener = window.matchMedia("(min-width: 655px)");
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
@@ -13,6 +16,10 @@ class ESPHomeMainView extends LitElement {
   @property() logoutUrl?: string;
 
   @state() private editing?: string;
+
+  @state() private viewMode: ViewMode = Number(localStorage.getItem('esphome_viewmode')) || ViewMode.Module;
+
+  @state() private _isWide = isWideListener.matches;
 
   protected render() {
     if (this.editing) {
@@ -32,7 +39,7 @@ class ESPHomeMainView extends LitElement {
     }
     return html`
       <main>
-        <esphome-devices-list></esphome-devices-list>
+        <esphome-devices-list .viewMode=${this._isWide ? this.viewMode : ViewMode.Module}></esphome-devices-list>
       </main>
       <div class="esphome-header">
         <img
@@ -40,7 +47,7 @@ class ESPHomeMainView extends LitElement {
           alt="ESPHome Logo"
         />
         <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+        <esphome-header-menu .logoutUrl=${this.logoutUrl} .toggleViewMode=${this._toggleViewMode.bind(this)} .viewMode=${this.viewMode}></esphome-header-menu>
       </div>
       <esphome-fab></esphome-fab>
       <footer class="page-footer grey darken-4">
@@ -74,6 +81,29 @@ class ESPHomeMainView extends LitElement {
   private _handleEditorClose() {
     this.editing = undefined;
   }
+
+  private _toggleViewMode() {
+    if (this.viewMode === ViewMode.Module) {
+      this.viewMode = ViewMode.List
+    } else {
+      this.viewMode = ViewMode.Module
+    }
+    localStorage.setItem('esphome_viewmode', this.viewMode.toString())
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    isWideListener.addEventListener("change", this._isWideUpdated);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    isWideListener.removeEventListener("change", this._isWideUpdated);
+  }
+
+  private _isWideUpdated = () => {
+    this._isWide = isWideListener.matches;
+  };
 }
 
 declare global {

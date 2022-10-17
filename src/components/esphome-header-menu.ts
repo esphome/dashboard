@@ -9,18 +9,26 @@ import { openEditDialog } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
+import ViewMode from "../devices/viewMode";
 
-const isWideListener = window.matchMedia("(min-width: 601px)");
+const isWideListener = window.matchMedia("(min-width: 655px)");
 
 @customElement("esphome-header-menu")
 export class ESPHomeHeaderMenu extends LitElement {
   @property({ type: String, attribute: "logout-url" }) logoutUrl?: string;
+  @property() toggleViewMode!: Function;
+  @property() viewMode: ViewMode = ViewMode.Module;
 
   @state() private _isWide = isWideListener.matches;
 
   protected render(): TemplateResult {
     if (this._isWide) {
       return html`
+        <mwc-button
+          icon="${this.viewMode === ViewMode.Module ? 'view_list' : 'view_modules'}"
+          label="${this.viewMode === ViewMode.Module ? 'List view' : 'Module view'}"
+          @click=${this.toggleViewMode}
+        ></mwc-button>
         <mwc-button
           icon="system_update"
           label="Update All"

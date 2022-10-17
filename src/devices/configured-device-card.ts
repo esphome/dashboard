@@ -46,6 +46,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
   @property() public onlineStatus?: boolean;
   @property() public highlightOnAdd = false;
+  @property() public list = false;
   @state() private _highlight = false;
 
   public async highlight() {
@@ -89,6 +90,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       : undefined;
     return html`
       <esphome-card
+        class=${this.list ? 'list' : ''}
+        .list=${this.list}
         .status=${status}
         .noStatusBar=${status === "ONLINE"}
         style=${styleMap({
@@ -214,6 +217,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       .device-config-path {
         margin-bottom: 8px;
         font-size: 14px;
+      }
+      :host.listmode .device-config-path {
+        margin-bottom: 4px;
       }
       .inlinecode {
         box-sizing: border-box;

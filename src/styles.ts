@@ -6,6 +6,9 @@ export const esphomeCardStyles = css`
     display: flex;
     flex-direction: column;
   }
+  esphome-card.list {
+    flex-direction: row;
+  }
   a {
     color: var(--mdc-theme-primary);
   }

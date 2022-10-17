@@ -1,6 +1,6 @@
 import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import { subscribeDevices, ListDevicesResult } from "../api/devices";
 import { openWizardDialog } from "../wizard";
@@ -8,11 +8,13 @@ import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import ViewMode from "./viewMode";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
   @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
+  @property({ attribute: 'view-mode' }) viewMode: ViewMode = ViewMode.Module;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -45,7 +47,7 @@ class ESPHomeDevicesList extends LitElement {
     const importable = this._devices.importable;
 
     return html`
-      <div class="grid">
+      <div class="devices-list ${this.viewMode === ViewMode.Module ? 'grid' : 'list'}">
         ${importable.length
           ? html`
               ${repeat(
@@ -53,6 +55,7 @@ class ESPHomeDevicesList extends LitElement {
                 (device) => device.name,
                 (device) => html`
                   <esphome-importable-device-card
+                    class=${this.viewMode === ViewMode.List ? 'listmode' : ''}
                     ${animate({ id: device.name, skipInitial: true })}
                     .device=${device}
                     @adopted=${this._updateDevices}
@@ -66,6 +69,8 @@ class ESPHomeDevicesList extends LitElement {
           this._devices.configured,
           (device) => device.name,
           (device) => html`<esphome-configured-device-card
+            class=${this.viewMode === ViewMode.List ? 'listmode' : ''}
+            .list=${this.viewMode === ViewMode.List}
             ${animate({
               id: device.name,
               inId: device.name,
@@ -87,14 +92,16 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   static styles = css`
+    .devices-list {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1920px;
+    }
     .grid {
       display: grid;
       grid-template-columns: 1fr;
       grid-template-columns: 1fr 1fr 1fr;
       grid-column-gap: 1.5rem;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
       justify-content: stretch;
     }
     @media only screen and (max-width: 1100px) {
@@ -116,6 +123,13 @@ class ESPHomeDevicesList extends LitElement {
     esphome-importable-device-card {
       margin: 0.5rem 0 1rem 0;
     }
+    esphome-configured-device-card.listmode,
+    esphome-importable-device-card.listmode {
+      display: block;
+      margin: 0;
+      border: 1px solid transparent;
+    }
+
     .welcome-container {
       text-align: center;
       margin-top: 40px;
