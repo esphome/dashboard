@@ -3,10 +3,9 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
 import { esphomeDialogStyles } from "../styles";
-import { getFile } from "../api/files";
+import { getJsonConfig } from "../api/files";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { openEditDialog } from "../editor";
-
 
 @customElement("esphome-show-api-key-dialog")
 class ESPHomeShowApiKeyDialogDialog extends LitElement {

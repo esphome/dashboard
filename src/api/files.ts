@@ -13,7 +13,9 @@ export const getFile = async (filename: string): Promise<string | null> => {
 };
 
 // null if file not found.
-export const getJsonConfig = async (filename: string): Promise<T | null> => {
+export const getJsonConfig = async (
+  filename: string
+): Promise<Record<string, any> | null> => {
   try {
     return fetchApiJson(`./json-config?configuration=${filename}`);
   } catch (err) {
