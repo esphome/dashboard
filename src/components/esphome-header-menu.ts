@@ -10,6 +10,7 @@ import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
 import ViewMode from "../devices/viewMode";
+import { fireEvent } from "../util/fire-event";
 
 const isWideListener = window.matchMedia("(min-width: 655px)");
 
@@ -27,7 +28,7 @@ export class ESPHomeHeaderMenu extends LitElement {
         <mwc-button
           icon="${this.viewMode === ViewMode.Module ? 'view_list' : 'view_modules'}"
           label="${this.viewMode === ViewMode.Module ? 'List view' : 'Module view'}"
-          @click=${this.toggleViewMode}
+          @click=${() => fireEvent(this, "toggle-view-mode")}
         ></mwc-button>
         <mwc-button
           icon="system_update"

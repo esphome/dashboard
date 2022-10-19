@@ -47,7 +47,7 @@ class ESPHomeMainView extends LitElement {
           alt="ESPHome Logo"
         />
         <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl} .toggleViewMode=${this._toggleViewMode.bind(this)} .viewMode=${this.viewMode}></esphome-header-menu>
+        <esphome-header-menu .logoutUrl=${this.logoutUrl} @toggle-view-mode=${this._toggleViewMode} .viewMode=${this.viewMode}></esphome-header-menu>
       </div>
       <esphome-fab></esphome-fab>
       <footer class="page-footer grey darken-4">
