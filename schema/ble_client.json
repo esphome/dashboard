@@ -10,8 +10,9 @@
               "id_type": {
                 "class": "ble_client::BLEClient",
                 "parents": [
-                  "Component",
-                  "esp32_ble_tracker::ESPBTClient"
+                  "esp32_ble_client::BLEClientBase",
+                  "esp32_ble_tracker::ESPBTClient",
+                  "Component"
                 ]
               },
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
@@ -95,64 +96,107 @@
   "ble_client.sensor": {
     "schemas": {
       "CONFIG_SCHEMA": {
-        "type": "schema",
-        "schema": {
-          "extends": [
-            "sensor.SENSOR_SCHEMA",
-            "core.COMPONENT_SCHEMA",
-            "ble_client.BLE_CLIENT_SCHEMA"
-          ],
-          "config_vars": {
-            "id": {
-              "id_type": {
-                "class": "ble_client::BLESensor",
-                "parents": [
-                  "sensor::Sensor",
-                  "EntityBase",
-                  "PollingComponent",
-                  "Component",
-                  "ble_client::BLEClientNode"
-                ]
+        "type": "typed",
+        "types": {
+          "characteristic": {
+            "extends": [
+              "sensor.SENSOR_SCHEMA",
+              "core.COMPONENT_SCHEMA",
+              "ble_client.BLE_CLIENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "id_type": {
+                  "class": "ble_client::BLESensor",
+                  "parents": [
+                    "sensor::Sensor",
+                    "EntityBase",
+                    "PollingComponent",
+                    "Component",
+                    "ble_client::BLEClientNode"
+                  ]
+                },
+                "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "accuracy_decimals": {
-              "default": "0"
-            },
-            "service_uuid": {
-              "key": "Required",
-              "docs": "**UUID**: UUID of the service on the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "characteristic_uuid": {
-              "key": "Required",
-              "docs": "**UUID**: UUID of the service\u2019s characteristic to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "descriptor_uuid": {
-              "key": "Optional",
-              "docs": "**UUID**: UUID of the characteristic\u2019s descriptor to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "lambda": {
-              "key": "Optional",
-              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The lambda to use for converting a raw data reading to a sensor value. See [Raw Data Parsing Lambda](https://esphome.io/components/sensor/ble_client.html#ble-sensor-lambda) for more information.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "notify": {
-              "key": "Optional",
-              "default": "False",
-              "type": "boolean",
-              "docs": "**boolean**: Instruct the server to send notifications for this characteristic.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "on_notify": {
-              "key": "Optional",
-              "type": "trigger",
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a notify message is received from the device. See [on_notify](https://esphome.io/components/sensor/ble_client.html#ble-sensor-on-notify).\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
-            },
-            "update_interval": {
-              "key": "Optional",
-              "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to poll the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              "accuracy_decimals": {
+                "default": "0"
+              },
+              "update_interval": {
+                "key": "Optional",
+                "default": "60s",
+                "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to poll the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "service_uuid": {
+                "key": "Required",
+                "docs": "**UUID**: UUID of the service on the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "characteristic_uuid": {
+                "key": "Required",
+                "docs": "**UUID**: UUID of the service\u2019s characteristic to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "descriptor_uuid": {
+                "key": "Optional",
+                "docs": "**UUID**: UUID of the characteristic\u2019s descriptor to query.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "lambda": {
+                "key": "Optional",
+                "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: The lambda to use for converting a raw data reading to a sensor value. See [Raw Data Parsing Lambda](https://esphome.io/components/sensor/ble_client.html#ble-sensor-lambda) for more information.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "notify": {
+                "key": "Optional",
+                "default": "False",
+                "type": "boolean",
+                "docs": "**boolean**: Instruct the server to send notifications for this characteristic.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "on_notify": {
+                "key": "Optional",
+                "type": "trigger",
+                "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a notify message is received from the device. See [on_notify](https://esphome.io/components/sensor/ble_client.html#ble-sensor-on-notify).\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              }
+            }
+          },
+          "rssi": {
+            "extends": [
+              "sensor.SENSOR_SCHEMA",
+              "core.COMPONENT_SCHEMA",
+              "ble_client.BLE_CLIENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "id_type": {
+                  "class": "ble_client::BLEClientRSSISensor",
+                  "parents": [
+                    "sensor::Sensor",
+                    "EntityBase",
+                    "PollingComponent",
+                    "Component",
+                    "ble_client::BLEClientNode"
+                  ]
+                },
+                "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID to use for code generation, and for reference by dependent components.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              },
+              "unit_of_measurement": {
+                "default": "dBm"
+              },
+              "accuracy_decimals": {
+                "default": "0"
+              },
+              "device_class": {
+                "default": "signal_strength"
+              },
+              "state_class": {
+                "default": "measurement"
+              },
+              "update_interval": {
+                "key": "Optional",
+                "default": "60s",
+                "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to poll the device.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
+              }
             }
           }
-        }
+        },
+        "typed_key": "type",
+        "docs": "One of `rssi`, `characteristic`.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#configuration-variables)*"
       }
     }
   },

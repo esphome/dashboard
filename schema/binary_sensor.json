@@ -183,12 +183,7 @@
           "esp32_ble_tracker"
         ]
       },
-      "xpt2046": {
-        "dependencies": [
-          "xpt2046"
-        ],
-        "docs": "The `xpt2046` binary sensor allows you to setup areas on the touch screen as virtual buttons. First, setup a [Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#xpt2046-component) and then use this binary sensor platform to create individual binary sensors for each virtual button.\n\n*See also: [xpt2046 Binary Sensor](https://esphome.io/components/binary_sensor/xpt2046.html#binary-sensor)*"
-      }
+      "xpt2046": {}
     },
     "schemas": {
       "BINARY_SENSOR_SCHEMA": {

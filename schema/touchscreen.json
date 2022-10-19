@@ -12,6 +12,12 @@
           "i2c"
         ],
         "docs": "The `liygo_t5_47` touchscreen platform allows using the touchscreen controller for the Lilygo T5 4.7\u201d e-Paper Display with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this touchscreen to work.\n\n*See also: [Lilygo T5 4.7\u201d Touchscreen](https://esphome.io/components/touchscreen/lilygo_t5_47.html#lilygo-t5-4-7-touchscreen)*"
+      },
+      "xpt2046": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The `xpt2046` touchscreen platform allows using the touch screen controllers based on the XPT2046 chip ([datasheet](https://datasheetspdf.com/pdf-file/746665/XPTEK/XPT2046/1), [AZ-Delivery](https://www.az-delivery.de/en/products/2-4-tft-lcd-touch-display)) with ESPHome. Many cheap LCD displays contain this controller. The [SPI](https://esphome.io/components/spi.html#spi) is required to be set up in your configuration for this sensor to work.\n\n*See also: [XPT2046 Touch Screen Controller (Updated version)](https://esphome.io/components/touchscreen/xpt2046.html#xpt2046-touch-screen-controller-updated-version)*"
       }
     },
     "schemas": {

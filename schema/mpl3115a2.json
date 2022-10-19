@@ -37,7 +37,8 @@
                     "default": "measurement"
                   }
                 }
-              }
+              },
+              "docs": "The information for the pressure sensor.\n  * **name** (**Required**, string): The name for the pressure sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#configuration-variables)*"
             },
             "altitude": {
               "key": "Optional",
@@ -57,7 +58,8 @@
                     "default": "measurement"
                   }
                 }
-              }
+              },
+              "docs": "The information for the altitude sensor.\n  * **name** (**Required**, string): The name for the altitude sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#configuration-variables)*"
             },
             "temperature": {
               "key": "Optional",
@@ -80,11 +82,13 @@
                     "default": "measurement"
                   }
                 }
-              }
+              },
+              "docs": "The information for the temperature sensor.\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",
-              "default": "60s"
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#configuration-variables)*"
             },
             "i2c_id": {
               "key": "GeneratedID",
@@ -94,7 +98,8 @@
             "address": {
               "key": "Optional",
               "default": "96",
-              "data_type": "hex_uint8_t"
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x60`.\n\n*See also: [MPL3115A2 Barometric Pressure/Altitude/Temperature Sensor](https://esphome.io/components/sensor/mpl3115a2.html#configuration-variables)*"
             }
           },
           "extends": [
