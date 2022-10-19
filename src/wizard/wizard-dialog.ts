@@ -52,7 +52,7 @@ const BOARD_GENERIC_ESP32 = "esp32dev";
 const BOARD_GENERIC_ESP8266 = "esp01_1m";
 const BOARD_GENERIC_ESP32S2 = "esp32-s2-saola-1";
 const BOARD_GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
-const BOARD_RPI_PICO_W = "rpi_picow";
+const BOARD_RPI_PICO_W = "rpipicow";
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {

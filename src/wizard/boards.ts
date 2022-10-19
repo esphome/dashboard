@@ -21,8 +21,8 @@ export const boardSelectOptions = html`
     <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
   </optgroup>
   <optgroup label="Raspberry Pi">
-    <option value="rpi_pico">Raspberry Pi Pico</option>
-    <option value="rpi_picow">Raspberry Pi Pico W</option>
+    <option value="rpipico">Raspberry Pi Pico</option>
+    <option value="rpipicow">Raspberry Pi Pico W</option>
   </optgroup>
   <optgroup label="Other ESP8266s">
     <option value="gen4iod">4D Systems gen4 IoD Range</option>
