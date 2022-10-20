@@ -25,12 +25,13 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @property() public configuration!: string;
 
   @state() private _ethernet = false;
+  @state() private _isPico = false;
 
   @state() private _ports?: ServerSerialPort[];
 
   @state() private _state:
     | "pick_option"
-    | "web_instructions"
+    | "download_instructions"
     | "pick_download_type"
     | "pick_server_port" = "pick_option";
 
@@ -41,6 +42,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
   private _compileConfiguration?: Promise<unknown>;
 
   private _abortCompilation?: AbortController;
+
+  private get _platformSupportsWebSerial() {
+    return !this._isPico;
+  }
 
   protected render() {
     let heading;
@@ -63,18 +68,32 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
-        <mwc-list-item twoline hasMeta @click=${this._handleBrowserInstall}>
+        <mwc-list-item
+          twoline
+          hasMeta
+          ?disabled=${!this._platformSupportsWebSerial}
+          @click=${this._handleBrowserInstall}
+        >
           <span>Plug into this computer</span>
           <span slot="secondary">
-            For devices connected via USB to this computer
+            ${this._platformSupportsWebSerial
+              ? "For devices connected via USB to this computer"
+              : "Installing this via the web is not supported yet for this device"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
 
-        <mwc-list-item twoline hasMeta @click=${this._showServerPorts}>
+        <mwc-list-item
+          twoline
+          hasMeta
+          ?disabled=${this._isPico}
+          @click=${this._handleServerInstall}
+        >
           <span>Plug into the computer running ESPHome Dashboard</span>
           <span slot="secondary">
-            For devices connected via USB to the server
+            ${this._isPico
+              ? "Installing this from the server is not supported yet for this device"
+              : "For devices connected via USB to the server"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -83,12 +102,17 @@ class ESPHomeInstallChooseDialog extends LitElement {
           twoline
           hasMeta
           @click=${() => {
-            this._state = "pick_download_type";
+            this._state = this._isPico
+              ? "download_instructions"
+              : "pick_download_type";
           }}
         >
           <span>Manual download</span>
           <span slot="secondary">
-            Install it yourself using ESPHome Web or other tools
+            Install it yourself
+            ${this._isPico
+              ? "by copying it to the Pico USB drive"
+              : "using ESPHome Web or other tools"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -105,24 +129,33 @@ class ESPHomeInstallChooseDialog extends LitElement {
       content =
         this._ports === undefined
           ? this._renderProgress("Loading serial devices")
-          : this._ports.length === 0
-          ? this._renderMessage(WARNING_ICON, "No serial devices found.", true)
           : html`
-              ${this._ports.map(
-                (port) => html`
-                  <mwc-list-item
-                    twoline
-                    hasMeta
-                    .port=${port.port}
-                    @click=${this._handleLegacyOption}
-                  >
-                    <span>${port.desc}</span>
-                    <span slot="secondary">${port.port}</span>
-                    ${metaChevronRight}
-                  </mwc-list-item>
-                `
-              )}
-
+              ${this._ports.length === 0
+                ? this._renderMessage(
+                    WARNING_ICON,
+                    html`
+                      No serial devices found.
+                      <br /><br />
+                      This list automatically refreshes if you plug one in.
+                    `,
+                    false
+                  )
+                : html`
+                    ${this._ports.map(
+                      (port) => html`
+                        <mwc-list-item
+                          twoline
+                          hasMeta
+                          .port=${port.port}
+                          @click=${this._handleLegacyOption}
+                        >
+                          <span>${port.desc}</span>
+                          <span slot="secondary">${port.port}</span>
+                          ${metaChevronRight}
+                        </mwc-list-item>
+                      `
+                    )}
+                  `}
               <mwc-button
                 no-attention
                 slot="primaryAction"
@@ -159,13 +192,17 @@ class ESPHomeInstallChooseDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
-        <a
-          href="https://web.esphome.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bottom-left"
-          >Open ESPHome Web</a
-        >
+        ${this._platformSupportsWebSerial
+          ? html`
+              <a
+                href="https://web.esphome.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bottom-left"
+                >Open ESPHome Web</a
+              >
+            `
+          : ""}
         <mwc-button
           no-attention
           slot="primaryAction"
@@ -175,41 +212,65 @@ class ESPHomeInstallChooseDialog extends LitElement {
           }}
         ></mwc-button>
       `;
-    } else if (this._state === "web_instructions") {
-      heading = "Install ESPHome via the browser";
+    } else if (this._state === "download_instructions") {
+      let instructions: TemplateResult;
+      const downloadButton = until(
+        this._compileConfiguration,
+        html`<a download disabled href="#">Download project</a>
+          preparing&nbsp;download…
+          <mwc-circular-progress
+            density="-8"
+            indeterminate
+          ></mwc-circular-progress>`
+      );
+
+      if (this._isPico) {
+        heading = "Install ESPHome via the USB drive";
+        instructions = html`
+          <div>
+            You can install your ESPHome project ${this.configuration} on your
+            device via your file explorer by following these steps:
+          </div>
+          <ol>
+            <li>Disconnect your Raspberry Pi Pico from your computer</li>
+            <li>
+              Hold the BOOTSEL button and connect the Pico to your computer
+            </li>
+            <li>The Pico will show up as a USB drive named RPI-RP2</li>
+            <li>${downloadButton}</li>
+            <li>Drag the downloaded file to the USB drive</li>
+            <li>Your Pico will reboot and the installation is complete</li>
+          </ol>
+        `;
+      } else {
+        heading = "Install ESPHome via the browser";
+        instructions = html`
+          <div>
+            ESPHome can install ${this.configuration} on your device via the
+            browser if certain requirements are met:
+          </div>
+          <ul>
+            <li>ESPHome is visited over HTTPS</li>
+            <li>Your browser supports WebSerial</li>
+          </ul>
+          <div>
+            Not all requirements are currently met. The easiest solution is to
+            download your project and do the installation with ESPHome Web.
+            ESPHome Web works 100% in your browser and no data will be shared
+            with the ESPHome project.
+          </div>
+          <ol>
+            <li>${downloadButton}</li>
+            <li>
+              <a href=${ESPHOME_WEB_URL} target="_blank" rel="noopener"
+                >Open ESPHome Web</a
+              >
+            </li>
+          </ol>
+        `;
+      }
       content = html`
-        <div>
-          ESPHome can install ${this.configuration} on your device via the
-          browser if certain requirements are met:
-        </div>
-        <ul>
-          <li>ESPHome is visited over HTTPS</li>
-          <li>Your browser supports WebSerial</li>
-        </ul>
-        <div>
-          Not all requirements are currently met. The easiest solution is to
-          download your project and do the installation with ESPHome Web.
-          ESPHome Web works 100% in your browser and no data will be shared with
-          the ESPHome project.
-        </div>
-        <ol>
-          <li>
-            ${until(
-              this._compileConfiguration,
-              html`<a download disabled href="#">Download project</a>
-                preparing&nbsp;download…
-                <mwc-circular-progress
-                  density="-8"
-                  indeterminate
-                ></mwc-circular-progress>`
-            )}
-          </li>
-          <li>
-            <a href=${ESPHOME_WEB_URL} target="_blank" rel="noopener"
-              >Open ESPHome Web</a
-            >
-          </li>
-        </ol>
+        ${instructions}
 
         <mwc-button
           no-attention
@@ -218,12 +279,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
           @click=${() => {
             this._state = "pick_option";
           }}
-        ></mwc-button>
-        <mwc-button
-          no-attention
-          slot="primaryAction"
-          dialogAction="close"
-          label="Close"
         ></mwc-button>
       `;
     }
@@ -270,14 +325,15 @@ class ESPHomeInstallChooseDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose &&
-      html`
-        <mwc-button
-          slot="primaryAction"
-          dialogAction="ok"
-          label="Close"
-        ></mwc-button>
-      `}
+      ${showClose
+        ? html`
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Close"
+            ></mwc-button>
+          `
+        : ""}
     `;
   }
 
@@ -286,6 +342,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._updateSerialPorts();
     getConfiguration(this.configuration).then((config) => {
       this._ethernet = config.loaded_integrations.includes("ethernet");
+      this._isPico = config.esp_platform === "RP2040";
     });
   }
 
@@ -297,14 +354,16 @@ class ESPHomeInstallChooseDialog extends LitElement {
     super.willUpdate(changedProps);
     if (
       changedProps.has("_state") &&
-      this._state === "web_instructions" &&
+      this._state === "download_instructions" &&
       !this._compileConfiguration
     ) {
       this._abortCompilation = new AbortController();
       this._compileConfiguration = compileConfiguration(this.configuration)
         .then(
           () => html`
-            <a download href="${getDownloadUrl(this.configuration, true)}"
+            <a
+              download
+              href="${getDownloadUrl(this.configuration, !this._isPico)}"
               >Download project</a
             >
           `,
@@ -314,7 +373,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
             <button
               class="link"
               dialogAction="close"
-              @click=${this._handleWebDownload}
+              @click=${() => {
+                openCompileDialog(this.configuration, !this._isPico);
+              }}
             >
               see what went wrong
             </button>
@@ -353,7 +414,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     );
   }
 
-  private _showServerPorts() {
+  private _handleServerInstall() {
     this._storeDialogWidth();
     this._state = "pick_server_port";
   }
@@ -374,7 +435,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   private _handleBrowserInstall() {
     if (!supportsWebSerial || !allowsWebSerial) {
       this._storeDialogWidth();
-      this._state = "web_instructions";
+      this._state = "download_instructions";
       return;
     }
 
@@ -436,6 +497,13 @@ class ESPHomeInstallChooseDialog extends LitElement {
       }
       .prepare-error {
         color: var(--alert-error-color);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+      }
+      li {
+        line-height: 2em;
       }
       li a {
         display: inline-block;

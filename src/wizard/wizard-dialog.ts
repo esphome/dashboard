@@ -52,6 +52,7 @@ const BOARD_GENERIC_ESP32 = "esp32dev";
 const BOARD_GENERIC_ESP8266 = "esp01_1m";
 const BOARD_GENERIC_ESP32S2 = "esp32-s2-saola-1";
 const BOARD_GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
+const BOARD_RPI_PICO_W = "rpipicow";
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
@@ -62,6 +63,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | typeof BOARD_GENERIC_ESP8266
     | typeof BOARD_GENERIC_ESP32S2
     | typeof BOARD_GENERIC_ESP32C3
+    | typeof BOARD_RPI_PICO_W
     | "CUSTOM" = BOARD_GENERIC_ESP32;
 
   // undefined = not loaded
@@ -357,6 +359,15 @@ export class ESPHomeWizardDialog extends LitElement {
         ></mwc-radio>
       </mwc-formfield>
 
+      <mwc-formfield label="Raspberry Pi Pico W">
+        <mwc-radio
+          name="board"
+          .value=${BOARD_RPI_PICO_W}
+          @click=${this._handlePickBoardRadio}
+          ?checked=${this._board === BOARD_RPI_PICO_W}
+        ></mwc-radio>
+      </mwc-formfield>
+
       <mwc-formfield label="Pick specific board">
         <mwc-radio
           name="board"
@@ -403,8 +414,9 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <div>
-        Connect your ESP board with a USB cable to your computer and click on
-        connect. You need to do this once. Later updates install wirelessly.
+        Connect your ESP8266 or ESP32 with a USB cable to your computer and
+        click on connect. You need to do this once. Later updates install
+        wirelessly.
         <a
           href="https://esphome.io/guides/getting_started_hassio.html#webserial"
           target="_blank"
@@ -412,7 +424,10 @@ export class ESPHomeWizardDialog extends LitElement {
         >
       </div>
 
-      <div>Skip this step to install it on your device later.</div>
+      <div>
+        Skip this step to install it on your device later or if you are using a
+        Raspberry Pi Pico.
+      </div>
 
       <mwc-button
         slot="primaryAction"
