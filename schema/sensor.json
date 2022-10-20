@@ -96,7 +96,7 @@
         "dependencies": [
           "ble_client"
         ],
-        "docs": "The `ble_client` component is a sensor platform that can query BLE devices for specific values of service characteristics.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#ble-client-sensor)*"
+        "docs": "The `ble_client` component is a sensor platform that can query BLE devices for RSSI or specific values of service characteristics.\n\n*See also: [BLE Client Sensor](https://esphome.io/components/sensor/ble_client.html#ble-client-sensor)*"
       },
       "ble_rssi": {
         "dependencies": [
@@ -177,7 +177,7 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `cse7766` sensor platform allows you to use your CSE7766 voltage/current and power sensors ([datasheet](http://dl.itead.cc/S31/CSE7766.pdf)) sensors with ESPHome. This sensor is commonly found in Sonoff POW R2. CSE7759B is similar to CSE7766 and works with this integration.\n\n*See also: [CSE7766 Power Sensor](https://esphome.io/components/sensor/cse7766.html#cse7766-power-sensor)*"
+        "docs": "The `cse7766` sensor platform allows you to use your CSE7766 voltage/current and power sensors ([datasheet](https://itead.cc/wp-content/uploads/2022/05/CSE7766.pdf)) sensors with ESPHome. This sensor is commonly found in Sonoff POW R2. CSE7759B is similar to CSE7766 and works with this integration.\n\n*See also: [CSE7766 Power Sensor](https://esphome.io/components/sensor/cse7766.html#cse7766-power-sensor)*"
       },
       "ct_clamp": {
         "docs": "The Current Transformer Clamp (`ct_clamp`) sensor allows you to hook up a CT Clamp to an analog voltage sensor (like the [ADC sensor](https://esphome.io/components/sensor/adc.html)) and convert the readings to measured single phase AC current.\n\n*See also: [CT Clamp Current Sensor](https://esphome.io/components/sensor/ct_clamp.html#ct-clamp-current-sensor)*"
@@ -588,7 +588,7 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `sgp4x` sensor platform allows you to use your Sensirion SGP40 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9_Gas_Sensors/Sensirion_Gas_Sensors_SGP40_Datasheet.pdf)) or SGP41 ([datasheet](https://sensirion.com/media/documents/5FE8673C/61E96F50/Sensirion_Gas_Sensors_Datasheet_SGP41.pdf)) with ESPHome. The type of sensor used is automatically detected. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SGP40 Volatile Organic Compound Sensor and SGP41 VOC and NOx Sensor](https://esphome.io/components/sensor/sgp4x.html#sgp40-volatile-organic-compound-sensor-and-sgp41-voc-and-nox-sensor)*"
+        "docs": "The `sgp4x` sensor platform allows you to use your Sensirion SGP40 ([datasheet](https://sensirion.com/media/documents/296373BB/6203C5DF/Sensirion_Gas_Sensors_Datasheet_SGP40.pdf)) or SGP41 ([datasheet](https://sensirion.com/media/documents/5FE8673C/61E96F50/Sensirion_Gas_Sensors_Datasheet_SGP41.pdf)) with ESPHome. The type of sensor used is automatically detected. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SGP40 Volatile Organic Compound Sensor and SGP41 VOC and NOx Sensor](https://esphome.io/components/sensor/sgp4x.html#sgp40-volatile-organic-compound-sensor-and-sgp41-voc-and-nox-sensor)*"
       },
       "sht3xd": {
         "dependencies": [
@@ -714,7 +714,7 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `ufire_ec` sensor platform allows you to use your uFire Isolated EC sensor with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. It required also to have an temperature sensor in the liquit tank; this can be on the same board or external sensor linked to the uFire EC configuration.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-isolated-ec-sensor)*"
+        "docs": "The `ufire_ec` sensor platform allows you to use your uFire Isolated EC sensor with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. It requires also to have a temperature sensor in the liquid tank; this can be on the same board or an external sensor linked to the uFire EC configuration.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-isolated-ec-sensor)*"
       },
       "ufire_ise": {
         "dependencies": [
@@ -867,12 +867,14 @@
                 "carbon_monoxide",
                 "current",
                 "date",
+                "distance",
                 "duration",
                 "energy",
                 "frequency",
                 "gas",
                 "humidity",
                 "illuminance",
+                "moisture",
                 "monetary",
                 "nitrogen_dioxide",
                 "nitrogen_monoxide",
@@ -886,11 +888,14 @@
                 "pressure",
                 "reactive_power",
                 "signal_strength",
+                "speed",
                 "sulphur_dioxide",
                 "temperature",
                 "timestamp",
                 "volatile_organic_compounds",
-                "voltage"
+                "voltage",
+                "volume",
+                "weight"
               ],
               "docs": "**string**: The device class for the sensor. See [https://developers.home-assistant.io/docs/core/entity/sensor/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/sensor/#available-device-classes) for a list of available options. Set to `\"\"` to remove the default device class of a sensor.\n\n*See also: [Sensor Component](https://esphome.io/components/sensor/index.html#base-sensor-configuration)*"
             },

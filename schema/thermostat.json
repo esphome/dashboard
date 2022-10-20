@@ -133,19 +133,12 @@
               "type": "trigger"
             },
             "default_mode": {
+              "key": "Optional"
+            },
+            "default_preset": {
               "key": "Optional",
-              "default": "OFF",
               "templatable": true,
-              "type": "enum",
-              "values": [
-                "OFF",
-                "HEAT_COOL",
-                "COOL",
-                "HEAT",
-                "DRY",
-                "FAN_ONLY",
-                "AUTO"
-              ]
+              "type": "string"
             },
             "default_target_temperature_high": {
               "key": "Optional"
@@ -373,6 +366,14 @@
                   }
                 }
               }
+            },
+            "on_boot_restore_from": {
+              "key": "Optional",
+              "type": "enum",
+              "values": [
+                "MEMORY",
+                "DEFAULT_PRESET"
+              ]
             },
             "preset_change": {
               "key": "Optional",

@@ -14,7 +14,8 @@
                   "Component",
                   "uart::UARTDevice"
                 ]
-              }
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation or multiple hubs.\n\n*See also: [teleinfo Component/Hub](https://esphome.io/components/sensor/teleinfo.html#configuration-variables)*"
             },
             "historical_mode": {
               "key": "Optional",

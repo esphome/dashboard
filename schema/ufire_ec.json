@@ -39,7 +39,7 @@
                   }
                 }
               },
-              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the onboard temperature sensor configuration. Can\u2019t be used together with `temperature_sensor`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the onboard temperature sensor configuration. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
             },
             "ec": {
               "key": "Optional",
@@ -66,7 +66,7 @@
                   }
                 }
               },
-              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the EC sensor configuration.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
+              "docs": "**[Sensor](https://esphome.io/components/sensor/index.html#config-sensor)**: Set the EC sensor configuration. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
             },
             "temperature_sensor": {
               "key": "Optional",
@@ -97,7 +97,8 @@
             "address": {
               "key": "Optional",
               "default": "60",
-              "data_type": "hex_uint8_t"
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Specify the I\u00b2C address of the sensor. Defaults to `0x3C`.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#configuration-variables)*"
             }
           },
           "extends": [
@@ -116,18 +117,22 @@
             "id": {
               "key": "GeneratedID",
               "use_id_type": "ufire_ec::UFireECComponent",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the ufire EC sensor.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-calibrate-probe-action)*"
             },
             "solution": {
               "key": "Required",
-              "templatable": true
+              "templatable": true,
+              "docs": "**float**: Solution reference EC value.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-calibrate-probe-action)*"
             },
             "temperature": {
               "key": "Required",
-              "templatable": true
+              "templatable": true,
+              "docs": "**float**: Solution current temperature.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-calibrate-probe-action)*"
             }
           }
-        }
+        },
+        "docs": "The EC probe have to be calibrated. For this you need know the EC reference value and temperature of the calibration solution.\n\n*See also: [`ufire_ec.calibrate_probe` Action](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-calibrate-probe-action)*"
       },
       "reset": {
         "type": "schema",
@@ -136,10 +141,12 @@
             "id": {
               "key": "GeneratedID",
               "use_id_type": "ufire_ec::UFireECComponent",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the ufire EC sensor.\n\n*See also: [uFire Isolated EC sensor](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-reset-action)*"
             }
           }
-        }
+        },
+        "docs": "Reset the current calibration on the sensor.\n\n*See also: [`ufire_ec.reset` Action](https://esphome.io/components/sensor/ufire_ec.html#ufire-ec-reset-action)*"
       }
     }
   }

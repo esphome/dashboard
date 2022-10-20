@@ -31,7 +31,7 @@
             "update_interval": {
               "key": "Optional",
               "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to publish the value of the sensor, either the result of the lambda function or if no lambda function the last value published using the publish action. Defaults to `60s`.\n\n*See also: [Template Sensor](https://esphome.io/components/sensor/template.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to publish the value of the sensor, either the result of the lambda function or if no lambda function the last value published using the publish action. Set to `never` to disable updates. Defaults to `60s`.\n\n*See also: [Template Sensor](https://esphome.io/components/sensor/template.html#configuration-variables)*"
             }
           }
         }

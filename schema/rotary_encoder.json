@@ -57,7 +57,7 @@
                 "output"
               ],
               "type": "pin",
-              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: An optional pin that resets the step value. This is useful with rotary encoders that have have a third pin. Defaults to no reset pin.\n\n*See also: [Rotary Encoder Sensor](https://esphome.io/components/sensor/rotary_encoder.html#configuration-variables)*"
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: An optional pin that resets the step value. This is useful with rotary encoders that have a third pin. Defaults to no reset pin.\n\n*See also: [Rotary Encoder Sensor](https://esphome.io/components/sensor/rotary_encoder.html#configuration-variables)*"
             },
             "resolution": {
               "key": "Optional",
@@ -88,7 +88,7 @@
               "key": "Optional",
               "default": "False",
               "type": "boolean",
-              "docs": "**boolean**: Controls whether the value is published upon start of ESPHome. By default the value is only published when it changes, causing an \u201cunknown\u201d value at first. If you set this option to true, the value is published once after boot and when it changes. Defaults to `false`.\n\n*See also: [Rotary Encoder Sensor](https://esphome.io/components/sensor/rotary_encoder.html#configuration-variables)*"
+              "docs": "**boolean**: Controls whether the value is published upon start of ESPHome. By default, the value is only published when it changes, causing an \u201cunknown\u201d value at first. If you set this option to true, the value is published once after boot and when it changes. Defaults to `false`.\n\n*See also: [Rotary Encoder Sensor](https://esphome.io/components/sensor/rotary_encoder.html#configuration-variables)*"
             },
             "restore_mode": {
               "key": "Optional",

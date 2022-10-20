@@ -60,7 +60,7 @@
               "key": "Required",
               "use_id_type": "bedjet::BedJetHub",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Bedjet component.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the Bedjet component.\n\n*See also: [bedjet Fan](https://esphome.io/components/climate/bedjet.html#id2)*"
             }
           }
         }
@@ -132,7 +132,8 @@
                   "PollingComponent",
                   "Component"
                 ]
-              }
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [bedjet Fan](https://esphome.io/components/climate/bedjet.html#id2)*"
             },
             "update_interval": {
               "key": "Optional",

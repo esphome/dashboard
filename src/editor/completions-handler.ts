@@ -31,14 +31,17 @@ export class CompletionsHandler {
   constructor(private documents: ESPHomeDocuments) {}
   private document!: ESPHomeDocument;
   private docMap!: YAMLMap;
+  private position!: Position;
+  private lineContent!: string;
 
   public async getCompletions(
     uri: string,
     position: Position
   ): Promise<CompletionItem[]> {
     this.document = this.documents.getDocument(uri);
-    const lineContent = this.document.text.getLineContent(position.line);
-    const findByClosest = lineContent.trim().length === 0;
+    this.position = position;
+    this.lineContent = this.document.text.getLineContent(position.line);
+    const findByClosest = this.lineContent.trim().length === 0;
     const offset = this.document.text.offsetAt(position);
 
     // Do not show completions when next to ':'
@@ -56,6 +59,8 @@ export class CompletionsHandler {
     let node = findByClosest
       ? this.findClosestNode(position, offset)
       : this.document.getNodeFromOffset(offset);
+
+    if (!node) return [];
 
     const range: Range = {
       start: this.document.text.getPosition(node.range?.[0]!),
@@ -546,6 +551,19 @@ export class CompletionsHandler {
     throw new Error("Unexpected path traverse.");
   }
 
+  private arrayItemPrefixed(key: string): string {
+    // prefix only if not prefixed already
+    if (
+      this.position.character > 1 &&
+      this.lineContent.substring(
+        this.position.character - 2,
+        this.position.character
+      ) === "- "
+    )
+      return key + ": ";
+    return "- " + key + ": ";
+  }
+
   private async getConfigVars(
     schema: Schema,
     node: YAMLMap | null,
@@ -561,10 +579,8 @@ export class CompletionsHandler {
       if (node !== null && this.mapHasScalarKey(node, prop)) {
         continue;
       }
-      let insertText = prop + ": ";
-      if (isList) {
-        insertText = "- " + insertText;
-      }
+
+      let insertText = isList ? this.arrayItemPrefixed(prop) : prop + ": ";
       let triggerSuggest = false;
       let snippet = false;
 
@@ -582,7 +598,7 @@ export class CompletionsHandler {
           if (config.type === "integer" || config.type === "string") {
             if (config.default) {
               snippet = true;
-              insertText = prop + ": ${0:" + config.default + "}";
+              insertText += "${0:" + config.default + "}";
             }
           }
         }
@@ -748,7 +764,6 @@ export class CompletionsHandler {
     cv: ConfigVarTrigger,
     node: Node
   ): Promise<CompletionItem[]> {
-    console.log("resolve inner: " + pathNode?.toString() + " - cv: " + cv.type);
     const final = pathIndex === path.length;
     if (final) {
       // If this has a schema, use it, these are suggestions so user will see the trigger parameters even when they are optional
@@ -859,7 +874,7 @@ export class CompletionsHandler {
       if (configVar.filter && !configVar.filter.includes(value)) {
         continue;
       }
-      let insertText = "- " + value + ": ";
+      let insertText = this.arrayItemPrefixed(value);
       const completeCv = await coreSchema.getConfigVarComplete2(props);
       if (!completeCv.maybe) {
         insertText += "\n    ";

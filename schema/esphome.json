@@ -110,6 +110,11 @@
                 }
               },
               "docs": "ESPHome Creator\u2019s Project information. See [Project information](https://esphome.io/components/esphome.html#esphome-creators-project).\n  * **name** (**Required**, string): Name of the project\n  \n  * **version** (**Required**, string): Version of the project\n  \n  \n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
+            },
+            "min_version": {
+              "key": "Optional",
+              "default": "2022.10.0",
+              "docs": "**string**: The minimum ESPHome version required to compile this configuration. See [Minimum ESPHome version](https://esphome.io/components/esphome.html#esphome-min-version).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             }
           }
         }
@@ -402,10 +407,10 @@
       },
       "bluetooth_proxy": {
         "dependencies": [
-          "esp32",
-          "esp32_ble_tracker"
+          "api",
+          "esp32"
         ],
-        "docs": "Home Assistant can expand it\u2019s Bluetooth reach by communicating through the Bluetooth proxy component in ESPHome. Place your ESPHome devices close to the Bluetooth devices that you want to interact with for the best experience.\n\n*See also: [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy.html#bluetooth-proxy)*"
+        "docs": "Home Assistant can expand its Bluetooth reach by communicating through the Bluetooth proxy component in ESPHome. Place your ESPHome devices close to the Bluetooth devices that you want to interact with for the best experience.\n\n*See also: [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy.html#bluetooth-proxy)*"
       },
       "bme680_bsec": {
         "dependencies": [
@@ -609,7 +614,7 @@
       },
       "json": {},
       "logger": {
-        "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics. By default, all logs with a severity higher than `DEBUG` will be shown. Decreasing the log level can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
+        "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics (if there is an MQTT client in the configuration). By default, all logs with a severity higher than `DEBUG` will be shown. Decreasing the log level can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
       },
       "mcp23008": {
         "dependencies": [
@@ -903,12 +908,7 @@
           "esp32_ble_tracker"
         ]
       },
-      "xpt2046": {
-        "dependencies": [
-          "spi"
-        ],
-        "docs": "The `xpt2046` component allows using the touch screen controllers based on the XPT2046 chip ([datasheet](https://datasheetspdf.com/pdf-file/746665/XPTEK/XPT2046/1), [AZ-Delivery](https://www.az-delivery.de/en/products/2-4-tft-lcd-touch-display)) with ESPHome. Many cheap LCD displays contain this controller. The [SPI](https://esphome.io/components/spi.html#spi) is required to be set up in your configuration for this sensor to work.\n\n*See also: [xpt2046 Component/Hub](https://esphome.io/components/binary_sensor/xpt2046.html#component-hub)*"
-      }
+      "xpt2046": {}
     },
     "action": {
       "delay": {

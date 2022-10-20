@@ -10,9 +10,16 @@
               "id_type": {
                 "class": "bluetooth_proxy::BluetoothProxy",
                 "parents": [
+                  "esp32_ble_client::BLEClientBase",
+                  "esp32_ble_tracker::ESPBTClient",
                   "Component"
                 ]
               }
+            },
+            "active": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
             },
             "esp32_ble_id": {
               "key": "GeneratedID",

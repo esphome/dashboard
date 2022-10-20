@@ -600,6 +600,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "ble_rssi_sensor": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "ble_sensor": {
                     "type": "enum",
                     "values": [
@@ -1417,6 +1429,42 @@
                     ]
                   },
                   "esp32_ble_beacon": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "esp32_ble_client.characteristic": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "esp32_ble_client": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "esp32_ble_client.service": {
                     "type": "enum",
                     "values": [
                       "NONE",
