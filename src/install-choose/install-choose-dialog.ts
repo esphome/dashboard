@@ -78,15 +78,22 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <span slot="secondary">
             ${this._platformSupportsWebSerial
               ? "For devices connected via USB to this computer"
-              : "This platform does not support web installation"}
+              : "Installing this via the web is not supported yet for this device"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
 
-        <mwc-list-item twoline hasMeta @click=${this._handleServerInstall}>
+        <mwc-list-item
+          twoline
+          hasMeta
+          ?disabled=${this._isPico}
+          @click=${this._handleServerInstall}
+        >
           <span>Plug into the computer running ESPHome Dashboard</span>
           <span slot="secondary">
-            For devices connected via USB to the server
+            ${this._isPico
+              ? "Installing this from the server is not supported yet for this device"
+              : "For devices connected via USB to the server"}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -104,7 +111,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <span slot="secondary">
             Install it yourself
             ${this._isPico
-              ? "by dragging it to the Pico USB drive"
+              ? "by copying it to the Pico USB drive"
               : "using ESPHome Web or other tools"}
           </span>
           ${metaChevronRight}
@@ -408,11 +415,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
   }
 
   private _handleServerInstall() {
-    if (this._isPico) {
-      openInstallServerDialog(this.configuration, "LOCAL");
-      this._close();
-      return;
-    }
     this._storeDialogWidth();
     this._state = "pick_server_port";
   }
