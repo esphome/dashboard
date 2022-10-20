@@ -280,6 +280,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
             this._state = "pick_option";
           }}
         ></mwc-button>
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          dialogAction="close"
+          label="Close"
+        ></mwc-button>
       `;
     }
 
