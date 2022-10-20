@@ -20,6 +20,10 @@ export const boardSelectOptions = html`
     <option value="thing">Sparkfun ESP8266 Thing</option>
     <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
   </optgroup>
+  <optgroup label="Raspberry Pi">
+    <option value="rpipico">Raspberry Pi Pico</option>
+    <option value="rpipicow">Raspberry Pi Pico W</option>
+  </optgroup>
   <optgroup label="Other ESP8266s">
     <option value="gen4iod">4D Systems gen4 IoD Range</option>
     <option value="wifi_slot">Amperka WiFi Slot</option>

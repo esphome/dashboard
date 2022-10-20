@@ -1,5 +1,5 @@
-import { LitElement, html, css } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { LitElement, html, css, PropertyValues } from "lit";
+import { customElement, property, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "./ewt-console";
@@ -7,6 +7,7 @@ import { textDownload } from "../util/file-download";
 import type { EwtConsole } from "./ewt-console";
 import { basename } from "../util/basename";
 import { openEditDialog } from "../editor";
+import { getConfiguration } from "../api/configuration";
 
 @customElement("esphome-logs-webserial-dialog")
 class ESPHomeLogsWebSerialDialog extends LitElement {
@@ -17,6 +18,8 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
   @property() public closePortOnClose!: boolean;
 
   @query("ewt-console") private _console!: EwtConsole;
+
+  @state() private _isPico = false;
 
   protected render() {
     return html`
@@ -46,11 +49,15 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
               ></mwc-button>
             `
           : ""}
-        <mwc-button
-          slot="secondaryAction"
-          label="Reset Device"
-          @click=${this._resetDevice}
-        ></mwc-button>
+        ${this._isPico
+          ? ""
+          : html`
+              <mwc-button
+                slot="secondaryAction"
+                label="Reset Device"
+                @click=${this._resetDevice}
+              ></mwc-button>
+            `}
         <mwc-button
           slot="primaryAction"
           dialogAction="close"
@@ -58,6 +65,15 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
         ></mwc-button>
       </mwc-dialog>
     `;
+  }
+
+  protected firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    if (this.configuration) {
+      getConfiguration(this.configuration).then((config) => {
+        this._isPico = config.esp_platform === "RP2040";
+      });
+    }
   }
 
   private async _openEdit() {
