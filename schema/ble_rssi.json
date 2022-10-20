@@ -22,7 +22,7 @@
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ESP32 Bluetooth Low Energy RSSI Sensor](https://esphome.io/components/sensor/ble_rssi.html#configuration-variables)*"
             },
             "unit_of_measurement": {
-              "default": "dB"
+              "default": "dBm"
             },
             "accuracy_decimals": {
               "default": "0"

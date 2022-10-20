@@ -51,15 +51,6 @@
               "type": "pin",
               "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The DC pin.\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
             },
-            "cs_pin": {
-              "key": "Required",
-              "schema": true,
-              "modes": [
-                "output"
-              ],
-              "type": "pin",
-              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
-            },
             "backlight_pin": {
               "key": "Optional",
               "schema": true,
@@ -104,6 +95,15 @@
               "key": "GeneratedID",
               "use_id_type": "spi::SPIComponent",
               "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
             }
           }
         }

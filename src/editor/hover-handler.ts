@@ -15,9 +15,14 @@ export class HoverHandler {
       }
       const offset = document.text.offsetAt(position);
       const node = document.getNodeFromOffset(offset);
+      if (!node) return;
 
+      let startPos = node.range?.[0]!;
+      if (node.tag) {
+        startPos -= node.tag.length + 1;
+      }
       const range: Range = {
-        start: document.text.getPosition(node.range?.[0]!),
+        start: document.text.getPosition(startPos),
         end: document.text.getPosition(node.range?.[1]!),
       };
 

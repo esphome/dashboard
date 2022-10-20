@@ -213,7 +213,7 @@
             }
           }
         },
-        "docs": "This action sets the float output to the given level when executed. Note: This only works with floating point outputs like ESP8266 PWM or LEDC.\n\n*See also: [`output.set_level` Action](https://esphome.io/components/output/index.html#output-set-level-action)*"
+        "docs": "This action sets the float output to the given level when executed. Note: This only works with floating point outputs like ESP8266 PWM, LEDC or `slow_pwm`.\n\n*See also: [`output.set_level` Action](https://esphome.io/components/output/index.html#output-set-level-action)*"
       }
     }
   },

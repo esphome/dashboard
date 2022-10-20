@@ -15,6 +15,7 @@ export class DefinitionHandler {
       const offset = document.text.offsetAt(position);
       const node = document.getNodeFromOffset(offset);
 
+      if (!node) return;
       var path = document.getPath(node);
 
       if (path.length === 1) {

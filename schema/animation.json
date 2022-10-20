@@ -9,7 +9,9 @@
               "key": "Required",
               "id_type": {
                 "class": "display::Animation",
-                "parents": []
+                "parents": [
+                  "display::Image"
+                ]
               },
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID with which you will be able to reference the animation later in your display code.\n\n*See also: [Animation](https://esphome.io/components/display/index.html#configuration-variables)*"
             },

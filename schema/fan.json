@@ -4,7 +4,8 @@
       "bedjet": {
         "dependencies": [
           "bedjet"
-        ]
+        ],
+        "docs": "The `fan` platform exposes the BedJet\u2019s fan-related functionality, including on/off and speed control.\n\n*See also: [bedjet Fan](https://esphome.io/components/climate/bedjet.html#bedjet-fan)*"
       },
       "binary": {
         "docs": "The `binary` fan platform lets you represent any binary [Output Component](https://esphome.io/components/output/index.html#output) as a fan.\n\n*See also: [Binary Fan](https://esphome.io/components/fan/binary.html#binary-fan)*"

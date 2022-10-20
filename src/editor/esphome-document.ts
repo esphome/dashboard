@@ -14,33 +14,58 @@ import {
   isSeq,
   isScalar,
   isMap,
+  YAMLMap,
+  YAMLSeq,
 } from "yaml";
 import { coreSchema } from "./editor-shims";
 import { ConfigVar } from "./esphome-schema";
 import { isNumber, isString } from "./utils/objects";
 import { TextBuffer } from "./utils/text-buffer";
 
+class CommonTagImpl {
+  tag: string;
+  readonly type: string;
+  default: boolean = false;
+  constructor(tag: string, type: string) {
+    this.tag = tag;
+    this.type = type;
+  }
+  get collection() {
+    return undefined;
+  }
+
+  identify(value: unknown) {
+    return true;
+  }
+  resolve(value: string | YAMLMap | YAMLSeq): string | YAMLMap | YAMLSeq {
+    return value;
+  }
+}
+
 export class ESPHomeDocument {
   public yaml: Document;
+  public bufferText?: string;
 
   constructor(public text: TextBuffer) {
-    this.yaml = this.parse();
+    this.bufferText = text.getText();
+    this.yaml = this.parse(this.bufferText);
   }
 
   public update(buffer: TextBuffer) {
-    if (this.text === buffer) {
-      console.log("text buffer cache hit");
+    this.text = buffer;
+    const text = this.text.getText();
+    if (this.bufferText === text) {
       return;
     }
-    console.log("text buffer changed, parsing yaml");
-    this.text = buffer;
-    this.yaml = this.parse();
+    this.bufferText = text;
+    this.yaml = this.parse(this.bufferText);
   }
 
-  private parse() {
+  private parse(text: string) {
     const options: ParseOptions & DocumentOptions & SchemaOptions = {
       strict: false,
       version: "1.2",
+      customTags: [new CommonTagImpl("!secret", "scalar")],
     };
     const composer = new Composer(options);
     const lineCounter = new LineCounter();
@@ -50,7 +75,6 @@ export class ESPHomeDocument {
       ? new Parser()
       : new Parser(lineCounter.addNewLine);
 
-    const text = this.text.getText();
     const tokens = parser.parse(text);
     const tokensArr = Array.from(tokens);
     const docs = composer.compose(tokensArr, true, text.length);
@@ -93,8 +117,9 @@ export class ESPHomeDocument {
     return path.reverse();
   }
 
-  public getNodeFromOffset(offset: number): Node {
-    let closestNode: Node;
+  public getNodeFromOffset(offset: number): Node | undefined {
+    let closestNode: Node | undefined = undefined;
+    let scalarAfterOffset = false;
     visit(this.yaml, (key, node) => {
       if (!node || !isNode(node)) {
         return;
@@ -104,17 +129,24 @@ export class ESPHomeDocument {
         return;
       }
 
+      // tagged node e.g. !secret at the beginning have tag property
+      // but the range does not include this tag space
+      const startPos = node.tag ? range[0] - node.tag.length - 1 : range[0];
       if (
-        (range[0] <= offset && range[2] >= offset) ||
+        (startPos <= offset && range[2] >= offset) ||
         // handle edge case of null node values
         (isScalar(node) &&
           node.value === null &&
-          range[0] > offset &&
+          startPos > offset &&
           range[1] > offset &&
-          !isScalar(closestNode))
+          !isScalar(closestNode) &&
+          !scalarAfterOffset)
       ) {
         closestNode = node;
       } else {
+        if (isScalar(node) && startPos > offset && range[1] > offset) {
+          scalarAfterOffset = true;
+        }
         return visit.SKIP;
       }
       return;
