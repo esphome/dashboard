@@ -41,6 +41,7 @@ body {
 
 /* Layout */
 main {
+  margin-top: 56px;
   flex: 1 0 auto;
   display: grid;
 }
@@ -52,11 +53,16 @@ esphome-main {
 }
 
 .esphome-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   align-items: center;
   height: 56px;
   background-color: var(--esphome-background-header);
   padding: 0 24px;
+  z-index: 1;
 }
 
 .flex {
@@ -122,7 +128,6 @@ ul.browser-default li {
   display: flex;
   align-items: center;
   min-height: 50px;
-  padding-top: 0;
   color: grey;
   background-color: var(--primary-footer-bg-color);
 }
