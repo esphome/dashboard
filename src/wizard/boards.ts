@@ -8,6 +8,7 @@ export const boardSelectOptions = html`
     <option value="lolin_d32_pro">Wemos Lolin D32 Pro</option>
     <option value="featheresp32">Adafruit ESP32 Feather</option>
     <option value="m5stack-core-esp32">M5Stack Core ESP32</option>
+    <option value="seeed_xiao_esp32c3">Seeed Studio XIAO ESP32C3</option>
   </optgroup>
   <optgroup label="ESP8266">
     <option value="esp01_1m">Generic ESP8266 (for example Sonoff)</option>
