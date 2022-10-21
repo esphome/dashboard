@@ -35,10 +35,7 @@ class ESPHomeMainView extends LitElement {
         <esphome-devices-list></esphome-devices-list>
       </main>
       <div class="esphome-header">
-        <img
-          src="https://esphome.io/_static/logo-text.svg"
-          alt="ESPHome Logo"
-        />
+        <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
         <div class="flex"></div>
         <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
       </div>
