@@ -27,16 +27,16 @@
   </head>
 
   <body>
-    <main>{% block main %}{% end %}</main>
-
-    <div class="esphome-header">
+    <header class="esphome-header">
       <img
         src="{{ get_static_file_url('images/logo-text.svg') }}"
         alt="ESPHome Logo"
       />
       <div class="flex"></div>
       {% block header %}{% end %}
-    </div>
+    </header>
+
+    <main>{% block main %}{% end %}</main>
 
     <footer class="page-footer">
       <div class="container">
