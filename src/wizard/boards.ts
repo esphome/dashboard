@@ -21,6 +21,18 @@ export const boardSelectOptions = html`
     <option value="thing">Sparkfun ESP8266 Thing</option>
     <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
   </optgroup>
+  <optgroup label="ESP32C3">
+    <option value="adafruit_qtpy_esp32c3">Adafruit QT Py ESP32-C3</option>
+    <option value="airm2m_core_esp32c3">AirM2M CORE ESP32C3</option>
+    <option value="wifiduino32c3">Blinker WiFiduinoV2 (ESP32-C3)</option>
+    <option value="dfrobot_beetle_esp32c3">DFRobot Beetle ESP32-C3</option>
+    <option value="deneyapkartg">Deneyap Kart G</option>
+    <option value="esp32-c3-devkitm-1">Espressif ESP32-C3-DevKitM-1</option>
+    <option value="seeed_xiao_esp32c3">Seeed Studio XIAO ESP32C3</option>
+    <option value="bee_motion_mini">Smart Bee Motion Mini</option>
+    <option value="ttgo-t-oi-plus">TTGO T-OI PLUS RISC-V ESP32-C3</option>
+    <option value="lolin_c3_mini">WEMOS LOLIN C3 Mini</option>
+  </optgroup>
   <optgroup label="Raspberry Pi">
     <option value="rpipico">Raspberry Pi Pico</option>
     <option value="rpipicow">Raspberry Pi Pico W</option>
