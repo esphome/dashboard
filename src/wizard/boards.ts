@@ -21,7 +21,7 @@ export const boardSelectOptions = html`
     <option value="thing">Sparkfun ESP8266 Thing</option>
     <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
   </optgroup>
-  <optgroup label="ESP32C3">
+  <optgroup label="ESP32-C3">
     <option value="adafruit_qtpy_esp32c3">Adafruit QT Py ESP32-C3</option>
     <option value="airm2m_core_esp32c3">AirM2M CORE ESP32C3</option>
     <option value="wifiduino32c3">Blinker WiFiduinoV2 (ESP32-C3)</option>
