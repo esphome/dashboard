@@ -1,4 +1,4 @@
-# ESPHome Dashboard
+# ESPHome Dashboard [![Contribute with Gitpod](https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/esphome/dashboard)
 
 The ESPHome dashboard is a user facing dashboard embedded in ESPHome. It allows users to easily create and manage their configurations.
 
