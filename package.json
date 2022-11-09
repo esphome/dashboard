@@ -46,6 +46,7 @@
     "esp-web-flasher": "^5.1.4",
     "improv-wifi-serial-sdk": "^2.2.2",
     "lit": "^2.4.0",
+    "memoize-one": "^6.0.0",
     "tslib": "^2.4.0",
     "yaml": "^2.1.3"
   },

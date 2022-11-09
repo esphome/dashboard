@@ -1,18 +1,26 @@
 import { animate } from "@lit-labs/motion";
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { subscribeDevices, ListDevicesResult } from "../api/devices";
+import {
+  subscribeDevices,
+  ListDevicesResult,
+  ConfiguredDevice,
+} from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import "../components/search-input";
+import memoizeOne from "memoize-one";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
   @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
+
+  @state() private _filter?: string;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -42,9 +50,21 @@ class ESPHomeDevicesList extends LitElement {
       `;
     }
 
+    let configured: TemplateResult[] = this.configuredDevices(
+      this._devices.configured,
+      this._filter
+    );
+
     const importable = this._devices.importable;
 
     return html`
+      <div class="search">
+        <search-input
+          .filter=${this._filter}
+          @value-changed=${this._filterChanged}
+          width="100%"
+        ></search-input>
+      </div>
       <div class="grid">
         ${importable.length
           ? html`
@@ -62,31 +82,54 @@ class ESPHomeDevicesList extends LitElement {
               )}
             `
           : ""}
-        ${repeat(
-          this._devices.configured,
-          (device) => device.name,
-          (device) => html`<esphome-configured-device-card
-            ${animate({
-              id: device.name,
-              inId: device.name,
-              skipInitial: true,
-            })}
-            .device=${device}
-            @deleted=${this._updateDevices}
-            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-            data-name=${device.name}
-            .highlightOnAdd=${this._highlightOnAdd}
-          ></esphome-configured-device-card>`
-        )}
+        ${configured}
       </div>
     `;
   }
+
+  private configuredDevices = memoizeOne(
+    (devices: ConfiguredDevice[], filter?: string) =>
+      devices
+        .filter((device) => {
+          if (!filter) {
+            return true;
+          }
+          return (
+            device.name.toLowerCase().includes(filter.toLowerCase()) ||
+            device.comment.toLowerCase().includes(filter.toLowerCase())
+          );
+        })
+        .map((device) => {
+          return html`
+            <esphome-configured-device-card
+              ${animate({
+                id: device.name,
+                inId: device.name,
+                skipInitial: true,
+              })}
+              .device=${device}
+              @deleted=${this._updateDevices}
+              .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
+              data-name=${device.name}
+              .highlightOnAdd=${this._highlightOnAdd}
+            ></esphome-configured-device-card>
+          `;
+        })
+  );
 
   private _handleOpenWizardClick() {
     openWizardDialog();
   }
 
+  private async _filterChanged(e: { detail: { value: any } }) {
+    this._filter = e.detail.value;
+  }
+
   static styles = css`
+    search-input {
+      display: block;
+      flex: 1;
+    }
     .grid {
       display: grid;
       grid-template-columns: 1fr;
