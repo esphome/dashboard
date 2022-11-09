@@ -31,18 +31,18 @@ class ESPHomeMainView extends LitElement {
       `;
     }
     return html`
+      <header class="esphome-header">
+        <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
+        <div class="flex"></div>
+        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+      </header>
+
       <main>
         <esphome-devices-list></esphome-devices-list>
       </main>
-      <div class="esphome-header">
-        <img
-          src="https://esphome.io/_static/logo-text.svg"
-          alt="ESPHome Logo"
-        />
-        <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
-      </div>
+
       <esphome-fab></esphome-fab>
+
       <footer class="page-footer grey darken-4">
         <div class="container">
           <div class="left">
