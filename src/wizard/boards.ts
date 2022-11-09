@@ -2,23 +2,23 @@ import { html } from "lit";
 
 export const boardSelectOptions = html`
   <optgroup label="ESP32">
-    <option value="featheresp32">Adafruit ESP32 Feather</option>
     <option value="esp-wrover-kit">Generic ESP32 (WROVER Module)</option>
-    <option value="m5stack-core-esp32">M5Stack Core ESP32</option>
     <option value="nodemcu-32s">NodeMCU-32S</option>
     <option value="lolin_d32">Wemos Lolin D32</option>
     <option value="lolin_d32_pro">Wemos Lolin D32 Pro</option>
+    <option value="featheresp32">Adafruit ESP32 Feather</option>
+    <option value="m5stack-core-esp32">M5Stack Core ESP32</option>
   </optgroup>
   <optgroup label="ESP8266">
-    <option value="huzzah">Adafruit HUZZAH ESP8266</option>
-    <option value="oak">DigiStump Oak</option>
     <option value="esp01_1m">Generic ESP8266 (for example Sonoff)</option>
     <option value="nodemcuv2">NodeMCU</option>
-    <option value="thing">Sparkfun ESP8266 Thing</option>
-    <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
     <option value="d1_mini">Wemos D1 and Wemos D1 mini</option>
     <option value="d1_mini_lite">Wemos D1 mini Lite</option>
     <option value="d1_mini_pro">Wemos D1 mini Pro</option>
+    <option value="huzzah">Adafruit HUZZAH ESP8266</option>
+    <option value="oak">DigiStump Oak</option>
+    <option value="thing">Sparkfun ESP8266 Thing</option>
+    <option value="thingdev">Sparkfun ESP8266 Thing - Dev Board</option>
   </optgroup>
   <optgroup label="Raspberry Pi">
     <option value="rpipico">Raspberry Pi Pico</option>
