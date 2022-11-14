@@ -43,18 +43,16 @@ class ESPHomeMainView extends LitElement {
 
       <esphome-fab></esphome-fab>
 
-      <footer class="page-footer grey darken-4">
-        <div class="container">
-          <div class="left">
-            ESPHome by Nabu Casa |
-            <a href="https://esphome.io/guides/supporters.html" target="_blank"
-              >Fund development</a
-            >
-            |
-            <a href=${this.docsLink} target="_blank" rel="noreferrer"
-              >v${this.version} Documentation</a
-            >
-          </div>
+      <footer class="page-footer">
+        <div>
+          ESPHome by Nabu Casa |
+          <a href="https://esphome.io/guides/supporters.html" target="_blank"
+            >Fund development</a
+          >
+          |
+          <a href=${this.docsLink} target="_blank" rel="noreferrer"
+            >v${this.version} Documentation</a
+          >
         </div>
       </footer>
     `;
