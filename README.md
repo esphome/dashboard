@@ -10,7 +10,14 @@ Check out this repository, run `npm install --legacy-peer-deps` and then run
 
 ```
 script/develop
-````
+```
+
+if you are developing on Windows machine using VS Code, you must set bash as a default shell.
+You can do that by creating `.npmrc` file in the root of the project with the following content:
+
+```
+script-shell=C:\Program Files\git\bin\bash.exe
+```
 
 It will start the dev server and will automatically re-bundle updated JavaScript (except for the `static` folder).
 
