@@ -1,6 +1,6 @@
 import { animate } from "@lit-labs/motion";
-import { LitElement, html, css, TemplateResult } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { LitElement, html, css, TemplateResult, PropertyValues } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import {
   subscribeDevices,
@@ -17,6 +17,8 @@ import memoizeOne from "memoize-one";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
+  @property({ attribute: "show-search" }) showSearch: boolean = false;
+
   @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
 
@@ -52,19 +54,23 @@ class ESPHomeDevicesList extends LitElement {
 
     let configured: TemplateResult[] = this.configuredDevices(
       this._devices.configured,
+      this.showSearch,
       this._filter
     );
 
     const importable = this._devices.importable;
 
     return html`
-      <div class="search">
-        <search-input
-          .filter=${this._filter}
-          @value-changed=${this._filterChanged}
-          width="100%"
-        ></search-input>
-      </div>
+      ${this.showSearch
+        ? html`<div class="search">
+            <search-input
+              autofocus
+              .filter=${this._filter}
+              @value-changed=${this._filterChanged}
+              width="100%"
+            ></search-input>
+          </div>`
+        : html``}
       <div class="grid">
         ${importable.length
           ? html`
@@ -87,11 +93,18 @@ class ESPHomeDevicesList extends LitElement {
     `;
   }
 
+  protected updated(changedProps: PropertyValues) {
+    super.updated(changedProps);
+    if (changedProps.has("showSearch") && !this.showSearch) {
+      this._filter = undefined;
+    }
+  }
+
   private configuredDevices = memoizeOne(
-    (devices: ConfiguredDevice[], filter?: string) =>
+    (devices: ConfiguredDevice[], showSearch: boolean, filter?: string) =>
       devices
         .filter((device) => {
-          if (!filter) {
+          if (!showSearch || !filter) {
             return true;
           }
           return (

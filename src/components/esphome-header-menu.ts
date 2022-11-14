@@ -1,6 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { property, state, customElement } from "lit/decorators.js";
 import "./esphome-button-menu";
+import "./esphome-icon-button";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
@@ -9,6 +10,8 @@ import { openEditDialog } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
+import { mdiCellphoneArrowDown, mdiLock, mdiMagnify } from "@mdi/js";
+import { fireEvent } from "../util/fire-event";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
@@ -21,16 +24,24 @@ export class ESPHomeHeaderMenu extends LitElement {
   protected render(): TemplateResult {
     if (this._isWide) {
       return html`
-        <mwc-button
-          icon="system_update"
-          label="Update All"
+        <esphome-icon-button
+          .path=${mdiMagnify}
+          .label=${"Toggle Search"}
+          @click=${() => fireEvent(this, "toggle-search")}
+        ></esphome-icon-button>
+
+        <esphome-icon-button
+          .path=${mdiCellphoneArrowDown}
+          .label=${"Update All"}
           @click=${this._handleUpdateAll}
-        ></mwc-button>
-        <mwc-button
-          icon="lock"
-          label="Secrets"
+        ></esphome-icon-button>
+
+        <esphome-icon-button
+          .path=${mdiLock}
+          .label=${"Secrets Editor"}
           @click=${this._handleEditSecrets}
-        ></mwc-button>
+        ></esphome-icon-button>
+
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
@@ -47,8 +58,26 @@ export class ESPHomeHeaderMenu extends LitElement {
         @action=${this._handleOverflowAction}
       >
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-        <mwc-list-item>Update All</mwc-list-item>
-        <mwc-list-item>Secrets Editor</mwc-list-item>
+
+        <mwc-list-item graphic="icon"
+          >Toggle Search<esphome-svg-icon
+            slot="graphic"
+            .path=${mdiMagnify}
+          ></esphome-svg-icon
+        ></mwc-list-item>
+
+        <mwc-list-item graphic="icon"
+          >Update All<esphome-svg-icon
+            slot="graphic"
+            .path=${mdiCellphoneArrowDown}
+          ></esphome-svg-icon
+        ></mwc-list-item>
+        <mwc-list-item graphic="icon"
+          >Secrets Editor<esphome-svg-icon
+            slot="graphic"
+            .path=${mdiLock}
+          ></esphome-svg-icon
+        ></mwc-list-item>
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
@@ -96,9 +125,12 @@ export class ESPHomeHeaderMenu extends LitElement {
   private async _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        this._handleUpdateAll();
+        fireEvent(this, "toggle-search");
         break;
       case 1:
+        this._handleUpdateAll();
+        break;
+      case 2:
         this._handleEditSecrets();
         break;
     }

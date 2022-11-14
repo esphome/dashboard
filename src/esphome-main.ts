@@ -14,6 +14,8 @@ class ESPHomeMainView extends LitElement {
 
   @state() private editing?: string;
 
+  @state() private showSearch: boolean = false;
+
   protected render() {
     if (this.editing) {
       return html`
@@ -34,11 +36,16 @@ class ESPHomeMainView extends LitElement {
       <header class="esphome-header">
         <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
         <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+        <esphome-header-menu
+          .logoutUrl=${this.logoutUrl}
+          @toggle-search=${this._toggleSearch}
+        ></esphome-header-menu>
       </header>
 
       <main>
-        <esphome-devices-list></esphome-devices-list>
+        <esphome-devices-list
+          .showSearch=${this.showSearch}
+        ></esphome-devices-list>
       </main>
 
       <esphome-fab></esphome-fab>
@@ -73,6 +80,10 @@ class ESPHomeMainView extends LitElement {
 
   private _handleEditorClose() {
     this.editing = undefined;
+  }
+
+  private _toggleSearch() {
+    this.showSearch = !this.showSearch;
   }
 }
 

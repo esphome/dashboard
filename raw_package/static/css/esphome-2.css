@@ -20,6 +20,8 @@
   --mdc-dialog-z-index: 998;
 
   --esphome-background-header: #e0e0e0;
+
+  --mdc-list-item-graphic-margin: 12px;
 }
 
 html {

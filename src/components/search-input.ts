@@ -1,6 +1,13 @@
 import "@material/mwc-textfield";
 import { mdiClose, mdiMagnify } from "@mdi/js";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { fireEvent } from "../util/fire-event";
 import "./esphome-svg-icon";
@@ -36,6 +43,7 @@ class SearchInput extends LitElement {
         icon
         .iconTrailing=${this.filter || this.suffix}
         @input=${this._filterInputChanged}
+        @keydown=${this._handleKeyDown}
       >
         <slot name="prefix" slot="leadingIcon">
           <esphome-svg-icon
@@ -59,12 +67,25 @@ class SearchInput extends LitElement {
     `;
   }
 
+  protected firstUpdated(changedProps: PropertyValues) {
+    super.firstUpdated(changedProps);
+    if (this.autofocus) {
+      setTimeout(() => this.focus(), 100);
+    }
+  }
+
   private async _filterChanged(value: string) {
     fireEvent(this, "value-changed", { value: String(value) });
   }
 
   private async _filterInputChanged(e: { target: { value: string } }) {
     this._filterChanged(e.target.value);
+  }
+
+  private async _handleKeyDown(e: { keyCode: number }) {
+    if (e.keyCode === 27) {
+      this._clearSearch();
+    }
   }
 
   private async _clearSearch() {
