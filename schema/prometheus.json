@@ -29,7 +29,7 @@
             "relabel": {
               "key": "String",
               "default": "{}",
-              "key_type": "<function use_id.<locals>.validator at 0x0000028EF9FE85E0>",
+              "key_type": "<function use_id.<locals>.validator at 0x000001EE51949870>",
               "type": "schema",
               "schema": {
                 "config_vars": {

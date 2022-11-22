@@ -1,0 +1,34 @@
+{
+  "daikin_brc.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate_ir.CLIMATE_IR_WITH_RECEIVER_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "daikin_brc::DaikinBrcClimate",
+                "parents": [
+                  "climate_ir::ClimateIR",
+                  "climate::Climate",
+                  "EntityBase",
+                  "Component",
+                  "remote_base::RemoteReceiverListener"
+                ]
+              }
+            },
+            "use_fahrenheit": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: U.S. models of the Daikin BRC remote send the temperature in Fahrenheit, if your remote shows Fahrenheit and can not be changed to Celsius then set this to true. Defaults to `false`.\n\n*See also: [daikin_brc Climate](https://esphome.io/components/climate/climate_ir.html#daikin-brc-climate)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

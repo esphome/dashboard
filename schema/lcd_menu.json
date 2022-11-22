@@ -1,0 +1,62 @@
+{
+  "lcd_menu": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.DISPLAY_MENU_BASE_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "lcd_menu::LCDCharacterMenuComponent",
+                "parents": [
+                  "display_menu_base::DisplayMenuComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            },
+            "display_id": {
+              "key": "GeneratedID",
+              "use_id_type": "lcd_base::LCDDisplay",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the LCD display.\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            },
+            "mark_selected": {
+              "key": "Optional",
+              "default": "62",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**0-255**: Code of the character used to mark menu item selected. Defaults to `0x3e` (`>`).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            },
+            "mark_editing": {
+              "key": "Optional",
+              "default": "42",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**0-255**: Code of the character used to mark menu item editing mode. Defaults to `0x2a` (`*`).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            },
+            "mark_submenu": {
+              "key": "Optional",
+              "default": "126",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**0-255**: Code of the character used to mark menu item leading to a submenu. Defaults to `0x7e` (a right arrow).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            },
+            "mark_back": {
+              "key": "Optional",
+              "default": "94",
+              "type": "integer",
+              "data_type": "uint8_t",
+              "docs": "**0-255**: Code of the character used to mark menu items going back one level. As the character set lacks a good looking up arrow, using a user defined character is advisable (use `8` to reference one at  position `0` to avoid problems with zeros in a string). Defaults to `0x5e` (`^`).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

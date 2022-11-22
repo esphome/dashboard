@@ -29,7 +29,8 @@
             },
             "update_interval": {
               "key": "Optional",
-              "default": "60s"
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval that the sensors should be checked. Defaults to 60 seconds.\n\n*See also: [Modbus Controller](https://esphome.io/components/modbus_controller.html#configuration-variables)*"
             },
             "modbus_id": {
               "key": "GeneratedID",

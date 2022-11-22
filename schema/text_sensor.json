@@ -37,6 +37,17 @@
       "dsmr": {
         "docs": "Configuration variables:\n\n*See also: [dsmr Text Sensor](https://esphome.io/components/sensor/dsmr.html#text-sensor)*"
       },
+      "ethernet_info": {
+        "dependencies": [
+          "ethernet"
+        ],
+        "docs": "The `ethernet_info` text sensor platform exposes different Ethernet information via text sensors.\n\n*See also: [Ethernet Info Text Sensor](https://esphome.io/components/text_sensor/ethernet_info.html#ethernet-info-text-sensor)*"
+      },
+      "ezo_pmp": {
+        "dependencies": [
+          "ezo_pmp"
+        ]
+      },
       "homeassistant": {
         "dependencies": [
           "api"
@@ -93,6 +104,12 @@
           "wifi"
         ],
         "docs": "The `wifi_info` text sensor platform exposes different WiFi information via text sensors.\n\n*See also: [WiFi Info Text Sensor](https://esphome.io/components/text_sensor/wifi_info.html#wifi-info-text-sensor)*"
+      },
+      "wl_134": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "The `wl_134` text sensor platform exposes the last read pet tag as text sensor.\n\n*See also: [WL-134 Pet Tag Sensor](https://esphome.io/components/text_sensor/wl_134.html#wl-134-pet-tag-sensor)*"
       }
     },
     "schemas": {

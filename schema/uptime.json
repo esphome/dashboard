@@ -30,6 +30,9 @@
             "accuracy_decimals": {
               "default": "0"
             },
+            "device_class": {
+              "default": "duration"
+            },
             "state_class": {
               "default": "total_increasing"
             },

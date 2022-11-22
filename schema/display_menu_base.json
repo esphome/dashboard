@@ -1,0 +1,388 @@
+{
+  "display_menu_base": {
+    "schemas": {
+      "MENU_ITEM_COMMON_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "text": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DISPLAY_MENU_BASE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "active": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: Whether the menu should start as active, meaning accepting user interactions and displaying output. Defaults to `true`.\n\n*See also: [Display Menu](https://esphome.io/components/display_menu/index.html#overview)*"
+            },
+            "root_item_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "display_menu_base::MenuItemMenu",
+                "parents": []
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the root menu item.\n\n*See also: [Display Menu](https://esphome.io/components/display_menu/index.html#overview)*"
+            },
+            "mode": {
+              "key": "Optional",
+              "default": "rotary",
+              "type": "enum",
+              "values": [
+                "rotary",
+                "joystick"
+              ],
+              "docs": "**enum**: Defines the navigation logic. Defaults to `rotary`.\n  * `rotary`: Rotary mode expects the clockwise movement wired to [display_menu.down](https://esphome.io/components/display_menu/index.html#display-menu-down-action), the anticlockwise one to [display_menu.up](https://esphome.io/components/display_menu/index.html#display-menu-up-action) and the switch to [display_menu.enter](https://esphome.io/components/display_menu/index.html#display-menu-enter-action) action.\n  \n  * `joystick`: Joystick mode expects the up, down, left and right buttons wired to the [display_menu.up](https://esphome.io/components/display_menu/index.html#display-menu-up-action), [display_menu.down](https://esphome.io/components/display_menu/index.html#display-menu-down-action), [display_menu.left](https://esphome.io/components/display_menu/index.html#display-menu-left-action) and [display_menu.right](https://esphome.io/components/display_menu/index.html#display-menu-right-action) actions and the middle button to the [display_menu.enter](https://esphome.io/components/display_menu/index.html#display-menu-enter-action) action.\n  \n  \n\n*See also: [Display Menu](https://esphome.io/components/display_menu/index.html#overview)*",
+              "values_docs": {
+                "rotary": "Rotary mode expects the clockwise movement wired to [display_menu.down](https://esphome.io/components/display_menu/index.html#display-menu-down-action), the anticlockwise one to [display_menu.up](https://esphome.io/components/display_menu/index.html#display-menu-up-action) and the switch to [display_menu.enter](https://esphome.io/components/display_menu/index.html#display-menu-enter-action) action.",
+                "joystick": "Joystick mode expects the up, down, left and right buttons wired to the [display_menu.up](https://esphome.io/components/display_menu/index.html#display-menu-up-action), [display_menu.down](https://esphome.io/components/display_menu/index.html#display-menu-down-action), [display_menu.left](https://esphome.io/components/display_menu/index.html#display-menu-left-action) and [display_menu.right](https://esphome.io/components/display_menu/index.html#display-menu-right-action) actions and the middle button to the [display_menu.enter](https://esphome.io/components/display_menu/index.html#display-menu-enter-action) action."
+              }
+            },
+            "on_enter": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the menu level (here the root one) is entered. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Display Menu](https://esphome.io/components/display_menu/index.html#overview)*"
+            },
+            "on_leave": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the menu level is not displayed anymore. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Display Menu](https://esphome.io/components/display_menu/index.html#overview)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA",
+            "display_menu_base.MENU_TYPES"
+          ]
+        }
+      },
+      "MENU_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "display_menu_base::DisplayMenuComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the menu to hide.\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#display-menu-show-main-action)*"
+            }
+          }
+        }
+      },
+      "MENU_TYPES": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "items": {
+              "key": "Required",
+              "is_list": true,
+              "type": "typed",
+              "types": {
+                "label": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItem",
+                        "parents": []
+                      }
+                    }
+                  }
+                },
+                "back": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItem",
+                        "parents": []
+                      }
+                    }
+                  }
+                },
+                "menu": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_enter": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the menu level is entered. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Menu](https://esphome.io/components/display_menu/index.html#menu)*"
+                    },
+                    "on_leave": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the menu level is not displayed anymore. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Menu](https://esphome.io/components/display_menu/index.html#menu)*"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemMenu",
+                        "parents": []
+                      }
+                    }
+                  },
+                  "extends": [
+                    "display_menu_base.MENU_TYPES"
+                  ]
+                },
+                "select": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_enter": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is activated. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    },
+                    "on_leave": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is exited. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    },
+                    "on_value": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the value is changed. See [on_value](https://esphome.io/components/display_menu/index.html#display-menu-on-value).\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemSelect",
+                        "parents": []
+                      }
+                    },
+                    "select": {
+                      "key": "Required",
+                      "use_id_type": "select::Select",
+                      "type": "use_id",
+                      "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: A `select` component managing the edited value.\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    },
+                    "immediate_edit": {
+                      "key": "Optional",
+                      "default": "False",
+                      "type": "boolean",
+                      "docs": "**boolean**: Whether the item can be immediately edited when selected. See [Editing Values](https://esphome.io/components/display_menu/index.html#display-menu-edit-mode). Defaults to `false`.\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    },
+                    "value_lambda": {
+                      "key": "Optional",
+                      "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Lambda returning a string to be displayed as value. The lambda gets an `it` argument pointing to the `MenuItem`. If not specified the selected option name of the `select` component is used as the value.\n\n*See also: [Select](https://esphome.io/components/display_menu/index.html#select)*"
+                    }
+                  }
+                },
+                "number": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_enter": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is activated. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "on_leave": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is exited. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "on_value": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the value is changed. See [on_value](https://esphome.io/components/display_menu/index.html#display-menu-on-value).\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemNumber",
+                        "parents": []
+                      }
+                    },
+                    "number": {
+                      "key": "Required",
+                      "use_id_type": "number::Number",
+                      "type": "use_id",
+                      "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: A `number` component managing the edited value. If on entering the value is less than `min_value` or more than `max_value`, the value is capped to fall into the range.\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "immediate_edit": {
+                      "key": "Optional",
+                      "default": "False",
+                      "type": "boolean",
+                      "docs": "**boolean**: Whether the item can be immediately edited when selected. See [Editing Values](https://esphome.io/components/display_menu/index.html#display-menu-edit-mode). Ignored in the `rotary` mode. Defaults to `false`.\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "format": {
+                      "key": "Optional",
+                      "default": "%.1f",
+                      "type": "string",
+                      "docs": "**string**: A `printf`-like format string specifying exactly one `f` or `g`-type conversion used to display the current value. Defaults to `%.1f`.\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    },
+                    "value_lambda": {
+                      "key": "Optional",
+                      "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Lambda returning a string to be displayed as value. The lambda gets an `it` argument pointing to the `MenuItem`. If not specified the value of the `number` component formatted according to the `format` is used as the value.\n\n*See also: [Number](https://esphome.io/components/display_menu/index.html#number)*"
+                    }
+                  }
+                },
+                "switch": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_enter": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is activated. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "on_leave": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is exited. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "on_value": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the value is changed. See [on_value](https://esphome.io/components/display_menu/index.html#display-menu-on-value).\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemSwitch",
+                        "parents": []
+                      }
+                    },
+                    "switch": {
+                      "key": "Required",
+                      "use_id_type": "switch_::Switch",
+                      "type": "use_id",
+                      "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: A `switch` component managing the edited value.\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "immediate_edit": {
+                      "key": "Optional",
+                      "default": "False",
+                      "type": "boolean",
+                      "docs": "**boolean**: Whether the item can be immediately edited when selected. See [Editing Values](https://esphome.io/components/display_menu/index.html#display-menu-edit-mode). Defaults to `false`.\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "on_text": {
+                      "key": "Optional",
+                      "default": "On",
+                      "type": "string",
+                      "docs": "**string**: The text for the `ON` state. Defaults to `On`.\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "off_text": {
+                      "key": "Optional",
+                      "default": "Off",
+                      "type": "string",
+                      "docs": "**string**: The text for the `OFF` state. Defaults to `Off`.\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    },
+                    "value_lambda": {
+                      "key": "Optional",
+                      "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Lambda returning a string to be displayed as value. The lambda gets an `it` argument pointing to the `MenuItem`. If not specified the `on_text` / `off_text` is used.\n\n*See also: [Switch](https://esphome.io/components/display_menu/index.html#switch)*"
+                    }
+                  }
+                },
+                "command": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_value": {
+                      "key": "Optional",
+                      "type": "trigger"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemCommand",
+                        "parents": []
+                      }
+                    }
+                  }
+                },
+                "custom": {
+                  "config_vars": {
+                    "text": {
+                      "key": "Optional",
+                      "templatable": true,
+                      "type": "string"
+                    },
+                    "on_enter": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is activated. See [on_enter](https://esphome.io/components/display_menu/index.html#display-menu-on-enter).\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "on_leave": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the editing mode is exited. See [on_leave](https://esphome.io/components/display_menu/index.html#display-menu-on-leave).\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "on_value": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the value is changed. See [on_value](https://esphome.io/components/display_menu/index.html#display-menu-on-value).\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "id": {
+                      "key": "GeneratedID",
+                      "id_type": {
+                        "class": "display_menu_base::MenuItemCustom",
+                        "parents": []
+                      }
+                    },
+                    "immediate_edit": {
+                      "key": "Optional",
+                      "default": "False",
+                      "type": "boolean",
+                      "docs": "**boolean**: Whether the item can be immediately edited when selected. See [Editing Values](https://esphome.io/components/display_menu/index.html#display-menu-edit-mode). Defaults to `false`.\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "value_lambda": {
+                      "key": "Optional",
+                      "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Lambda returning a string to be displayed as value. The lambda gets an `it` argument pointing to the `MenuItem`.\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "on_next": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the user navigates to the next value. See [on_next](https://esphome.io/components/display_menu/index.html#display-menu-on-next).\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    },
+                    "on_prev": {
+                      "key": "Optional",
+                      "type": "trigger",
+                      "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when the user navigates to the previous value. See [on_prev](https://esphome.io/components/display_menu/index.html#display-menu-on-prev).\n\n*See also: [Custom](https://esphome.io/components/display_menu/index.html#custom)*"
+                    }
+                  }
+                }
+              },
+              "typed_key": "type",
+              "docs": "Defines the child menu items.\n\n*See also: [Menu](https://esphome.io/components/display_menu/index.html#menu)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}
