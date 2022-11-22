@@ -8,7 +8,7 @@
             "name": {
               "key": "Required",
               "type": "string",
-              "docs": "**string**: This is the name of the node. It should always be unique in your ESPHome network. May only contain lowercase characters, digits and hyphens, and can be at most 31 characters long. See [Changing ESPHome Node Name](https://esphome.io/components/esphome.html#esphome-changing-node-name).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
+              "docs": "**string**: This is the name of the node. It should always be unique in your ESPHome network. May only contain lowercase characters, digits and hyphens, and can be at most 24 characters long by default, or 31 characters long if `name_add_mac_suffix` is `false`. See [Changing ESPHome Node Name](https://esphome.io/components/esphome.html#esphome-changing-node-name).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             },
             "comment": {
               "key": "Optional",
@@ -113,8 +113,13 @@
             },
             "min_version": {
               "key": "Optional",
-              "default": "2022.10.0",
+              "default": "2022.11.1",
               "docs": "**string**: The minimum ESPHome version required to compile this configuration. See [Minimum ESPHome version](https://esphome.io/components/esphome.html#esphome-min-version).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
+            },
+            "compile_process_limit": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**int**: The maximum number of simultaneous compile processes to run. Defaults to the number of cores of the CPU which is also the maximum you can set.\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             }
           }
         }
@@ -293,7 +298,7 @@
         "docs": "With ESPHome you can use different types of binary sensors. They will automatically appear in the Home Assistant front-end and have several configuration options.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#binary-sensor-component)*"
       },
       "button": {
-        "docs": "To attach a physical buttons to ESPHome, see [GPIO Binary Sensor](https://esphome.io/components/binary_sensor/gpio.html).\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#button-component)*"
+        "docs": "To attach a physical button to ESPHome, see [GPIO Binary Sensor](https://esphome.io/components/binary_sensor/gpio.html).\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#button-component)*"
       },
       "canbus": {
         "docs": "Each canbus platform extends this configuration schema.\n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#base-can-bus-configuration)*"
@@ -350,6 +355,12 @@
         "dependencies": [
           "uart"
         ]
+      },
+      "adc128s102": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "The ADC128S102 component allows you to use ADC128S102 8-Channel 12-Bit A/D Converter ([datasheet](https://www.ti.com/lit/ds/symlink/adc128s102.pdf), [Texas Instruments](https://www.ti.com/product/ADC128S102)) in ESPHome. It uses the [SPI Bus](https://esphome.io/components/spi.html#spi) for communication.\n\n*See also: [adc128s102 Component/Hub](https://esphome.io/components/sensor/adc128s102.html#component-hub)*"
       },
       "ads1115": {
         "dependencies": [
@@ -559,6 +570,12 @@
       "external_components": {
         "docs": "You can easily import community or personal components using the external components feature. Bundled components can be overridden using this feature.\n\n*See also: [External Components](https://esphome.io/components/external_components.html#external-components)*"
       },
+      "ezo_pmp": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `ezo_pmp` component allows you to use an Atlas Scientific Peristaltic Pump with ESPHome. Both the EZO-PMP ([datasheet](https://files.atlas-scientific.com/EZO_PMP_Datasheet.pdf)) and EZO-PMP-L ([datasheet](https://files.atlas-scientific.com/EZO_PMP_L_Datasheet.pdf)) are supported. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [Atlas Scientific Peristaltic Pump](https://esphome.io/components/ezo_pmp.html#atlas-scientific-peristaltic-pump)*"
+      },
       "fingerprint_grow": {
         "dependencies": [
           "uart"
@@ -613,6 +630,9 @@
         "docs": "This component allows you to run actions at fixed time intervals. For example if you want to toggle a switch every minute, you can use this component. Please note that it\u2019s possible to achieve the same thing with the [time.on_time](https://esphome.io/components/time.html#time-on-time) trigger, but this technique is more light-weight and user-friendly.\n\n*See also: [interval Component](https://esphome.io/guides/automations.html#interval-component)*"
       },
       "json": {},
+      "lcd_menu": {
+        "docs": "The component provides an infrastructure for setting up a hierarchical menu on the character based LCD displays.\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#lcd-menu)*"
+      },
       "logger": {
         "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics (if there is an MQTT client in the configuration). By default, all logs with a severity higher than `DEBUG` will be shown. Decreasing the log level can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
       },
@@ -788,6 +808,9 @@
           "uart"
         ],
         "docs": "The `RF Bridge` Component provides the ability to send and receive 433MHz remote codes without hardware hacking the circuit board to bypass the `efm8bb1` MCU. This component implements the communication protocol that the original `efm8bb1` firmware implements. The device is connected via the [UART bus](https://esphome.io/components/uart.html). The uart bus must be configured at the same speed of the module which is 19200bps.\n\n*See also: [RF Bridge Component](https://esphome.io/components/rf_bridge.html#rf-bridge-component)*"
+      },
+      "rp2040": {
+        "docs": "This component contains platform-specific options for the RP2040 platform.\n\n*See also: [RP2040 Platform](https://esphome.io/components/rp2040.html#rp2040-platform)*"
       },
       "rtttl": {
         "docs": "The `rtttl`, component allows you to easily connect a passive piezo buzzer to your microcontroller and play monophonic songs. It accepts the Ring Tone Text Transfer Language, rtttl format ([Wikipedia](https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language)) which allows to store simple melodies.\n\n*See also: [Rtttl Buzzer](https://esphome.io/components/rtttl.html#rtttl-buzzer)*"
@@ -1075,6 +1098,7 @@
       "mcp23xxx",
       "mcp23016",
       "pcf8574",
+      "rp2040",
       "sn74hc595",
       "sx1509"
     ]

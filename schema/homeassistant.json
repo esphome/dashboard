@@ -12,7 +12,7 @@
             "attribute": {
               "key": "Optional",
               "type": "string",
-              "docs": "**string**: The name of the state attribute to import from the specified entity. The entity state is used when this option is omitted. Requires Home Assistant 2021.6 or newer.\n\n*See also: [Home Assistant Text Sensor](https://esphome.io/components/text_sensor/homeassistant.html#configuration-variables)*"
+              "docs": "**string**: The name of the state attribute to import from the specified entity. The entity state is used when this option is omitted.\n\n*See also: [Home Assistant Text Sensor](https://esphome.io/components/text_sensor/homeassistant.html#configuration-variables)*"
             },
             "internal": {
               "key": "Optional",

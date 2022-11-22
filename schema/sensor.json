@@ -2,7 +2,13 @@
   "sensor": {
     "components": {
       "adc": {
-        "docs": "The Analog To Digital (`adc`) Sensor allows you to use the built-in ADC in your device to measure a voltage on certain pins. On the ESP8266 only pin A0 (GPIO17) supports this. On the ESP32 pins GPIO32 through GPIO39 can be used.\n\n*See also: [Analog To Digital Sensor](https://esphome.io/components/sensor/adc.html#analog-to-digital-sensor)*"
+        "docs": "The Analog To Digital (`adc`) Sensor allows you to use the built-in ADC in your device to measure a voltage on certain pins.\n\n*See also: [Analog To Digital Sensor](https://esphome.io/components/sensor/adc.html#analog-to-digital-sensor)*"
+      },
+      "adc128s102": {
+        "dependencies": [
+          "adc128s102"
+        ],
+        "docs": "The `adc128s102` sensor allows you to use your ADC128S102 12-Bit A/D Converter sensors with ESPHome. First, setup a [ADC128S102 Hub](https://esphome.io/components/sensor/adc128s102.html#adc128s102-component) for your ADC128S102 sensor and then use this sensor platform to create individual sensors that will report the voltage to Home Assistant.\n\n*See also: [adc128s102 Sensor](https://esphome.io/components/sensor/adc128s102.html#sensor)*"
       },
       "ade7953": {
         "dependencies": [
@@ -234,7 +240,12 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `ezo` sensor platform allows you to use your EZO sensor circuits with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [EZO sensor circuits](https://esphome.io/components/sensor/ezo.html#ezo-sensor-circuits)*"
+        "docs": "The `ezo` sensor platform allows you to use your EZO sensor circuits with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. All embedded solutions from EZO can be found [here](https://atlas-scientific.com/embedded-solutions/). If a certain command is not supported directly, it can be executed with the `send_custom()` method call.\n\n*See also: [EZO sensor circuits](https://esphome.io/components/sensor/ezo.html#ezo-sensor-circuits)*"
+      },
+      "ezo_pmp": {
+        "dependencies": [
+          "ezo_pmp"
+        ]
       },
       "fingerprint_grow": {
         "dependencies": [
@@ -545,7 +556,7 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `scd4x` sensor platform  allows you to use your Sensirion SCD4X CO\u2082 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD4x_Datasheet.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#scd4x-co2-temperature-and-relative-humidity-sensor)*"
+        "docs": "The `scd4x` sensor platform  allows you to use your Sensirion SCD4X CO\u2082 ([datasheet](https://sensirion.com/media/documents/C4B87CE6/627C2DCD/CD_DS_SCD40_SCD41_Datasheet_D1.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#scd4x-co2-temperature-and-relative-humidity-sensor)*"
       },
       "sdm_meter": {
         "docs": "The `sdm_meter` sensor platform allows you to use Eastron SDM modbus energy monitors ([website](http://www.eastrongroup.com/product_detail.php?id=170&menu1=&menu2=)) with ESPHome.\n\n*See also: [Eastron SDM Energy Monitor](https://esphome.io/components/sensor/sdm_meter.html#eastron-sdm-energy-monitor)*"
@@ -885,6 +896,7 @@
                 "pm25",
                 "power",
                 "power_factor",
+                "precipitation_intensity",
                 "pressure",
                 "reactive_power",
                 "signal_strength",
@@ -895,6 +907,8 @@
                 "volatile_organic_compounds",
                 "voltage",
                 "volume",
+                "water",
+                "wind_speed",
                 "weight"
               ],
               "docs": "**string**: The device class for the sensor. See [https://developers.home-assistant.io/docs/core/entity/sensor/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/sensor/#available-device-classes) for a list of available options. Set to `\"\"` to remove the default device class of a sensor.\n\n*See also: [Sensor Component](https://esphome.io/components/sensor/index.html#base-sensor-configuration)*"

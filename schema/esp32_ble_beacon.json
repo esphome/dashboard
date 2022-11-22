@@ -40,6 +40,50 @@
               "type": "integer",
               "data_type": "uint16_t",
               "docs": "**int**: The iBeacon minor identifier of this beacon. Usually used to identify beacons within an iBeacon group. Defaults to `61958`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "min_interval": {
+              "key": "Optional",
+              "default": "100ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The iBeacon minimum transmit interval in milliseconds from 20 to 10240. Setting this less than `max_interval` gives the BLE hardware a better chance to avoid collisions with other BLE transmissions. Defaults to the iBeacon specification\u2019s defined interval: `100ms`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "max_interval": {
+              "key": "Optional",
+              "default": "100ms",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The iBeacon maximum transmit interval in milliseconds from 20 to 10240. Setting this greater than `min_interval` gives the BLE hardware a better chance to avoid collisions with other BLE transmissions. Defaults to the iBeacon specification\u2019s defined interval: `100ms`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "measured_power": {
+              "key": "Optional",
+              "default": "-59",
+              "type": "integer",
+              "docs": "**int**: The RSSI of the iBeacon as measured 1 meter from the device. This is used to calibrate the ranging calculations in iOS. The procedure for setting this value can be found in Apple\u2019s [Getting Started with iBeacon PDF](https://developer.apple.com/ibeacon/Getting-Started-with-iBeacon.pdf) under the heading *Calibrating iBeacon*. Between -128 to 0. Defaults to `-59`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
+            },
+            "tx_power": {
+              "key": "Optional",
+              "default": "3dBm",
+              "type": "enum",
+              "values": [
+                -12,
+                -9,
+                -6,
+                -3,
+                0,
+                3,
+                6,
+                9
+              ],
+              "docs": "**int**: The transmit power of the iBeacon in dBm. One of -12, -9, -6, -3, 0, 3, 6, 9. Defaults to `3dBm`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
             }
           },
           "extends": [

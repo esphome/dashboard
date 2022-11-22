@@ -31,7 +31,8 @@
           "extends": [
             "core.COMPONENT_SCHEMA"
           ]
-        }
+        },
+        "is_list": true
       }
     }
   },

@@ -1,0 +1,94 @@
+{
+  "display_menu": {
+    "action": {
+      "up": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for navigating up in a menu. The action is usually wired to an anticlockwise turn of a rotary encoder or to the upper button of the joystick.\n\n*See also: [`display_menu.up` Action](https://esphome.io/components/display_menu/index.html#display-menu-up-action)*"
+      },
+      "down": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for navigating down in a menu. The action is usually wired to a clockwise turn of a rotary encoder or to the lower button of the joystick.\n\n*See also: [`display_menu.down` Action](https://esphome.io/components/display_menu/index.html#display-menu-down-action)*"
+      },
+      "left": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) usually wired to the left button of the joystick. In the `joystick` mode it is used to set the previous value or to decrement the numeric one; depending on the `immediate_edit` flag entering the edit mode is required or not. If used in the `rotary` mode it exits the editing. In both modes it can be also used to navigate back one level when used with the `back` menu item.\n\n*See also: [`display_menu.left` Action](https://esphome.io/components/display_menu/index.html#display-menu-left-action)*"
+      },
+      "right": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) usually wired to the right button of the joystick. In the `joystick` mode it is used to set the next value or to increment the numeric one; depending on the `immediate_edit` flag entering the edit mode is required or not. In both modes it can be also used to enter the submenu when used with the `menu` menu item.\n\n*See also: [`display_menu.right` Action](https://esphome.io/components/display_menu/index.html#display-menu-right-action)*"
+      },
+      "enter": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for triggering a selected menu item, resulting in an action depending on the type of the item - entering a submenu, starting/stopping editing or triggering a command. The action is usually wired to a press button of a rotary encoder or to the center button of the joystick.\n\n*See also: [`display_menu.enter` Action](https://esphome.io/components/display_menu/index.html#display-menu-enter-action)*"
+      },
+      "show": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for showing an inactive menu. The state of the menu remains unchanged, i.e. the menu level shown at the moment it was hidden is restored, as is the selected item. The following snippet shows the menu if it is inactive, otherwise triggers the selected item.\n\n*See also: [`display_menu.show` Action](https://esphome.io/components/display_menu/index.html#display-menu-show-action)*"
+      },
+      "hide": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for hiding the menu. A hidden menu does not react to `draw()` and does not process navigation actions.\n\n*See also: [`display_menu.hide` Action](https://esphome.io/components/display_menu/index.html#display-menu-hide-action)*"
+      },
+      "show_main": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "display_menu_base.MENU_ACTION_SCHEMA"
+          ]
+        },
+        "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for showing the root level of the menu.\n\n*See also: [`display_menu.show_main` Action](https://esphome.io/components/display_menu/index.html#display-menu-show-main-action)*"
+      }
+    },
+    "condition": {
+      "is_active": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "display_menu_base::DisplayMenuComponent",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if the given menu is active, i.e. shown on the display and processing navigation events.\n\n*See also: [`display_menu.is_active` Condition](https://esphome.io/components/display_menu/index.html#display-menu-is-active-condition)*"
+      }
+    }
+  }
+}

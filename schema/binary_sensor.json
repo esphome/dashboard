@@ -44,6 +44,11 @@
         ],
         "docs": "The `esp32_touch` binary sensor platform lets you use the touch peripheral of the ESP32 to detect if a certain pin is being \u201ctouched\u201d.\n\n*See also: [esp32_touch Binary Sensor](https://esphome.io/components/binary_sensor/esp32_touch.html#binary-sensor)*"
       },
+      "ezo_pmp": {
+        "dependencies": [
+          "ezo_pmp"
+        ]
+      },
       "fingerprint_grow": {
         "dependencies": [
           "fingerprint_grow"

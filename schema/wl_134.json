@@ -1,0 +1,37 @@
+{
+  "wl_134.text_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "text_sensor.TEXT_SENSOR_SCHEMA",
+            "uart.UART_DEVICE_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "wl_134::Wl134Component",
+                "parents": [
+                  "text_sensor::TextSensor",
+                  "EntityBase",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "icon": {
+              "default": "mdi:fingerprint"
+            },
+            "reset": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Reset the text sensor state back to \u201c\u201d 1s after reading a tag. Defaults to `false`.\n\n*See also: [WL-134 Pet Tag Sensor](https://esphome.io/components/text_sensor/wl_134.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

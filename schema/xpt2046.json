@@ -81,7 +81,7 @@
             "update_interval": {
               "key": "Optional",
               "default": "50ms",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. If `interupt_pin` is specified the touch will be detected nearly instantaneously and this setting will be used only for the release detection. Defaults to `50ms`.\n\n*See also: [XPT2046 Touch Screen Controller (Updated version)](https://esphome.io/components/touchscreen/xpt2046.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. If `interrupt_pin` is specified the touch will be detected nearly instantaneously and this setting will be used only for the release detection. Defaults to `50ms`.\n\n*See also: [XPT2046 Touch Screen Controller (Updated version)](https://esphome.io/components/touchscreen/xpt2046.html#configuration-variables)*"
             },
             "spi_id": {
               "key": "GeneratedID",
