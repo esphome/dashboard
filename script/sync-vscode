@@ -5,6 +5,10 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+rm ./schema/*
+
+cp ../esphome-vscode/server/src/schema/* ./schema
+
 cp ../esphome-vscode/server/src/completions-handler.ts ./src/editor
 cp ../esphome-vscode/server/src/definition-handler.ts ./src/editor
 cp ../esphome-vscode/server/src/esphome-document.ts ./src/editor

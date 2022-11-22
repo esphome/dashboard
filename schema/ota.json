@@ -26,7 +26,7 @@
               "default": "8266",
               "type": "integer",
               "data_type": "port",
-              "docs": "**int**: The port to use for OTA updates. Defaults to `3232` for the ESP32 and `8266` for the ESP8266.\n\n*See also: [OTA Update Component](https://esphome.io/components/ota.html#configuration-variables)*"
+              "docs": "**int**: The port to use for OTA updates. Defaults:\n  * `3232` for the ESP32\n  \n  * `8266` for the ESP8266\n  \n  * `2040` for the RP2040\n  \n  \n\n*See also: [OTA Update Component](https://esphome.io/components/ota.html#configuration-variables)*"
             },
             "password": {
               "key": "Optional",

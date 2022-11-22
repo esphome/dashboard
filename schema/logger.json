@@ -168,6 +168,30 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "adc128s102": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "adc128s102.sensor": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "addressable_light.display": {
                     "type": "enum",
                     "values": [
@@ -684,6 +708,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "bluetooth_proxy.connection": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "bluetooth_proxy": {
                     "type": "enum",
                     "values": [
@@ -1164,6 +1200,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "daikin_brc.climate": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "dallas.sensor": {
                     "type": "enum",
                     "values": [
@@ -1440,31 +1488,7 @@
                       "VERY_VERBOSE"
                     ]
                   },
-                  "esp32_ble_client.characteristic": {
-                    "type": "enum",
-                    "values": [
-                      "NONE",
-                      "ERROR",
-                      "WARN",
-                      "INFO",
-                      "DEBUG",
-                      "VERBOSE",
-                      "VERY_VERBOSE"
-                    ]
-                  },
                   "esp32_ble_client": {
-                    "type": "enum",
-                    "values": [
-                      "NONE",
-                      "ERROR",
-                      "WARN",
-                      "INFO",
-                      "DEBUG",
-                      "VERBOSE",
-                      "VERY_VERBOSE"
-                    ]
-                  },
-                  "esp32_ble_client.service": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -1668,6 +1692,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "ethernet_info": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "exposure_notifications": {
                     "type": "enum",
                     "values": [
@@ -1680,7 +1716,7 @@
                       "VERY_VERBOSE"
                     ]
                   },
-                  "ezo.sensor": {
+                  "ezo-pmp": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -2269,6 +2305,18 @@
                     ]
                   },
                   "lcd_gpio": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "lcd_menu": {
                     "type": "enum",
                     "values": [
                       "NONE",
@@ -4200,6 +4248,42 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "rp2040": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "rp2040.preferences": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "rp2040_pwm": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "rtttl": {
                     "type": "enum",
                     "values": [
@@ -5724,6 +5808,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "uart.arduino_rp2040": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "uart_debug": {
                     "type": "enum",
                     "values": [
@@ -5940,6 +6036,18 @@
                       "VERY_VERBOSE"
                     ]
                   },
+                  "wifi_pico_w": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
                   "wifi_info": {
                     "type": "enum",
                     "values": [
@@ -5965,6 +6073,18 @@
                     ]
                   },
                   "wled_light_effect": {
+                    "type": "enum",
+                    "values": [
+                      "NONE",
+                      "ERROR",
+                      "WARN",
+                      "INFO",
+                      "DEBUG",
+                      "VERBOSE",
+                      "VERY_VERBOSE"
+                    ]
+                  },
+                  "wl_134.sensor": {
                     "type": "enum",
                     "values": [
                       "NONE",

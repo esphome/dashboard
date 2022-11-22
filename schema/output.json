@@ -82,6 +82,11 @@
         ],
         "docs": "Not all possible outputs are exposed as they lead to the possibility to make serious damage. They should only be set at the physical device itself.\n\n*See also: [pipsolar Output](https://esphome.io/components/pipsolar.html#output)*"
       },
+      "rp2040_pwm": {
+        "dependencies": [
+          "rp2040"
+        ]
+      },
       "slow_pwm": {
         "docs": "Similar to PWM, the Slow PWM Output platform allows you to control GPIO pins by pulsing them on/off over a longer time period. It could be used to control a heating element through a relay where a fast PWM update cycle would not be appropriate.\n\n*See also: [Slow PWM Output](https://esphome.io/components/output/slow_pwm.html#slow-pwm-output)*"
       },

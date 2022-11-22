@@ -1,0 +1,103 @@
+{
+  "rp2040": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "board": {
+              "key": "Required",
+              "type": "string",
+              "docs": "**string**: The board type. Valid options are `rpipico` and `rpipicow`.\n\n*See also: [RP2040 Platform](https://esphome.io/components/rp2040.html#configuration-variables)*"
+            },
+            "framework": {
+              "key": "Optional",
+              "default": "{}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "version": {
+                    "key": "Optional",
+                    "default": "recommended",
+                    "type": "string"
+                  },
+                  "source": {
+                    "key": "Optional",
+                    "type": "string"
+                  },
+                  "platform_version": {
+                    "key": "Optional"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "config_vars": {
+          "id": {
+            "key": "GeneratedID",
+            "id_type": {
+              "class": "rp2040::RP2040GPIOPin",
+              "parents": [
+                "InternalGPIOPin",
+                "GPIOPin"
+              ]
+            }
+          },
+          "number": {
+            "key": "Required"
+          },
+          "mode": {
+            "key": "Optional",
+            "default": "{}",
+            "type": "schema",
+            "schema": {
+              "config_vars": {
+                "analog": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "input": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "output": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "open_drain": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "pullup": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "pulldown": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "inverted": {
+            "key": "Optional",
+            "default": "False",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

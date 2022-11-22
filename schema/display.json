@@ -18,13 +18,13 @@
         "docs": "All-in-one e-paper display `Inkplate 6`, `Inkplate 10` and `Inkplate 6 Plus`.\n\n*See also: [Inkplate 6, 10 and 6 Plus](https://esphome.io/components/display/inkplate6.html#inkplate-6-10-and-6-plus)*"
       },
       "lcd_gpio": {
-        "docs": "The `lcd_gpio` display platform allows you to use standard character-based LCD displays like [this one](https://www.adafruit.com/product/181) with ESPHome. This integration is only for LCD displays that display individual characters on a screen (usually 16-20 columns and 2-4 rows), and not for LCD displays that can control each pixel individually. Also, this is the GPIO version of the LCD integration where each of the data pins of the LCD needs a dedicated GPIO pin on the ESP. These LCD displays are also commonly sold with a PCF8574 chip which only need two lines to the ESP, for that see [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#lcd-pcf8574).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio-component)*"
+        "docs": "The `lcd_gpio` version of this component addresses the screen directly and does not employ a PCF8574 module. Each of the data pins of the LCD needs a dedicated GPIO pin on the ESP. Connecting the screen this way offers faster refresh, especially in conjunction with an [LCD menu](https://esphome.io/components/display_menu/lcd_menu.html#id1).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio-component)*"
       },
       "lcd_pcf8574": {
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `lcd_pcf8574` display platform allows you to use standard character-based LCD displays like [this one](https://docs.labs.mediatek.com/resource/linkit7697-arduino/en/tutorial/driving-1602-lcd-with-pcf8574-pcf8574a) with ESPHome. This integration is only for LCD displays that display individual characters on a screen (usually 16-20 columns and 2-4 rows), and not for LCD displays that can control each pixel individually.\n\n*See also: [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#lcd-pcf8574-component)*"
+        "docs": "`lcd_pcf8574` is for LCD displays with a PCF8574 GPIO expander module connected to all the data pins. This has the benefit that you only need to connect two data wires to the ESP instead of the six or ten as with the [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio). The communication happens via [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c), you need to have an `i2c:` section in your configuration.\n\n*See also: [lcd_pcf8574 Component](https://esphome.io/components/display/lcd_display.html#lcd-pcf8574-component)*"
       },
       "max7219": {
         "dependencies": [

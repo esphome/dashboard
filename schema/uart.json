@@ -76,6 +76,19 @@
           ]
         },
         "is_list": true
+      },
+      "UART_DEVICE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+            }
+          }
+        }
       }
     },
     "action": {
@@ -104,6 +117,11 @@
       "CONFIG_SCHEMA": {
         "type": "schema",
         "schema": {
+          "extends": [
+            "switch.SWITCH_SCHEMA",
+            "uart.UART_DEVICE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
           "config_vars": {
             "id": {
               "key": "GeneratedID",
@@ -131,15 +149,6 @@
                 ]
               },
               "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Sends recurring data instead of sending once.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
-            },
-            "uart_id": {
-              "key": "GeneratedID",
-              "use_id_type": "uart::UARTComponent",
-              "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
-            },
-            "name": {
-              "docs": "**string**: The name for the switch.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
             }
           }
         }

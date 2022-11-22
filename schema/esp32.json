@@ -206,7 +206,7 @@
                 }
               },
               "typed_key": "type",
-              "docs": "Options for the underlying framework used by ESPHome. See [Arduino framework](https://esphome.io/components/esp32.html#esp32-arduino-framework) and [ESP-IDF framework](https://esphome.io/components/esp32.html#esp32-espidf-framework).\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
+              "docs": "Options for the underlying framework used by ESPHome. See [GPIO Pin Numbering](https://esphome.io/components/esp32.html#esp32-arduino-framework) and [ESP-IDF framework](https://esphome.io/components/esp32.html#esp32-espidf-framework).\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
             }
           }
         }

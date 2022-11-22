@@ -25,6 +25,9 @@
         "docs": "This integration can be used to create custom climate devices in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Climate](https://esphome.io/components/climate/custom.html#custom-climate)*"
       },
       "daikin": {},
+      "daikin_brc": {
+        "docs": "The Daikin BRC remotes are used by the ceiling cassette model of Daikin heatpumps.\n\n*See also: [daikin_brc Climate](https://esphome.io/components/climate/climate_ir.html#daikin-brc-climate)*"
+      },
       "delonghi": {
         "docs": "Currently supports the protocol used by some Delonghi portable units\n\n*See also: [delonghi Climate](https://esphome.io/components/climate/climate_ir.html#delonghi-climate)*"
       },
