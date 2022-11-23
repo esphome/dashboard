@@ -8,9 +8,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "develop": "script/develop",
-    "build": "script/build",
     "develop_web": "web.esphome.io/script/develop_web",
-    "build_web": "web.esphome.io/script/build_web"
+    "prepublishOnly": "script/build"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.2",
