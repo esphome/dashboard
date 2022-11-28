@@ -10,7 +10,7 @@ Check out this repository, run `npm install --legacy-peer-deps` and then run
 
 ```
 script/develop
-````
+```
 
 It will start the dev server and will automatically re-bundle updated JavaScript (except for the `static` folder).
 
