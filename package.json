@@ -7,6 +7,8 @@
   "author": "ESPHome maintainers",
   "license": "Apache-2.0",
   "scripts": {
+    "develop": "script/develop",
+    "develop_web": "web.esphome.io/script/develop_web",
     "prepublishOnly": "script/build"
   },
   "devDependencies": {

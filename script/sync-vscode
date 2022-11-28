@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Copies all files which are shared between vscode and dashboard editor
 
 # Stop on errors
