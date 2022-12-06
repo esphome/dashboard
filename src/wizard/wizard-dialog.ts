@@ -489,7 +489,7 @@ export class ESPHomeWizardDialog extends LitElement {
     });
 
     getSupportedBoards().then((boards) => {
-      this._supportedBoards = boards
+      this._supportedBoards = boards;
     });
   }
 
