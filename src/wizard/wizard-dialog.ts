@@ -23,6 +23,7 @@ import {
   deleteConfiguration,
   getConfiguration,
 } from "../api/configuration";
+import { getSupportedBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -79,6 +80,8 @@ export class ESPHomeWizardDialog extends LitElement {
   private _wifi?: { ssid: string; password: string };
 
   @state() private _writeProgress?: number;
+
+  private _supportedBoards?: SupportedBoards;
 
   @state() private _state:
     | "ask_esphome_web"
@@ -381,7 +384,7 @@ export class ESPHomeWizardDialog extends LitElement {
         : html`
             <div class="formfield-extra">
               <select @change=${this._handlePickBoardCustom}>
-                ${boardSelectOptions}
+                ${boardSelectOptions(this._supportedBoards)}
               </select>
             </div>
           `}
@@ -483,6 +486,10 @@ export class ESPHomeWizardDialog extends LitElement {
     super.firstUpdated(changedProps);
     checkHasWifiSecrets().then((hasWifiSecrets) => {
       this._hasWifiSecrets = hasWifiSecrets;
+    });
+
+    getSupportedBoards().then((boards) => {
+      this._supportedBoards = boards
     });
   }
 
