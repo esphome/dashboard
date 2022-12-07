@@ -14,6 +14,7 @@ import {
   CHIP_FAMILY_ESP8266,
   CHIP_FAMILY_ESP32C3,
   CHIP_FAMILY_ESP32S2,
+  CHIP_FAMILY_ESP32S3,
 } from "esp-web-flasher";
 import { allowsWebSerial, supportsWebSerial } from "../const";
 import {
@@ -51,6 +52,7 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 const BOARD_GENERIC_ESP32 = "esp32dev";
 const BOARD_GENERIC_ESP8266 = "esp01_1m";
 const BOARD_GENERIC_ESP32S2 = "esp32-s2-saola-1";
+const BOARD_GENERIC_ESP32S3 = "esp32-s3-devkitc-1";
 const BOARD_GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
 const BOARD_RPI_PICO_W = "rpipicow";
 
@@ -62,6 +64,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | typeof BOARD_GENERIC_ESP32
     | typeof BOARD_GENERIC_ESP8266
     | typeof BOARD_GENERIC_ESP32S2
+    | typeof BOARD_GENERIC_ESP32S3
     | typeof BOARD_GENERIC_ESP32C3
     | typeof BOARD_RPI_PICO_W
     | "CUSTOM" = BOARD_GENERIC_ESP32;
@@ -338,6 +341,15 @@ export class ESPHomeWizardDialog extends LitElement {
           .value=${BOARD_GENERIC_ESP32S2}
           @click=${this._handlePickBoardRadio}
           ?checked=${this._board === BOARD_GENERIC_ESP32S2}
+        ></mwc-radio>
+      </mwc-formfield>
+
+      <mwc-formfield label="ESP32-S3">
+        <mwc-radio
+          name="board"
+          .value=${BOARD_GENERIC_ESP32S3}
+          @click=${this._handlePickBoardRadio}
+          ?checked=${this._board === BOARD_GENERIC_ESP32S3}
         ></mwc-radio>
       </mwc-formfield>
 
@@ -635,6 +647,8 @@ export class ESPHomeWizardDialog extends LitElement {
         this._data.board = BOARD_GENERIC_ESP8266;
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S2) {
         this._data.board = BOARD_GENERIC_ESP32S2;
+      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S3) {
+        this._data.board = BOARD_GENERIC_ESP32S3;
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32C3) {
         this._data.board = BOARD_GENERIC_ESP32C3;
       } else {
