@@ -16,6 +16,7 @@ import {
   getDownloadUrl,
 } from "../api/configuration";
 import { esphomeDialogStyles } from "../styles";
+import "../components/esphome-alert";
 
 const WARNING_ICON = "👀";
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
@@ -83,17 +84,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
           ${metaChevronRight}
         </mwc-list-item>
 
-        <mwc-list-item
-          twoline
-          hasMeta
-          ?disabled=${this._isPico}
-          @click=${this._handleServerInstall}
-        >
+        <mwc-list-item twoline hasMeta @click=${this._handleServerInstall}>
           <span>Plug into the computer running ESPHome Dashboard</span>
           <span slot="secondary">
-            ${this._isPico
-              ? "Installing this from the server is not supported yet for this device"
-              : "For devices connected via USB to the server"}
+            ${`For devices connected via USB to the server${
+              this._isPico ? " and running ESPHome" : ""
+            }`}
           </span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -130,6 +126,14 @@ class ESPHomeInstallChooseDialog extends LitElement {
         this._ports === undefined
           ? this._renderProgress("Loading serial devices")
           : html`
+              ${this._isPico
+                ? html`
+                    <esphome-alert type="warning">
+                      Installation via the server requires the Pico to already
+                      run ESPHome.
+                    </esphome-alert>
+                  `
+                : ""}
               ${this._ports.length === 0
                 ? this._renderMessage(
                     WARNING_ICON,
@@ -527,6 +531,12 @@ class ESPHomeInstallChooseDialog extends LitElement {
         position: absolute;
         line-height: 36px;
         bottom: 9px;
+      }
+      esphome-alert {
+        color: black;
+        margin: 0 -24px;
+        display: block;
+        --esphome-alert-padding-left: 20px;
       }
     `,
   ];
