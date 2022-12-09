@@ -23,8 +23,9 @@ import {
   createConfiguration,
   deleteConfiguration,
   getConfiguration,
+  SupportedPlatforms,
 } from "../api/configuration";
-import { getSupportedBoards, SupportedBoards } from "../api/boards";
+import { getSupportedBoards, getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -50,30 +51,27 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 
 */
 
-const BOARD_GENERIC_ESP32 = "esp32dev";
-const BOARD_GENERIC_ESP8266 = "esp01_1m";
-const BOARD_GENERIC_ESP32S2 = "esp32-s2-saola-1";
-const BOARD_GENERIC_ESP32S3 = "esp32-s3-devkitc-1";
-const BOARD_GENERIC_ESP32C3 = "esp32-c3-devkitm-1";
-const BOARD_RPI_PICO_W = "rpipicow";
+type WizardPlatform = SupportedPlatforms | "CUSTOM";
+
+const DEFAULT_BOARD: { [key in WizardPlatform]: string | null } = {
+  ESP32: "esp32dev",
+  ESP8266: "esp01_1m",
+  ESP32S2: "esp32-s2-saola-1",
+  ESP32S3: "esp32-s3-devkitc-1",
+  ESP32C3: "esp32-c3-devkitm-1",
+  RP2040: "rpipicow",
+  CUSTOM: null,
+};
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
-  @state() private _board:
-    | typeof BOARD_GENERIC_ESP32
-    | typeof BOARD_GENERIC_ESP8266
-    | typeof BOARD_GENERIC_ESP32S2
-    | typeof BOARD_GENERIC_ESP32S3
-    | typeof BOARD_GENERIC_ESP32C3
-    | typeof BOARD_RPI_PICO_W
-    | "CUSTOM" = BOARD_GENERIC_ESP32;
+  @state() private _platform: WizardPlatform = "ESP32";
+  @state() private _board: string | null = DEFAULT_BOARD[this._platform];
 
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
-
-  private _customBoard = "";
 
   private _data: Partial<CreateConfigParams> = {
     ssid: `!secret ${SECRET_WIFI_SSID}`,
@@ -90,6 +88,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "ask_esphome_web"
     | "basic_config"
     | "connect_webserial"
+    | "pick_platform"
     | "pick_board"
     | "connecting_webserial"
     | "prepare_flash"
@@ -114,8 +113,11 @@ export class ESPHomeWizardDialog extends LitElement {
       [heading, content, hideActions] = this._renderAskESPHomeWeb();
     } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
-    } else if (this._state === "pick_board") {
+    } else if (this._state === "pick_platform") {
       heading = "Select your device type";
+      content = this._renderPickPlatform();
+    } else if (this._state === "pick_board") {
+      heading = "Select your board";
       content = this._renderPickBoard();
     } else if (this._state === "connect_webserial") {
       heading = "Installation";
@@ -134,7 +136,7 @@ export class ESPHomeWizardDialog extends LitElement {
               html`
                 Installing<br /><br />
                 This will take
-                ${this._board === BOARD_GENERIC_ESP8266
+                ${this._platform === "ESP8266"
                   ? "a minute"
                   : "2 minutes"}.<br />
                 Keep this page visible to prevent slow down
@@ -322,7 +324,7 @@ export class ESPHomeWizardDialog extends LitElement {
     return [heading, content, hideActions];
   }
 
-  private _renderPickBoard() {
+  private _renderPickPlatform() {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
@@ -332,54 +334,54 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-formfield label="ESP32" checked>
         <mwc-radio
           name="board"
-          .value=${BOARD_GENERIC_ESP32}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_GENERIC_ESP32}
+          value="ESP32"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "ESP32"}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP32-S2">
         <mwc-radio
           name="board"
-          .value=${BOARD_GENERIC_ESP32S2}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_GENERIC_ESP32S2}
+          value="ESP32S2"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "ESP32S2"}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP32-S3">
         <mwc-radio
           name="board"
-          .value=${BOARD_GENERIC_ESP32S3}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_GENERIC_ESP32S3}
+          value="ESP32S3"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "ESP32S3"}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP32-C3">
         <mwc-radio
           name="board"
-          .value=${BOARD_GENERIC_ESP32C3}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_GENERIC_ESP32C3}
+          value="ESP32C3"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "ESP32C3"}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="ESP8266">
         <mwc-radio
           name="board"
-          .value=${BOARD_GENERIC_ESP8266}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_GENERIC_ESP8266}
+          value="ESP8266"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "ESP8266"}
         ></mwc-radio>
       </mwc-formfield>
 
       <mwc-formfield label="Raspberry Pi Pico W">
         <mwc-radio
           name="board"
-          .value=${BOARD_RPI_PICO_W}
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === BOARD_RPI_PICO_W}
+          value="RP2040"
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "RP2040"}
         ></mwc-radio>
       </mwc-formfield>
 
@@ -387,15 +389,15 @@ export class ESPHomeWizardDialog extends LitElement {
         <mwc-radio
           name="board"
           value="CUSTOM"
-          @click=${this._handlePickBoardRadio}
-          ?checked=${this._board === "CUSTOM"}
+          @click=${this._handlePickPlatformRadio}
+          ?checked=${this._platform === "CUSTOM"}
         ></mwc-radio>
       </mwc-formfield>
-      ${this._board !== "CUSTOM"
+      ${this._platform !== "CUSTOM"
         ? ""
         : html`
             <div class="formfield-extra">
-              <select @change=${this._handlePickBoardCustom}>
+              <select @change=${this._handlePickBoardSelect}>
                 ${boardSelectOptions(this._supportedBoards)}
               </select>
             </div>
@@ -404,6 +406,36 @@ export class ESPHomeWizardDialog extends LitElement {
         Pick a custom board if the default targets don't work or if you want to
         use the pin numbers printed on the device in your configuration.
       </div>
+
+      <mwc-button
+        slot="primaryAction"
+        label="Next"
+        @click=${this._handlePickPlatformSubmit}
+      ></mwc-button>
+      <mwc-button
+        no-attention
+        slot="secondaryAction"
+        dialogAction="close"
+        label="Cancel"
+      ></mwc-button>
+    `;
+  }
+
+  private _renderPickBoard() {
+    return html`
+      ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+
+      <div>
+        Select the board that your device contains.
+      </div>
+      <br>
+      ${this._busy
+        ? html`<div>Loading board list...</div>`
+        : html`
+            <select @change=${this._handlePickBoardSelect} size="15" style="width: 100%;">
+              ${boardSelectOptions(this._supportedBoards)}
+            </select>
+          `}
 
       <mwc-button
         slot="primaryAction"
@@ -516,8 +548,16 @@ export class ESPHomeWizardDialog extends LitElement {
       }
     }
 
-    if (changedProps.has("_board") && this._board === "CUSTOM") {
-      this._customBoard = this.shadowRoot!.querySelector("select")!.value;
+    if (changedProps.has("_board") && this._platform === "CUSTOM") {
+      this._board = this.shadowRoot!.querySelector("select")!.value;
+    }
+
+    if (changedProps.has("_state") && this._state == "pick_board") {
+      const platform = this._platform.toLowerCase();
+      getSupportedPlatformBoards(platform).then((boards) => {
+        this._supportedBoards = boards;
+        this._busy = false;
+      });
     }
   }
 
@@ -579,21 +619,37 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state =
         supportsWebSerial && allowsWebSerial
           ? "connect_webserial"
-          : "pick_board";
+          : "pick_platform";
     }, 0);
   }
 
-  private _handlePickBoardRadio(ev: MouseEvent) {
-    this._board = (ev.target as any).value;
+  private _handlePickPlatformRadio(ev: MouseEvent) {
+    this._platform = (ev.target as any).value;
   }
 
-  private _handlePickBoardCustom(ev: Event) {
-    this._customBoard = (ev.target as HTMLSelectElement).value;
+  private _handlePickBoardSelect(ev: Event) {
+    this._board = (ev.target as HTMLSelectElement).value;
   }
 
-  private async _handlePickBoardSubmit() {
-    this._data.board =
-      this._board === "CUSTOM" ? this._customBoard : this._board;
+  private async _handlePickPlatformSubmit(ev: Event) {
+    const defaultBoard = DEFAULT_BOARD[this._platform];
+    if (this._platform == "CUSTOM" && this._board !== null) {
+      await this._handlePickBoardSubmit(ev);
+      return;
+    }
+    if (!defaultBoard) {
+      this._busy = true;
+      this._state = "pick_board";
+      return;
+    }
+    await this._handlePickBoardSubmit(ev, defaultBoard);
+  }
+
+  private async _handlePickBoardSubmit(ev: Event, board: string | undefined = undefined) {
+    this._data.board = board ?? this._board!;
+    if (this._platform != "CUSTOM") {
+      this._data.platform = this._platform;
+    }
 
     this._busy = true;
 
@@ -613,7 +669,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _handleConnectSerialSkip() {
     this._error = undefined;
-    this._state = "pick_board";
+    this._state = "pick_platform";
   }
 
   private async _handleConnectSerialSubmit() {
@@ -648,21 +704,23 @@ export class ESPHomeWizardDialog extends LitElement {
 
       this._state = "prepare_flash";
 
+      let platform: WizardPlatform;
       if (esploader.chipFamily === CHIP_FAMILY_ESP32) {
-        this._data.board = BOARD_GENERIC_ESP32;
+        platform = "ESP32";
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP8266) {
-        this._data.board = BOARD_GENERIC_ESP8266;
+        platform = "ESP8266";
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S2) {
-        this._data.board = BOARD_GENERIC_ESP32S2;
+        platform = "ESP32S2";
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S3) {
-        this._data.board = BOARD_GENERIC_ESP32S3;
+        platform = "ESP32S3";
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP32C3) {
-        this._data.board = BOARD_GENERIC_ESP32C3;
+        platform = "ESP32C3";
       } else {
         this._state = "connect_webserial";
         this._error = `Unable to identify the connected device (${esploader.chipFamily}).`;
         return;
       }
+      this._data.board = DEFAULT_BOARD[platform] ?? undefined;
 
       try {
         await createConfiguration(this._data as CreateConfigParams);
