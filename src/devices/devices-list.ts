@@ -8,6 +8,7 @@ import "@material/mwc-button";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import { MetadataRefresher } from "./device-metadata-refresher";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -17,6 +18,7 @@ class ESPHomeDevicesList extends LitElement {
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
   private _highlightOnAdd = false;
+  private _metadataRefresher = new MetadataRefresher();
 
   protected render() {
     if (this._devices === undefined) {
@@ -150,6 +152,7 @@ class ESPHomeDevicesList extends LitElement {
 
   public connectedCallback() {
     super.connectedCallback();
+
     this._devicesUnsub = subscribeDevices(async (devices) => {
       let newName: string | undefined;
 
@@ -166,11 +169,18 @@ class ESPHomeDevicesList extends LitElement {
       }
       this._devices = devices;
 
-      if (!newName) {
-        return;
+      if (newName) {
+        await this.updateComplete;
+        this._scrollToDevice(newName);
       }
-      await this.updateComplete;
-      this._scrollToDevice(newName);
+
+      // check if any YAML has been copied in and needs to
+      // have it's metadata generated
+      for (const device of devices.configured) {
+        if (device.loaded_integrations.length === 0) {
+          this._metadataRefresher.add(device.configuration);
+        }
+      }
     });
     this._onlineStatusUnsub = subscribeOnlineStatus((res) => {
       this._onlineStatus = res;
