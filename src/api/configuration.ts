@@ -52,6 +52,17 @@ export const compileConfiguration = (
   abortController?: AbortController
 ) => streamLogs("compile", { configuration }, undefined, abortController);
 
+export const compileConfigurationMetadata = (
+  configuration: string,
+  abortController?: AbortController
+) =>
+  streamLogs(
+    "compile",
+    { configuration, only_generate: true },
+    undefined,
+    abortController
+  );
+
 export const getConfigurationManifest = (configuration: string) =>
   fetchApiJson<Manifest>(`./manifest.json?configuration=${configuration}`);
 
