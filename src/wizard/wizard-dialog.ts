@@ -25,7 +25,11 @@ import {
   getConfiguration,
   SupportedPlatforms,
 } from "../api/configuration";
-import { getSupportedBoards, getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
+import {
+  getSupportedBoards,
+  getSupportedPlatformBoards,
+  SupportedBoards,
+} from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -136,9 +140,7 @@ export class ESPHomeWizardDialog extends LitElement {
               html`
                 Installing<br /><br />
                 This will take
-                ${this._platform === "ESP8266"
-                  ? "a minute"
-                  : "2 minutes"}.<br />
+                ${this._platform === "ESP8266" ? "a minute" : "2 minutes"}.<br />
                 Keep this page visible to prevent slow down
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
@@ -425,14 +427,16 @@ export class ESPHomeWizardDialog extends LitElement {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
-      <div>
-        Select the board that your device contains.
-      </div>
-      <br>
+      <div>Select the board that your device contains.</div>
+      <br />
       ${this._busy
         ? html`<div>Loading board list...</div>`
         : html`
-            <select @change=${this._handlePickBoardSelect} size="15" style="width: 100%;">
+            <select
+              @change=${this._handlePickBoardSelect}
+              size="15"
+              style="width: 100%;"
+            >
               ${boardSelectOptions(this._supportedBoards)}
             </select>
           `}
@@ -645,7 +649,10 @@ export class ESPHomeWizardDialog extends LitElement {
     await this._handlePickBoardSubmit(ev, defaultBoard);
   }
 
-  private async _handlePickBoardSubmit(ev: Event, board: string | undefined = undefined) {
+  private async _handlePickBoardSubmit(
+    ev: Event,
+    board: string | undefined = undefined
+  ) {
     this._data.board = board ?? this._board!;
     if (this._platform != "CUSTOM") {
       this._data.platform = this._platform;

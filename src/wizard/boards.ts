@@ -10,4 +10,5 @@ export const boardSelectOptions = (boards: SupportedBoards | undefined) =>
           (key) => html`<option value="${key}">${group.items[key]}</option>`
         )}
       </optgroup>
-    `);
+    `
+  );
