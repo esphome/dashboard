@@ -5,6 +5,7 @@ import "@material/mwc-textfield";
 import "@material/mwc-radio";
 import "@material/mwc-formfield";
 import "@material/mwc-button";
+import "@material/mwc-checkbox";
 import "@material/mwc-circular-progress";
 import type { TextField } from "@material/mwc-textfield";
 import {
@@ -25,11 +26,7 @@ import {
   getConfiguration,
   SupportedPlatforms,
 } from "../api/configuration";
-import {
-  getSupportedBoards,
-  getSupportedPlatformBoards,
-  SupportedBoards,
-} from "../api/boards";
+import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
 import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
@@ -55,24 +52,22 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 
 */
 
-type WizardPlatform = SupportedPlatforms | "CUSTOM";
-
-const DEFAULT_BOARD: { [key in WizardPlatform]: string | null } = {
+const DEFAULT_BOARD: { [key in SupportedPlatforms]: string | null } = {
   ESP32: "esp32dev",
   ESP8266: "esp01_1m",
   ESP32S2: "esp32-s2-saola-1",
   ESP32S3: "esp32-s3-devkitc-1",
   ESP32C3: "esp32-c3-devkitm-1",
   RP2040: "rpipicow",
-  CUSTOM: null,
 };
 
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
-  @state() private _platform: WizardPlatform = "ESP32";
+  @state() private _platform: SupportedPlatforms = "ESP32";
   @state() private _board: string | null = DEFAULT_BOARD[this._platform];
+  @state() private _useRecommended: boolean = true;
 
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
@@ -387,25 +382,15 @@ export class ESPHomeWizardDialog extends LitElement {
         ></mwc-radio>
       </mwc-formfield>
 
-      <mwc-formfield label="Pick specific board">
-        <mwc-radio
-          name="board"
-          value="CUSTOM"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "CUSTOM"}
-        ></mwc-radio>
+      <mwc-formfield label="Use recommended settings">
+        <mwc-checkbox
+          name="use-recommended"
+          @change=${this._handleUseRecommendedCheckbox}
+          ?checked=${this._useRecommended}
+        ></mwc-checkbox>
       </mwc-formfield>
-      ${this._platform !== "CUSTOM"
-        ? ""
-        : html`
-            <div class="formfield-extra">
-              <select @change=${this._handlePickBoardSelect}>
-                ${boardSelectOptions(this._supportedBoards)}
-              </select>
-            </div>
-          `}
       <div>
-        Pick a custom board if the default targets don't work or if you want to
+        Uncheck this field if the default targets don't work or if you want to
         use the pin numbers printed on the device in your configuration.
       </div>
 
@@ -437,7 +422,7 @@ export class ESPHomeWizardDialog extends LitElement {
               size="15"
               style="width: 100%;"
             >
-              ${boardSelectOptions(this._supportedBoards)}
+              ${boardSelectOptions(this._supportedBoards, this._board)}
             </select>
           `}
 
@@ -445,6 +430,7 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         label="Next"
         @click=${this._handlePickBoardSubmit}
+        ?disabled=${this._board === null}
       ></mwc-button>
       <mwc-button
         no-attention
@@ -535,10 +521,6 @@ export class ESPHomeWizardDialog extends LitElement {
     checkHasWifiSecrets().then((hasWifiSecrets) => {
       this._hasWifiSecrets = hasWifiSecrets;
     });
-
-    getSupportedBoards().then((boards) => {
-      this._supportedBoards = boards;
-    });
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -550,10 +532,6 @@ export class ESPHomeWizardDialog extends LitElement {
       if (formEl) {
         formEl.updateComplete.then(() => formEl.focus());
       }
-    }
-
-    if (changedProps.has("_board") && this._platform === "CUSTOM") {
-      this._board = this.shadowRoot!.querySelector("select")!.value;
     }
 
     if (changedProps.has("_state") && this._state == "pick_board") {
@@ -631,22 +609,23 @@ export class ESPHomeWizardDialog extends LitElement {
     this._platform = (ev.target as any).value;
   }
 
+  private _handleUseRecommendedCheckbox(ev: Event) {
+    this._useRecommended = (ev.target as HTMLInputElement).checked;
+  }
+
   private _handlePickBoardSelect(ev: Event) {
     this._board = (ev.target as HTMLSelectElement).value;
   }
 
   private async _handlePickPlatformSubmit(ev: Event) {
     const defaultBoard = DEFAULT_BOARD[this._platform];
-    if (this._platform == "CUSTOM" && this._board !== null) {
-      await this._handlePickBoardSubmit(ev);
+    if (this._useRecommended && defaultBoard !== null) {
+      await this._handlePickBoardSubmit(ev, defaultBoard);
       return;
     }
-    if (!defaultBoard) {
-      this._busy = true;
-      this._state = "pick_board";
-      return;
-    }
-    await this._handlePickBoardSubmit(ev, defaultBoard);
+    this._busy = true;
+    this._board = defaultBoard;
+    this._state = "pick_board";
   }
 
   private async _handlePickBoardSubmit(
@@ -654,9 +633,6 @@ export class ESPHomeWizardDialog extends LitElement {
     board: string | undefined = undefined
   ) {
     this._data.board = board ?? this._board!;
-    if (this._platform != "CUSTOM") {
-      this._data.platform = this._platform;
-    }
 
     this._busy = true;
 
@@ -711,7 +687,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       this._state = "prepare_flash";
 
-      let platform: WizardPlatform;
+      let platform: SupportedPlatforms;
       if (esploader.chipFamily === CHIP_FAMILY_ESP32) {
         platform = "ESP32";
       } else if (esploader.chipFamily === CHIP_FAMILY_ESP8266) {

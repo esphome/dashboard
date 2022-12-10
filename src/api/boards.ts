@@ -7,8 +7,5 @@ export interface SupportedBoards {
   };
 }
 
-export const getSupportedBoards = () =>
-  fetchApiJson<SupportedBoards>("./boards");
-
 export const getSupportedPlatformBoards = (platform: string) =>
   fetchApiJson<SupportedBoards>(`./boards/${platform}`);
