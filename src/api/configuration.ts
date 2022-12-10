@@ -31,8 +31,6 @@ export interface Configuration {
   loaded_integrations: string[];
 }
 
-export type Manifest = { path: string; offset: number }[];
-
 export const createConfiguration = (params: CreateConfigParams) =>
   fetchApiText("./wizard", {
     method: "post",
@@ -62,9 +60,6 @@ export const compileConfigurationMetadata = (
     undefined,
     abortController
   );
-
-export const getConfigurationManifest = (configuration: string) =>
-  fetchApiJson<Manifest>(`./manifest.json?configuration=${configuration}`);
 
 export const getDownloadUrl = (
   configuration: string,
