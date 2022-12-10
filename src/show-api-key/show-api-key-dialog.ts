@@ -3,9 +3,9 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
 import { esphomeDialogStyles } from "../styles";
-import { getJsonConfig } from "../api/files";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { openEditDialog } from "../editor";
+import { getConfigurationApiKey } from "../api/configuration";
 
 @customElement("esphome-show-api-key-dialog")
 class ESPHomeShowApiKeyDialogDialog extends LitElement {
@@ -61,8 +61,8 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
 
-    getJsonConfig(this.configuration).then(async (content) => {
-      this._apiKey = content?.api?.encryption?.key;
+    getConfigurationApiKey(this.configuration).then((key) => {
+      this._apiKey = key;
     });
   }
 

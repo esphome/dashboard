@@ -1,4 +1,4 @@
-import { fetchApiJson, fetchApiText, streamLogs } from ".";
+import { APIError, fetchApiJson, fetchApiText, streamLogs } from ".";
 
 export type SupportedPlatforms =
   | "ESP8266"
@@ -64,4 +64,25 @@ export const getDownloadUrl = (
     url += "&type=firmware-factory.bin";
   }
   return url;
+};
+
+// null if file not found.
+export const getJsonConfig = async (
+  filename: string
+): Promise<Record<string, any> | null> => {
+  try {
+    return fetchApiJson(`./json-config?configuration=${filename}`);
+  } catch (err) {
+    if (err instanceof APIError && err.status === 404) {
+      return null;
+    }
+    throw err;
+  }
+};
+
+export const getConfigurationApiKey = async (
+  configuration: string
+): Promise<string | undefined> => {
+  const config = await getJsonConfig(configuration);
+  return config?.api?.encryption?.key;
 };
