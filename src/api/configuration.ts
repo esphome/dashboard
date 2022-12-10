@@ -1,4 +1,4 @@
-import { fetchApiJson, fetchApiText, streamLogs } from ".";
+import { APIError, fetchApiJson, fetchApiText, streamLogs } from ".";
 
 export type SupportedPlatforms =
   | "ESP8266"
@@ -31,8 +31,6 @@ export interface Configuration {
   loaded_integrations: string[];
 }
 
-export type Manifest = { path: string; offset: number }[];
-
 export const createConfiguration = (params: CreateConfigParams) =>
   fetchApiText("./wizard", {
     method: "post",
@@ -52,8 +50,16 @@ export const compileConfiguration = (
   abortController?: AbortController
 ) => streamLogs("compile", { configuration }, undefined, abortController);
 
-export const getConfigurationManifest = (configuration: string) =>
-  fetchApiJson<Manifest>(`./manifest.json?configuration=${configuration}`);
+export const compileConfigurationMetadata = (
+  configuration: string,
+  abortController?: AbortController
+) =>
+  streamLogs(
+    "compile",
+    { configuration, only_generate: true },
+    undefined,
+    abortController
+  );
 
 export const getDownloadUrl = (
   configuration: string,
@@ -64,4 +70,25 @@ export const getDownloadUrl = (
     url += "&type=firmware-factory.bin";
   }
   return url;
+};
+
+// null if file not found.
+export const getJsonConfig = async (
+  filename: string
+): Promise<Record<string, any> | null> => {
+  try {
+    return fetchApiJson(`./json-config?configuration=${filename}`);
+  } catch (err) {
+    if (err instanceof APIError && err.status === 404) {
+      return null;
+    }
+    throw err;
+  }
+};
+
+export const getConfigurationApiKey = async (
+  configuration: string
+): Promise<string | undefined> => {
+  const config = await getJsonConfig(configuration);
+  return config?.api?.encryption?.key;
 };

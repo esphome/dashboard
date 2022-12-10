@@ -1,5 +1,5 @@
 import { ESPLoader } from "esp-web-flasher";
-import { getConfigurationManifest, Manifest } from "./api/configuration";
+import { getDownloadUrl } from "./api/configuration";
 
 export interface FileToFlash {
   data: ArrayBuffer;
@@ -9,33 +9,23 @@ export interface FileToFlash {
 export const getConfigurationFiles = async (
   filename: string
 ): Promise<FileToFlash[]> => {
-  let toFlash: Manifest;
-
+  let resp: Response;
   try {
-    toFlash = await getConfigurationManifest(filename);
+    resp = await fetch(getDownloadUrl(filename, true));
   } catch (err) {
-    throw new Error(`Error fetching manifest.json for ${filename}: ${err}`);
+    throw new Error(`Downloading firmware failed: ${err}`);
   }
 
-  const filePromises = toFlash.map(async (part) => {
-    const url = new URL(part.path, location.href).toString();
-    const resp = await fetch(url);
-    if (!resp.ok) {
-      throw new Error(
-        `Downloading firmware ${part.path} failed: ${resp.status}`
-      );
-    }
-    return resp.arrayBuffer();
-  });
-
-  const files: FileToFlash[] = [];
-
-  for (const part of toFlash) {
-    const data = await filePromises.shift()!;
-    files.push({ data, offset: part.offset });
+  if (!resp.ok) {
+    throw new Error(`Downloading firmware failed: ${resp.status}`);
   }
 
-  return files;
+  return [
+    {
+      data: await resp.arrayBuffer(),
+      offset: 0,
+    },
+  ];
 };
 
 export const flashFiles = async (
