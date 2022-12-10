@@ -228,6 +228,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       .card-actions mwc-button.update-available {
         --mdc-theme-primary: var(--update-available-color);
       }
+      esphome-button-menu {
+        --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.56);
+      }
       .tooltip-container {
         display: inline-block;
       }
