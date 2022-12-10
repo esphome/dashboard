@@ -242,7 +242,19 @@ class ESPHomeInstallChooseDialog extends LitElement {
             </li>
             <li>The Pico will show up as a USB drive named RPI-RP2</li>
             <li>${downloadButton}</li>
-            <li>Drag the downloaded file to the USB drive</li>
+            <li>
+              ${window.navigator.platform.startsWith("Mac")
+                ? html`
+                    <del>Drag the downloaded file to the USB drive</del><br />
+                    For users on a Mac, follow
+                    <a
+                      href="https://www.raspberrypi.com/news/the-ventura-problem/"
+                      target="_blank_"
+                      >these instructions</a
+                    >
+                  `
+                : "Drag the downloaded file to the USB drive"}
+            </li>
             <li>Your Pico will reboot and the installation is complete</li>
           </ol>
         `;
