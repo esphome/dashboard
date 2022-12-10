@@ -6,6 +6,7 @@ import "@material/mwc-radio";
 import "@material/mwc-formfield";
 import "@material/mwc-button";
 import "@material/mwc-checkbox";
+import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import type { TextField } from "@material/mwc-textfield";
 import {
@@ -17,7 +18,7 @@ import {
   CHIP_FAMILY_ESP32S2,
   CHIP_FAMILY_ESP32S3,
 } from "esp-web-flasher";
-import { allowsWebSerial, supportsWebSerial } from "../const";
+import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import {
   compileConfiguration,
   CreateConfigParams,
@@ -65,7 +66,7 @@ const DEFAULT_BOARD: { [key in SupportedPlatforms]: string | null } = {
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
-  @state() private _platform: SupportedPlatforms = "ESP32";
+  private _platform: SupportedPlatforms = "ESP32";
   @state() private _board: string | null = DEFAULT_BOARD[this._platform];
   @state() private _useRecommended: boolean = true;
 
@@ -322,65 +323,33 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private _renderPickPlatform() {
+    const platforms: { [key in SupportedPlatforms]: string } = {
+      ESP32: "ESP32",
+      ESP32S2: "ESP32-S2",
+      ESP32S3: "ESP32-S3",
+      ESP32C3: "ESP32-C3",
+      ESP8266: "ESP8266",
+      RP2040: "Raspberry Pi Pico W",
+    };
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
       <div>
         Select the type of device that this configuration will be installed on.
       </div>
-      <mwc-formfield label="ESP32" checked>
-        <mwc-radio
-          name="board"
-          value="ESP32"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "ESP32"}
-        ></mwc-radio>
-      </mwc-formfield>
 
-      <mwc-formfield label="ESP32-S2">
-        <mwc-radio
-          name="board"
-          value="ESP32S2"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "ESP32S2"}
-        ></mwc-radio>
-      </mwc-formfield>
-
-      <mwc-formfield label="ESP32-S3">
-        <mwc-radio
-          name="board"
-          value="ESP32S3"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "ESP32S3"}
-        ></mwc-radio>
-      </mwc-formfield>
-
-      <mwc-formfield label="ESP32-C3">
-        <mwc-radio
-          name="board"
-          value="ESP32C3"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "ESP32C3"}
-        ></mwc-radio>
-      </mwc-formfield>
-
-      <mwc-formfield label="ESP8266">
-        <mwc-radio
-          name="board"
-          value="ESP8266"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "ESP8266"}
-        ></mwc-radio>
-      </mwc-formfield>
-
-      <mwc-formfield label="Raspberry Pi Pico W">
-        <mwc-radio
-          name="board"
-          value="RP2040"
-          @click=${this._handlePickPlatformRadio}
-          ?checked=${this._platform === "RP2040"}
-        ></mwc-radio>
-      </mwc-formfield>
+      ${Object.keys(platforms).map(
+        (key) => html`
+          <mwc-list-item
+            hasMeta
+            .platform=${key}
+            @click=${this._handlePickPlatformClick}
+          >
+            <span>${platforms[key]}</span>
+            ${metaChevronRight}
+          </mwc-list-item>
+        `
+      )}
 
       <mwc-formfield label="Use recommended settings">
         <mwc-checkbox
@@ -394,11 +363,6 @@ export class ESPHomeWizardDialog extends LitElement {
         use the pin numbers printed on the device in your configuration.
       </div>
 
-      <mwc-button
-        slot="primaryAction"
-        label="Next"
-        @click=${this._handlePickPlatformSubmit}
-      ></mwc-button>
       <mwc-button
         no-attention
         slot="secondaryAction"
@@ -605,10 +569,6 @@ export class ESPHomeWizardDialog extends LitElement {
     }, 0);
   }
 
-  private _handlePickPlatformRadio(ev: MouseEvent) {
-    this._platform = (ev.target as any).value;
-  }
-
   private _handleUseRecommendedCheckbox(ev: Event) {
     this._useRecommended = (ev.target as HTMLInputElement).checked;
   }
@@ -617,7 +577,8 @@ export class ESPHomeWizardDialog extends LitElement {
     this._board = (ev.target as HTMLSelectElement).value;
   }
 
-  private async _handlePickPlatformSubmit(ev: Event) {
+  private async _handlePickPlatformClick(ev: Event) {
+    this._platform = (ev.currentTarget as any).platform;
     const defaultBoard = DEFAULT_BOARD[this._platform];
     if (this._useRecommended && defaultBoard !== null) {
       await this._handlePickBoardSubmit(ev, defaultBoard);
