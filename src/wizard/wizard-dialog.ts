@@ -25,6 +25,7 @@ import {
   createConfiguration,
   deleteConfiguration,
   getConfiguration,
+  getConfigurationApiKey,
   SupportedPlatforms,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
@@ -42,6 +43,8 @@ import { openInstallChooseDialog } from "../install-choose";
 import { esphomeDialogStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
 import { cleanName, stripDash } from "../util/name-validator";
+import { copyToClipboard } from "../util/copy-clipboard";
+import { sleep } from "../util/sleep";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -100,10 +103,12 @@ export class ESPHomeWizardDialog extends LitElement {
   @state() private _error?: string;
 
   private _installed = false;
+  private _apiKey?: string;
 
   @query("mwc-textfield[name=name]") private _inputName!: TextField;
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
+  @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
 
   protected render() {
     let heading;
@@ -447,7 +452,7 @@ export class ESPHomeWizardDialog extends LitElement {
       return this._renderMessage(WARNING_ICON, this._error, true);
     }
     return html`
-      ${this._renderMessage(OK_ICON, "Configuration created!", this._installed)}
+      ${this._renderMessage(OK_ICON, "Configuration created!", false)}
       ${this._installed
         ? ""
         : html`
@@ -459,6 +464,35 @@ export class ESPHomeWizardDialog extends LitElement {
               Once the device is installed and connected to your network, you
               will be able to manage it wirelessly.
             </div>
+          `}
+      ${this._apiKey
+        ? html`
+            <p>
+              Each ESPHome device has a unique encryption key to talk to other
+              devices. You will need this key to include your device in Home
+              Assistant. You can find the key later in the device menu.
+            </p>
+            <div class="api-key-container">
+              <mwc-textfield
+                label="Encryption key"
+                readonly
+                name="api_key"
+                value=${this._apiKey}
+                @click=${this._handleCopyApiKey}
+              ></mwc-textfield>
+              <div class="api-key-banner">Copied!</div>
+            </div>
+          `
+        : ""}
+      ${this._installed
+        ? html`
+            <mwc-button
+              slot="primaryAction"
+              dialogAction="ok"
+              label="Close"
+            ></mwc-button>
+          `
+        : html`
             <mwc-button
               slot="primaryAction"
               dialogAction="ok"
@@ -598,6 +632,7 @@ export class ESPHomeWizardDialog extends LitElement {
         await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
       }
       await createConfiguration(this._data as CreateConfigParams);
+      this._apiKey = await getConfigurationApiKey(this._configFilename);
       refreshDevices();
       this._state = "done";
     } catch (err: any) {
@@ -753,6 +788,14 @@ export class ESPHomeWizardDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
+  private async _handleCopyApiKey() {
+    copyToClipboard(this._apiKey!);
+    this._inputApiKeyBanner!.style.setProperty("display", "flex");
+    await sleep(3000);
+    // User might have closed the dialog in the meantime
+    this._inputApiKeyBanner?.style.setProperty("display", "none");
+  }
+
   static styles = [
     esphomeDialogStyles,
     css`
@@ -782,6 +825,24 @@ export class ESPHomeWizardDialog extends LitElement {
       .error {
         color: var(--alert-error-color);
         margin-bottom: 16px;
+      }
+      .api-key-container {
+        position: relative;
+      }
+      .api-key-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--mdc-theme-primary);
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin: 0 !important;
+        font-weight: bold;
+        border-radius: 2px;
       }
     `,
   ];
