@@ -68,6 +68,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private _platform: SupportedPlatforms = "ESP32";
   @state() private _board: string | null = DEFAULT_BOARD[this._platform];
+  private _defaultBoard: string | null = DEFAULT_BOARD[this._platform];
   @state() private _useRecommended: boolean = true;
 
   // undefined = not loaded
@@ -338,34 +339,32 @@ export class ESPHomeWizardDialog extends LitElement {
         Select the type of device that this configuration will be installed on.
       </div>
 
-      ${Object.keys(platforms).map(
-        (key) => html`
-          <mwc-list-item
-            hasMeta
-            .platform=${key}
-            @click=${this._handlePickPlatformClick}
-          >
-            <span>${platforms[key]}</span>
-            ${metaChevronRight}
-          </mwc-list-item>
-        `
-      )}
+      <mwc-list class="platforms">
+        ${Object.keys(platforms).map(
+          (key) => html`
+            <mwc-list-item
+              hasMeta
+              .platform=${key}
+              @click=${this._handlePickPlatformClick}
+            >
+              <span>${platforms[key]}</span>
+              ${metaChevronRight}
+            </mwc-list-item>
+          `
+        )}
+      </mwc-list>
 
-      <mwc-formfield label="Use recommended settings">
+      <mwc-formfield slot="secondaryAction" label="Use recommended settings">
         <mwc-checkbox
           name="use-recommended"
           @change=${this._handleUseRecommendedCheckbox}
           ?checked=${this._useRecommended}
         ></mwc-checkbox>
       </mwc-formfield>
-      <div>
-        Uncheck this field if the default targets don't work or if you want to
-        use the pin numbers printed on the device in your configuration.
-      </div>
 
       <mwc-button
         no-attention
-        slot="secondaryAction"
+        slot="primaryAction"
         dialogAction="close"
         label="Cancel"
       ></mwc-button>
@@ -375,9 +374,6 @@ export class ESPHomeWizardDialog extends LitElement {
   private _renderPickBoard() {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-
-      <div>Select the board that your device contains.</div>
-      <br />
       ${this._busy
         ? html`<div>Loading board list...</div>`
         : html`
@@ -386,7 +382,7 @@ export class ESPHomeWizardDialog extends LitElement {
               size="15"
               style="width: 100%;"
             >
-              ${boardSelectOptions(this._supportedBoards, this._board)}
+              ${boardSelectOptions(this._supportedBoards, this._defaultBoard)}
             </select>
           `}
 
@@ -579,13 +575,13 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handlePickPlatformClick(ev: Event) {
     this._platform = (ev.currentTarget as any).platform;
-    const defaultBoard = DEFAULT_BOARD[this._platform];
-    if (this._useRecommended && defaultBoard !== null) {
-      await this._handlePickBoardSubmit(ev, defaultBoard);
+    this._defaultBoard = DEFAULT_BOARD[this._platform];
+    if (this._useRecommended && this._defaultBoard !== null) {
+      await this._handlePickBoardSubmit(ev, this._defaultBoard);
       return;
     }
     this._busy = true;
-    this._board = defaultBoard;
+    this._board = this._defaultBoard;
     this._state = "pick_board";
   }
 

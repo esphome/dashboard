@@ -2,7 +2,7 @@ import { fetchApiJson } from ".";
 
 export interface SupportedBoards {
   [key: string]: {
-    title: string;
+    title?: string;
     items: { [key: string]: string };
   };
 }

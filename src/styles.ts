@@ -91,4 +91,12 @@ export const esphomeDialogStyles = css`
       ) !important;
     }
   }
+
+  mwc-list.platforms {
+    margin: 0 -24px;
+  }
+
+  mwc-list.platforms mwc-list-item {
+    padding: 0 24px;
+  }
 `;
