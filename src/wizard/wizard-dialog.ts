@@ -9,16 +9,16 @@ import "@material/mwc-checkbox";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import type { TextField } from "@material/mwc-textfield";
+import { connect, ESPLoader } from "esp-web-flasher";
 import {
-  connect,
-  ESPLoader,
-  CHIP_FAMILY_ESP32,
-  CHIP_FAMILY_ESP8266,
-  CHIP_FAMILY_ESP32C3,
-  CHIP_FAMILY_ESP32S2,
-  CHIP_FAMILY_ESP32S3,
-} from "esp-web-flasher";
-import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
+  allowsWebSerial,
+  metaChevronRight,
+  supportsWebSerial,
+  SupportedPlatforms,
+  supportedPlatforms,
+  PlatformData,
+  chipFamilyToPlatform,
+} from "../const";
 import {
   compileConfiguration,
   CreateConfigParams,
@@ -26,7 +26,6 @@ import {
   deleteConfiguration,
   getConfiguration,
   getConfigurationApiKey,
-  SupportedPlatforms,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
@@ -56,22 +55,12 @@ https://docs.google.com/drawings/d/1LAYImcreQdcUxtBt10K76FFypMGRTwu1tGBEERfAWkE/
 
 */
 
-const DEFAULT_BOARD: { [key in SupportedPlatforms]: string | null } = {
-  ESP32: "esp32dev",
-  ESP8266: "esp01_1m",
-  ESP32S2: "esp32-s2-saola-1",
-  ESP32S3: "esp32-s3-devkitc-1",
-  ESP32C3: "esp32-c3-devkitm-1",
-  RP2040: "rpipicow",
-};
-
 @customElement("esphome-wizard-dialog")
 export class ESPHomeWizardDialog extends LitElement {
   @state() private _busy = false;
 
   private _platform: SupportedPlatforms = "ESP32";
-  @state() private _board: string | null = DEFAULT_BOARD[this._platform];
-  private _defaultBoard: string | null = DEFAULT_BOARD[this._platform];
+  @state() private _board: string | null = this._platformData().defaultBoard;
   @state() private _useRecommended: boolean = true;
 
   // undefined = not loaded
@@ -110,6 +99,10 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
   @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
 
+  private _platformData(): PlatformData {
+    return supportedPlatforms[this._platform];
+  }
+
   protected render() {
     let heading;
     let content;
@@ -123,7 +116,9 @@ export class ESPHomeWizardDialog extends LitElement {
       heading = "Select your device type";
       content = this._renderPickPlatform();
     } else if (this._state === "pick_board") {
-      heading = "Select your board";
+      heading = this._platformData().showPickerTitle
+        ? `Select your ${this._platformData().label} board`
+        : "Select your board";
       content = this._renderPickBoard();
     } else if (this._state === "connect_webserial") {
       heading = "Installation";
@@ -329,14 +324,6 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private _renderPickPlatform() {
-    const platforms: { [key in SupportedPlatforms]: string } = {
-      ESP32: "ESP32",
-      ESP32S2: "ESP32-S2",
-      ESP32S3: "ESP32-S3",
-      ESP32C3: "ESP32-C3",
-      ESP8266: "ESP8266",
-      RP2040: "Raspberry Pi Pico W",
-    };
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
@@ -345,14 +332,14 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <mwc-list class="platforms">
-        ${Object.keys(platforms).map(
+        ${Object.keys(supportedPlatforms).map(
           (key) => html`
             <mwc-list-item
               hasMeta
               .platform=${key}
               @click=${this._handlePickPlatformClick}
             >
-              <span>${platforms[key]}</span>
+              <span>${supportedPlatforms[key].label}</span>
               ${metaChevronRight}
             </mwc-list-item>
           `
@@ -379,7 +366,11 @@ export class ESPHomeWizardDialog extends LitElement {
   private _renderPickBoard() {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-      ${this._busy
+      ${!this._platformData().showPickerTitle
+        ? html``
+        : html` <div>Pick your ${this._platformData().label} board.</div>
+            <br />`}
+      ${!this._supportedBoards
         ? html`<div>Loading board list...</div>`
         : html`
             <select
@@ -387,7 +378,10 @@ export class ESPHomeWizardDialog extends LitElement {
               size="15"
               style="width: 100%;"
             >
-              ${boardSelectOptions(this._supportedBoards, this._defaultBoard)}
+              ${boardSelectOptions(
+                this._supportedBoards,
+                this._platformData().defaultBoard
+              )}
             </select>
           `}
 
@@ -401,7 +395,7 @@ export class ESPHomeWizardDialog extends LitElement {
         no-attention
         slot="secondaryAction"
         label="Back"
-        @click=${() => this._state = "pick_platform"}
+        @click=${() => (this._state = "pick_platform")}
       ></mwc-button>
     `;
   }
@@ -608,22 +602,20 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private async _handlePickPlatformClick(ev: Event) {
+    this._supportedBoards = undefined;
     this._platform = (ev.currentTarget as any).platform;
-    this._defaultBoard = DEFAULT_BOARD[this._platform];
-    if (this._useRecommended && this._defaultBoard !== null) {
-      await this._handlePickBoardSubmit(ev, this._defaultBoard);
+    this._board = this._platformData().defaultBoard;
+    if (this._useRecommended && this._board !== null) {
+      await this._handlePickBoardSubmit();
       return;
     }
     this._busy = true;
-    this._board = this._defaultBoard;
     this._state = "pick_board";
   }
 
-  private async _handlePickBoardSubmit(
-    ev: Event,
-    board: string | undefined = undefined
-  ) {
-    this._data.board = board ?? this._board!;
+  private async _handlePickBoardSubmit() {
+    if (!this._board) return;
+    this._data.board = this._board!;
 
     this._busy = true;
 
@@ -680,22 +672,15 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "prepare_flash";
 
       let platform: SupportedPlatforms;
-      if (esploader.chipFamily === CHIP_FAMILY_ESP32) {
-        platform = "ESP32";
-      } else if (esploader.chipFamily === CHIP_FAMILY_ESP8266) {
-        platform = "ESP8266";
-      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S2) {
-        platform = "ESP32S2";
-      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32S3) {
-        platform = "ESP32S3";
-      } else if (esploader.chipFamily === CHIP_FAMILY_ESP32C3) {
-        platform = "ESP32C3";
+      const chipFamily = esploader.chipFamily.toString();
+      if (Object.keys(chipFamilyToPlatform).includes(chipFamily)) {
+        platform = chipFamilyToPlatform[chipFamily];
       } else {
         this._state = "connect_webserial";
         this._error = `Unable to identify the connected device (${esploader.chipFamily}).`;
         return;
       }
-      this._data.board = DEFAULT_BOARD[platform] ?? undefined;
+      this._data.board = supportedPlatforms[platform].defaultBoard ?? undefined;
 
       try {
         await createConfiguration(this._data as CreateConfigParams);
