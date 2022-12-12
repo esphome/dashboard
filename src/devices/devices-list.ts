@@ -67,18 +67,23 @@ class ESPHomeDevicesList extends LitElement {
         ${repeat(
           this._devices.configured,
           (device) => device.name,
-          (device) => html`<esphome-configured-device-card
-            ${animate({
-              id: device.name,
-              inId: device.name,
-              skipInitial: true,
-            })}
-            .device=${device}
-            @deleted=${this._updateDevices}
-            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-            data-name=${device.name}
-            .highlightOnAdd=${this._highlightOnAdd}
-          ></esphome-configured-device-card>`
+          (device) =>
+            device.configuration.includes(".hide.")
+              ? html``
+              : html`<esphome-configured-device-card
+                  ${animate({
+                    id: device.name,
+                    inId: device.name,
+                    skipInitial: true,
+                  })}
+                  .device=${device}
+                  @deleted=${this._updateDevices}
+                  .onlineStatus=${(this._onlineStatus || {})[
+                    device.configuration
+                  ]}
+                  data-name=${device.name}
+                  .highlightOnAdd=${this._highlightOnAdd}
+                ></esphome-configured-device-card>`
         )}
       </div>
     `;
