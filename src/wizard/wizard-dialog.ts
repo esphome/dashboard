@@ -366,7 +366,7 @@ export class ESPHomeWizardDialog extends LitElement {
     const defaultBoard = this._platformData().defaultBoard;
     let defaultBoardTitle: string | null = null;
     if (defaultBoard && this._supportedBoards) {
-      for (let group of Object.values(this._supportedBoards)) {
+      for (let group of this._supportedBoards) {
         if (Object.keys(group.items).includes(defaultBoard)) {
           defaultBoardTitle = group.items[defaultBoard];
           break;
@@ -394,7 +394,7 @@ export class ESPHomeWizardDialog extends LitElement {
                       ${defaultBoardTitle} (default)
                     </option>
                     <option disabled>------</option>`}
-              ${Object.values(this._supportedBoards).map((group) => {
+              ${this._supportedBoards.map((group) => {
                 const options = Object.keys(group.items).map((key) =>
                   key === defaultBoard
                     ? html``
