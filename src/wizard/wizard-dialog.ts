@@ -29,7 +29,6 @@ import {
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../flash";
-import { boardSelectOptions } from "./boards";
 import { subscribeOnlineStatus } from "../api/online-status";
 import { refreshDevices } from "../api/devices";
 import {
@@ -364,6 +363,17 @@ export class ESPHomeWizardDialog extends LitElement {
   }
 
   private _renderPickBoard() {
+    const defaultBoard = this._platformData().defaultBoard;
+    let defaultBoardTitle: string | null = null;
+    if (defaultBoard && this._supportedBoards) {
+      for (let group of Object.values(this._supportedBoards)) {
+        if (Object.keys(group.items).includes(defaultBoard)) {
+          defaultBoardTitle = group.items[defaultBoard];
+          break;
+        }
+      }
+    }
+
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
       ${!this._platformData().showPickerTitle
@@ -378,10 +388,22 @@ export class ESPHomeWizardDialog extends LitElement {
               size="15"
               style="width: 100%;"
             >
-              ${boardSelectOptions(
-                this._supportedBoards,
-                this._platformData().defaultBoard
-              )}
+              ${!defaultBoard || !defaultBoardTitle
+                ? html``
+                : html`<option value="${defaultBoard}" selected>
+                      ${defaultBoardTitle} (default)
+                    </option>
+                    <option disabled>------</option>`}
+              ${Object.values(this._supportedBoards).map((group) => {
+                const options = Object.keys(group.items).map((key) =>
+                  key === defaultBoard
+                    ? html``
+                    : html`<option value="${key}">${group.items[key]}</option>`
+                );
+                return group.title
+                  ? html`<optgroup label="${group.title}">${options}</optgroup>`
+                  : options;
+              })}
             </select>
           `}
 
