@@ -540,12 +540,21 @@ export class ESPHomeWizardDialog extends LitElement {
       }
     }
 
-    if (changedProps.has("_state") && this._state == "pick_board") {
-      const platform = this._platform.toLowerCase();
-      getSupportedPlatformBoards(platform).then((boards) => {
-        this._supportedBoards = boards;
-        this._busy = false;
-      });
+    if (this._state == "pick_board") {
+      if (changedProps.has("_state")) {
+        const platform = this._platform.toLowerCase();
+        getSupportedPlatformBoards(platform).then((boards) => {
+          this._supportedBoards = boards;
+          this._busy = false;
+        });
+      }
+
+      if (changedProps.has("_busy") && !this._busy) {
+        const formEl: any = this.shadowRoot!.querySelector("select");
+        if (formEl) {
+          formEl.focus();
+        }
+      }
     }
   }
 
