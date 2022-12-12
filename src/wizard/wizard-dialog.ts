@@ -367,7 +367,7 @@ export class ESPHomeWizardDialog extends LitElement {
     let defaultBoardTitle: string | null = null;
     if (defaultBoard && this._supportedBoards) {
       for (let group of this._supportedBoards) {
-        if (Object.keys(group.items).includes(defaultBoard)) {
+        if (defaultBoard in group.items) {
           defaultBoardTitle = group.items[defaultBoard];
           break;
         }
@@ -377,7 +377,7 @@ export class ESPHomeWizardDialog extends LitElement {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
       ${!this._platformData().showPickerTitle
-        ? html``
+        ? ""
         : html` <div>Pick your ${this._platformData().label} board.</div>
             <br />`}
       ${!this._supportedBoards
@@ -389,7 +389,7 @@ export class ESPHomeWizardDialog extends LitElement {
               style="width: 100%;"
             >
               ${!defaultBoard || !defaultBoardTitle
-                ? html``
+                ? ""
                 : html`<option value="${defaultBoard}" selected>
                       ${defaultBoardTitle} (default)
                     </option>
