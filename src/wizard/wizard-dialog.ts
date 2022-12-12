@@ -359,7 +359,7 @@ export class ESPHomeWizardDialog extends LitElement {
         )}
       </mwc-list>
 
-      <mwc-formfield slot="secondaryAction" label="Use recommended settings">
+      <mwc-formfield class="footer-left" label="Use recommended settings">
         <mwc-checkbox
           name="use-recommended"
           @change=${this._handleUseRecommendedCheckbox}
@@ -400,8 +400,8 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-button
         no-attention
         slot="secondaryAction"
-        dialogAction="close"
-        label="Cancel"
+        label="Back"
+        @click=${() => this._state = "pick_platform"}
       ></mwc-button>
     `;
   }
@@ -843,6 +843,12 @@ export class ESPHomeWizardDialog extends LitElement {
         margin: 0 !important;
         font-weight: bold;
         border-radius: 2px;
+      }
+      .footer-left {
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        z-index: 1;
       }
     `,
   ];
