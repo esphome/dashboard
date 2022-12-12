@@ -115,7 +115,7 @@ export class ESPHomeWizardDialog extends LitElement {
       heading = "Select your device type";
       content = this._renderPickPlatform();
     } else if (this._state === "pick_board") {
-      heading = this._platformData().showPickerTitle
+      heading = this._platformData().showInPickerTitle
         ? `Select your ${this._platformData().label} board`
         : "Select your board";
       content = this._renderPickBoard();
@@ -376,10 +376,6 @@ export class ESPHomeWizardDialog extends LitElement {
 
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-      ${!this._platformData().showPickerTitle
-        ? ""
-        : html` <div>Pick your ${this._platformData().label} board.</div>
-            <br />`}
       ${!this._supportedBoards
         ? html`<div>Loading board list...</div>`
         : html`

@@ -20,7 +20,7 @@ export type SupportedPlatforms =
 
 export type PlatformData = {
   label: string;
-  showPickerTitle: boolean;
+  showInPickerTitle: boolean;
   defaultBoard: string | null;
 };
 
@@ -29,32 +29,32 @@ export const supportedPlatforms: { [key in SupportedPlatforms]: PlatformData } =
   {
     ESP32: {
       label: "ESP32",
-      showPickerTitle: true,
+      showInPickerTitle: true,
       defaultBoard: "esp32dev",
     },
     ESP32S2: {
       label: "ESP32-S2",
-      showPickerTitle: true,
+      showInPickerTitle: true,
       defaultBoard: "esp32-s2-saola-1",
     },
     ESP32S3: {
       label: "ESP32-S3",
-      showPickerTitle: true,
+      showInPickerTitle: true,
       defaultBoard: "esp32-s3-devkitc-1",
     },
     ESP32C3: {
       label: "ESP32-C3",
-      showPickerTitle: true,
+      showInPickerTitle: true,
       defaultBoard: "esp32-c3-devkitm-1",
     },
     ESP8266: {
       label: "ESP8266",
-      showPickerTitle: true,
+      showInPickerTitle: true,
       defaultBoard: "esp01_1m",
     },
     RP2040: {
       label: "Raspberry Pi Pico W",
-      showPickerTitle: false,
+      showInPickerTitle: false,
       defaultBoard: "rpipicow",
     },
   };
