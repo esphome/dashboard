@@ -194,7 +194,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
       const filesCallback =
         this.params.filesCallback ||
-        ((platform: string) =>
+        ((platform: ValueOf<typeof chipFamilyToPlatform>) =>
           this._getFilesForConfiguration(this.params.configuration!, platform));
 
       let files: FileToFlash[] | undefined = [];

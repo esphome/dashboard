@@ -1,12 +1,5 @@
 import { APIError, fetchApiJson, fetchApiText, streamLogs } from ".";
-
-export type SupportedPlatforms =
-  | "ESP8266"
-  | "ESP32"
-  | "ESP32S2"
-  | "ESP32S3"
-  | "ESP32C3"
-  | "RP2040";
+import { SupportedPlatforms } from "../const";
 
 export interface CreateConfigParams {
   name: string;
