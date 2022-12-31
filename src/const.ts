@@ -10,8 +10,56 @@ import { svg } from "lit";
 export const supportsWebSerial = "serial" in navigator;
 export const allowsWebSerial = window.isSecureContext;
 
+export type SupportedPlatforms =
+  | "ESP8266"
+  | "ESP32"
+  | "ESP32S2"
+  | "ESP32S3"
+  | "ESP32C3"
+  | "RP2040";
+
+export type PlatformData = {
+  label: string;
+  showInPickerTitle: boolean;
+  defaultBoard: string | null;
+};
+
 // Platforms supported by ESPHome
-export const chipFamilyToPlatform = {
+export const supportedPlatforms: { [key in SupportedPlatforms]: PlatformData } =
+  {
+    ESP32: {
+      label: "ESP32",
+      showInPickerTitle: true,
+      defaultBoard: "esp32dev",
+    },
+    ESP32S2: {
+      label: "ESP32-S2",
+      showInPickerTitle: true,
+      defaultBoard: "esp32-s2-saola-1",
+    },
+    ESP32S3: {
+      label: "ESP32-S3",
+      showInPickerTitle: true,
+      defaultBoard: "esp32-s3-devkitc-1",
+    },
+    ESP32C3: {
+      label: "ESP32-C3",
+      showInPickerTitle: true,
+      defaultBoard: "esp32-c3-devkitm-1",
+    },
+    ESP8266: {
+      label: "ESP8266",
+      showInPickerTitle: true,
+      defaultBoard: "esp01_1m",
+    },
+    RP2040: {
+      label: "Raspberry Pi Pico W",
+      showInPickerTitle: false,
+      defaultBoard: "rpipicow",
+    },
+  };
+
+export const chipFamilyToPlatform: { [key: number]: SupportedPlatforms } = {
   [CHIP_FAMILY_ESP32]: "ESP32",
   [CHIP_FAMILY_ESP32S2]: "ESP32S2",
   [CHIP_FAMILY_ESP32S3]: "ESP32S3",

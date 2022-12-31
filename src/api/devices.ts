@@ -1,6 +1,6 @@
 import { fetchApiJson, fetchApiText } from ".";
+import { SupportedPlatforms } from "../const";
 import { createPollingCollection } from "../util/polling-collection";
-import { SupportedPlatforms } from "./configuration";
 
 export interface ConfiguredDevice {
   name: string;
