@@ -81,7 +81,7 @@ export const getJsonConfig = async (
 
 export const getConfigurationApiKey = async (
   configuration: string
-): Promise<string | undefined> => {
+): Promise<string | null> => {
   const config = await getJsonConfig(configuration);
-  return config?.api?.encryption?.key;
+  return config?.api?.encryption?.key || null;
 };
