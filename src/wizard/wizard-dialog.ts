@@ -91,7 +91,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @state() private _error?: string;
 
   private _installed = false;
-  private _apiKey?: string;
+  private _apiKey?: string | null;
 
   @query("mwc-textfield[name=name]") private _inputName!: TextField;
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
