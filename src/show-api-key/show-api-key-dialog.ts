@@ -26,8 +26,8 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
         ${this._apiKey === undefined
           ? "Loading…"
           : this._apiKey === null
-          ? html`Unable to automatically extract API key. Open the configuration
-              and look for <code>api:</code>.`
+          ? html`Unable to automatically extract API key. It may not be set.
+              Open the configuration and look for <code>api:</code>.`
           : html`
               <div class="key" @click=${this._copyApiKey}>
                 <code>${this._apiKey}</code>
