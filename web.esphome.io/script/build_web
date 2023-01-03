@@ -13,6 +13,6 @@ cp -r static dist/static_web
 
 cd ..
 
-NODE_ENV=production npm exec -- rollup -c web.esphome.io/rollup.config.js
+NODE_ENV=production npm exec -- rollup -c web.esphome.io/rollup.config.mjs
 
 NODE_ENV=production node web.esphome.io/build/render-index.mjs
