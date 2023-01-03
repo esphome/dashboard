@@ -1,8 +1,8 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import json from "@rollup/plugin-json";
 import typescript from "@rollup/plugin-typescript";
-import manifest from "./build-scripts/rollup/manifest-plugin";
+import manifest from "./build-scripts/rollup/manifest-plugin.mjs";
 import postcss from "rollup-plugin-postcss";
 import postcssUrl from "postcss-url";
 import commonjs from "@rollup/plugin-commonjs";
@@ -63,7 +63,7 @@ const config = {
       terser({
         ecma: 2019,
         toplevel: true,
-        output: {
+        format: {
           comments: false,
         },
       }),

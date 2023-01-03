@@ -1,6 +1,6 @@
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
-import config from "../rollup.config.js";
+import config from "../rollup.config.mjs";
 
 const WEB_DIR = dirname(fileURLToPath(import.meta.url));
 

@@ -20,5 +20,5 @@ npm exec -- serve -p 5006 dist &
 
 cd ..
 
-npm exec -- rollup -c web.esphome.io/rollup.config.js --watch &
+npm exec -- rollup -c web.esphome.io/rollup.config.mjs --watch &
 wait
