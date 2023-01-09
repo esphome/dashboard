@@ -22,7 +22,7 @@
     "nunjucks": "^3.2.3",
     "postcss": "^8.4.20",
     "postcss-url": "^10.1.3",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "rollup": "^3.9.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-monaco-editor": "^0.2.1",
