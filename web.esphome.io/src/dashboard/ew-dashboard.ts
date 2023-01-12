@@ -2,18 +2,9 @@ import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
 import "@material/mwc-button";
 import "./unsupported-card";
-import "./connect-card";
+import "./esp-connect-card";
 import { supportsWebSerial } from "../../../src/const";
-
-const ARROW = html`
-  <div class="arrow">
-    <svg width="48" height="48" viewBox="0 0 24 24">
-      <path
-        d="M20 18V20H13.5C9.91 20 7 17.09 7 13.5V7.83L3.91 10.92L2.5 9.5L8 4L13.5 9.5L12.09 10.91L9 7.83V13.5C9 16 11 18 13.5 18H20Z"
-      />
-    </svg>
-  </div>
-`;
+import { ARROW } from "./arrow";
 
 @customElement("ew-dashboard")
 class EWDashboard extends LitElement {
@@ -22,7 +13,7 @@ class EWDashboard extends LitElement {
       <div class="container">
         ${
           supportsWebSerial
-            ? html`<ew-connect-card></ew-connect-card>`
+            ? html`<ew-esp-connect-card></ew-esp-connect-card>`
             : html`<ew-unsupported-card></ew-unsupported-card>`
         }
 
@@ -129,7 +120,7 @@ class EWDashboard extends LitElement {
     .intro {
       padding-left: 32px;
     }
-    ew-connect-card[connected] + .intro {
+    ew-esp-connect-card[connected] + .intro {
       display: none;
     }
     .promote-install {
@@ -138,17 +129,19 @@ class EWDashboard extends LitElement {
     .promote-logs {
       padding-left: 20px;
     }
-    ew-connect-card ~ .promote,
+    ew-esp-connect-card ~ .promote,
     ew-unsupported-card ~ .promote {
       display: none;
     }
-    :host([dashboard_logs]) ew-connect-card[connected] ~ .promote-logs {
+    :host([dashboard_logs]) ew-esp-connect-card[connected] ~ .promote-logs {
       display: flex;
     }
-    :host([dashboard_install]) ew-connect-card[connected] ~ .promote-install {
+    :host([dashboard_install])
+      ew-esp-connect-card[connected]
+      ~ .promote-install {
       display: flex;
     }
-    :host([dashboard_wizard]) ew-connect-card[connected] ~ .promote-adopt {
+    :host([dashboard_wizard]) ew-esp-connect-card[connected] ~ .promote-adopt {
       display: flex;
     }
     .text {
@@ -167,14 +160,6 @@ class EWDashboard extends LitElement {
       position: relative;
       left: 32px;
       bottom: -5px;
-    }
-    @media only screen and (max-width: 550px) {
-      :host {
-        width: 100%;
-      }
-      :host > * {
-        max-width: initial;
-      }
     }
   `;
 }

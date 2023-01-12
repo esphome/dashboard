@@ -21,8 +21,8 @@ import {
 } from "../install-adoptable";
 import { esphomeCardStyles } from "../../../src/styles";
 
-@customElement("ew-device-card")
-class EWDeviceCard extends LitElement {
+@customElement("ew-esp-device-card")
+class EWESPDeviceCard extends LitElement {
   public port!: SerialPort;
 
   protected render() {
@@ -100,6 +100,6 @@ class EWDeviceCard extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ew-device-card": EWDeviceCard;
+    "ew-esp-device-card": EWESPDeviceCard;
   }
 }

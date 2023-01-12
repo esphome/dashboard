@@ -3,18 +3,18 @@ import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
 import { openNoPortPickedDialog } from "../../../src/no-port-picked";
 import { esphomeCardStyles } from "../../../src/styles";
-import "./device-card";
+import "./esp-device-card";
 
-@customElement("ew-connect-card")
-class EWConnectCard extends LitElement {
+@customElement("ew-esp-connect-card")
+class EWESPConnectCard extends LitElement {
   @property() private port?: SerialPort;
 
   protected render() {
     if (this.port) {
-      return html`<ew-device-card
+      return html`<ew-esp-device-card
         .port=${this.port}
         @close=${this.handleClose}
-      ></ew-device-card>`;
+      ></ew-esp-device-card>`;
     }
 
     return html`
@@ -87,6 +87,6 @@ class EWConnectCard extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ew-connect-card": EWConnectCard;
+    "ew-esp-connect-card": EWESPConnectCard;
   }
 }
