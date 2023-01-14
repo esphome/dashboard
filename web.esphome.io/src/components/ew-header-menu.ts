@@ -1,6 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { property, state, customElement } from "lit/decorators.js";
 import "@material/mwc-button";
+import { supportsWebSerial } from "../../../src/const";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
@@ -13,6 +14,9 @@ export class EWHeaderMenu extends LitElement {
   @state() private _pico = false;
 
   protected render(): TemplateResult {
+    if (!supportsWebSerial) {
+      return html``;
+    }
     return html`
       <a href=${this._pico ? "/" : "/?pico"}>
         <mwc-button
