@@ -12,6 +12,9 @@ export const esphomeCardStyles = css`
   .flex {
     flex: 1;
   }
+  mwc-button {
+    line-height: 1em;
+  }
   .card-actions {
     display: flex;
     padding: 4px;

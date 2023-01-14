@@ -14,7 +14,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     return html`
       <mwc-dialog
         open
-        heading="Prepare your device for adoption"
+        heading="Prepare your device for first use"
         scrimClickAction
         @closed=${this._handleClose}
       >
@@ -30,7 +30,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
 
         <mwc-button
           slot="primaryAction"
-          label="Make Adoptable"
+          label="Install"
           @click=${this._handleInstall}
         ></mwc-button>
         <mwc-button

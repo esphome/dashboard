@@ -4,6 +4,7 @@ import "@material/mwc-icon-button";
 import type { ActionDetail } from "@material/mwc-list";
 import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
+import "../../../src/components/esphome-svg-icon";
 import "../../../src/components/esphome-card";
 import "../../../src/components/esphome-button-menu";
 import { fireEvent } from "../../../src/util/fire-event";
@@ -20,6 +21,7 @@ import {
   openInstallAdoptableDialog,
 } from "../install-adoptable";
 import { esphomeCardStyles } from "../../../src/styles";
+import { mdiLinkOff, mdiWifiCog } from "@mdi/js";
 
 @customElement("ew-esp-device-card")
 class EWESPDeviceCard extends LitElement {
@@ -32,20 +34,34 @@ class EWESPDeviceCard extends LitElement {
         <div class="card-content flex"></div>
 
         <div class="card-actions">
-          <mwc-button label="Logs" @click=${this.showLogs}></mwc-button>
-          <mwc-button label="Install" @click=${this.showInstall}></mwc-button>
           <mwc-button
-            label="Prepare for adoption"
+            class="first-use"
+            icon="system_update"
+            label="Prepare for first use"
             @click=${this.showAdoptable}
           ></mwc-button>
+          <mwc-button label="Install" @click=${this.showInstall}></mwc-button>
+          <mwc-button label="Logs" @click=${this.showLogs}></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
             corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-            <mwc-list-item>Configure Wi-Fi</mwc-list-item>
-            <mwc-list-item>Disconnect</mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Configure Wi-Fi
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiWifiCog}
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Disconnect
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiLinkOff}
+              ></esphome-svg-icon>
+            </mwc-list-item>
           </esphome-button-menu>
         </div>
       </esphome-card>
@@ -93,6 +109,12 @@ class EWESPDeviceCard extends LitElement {
     css`
       esphome-card {
         --status-color: rgba(0, 0, 0, 0.5);
+      }
+      esphome-button-menu {
+        --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.56);
+      }
+      mwc-button.first-use {
+        --mdc-theme-primary: var(--update-available-color);
       }
     `,
   ];
