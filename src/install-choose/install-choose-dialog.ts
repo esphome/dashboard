@@ -238,12 +238,15 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <ol>
             <li>Disconnect your Raspberry Pi Pico from your computer</li>
             <li>
-              Hold the BOOTSEL button and connect the Pico to your computer
+              Hold the BOOTSEL button and connect the Pico to your computer. The
+              Pico will show up as a USB drive named RPI-RP2
             </li>
-            <li>The Pico will show up as a USB drive named RPI-RP2</li>
             <li>${downloadButton}</li>
-            <li>Drag the downloaded file to the USB drive</li>
-            <li>Your Pico will reboot and the installation is complete</li>
+            <li>
+              Drag the downloaded file to the USB drive. The installation is
+              complete when the drive disappears
+            </li>
+            <li>Your Pico now runs your ESPHome project 🎉</li>
           </ol>
         `;
       } else {

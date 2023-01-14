@@ -32,6 +32,10 @@ export const esphomeCardStyles = css`
 `;
 
 export const esphomeDialogStyles = css`
+  :host {
+    --mdc-dialog-content-ink-color: #212121;
+  }
+
   a {
     color: var(--mdc-theme-primary);
   }
