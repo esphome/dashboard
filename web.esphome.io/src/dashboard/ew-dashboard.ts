@@ -5,7 +5,7 @@ import "./unsupported-card";
 import "./esp-connect-card";
 import "./pico-connect-card";
 import { supportsWebSerial } from "../../../src/const";
-import { ARROW } from "./arrow";
+import { ARROW, ARROW_RIGHT } from "./arrow";
 
 @customElement("ew-dashboard")
 class EWDashboard extends LitElement {
@@ -14,31 +14,28 @@ class EWDashboard extends LitElement {
   protected render() {
     return html`
       <div class="container">
-        ${
-          !supportsWebSerial
-            ? html`<ew-unsupported-card></ew-unsupported-card>`
-            : this.pico
-            ? html`<ew-pico-connect-card></ew-pico-connect-card>`
-            : html`<ew-esp-connect-card></ew-esp-connect-card>`
-        }
+        ${!supportsWebSerial
+          ? html`<ew-unsupported-card></ew-unsupported-card>`
+          : this.pico
+          ? html`<ew-pico-connect-card></ew-pico-connect-card>`
+          : html`<ew-esp-connect-card></ew-esp-connect-card>`}
 
         <div class="intro">
           ${ARROW}
           <div class="text">
             <p><b>Welcome to ESPHome Web!</b></p>
             <p>
-              ESPHome Web allows you to prepare your ${
-                this.pico
-                  ? html`
-                      <a
-                        href="https://www.raspberrypi.com/products/raspberry-pi-pico/"
-                        >Raspberry&nbsp;Pi Pico&nbsp;W</a
-                      >
-                    `
-                  : "device"
-              } for first use${
-      this.pico ? "" : ", install new versions"
-    } and check the device logs directly from your browser.
+              ESPHome Web allows you to prepare your
+              ${this.pico
+                ? html`
+                    <a
+                      href="https://www.raspberrypi.com/products/raspberry-pi-pico/"
+                      >Raspberry&nbsp;Pi Pico&nbsp;W</a
+                    >
+                  `
+                : "device"}
+              for first use${this.pico ? "" : ", install new versions"} and
+              check the device logs directly from your browser.
             </p>
             <p>
               ESPHome Web runs 100% in your browser. No data will leave your
@@ -57,10 +54,12 @@ class EWDashboard extends LitElement {
           </div>
         </div>
 
-        <div class="promote promote-install">
-          ${ARROW}
+        <div class="promote promote-install right-arrow">
           <div class="text">
-            <p><b>Install downloaded project</b></p>
+            <p>
+              <b>Install downloaded project</b>
+              ${ARROW_RIGHT}
+            </p>
             <p>
               If you have a downloaded version of your project, you can install
               it on your device here.
@@ -68,27 +67,28 @@ class EWDashboard extends LitElement {
           </div>
         </div>
 
-        <div class="promote promote-logs">
-          ${ARROW}
+        <div class="promote promote-logs right-arrow">
           <div class="text">
-            <p><b>Check logs</b></p>
             <p>
-              Click here to check the device logs. If you don't see logs
-              output, press the reset device button.
+              <b>Check logs</b>
+              ${ARROW_RIGHT}
+            </p>
+            <p>
+              Click here to check the device logs. If you don't see logs output,
+              press the reset device button.
             </p>
           </div>
         </div>
 
         <div class="promote promote-adopt">
-          </svg>
+          ${ARROW}
           <div class="text">
-            <p><b>Make Adoptable</b>
-            <svg width="48" height="48" viewBox="0 0 24 24"><path d="M21.5 9.5L20.09 10.92L17 7.83V13.5C17 17.09 14.09 20 10.5 20H4V18H10.5C13 18 15 16 15 13.5V7.83L11.91 10.91L10.5 9.5L16 4L21.5 9.5Z" /></svg>
-
-          </p>
             <p>
-              This action will prepare your device to be adopted by your ESPHome
-              dashboard. Once adopted, a device can be configured and updated
+              <b>Prepare for first use</b>
+            </p>
+            <p>
+              Install ESPHome on your device to add it to your ESPHome
+              dashboard. Once added, a device can be configured and updated
               wirelessly.
             </p>
           </div>
@@ -141,13 +141,7 @@ class EWDashboard extends LitElement {
     ew-esp-connect-card[connected] + .intro {
       display: none;
     }
-    .promote-install {
-      padding-left: 83px;
-    }
-    .promote-logs {
-      padding-left: 20px;
-    }
-    ew-esp-connect-card ~ .promote,
+    ew-esp2-connect-card ~ .promote,
     ew-pico-connect-card ~ .promote,
     ew-unsupported-card ~ .promote {
       display: none;
@@ -168,17 +162,28 @@ class EWDashboard extends LitElement {
       padding-right: 8px;
       flex: 1;
     }
+    .promote-adopt {
+      margin-left: 180px;
+    }
+    .promote-install {
+      padding-left: 5px;
+    }
+    .promote-logs {
+      padding-left: 80px;
+    }
     .arrow svg {
       position: relative;
       top: -13px;
     }
-    .promote-adopt p:first-child {
+    .right-arrow p:first-child {
       margin-top: 0;
     }
-    .promote-adopt svg {
+    .right-arrow svg {
       position: relative;
-      left: 32px;
       bottom: -5px;
+    }
+    .promote-logs.right-arrow svg {
+      left: 108px;
     }
   `;
 }

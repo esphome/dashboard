@@ -140,57 +140,65 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             @action=${this._handleOverflowAction}
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-            <mwc-list-item graphic="icon"
-              >Validate<esphome-svg-icon
+            <mwc-list-item graphic="icon">
+              Validate
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiSpellcheck}
-              ></esphome-svg-icon
-            ></mwc-list-item>
-            <mwc-list-item graphic="icon"
-              >Install<esphome-svg-icon
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Install
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiUploadNetwork}
-              ></esphome-svg-icon
-            ></mwc-list-item>
-            <mwc-list-item graphic="icon"
-              >Show API Key<esphome-svg-icon
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Show API Key
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiKey}
-              ></esphome-svg-icon
-            ></mwc-list-item>
-            <mwc-list-item graphic="icon"
-              >Download YAML<esphome-svg-icon
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Download YAML
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiCodeBraces}
-              ></esphome-svg-icon
-            ></mwc-list-item>
-            <mwc-list-item graphic="icon"
-              >Rename<esphome-svg-icon
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Rename
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiRenameBox}
-              ></esphome-svg-icon
-            ></mwc-list-item>
-            <mwc-list-item graphic="icon"
-              >Clean Build Files<esphome-svg-icon
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Clean Build Files
+              <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiBroom}
-              ></esphome-svg-icon
-            ></mwc-list-item>
+              ></esphome-svg-icon>
+            </mwc-list-item>
             <li divider role="separator"></li>
-            <mwc-list-item class="warning" graphic="icon"
-              >Delete<esphome-svg-icon
+            <mwc-list-item class="warning" graphic="icon">
+              Delete
+              <esphome-svg-icon
                 class="warning"
                 slot="graphic"
                 .path=${mdiDelete}
-              ></esphome-svg-icon
-            ></mwc-list-item>
+              ></esphome-svg-icon>
+            </mwc-list-item>
             ${"mqtt" in this.device.loaded_integrations
-              ? html`<mwc-list-item graphic="icon"
-                  >Clean MQTT<esphome-svg-icon
+              ? html`<mwc-list-item graphic="icon">
+                  Clean MQTT
+                  <esphome-svg-icon
                     slot="graphic"
                     .path=${mdiBroom}
-                  ></esphome-svg-icon
-                ></mwc-list-item>`
+                  ></esphome-svg-icon>
+                </mwc-list-item>`
               : ""}
           </esphome-button-menu>
         </div>
