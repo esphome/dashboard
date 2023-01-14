@@ -1,20 +1,25 @@
 import { LitElement, html, css, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "./unsupported-card";
 import "./esp-connect-card";
+import "./pico-connect-card";
 import { supportsWebSerial } from "../../../src/const";
 import { ARROW } from "./arrow";
 
 @customElement("ew-dashboard")
 class EWDashboard extends LitElement {
+  @state() private pico = false;
+
   protected render() {
     return html`
       <div class="container">
         ${
-          supportsWebSerial
-            ? html`<ew-esp-connect-card></ew-esp-connect-card>`
-            : html`<ew-unsupported-card></ew-unsupported-card>`
+          !supportsWebSerial
+            ? html`<ew-unsupported-card></ew-unsupported-card>`
+            : this.pico
+            ? html`<ew-pico-connect-card></ew-pico-connect-card>`
+            : html`<ew-esp-connect-card></ew-esp-connect-card>`
         }
 
         <div class="intro">
@@ -22,7 +27,9 @@ class EWDashboard extends LitElement {
           <div class="text">
             <p><b>Welcome to ESPHome Web!</b></p>
             <p>
-              ESPHome Web allows you to install new versions and check the device logs directly from your browser.
+              ESPHome Web allows you to prepare your device for first use${
+                this.pico ? "" : ", install new versions"
+              } and check the device logs directly from your browser.
             </p>
             <p>
               ESPHome Web runs 100% in your browser. No data will leave your
@@ -83,13 +90,15 @@ class EWDashboard extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
-    const highlight = location.search.substring(1);
-    if (
-      highlight === "dashboard_install" ||
-      highlight === "dashboard_logs" ||
-      highlight === "dashboard_wizard"
-    ) {
-      this.toggleAttribute(highlight);
+    const params = new URLSearchParams(location.search);
+
+    for (const key of params.keys()) {
+      if (key === "pico") {
+        this.pico = true;
+      } else if (key.startsWith("dashboard_")) {
+        this.toggleAttribute(key);
+        break;
+      }
     }
   }
 
@@ -130,6 +139,7 @@ class EWDashboard extends LitElement {
       padding-left: 20px;
     }
     ew-esp-connect-card ~ .promote,
+    ew-pico-connect-card ~ .promote,
     ew-unsupported-card ~ .promote {
       display: none;
     }

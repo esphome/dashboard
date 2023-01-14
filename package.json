@@ -46,7 +46,7 @@
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.3",
     "esp-web-flasher": "^5.1.4",
-    "improv-wifi-serial-sdk": "^2.4.0",
+    "improv-wifi-serial-sdk": "^2.5.0",
     "lit": "^2.6.0",
     "tslib": "^2.4.1",
     "yaml": "^2.2.1"
