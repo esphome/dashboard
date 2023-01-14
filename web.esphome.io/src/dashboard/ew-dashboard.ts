@@ -141,7 +141,7 @@ class EWDashboard extends LitElement {
     ew-esp-connect-card[connected] + .intro {
       display: none;
     }
-    ew-esp2-connect-card ~ .promote,
+    ew-esp-connect-card ~ .promote,
     ew-pico-connect-card ~ .promote,
     ew-unsupported-card ~ .promote {
       display: none;
