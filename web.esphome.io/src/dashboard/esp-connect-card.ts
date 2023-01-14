@@ -21,8 +21,8 @@ class EWESPConnectCard extends LitElement {
       <esphome-card status="NOT CONNECTED">
         <div class="card-header">ESP Device</div>
         <div class="card-content flex">
-          Connect the ESP8266 or ESP32 to your computer and click on connect to
-          be able to manage your device.
+          Connect the ESP32 or ESP8266 to your computer and click on connect to
+          start managing your device.
         </div>
 
         <div class="card-actions">

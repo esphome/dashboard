@@ -22,7 +22,6 @@ class EWPicoConnectCard extends LitElement {
     return html`
       <esphome-card status="NOT CONNECTED">
         <div class="card-header">Raspberry Pico W</div>
-
         <mwc-list-item twoline hasMeta @click=${this._showInitialInstall}>
           <span>First-time setup</span>
           <span slot="secondary">Install ESPHome on your Pico</span>
@@ -90,8 +89,8 @@ class EWPicoConnectCard extends LitElement {
       esphome-card {
         --status-color: var(--alert-warning-color);
       }
-      .card-actions mwc-button {
-        --mdc-theme-primary: var(--alert-warning-color);
+      mwc-list-item {
+        --mdc-list-side-padding: 14px;
       }
     `,
   ];
