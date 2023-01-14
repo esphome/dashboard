@@ -2,7 +2,6 @@ import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
 import { metaChevronRight } from "../../../src/const";
-import { openNoPortPickedDialog } from "../../../src/no-port-picked";
 import { esphomeCardStyles } from "../../../src/styles";
 import { picoPortFilters } from "../../../src/util/pico-port-filter";
 import { openInstallPicoDialog } from "../install-pico";
