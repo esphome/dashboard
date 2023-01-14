@@ -27,9 +27,18 @@ class EWDashboard extends LitElement {
           <div class="text">
             <p><b>Welcome to ESPHome Web!</b></p>
             <p>
-              ESPHome Web allows you to prepare your device for first use${
-                this.pico ? "" : ", install new versions"
-              } and check the device logs directly from your browser.
+              ESPHome Web allows you to prepare your ${
+                this.pico
+                  ? html`
+                      <a
+                        href="https://www.raspberrypi.com/products/raspberry-pi-pico/"
+                        >Raspberry&nbsp;Pi Pico&nbsp;W</a
+                      >
+                    `
+                  : "device"
+              } for first use${
+      this.pico ? "" : ", install new versions"
+    } and check the device logs directly from your browser.
             </p>
             <p>
               ESPHome Web runs 100% in your browser. No data will leave your
