@@ -26,7 +26,11 @@ class EWESPConnectCard extends LitElement {
         </div>
 
         <div class="card-actions">
-          <mwc-button label="Connect" @click=${this.connect}></mwc-button>
+          <mwc-button
+            icon="link"
+            label="Connect"
+            @click=${this.connect}
+          ></mwc-button>
         </div>
       </esphome-card>
     `;

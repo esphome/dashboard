@@ -56,6 +56,7 @@ export class EWHeaderMenu extends LitElement {
     mwc-button {
       --mdc-theme-primary: black;
       margin-left: 16px;
+      line-height: 1em;
     }
     mwc-button img {
       height: 32px;
