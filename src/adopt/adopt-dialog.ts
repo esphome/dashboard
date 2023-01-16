@@ -132,8 +132,8 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Installation skipped";
       content = html`
         <div>
-          You will be able to rename the device and install the configuration at
-          a later point from the three-dot menu on the device card.
+          You will be able to install the configuration at a later point from
+          the three-dot menu on the device card.
         </div>
         <mwc-button
           slot="primaryAction"
