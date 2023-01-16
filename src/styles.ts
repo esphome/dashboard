@@ -53,6 +53,7 @@ export const esphomeDialogStyles = css`
     margin-top: 0;
   }
 
+  mwc-textfield + div,
   div + div {
     margin-top: 16px;
   }

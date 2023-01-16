@@ -15,8 +15,19 @@ class ESPHomeImportableDeviceCard extends LitElement {
   protected render() {
     return html`
       <esphome-card status="DISCOVERED">
-        <div class="card-header">${this.device.name}</div>
-        <div class="card-content flex">${this.device.project_name}</div>
+        <div class="card-header">
+          ${this.device.friendly_name || this.device.name}
+        </div>
+        <div class="card-content flex">
+          ${this.device.friendly_name
+            ? html`
+                <div class="device-config-path tooltip-container">
+                  <code class="inlinecode">${this.device.name}</code>
+                </div>
+              `
+            : ""}
+          ${this.device.project_name}
+        </div>
 
         <div class="card-actions">
           <mwc-button
@@ -44,6 +55,16 @@ class ESPHomeImportableDeviceCard extends LitElement {
     css`
       esphome-card {
         --status-color: #4caf50;
+      }
+      .inlinecode {
+        box-sizing: border-box;
+        padding: 0.2em 0.4em;
+        margin: 0;
+        font-size: 85%;
+        background-color: rgba(27, 31, 35, 0.05);
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+          Courier, monospace;
       }
       .card-actions mwc-button {
         --mdc-theme-primary: #4caf50;

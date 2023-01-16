@@ -24,7 +24,6 @@ import {
   CreateConfigParams,
   createConfiguration,
   deleteConfiguration,
-  getConfiguration,
   getConfigurationApiKey,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
@@ -40,7 +39,6 @@ import {
 import { openInstallChooseDialog } from "../install-choose";
 import { esphomeDialogStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
-import { cleanName, stripDash } from "../util/name-validator";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
 
@@ -71,6 +69,8 @@ export class ESPHomeWizardDialog extends LitElement {
   };
 
   private _wifi?: { ssid: string; password: string };
+
+  private _configFilename!: string;
 
   @state() private _writeProgress?: number;
 
@@ -262,15 +262,7 @@ export class ESPHomeWizardDialog extends LitElement {
     const content = html`
       ${this._error ? html`<div class="error">${this._error}</div>` : ""}
 
-      <mwc-textfield
-        label="Name"
-        name="name"
-        required
-        pattern="^[a-z0-9-]+$"
-        helper="Lowercase letters (a-z), numbers (0-9) or dash (-)"
-        @input=${this._cleanNameInput}
-        @blur=${this._cleanNameBlur}
-      ></mwc-textfield>
+      <mwc-textfield label="Name" name="name" required></mwc-textfield>
 
       ${this._hasWifiSecrets
         ? html`
@@ -558,17 +550,6 @@ export class ESPHomeWizardDialog extends LitElement {
     }
   }
 
-  private _cleanNameInput = (ev: InputEvent) => {
-    this._error = undefined;
-    const input = ev.target as TextField;
-    input.value = cleanName(input.value);
-  };
-
-  private _cleanNameBlur = (ev: Event) => {
-    const input = ev.target as TextField;
-    input.value = stripDash(input.value);
-  };
-
   private _cleanSSIDBlur = (ev: Event) => {
     const input = ev.target as TextField;
     // Remove starting and trailing whitespace
@@ -583,24 +564,15 @@ export class ESPHomeWizardDialog extends LitElement {
       ? true
       : this._inputSSID.reportValidity();
 
-    if (!nameValid || !ssidValid) {
-      if (!nameValid) {
-        nameInput.focus();
-      } else {
-        this._inputSSID.focus();
-      }
+    if (!nameValid) {
+      nameInput.focus();
+      return;
+    } else if (!ssidValid) {
+      this._inputSSID.focus();
       return;
     }
 
     const name = nameInput.value;
-
-    try {
-      await getConfiguration(`${name}.yaml`);
-      this._error = "Name already in use";
-      return;
-    } catch (err) {
-      // This is expected.
-    }
 
     this._data.name = name;
 
@@ -650,7 +622,10 @@ export class ESPHomeWizardDialog extends LitElement {
       if (this._wifi) {
         await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
       }
-      await createConfiguration(this._data as CreateConfigParams);
+      const response = await createConfiguration(
+        this._data as CreateConfigParams
+      );
+      this._configFilename = response.configuration;
       this._apiKey = await getConfigurationApiKey(this._configFilename);
       refreshDevices();
       this._state = "done";
@@ -792,10 +767,6 @@ export class ESPHomeWizardDialog extends LitElement {
     }
   }
 
-  private get _configFilename(): string {
-    return `${this._data.name!}.yaml`;
-  }
-
   private async _handleClose() {
     this.parentNode!.removeChild(this);
   }
@@ -813,9 +784,6 @@ export class ESPHomeWizardDialog extends LitElement {
     css`
       :host {
         --mdc-dialog-max-width: 390px;
-      }
-      mwc-textfield[name="name"] + div {
-        margin-top: 18px;
       }
       .center {
         text-align: center;

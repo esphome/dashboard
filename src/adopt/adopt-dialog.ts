@@ -8,8 +8,6 @@ import { fireEvent } from "../util/fire-event";
 import { ImportableDevice, importDevice } from "../api/devices";
 import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
 import { esphomeDialogStyles } from "../styles";
-import { cleanName, stripDash } from "../util/name-validator";
-import { openRenameProcessDialog } from "../rename-process";
 import { openInstallServerDialog } from "../install-server";
 
 @customElement("esphome-adopt-dialog")
@@ -21,6 +19,9 @@ class ESPHomeAdoptDialog extends LitElement {
   @state() private _state: "ask" | "adopted" | "skipped" = "ask";
   @state() private _busy = false;
   @state() private _error?: string;
+
+  private _nameOverride?: string;
+  private _configFilename!: string;
 
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
@@ -34,12 +35,22 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Adopt device";
       content = html`
         <div>
-          Adopting ${this.device.name} will create an ESPHome configuration for
-          this device. This allows you to install updates and customize the
-          original firmware.
+          Adopting ${this.device.friendly_name || this.device.name} will create
+          an ESPHome configuration for this device. This allows you to install
+          updates and customize the original firmware.
         </div>
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+        ${this.device.friendly_name
+          ? html`
+              <mwc-textfield
+                label="New Name"
+                name="name"
+                required
+                dialogInitialFocus
+              ></mwc-textfield>
+            `
+          : ""}
         ${!this._needsWifiSecrets
           ? ""
           : this._hasWifiSecrets !== false
@@ -99,23 +110,9 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Configuration created";
       content = html`
         <div>
-          To finish adoption of ${this.device.name}, the new configuration needs
-          to be installed on the device.
+          To finish adoption of ${this._nameOverride || this.device.name}, the
+          new configuration needs to be installed on the device.
         </div>
-
-        ${this._error ? html`<div class="error">${this._error}</div>` : ""}
-
-        <mwc-textfield
-          label="New Name"
-          name="name"
-          required
-          dialogInitialFocus
-          spellcheck="false"
-          pattern="^[a-z0-9-]+$"
-          helper="Lowercase letters (a-z), numbers (0-9) or dash (-)"
-          @input=${this._cleanNameInput}
-          @blur=${this._cleanNameBlur}
-        ></mwc-textfield>
 
         <mwc-button
           slot="primaryAction"
@@ -135,8 +132,8 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Installation skipped";
       content = html`
         <div>
-          You will be able to rename the device and install the configuration at
-          a later point from the three-dot menu on the device card.
+          You will be able to install the configuration at a later point from
+          the three-dot menu on the device card.
         </div>
         <mwc-button
           slot="primaryAction"
@@ -172,9 +169,13 @@ class ESPHomeAdoptDialog extends LitElement {
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
-    if (changedProps.has("_state") && this._state === "adopted") {
-      const nameEl = this.shadowRoot!.querySelector("mwc-textfield")!;
-      nameEl.value = this.device.name;
+    if (
+      changedProps.has("_state") &&
+      this._state === "ask" &&
+      this.device.friendly_name
+    ) {
+      const nameEl = this._inputName;
+      nameEl.value = this.device.friendly_name;
       nameEl.updateComplete.then(() => nameEl.focus());
     }
   }
@@ -182,17 +183,6 @@ class ESPHomeAdoptDialog extends LitElement {
   private get _needsWifiSecrets() {
     return this.device.network === "wifi";
   }
-
-  private _cleanNameInput = (ev: InputEvent) => {
-    this._error = undefined;
-    const input = ev.target as TextField;
-    input.value = cleanName(input.value);
-  };
-
-  private _cleanNameBlur = (ev: Event) => {
-    const input = ev.target as TextField;
-    input.value = stripDash(input.value);
-  };
 
   private _cleanSSIDBlur = (ev: Event) => {
     const input = ev.target as TextField;
@@ -207,20 +197,32 @@ class ESPHomeAdoptDialog extends LitElement {
   private async _handleAdopt() {
     this._error = undefined;
 
-    if (this._needsWifiSecrets && this._hasWifiSecrets === false) {
-      if (!this._inputSSID.reportValidity()) {
-        this._inputSSID.focus();
-        return;
-      }
+    const hasFriendlyName = !!this.device.friendly_name;
+    const shouldStoreWifiSecrets =
+      this._needsWifiSecrets && this._hasWifiSecrets === false;
 
+    const friendlyNameValid =
+      !hasFriendlyName || this._inputName.reportValidity();
+    const ssidValid =
+      !shouldStoreWifiSecrets || this._inputSSID.reportValidity();
+
+    if (!friendlyNameValid) {
+      this._inputName.focus();
+      return;
+    } else if (!ssidValid) {
+      this._inputSSID.focus();
+      return;
+    }
+
+    if (shouldStoreWifiSecrets) {
       this._busy = true;
-
       try {
         await storeWifiSecrets(
           this._inputSSID.value,
           this._inputPassword.value
         );
       } catch (err) {
+        console.error(err);
         this._busy = false;
         this._error = "Failed to store Wi-Fi credentials";
         return;
@@ -229,7 +231,13 @@ class ESPHomeAdoptDialog extends LitElement {
 
     this._busy = true;
     try {
-      await importDevice(this.device);
+      let data = this.device;
+      if (hasFriendlyName) {
+        data = { ...data, friendly_name: this._inputName.value };
+        this._nameOverride = data.friendly_name;
+      }
+      const response = await importDevice(data);
+      this._configFilename = response.configuration;
       fireEvent(this, "adopted");
       this._state = "adopted";
     } catch (err) {
@@ -239,24 +247,7 @@ class ESPHomeAdoptDialog extends LitElement {
   }
 
   private async _handleInstall() {
-    const nameInput = this._inputName;
-
-    const nameValid = nameInput.reportValidity();
-
-    if (!nameValid) {
-      nameInput.focus();
-      return;
-    }
-
-    const name = nameInput.value;
-
-    // If name is the same, it's the existing configuration. Trigger OTA
-    if (name === this.device.name) {
-      openInstallServerDialog(`${this.device.name}.yaml`, "OTA");
-    } else {
-      openRenameProcessDialog(`${this.device.name}.yaml`, name);
-    }
-
+    openInstallServerDialog(this._configFilename, "OTA");
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
   }
 
