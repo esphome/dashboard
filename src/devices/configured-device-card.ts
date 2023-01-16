@@ -60,8 +60,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const content: TemplateResult[] = [];
 
     if (
-      this.device.configuration !== `${this.device.name}.yaml` &&
-      this.device.configuration !== `${this.device.name}.yml`
+      this.device.friendly_name ||
+      (this.device.configuration !== `${this.device.name}.yaml` &&
+        this.device.configuration !== `${this.device.name}.yml`)
     ) {
       content.push(html`
         <div class="device-config-path tooltip-container">
@@ -95,7 +96,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           "--status-color": status === undefined ? "" : STATUS_COLORS[status],
         })}
       >
-        <div class="card-header">${this.device.name}</div>
+        <div class="card-header">
+          ${this.device.friendly_name || this.device.name}
+        </div>
 
         ${content.length
           ? html`<div class="card-content flex">${content}</div>`
@@ -169,7 +172,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Rename
+              Rename hostname
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiRenameBox}

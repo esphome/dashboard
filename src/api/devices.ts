@@ -1,9 +1,10 @@
-import { fetchApiJson, fetchApiText } from ".";
+import { fetchApiJson } from ".";
 import { SupportedPlatforms } from "../const";
 import { createPollingCollection } from "../util/polling-collection";
 
 export interface ConfiguredDevice {
   name: string;
+  friendly_name: string;
   configuration: string;
   loaded_integrations: string[];
   deployed_version: string;
@@ -17,6 +18,7 @@ export interface ConfiguredDevice {
 
 export interface ImportableDevice {
   name: string;
+  friendly_name: string;
   package_import_url: string;
   project_name: string;
   project_version: string;
@@ -31,7 +33,7 @@ export interface ListDevicesResult {
 export const getDevices = () => fetchApiJson<ListDevicesResult>("./devices");
 
 export const importDevice = (params: ImportableDevice) =>
-  fetchApiText("./import", {
+  fetchApiJson<{ configuration: string }>("./import", {
     method: "post",
     body: JSON.stringify(params),
   });
