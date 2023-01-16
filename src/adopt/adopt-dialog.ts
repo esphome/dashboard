@@ -109,8 +109,9 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Configuration created";
       content = html`
         <div>
-          To finish adoption of ${this.device.name}, the new configuration needs
-          to be installed on the device.
+          To finish adoption of
+          ${this.device.friendly_name || this.device.name}, the new
+          configuration needs to be installed on the device.
         </div>
 
         <mwc-button
