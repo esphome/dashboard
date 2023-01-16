@@ -34,9 +34,9 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Adopt device";
       content = html`
         <div>
-          Adopting ${this.device.name} will create an ESPHome configuration for
-          this device. This allows you to install updates and customize the
-          original firmware.
+          Adopting ${this.device.friendly_name || this.device.name} will create
+          an ESPHome configuration for this device. This allows you to install
+          updates and customize the original firmware.
         </div>
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
@@ -213,7 +213,7 @@ class ESPHomeAdoptDialog extends LitElement {
       return;
     }
 
-    if (storeWifiSecrets) {
+    if (shouldStoreWifiSecrets) {
       this._busy = true;
       try {
         await storeWifiSecrets(
@@ -221,6 +221,7 @@ class ESPHomeAdoptDialog extends LitElement {
           this._inputPassword.value
         );
       } catch (err) {
+        console.error(err);
         this._busy = false;
         this._error = "Failed to store Wi-Fi credentials";
         return;
