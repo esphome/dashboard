@@ -20,6 +20,7 @@ class ESPHomeAdoptDialog extends LitElement {
   @state() private _busy = false;
   @state() private _error?: string;
 
+  private _nameOverride?: string;
   private _configFilename!: string;
 
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
@@ -109,9 +110,8 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Configuration created";
       content = html`
         <div>
-          To finish adoption of
-          ${this.device.friendly_name || this.device.name}, the new
-          configuration needs to be installed on the device.
+          To finish adoption of ${this._nameOverride || this.device.name}, the
+          new configuration needs to be installed on the device.
         </div>
 
         <mwc-button
@@ -234,6 +234,7 @@ class ESPHomeAdoptDialog extends LitElement {
       let data = this.device;
       if (hasFriendlyName) {
         data = { ...data, friendly_name: this._inputName.value };
+        this._nameOverride = data.friendly_name;
       }
       const response = await importDevice(data);
       this._configFilename = response.configuration;
