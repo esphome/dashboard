@@ -17,7 +17,7 @@ class ESPHomeInstallServerDialog extends LitElement {
     return html`
       <esphome-process-dialog
         .heading=${`Install ${this.configuration}`}
-        .type=${"upload"}
+        .type=${"run"}
         .spawnParams=${{ configuration: this.configuration, port: this.target }}
         @closed=${this._handleClose}
         @process-done=${this._handleProcessDone}
