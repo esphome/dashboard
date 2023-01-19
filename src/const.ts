@@ -1,10 +1,3 @@
-import {
-  CHIP_FAMILY_ESP32,
-  CHIP_FAMILY_ESP32S2,
-  CHIP_FAMILY_ESP32S3,
-  CHIP_FAMILY_ESP32C3,
-  CHIP_FAMILY_ESP8266,
-} from "esp-web-flasher";
 import { svg } from "lit";
 
 export const supportsWebSerial = "serial" in navigator;
@@ -59,12 +52,13 @@ export const supportedPlatforms: { [key in SupportedPlatforms]: PlatformData } =
     },
   };
 
-export const chipFamilyToPlatform: { [key: number]: SupportedPlatforms } = {
-  [CHIP_FAMILY_ESP32]: "ESP32",
-  [CHIP_FAMILY_ESP32S2]: "ESP32S2",
-  [CHIP_FAMILY_ESP32S3]: "ESP32S3",
-  [CHIP_FAMILY_ESP32C3]: "ESP32C3",
-  [CHIP_FAMILY_ESP8266]: "ESP8266",
+// esploader.chip.CHIP_NAME mapped to ESPHome platform names
+export const chipFamilyToPlatform: { [key: string]: SupportedPlatforms } = {
+  ESP32: "ESP32",
+  "ESP32-S2": "ESP32S2",
+  "ESP32-S3": "ESP32S3",
+  "ESP32-C3": "ESP32C3",
+  ESP8266: "ESP8266",
 };
 
 export const metaChevronRight = svg`
