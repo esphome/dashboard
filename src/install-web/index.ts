@@ -1,5 +1,5 @@
-import { connect, ESPLoader } from "esp-web-flasher";
 import { openNoPortPickedDialog } from "../no-port-picked";
+import { createESPLoader } from "../web-serial/create-esploader";
 import type { ESPHomeInstallWebDialog } from "./install-web-dialog";
 
 const preload = () => import("./install-web-dialog");
@@ -11,13 +11,14 @@ export const openInstallWebDialog = async (
 ): Promise<void> => {
   preload();
 
-  let esploader: ESPLoader;
+  let port = params.port;
 
-  if (params.port) {
-    esploader = new ESPLoader(params.port, console);
+  if (port) {
+    // ESPLoader likes opening the port.
+    await port.close();
   } else {
     try {
-      esploader = await connect(console);
+      port = await navigator.serial.requestPort();
     } catch (err: any) {
       if ((err as DOMException).name === "NotFoundError") {
         openNoPortPickedDialog(() =>
@@ -29,6 +30,7 @@ export const openInstallWebDialog = async (
       return;
     }
   }
+  const esploader = createESPLoader(port);
 
   if (onDialogOpen) {
     onDialogOpen();
