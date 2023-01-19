@@ -9,7 +9,7 @@ import "@material/mwc-checkbox";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import type { TextField } from "@material/mwc-textfield";
-import { connect, ESPLoader } from "esp-web-flasher";
+import { ESPLoader } from "esptool-js";
 import {
   allowsWebSerial,
   metaChevronRight,
@@ -27,7 +27,7 @@ import {
   getConfigurationApiKey,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
-import { getConfigurationFiles, flashFiles } from "../flash";
+import { getConfigurationFiles, flashFiles } from "../web-serial/flash";
 import { subscribeOnlineStatus } from "../api/online-status";
 import { refreshDevices } from "../api/devices";
 import {
@@ -41,6 +41,8 @@ import { esphomeDialogStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
+import { createESPLoader } from "../web-serial/create-esploader";
+import { resetSerialDevice } from "../web-serial/reset-serial-device";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -647,8 +649,10 @@ export class ESPHomeWizardDialog extends LitElement {
     let esploader: ESPLoader | undefined;
     let removeConfig = false;
     try {
+      let port: SerialPort | undefined;
+
       try {
-        esploader = await connect(console);
+        port = await navigator.serial.requestPort();
       } catch (err: any) {
         console.error(err);
         if ((err as DOMException).name === "NotFoundError") {
@@ -659,10 +663,13 @@ export class ESPHomeWizardDialog extends LitElement {
         return;
       }
 
+      esploader = createESPLoader(port);
+
       this._state = "connecting_webserial";
 
       try {
-        await esploader.initialize();
+        await esploader.main_fn();
+        await esploader.flash_id();
       } catch (err) {
         console.error(err);
         this._state = "connect_webserial";
@@ -674,18 +681,21 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "prepare_flash";
 
       let platform: SupportedPlatforms;
-      const chipFamily = esploader.chipFamily.toString();
+      const chipFamily = esploader.chip.CHIP_NAME;
       if (Object.keys(chipFamilyToPlatform).includes(chipFamily)) {
         platform = chipFamilyToPlatform[chipFamily];
       } else {
         this._state = "connect_webserial";
-        this._error = `Unable to identify the connected device (${esploader.chipFamily}).`;
+        this._error = `Unable to identify the connected device (${esploader.chip.CHIP_NAME}).`;
         return;
       }
       this._data.board = supportedPlatforms[platform].defaultBoard ?? undefined;
 
       try {
-        await createConfiguration(this._data as CreateConfigParams);
+        const { configuration } = await createConfiguration(
+          this._data as CreateConfigParams
+        );
+        this._configFilename = configuration;
       } catch (err) {
         console.error(err);
         this._state = "connect_webserial";
@@ -726,7 +736,7 @@ export class ESPHomeWizardDialog extends LitElement {
       this._installed = true;
 
       // Reset the device so it can load new firmware and come online
-      await esploader.hardReset();
+      await resetSerialDevice(esploader.transport);
 
       this._state = "wait_come_online";
 
@@ -754,12 +764,8 @@ export class ESPHomeWizardDialog extends LitElement {
     } finally {
       this._busy = false;
       if (esploader) {
-        if (esploader.connected) {
-          console.log("Disconnecting esp");
-          await esploader.disconnect();
-        }
         console.log("Closing port");
-        await esploader.port.close();
+        await esploader.transport.disconnect();
       }
       if (removeConfig) {
         await deleteConfiguration(this._configFilename);

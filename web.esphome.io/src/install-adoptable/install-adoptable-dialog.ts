@@ -3,7 +3,7 @@ import { customElement } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import { openInstallWebDialog } from "../../../src/install-web";
-import { FileToFlash } from "../../../src/flash";
+import { FileToFlash } from "../../../src/web-serial/flash";
 import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-adoptable-dialog")
@@ -59,7 +59,18 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
               `Downlading ESPHome firmware for ${platform} failed (${resp.status})`
             );
           }
-          return [{ data: await resp.arrayBuffer(), offset: 0 }];
+
+          const reader = new FileReader();
+          const blob = await resp.blob();
+
+          const data = await new Promise<string>((resolve) => {
+            reader.addEventListener("load", () =>
+              resolve(reader.result as string)
+            );
+            reader.readAsBinaryString(blob);
+          });
+
+          return [{ data, address: 0 }];
         },
         onClose(success) {
           if (!success) {

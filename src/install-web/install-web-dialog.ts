@@ -3,17 +3,22 @@ import { customElement, property, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
-import type { ESPLoader } from "esp-web-flasher";
+import type { ESPLoader } from "esptool-js";
 import {
   compileConfiguration,
   Configuration,
   getConfiguration,
 } from "../api/configuration";
-import { FileToFlash, flashFiles, getConfigurationFiles } from "../flash";
+import {
+  FileToFlash,
+  flashFiles,
+  getConfigurationFiles,
+} from "../web-serial/flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
 import { chipFamilyToPlatform } from "../const";
 import { esphomeDialogStyles } from "../styles";
+import { resetSerialDevice } from "../web-serial/reset-serial-device";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -171,17 +176,18 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _handleInstall() {
     const esploader = this.esploader;
-    esploader.port.addEventListener("disconnect", async () => {
+    esploader.transport.device.addEventListener("disconnect", async () => {
       this._state = "done";
       this._error = "Device disconnected";
       if (!this.params.port) {
-        await esploader.port.close();
+        await esploader.transport.device.close();
       }
     });
 
     try {
       try {
-        await esploader.initialize();
+        await esploader.main_fn();
+        await esploader.flash_id();
       } catch (err) {
         console.error(err);
         this._state = "done";
@@ -190,7 +196,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      this._platform = chipFamilyToPlatform[esploader.chipFamily];
+      this._platform = chipFamilyToPlatform[esploader.chip.CHIP_NAME];
 
       const filesCallback =
         this.params.filesCallback ||
@@ -233,17 +239,13 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      await esploader.hardReset();
+      await resetSerialDevice(esploader.transport);
       this._state = "done";
     } finally {
-      if (esploader.connected) {
-        console.log("Disconnecting esp");
-        await esploader.disconnect();
-      }
       if (!this.params.port) {
         console.log("Closing port");
         try {
-          await esploader.port.close();
+          await esploader.transport.disconnect();
         } catch (err) {
           // can happen if we already closed in disconnect
         }

@@ -31,8 +31,8 @@ class ESPHomeInstallUploadDialog extends LitElement {
             Find your device card click on menu (<mwc-icon>more_vert</mwc-icon>)
           </li>
           <li>Click on Install</li>
-          <li>Click on "Plug into this computer"</li>
-          <li>Click on download project.</li>
+          <li>Click on Manual Download</li>
+          <li>Click on Modern Format</li>
         </ol>
         <mwc-button
           slot="primaryAction"
@@ -61,10 +61,17 @@ class ESPHomeInstallUploadDialog extends LitElement {
       return;
     }
 
+    const reader = new FileReader();
+
+    const data = await new Promise<string>((resolve) => {
+      reader.addEventListener("load", () => resolve(reader.result as string));
+      reader.readAsBinaryString(input.files![0]);
+    });
+
     const files = [
       {
-        data: await input.files[0].arrayBuffer(),
-        offset: 0,
+        data,
+        address: 0,
       },
     ];
 
