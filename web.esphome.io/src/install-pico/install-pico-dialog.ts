@@ -5,6 +5,9 @@ import "@material/mwc-button";
 import { esphomeDialogStyles } from "../../../src/styles";
 import { picoPortFilters } from "../../../src/util/pico-port-filter";
 
+const DOWNLOAD_URL =
+  "https://firmware.esphome.io/esphome-web-pico-w/esphome-web-rp2040.uf2";
+
 @customElement("esphome-install-pico-dialog")
 class ESPHomeInstallPicoDialog extends LitElement {
   public portSelectedCallback!: (port: SerialPort) => void;
@@ -30,7 +33,7 @@ class ESPHomeInstallPicoDialog extends LitElement {
           </li>
           <li>
             Download
-            <a href="/static_web/firmware/pico-w.uf2">ESPHome for Pico</a>
+            <a href=${DOWNLOAD_URL}>ESPHome for Pico</a>
           </li>
           <li>
             Drag the downloaded file to the RPI-RP2 USB drive. The installation
