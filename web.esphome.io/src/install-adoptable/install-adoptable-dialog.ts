@@ -51,8 +51,9 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           if (platform !== "ESP8266" && platform !== "ESP32") {
             throw new Error("Only ESP8266 and ESP32 are currently supported");
           }
+          const platformLower = platform.toLowerCase();
           const resp = await fetch(
-            `/static_web/firmware/${platform.toLowerCase()}.bin`
+            `https://firmware.esphome.io/esphome-web-${platformLower}/esphome-web-${platformLower}/esphome-web-${platformLower}.bin`
           );
           if (!resp.ok) {
             throw new Error(
