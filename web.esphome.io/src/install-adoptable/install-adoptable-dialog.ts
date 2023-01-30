@@ -6,6 +6,14 @@ import { openInstallWebDialog } from "../../../src/install-web";
 import { FileToFlash } from "../../../src/web-serial/flash";
 import { esphomeDialogStyles } from "../../../src/styles";
 
+const SUPPORTED_PLATFORMS = [
+  'ESP8266',
+  'ESP32',
+  'ESP32S2',
+  'ESP32S3',
+  'ESP32C3',
+];
+
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
   public port!: SerialPort;
@@ -48,8 +56,12 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
       {
         port: this.port,
         async filesCallback(platform: string): Promise<FileToFlash[]> {
-          if (platform !== "ESP8266" && platform !== "ESP32") {
-            throw new Error("Only ESP8266 and ESP32 are currently supported");
+          if (!SUPPORTED_PLATFORMS.includes(platform)) {
+            throw new Error(
+              `Unsupported platform ${platform}. Only ${SUPPORTED_PLATFORMS.join(
+                ', ',
+              )} are supported.`,
+            )
           }
           const platformLower = platform.toLowerCase();
           const resp = await fetch(
