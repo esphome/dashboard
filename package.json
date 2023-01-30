@@ -49,7 +49,7 @@
     "esptool-js": "^0.2.0",
     "improv-wifi-serial-sdk": "^2.5.0",
     "lit": "^2.6.1",
-    "tslib": "^2.4.1",
+    "tslib": "^2.5.0",
     "yaml": "^2.2.1"
   },
   "overrides": {
