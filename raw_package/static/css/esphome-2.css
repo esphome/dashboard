@@ -20,7 +20,29 @@
   --mdc-dialog-z-index: 998;
 
   --esphome-background-header: #e0e0e0;
+
+  --card-background-color: #ffffff;
+  --card-status-color: rgba(0, 0, 0, 0.5);
 }
+
+/* dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg-color: #212121;
+    --primary-footer-bg-color: #080808;
+
+    --mdc-theme-surface: #C0C0C0;
+
+    --esphome-background-header: #C0C0C0;
+
+    --card-background-color: #888888;
+    --card-status-color: #FFFFFF;
+  }
+  html {
+    color: #FFFFFF;
+  }
+}
+
 
 html {
   font-size: 15px;
