@@ -31,15 +31,15 @@
     --primary-bg-color: #212121;
     --primary-footer-bg-color: #080808;
 
-    --mdc-theme-surface: #C0C0C0;
+    --mdc-theme-surface: #c0c0c0;
 
-    --esphome-background-header: #C0C0C0;
+    --esphome-background-header: #c0c0c0;
 
     --card-background-color: #888888;
-    --card-status-color: #FFFFFF;
+    --card-status-color: #ffffff;
   }
   html {
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 
