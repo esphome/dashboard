@@ -12,10 +12,12 @@ jobs:
     name: Build Site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v3.3.0
+      - uses: actions/setup-node@v3.6.0
         with:
           node-version: 16
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
       - name: Run Build
         run: web.esphome.io/script/build_web
       - name: Upload GitHub Pages artifact
@@ -36,7 +38,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v3.0.2
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1.2.3
+        uses: actions/deploy-pages@v1.2.4
