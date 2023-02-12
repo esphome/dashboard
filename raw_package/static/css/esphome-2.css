@@ -28,7 +28,7 @@
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-bg-color: #111;
+    --primary-bg-color: #111111;
     --primary-footer-bg-color: #101e24;
 
     --esphome-background-header: #c0c0c0;
