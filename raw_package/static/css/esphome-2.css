@@ -22,24 +22,27 @@
   --esphome-background-header: #e0e0e0;
 
   --card-background-color: #ffffff;
-  --card-status-color: rgba(0, 0, 0, 0.5);
+  --card-text-color: rgba(0, 0, 0, 0.88);
 }
 
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-bg-color: #212121;
-    --primary-footer-bg-color: #080808;
+    --primary-text-color: #e1e1e1;
+
+    --primary-bg-color: #111;
+    --primary-footer-bg-color: #101e24;
 
     --mdc-theme-surface: #c0c0c0;
 
     --esphome-background-header: #c0c0c0;
 
-    --card-background-color: #888888;
-    --card-status-color: #ffffff;
+    --card-background-color: #1c1c1c;
+    --card-text-color: #e1e1e1;
+
   }
   html {
-    color: #ffffff;
+    color: #e1e1e1;
   }
 }
 

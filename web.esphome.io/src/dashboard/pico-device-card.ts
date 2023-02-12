@@ -73,7 +73,10 @@ class EWPicoDeviceCard extends LitElement {
     esphomeCardStyles,
     css`
       esphome-card {
-        --status-color: var(--card-status-color);
+        --status-color: var(--card-text-color);
+      }
+      .card-actions mwc-button {
+        --mdc-theme-primary: var(--card-text-color);
       }
     `,
   ];

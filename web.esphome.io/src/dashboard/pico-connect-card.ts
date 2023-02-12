@@ -89,6 +89,9 @@ class EWPicoConnectCard extends LitElement {
       esphome-card {
         --status-color: var(--alert-warning-color);
       }
+      .card-actions mwc-button {
+        --mdc-theme-primary: var(--card-text-color);
+      }
       mwc-list-item {
         --mdc-list-side-padding: 14px;
       }

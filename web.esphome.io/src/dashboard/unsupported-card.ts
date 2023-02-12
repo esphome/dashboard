@@ -23,6 +23,9 @@ class EWUnsupportedCard extends LitElement {
       esphome-card {
         --status-color: var(--alert-error-color);
       }
+      .card-actions mwc-button {
+        --mdc-theme-primary: var(--card-text-color);
+      }
     `,
   ];
 }
