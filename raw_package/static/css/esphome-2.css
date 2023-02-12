@@ -28,18 +28,13 @@
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-text-color: #e1e1e1;
-
     --primary-bg-color: #111;
     --primary-footer-bg-color: #101e24;
-
-    --mdc-theme-surface: #c0c0c0;
 
     --esphome-background-header: #c0c0c0;
 
     --card-background-color: #1c1c1c;
     --card-text-color: #e1e1e1;
-
   }
   html {
     color: #e1e1e1;
