@@ -18,7 +18,7 @@ export interface ConfiguredDevice {
 
 export interface ImportableDevice {
   name: string;
-  friendly_name: string;
+  friendly_name: string | null;
   package_import_url: string;
   project_name: string;
   project_version: string;
@@ -35,7 +35,7 @@ export const getDevices = () => fetchApiJson<ListDevicesResult>("./devices");
 export const importDevice = (params: ImportableDevice) =>
   fetchApiJson<{ configuration: string }>("./import", {
     method: "post",
-    body: JSON.stringify(params),
+    body: JSON.stringify({ ...params, encryption: true }),
   });
 
 export const subscribeDevices = createPollingCollection(getDevices, 5000);

@@ -9,6 +9,9 @@ import { ImportableDevice, importDevice } from "../api/devices";
 import { checkHasWifiSecrets, storeWifiSecrets } from "../api/wifi";
 import { esphomeDialogStyles } from "../styles";
 import { openInstallServerDialog } from "../install-server";
+import { getConfigurationApiKey } from "../api/configuration";
+import { copyToClipboard } from "../util/copy-clipboard";
+import { sleep } from "../util/sleep";
 
 @customElement("esphome-adopt-dialog")
 class ESPHomeAdoptDialog extends LitElement {
@@ -19,9 +22,11 @@ class ESPHomeAdoptDialog extends LitElement {
   @state() private _state: "ask" | "adopted" | "skipped" = "ask";
   @state() private _busy = false;
   @state() private _error?: string;
+  @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
 
   private _nameOverride?: string;
   private _configFilename!: string;
+  private _apiKey: string | null = null;
 
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
@@ -113,6 +118,25 @@ class ESPHomeAdoptDialog extends LitElement {
           To finish adoption of ${this._nameOverride || this.device.name}, the
           new configuration needs to be installed on the device.
         </div>
+        ${this._apiKey
+          ? html`
+              <p>
+                Each ESPHome device has a unique encryption key to talk to other
+                devices. You will need this key to include your device in Home
+                Assistant. You can find the key later in the device menu.
+              </p>
+              <div class="api-key-container">
+                <mwc-textfield
+                  label="Encryption key"
+                  readonly
+                  name="api_key"
+                  value=${this._apiKey}
+                  @click=${this._handleCopyApiKey}
+                ></mwc-textfield>
+                <div class="api-key-banner">Copied!</div>
+              </div>
+            `
+          : ""}
 
         <mwc-button
           slot="primaryAction"
@@ -234,11 +258,12 @@ class ESPHomeAdoptDialog extends LitElement {
       let data = this.device;
       if (hasFriendlyName) {
         data = { ...data, friendly_name: this._inputName.value };
-        this._nameOverride = data.friendly_name;
+        this._nameOverride = data.friendly_name!;
       }
       const response = await importDevice(data);
       this._configFilename = response.configuration;
       fireEvent(this, "adopted");
+      this._apiKey = await getConfigurationApiKey(this._configFilename);
       this._state = "adopted";
     } catch (err) {
       this._busy = false;
@@ -251,6 +276,14 @@ class ESPHomeAdoptDialog extends LitElement {
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
   }
 
+  private async _handleCopyApiKey() {
+    copyToClipboard(this._apiKey!);
+    this._inputApiKeyBanner!.style.setProperty("display", "flex");
+    await sleep(3000);
+    // User might have closed the dialog in the meantime
+    this._inputApiKeyBanner?.style.setProperty("display", "none");
+  }
+
   static styles = [
     esphomeDialogStyles,
     css`
@@ -260,6 +293,24 @@ class ESPHomeAdoptDialog extends LitElement {
       .error {
         color: var(--alert-error-color);
         margin-bottom: 16px;
+      }
+      .api-key-container {
+        position: relative;
+      }
+      .api-key-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--mdc-theme-primary);
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin: 0 !important;
+        font-weight: bold;
+        border-radius: 2px;
       }
     `,
   ];
