@@ -66,6 +66,9 @@ export const getDownloadUrl = (
 };
 
 // null if file not found.
+// status 404 = file not found
+// status 422 = invalid config
+// status 500 = json serialization failed
 export const getJsonConfig = async (
   filename: string
 ): Promise<Record<string, any> | null> => {
@@ -82,6 +85,12 @@ export const getJsonConfig = async (
 export const getConfigurationApiKey = async (
   configuration: string
 ): Promise<string | null> => {
-  const config = await getJsonConfig(configuration);
+  let config;
+  try {
+    config = await getJsonConfig(configuration);
+  } catch {
+    // invalid config or config not found.
+    return null;
+  }
   return config?.api?.encryption?.key || null;
 };
