@@ -628,8 +628,8 @@ export class ESPHomeWizardDialog extends LitElement {
         this._data as CreateConfigParams
       );
       this._configFilename = response.configuration;
-      this._apiKey = await getConfigurationApiKey(this._configFilename);
       refreshDevices();
+      this._apiKey = await getConfigurationApiKey(this._configFilename);
       this._state = "done";
     } catch (err: any) {
       this._error = err.message || err;
