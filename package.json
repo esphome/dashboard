@@ -9,8 +9,7 @@
   "scripts": {
     "develop": "script/develop",
     "develop_web": "web.esphome.io/script/develop_web",
-    "prepublishOnly": "script/build",
-    "postinstall": "patch -Ntu node_modules/esptool-js/lib/esploader.js -i patches/0001-not-change-baud.patch || true"
+    "prepublishOnly": "script/build"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
@@ -46,7 +45,7 @@
     "@mdi/js": "^7.1.96",
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.3",
-    "esptool-js": "^0.2.0",
+    "esptool-js": "^0.2.1",
     "improv-wifi-serial-sdk": "^2.5.0",
     "lit": "^2.6.1",
     "tslib": "^2.5.0",
