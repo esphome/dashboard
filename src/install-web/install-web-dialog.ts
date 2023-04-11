@@ -166,7 +166,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
   }
 
   private _openCompileDialog() {
-    openCompileDialog(this.params.configuration!, false);
+    openCompileDialog(this.params.configuration!);
     this._close();
   }
 

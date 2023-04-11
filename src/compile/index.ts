@@ -1,12 +1,8 @@
 const preload = () => import("./compile-dialog");
 
-export const openCompileDialog = (
-  configuration: string,
-  downloadFactoryFirmware: boolean
-) => {
+export const openCompileDialog = (configuration: string) => {
   preload();
   const dialog = document.createElement("esphome-compile-dialog");
   dialog.configuration = configuration;
-  dialog.downloadFactoryFirmware = downloadFactoryFirmware;
   document.body.append(dialog);
 };

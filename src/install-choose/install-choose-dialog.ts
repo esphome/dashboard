@@ -10,13 +10,10 @@ import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
-import {
-  compileConfiguration,
-  getConfiguration,
-  getDownloadUrl,
-} from "../api/configuration";
+import { compileConfiguration, getConfiguration } from "../api/configuration";
 import { esphomeDialogStyles } from "../styles";
 import "../components/esphome-alert";
+import { openDownloadTypeDialog } from "../download-type";
 
 const WARNING_ICON = "👀";
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
@@ -33,7 +30,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @state() private _state:
     | "pick_option"
     | "download_instructions"
-    | "pick_download_type"
     | "pick_server_port" = "pick_option";
 
   @state() private _error?: string | TemplateResult;
@@ -98,9 +94,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
           twoline
           hasMeta
           @click=${() => {
-            this._state = this._isPico
-              ? "download_instructions"
-              : "pick_download_type";
+            this._isPico
+              ? (this._state = "download_instructions")
+              : this._handleCompileDialog();
           }}
         >
           <span>Manual download</span>
@@ -169,53 +165,6 @@ class ESPHomeInstallChooseDialog extends LitElement {
                 }}
               ></mwc-button>
             `;
-    } else if (this._state === "pick_download_type") {
-      heading = "What version do you want to download?";
-      content = html`
-        <mwc-list-item
-          twoline
-          hasMeta
-          dialogAction="close"
-          @click=${this._handleWebDownload}
-        >
-          <span>Modern format</span>
-          <span slot="secondary">
-            For use with ESPHome Web and other tools.
-          </span>
-          ${metaChevronRight}
-        </mwc-list-item>
-
-        <mwc-list-item
-          twoline
-          hasMeta
-          dialogAction="close"
-          @click=${this._handleManualDownload}
-        >
-          <span>Legacy format</span>
-          <span slot="secondary">For use with ESPHome Flasher.</span>
-          ${metaChevronRight}
-        </mwc-list-item>
-
-        ${this._platformSupportsWebSerial
-          ? html`
-              <a
-                href="https://web.esphome.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="bottom-left"
-                >Open ESPHome Web</a
-              >
-            `
-          : ""}
-        <mwc-button
-          no-attention
-          slot="primaryAction"
-          label="Back"
-          @click=${() => {
-            this._state = "pick_option";
-          }}
-        ></mwc-button>
-      `;
     } else if (this._state === "download_instructions") {
       let instructions: TemplateResult;
       const downloadButton = until(
@@ -374,9 +323,11 @@ class ESPHomeInstallChooseDialog extends LitElement {
       this._compileConfiguration = compileConfiguration(this.configuration)
         .then(
           () => html`
-            <a
-              download
-              href="${getDownloadUrl(this.configuration, !this._isPico)}"
+            <button
+              class="link"
+              @click=${() => {
+                openDownloadTypeDialog(this.configuration);
+              }}
               >Download project</a
             >
           `,
@@ -387,7 +338,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
               class="link"
               dialogAction="close"
               @click=${() => {
-                openCompileDialog(this.configuration, !this._isPico);
+                openCompileDialog(this.configuration);
               }}
             >
               see what went wrong
@@ -432,12 +383,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
     this._state = "pick_server_port";
   }
 
-  private _handleManualDownload() {
-    openCompileDialog(this.configuration, false);
-  }
-
-  private _handleWebDownload() {
-    openCompileDialog(this.configuration, true);
+  private _handleCompileDialog() {
+    openCompileDialog(this.configuration);
+    this._close();
   }
 
   private _handleLegacyOption(ev: Event) {
