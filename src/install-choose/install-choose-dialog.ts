@@ -326,7 +326,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
             <button
               class="link"
               @click=${() => {
-                openDownloadTypeDialog(this.configuration);
+                openDownloadTypeDialog(
+                  this.configuration,
+                  this._platformSupportsWebSerial
+                );
               }}
               >Download project</a
             >
@@ -338,7 +341,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
               class="link"
               dialogAction="close"
               @click=${() => {
-                openCompileDialog(this.configuration);
+                openCompileDialog(
+                  this.configuration,
+                  this._platformSupportsWebSerial
+                );
               }}
             >
               see what went wrong
@@ -384,7 +390,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   }
 
   private _handleCompileDialog() {
-    openCompileDialog(this.configuration);
+    openCompileDialog(this.configuration, this._platformSupportsWebSerial);
     this._close();
   }
 

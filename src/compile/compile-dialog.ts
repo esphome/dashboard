@@ -9,6 +9,7 @@ import { openDownloadTypeDialog } from "../download-type";
 @customElement("esphome-compile-dialog")
 class ESPHomeCompileDialog extends LitElement {
   @property() public configuration!: string;
+  @property() public platformSupportsWebSerial!: boolean;
 
   @property() public downloadFactoryFirmware = true;
 
@@ -52,11 +53,11 @@ class ESPHomeCompileDialog extends LitElement {
       return;
     }
 
-    openDownloadTypeDialog(this.configuration);
+    openDownloadTypeDialog(this.configuration, this.platformSupportsWebSerial);
   }
 
   private _handleDownload() {
-    openDownloadTypeDialog(this.configuration);
+    openDownloadTypeDialog(this.configuration, this.platformSupportsWebSerial);
   }
 
   private _handleRetry() {

@@ -16,6 +16,7 @@ import {
 @customElement("esphome-download-type-dialog")
 class ESPHomeDownloadTypeDialog extends LitElement {
   @property() public configuration!: string;
+  @property() public platformSupportsWebSerial!: boolean;
 
   @state() private _error?: string;
   @state() private _downloadTypes?: DownloadType[];
@@ -50,6 +51,17 @@ class ESPHomeDownloadTypeDialog extends LitElement {
     return html`
       <mwc-dialog open heading=${heading} scrimClickAction>
         ${content}
+        ${this.platformSupportsWebSerial
+          ? html`
+              <a
+                href="https://web.esphome.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bottom-left"
+                >Open ESPHome Web</a
+              >
+            `
+          : ""}
 
         <mwc-button
           no-attention
