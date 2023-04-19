@@ -61,7 +61,7 @@ class ESPHomeCompileDialog extends LitElement {
   }
 
   private _handleRetry() {
-    openCompileDialog(this.configuration);
+    openCompileDialog(this.configuration, this.platformSupportsWebSerial);
   }
 
   private _handleClose() {
