@@ -7,11 +7,11 @@ import { FileToFlash } from "../../../src/web-serial/flash";
 import { esphomeDialogStyles } from "../../../src/styles";
 
 const SUPPORTED_PLATFORMS = [
-  'ESP8266',
-  'ESP32',
-  'ESP32S2',
-  'ESP32S3',
-  'ESP32C3',
+  "ESP8266",
+  "ESP32",
+  "ESP32S2",
+  "ESP32S3",
+  "ESP32C3",
 ];
 
 @customElement("esphome-install-adoptable-dialog")
@@ -59,13 +59,13 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           if (!SUPPORTED_PLATFORMS.includes(platform)) {
             throw new Error(
               `Unsupported platform ${platform}. Only ${SUPPORTED_PLATFORMS.join(
-                ', ',
-              )} are supported.`,
-            )
+                ", "
+              )} are supported.`
+            );
           }
           const platformLower = platform.toLowerCase();
           const resp = await fetch(
-            `https://firmware.esphome.io/esphome-web-${platformLower}/esphome-web-${platformLower}.bin`
+            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.bin`
           );
           if (!resp.ok) {
             throw new Error(
