@@ -1,0 +1,51 @@
+{
+  "haier.climate": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "haier::HaierClimate",
+                "parents": [
+                  "climate::Climate",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+            },
+            "supported_swing_modes": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "enum",
+              "values": {
+                "BOTH": null,
+                "VERTICAL": null,
+                "HORIZONTAL": null
+              },
+              "docs": "**list**: List of supported swing modes. Possible values are: `VERTICAL`, `HORIZONTAL`, `BOTH`.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "5s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: How often device will be polled for status. Defaults to `5s`.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    }
+  }
+}

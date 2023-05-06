@@ -1,0 +1,184 @@
+{
+  "as7341.sensor": {
+    "schemas": {
+      "SENSOR_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "unit_of_measurement": {
+              "default": "#"
+            },
+            "icon": {
+              "default": "mdi:brightness-5"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            },
+            "device_class": {
+              "default": "illuminance"
+            },
+            "state_class": {
+              "default": "measurement"
+            }
+          }
+        }
+      },
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "as7341::AS7341Component",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "f1": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f2": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f3": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f4": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f5": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f6": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f7": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "f8": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "clear": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "nir": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "as7341.sensor.SENSOR_SCHEMA"
+                ]
+              }
+            },
+            "gain": {
+              "key": "Optional",
+              "default": "X8",
+              "type": "enum",
+              "values": {
+                "X0.5": null,
+                "X1": null,
+                "X2": null,
+                "X4": null,
+                "X8": null,
+                "X16": null,
+                "X32": null,
+                "X64": null,
+                "X128": null,
+                "X256": null,
+                "X512": null
+              }
+            },
+            "atime": {
+              "key": "Optional",
+              "default": "29",
+              "type": "integer"
+            },
+            "astep": {
+              "key": "Optional",
+              "default": "599",
+              "type": "integer"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "57",
+              "data_type": "hex_uint8_t"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

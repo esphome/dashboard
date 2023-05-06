@@ -23,11 +23,11 @@
             "gain": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "8X",
-                "4X",
-                "1X"
-              ]
+              "values": {
+                "8X": null,
+                "4X": null,
+                "1X": null
+              }
             },
             "voltage": {
               "key": "Optional",

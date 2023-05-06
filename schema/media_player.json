@@ -3,9 +3,9 @@
     "components": {
       "i2s_audio": {
         "dependencies": [
-          "esp32"
+          "i2s_audio"
         ],
-        "docs": "The `i2s_audio` media player platform allows you to play media from webservers and web streams via the I2S bus. This platform only works on ESP32 based chips.\n\n*See also: [I2S Audio Media Player](https://esphome.io/components/media_player/i2s_audio.html#i2s-audio-media-player)*"
+        "docs": "The `i2s_audio` media player platform allows you to play media from webservers and web streams via the [I\u00b2S Audio Component](https://esphome.io/components/i2s_audio.html). This platform only works on ESP32 based chips.\n\n*See also: [I2S Audio Media Player](https://esphome.io/components/media_player/i2s_audio.html#i2s-audio-media-player)*"
       }
     },
     "schemas": {

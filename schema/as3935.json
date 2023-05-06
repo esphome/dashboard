@@ -51,12 +51,12 @@
               "key": "Optional",
               "default": "1",
               "type": "enum",
-              "values": [
-                1,
-                5,
-                9,
-                16
-              ],
+              "values": {
+                "1": null,
+                "5": null,
+                "9": null,
+                "16": null
+              },
               "docs": "**int**: The number of lightnings that must appear in a 15-minute time window before a lightning storm is detected. 15 minutes is the window of time before the number of detected lightning events is reset. The number of lightning strikes can be set to 1,5,9, or 16. Defaults to `1`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
             },
             "mask_disturber": {
@@ -69,13 +69,13 @@
               "key": "Optional",
               "default": "0",
               "type": "enum",
-              "values": [
-                0,
-                16,
-                32,
-                64,
-                128
-              ],
+              "values": {
+                "0": null,
+                "16": null,
+                "32": null,
+                "64": null,
+                "128": null
+              },
               "docs": "**int**: The antenna is designed to resonate at 500kHz and so can be tuned with the following setting. The accuracy of the antenna must be within 3.5 percent of that value for proper signal validation and distance estimation. Defaults to `0`.\n\n*See also: [as3935 Over I\u00b2C](https://esphome.io/components/sensor/as3935.html#id1)*"
             },
             "capacitance": {

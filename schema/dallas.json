@@ -91,7 +91,7 @@
               "key": "Optional",
               "default": "12",
               "type": "integer",
-              "docs": "**int**: An optional resolution from 8 to 12. Higher means more accurate. Defaults to the maximum for most Dallas temperature sensors: 12.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
+              "docs": "**int**: An optional resolution from 9 to 12. Higher means more accurate. Defaults to the maximum for most Dallas temperature sensors: 12.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
             }
           }
         }

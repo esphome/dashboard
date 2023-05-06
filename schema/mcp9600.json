@@ -20,16 +20,16 @@
               "key": "Optional",
               "default": "K",
               "type": "enum",
-              "values": [
-                "K",
-                "J",
-                "T",
-                "N",
-                "S",
-                "E",
-                "B",
-                "R"
-              ],
+              "values": {
+                "K": null,
+                "J": null,
+                "T": null,
+                "N": null,
+                "S": null,
+                "E": null,
+                "B": null,
+                "R": null
+              },
               "docs": "Set the thermocouple type. Options are: K, J, T, N, S, E, B and R type thermocouple. Defaults to `K`.\n\n*See also: [MCP9600 Thermocouple Amplifier](https://esphome.io/components/sensor/mcp9600.html#configuration-variables)*"
             },
             "hot_junction": {

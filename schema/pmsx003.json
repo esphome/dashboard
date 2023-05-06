@@ -18,12 +18,12 @@
             "type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "PMSX003",
-                "PMS5003T",
-                "PMS5003ST",
-                "PMS5003S"
-              ]
+              "values": {
+                "PMSX003": null,
+                "PMS5003T": null,
+                "PMS5003ST": null,
+                "PMS5003S": null
+              }
             },
             "pm_1_0_std": {
               "key": "Optional",
@@ -47,7 +47,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 1.0\u00b5m in \u00b5g per cubic meter at standard particle All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 1.0\u00b5m in \u00b5g per cubic meter at standard particle. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_2_5_std": {
               "key": "Optional",
@@ -71,7 +71,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 2.5\u00b5m in \u00b5g per cubic meter at standard particle All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 2.5\u00b5m in \u00b5g per cubic meter at standard particle. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_10_0_std": {
               "key": "Optional",
@@ -95,7 +95,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 10.0\u00b5m in \u00b5g per cubic meter at standard particle All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 10.0\u00b5m in \u00b5g per cubic meter at standard particle. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_1_0": {
               "key": "Optional",
@@ -119,7 +119,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 1.0\u00b5m in \u00b5g per cubic meter under atmospheric environment All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 1.0\u00b5m in \u00b5g per cubic meter under atmospheric environment. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_2_5": {
               "key": "Optional",
@@ -143,7 +143,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 2.5\u00b5m in \u00b5g per cubic meter under atmospheric environment All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 2.5\u00b5m in \u00b5g per cubic meter under atmospheric environment. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_10_0": {
               "key": "Optional",
@@ -167,7 +167,7 @@
                   }
                 }
               },
-              "docs": "Use the concentration of particulates of size less than 10.0\u00b5m in \u00b5g per cubic meter under atmospheric environment All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the concentration of particulates of size less than 10.0\u00b5m in \u00b5g per cubic meter under atmospheric environment. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_0_3um": {
               "key": "Optional",
@@ -188,7 +188,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 0.3um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 0.3um in 0.1L of air. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_0_5um": {
               "key": "Optional",
@@ -209,7 +209,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 0.5um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 0.5um in 0.1L of air. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_1_0um": {
               "key": "Optional",
@@ -230,7 +230,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 1.0um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 1.0um in 0.1L of air. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_2_5um": {
               "key": "Optional",
@@ -251,7 +251,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 2.5um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 2.5um in 0.1L of air. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_5_0um": {
               "key": "Optional",
@@ -272,7 +272,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 5.0um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 5.0um in 0.1L of air. Not supported by the `PMS5003T` type sensors. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "pm_10_0um": {
               "key": "Optional",
@@ -293,7 +293,7 @@
                   }
                 }
               },
-              "docs": "Use the number of particles with diameter beyond 10.0um in 0.1L of air All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the number of particles with diameter beyond 10.0um in 0.1L of air. Not supported by the `PMS5003T` type sensors. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "temperature": {
               "key": "Optional",
@@ -317,7 +317,7 @@
                   }
                 }
               },
-              "docs": "Use the temperature value in \u00b0C for the `PMS5003T` and `PMS5003ST`. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the temperature value in \u00b0C for the `PMS5003T` and `PMS5003ST` type sensors. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "humidity": {
               "key": "Optional",
@@ -341,7 +341,7 @@
                   }
                 }
               },
-              "docs": "Use the humidity value in % for the `PMS5003T` and `PMS5003ST`. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the humidity value in % for the `PMS5003T` and `PMS5003ST` type sensors. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "formaldehyde": {
               "key": "Optional",
@@ -365,7 +365,7 @@
                   }
                 }
               },
-              "docs": "Use the formaldehyde (HCHO) concentration in \u00b5g per cubic meter for the `PMS5003S` and `PMS5003ST`. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
+              "docs": "Use the formaldehyde (HCHO) concentration in \u00b5g per cubic meter for the `PMS5003S` and `PMS5003ST` type sensors. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

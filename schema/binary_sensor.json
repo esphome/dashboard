@@ -67,6 +67,18 @@
       "hydreon_rgxx": {
         "docs": "The `hydreon_rgxx` binary sensor platform gives access to information provided by a Hydreon Rain Sensor. For this sensor to work, a [Hydreon Rain Sensor](https://esphome.io/components/sensor/hydreon_rgxx.html) must be set up.\n\n*See also: [Hydreon Rain Sensor Binary Sensor](https://esphome.io/components/binary_sensor/hydreon_rgxx.html#hydreon-rain-sensor-binary-sensor)*"
       },
+      "ld2410": {
+        "dependencies": [
+          "ld2410"
+        ],
+        "docs": "The `ld2410` binary sensor allows you to use your [LD2410 Sensor to perform different measurements.\n\n*See also: [ld2410 Binary Sensor](https://esphome.io/components/sensor/ld2410.html#binary-sensor)*"
+      },
+      "matrix_keypad": {
+        "dependencies": [
+          "matrix_keypad"
+        ],
+        "docs": "Individual keys can be added independently to ESPHome as `binary_sensor`:\n\n*See also: [matrix_keypad Binary Sensor](https://esphome.io/components/matrix_keypad.html#binary-sensor)*"
+      },
       "modbus_controller": {
         "dependencies": [
           "modbus_controller"
@@ -163,6 +175,9 @@
         ],
         "docs": "The `tuya` binary sensor platform creates a binary sensor from a tuya component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Binary Sensor](https://esphome.io/components/binary_sensor/tuya.html#tuya-binary-sensor)*"
       },
+      "vbus": {
+        "docs": "Configuration variables:\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
+      },
       "xiaomi_cgpr1": {
         "dependencies": [
           "esp32_ble_tracker"
@@ -227,37 +242,37 @@
             "device_class": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "",
-                "battery",
-                "battery_charging",
-                "carbon_monoxide",
-                "cold",
-                "connectivity",
-                "door",
-                "garage_door",
-                "gas",
-                "heat",
-                "light",
-                "lock",
-                "moisture",
-                "motion",
-                "moving",
-                "occupancy",
-                "opening",
-                "plug",
-                "power",
-                "presence",
-                "problem",
-                "running",
-                "safety",
-                "smoke",
-                "sound",
-                "tamper",
-                "update",
-                "vibration",
-                "window"
-              ],
+              "values": {
+                "battery": null,
+                "battery_charging": null,
+                "carbon_monoxide": null,
+                "cold": null,
+                "connectivity": null,
+                "door": null,
+                "": null,
+                "garage_door": null,
+                "gas": null,
+                "heat": null,
+                "light": null,
+                "lock": null,
+                "moisture": null,
+                "motion": null,
+                "moving": null,
+                "occupancy": null,
+                "opening": null,
+                "plug": null,
+                "power": null,
+                "presence": null,
+                "problem": null,
+                "running": null,
+                "safety": null,
+                "smoke": null,
+                "sound": null,
+                "tamper": null,
+                "update": null,
+                "vibration": null,
+                "window": null
+              },
               "docs": "**string**: The device class for the sensor. See [https://developers.home-assistant.io/docs/core/entity/binary-sensor/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/binary-sensor/#available-device-classes) for a list of available options.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"
             },
             "filters": {

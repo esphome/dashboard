@@ -76,7 +76,8 @@
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [dsmr Component/Hub](https://esphome.io/components/sensor/dsmr.html#component-hub)*"
             }
           }
-        }
+        },
+        "is_list": true
       }
     }
   },

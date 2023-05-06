@@ -12,24 +12,24 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "SSD1306_128X32",
-                "SSD1306_128X64",
-                "SSD1306_96X16",
-                "SSD1306_64X48",
-                "SSD1306_64X32",
-                "SH1106_128X32",
-                "SH1106_128X64",
-                "SH1106_96X16",
-                "SH1106_64X48",
-                "SH1107_128X64",
-                "SSD1305_128X32",
-                "SSD1305_128X64"
-              ],
-              "docs": "The model of the display. Options are:\n  * `SSD1306 128x32` (SSD1306 with 128 columns and 32 rows)\n  \n  * `SSD1306 128x64`\n  \n  * `SSD1306 96x16`\n  \n  * `SSD1306 64x48`\n  \n  * `SH1106 128x32`\n  \n  * `SH1106 128x64`\n  \n  * `SH1106 96x16`\n  \n  * `SH1106 64x48`\n  \n  * `SH1107 128x64`\n  \n  * `SSD1305 128x32`\n  \n  * `SSD1305 128x64`\n  \n  \n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*",
-              "values_docs": {
-                "SSD1306_128X32": "SSD1306 with 128 columns and 32 rows"
-              }
+              "values": {
+                "SSD1306_128X32": {
+                  "docs": "SSD1306 with 128 columns and 32 rows"
+                },
+                "SSD1306_128X64": null,
+                "SSD1306_96X16": null,
+                "SSD1306_64X48": null,
+                "SSD1306_64X32": null,
+                "SSD1306_72X40": null,
+                "SH1106_128X32": null,
+                "SH1106_128X64": null,
+                "SH1106_96X16": null,
+                "SH1106_64X48": null,
+                "SH1107_128X64": null,
+                "SSD1305_128X32": null,
+                "SSD1305_128X64": null
+              },
+              "docs": "The model of the display. Options are:\n  * `SSD1306 128x32` (SSD1306 with 128 columns and 32 rows)\n  \n  * `SSD1306 128x64`\n  \n  * `SSD1306 96x16`\n  \n  * `SSD1306 72x40`\n  \n  * `SSD1306 64x48`\n  \n  * `SH1106 128x32`\n  \n  * `SH1106 128x64`\n  \n  * `SH1106 96x16`\n  \n  * `SH1106 64x48`\n  \n  * `SH1107 128x64`\n  \n  * `SSD1305 128x32`\n  \n  * `SSD1305 128x64`\n  \n  \n\n*See also: [ssd1306 Over SPI](https://esphome.io/components/display/ssd1306.html#id1)*"
             },
             "reset_pin": {
               "key": "Optional",

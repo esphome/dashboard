@@ -30,6 +30,10 @@
               "type": "trigger",
               "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is read. See [on_tag Action](https://esphome.io/components/binary_sensor/rc522.html#rc522-on-tag).\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#id1)*"
             },
+            "on_tag_removed": {
+              "key": "Optional",
+              "type": "trigger"
+            },
             "update_interval": {
               "key": "Optional",
               "default": "1s",

@@ -39,15 +39,6 @@
                 ]
               }
             },
-            "id": {
-              "key": "GeneratedID",
-              "id_type": {
-                "class": "number::Number",
-                "parents": [
-                  "EntityBase"
-                ]
-              }
-            },
             "on_value": {
               "key": "Optional",
               "type": "trigger",
@@ -85,12 +76,64 @@
               "key": "Optional",
               "default": "AUTO",
               "type": "enum",
-              "values": [
-                "AUTO",
-                "BOX",
-                "SLIDER"
-              ],
+              "values": {
+                "AUTO": null,
+                "BOX": null,
+                "SLIDER": null
+              },
               "docs": "**string**: Defines how the number should be displayed in the frontend. See [https://developers.home-assistant.io/docs/core/entity/number/#properties](https://developers.home-assistant.io/docs/core/entity/number/#properties) for a list of available options. Requires Home Assistant Core 2021.12 or newer. Defaults to `\"auto\"`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            },
+            "device_class": {
+              "key": "Optional",
+              "type": "enum",
+              "values": {
+                "apparent_power": null,
+                "aqi": null,
+                "atmospheric_pressure": null,
+                "battery": null,
+                "carbon_dioxide": null,
+                "carbon_monoxide": null,
+                "current": null,
+                "data_rate": null,
+                "data_size": null,
+                "distance": null,
+                "": null,
+                "energy": null,
+                "energy_storage": null,
+                "frequency": null,
+                "gas": null,
+                "humidity": null,
+                "illuminance": null,
+                "irradiance": null,
+                "moisture": null,
+                "monetary": null,
+                "nitrogen_dioxide": null,
+                "nitrogen_monoxide": null,
+                "nitrous_oxide": null,
+                "ozone": null,
+                "pm1": null,
+                "pm10": null,
+                "pm25": null,
+                "power": null,
+                "power_factor": null,
+                "precipitation": null,
+                "precipitation_intensity": null,
+                "pressure": null,
+                "reactive_power": null,
+                "signal_strength": null,
+                "sound_pressure": null,
+                "speed": null,
+                "sulphur_dioxide": null,
+                "temperature": null,
+                "volatile_organic_compounds": null,
+                "voltage": null,
+                "volume": null,
+                "volume_storage": null,
+                "water": null,
+                "weight": null,
+                "wind_speed": null
+              },
+              "docs": "**string**: The device class for the number. See [https://developers.home-assistant.io/docs/core/entity/number/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/number/#available-device-classes) for a list of available options.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
             }
           }
         }
@@ -137,12 +180,12 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "INCREMENT",
-                "DECREMENT",
-                "TO_MIN",
-                "TO_MAX"
-              ],
+              "values": {
+                "INCREMENT": null,
+                "DECREMENT": null,
+                "TO_MIN": null,
+                "TO_MAX": null
+              },
               "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: What operation to perform on the number component. One of `TO_MIN`, `TO_MAX`, `DECREMENT` or `INCREMENT` (case insensitive). When writing a lambda for this field, then return one of the following enum values: `NUMBER_OP_TO_MIN`, `NUMBER_OP_TO_MAX`, `NUMBER_OP_DECREMENT` or `NUMBER_OP_INCREMENT`.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-operation-action)*"
             },
             "cycle": {
@@ -168,9 +211,9 @@
               "key": "Optional",
               "default": "TO_MAX",
               "type": "enum",
-              "values": [
-                "TO_MAX"
-              ]
+              "values": {
+                "TO_MAX": null
+              }
             }
           }
         },
@@ -188,9 +231,9 @@
               "key": "Optional",
               "default": "TO_MIN",
               "type": "enum",
-              "values": [
-                "TO_MIN"
-              ]
+              "values": {
+                "TO_MIN": null
+              }
             }
           }
         },
@@ -208,9 +251,9 @@
               "key": "Optional",
               "default": "DECREMENT",
               "type": "enum",
-              "values": [
-                "DECREMENT"
-              ]
+              "values": {
+                "DECREMENT": null
+              }
             },
             "cycle": {
               "key": "Optional",
@@ -234,9 +277,9 @@
               "key": "Optional",
               "default": "INCREMENT",
               "type": "enum",
-              "values": [
-                "INCREMENT"
-              ]
+              "values": {
+                "INCREMENT": null
+              }
             },
             "cycle": {
               "key": "Optional",

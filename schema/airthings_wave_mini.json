@@ -113,7 +113,7 @@
               "default": "5min"
             },
             "ble_client_id": {
-              "key": "Required",
+              "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
               "type": "use_id"
             }

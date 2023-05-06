@@ -25,12 +25,12 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "TTGO_TDISPLAY_135X240",
-                "ADAFRUIT_FUNHOUSE_240X240",
-                "ADAFRUIT_RR_280X240",
-                "CUSTOM"
-              ],
+              "values": {
+                "TTGO_TDISPLAY_135X240": null,
+                "ADAFRUIT_FUNHOUSE_240X240": null,
+                "ADAFRUIT_RR_280X240": null,
+                "CUSTOM": null
+              },
               "docs": "**string**: The display model to use. One of the following options:\n  * `TTGO TDisplay 135x240`\n  \n  * `Adafruit Funhouse 240x240`\n  \n  * `Adafruit RR 280x240` (round-rectangular display \u2013 some pixels are \u201cdeleted\u201d from corners to form rounded shape)\n  \n  * `Custom` (see details below)\n  \n  \n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
             },
             "reset_pin": {

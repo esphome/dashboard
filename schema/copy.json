@@ -23,7 +23,7 @@
               "key": "Required",
               "use_id_type": "sensor::Sensor",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that should be mirrored.\n\n*See also: [Copy Sensor](https://esphome.io/components/copy.html#id7)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that should be mirrored.\n\n*See also: [Copy Sensor](https://esphome.io/components/copy.html#id8)*"
             }
           }
         }
@@ -198,6 +198,7 @@
           ],
           "config_vars": {
             "id": {
+              "key": "GeneratedID",
               "id_type": {
                 "class": "copy::CopyNumber",
                 "parents": [
@@ -255,10 +256,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {
@@ -274,7 +289,7 @@
               "key": "Required",
               "use_id_type": "switch_::Switch",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The switch that should be mirrored.\n\n*See also: [Copy Switch](https://esphome.io/components/copy.html#id8)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The switch that should be mirrored.\n\n*See also: [Copy Switch](https://esphome.io/components/copy.html#id9)*"
             }
           }
         }
@@ -305,7 +320,7 @@
               "key": "Required",
               "use_id_type": "text_sensor::TextSensor",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The text sensor that should be mirrored.\n\n*See also: [Copy Text Sensor](https://esphome.io/components/copy.html#id9)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The text sensor that should be mirrored.\n\n*See also: [Copy Text Sensor](https://esphome.io/components/copy.html#id10)*"
             }
           }
         }

@@ -1,0 +1,136 @@
+{
+  "max6956": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "max6956::MAX6956",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "brightness_global": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer"
+            },
+            "brightness_mode": {
+              "key": "Optional",
+              "default": "global",
+              "type": "enum",
+              "values": {
+                "global": null,
+                "segment": null
+              }
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "64",
+              "data_type": "hex_uint8_t"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "action": {
+      "set_brightness_global": {
+        "type": "schema",
+        "maybe": "brightness_global",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "max6956::MAX6956",
+              "type": "use_id"
+            },
+            "brightness_global": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "set_brightness_mode": {
+        "type": "schema",
+        "maybe": "brightness_mode",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "max6956::MAX6956",
+              "type": "use_id"
+            },
+            "brightness_mode": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": {
+                "global": null,
+                "segment": null
+              }
+            }
+          }
+        }
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "max6956.MAX6956_PIN_SCHEMA"
+        ]
+      }
+    }
+  },
+  "max6956.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "max6956::MAX6956LedChannel",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              }
+            },
+            "max6956": {
+              "key": "GeneratedID",
+              "use_id_type": "max6956::MAX6956",
+              "type": "use_id"
+            },
+            "pin": {
+              "key": "Required",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

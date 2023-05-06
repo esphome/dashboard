@@ -81,14 +81,14 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "INITR_GREENTAB",
-                "INITR_REDTAB",
-                "INITR_BLACKTAB",
-                "INITR_MINI160X80",
-                "INITR_18BLACKTAB",
-                "INITR_18REDTAB"
-              ],
+              "values": {
+                "INITR_GREENTAB": null,
+                "INITR_REDTAB": null,
+                "INITR_BLACKTAB": null,
+                "INITR_MINI160X80": null,
+                "INITR_18BLACKTAB": null,
+                "INITR_18REDTAB": null
+              },
               "docs": "**string**: The model to use, one of the following options:\n  * `INITR_BLACKTAB`\n  \n  * `INITR_GREENTAB`\n  \n  * `INITR_REDTAB`\n  \n  * `INITR_MINI160X80`\n  \n  * `INITR_18BLACKTAB`\n  \n  * `INITR_18REDTAB`\n  \n  \n\n*See also: [ST7735 Display](https://esphome.io/components/display/st7735.html#configuration-variables)*"
             },
             "reset_pin": {

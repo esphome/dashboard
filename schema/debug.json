@@ -158,12 +158,33 @@
                   "text_sensor.TEXT_SENSOR_SCHEMA"
                 ],
                 "config_vars": {
+                  "icon": {
+                    "default": "mdi:chip"
+                  },
                   "entity_category": {
                     "default": "diagnostic"
                   }
                 }
               },
               "docs": "Reports the following device information:\n  * ESPHome Version\n  \n  * Free heap size at startup\n  \n  * Flash chip size, speed and mode\n  \n  * ESP32:\n    * Chip model, cores, revision\n    \n    * Chip features (BLE / BT / WiFi_BGN / EMB_FLASH / \u2026)\n    \n    * ESP-IDF version\n    \n    * EFuse MAC\n    \n    * Reset reason\n    \n    * Wakeup reason\n    \n    \n  \n  * ESP8266:\n    * Chip id, frequency\n    \n    * Flash id\n    \n    * SDK, Core & Boot versions\n    \n    * Reset reason & information\n    \n    \n  \n  Accepts these options:\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
+            },
+            "reset_reason": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "text_sensor.TEXT_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "icon": {
+                    "default": "mdi:restart"
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              },
+              "docs": "Reports the last reboot reason in a human-readable form.Accepts these options:\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
             }
           }
         }

@@ -1,0 +1,46 @@
+{
+  "sm10bit_base": {
+    "schemas": {
+      "SM10BIT_BASE_CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "data_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for DATA.\n\n*See also: [sm2335 Component/Hub](https://esphome.io/components/output/sm2335.html#configuration-variables)*"
+            },
+            "clock_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin which CLK is connected to.\n\n*See also: [sm2335 Component/Hub](https://esphome.io/components/output/sm2335.html#configuration-variables)*"
+            },
+            "max_power_color_channels": {
+              "key": "Optional",
+              "default": "2",
+              "type": "integer",
+              "docs": "**int 0-15**: Adjusts the current supplied to the color channels, higher is more power.  Default is 2 per SM2335 datasheet. See table below.\n\n*See also: [sm2335 Component/Hub](https://esphome.io/components/output/sm2335.html#configuration-variables)*"
+            },
+            "max_power_white_channels": {
+              "key": "Optional",
+              "default": "4",
+              "type": "integer",
+              "docs": "**int 0-15**: Adjusts the current supplied to the white channels, higher is more power.  Default is 4 per SM2335 datasheet. See table below.\n\n*See also: [sm2335 Component/Hub](https://esphome.io/components/output/sm2335.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

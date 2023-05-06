@@ -18,14 +18,14 @@
               }
             },
             "bit_rate": {
-              "values": [
-                "50KBPS",
-                "100KBPS",
-                "125KBPS",
-                "250KBPS",
-                "500KBPS",
-                "1000KBPS"
-              ]
+              "values": {
+                "50KBPS": null,
+                "100KBPS": null,
+                "125KBPS": null,
+                "250KBPS": null,
+                "500KBPS": null,
+                "1000KBPS": null
+              }
             },
             "rx_pin": {
               "key": "Required",

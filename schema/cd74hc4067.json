@@ -19,7 +19,6 @@
             "pin_s0": {
               "key": "Required",
               "schema": true,
-              "internal": true,
               "modes": [
                 "output"
               ],
@@ -28,7 +27,6 @@
             "pin_s1": {
               "key": "Required",
               "schema": true,
-              "internal": true,
               "modes": [
                 "output"
               ],
@@ -37,7 +35,6 @@
             "pin_s2": {
               "key": "Required",
               "schema": true,
-              "internal": true,
               "modes": [
                 "output"
               ],
@@ -46,7 +43,6 @@
             "pin_s3": {
               "key": "Required",
               "schema": true,
-              "internal": true,
               "modes": [
                 "output"
               ],

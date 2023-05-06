@@ -144,7 +144,7 @@
                   }
                 }
               },
-              "docs": "Use the power value of the A channel in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ADE7953 Power Sensor](https://esphome.io/components/sensor/ade7953.html#configuration-variables)*"
+              "docs": "Use the power value of the B channel in watts. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ADE7953 Power Sensor](https://esphome.io/components/sensor/ade7953.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

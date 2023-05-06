@@ -190,14 +190,14 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "BREATHING",
-                "FLASHING",
-                "ALWAYS_ON",
-                "ALWAYS_OFF",
-                "GRADUAL_ON",
-                "GRADUAL_OFF"
-              ],
+              "values": {
+                "BREATHING": null,
+                "FLASHING": null,
+                "ALWAYS_ON": null,
+                "ALWAYS_OFF": null,
+                "GRADUAL_ON": null,
+                "GRADUAL_OFF": null
+              },
               "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The state to set the LED. One of `BREATHING`, `FLASHING`, `ALWAYS_ON`, `ALWAYS_OFF`, `GRADUAL_ON` and `GRADUAL_OFF`.\n\n*See also: [on_enrollment_failed Trigger](https://esphome.io/components/fingerprint_grow.html#fingerprint-grow-aura-led-control-action)*"
             },
             "speed": {
@@ -211,15 +211,15 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "RED",
-                "BLUE",
-                "PURPLE",
-                "GREEN",
-                "YELLOW",
-                "CYAN",
-                "WHITE"
-              ],
+              "values": {
+                "RED": null,
+                "BLUE": null,
+                "PURPLE": null,
+                "GREEN": null,
+                "YELLOW": null,
+                "CYAN": null,
+                "WHITE": null
+              },
               "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The LED color to activate. For R503, one of `RED`, `BLUE` and `PURPLE`.  For R503-RGB, one of `RED`, `BLUE`, `PURPLE`, `GREEN`, `YELLOW`, `CYAN` and `WHITE`.\n\n*See also: [on_enrollment_failed Trigger](https://esphome.io/components/fingerprint_grow.html#fingerprint-grow-aura-led-control-action)*"
             },
             "count": {

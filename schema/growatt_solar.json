@@ -17,7 +17,7 @@
                     "default": "V"
                   },
                   "accuracy_decimals": {
-                    "default": "2"
+                    "default": "1"
                   },
                   "device_class": {
                     "default": "voltage"
@@ -93,7 +93,7 @@
                     "default": "V"
                   },
                   "accuracy_decimals": {
-                    "default": "2"
+                    "default": "1"
                   },
                   "device_class": {
                     "default": "voltage"
@@ -172,10 +172,10 @@
               "key": "Optional",
               "default": "RTU",
               "type": "enum",
-              "values": [
-                "RTU",
-                "RTU2"
-              ],
+              "values": {
+                "RTU": null,
+                "RTU2": null
+              },
               "docs": "Version of the protocol used by your inverter. Old inverters use RTU (default). Newer ones use RTU2 (e.g. MIC, MIN, MAX series)\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#configuration-variables)*"
             },
             "phase_a": {
@@ -322,7 +322,7 @@
                     "default": "kWh"
                   },
                   "accuracy_decimals": {
-                    "default": "2"
+                    "default": "1"
                   },
                   "device_class": {
                     "default": "energy"
@@ -346,7 +346,7 @@
                     "default": "kWh"
                   },
                   "accuracy_decimals": {
-                    "default": "0"
+                    "default": "1"
                   },
                   "device_class": {
                     "default": "energy"

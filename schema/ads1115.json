@@ -62,7 +62,7 @@
                   "voltage_sampler::VoltageSampler"
                 ]
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
             },
             "unit_of_measurement": {
               "default": "V"
@@ -80,31 +80,41 @@
               "key": "GeneratedID",
               "use_id_type": "ads1115::ADS1115Component",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [ADS1115 Hub](https://esphome.io/components/sensor/ads1115.html#ads1115-component) you want to use this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the [ADS1115 Hub](https://esphome.io/components/sensor/ads1115.html#ads1115-component) you want to use this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
             },
             "multiplexer": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "A0_A1",
-                "A0_A3",
-                "A1_A3",
-                "A2_A3",
-                "A0_GND",
-                "A1_GND",
-                "A2_GND",
-                "A3_GND"
-              ],
-              "docs": "The multiplexer channel of this sensor. Effectively means between which pins you want to measure voltage.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+              "values": {
+                "A0_A1": null,
+                "A0_A3": null,
+                "A1_A3": null,
+                "A2_A3": null,
+                "A0_GND": null,
+                "A1_GND": null,
+                "A2_GND": null,
+                "A3_GND": null
+              },
+              "docs": "The multiplexer channel of this sensor. Effectively means between which pins you want to measure voltage.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
             },
             "gain": {
               "key": "Required",
-              "docs": "**float**: The gain of this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+              "docs": "**float**: The gain of this sensor.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
+            },
+            "resolution": {
+              "key": "Optional",
+              "default": "16_BITS",
+              "type": "enum",
+              "values": {
+                "16_BITS": null,
+                "12_BITS": null
+              },
+              "docs": "**string**: the resolution of this sensor. Defaults to `16 bits`.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
             },
             "update_interval": {
               "key": "Optional",
               "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id3)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [ads1115 Sensor](https://esphome.io/components/sensor/ads1115.html#id1)*"
             }
           }
         }

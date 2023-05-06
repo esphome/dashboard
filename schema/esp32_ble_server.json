@@ -10,7 +10,10 @@
               "id_type": {
                 "class": "esp32_ble_server::BLEServer",
                 "parents": [
-                  "Component"
+                  "Component",
+                  "esp32_ble::GATTsEventHandler",
+                  "Parented<esp32_ble::ESP32BLE>",
+                  "Parented"
                 ]
               }
             },

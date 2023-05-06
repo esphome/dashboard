@@ -55,7 +55,7 @@
               "key": "Optional",
               "default": "1",
               "type": "integer",
-              "docs": "**int**: Number of daisy-chained shift registers, up-to 4. Defaults to `1`.\n\n*See also: [SN74HC595 I/O Expander (shift register)](https://esphome.io/components/sn74hc595.html#configuration-variables)*"
+              "docs": "**int**: Number of daisy-chained shift registers, up-to 256. Defaults to `1`.\n\n*See also: [SN74HC595 I/O Expander (shift register)](https://esphome.io/components/sn74hc595.html#configuration-variables)*"
             }
           },
           "extends": [
