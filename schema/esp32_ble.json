@@ -13,6 +13,18 @@
                   "Component"
                 ]
               }
+            },
+            "io_capability": {
+              "key": "Optional",
+              "default": "none",
+              "type": "enum",
+              "values": {
+                "none": null,
+                "keyboard_only": null,
+                "keyboard_display": null,
+                "display_only": null,
+                "display_yes_no": null
+              }
             }
           },
           "extends": [

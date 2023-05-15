@@ -41,6 +41,12 @@
               ],
               "type": "pin",
               "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin used for the MOSI line of the SPI bus.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
+            },
+            "force_sw": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether software implementation should be used even if hardware one is available.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#configuration-variables)*"
             }
           }
         },

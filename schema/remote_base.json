@@ -17,9 +17,66 @@
             }
           }
         }
+      },
+      "CANALSAT_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "device": {
+              "key": "Required",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The device to trigger on, see dumper output for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "0",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The address (or subdevice) to trigger on, see dumper output for more info. Defaults to `0`\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
+            "command": {
+              "key": "Required",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The command to listen for.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            }
+          }
+        }
+      },
+      "RC_SWITCH_PROTOCOL_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "pulse_length": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "uint32_t"
+            },
+            "sync": {
+              "key": "Optional",
+              "default": "[1, 31]",
+              "data_type": "RC_SWITCH_TIMING_SCHEMA"
+            },
+            "zero": {
+              "key": "Optional",
+              "default": "[1, 3]",
+              "data_type": "RC_SWITCH_TIMING_SCHEMA"
+            },
+            "one": {
+              "key": "Optional",
+              "default": "[3, 1]",
+              "data_type": "RC_SWITCH_TIMING_SCHEMA"
+            },
+            "inverted": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            }
+          }
+        }
       }
     },
     "dumper": {
+      "canalsat": {},
+      "canalsatld": {},
       "coolix": {},
       "dish": {},
       "jvc": {},
@@ -30,6 +87,7 @@
       "pronto": {},
       "sony": {},
       "raw": {},
+      "drayton": {},
       "rc5": {},
       "rc6": {},
       "rc_switch": {},

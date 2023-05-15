@@ -12,9 +12,9 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "SSD1327_128X128"
-              ],
+              "values": {
+                "SSD1327_128X128": null
+              },
               "docs": "The model of the display. At present, only one option is available:\n  * `SSD1327 128x128`\n  \n  \n\n*See also: [ssd1327 Over SPI](https://esphome.io/components/display/ssd1327.html#id1)*"
             },
             "reset_pin": {

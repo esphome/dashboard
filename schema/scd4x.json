@@ -129,19 +129,21 @@
               "key": "Optional",
               "default": "periodic",
               "type": "enum",
-              "values": [
-                "periodic",
-                "low_power_periodic",
-                "single_shot",
-                "single_shot_rht_only"
-              ],
-              "docs": "Set measurement mode for scd4x.\n  * `periodic`: The sensor takes a new measurement every 5 seconds. This is the default mode.\n  \n  * `low_power_periodic`: The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds.\n  \n  * `single_shot`: A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters).\n  \n  * `single_shot_rht_only`: A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required.\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*",
-              "values_docs": {
-                "periodic": "The sensor takes a new measurement every 5 seconds. This is the default mode.",
-                "low_power_periodic": "The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds.",
-                "single_shot": "A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters).",
-                "single_shot_rht_only": "A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required."
-              }
+              "values": {
+                "periodic": {
+                  "docs": "The sensor takes a new measurement every 5 seconds. This is the default mode."
+                },
+                "low_power_periodic": {
+                  "docs": "The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds."
+                },
+                "single_shot": {
+                  "docs": "A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters)."
+                },
+                "single_shot_rht_only": {
+                  "docs": "A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required."
+                }
+              },
+              "docs": "Set measurement mode for scd4x.\n  * `periodic`: The sensor takes a new measurement every 5 seconds. This is the default mode.\n  \n  * `low_power_periodic`: The sensor takes a new measurement every 30 seconds. Make sure `update_interval` is at least 30 seconds.\n  \n  * `single_shot`: A measurement is started in every update interval. A measurement takes 5 seconds. This mode is only available on scd41 and useful if low power consumption is required. The automatic self-calibration is optimized for single shot measurements performed every 5 minutes. To reduce noise levels, you can can perform several single shot measurements in a row and average the output values using a [Sensor Filters](https://esphome.io/components/sensor/index.html#sensor-filters).\n  \n  * `single_shot_rht_only`: A measurement is started in every update interval. A measurement takes 50 ms. Only humidity and temperature is measured. CO2 is reported as 0 ppm. This mode is only available on scd41 and useful if low power consumption is required.\n  \n  \n\n*See also: [SCD4X CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd4x.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

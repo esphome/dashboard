@@ -38,10 +38,10 @@
               "key": "Optional",
               "default": "60HZ",
               "type": "enum",
-              "values": [
-                "50HZ",
-                "60HZ"
-              ],
+              "values": {
+                "50HZ": null,
+                "60HZ": null
+              },
               "docs": "**string**: The mains power frequency to reject (`50 Hz` or `60 Hz`). Defaults to `60 Hz`.\n\n*See also: [MAX31856 Thermocouple Temperature Sensor](https://esphome.io/components/sensor/max31856.html#configuration-variables)*"
             },
             "update_interval": {

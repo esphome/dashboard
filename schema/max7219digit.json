@@ -38,10 +38,10 @@
               "key": "Optional",
               "default": "SNAKE",
               "type": "enum",
-              "values": [
-                "ZIGZAG",
-                "SNAKE"
-              ],
+              "values": {
+                "ZIGZAG": null,
+                "SNAKE": null
+              },
               "docs": "How are the lines in Multiline Mode connected? Possible values are `zigzag` and `snake`. Defaults to `snake`\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
             },
             "intensity": {
@@ -54,27 +54,27 @@
               "key": "Optional",
               "default": "0",
               "type": "enum",
-              "values": [
-                "0",
-                "90",
-                "180",
-                "270"
-              ],
+              "values": {
+                "0": null,
+                "90": null,
+                "180": null,
+                "270": null
+              },
               "docs": "Rotates every 8x8 chip. Valid values are `0`, `90`, `180` and `270`. Defaults to `0`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
             },
             "scroll_mode": {
               "key": "Optional",
               "default": "CONTINUOUS",
               "type": "enum",
-              "values": [
-                "CONTINUOUS",
-                "STOP"
-              ],
-              "docs": "Set the scroll mode. One of `CONTINUOUS` or `STOP`. Defaults to `CONTINUOUS`\n  * `CONTINUOUS`: Always scrolls and the text repeats continuously, you might need to add some separation at the end.\n  \n  * `STOP`: When text is over it waits the `scroll_dwell` time and scroll is set back to the start.\n  \n  \n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*",
-              "values_docs": {
-                "CONTINUOUS": "Always scrolls and the text repeats continuously, you might need to add some separation at the end.",
-                "STOP": "When text is over it waits the `scroll_dwell` time and scroll is set back to the start."
-              }
+              "values": {
+                "CONTINUOUS": {
+                  "docs": "Always scrolls and the text repeats continuously, you might need to add some separation at the end."
+                },
+                "STOP": {
+                  "docs": "When text is over it waits the `scroll_dwell` time and scroll is set back to the start."
+                }
+              },
+              "docs": "Set the scroll mode. One of `CONTINUOUS` or `STOP`. Defaults to `CONTINUOUS`\n  * `CONTINUOUS`: Always scrolls and the text repeats continuously, you might need to add some separation at the end.\n  \n  * `STOP`: When text is over it waits the `scroll_dwell` time and scroll is set back to the start.\n  \n  \n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
             },
             "scroll_enable": {
               "key": "Optional",
@@ -120,6 +120,12 @@
               "default": "False",
               "type": "boolean",
               "docs": "**boolean**: For some displays the order of the displays is reversed (\u201cDCBA\u201d). This option will reverse the display to (\u201cABCD\u201d) again. Defaults to  `false`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
+            },
+            "flip_x": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Flip the horizontal axis on the screen. Defaults to `false`.\n\n*See also: [MAX7219 Digit Display](https://esphome.io/components/display/max7219digit.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

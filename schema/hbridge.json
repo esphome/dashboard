@@ -36,11 +36,11 @@
               "key": "Optional",
               "default": "SLOW",
               "type": "enum",
-              "values": [
-                "SLOW",
-                "FAST"
-              ],
-              "docs": "**string**: The decay mode you want to use with the h-bridge. Either `slow` (braking) or `fast` (coasting). Defaults to `slow`.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
+              "values": {
+                "SLOW": null,
+                "FAST": null
+              },
+              "docs": "**string**: The decay mode you want to use with the h-bridge. Either `slow` (coasting) or `fast` (braking). Defaults to `slow`.\n\n*See also: [H-bridge Fan](https://esphome.io/components/fan/hbridge.html#configuration-variables)*"
             },
             "speed_count": {
               "key": "Optional",

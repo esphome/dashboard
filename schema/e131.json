@@ -18,10 +18,10 @@
               "key": "Optional",
               "default": "MULTICAST",
               "type": "enum",
-              "values": [
-                "UNICAST",
-                "MULTICAST"
-              ],
+              "values": {
+                "UNICAST": null,
+                "MULTICAST": null
+              },
               "docs": "Listening method, one of `multicast` or `unicast`. Defaults to `multicast`.\n\n*See also: [E1.31 Component](https://esphome.io/components/light/index.html#e1-31-component)*"
             }
           }

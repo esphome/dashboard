@@ -67,19 +67,19 @@
             "device_class": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "",
-                "awning",
-                "blind",
-                "curtain",
-                "damper",
-                "door",
-                "garage",
-                "gate",
-                "shade",
-                "shutter",
-                "window"
-              ],
+              "values": {
+                "awning": null,
+                "blind": null,
+                "curtain": null,
+                "damper": null,
+                "door": null,
+                "": null,
+                "garage": null,
+                "gate": null,
+                "shade": null,
+                "shutter": null,
+                "window": null
+              },
               "docs": "**string**: The device class for the sensor. See [https://www.home-assistant.io/components/cover/](https://www.home-assistant.io/components/cover/) for a list of available options.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#base-cover-configuration)*"
             },
             "position_command_topic": {
@@ -180,10 +180,10 @@
               "key": "Optional",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "OPEN",
-                "CLOSED"
-              ],
+              "values": {
+                "OPEN": null,
+                "CLOSED": null
+              },
               "docs": "**string**: The state to set the cover to - one of `OPEN` or `CLOSE`.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
             },
             "position": {

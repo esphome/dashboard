@@ -28,8 +28,7 @@ export interface ConfigVarTrigger extends ConfigVarBase {
 
 export interface ConfigVarEnum extends ConfigVarBase {
   type: "enum";
-  values: string[];
-  values_docs?: { [key: string]: string };
+  values: { [key: string]: { docs: string } | null };
   default?: string;
 }
 
@@ -102,7 +101,7 @@ interface Component {
     CONFIG_SCHEMA: ConfigVarSchema;
   };
   // These are the components e.g. of sensor, binary_sensor
-  components: { docs?: string };
+  components: { [name: string]: { docs?: string } };
 
   action: Registry;
   condition: Registry;
@@ -267,10 +266,13 @@ export class ESPHomeSchema {
     if (registry.includes(".")) {
       // e.g. sensor.filter only items from one component
       const [domain, registryName] = registry.split(".");
-      if (this.isRegistry(registryName))
+      if (this.isRegistry(registryName)) {
+        // @ts-ignore
         for (const name in (await this.getSchema())[domain][registryName]) {
+          // @ts-ignore
           yield [name, (await this.getSchema())[domain][registryName][name]];
         }
+      }
     } else {
       // e.g. action, condition: search in all domains
       if (this.isRegistry(registry))
@@ -278,14 +280,16 @@ export class ESPHomeSchema {
           doc
         )) {
           // component might be undefined if this component has no registries
-          if (component && component[registry] !== undefined) {
-            for (const name in component[registry]) {
+          // @ts-ignore
+          const componentRegistry = component[registry];
+          if (component && componentRegistry !== undefined) {
+            for (const name in componentRegistry) {
               if (componentName === "core") {
-                yield [name, component[registry][name]];
+                yield [name, componentRegistry[name]];
               } else {
                 yield [
                   componentName.split(".").reverse().join(".") + "." + name,
-                  component[registry][name],
+                  componentRegistry[name],
                 ];
               }
             }
@@ -301,6 +305,7 @@ export class ESPHomeSchema {
     if (registry.includes(".")) {
       const [domain, registryName] = registry.split(".");
       if (this.isRegistry(registryName))
+        //@ts-ignore
         return (await this.getComponent(domain))[registryName][entry];
     } else {
       if (this.isRegistry(registry)) {
@@ -308,20 +313,25 @@ export class ESPHomeSchema {
           const parts = entry.split(".");
           if (parts.length === 3) {
             const [domain, platform, actionName] = parts;
+            //@ts-ignore
             return (await this.getComponent(platform, domain))[registry][
               actionName
             ];
           } else {
             const [domain, actionName] = parts;
+            //@ts-ignore
             return (await this.getComponent(domain))[registry][actionName];
           }
         }
         for (const c in this.schema) {
           const schema = await this.getComponent(c);
           if (
+            //@ts-ignore
             schema[registry] !== undefined &&
+            //@ts-ignore
             schema[registry][entry] !== undefined
           ) {
+            //@ts-ignore
             return schema[registry][entry];
           }
         }

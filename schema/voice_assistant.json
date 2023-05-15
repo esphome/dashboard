@@ -1,0 +1,84 @@
+{
+  "voice_assistant": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "voice_assistant::VoiceAssistant",
+                "parents": [
+                  "Component"
+                ]
+              }
+            },
+            "microphone": {
+              "key": "GeneratedID",
+              "use_id_type": "microphone::Microphone",
+              "type": "use_id"
+            },
+            "on_start": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_stt_end": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_tts_start": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_tts_end": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_end": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_error": {
+              "key": "Optional",
+              "type": "trigger"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      },
+      "VOICE_ASSISTANT_ACTION_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "voice_assistant::VoiceAssistant",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "start": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "voice_assistant.VOICE_ASSISTANT_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "stop": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "voice_assistant.VOICE_ASSISTANT_ACTION_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

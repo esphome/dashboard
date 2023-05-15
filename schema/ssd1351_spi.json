@@ -45,15 +45,15 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "SSD1351_128X96",
-                "SSD1351_128X128"
-              ],
-              "docs": "The model of the display. Options are:\n  * `SSD1351 128x128` - SSD1351 with 128 columns and 128 rows\n  \n  * `SSD1351 128x96` - SSD1351 with 128 columns and 96 rows\n  \n  \n\n*See also: [ssd1351_spi Component](https://esphome.io/components/display/ssd1351.html#configuration-variables)*",
-              "values_docs": {
-                "SSD1351_128X128": "SSD1351 with 128 columns and 128 rows",
-                "SSD1351_128X96": "SSD1351 with 128 columns and 96 rows"
-              }
+              "values": {
+                "SSD1351_128X96": {
+                  "docs": "SSD1351 with 128 columns and 96 rows"
+                },
+                "SSD1351_128X128": {
+                  "docs": "SSD1351 with 128 columns and 128 rows"
+                }
+              },
+              "docs": "The model of the display. Options are:\n  * `SSD1351 128x128` - SSD1351 with 128 columns and 128 rows\n  \n  * `SSD1351 128x96` - SSD1351 with 128 columns and 96 rows\n  \n  \n\n*See also: [ssd1351_spi Component](https://esphome.io/components/display/ssd1351.html#configuration-variables)*"
             },
             "reset_pin": {
               "key": "Optional",

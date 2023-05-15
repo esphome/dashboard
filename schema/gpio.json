@@ -75,10 +75,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {
@@ -99,27 +113,6 @@
               ],
               "type": "pin",
               "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The GPIO pin to use for the switch.\n\n*See also: [GPIO Switch](https://esphome.io/components/switch/gpio.html#configuration-variables)*"
-            },
-            "restore_mode": {
-              "key": "Optional",
-              "default": "RESTORE_DEFAULT_OFF",
-              "type": "enum",
-              "values": [
-                "RESTORE_DEFAULT_OFF",
-                "RESTORE_DEFAULT_ON",
-                "ALWAYS_OFF",
-                "ALWAYS_ON",
-                "RESTORE_INVERTED_DEFAULT_OFF",
-                "RESTORE_INVERTED_DEFAULT_ON"
-              ],
-              "docs": "Control how the GPIO Switch attempts to restore state on bootup. For restoring on ESP8266s, also see `restore_from_flash` in the [esp8266 section](https://esphome.io/components/esp8266.html).\n  * `RESTORE_DEFAULT_OFF` (Default) - Attempt to restore state and default to OFF if not possible to restore.\n  \n  * `RESTORE_DEFAULT_ON` - Attempt to restore state and default to ON.\n  \n  * `RESTORE_INVERTED_DEFAULT_OFF` - Attempt to restore state inverted from the previous state and default to OFF.\n  \n  * `RESTORE_INVERTED_DEFAULT_ON` - Attempt to restore state inverted from the previous state and default to ON.\n  \n  * `ALWAYS_OFF` - Always initialize the pin as OFF on bootup.\n  \n  * `ALWAYS_ON` - Always initialize the pin as ON on bootup.\n  \n  \n\n*See also: [GPIO Switch](https://esphome.io/components/switch/gpio.html#configuration-variables)*",
-              "values_docs": {
-                "RESTORE_DEFAULT_ON": "Attempt to restore state and default to ON.",
-                "RESTORE_INVERTED_DEFAULT_OFF": "Attempt to restore state inverted from the previous state and default to OFF.",
-                "RESTORE_INVERTED_DEFAULT_ON": "Attempt to restore state inverted from the previous state and default to ON.",
-                "ALWAYS_OFF": "Always initialize the pin as OFF on bootup.",
-                "ALWAYS_ON": "Always initialize the pin as ON on bootup."
-              }
             },
             "interlock": {
               "key": "Optional",

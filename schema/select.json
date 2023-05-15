@@ -118,9 +118,9 @@
               "key": "Optional",
               "default": "LAST",
               "type": "enum",
-              "values": [
-                "LAST"
-              ]
+              "values": {
+                "LAST": null
+              }
             }
           }
         },
@@ -138,9 +138,9 @@
               "key": "Optional",
               "default": "FIRST",
               "type": "enum",
-              "values": [
-                "FIRST"
-              ]
+              "values": {
+                "FIRST": null
+              }
             }
           }
         },
@@ -158,9 +158,9 @@
               "key": "Optional",
               "default": "PREVIOUS",
               "type": "enum",
-              "values": [
-                "PREVIOUS"
-              ]
+              "values": {
+                "PREVIOUS": null
+              }
             },
             "cycle": {
               "key": "Optional",
@@ -184,9 +184,9 @@
               "key": "Optional",
               "default": "NEXT",
               "type": "enum",
-              "values": [
-                "NEXT"
-              ]
+              "values": {
+                "NEXT": null
+              }
             },
             "cycle": {
               "key": "Optional",
@@ -209,12 +209,12 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "NEXT",
-                "PREVIOUS",
-                "FIRST",
-                "LAST"
-              ],
+              "values": {
+                "NEXT": null,
+                "PREVIOUS": null,
+                "FIRST": null,
+                "LAST": null
+              },
               "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The operation to perform. One of `FIRST`, `LAST`, `PREVIOUS` or `NEXT` (case insensitive). When writing a lambda for this field, then return one of the following enum values: `SELECT_OP_FIRST`, `SELECT_OP_LAST`, `SELECT_OP_PREVIOUS` or `SELECT_OP_NEXT`.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-operation-action)*"
             },
             "cycle": {

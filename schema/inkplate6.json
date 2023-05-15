@@ -45,11 +45,11 @@
               "key": "Optional",
               "default": "inkplate_6",
               "type": "enum",
-              "values": [
-                "inkplate_6",
-                "inkplate_10",
-                "inkplate_6_plus"
-              ],
+              "values": {
+                "inkplate_6": null,
+                "inkplate_10": null,
+                "inkplate_6_plus": null
+              },
               "docs": "**enum**: Specify the model. Defaults to `inkplate_6`. - `inkplate_6` - `inkplate_10` - `inkplate_6_plus`\n\n*See also: [Inkplate 6, 10 and 6 Plus](https://esphome.io/components/display/inkplate6.html#configuration-variables)*"
             },
             "ckv_pin": {

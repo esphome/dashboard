@@ -46,9 +46,10 @@
       "shelly_dimmer": {
         "dependencies": [
           "sensor",
-          "uart"
+          "uart",
+          "esp8266"
         ],
-        "docs": "The `shelly_dimmer` component adds support for the dimming and power-metering functionality that can be found the [Shelly Dimmer 2](https://shelly.cloud/knowledge-base/devices/shelly-dimmer-2/). The interaction with mains is done via an STM32 microcontroller that is flashed with an [open source firmware](https://github.com/jamesturton/shelly-dimmer-stm32). A detailed analysis of the Shelly Dimmer 2 hardware is given [here](https://github.com/arendst/Tasmota/issues/6914).\n\n*See also: [Shelly Dimmer](https://esphome.io/components/light/shelly_dimmer.html#shelly-dimmer)*"
+        "docs": "The `shelly_dimmer` component adds support for the dimming and power-metering functionality that can be found the [Shelly Dimmer 2](https://shelly.cloud/knowledge-base/devices/shelly-dimmer-2/). The interaction with mains is done via an STM32 microcontroller that is automatically (when configured) flashed with an [open source firmware](https://github.com/jamesturton/shelly-dimmer-stm32). A detailed analysis of the Shelly Dimmer 2 hardware is given [here](https://github.com/arendst/Tasmota/issues/6914).\n\n*See also: [Shelly Dimmer](https://esphome.io/components/light/shelly_dimmer.html#shelly-dimmer)*"
       },
       "sonoff_d1": {
         "dependencies": [
@@ -58,7 +59,7 @@
         "docs": "The `sonoff_d1` light platform creates a simple brightness-only light for the hardware found in [Sonoff D1 dimmer](https://itead.cc/product/sonoff-d1-smart-dimmer-switch/). Installations with Sonoff RM433 433MHz radio remotes are also supported. Use this component to integrate Sonoff D1 dimmer into ESPHome / Home Assistant ecosystem.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#sonoff-d1-dimmer)*"
       },
       "status_led": {
-        "docs": "The `status_led` light platform allows to share a single LED for indicating the status of the device (when on error/warning state) or as binary light (when on OK state). This is useful for devices with only one LED available.\n\n*See also: [Status LED Light](https://esphome.io/components/light/status_led.html#status-led-light)*"
+        "docs": "The `status_led` light platform allows to share a single LED for indicating the status of the device (when on error/warning state) or as binary light (when on OK state). This is useful for devices with only one LED available. You can also use a binary [Output Component](https://esphome.io/components/output/index.html#output).\n\n*See also: [Status LED Light](https://esphome.io/components/light/status_led.html#status-led-light)*"
       },
       "tuya": {
         "dependencies": [
@@ -99,28 +100,33 @@
             },
             "restore_mode": {
               "key": "Optional",
-              "default": "restore_default_off",
+              "default": "ALWAYS_OFF",
               "type": "enum",
-              "values": [
-                "RESTORE_DEFAULT_OFF",
-                "RESTORE_DEFAULT_ON",
-                "ALWAYS_OFF",
-                "ALWAYS_ON",
-                "RESTORE_INVERTED_DEFAULT_OFF",
-                "RESTORE_INVERTED_DEFAULT_ON",
-                "RESTORE_AND_OFF",
-                "RESTORE_AND_ON"
-              ],
-              "docs": "Control how the light attempts to restore state on bootup. For restoring on ESP8266s, also see `esp8266_restore_from_flash` in the [esphome section](https://esphome.io/components/esphome.html).\n  * `RESTORE_DEFAULT_OFF` (Default) - Attempt to restore state and default to OFF if not possible to restore.\n  \n  * `RESTORE_DEFAULT_ON` - Attempt to restore state and default to ON.\n  \n  * `RESTORE_INVERTED_DEFAULT_OFF` - Attempt to restore state inverted from the previous state and default to OFF.\n  \n  * `RESTORE_INVERTED_DEFAULT_ON` - Attempt to restore state inverted from the previous state and default to ON.\n  \n  * `RESTORE_AND_OFF` - Attempt to restore state but initialize the light as OFF.\n  \n  * `RESTORE_AND_ON` - Attempt to restore state but initialize the light as ON.\n  \n  * `ALWAYS_OFF` - Always initialize the light as OFF on bootup.\n  \n  * `ALWAYS_ON` - Always initialize the light as ON on bootup.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*",
-              "values_docs": {
-                "RESTORE_DEFAULT_ON": "Attempt to restore state and default to ON.",
-                "RESTORE_INVERTED_DEFAULT_OFF": "Attempt to restore state inverted from the previous state and default to OFF.",
-                "RESTORE_INVERTED_DEFAULT_ON": "Attempt to restore state inverted from the previous state and default to ON.",
-                "RESTORE_AND_OFF": "Attempt to restore state but initialize the light as OFF.",
-                "RESTORE_AND_ON": "Attempt to restore state but initialize the light as ON.",
-                "ALWAYS_OFF": "Always initialize the light as OFF on bootup.",
-                "ALWAYS_ON": "Always initialize the light as ON on bootup."
-              }
+              "values": {
+                "RESTORE_DEFAULT_OFF": {
+                  "docs": "Attempt to restore state and default to OFF if not possible to restore."
+                },
+                "RESTORE_DEFAULT_ON": {
+                  "docs": "Attempt to restore state and default to ON."
+                },
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": {
+                  "docs": "Always initialize the light as ON on bootup."
+                },
+                "RESTORE_INVERTED_DEFAULT_OFF": {
+                  "docs": "Attempt to restore state inverted from the previous state and default to OFF."
+                },
+                "RESTORE_INVERTED_DEFAULT_ON": {
+                  "docs": "Attempt to restore state inverted from the previous state and default to ON."
+                },
+                "RESTORE_AND_OFF": {
+                  "docs": "Attempt to restore state but initialize the light as OFF."
+                },
+                "RESTORE_AND_ON": {
+                  "docs": "Attempt to restore state but initialize the light as ON."
+                }
+              },
+              "docs": "Control how the light attempts to restore state on bootup. For restoring on ESP8266s, also see `esp8266_restore_from_flash` in the [esphome section](https://esphome.io/components/esphome.html).\n  * `RESTORE_DEFAULT_OFF` - Attempt to restore state and default to OFF if not possible to restore.\n  \n  * `RESTORE_DEFAULT_ON` - Attempt to restore state and default to ON.\n  \n  * `RESTORE_INVERTED_DEFAULT_OFF` - Attempt to restore state inverted from the previous state and default to OFF.\n  \n  * `RESTORE_INVERTED_DEFAULT_ON` - Attempt to restore state inverted from the previous state and default to ON.\n  \n  * `RESTORE_AND_OFF` - Attempt to restore state but initialize the light as OFF.\n  \n  * `RESTORE_AND_ON` - Attempt to restore state but initialize the light as ON.\n  \n  * `ALWAYS_OFF` (Default) - Always initialize the light as OFF on bootup.\n  \n  * `ALWAYS_ON` - Always initialize the light as ON on bootup.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#base-light-configuration)*"
             },
             "on_turn_on": {
               "key": "Optional",
@@ -357,17 +363,17 @@
             "color_mode": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "ON_OFF",
-                "BRIGHTNESS",
-                "WHITE",
-                "COLOR_TEMPERATURE",
-                "COLD_WARM_WHITE",
-                "RGB",
-                "RGB_WHITE",
-                "RGB_COLOR_TEMPERATURE",
-                "RGB_COLD_WARM_WHITE"
-              ]
+              "values": {
+                "ON_OFF": null,
+                "BRIGHTNESS": null,
+                "WHITE": null,
+                "COLOR_TEMPERATURE": null,
+                "COLD_WARM_WHITE": null,
+                "RGB": null,
+                "RGB_WHITE": null,
+                "RGB_COLOR_TEMPERATURE": null,
+                "RGB_COLD_WARM_WHITE": null
+              }
             },
             "state": {
               "key": "Optional",
@@ -454,29 +460,36 @@
             "color_mode": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "ON_OFF",
-                "BRIGHTNESS",
-                "WHITE",
-                "COLOR_TEMPERATURE",
-                "COLD_WARM_WHITE",
-                "RGB",
-                "RGB_WHITE",
-                "RGB_COLOR_TEMPERATURE",
-                "RGB_COLD_WARM_WHITE"
-              ],
-              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: For lights that support more than one color mode, the color mode that will be activated. The color mode determines which outputs of the light are active, and which parameters can be used. This can for example be used to switch between colored and white light. Must be a color mode that is supported by the light. Valid color modes are:\n  * `ON_OFF`: Only on/off control.\n  \n  * `BRIGHTNESS`: Only brightness control. Accepts *brightness* parameter.\n  \n  * `WHITE`: Single white channel only. Accepts *brightness* and *white* parameters.\n  \n  * `COLOR_TEMPERATURE`: Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters.\n  \n  * `COLD_WARM_WHITE`: Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters.\n  \n  * `RGB`: RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters.\n  \n  * `RGB_WHITE`: RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes.\n  \n  * `RGB_COLOR_TEMPERATURE`: RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes.\n  \n  * `RGB_COLD_WARM_WHITE`: RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*",
-              "values_docs": {
-                "ON_OFF": "Only on/off control.",
-                "BRIGHTNESS": "Only brightness control. Accepts *brightness* parameter.",
-                "WHITE": "Single white channel only. Accepts *brightness* and *white* parameters.",
-                "COLOR_TEMPERATURE": "Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters.",
-                "COLD_WARM_WHITE": "Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters.",
-                "RGB": "RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters.",
-                "RGB_WHITE": "RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes.",
-                "RGB_COLOR_TEMPERATURE": "RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes.",
-                "RGB_COLD_WARM_WHITE": "RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes."
-              }
+              "values": {
+                "ON_OFF": {
+                  "docs": "Only on/off control."
+                },
+                "BRIGHTNESS": {
+                  "docs": "Only brightness control. Accepts *brightness* parameter."
+                },
+                "WHITE": {
+                  "docs": "Single white channel only. Accepts *brightness* and *white* parameters."
+                },
+                "COLOR_TEMPERATURE": {
+                  "docs": "Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters."
+                },
+                "COLD_WARM_WHITE": {
+                  "docs": "Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters."
+                },
+                "RGB": {
+                  "docs": "RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters."
+                },
+                "RGB_WHITE": {
+                  "docs": "RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes."
+                },
+                "RGB_COLOR_TEMPERATURE": {
+                  "docs": "RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes."
+                },
+                "RGB_COLD_WARM_WHITE": {
+                  "docs": "RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes."
+                }
+              },
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: For lights that support more than one color mode, the color mode that will be activated. The color mode determines which outputs of the light are active, and which parameters can be used. This can for example be used to switch between colored and white light. Must be a color mode that is supported by the light. Valid color modes are:\n  * `ON_OFF`: Only on/off control.\n  \n  * `BRIGHTNESS`: Only brightness control. Accepts *brightness* parameter.\n  \n  * `WHITE`: Single white channel only. Accepts *brightness* and *white* parameters.\n  \n  * `COLOR_TEMPERATURE`: Color-temperature controlled white channel. Accepts *brightness* and *color_temperature* parameters.\n  \n  * `COLD_WARM_WHITE`: Cold and warm white channels. Accepts *brightness*, *color_temperature*, *cold_white* and *warm_white* parameters.\n  \n  * `RGB`: RGB color channels. Accepts *brightness*, *color_brightness*, *red*, *green* and *blue* parameters.\n  \n  * `RGB_WHITE`: RGB color channels and a separate white channel. Accepts parameters from `RGB` and `WHITE` color modes.\n  \n  * `RGB_COLOR_TEMPERATURE`: RGB color channels and a separate color-temperature controlled white channel. Accepts parameters from `RGB` and `COLOR_TEMPERATURE` color modes.\n  \n  * `RGB_COLD_WARM_WHITE`: RGB color channels and two separate cold and warm white channels. Accepts parameters from `RGB` and `COLD_WARM_WHITE` color modes.\n  \n  \n\n*See also: [Light Component](https://esphome.io/components/light/index.html#light-turn-on-action)*"
             },
             "state": {
               "key": "Optional",
@@ -841,17 +854,17 @@
                   "color_mode": {
                     "key": "Optional",
                     "type": "enum",
-                    "values": [
-                      "ON_OFF",
-                      "BRIGHTNESS",
-                      "WHITE",
-                      "COLOR_TEMPERATURE",
-                      "COLD_WARM_WHITE",
-                      "RGB",
-                      "RGB_WHITE",
-                      "RGB_COLOR_TEMPERATURE",
-                      "RGB_COLD_WARM_WHITE"
-                    ],
+                    "values": {
+                      "ON_OFF": null,
+                      "BRIGHTNESS": null,
+                      "WHITE": null,
+                      "COLOR_TEMPERATURE": null,
+                      "COLD_WARM_WHITE": null,
+                      "RGB": null,
+                      "RGB_WHITE": null,
+                      "RGB_COLOR_TEMPERATURE": null,
+                      "RGB_COLD_WARM_WHITE": null
+                    },
                     "docs": "**string**: The color mode of the light. Defaults to the current color mode.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
                   },
                   "color_brightness": {
@@ -881,7 +894,7 @@
                   },
                   "color_temperature": {
                     "key": "Optional",
-                    "docs": "**percentage**: The color temperature of the light, if applicable. Defaults to `100%`.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+                    "docs": "**float**: The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the light, if applicable.\n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
                   },
                   "cold_white": {
                     "key": "Optional",
@@ -905,7 +918,7 @@
                   }
                 }
               },
-              "docs": "**list**: A list of colors to cycle through. Defaults to a quick cycle between ON and OFF.\n  * **state** (*Optional*, boolean): The on/off state to show. Defaults to `true`.\n  \n  * **color_mode** (*Optional*, string): The color mode of the light. Defaults to the current color mode.\n  \n  * **brightness** (*Optional*, percentage): The brightness of the light. Defaults to `100%`.\n  \n  * **color_brightness** (*Optional*, percentage): The brightness of the RGB lights, if applicable. Defaults to `100%`.\n  \n  * **red** (*Optional*, percentage): The red channel of the light, if applicable. Defaults to `100%`.\n  \n  * **green** (*Optional*, percentage): The green channel of the light, if applicable. Defaults to `100%`.\n  \n  * **blue** (*Optional*, percentage): The blue channel of the light, if applicable. Defaults to `100%`.\n  \n  * **white** (*Optional*, percentage): The white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **color_temperature** (*Optional*, percentage): The color temperature of the light, if applicable. Defaults to `100%`.\n  \n  * **cold_white** (*Optional*, percentage): The cold white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **warm_white** (*Optional*, percentage): The warm white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **duration** (**Required**, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The duration this color should be active.\n  \n  \n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
+              "docs": "**list**: A list of colors to cycle through. Defaults to a quick cycle between ON and OFF.\n  * **state** (*Optional*, boolean): The on/off state to show. Defaults to `true`.\n  \n  * **color_mode** (*Optional*, string): The color mode of the light. Defaults to the current color mode.\n  \n  * **brightness** (*Optional*, percentage): The brightness of the light. Defaults to `100%`.\n  \n  * **color_brightness** (*Optional*, percentage): The brightness of the RGB lights, if applicable. Defaults to `100%`.\n  \n  * **red** (*Optional*, percentage): The red channel of the light, if applicable. Defaults to `100%`.\n  \n  * **green** (*Optional*, percentage): The green channel of the light, if applicable. Defaults to `100%`.\n  \n  * **blue** (*Optional*, percentage): The blue channel of the light, if applicable. Defaults to `100%`.\n  \n  * **white** (*Optional*, percentage): The white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **color_temperature** (*Optional*, float): The color temperature (in [mireds](https://en.wikipedia.org/wiki/Mired) or Kelvin) of the light, if applicable.\n  \n  * **cold_white** (*Optional*, percentage): The cold white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **warm_white** (*Optional*, percentage): The warm white channel of the light, if applicable. Defaults to `100%`.\n  \n  * **duration** (**Required**, [Time](https://esphome.io/guides/configuration-types.html#config-time)): The duration this color should be active.\n  \n  \n\n*See also: [Strobe Effect](https://esphome.io/components/light/index.html#strobe-effect)*"
             },
             "name": {
               "key": "Optional",
@@ -1269,11 +1282,11 @@
               "key": "Optional",
               "default": "RGB",
               "type": "enum",
-              "values": [
-                "MONO",
-                "RGB",
-                "RGBW"
-              ],
+              "values": {
+                "MONO": null,
+                "RGB": null,
+                "RGBW": null
+              },
               "docs": "The type of data. This is used to specify if it is a `MONO`, `RGB` or `RGBW` light and in which order the colors are. Defaults to `RGB`.\n\n*See also: [E1.31 Effect](https://esphome.io/components/light/index.html#e1-31-effect)*"
             },
             "name": {

@@ -17,7 +17,7 @@
             },
             "mac_address": {
               "key": "Required",
-              "docs": "**MAC Address**: The MAC address of the Mopeka device.\n\n*See also: [Mopeka Pro Check BLE Sensor](https://esphome.io/components/sensor/mopeka_pro_check.html#configuration-variables)*"
+              "docs": "**MAC Address**: The MAC address of the Mopeka/Lippert device.\n\n*See also: [Mopeka Pro Check BLE Sensor](https://esphome.io/components/sensor/mopeka_pro_check.html#configuration-variables)*"
             },
             "custom_distance_full": {
               "key": "Optional",
@@ -30,12 +30,12 @@
             "tank_type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "CUSTOM",
-                "20LB_V",
-                "30LB_V",
-                "40LB_V"
-              ],
+              "values": {
+                "CUSTOM": null,
+                "20LB_V": null,
+                "30LB_V": null,
+                "40LB_V": null
+              },
               "docs": "The tank type the sensor is measuring. See below.\n\n*See also: [Mopeka Pro Check BLE Sensor](https://esphome.io/components/sensor/mopeka_pro_check.html#configuration-variables)*"
             },
             "temperature": {

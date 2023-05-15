@@ -77,11 +77,11 @@
             "wakeup_pin_mode": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "IGNORE",
-                "KEEP_AWAKE",
-                "INVERT_WAKEUP"
-              ],
+              "values": {
+                "IGNORE": null,
+                "KEEP_AWAKE": null,
+                "INVERT_WAKEUP": null
+              },
               "docs": "Only on ESP32. Specify how to handle waking up from a `wakeup_pin` if the wakeup pin is already in the state with which it would wake up when attempting to enter deep sleep. See [ESP32 Wakeup Pin Mode](https://esphome.io/components/deep_sleep.html#deep-sleep-esp32-wakeup-pin-mode). Defaults to `IGNORE`\n\n*See also: [Deep Sleep Component](https://esphome.io/components/deep_sleep.html#configuration-variables)*"
             },
             "esp32_ext1_wakeup": {
@@ -103,10 +103,10 @@
                   "mode": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "ALL_LOW",
-                      "ANY_HIGH"
-                    ],
+                    "values": {
+                      "ALL_LOW": null,
+                      "ANY_HIGH": null
+                    },
                     "docs": "The mode to use for the wakeup source. Must be one of `ALL_LOW` (wake up when all pins go LOW) or `ANY_HIGH` (wake up when any pin goes HIGH).\n\n*See also: [Deep Sleep Component](https://esphome.io/components/deep_sleep.html#configuration-variables)*"
                   }
                 }

@@ -19,7 +19,8 @@
             "red_int": {
               "key": "Optional",
               "type": "integer",
-              "data_type": "uint8_t"
+              "data_type": "uint8_t",
+              "docs": "**integer**: The brightness of the red component on a scale of `0` to `255`. Defaults to `255`.\n\n*See also: [Color](https://esphome.io/components/display/index.html#color)*"
             },
             "green": {
               "key": "Optional",
@@ -28,7 +29,8 @@
             "green_int": {
               "key": "Optional",
               "type": "integer",
-              "data_type": "uint8_t"
+              "data_type": "uint8_t",
+              "docs": "**integer**: The brightness of the green component on a scale of `0` to `255`. Defaults to `255`.\n\n*See also: [Color](https://esphome.io/components/display/index.html#color)*"
             },
             "blue": {
               "key": "Optional",
@@ -37,7 +39,8 @@
             "blue_int": {
               "key": "Optional",
               "type": "integer",
-              "data_type": "uint8_t"
+              "data_type": "uint8_t",
+              "docs": "**integer**: The brightness of the blue component on a scale of `0` to `255`. Defaults to `255`.\n\n*See also: [Color](https://esphome.io/components/display/index.html#color)*"
             },
             "white": {
               "key": "Optional",
@@ -46,7 +49,12 @@
             "white_int": {
               "key": "Optional",
               "type": "integer",
-              "data_type": "uint8_t"
+              "data_type": "uint8_t",
+              "docs": "**integer**: The brightness of the white component on a scale of `0` to `255`. Defaults to `255`.\n\n*See also: [Color](https://esphome.io/components/display/index.html#color)*"
+            },
+            "hex": {
+              "key": "Required",
+              "docs": "**string**: The color in hexadecimal representation. Defaults to `FFFFFF`.\n\n*See also: [Color](https://esphome.io/components/display/index.html#color)*"
             }
           },
           "extends": [

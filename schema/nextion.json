@@ -271,6 +271,20 @@
         "type": "schema",
         "schema": {
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {

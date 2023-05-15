@@ -101,14 +101,14 @@
               "key": "Optional",
               "default": "",
               "type": "enum",
-              "values": [
-                "text",
-                "bool",
-                "int",
-                "uint",
-                "hex",
-                ""
-              ]
+              "values": {
+                "text": null,
+                "bool": null,
+                "int": null,
+                "uint": null,
+                "hex": null,
+                "": null
+              }
             }
           }
         }

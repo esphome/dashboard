@@ -1,0 +1,77 @@
+{
+  "sn74hc165": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "sn74hc165::SN74HC165Component",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this SN74HC165 component.\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            },
+            "data_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Pin connected to SN74HC165 Serial Output (QH) input.\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            },
+            "clock_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Pin connected to SN74HC165 Clock (CLK) pin\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            },
+            "load_pin": {
+              "key": "Required",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Pin connected to SN74HC165 Load input (SH/LD) pin\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            },
+            "clock_inhibit_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Pin connected to SN74HC165 Clock Inhibit (CLK INH) pin\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            },
+            "sr_count": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "docs": "**int**: Number of daisy-chained shift registers, up-to 256. Defaults to `1`.\n\n*See also: [SN74HC165 I/O Expander (shift register)](https://esphome.io/components/sn74hc165.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "sn74hc165.SN74HC165_PIN_SCHEMA"
+        ]
+      }
+    }
+  }
+}

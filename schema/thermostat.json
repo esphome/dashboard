@@ -112,6 +112,10 @@
               "key": "Optional",
               "type": "trigger"
             },
+            "fan_mode_quiet_action": {
+              "key": "Optional",
+              "type": "trigger"
+            },
             "swing_both_action": {
               "key": "Optional",
               "type": "trigger"
@@ -321,15 +325,15 @@
                   "mode": {
                     "key": "Optional",
                     "type": "enum",
-                    "values": [
-                      "OFF",
-                      "HEAT_COOL",
-                      "COOL",
-                      "HEAT",
-                      "DRY",
-                      "FAN_ONLY",
-                      "AUTO"
-                    ]
+                    "values": {
+                      "OFF": null,
+                      "HEAT_COOL": null,
+                      "COOL": null,
+                      "HEAT": null,
+                      "DRY": null,
+                      "FAN_ONLY": null,
+                      "AUTO": null
+                    }
                   },
                   "default_target_temperature_high": {
                     "key": "Optional"
@@ -341,28 +345,29 @@
                     "key": "Optional",
                     "templatable": true,
                     "type": "enum",
-                    "values": [
-                      "ON",
-                      "OFF",
-                      "AUTO",
-                      "LOW",
-                      "MEDIUM",
-                      "HIGH",
-                      "MIDDLE",
-                      "FOCUS",
-                      "DIFFUSE"
-                    ]
+                    "values": {
+                      "ON": null,
+                      "OFF": null,
+                      "AUTO": null,
+                      "LOW": null,
+                      "MEDIUM": null,
+                      "HIGH": null,
+                      "MIDDLE": null,
+                      "FOCUS": null,
+                      "DIFFUSE": null,
+                      "QUIET": null
+                    }
                   },
                   "swing_mode": {
                     "key": "Optional",
                     "templatable": true,
                     "type": "enum",
-                    "values": [
-                      "OFF",
-                      "BOTH",
-                      "VERTICAL",
-                      "HORIZONTAL"
-                    ]
+                    "values": {
+                      "OFF": null,
+                      "BOTH": null,
+                      "VERTICAL": null,
+                      "HORIZONTAL": null
+                    }
                   }
                 }
               }
@@ -370,10 +375,10 @@
             "on_boot_restore_from": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "MEMORY",
-                "DEFAULT_PRESET"
-              ]
+              "values": {
+                "MEMORY": null,
+                "DEFAULT_PRESET": null
+              }
             },
             "preset_change": {
               "key": "Optional",

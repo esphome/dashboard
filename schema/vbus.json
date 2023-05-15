@@ -1,0 +1,1777 @@
+{
+  "vbus": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "uart.UART_DEVICE_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "vbus::VBus",
+                "parents": [
+                  "uart::UARTDevice",
+                  "Component"
+                ]
+              }
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  },
+  "vbus.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "typed",
+        "types": {
+          "deltasol_bs_plus": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolBSPlusSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "temperature_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_3": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_4": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "heat_quantity": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "Wh"
+                    },
+                    "icon": {
+                      "default": "mdi:radiator"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "energy"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "time": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "min"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "version": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "accuracy_decimals": {
+                      "default": "2"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_c": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "temperature_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_3": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_4": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "heat_quantity": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "Wh"
+                    },
+                    "icon": {
+                      "default": "mdi:radiator"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "energy"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "time": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "min"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_cs2": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCS2Sensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "temperature_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_3": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_4": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "heat_quantity": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "Wh"
+                    },
+                    "icon": {
+                      "default": "mdi:radiator"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "energy"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "version": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "accuracy_decimals": {
+                      "default": "2"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_cs_plus": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCSPlusSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "temperature_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_3": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_4": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_5": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "heat_quantity": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "Wh"
+                    },
+                    "icon": {
+                      "default": "mdi:radiator"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "energy"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "time": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "min"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "version": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "accuracy_decimals": {
+                      "default": "2"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "flow_rate": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "custom": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::VBusCustomSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "command": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "source": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "dest": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "sensors": {
+                "key": "Optional",
+                "is_list": true,
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "id": {
+                      "id_type": {
+                        "class": "vbus::VBusCustomSubSensor",
+                        "parents": [
+                          "Component"
+                        ]
+                      }
+                    },
+                    "lambda": {
+                      "key": "Required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "typed_key": "model",
+        "docs": "Specify the model of the connected controller. Currently supported models are: `deltasol_bs_plus`, `deltasol_c`, `deltasol_cs2`, `deltasol_cs_plus`.\n\n*See also: [vbus Sensor](https://esphome.io/components/vbus.html#sensor)*"
+      }
+    }
+  },
+  "vbus.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "typed",
+        "types": {
+          "deltasol_bs_plus": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolBSPlusBSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "relay1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ]
+                }
+              },
+              "relay2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ]
+                }
+              },
+              "sensor1_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor2_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor3_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor4_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "collector_max": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "collector_min": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "collector_frost": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "tube_collector": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "recooling": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "hqm": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_c": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCBSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "sensor1_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor2_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor3_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor4_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_cs2": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCS2BSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "sensor1_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor2_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor3_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor4_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_cs_plus": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolCSPlusBSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "sensor1_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor2_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor3_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor4_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "custom": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::VBusCustomBSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "command": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "source": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "dest": {
+                "key": "Optional",
+                "type": "integer",
+                "data_type": "uint16_t"
+              },
+              "binary_sensors": {
+                "key": "Optional",
+                "is_list": true,
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "id": {
+                      "id_type": {
+                        "class": "vbus::VBusCustomSubBSensor",
+                        "parents": [
+                          "Component"
+                        ]
+                      }
+                    },
+                    "lambda": {
+                      "key": "Required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "typed_key": "model",
+        "docs": "Specify the model of the connected controller. Currently supported models are: `deltasol_bs_plus`, `deltasol_c`, `deltasol_cs2`, `deltasol_cs_plus`.\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
+      }
+    }
+  }
+}

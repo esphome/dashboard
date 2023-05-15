@@ -58,6 +58,24 @@
         },
         "docs": "Plays the previously played track.\n\n*See also: [`dfplayer.play_previous` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-previous-action)*"
       },
+      "play_mp3": {
+        "type": "schema",
+        "maybe": "file",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "file": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer"
+            }
+          }
+        }
+      },
       "play": {
         "type": "schema",
         "maybe": "file",
@@ -128,10 +146,10 @@
             "device": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "USB",
-                "TF_CARD"
-              ]
+              "values": {
+                "USB": null,
+                "TF_CARD": null
+              }
             }
           }
         },
@@ -197,14 +215,14 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "NORMAL",
-                "POP",
-                "ROCK",
-                "JAZZ",
-                "CLASSIC",
-                "BASS"
-              ],
+              "values": {
+                "NORMAL": null,
+                "POP": null,
+                "ROCK": null,
+                "JAZZ": null,
+                "CLASSIC": null,
+                "BASS": null
+              },
               "docs": "Eq Preset value. Valid values are `NORMAL`, `POP`, `ROCK`, `JAZZ`, `CLASSIC` and `BASS`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-set-eq-action)*"
             }
           }
