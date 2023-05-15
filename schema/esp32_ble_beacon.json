@@ -18,9 +18,9 @@
             "type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "IBEACON"
-              ],
+              "values": {
+                "IBEACON": null
+              },
               "docs": "The type of beacon to create, currently only supports `iBeacon`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
             },
             "uuid": {
@@ -73,16 +73,16 @@
               "key": "Optional",
               "default": "3dBm",
               "type": "enum",
-              "values": [
-                -12,
-                -9,
-                -6,
-                -3,
-                0,
-                3,
-                6,
-                9
-              ],
+              "values": {
+                "-12": null,
+                "-9": null,
+                "-6": null,
+                "-3": null,
+                "0": null,
+                "3": null,
+                "6": null,
+                "9": null
+              },
               "docs": "**int**: The transmit power of the iBeacon in dBm. One of -12, -9, -6, -3, 0, 3, 6, 9. Defaults to `3dBm`.\n\n*See also: [ESP32 Bluetooth Low Energy Beacon](https://esphome.io/components/esp32_ble_beacon.html#configuration-variables)*"
             }
           },

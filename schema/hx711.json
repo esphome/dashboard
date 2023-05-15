@@ -52,11 +52,11 @@
               "key": "Optional",
               "default": "128",
               "type": "enum",
-              "values": [
-                128,
-                32,
-                64
-              ],
+              "values": {
+                "128": null,
+                "32": null,
+                "64": null
+              },
               "docs": "**enum**: The gain. Implicitly selects the channel. Defaults to `128`.\n  * `32` (Channel B, gain 32)\n  \n  * `64` (Channel A, gain 64)\n  \n  * `128` (Channel A, gain 128)\n  \n  \n\n*See also: [HX711 Load Cell Amplifier](https://esphome.io/components/sensor/hx711.html#configuration-variables)*"
             },
             "update_interval": {

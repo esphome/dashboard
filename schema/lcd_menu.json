@@ -51,7 +51,7 @@
               "default": "94",
               "type": "integer",
               "data_type": "uint8_t",
-              "docs": "**0-255**: Code of the character used to mark menu items going back one level. As the character set lacks a good looking up arrow, using a user defined character is advisable (use `8` to reference one at  position `0` to avoid problems with zeros in a string). Defaults to `0x5e` (`^`).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
+              "docs": "**0-255**: Code of the character used to mark menu items going back one level. As the character set lacks a good looking back arrow, using a user defined character is advisable (use `8` to reference one at  position `0` to avoid problems with zeros in a string). Defaults to `0x5e` (`^`).\n\n*See also: [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#overview)*"
             }
           }
         },

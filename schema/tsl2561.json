@@ -43,10 +43,10 @@
               "key": "Optional",
               "default": "1X",
               "type": "enum",
-              "values": [
-                "1X",
-                "16X"
-              ],
+              "values": {
+                "1X": null,
+                "16X": null
+              },
               "docs": "**string**: The gain of the sensor. Higher values are better in low-light conditions. One of `1x` and `16x`. Defaults to `1x`.\n\n*See also: [TSL2561 Ambient Light Sensor](https://esphome.io/components/sensor/tsl2561.html#configuration-variables)*"
             },
             "is_cs_package": {

@@ -9,10 +9,10 @@
               "key": "Optional",
               "default": "lwip_tcp",
               "type": "enum",
-              "values": [
-                "lwip_tcp",
-                "bsd_sockets"
-              ]
+              "values": {
+                "lwip_tcp": null,
+                "bsd_sockets": null
+              }
             }
           }
         }

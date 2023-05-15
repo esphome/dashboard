@@ -29,24 +29,24 @@
             "time_unit": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "ms",
-                "s",
-                "min",
-                "h",
-                "d"
-              ],
+              "values": {
+                "ms": null,
+                "s": null,
+                "min": null,
+                "h": null,
+                "d": null
+              },
               "docs": "**string**: The time unit to integrate with, one of `ms`, `s`, `min`, `h` or `d`.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
             },
             "integration_method": {
               "key": "Optional",
               "default": "trapezoid",
               "type": "enum",
-              "values": [
-                "trapezoid",
-                "left",
-                "right"
-              ],
+              "values": {
+                "trapezoid": null,
+                "left": null,
+                "right": null
+              },
               "docs": "**string**: The integration method to use. One of `trapezoid`, `left` or `right`. Defaults to `trapezoid`.\n\n*See also: [Integration Sensor](https://esphome.io/components/sensor/integration.html#configuration-variables)*"
             },
             "restore": {

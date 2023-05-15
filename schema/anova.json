@@ -25,14 +25,14 @@
             "unit_of_measurement": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "f",
-                "c"
-              ],
+              "values": {
+                "f": null,
+                "c": null
+              },
               "docs": "**string**: Units to use on the device display. \u2018c\u2019 or \u2018f\u2019.\n\n*See also: [Anova Cooker](https://esphome.io/components/climate/anova.html#configuration-variables)*"
             },
             "ble_client_id": {
-              "key": "Required",
+              "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the BLE Client.\n\n*See also: [Anova Cooker](https://esphome.io/components/climate/anova.html#configuration-variables)*"

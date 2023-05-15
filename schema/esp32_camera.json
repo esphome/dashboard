@@ -68,16 +68,11 @@
                   "frequency": {
                     "key": "Optional",
                     "default": "20MHz",
-                    "type": "enum",
-                    "values": [
-                      20000000.0,
-                      10000000.0
-                    ],
-                    "docs": "**float**: The frequency of the external clock, must be either 20MHz or 10MHz. Defaults to `20MHz`.\n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
+                    "docs": "**float**: The frequency of the external clock, must be between 10 and 20MHz. Defaults to `20MHz`.\n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
                   }
                 }
               },
-              "docs": "The configuration of the external clock to drive the camera.\n  * **pin** (**Required**, pin): The pin the external clock line is connected to.\n  \n  * **frequency** (*Optional*, float): The frequency of the external clock, must be either 20MHz or 10MHz. Defaults to `20MHz`.\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
+              "docs": "The configuration of the external clock to drive the camera.\n  * **pin** (**Required**, pin): The pin the external clock line is connected to.\n  \n  * **frequency** (*Optional*, float): The frequency of the external clock, must be between 10 and 20MHz. Defaults to `20MHz`.\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "i2c_pins": {
               "key": "Required",
@@ -128,29 +123,45 @@
               "key": "Optional",
               "default": "640X480",
               "type": "enum",
-              "values": [
-                "160X120",
-                "QQVGA",
-                "176X144",
-                "QCIF",
-                "240X176",
-                "HQVGA",
-                "320X240",
-                "QVGA",
-                "400X296",
-                "CIF",
-                "640X480",
-                "VGA",
-                "800X600",
-                "SVGA",
-                "1024X768",
-                "XGA",
-                "1280X1024",
-                "SXGA",
-                "1600X1200",
-                "UXGA"
-              ],
-              "docs": "**enum**: The resolution the camera will capture images at. Higher resolutions require more memory, if there\u2019s not enough memory you will see an error during startup.\n  * `160x120` (QQVGA)\n  \n  * `176x144` (QCIF)\n  \n  * `240x176` (HQVGA)\n  \n  * `320x240` (QVGA)\n  \n  * `400x296` (CIF)\n  \n  * `640x480` (VGA, default)\n  \n  * `800x600` (SVGA)\n  \n  * `1024x768` (XGA)\n  \n  * `1280x1024` (SXGA)\n  \n  * `1600x1200` (UXGA)\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
+              "values": {
+                "160X120": null,
+                "QQVGA": null,
+                "176X144": null,
+                "QCIF": null,
+                "240X176": null,
+                "HQVGA": null,
+                "320X240": null,
+                "QVGA": null,
+                "400X296": null,
+                "CIF": null,
+                "640X480": null,
+                "VGA": null,
+                "800X600": null,
+                "SVGA": null,
+                "1024X768": null,
+                "XGA": null,
+                "1280X1024": null,
+                "SXGA": null,
+                "1600X1200": null,
+                "UXGA": null,
+                "1920X1080": null,
+                "FHD": null,
+                "720X1280": null,
+                "PHD": null,
+                "864X1536": null,
+                "P3MP": null,
+                "2048X1536": null,
+                "QXGA": null,
+                "2560X1440": null,
+                "QHD": null,
+                "2560X1600": null,
+                "WQXGA": null,
+                "1080X1920": null,
+                "PFHD": null,
+                "2560X1920": null,
+                "QSXGA": null
+              },
+              "docs": "**enum**: The resolution the camera will capture images at. Higher resolutions require more memory, if there\u2019s not enough memory you will see an error during startup.\n  * `160x120` (QQVGA)\n  \n  * `176x144` (QCIF)\n  \n  * `240x176` (HQVGA)\n  \n  * `320x240` (QVGA)\n  \n  * `400x296` (CIF)\n  \n  * `640x480` (VGA, default)\n  \n  * `800x600` (SVGA)\n  \n  * `1024x768` (XGA)\n  \n  * `1280x1024` (SXGA)\n  \n  * `1600x1200` (UXGA)\n  \n  * `1920x1080` (FHD)\n  \n  * `720x1280` (Portrait HD)\n  \n  * `864x1536` (Portrait 3MP)\n  \n  * `2048x1536` (QXGA)\n  \n  * `2560x1440` (QHD)\n  \n  * `2560x1600` (WQXGA)\n  \n  * `1080x1920` (Portrait FHD)\n  \n  * `2560x1920` (QSXGA)\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "jpeg_quality": {
               "key": "Optional",
@@ -195,39 +206,44 @@
               "key": "Optional",
               "default": "NONE",
               "type": "enum",
-              "values": [
-                "NONE",
-                "NEGATIVE",
-                "GRAYSCALE",
-                "RED_TINT",
-                "GREEN_TINT",
-                "BLUE_TINT",
-                "SEPIA"
-              ],
-              "docs": "**enum**: The effect to apply to the picture. Defaults to `none` (picture without effect).\n  * `none`: Picture without effect\n  \n  * `negative`: Colors of picture are inverted\n  \n  * `grayscale`: Only luminance of picture is kept\n  \n  * `red_tint`: Picture appear red-tinted\n  \n  * `green_tint`: Picture appear green-tinted\n  \n  * `blue_tint`: Picture appear blue-tinted\n  \n  * `sepia`: Sepia effect is applied to picture\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*",
-              "values_docs": {
-                "NONE": "Picture without effect",
-                "NEGATIVE": "Colors of picture are inverted",
-                "GRAYSCALE": "Only luminance of picture is kept",
-                "RED_TINT": "Picture appear red-tinted",
-                "GREEN_TINT": "Picture appear green-tinted",
-                "BLUE_TINT": "Picture appear blue-tinted",
-                "SEPIA": "Sepia effect is applied to picture"
-              }
+              "values": {
+                "NONE": {
+                  "docs": "Picture without effect"
+                },
+                "NEGATIVE": {
+                  "docs": "Colors of picture are inverted"
+                },
+                "GRAYSCALE": {
+                  "docs": "Only luminance of picture is kept"
+                },
+                "RED_TINT": {
+                  "docs": "Picture appear red-tinted"
+                },
+                "GREEN_TINT": {
+                  "docs": "Picture appear green-tinted"
+                },
+                "BLUE_TINT": {
+                  "docs": "Picture appear blue-tinted"
+                },
+                "SEPIA": {
+                  "docs": "Sepia effect is applied to picture"
+                }
+              },
+              "docs": "**enum**: The effect to apply to the picture. Defaults to `none` (picture without effect).\n  * `none`: Picture without effect\n  \n  * `negative`: Colors of picture are inverted\n  \n  * `grayscale`: Only luminance of picture is kept\n  \n  * `red_tint`: Picture appear red-tinted\n  \n  * `green_tint`: Picture appear green-tinted\n  \n  * `blue_tint`: Picture appear blue-tinted\n  \n  * `sepia`: Sepia effect is applied to picture\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "agc_mode": {
               "key": "Optional",
               "default": "AUTO",
               "type": "enum",
-              "values": [
-                "MANUAL",
-                "AUTO"
-              ],
-              "docs": "**enum**: The mode of gain control module. Defaults to `auto` (leave camera to automatically adjust sensor gain).\n  * `manual`: Gain can be manually set, with **agc_value** parameter. **agc_gain_ceiling** has no effect here\n  \n  * `auto`: Camera manage sensor gain automatically. Maximum gain can be defined, thanks to **agc_gain_ceiling** parameter. **agc_value** has no effect here\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*",
-              "values_docs": {
-                "MANUAL": "Gain can be manually set, with **agc_value** parameter. **agc_gain_ceiling** has no effect here",
-                "AUTO": "Camera manage sensor gain automatically. Maximum gain can be defined, thanks to **agc_gain_ceiling** parameter. **agc_value** has no effect here"
-              }
+              "values": {
+                "MANUAL": {
+                  "docs": "Gain can be manually set, with **agc_value** parameter. **agc_gain_ceiling** has no effect here"
+                },
+                "AUTO": {
+                  "docs": "Camera manage sensor gain automatically. Maximum gain can be defined, thanks to **agc_gain_ceiling** parameter. **agc_value** has no effect here"
+                }
+              },
+              "docs": "**enum**: The mode of gain control module. Defaults to `auto` (leave camera to automatically adjust sensor gain).\n  * `manual`: Gain can be manually set, with **agc_value** parameter. **agc_gain_ceiling** has no effect here\n  \n  * `auto`: Camera manage sensor gain automatically. Maximum gain can be defined, thanks to **agc_gain_ceiling** parameter. **agc_value** has no effect here\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "aec2": {
               "key": "Optional",
@@ -252,15 +268,15 @@
               "key": "Optional",
               "default": "AUTO",
               "type": "enum",
-              "values": [
-                "MANUAL",
-                "AUTO"
-              ],
-              "docs": "**enum**: The mode of exposure module. Defaults to `auto` (leave camera to automatically adjust exposure).\n  * `manual`: Exposure can be manually set, with **aec_value** parameter. **ae_level** has no effect here\n  \n  * `auto`: Camera manage exposure automatically. Compensation can be applied, thanks to **ae_level** parameter. **aec_value** has no effect here\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*",
-              "values_docs": {
-                "MANUAL": "Exposure can be manually set, with **aec_value** parameter. **ae_level** has no effect here",
-                "AUTO": "Camera manage exposure automatically. Compensation can be applied, thanks to **ae_level** parameter. **aec_value** has no effect here"
-              }
+              "values": {
+                "MANUAL": {
+                  "docs": "Exposure can be manually set, with **aec_value** parameter. **ae_level** has no effect here"
+                },
+                "AUTO": {
+                  "docs": "Camera manage exposure automatically. Compensation can be applied, thanks to **ae_level** parameter. **aec_value** has no effect here"
+                }
+              },
+              "docs": "**enum**: The mode of exposure module. Defaults to `auto` (leave camera to automatically adjust exposure).\n  * `manual`: Exposure can be manually set, with **aec_value** parameter. **ae_level** has no effect here\n  \n  * `auto`: Camera manage exposure automatically. Compensation can be applied, thanks to **ae_level** parameter. **aec_value** has no effect here\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "agc_value": {
               "key": "Optional",
@@ -272,40 +288,43 @@
               "key": "Optional",
               "default": "2X",
               "type": "enum",
-              "values": [
-                "2X",
-                "4X",
-                "8X",
-                "16X",
-                "32X",
-                "64X",
-                "128X"
-              ],
-              "docs": "**enum**: The maximum gain allowed, when **agc_mode** is set to `auto`. This parameter seems act as \u201cISO\u201d setting. Defaults to `2x`.\n  * `2x`: Camera is less sensitive, picture is clean (without visible noise)\n  \n  * `4x`\n  \n  * `8x`\n  \n  * `16x`\n  \n  * `32x`\n  \n  * `64x`\n  \n  * `128x`: Camera is more sensitive, but picture contain lot of noise\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*",
-              "values_docs": {
-                "2X": "Camera is less sensitive, picture is clean (without visible noise)",
-                "128X": "Camera is more sensitive, but picture contain lot of noise"
-              }
+              "values": {
+                "2X": {
+                  "docs": "Camera is less sensitive, picture is clean (without visible noise)"
+                },
+                "4X": null,
+                "8X": null,
+                "16X": null,
+                "32X": null,
+                "64X": null,
+                "128X": {
+                  "docs": "Camera is more sensitive, but picture contain lot of noise"
+                }
+              },
+              "docs": "**enum**: The maximum gain allowed, when **agc_mode** is set to `auto`. This parameter seems act as \u201cISO\u201d setting. Defaults to `2x`.\n  * `2x`: Camera is less sensitive, picture is clean (without visible noise)\n  \n  * `4x`\n  \n  * `8x`\n  \n  * `16x`\n  \n  * `32x`\n  \n  * `64x`\n  \n  * `128x`: Camera is more sensitive, but picture contain lot of noise\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "wb_mode": {
               "key": "Optional",
               "default": "AUTO",
               "type": "enum",
-              "values": [
-                "AUTO",
-                "SUNNY",
-                "CLOUDY",
-                "OFFICE",
-                "HOME"
-              ],
-              "docs": "**enum**: The mode of white balace module. Defaults to `auto`.\n  * `auto`: Camera choose best white balance setting\n  \n  * `sunny`: White balance sunny mode\n  \n  * `cloudy`: White balance cloudy mode\n  \n  * `office`: White balance office mode\n  \n  * `home`: White balance home mode\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*",
-              "values_docs": {
-                "AUTO": "Camera choose best white balance setting",
-                "SUNNY": "White balance sunny mode",
-                "CLOUDY": "White balance cloudy mode",
-                "OFFICE": "White balance office mode",
-                "HOME": "White balance home mode"
-              }
+              "values": {
+                "AUTO": {
+                  "docs": "Camera choose best white balance setting"
+                },
+                "SUNNY": {
+                  "docs": "White balance sunny mode"
+                },
+                "CLOUDY": {
+                  "docs": "White balance cloudy mode"
+                },
+                "OFFICE": {
+                  "docs": "White balance office mode"
+                },
+                "HOME": {
+                  "docs": "White balance home mode"
+                }
+              },
+              "docs": "**enum**: The mode of white balace module. Defaults to `auto`.\n  * `auto`: Camera choose best white balance setting\n  \n  * `sunny`: White balance sunny mode\n  \n  * `cloudy`: White balance cloudy mode\n  \n  * `office`: White balance office mode\n  \n  * `home`: White balance home mode\n  \n  \n\n*See also: [ESP32 Camera Component](https://esphome.io/components/esp32_camera.html#configuration-variables)*"
             },
             "test_pattern": {
               "key": "Optional",

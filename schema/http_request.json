@@ -110,13 +110,13 @@
             "method": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE",
-                "PATCH"
-              ],
+              "values": {
+                "GET": null,
+                "POST": null,
+                "PUT": null,
+                "DELETE": null,
+                "PATCH": null
+              },
               "docs": "**string**: HTTP method to use (`GET`, `POST`, `PUT`, `DELETE`, `PATCH`).\n\n*See also: [HTTP Request](https://esphome.io/components/http_request.html#http-request-send-action)*"
             },
             "body": {
@@ -152,9 +152,9 @@
               "key": "Optional",
               "default": "POST",
               "type": "enum",
-              "values": [
-                "POST"
-              ]
+              "values": {
+                "POST": null
+              }
             },
             "body": {
               "key": "Optional",
@@ -192,9 +192,9 @@
               "key": "Optional",
               "default": "GET",
               "type": "enum",
-              "values": [
-                "GET"
-              ]
+              "values": {
+                "GET": null
+              }
             }
           }
         },

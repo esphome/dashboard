@@ -40,16 +40,16 @@
                     "key": "Optional",
                     "default": "8X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "1X",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X",
-                      "32X",
-                      "64X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "1X": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null,
+                      "32X": null,
+                      "64X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/qmp6988.html#qmp6988-oversampling).\n\n*See also: [QMP6988 Temperature+Pressure Sensor](https://esphome.io/components/sensor/qmp6988.html#configuration-variables)*"
                   }
                 }
@@ -80,16 +80,16 @@
                     "key": "Optional",
                     "default": "8X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "1X",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X",
-                      "32X",
-                      "64X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "1X": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null,
+                      "32X": null,
+                      "64X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/qmp6988.html#qmp6988-oversampling).\n\n*See also: [QMP6988 Temperature+Pressure Sensor](https://esphome.io/components/sensor/qmp6988.html#configuration-variables)*"
                   }
                 }
@@ -100,14 +100,14 @@
               "key": "Optional",
               "default": "OFF",
               "type": "enum",
-              "values": [
-                "OFF",
-                "2X",
-                "4X",
-                "8X",
-                "16X",
-                "32X"
-              ],
+              "values": {
+                "OFF": null,
+                "2X": null,
+                "4X": null,
+                "8X": null,
+                "16X": null,
+                "32X": null
+              },
               "docs": "Set up an Infinite Impulse Response filter to increase accuracy. One of `OFF`, `2x`, `4x`, `8x`, `16x`, `32x`. Defaults to `OFF`.\n\n*See also: [QMP6988 Temperature+Pressure Sensor](https://esphome.io/components/sensor/qmp6988.html#configuration-variables)*"
             },
             "update_interval": {

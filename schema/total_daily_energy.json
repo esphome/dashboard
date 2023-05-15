@@ -47,11 +47,11 @@
               "key": "Optional",
               "default": "right",
               "type": "enum",
-              "values": [
-                "trapezoid",
-                "left",
-                "right"
-              ],
+              "values": {
+                "trapezoid": null,
+                "left": null,
+                "right": null
+              },
               "docs": "**string**: The method to use for calculating the total daily energy. One of `trapezoid`, `left` or `right`. Defaults to `right`.\n\n*See also: [Total Daily Energy Sensor](https://esphome.io/components/sensor/total_daily_energy.html#configuration-variables)*"
             }
           }

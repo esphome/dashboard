@@ -20,6 +20,10 @@
               "default": "False",
               "type": "boolean"
             },
+            "cache_services": {
+              "key": "Optional",
+              "type": "boolean"
+            },
             "connections": {
               "key": "Optional",
               "is_list": true,

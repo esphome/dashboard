@@ -23,10 +23,10 @@
             "mode": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "STREAM",
-                "SNAPSHOT"
-              ],
+              "values": {
+                "STREAM": null,
+                "SNAPSHOT": null
+              },
               "docs": "**string**: The operation mode. One of these values:\n  * `snapshot`\n  \n  * `stream`\n  \n  \n\n*See also: [ESP32 Camera Web Server Component](https://esphome.io/components/esp32_camera_web_server.html#configuration-variables)*"
             }
           },

@@ -49,12 +49,12 @@
               "key": "Optional",
               "default": "16",
               "type": "enum",
-              "values": [
-                8,
-                12,
-                14,
-                16
-              ],
+              "values": {
+                "8": null,
+                "12": null,
+                "14": null,
+                "16": null
+              },
               "docs": "**int**: The bit depth to use for all output channels in this chain. Must be one of 8, 12, 14 or 16. Defaults to 16.\n\n*See also: [my9231 Component/Hub](https://esphome.io/components/output/my9231.html#configuration-variables)*"
             }
           },

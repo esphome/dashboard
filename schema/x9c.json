@@ -1,0 +1,63 @@
+{
+  "x9c.output": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "output.FLOAT_OUTPUT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "x9c::X9cOutput",
+                "parents": [
+                  "output::FloatOutput",
+                  "output::BinaryOutput",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this output component.\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#configuration-variables)*"
+            },
+            "cs_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Chip Select pin\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#configuration-variables)*"
+            },
+            "inc_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Increment pin\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#configuration-variables)*"
+            },
+            "ud_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: Up/Down pin\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#configuration-variables)*"
+            },
+            "initial_value": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**float**: Manually specify the initial potentiometer value, between `0.01` and `1.0`. Defaults to `1.0`.\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

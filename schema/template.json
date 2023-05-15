@@ -212,11 +212,11 @@
               "key": "Optional",
               "default": "RESTORE",
               "type": "enum",
-              "values": [
-                "NO_RESTORE",
-                "RESTORE",
-                "RESTORE_AND_CALL"
-              ]
+              "values": {
+                "NO_RESTORE": null,
+                "RESTORE": null,
+                "RESTORE_AND_CALL": null
+              }
             }
           }
         }
@@ -237,10 +237,10 @@
               "key": "Optional",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "OPEN",
-                "CLOSED"
-              ],
+              "values": {
+                "OPEN": null,
+                "CLOSED": null
+              },
               "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: The state to publish. One of `OPEN`, `CLOSED`. If using a lambda, use `COVER_OPEN` or `COVER_CLOSED`.\n\n*See also: [Template Cover](https://esphome.io/components/cover/template.html#cover-template-publish-action)*"
             },
             "position": {
@@ -253,11 +253,11 @@
               "key": "Optional",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "IDLE",
-                "OPENING",
-                "CLOSING"
-              ],
+              "values": {
+                "IDLE": null,
+                "OPENING": null,
+                "CLOSING": null
+              },
               "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), string**: The current operation mode to publish. One of `IDLE`, `OPENING` and `CLOSING`. If using a lambda, use `COVER_OPERATION_IDLE`, `COVER_OPERATION_OPENING`, and `COVER_OPERATION_CLOSING`.\n\n*See also: [Template Cover](https://esphome.io/components/cover/template.html#cover-template-publish-action)*"
             },
             "tilt": {
@@ -343,13 +343,13 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "LOCKED",
-                "UNLOCKED",
-                "JAMMED",
-                "LOCKING",
-                "UNLOCKING"
-              ],
+              "values": {
+                "LOCKED": null,
+                "UNLOCKED": null,
+                "JAMMED": null,
+                "LOCKING": null,
+                "UNLOCKING": null
+              },
               "docs": "**boolean, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The state to publish.\n\n*See also: [Template Lock](https://esphome.io/components/lock/template.html#lock-template-publish-action)*"
             }
           }
@@ -369,6 +369,7 @@
           ],
           "config_vars": {
             "id": {
+              "key": "GeneratedID",
               "id_type": {
                 "class": "template_::TemplateNumber",
                 "parents": [
@@ -552,10 +553,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {

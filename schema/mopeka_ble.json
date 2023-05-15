@@ -13,6 +13,11 @@
                   "esp32_ble_tracker::ESPBTDeviceListener"
                 ]
               }
+            },
+            "show_sensors_without_sync": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
             }
           },
           "extends": [

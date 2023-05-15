@@ -1,0 +1,49 @@
+{
+  "internal_temperature.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "internal_temperature::InternalTemperatureSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Internal Temperature Sensor](https://esphome.io/components/sensor/internal_temperature.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "\u00b0C"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "device_class": {
+              "default": "temperature"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "entity_category": {
+              "default": "diagnostic"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [Internal Temperature Sensor](https://esphome.io/components/sensor/internal_temperature.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

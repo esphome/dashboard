@@ -49,7 +49,7 @@
                   }
                 }
               },
-              "docs": "Include the Longitude as a sensor\n  * **name** (**Required**, string): The name to give the latitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
+              "docs": "Include the Longitude as a sensor\n  * **name** (**Required**, string): The name to give the longitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
             },
             "speed": {
               "key": "Optional",
@@ -67,7 +67,7 @@
                   }
                 }
               },
-              "docs": "Include the measured speed as a sensor\n  * **name** (**Required**, string): The name to give the latitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
+              "docs": "Include the measured speed as a sensor\n  * **name** (**Required**, string): The name to give the speed sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
             },
             "course": {
               "key": "Optional",
@@ -85,7 +85,7 @@
                   }
                 }
               },
-              "docs": "Include the measured course as a sensor\n  * **name** (**Required**, string): The name to give the latitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
+              "docs": "Include the measured course as a sensor\n  * **name** (**Required**, string): The name to give the course sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
             },
             "altitude": {
               "key": "Optional",
@@ -103,7 +103,7 @@
                   }
                 }
               },
-              "docs": "Include the measured altitude as a sensor\n  * **name** (**Required**, string): The name to give the latitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
+              "docs": "Include the measured altitude as a sensor\n  * **name** (**Required**, string): The name to give the altitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
             },
             "satellites": {
               "key": "Optional",
@@ -121,7 +121,7 @@
                   }
                 }
               },
-              "docs": "Include the number of tracking satellites being used as a sensor\n  * **name** (**Required**, string): The name to give the latitude sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
+              "docs": "Include the number of tracking satellites being used as a sensor\n  * **name** (**Required**, string): The name to give the tracking satellites sensor\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [GPS Component](https://esphome.io/components/gps.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

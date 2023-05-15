@@ -54,10 +54,11 @@
             "device_class": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "restart",
-                "update"
-              ],
+              "values": {
+                "": null,
+                "restart": null,
+                "update": null
+              },
               "docs": "**string**: The device class for the button. See [https://developers.home-assistant.io/docs/core/entity/button/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/button/#available-device-classes) for a list of available options.\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#base-button-configuration)*"
             },
             "on_press": {

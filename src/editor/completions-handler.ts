@@ -38,128 +38,133 @@ export class CompletionsHandler {
     uri: string,
     position: Position
   ): Promise<CompletionItem[]> {
-    this.document = this.documents.getDocument(uri);
-    this.position = position;
-    this.lineContent = this.document.text.getLineContent(position.line);
-    const findByClosest = this.lineContent.trim().length === 0;
-    const offset = this.document.text.offsetAt(position);
+    try {
+      this.document = this.documents.getDocument(uri);
+      this.position = position;
+      this.lineContent = this.document.text.getLineContent(position.line);
+      const findByClosest = this.lineContent.trim().length === 0;
+      const offset = this.document.text.offsetAt(position);
 
-    // Do not show completions when next to ':'
-    if (this.document.text.getText().charAt(offset - 1) === ":") {
+      // Do not show completions when next to ':'
+      if (this.document.text.getText().charAt(offset - 1) === ":") {
+        return [];
+      }
+
+      const docMap = this.document.yaml.contents;
+      if (!isMap(docMap)) {
+        this.docMap = undefined!;
+        return this.getCoreComponents();
+      }
+      this.docMap = docMap;
+
+      let node = findByClosest
+        ? this.findClosestNode(position, offset)
+        : this.document.getNodeFromOffset(offset);
+
+      if (!node) return [];
+
+      const range: Range = {
+        start: this.document.text.getPosition(node.range?.[0]!),
+        end: this.document.text.getPosition(node.range?.[1]!),
+      };
+      if (range.start.character === 0) {
+        return this.getCoreComponents();
+      }
+
+      const p1 = this.document.getParent(node);
+      const p2 = p1 !== undefined ? this.document.getParent(p1) : undefined;
+
+      if (!findByClosest && isScalar(node)) {
+        if (isPair(p1) && p1.value === null) {
+          // seems to be writing on a key still without value
+          if (isMap(p2)) {
+            node = p2;
+          }
+        }
+      }
+
+      const path = this.document.getPath(node);
+      // At this point node and path should be meaningful and consistent
+      // Path is were completions need to be listed, it really doesn't matter where the cursor is, cursor shouldn't be checked
+      // to see what completions are need
+
+      // List items under - platform: |
+      if (isPair(p1) && isScalar(p1.key)) {
+        if (p1.key.value === "platform") {
+          if (isMap(p2)) {
+            const p3 = this.document.getParent(p2);
+            if (isSeq(p3)) {
+              const p4 = this.document.getParent(p3);
+              if (isPair(p4) && isScalar(p4.key)) {
+                const platform_name = p4.key.value as string;
+                return await this.getPlatformNames(platform_name, range);
+              }
+            }
+          }
+        }
+      }
+
+      console.log(node, path, path.length, `'${path[0]}'`);
+
+      let pathElement;
+      // First get the root component
+      let cv: ConfigVar | undefined = undefined;
+      let pathIndex = 0;
+      if (path.length) {
+        pathIndex = 1;
+        pathElement = docMap.get(path[0]);
+        if (isString(path[0]) && (await coreSchema.isPlatform(path[0]))) {
+          if (path.length > 1) {
+            // we are in a platform (e.g. sensor) and there are inner stuff
+            if (isNumber(path[1])) {
+              // the index in the sequence
+              const index = path[1];
+              if (isSeq(pathElement)) {
+                pathElement = pathElement.get(index);
+                pathIndex += 1;
+              }
+            }
+          }
+          // else branch not needed here as pathElement should be pointing
+          // to the object with the platform key
+          if (isMap(pathElement)) {
+            const domain = pathElement.get("platform");
+            if (isString(domain)) {
+              cv = await coreSchema.getComponentPlatformSchema(domain, path[0]);
+            }
+          }
+          if (!cv) {
+            return [
+              createCompletion(
+                "platform",
+                isSeq(this.document.getParent(node))
+                  ? "platform: "
+                  : "- platform: ",
+                CompletionItemKind.EnumMember,
+                undefined,
+                true
+              ),
+            ];
+          }
+        } else {
+          pathElement = docMap.get(path[0]);
+          if (isString(path[0])) {
+            cv = await coreSchema.getComponentSchema(path[0]);
+          }
+        }
+      }
+
+      return this.resolveConfigVar(
+        path,
+        pathIndex,
+        cv!,
+        pathElement as YAMLMap,
+        node
+      );
+    } catch (e) {
+      console.log(`Error during evaluating completions ${e}`);
       return [];
     }
-
-    const docMap = this.document.yaml.contents;
-    if (!isMap(docMap)) {
-      this.docMap = undefined!;
-      return this.getCoreComponents();
-    }
-    this.docMap = docMap;
-
-    let node = findByClosest
-      ? this.findClosestNode(position, offset)
-      : this.document.getNodeFromOffset(offset);
-
-    if (!node) return [];
-
-    const range: Range = {
-      start: this.document.text.getPosition(node.range?.[0]!),
-      end: this.document.text.getPosition(node.range?.[1]!),
-    };
-    if (range.start.character === 0) {
-      return this.getCoreComponents();
-    }
-
-    const p1 = this.document.getParent(node);
-    const p2 = p1 !== undefined ? this.document.getParent(p1) : undefined;
-
-    if (!findByClosest && isScalar(node)) {
-      if (isPair(p1) && p1.value === null) {
-        // seems to be writing on a key still without value
-        if (isMap(p2)) {
-          node = p2;
-        }
-      }
-    }
-
-    const path = this.document.getPath(node);
-    // At this point node and path should be meaningful and consistent
-    // Path is were completions need to be listed, it really doesn't matter where the cursor is, cursor shouldn't be checked
-    // to see what completions are need
-
-    // List items under - platform: |
-    if (isPair(p1) && isScalar(p1.key)) {
-      if (p1.key.value === "platform") {
-        if (isMap(p2)) {
-          const p3 = this.document.getParent(p2);
-          if (isSeq(p3)) {
-            const p4 = this.document.getParent(p3);
-            if (isPair(p4) && isScalar(p4.key)) {
-              const platform_name = p4.key.value as string;
-              return await this.getPlatformNames(platform_name, range);
-            }
-          }
-        }
-      }
-    }
-
-    console.log(node, path, path.length, `'${path[0]}'`);
-
-    let pathElement;
-    // First get the root component
-    let cv: ConfigVar | undefined = undefined;
-    let pathIndex = 0;
-    if (path.length) {
-      pathIndex = 1;
-      pathElement = docMap.get(path[0]);
-      if (isString(path[0]) && (await coreSchema.isPlatform(path[0]))) {
-        if (path.length > 1) {
-          // we are in a platform (e.g. sensor) and there are inner stuff
-          if (isNumber(path[1])) {
-            // the index in the sequence
-            const index = path[1];
-            if (isSeq(pathElement)) {
-              pathElement = pathElement.get(index);
-              pathIndex += 1;
-            }
-          }
-        }
-        // else branch not needed here as pathElement should be pointing
-        // to the object with the platform key
-        if (isMap(pathElement)) {
-          const domain = pathElement.get("platform");
-          if (isString(domain)) {
-            cv = await coreSchema.getComponentPlatformSchema(domain, path[0]);
-          }
-        }
-        if (!cv) {
-          return [
-            createCompletion(
-              "platform",
-              isSeq(this.document.getParent(node))
-                ? "platform: "
-                : "- platform: ",
-              CompletionItemKind.EnumMember,
-              undefined,
-              true
-            ),
-          ];
-        }
-      } else {
-        pathElement = docMap.get(path[0]);
-        if (isString(path[0])) {
-          cv = await coreSchema.getComponentSchema(path[0]);
-        }
-      }
-    }
-
-    return this.resolveConfigVar(
-      path,
-      pathIndex,
-      cv!,
-      pathElement as YAMLMap,
-      node
-    );
   }
 
   private async getPlatformNames(platform_name: string, range: Range) {
@@ -698,7 +703,7 @@ export class CompletionsHandler {
         )
       );
     }
-    for (var value of cv.values) {
+    for (var value in cv.values) {
       if (isNumber(value as any)) {
         value = value.toString();
       }
@@ -707,9 +712,7 @@ export class CompletionsHandler {
           value,
           value,
           CompletionItemKind.EnumMember,
-          cv.values_docs !== undefined && cv.values_docs[value] !== undefined
-            ? cv.values_docs[value]
-            : undefined,
+          cv.values[value]?.docs,
           false,
           cv.default === value
         )

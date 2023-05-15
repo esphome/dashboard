@@ -7,6 +7,11 @@
           "config_vars": {
             "package_import_url": {
               "key": "Required"
+            },
+            "import_full_config": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
             }
           }
         }

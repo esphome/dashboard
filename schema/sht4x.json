@@ -75,32 +75,32 @@
               "key": "Optional",
               "default": "High",
               "type": "enum",
-              "values": [
-                "High",
-                "Med",
-                "Low"
-              ],
+              "values": {
+                "High": null,
+                "Med": null,
+                "Low": null
+              },
               "docs": "**string**: The measurement precision, either `High`, `Med` or `Low`. Default is `High`.\n\n*See also: [SHT4X Temperature and Humidity Sensor](https://esphome.io/components/sensor/sht4x.html#configuration-variables)*"
             },
             "heater_power": {
               "key": "Optional",
               "default": "High",
               "type": "enum",
-              "values": [
-                "High",
-                "Med",
-                "Low"
-              ],
+              "values": {
+                "High": null,
+                "Med": null,
+                "Low": null
+              },
               "docs": "**string**: The heater power, either `High`, `Med` or `Low`. Default is `High`.\n\n*See also: [SHT4X Temperature and Humidity Sensor](https://esphome.io/components/sensor/sht4x.html#configuration-variables)*"
             },
             "heater_time": {
               "key": "Optional",
               "default": "Long",
               "type": "enum",
-              "values": [
-                "Long",
-                "Short"
-              ],
+              "values": {
+                "Long": null,
+                "Short": null
+              },
               "docs": "**string**: The length of time to run the heater, either `Long` (1000ms) or `Short` (100ms). Default is `Long`.\n\n*See also: [SHT4X Temperature and Humidity Sensor](https://esphome.io/components/sensor/sht4x.html#configuration-variables)*"
             },
             "heater_max_duty": {

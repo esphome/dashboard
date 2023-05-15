@@ -61,6 +61,12 @@
               "type": "boolean",
               "docs": "**boolean**: Indicates that the cover has built in end stop detectors. In this configuration the `stop_action` is not performed when the open or close time is completed and if the cover is commanded to open or close the corresponding actions will be performed without checking current state. Defaults to `false`.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
             },
+            "manual_control": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: For covers with manual external controls. With this configuration if the cover is commanded to open or close the corresponding actions will be performed even if the current state fully open or fully closed matches desired state, then `stop_action` will be called after the full duration of the action elapses. The current state will then be relearned upon completion. It\u2019s recommended to  set `assumed_state` to true so the cover control button aren\u2019t disabled in the interface. Defaults to `false`.\n\n*See also: [Time Based Cover](https://esphome.io/components/cover/time_based.html#configuration-variables)*"
+            },
             "assumed_state": {
               "key": "Optional",
               "default": "True",

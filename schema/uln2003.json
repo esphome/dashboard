@@ -66,11 +66,11 @@
               "key": "Optional",
               "default": "FULL_STEP",
               "type": "enum",
-              "values": [
-                "FULL_STEP",
-                "HALF_STEP",
-                "WAVE_DRIVE"
-              ],
+              "values": {
+                "FULL_STEP": null,
+                "HALF_STEP": null,
+                "WAVE_DRIVE": null
+              },
               "docs": "**string**: The step mode to operate the motor with. One of:\n  * `FULL_STEP` (Default)\n  \n  * `HALF_STEP`\n  \n  * `WAVE_DRIVE`\n  \n  \n\n*See also: [ULN2003 Component](https://esphome.io/components/stepper/index.html#uln2003-component)*"
             }
           }

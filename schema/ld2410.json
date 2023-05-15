@@ -1,0 +1,332 @@
+{
+  "ld2410": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "ld2410::LD2410Component",
+                "parents": [
+                  "Component",
+                  "uart::UARTDevice"
+                ]
+              }
+            },
+            "max_move_distance": {
+              "key": "Optional",
+              "default": "4.5m",
+              "type": "enum",
+              "values": {
+                "0.75": null,
+                "1.5": null,
+                "2.25": null,
+                "3": null,
+                "3.75": null,
+                "4.5": null,
+                "5.25": null,
+                "6": null
+              },
+              "docs": "**int**: Maximum distance for movement detection. Value between `0.75m` and `6m` inclusive. Defaults to `4.5m`.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#configuration-variables)*"
+            },
+            "max_still_distance": {
+              "key": "Optional",
+              "default": "4.5m",
+              "type": "enum",
+              "values": {
+                "0.75": null,
+                "1.5": null,
+                "2.25": null,
+                "3": null,
+                "3.75": null,
+                "4.5": null,
+                "5.25": null,
+                "6": null
+              },
+              "docs": "**int**: Maximum distance for still detection. Value between `0.75m` and `6m` inclusive. Defaults to `4.5m`.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#configuration-variables)*"
+            },
+            "timeout": {
+              "key": "Optional",
+              "default": "5s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              },
+              "docs": "**int**: Time in seconds during which presence state will stay present after leaving. Defaults to `5s`.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#configuration-variables)*"
+            },
+            "g0_move_threshold": {
+              "key": "Optional",
+              "default": "50",
+              "type": "integer"
+            },
+            "g0_still_threshold": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer"
+            },
+            "g1_move_threshold": {
+              "key": "Optional",
+              "default": "50",
+              "type": "integer"
+            },
+            "g1_still_threshold": {
+              "key": "Optional",
+              "default": "0",
+              "type": "integer"
+            },
+            "g2_move_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g2_still_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g3_move_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g3_still_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g4_move_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g4_still_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g5_move_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g5_still_threshold": {
+              "key": "Optional",
+              "default": "40",
+              "type": "integer"
+            },
+            "g6_move_threshold": {
+              "key": "Optional",
+              "default": "30",
+              "type": "integer"
+            },
+            "g6_still_threshold": {
+              "key": "Optional",
+              "default": "15",
+              "type": "integer"
+            },
+            "g7_move_threshold": {
+              "key": "Optional",
+              "default": "30",
+              "type": "integer"
+            },
+            "g7_still_threshold": {
+              "key": "Optional",
+              "default": "15",
+              "type": "integer"
+            },
+            "g8_move_threshold": {
+              "key": "Optional",
+              "default": "30",
+              "type": "integer"
+            },
+            "g8_still_threshold": {
+              "key": "Optional",
+              "default": "15",
+              "type": "integer"
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    }
+  },
+  "ld2410.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "ld2410_id": {
+              "key": "GeneratedID",
+              "use_id_type": "ld2410::LD2410Component",
+              "type": "use_id"
+            },
+            "moving_distance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "cm"
+                  },
+                  "device_class": {
+                    "default": "distance"
+                  }
+                }
+              },
+              "docs": "Distance of detected moving target. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ld2410 Sensor](https://esphome.io/components/sensor/ld2410.html#id1)*"
+            },
+            "still_distance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "cm"
+                  },
+                  "device_class": {
+                    "default": "distance"
+                  }
+                }
+              },
+              "docs": "Distance of detected still target. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ld2410 Sensor](https://esphome.io/components/sensor/ld2410.html#id1)*"
+            },
+            "moving_energy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "device_class": {
+                    "default": "energy"
+                  }
+                }
+              },
+              "docs": "Energy for moving target. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ld2410 Sensor](https://esphome.io/components/sensor/ld2410.html#id1)*"
+            },
+            "still_energy": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "%"
+                  },
+                  "device_class": {
+                    "default": "energy"
+                  }
+                }
+              },
+              "docs": "Energy for still target. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ld2410 Sensor](https://esphome.io/components/sensor/ld2410.html#id1)*"
+            },
+            "detection_distance": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "cm"
+                  },
+                  "device_class": {
+                    "default": "distance"
+                  }
+                }
+              },
+              "docs": "Distance in cm of target. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [ld2410 Sensor](https://esphome.io/components/sensor/ld2410.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "ld2410.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "ld2410_id": {
+              "key": "GeneratedID",
+              "use_id_type": "ld2410::LD2410Component",
+              "type": "use_id"
+            },
+            "has_target": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "device_class": {
+                    "default": "occupancy"
+                  }
+                }
+              },
+              "docs": "If true target detect either still or in movement. All options from [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor).\n\n*See also: [ld2410 Binary Sensor](https://esphome.io/components/sensor/ld2410.html#id2)*"
+            },
+            "has_moving_target": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "device_class": {
+                    "default": "motion"
+                  }
+                }
+              },
+              "docs": "If true a moving target is detected. All options from [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor).\n\n*See also: [ld2410 Binary Sensor](https://esphome.io/components/sensor/ld2410.html#id2)*"
+            },
+            "has_still_target": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "device_class": {
+                    "default": "occupancy"
+                  }
+                }
+              },
+              "docs": "If true a still target is detected. All options from [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor).\n\n*See also: [ld2410 Binary Sensor](https://esphome.io/components/sensor/ld2410.html#id2)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

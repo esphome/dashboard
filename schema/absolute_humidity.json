@@ -1,0 +1,62 @@
+{
+  "absolute_humidity.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "unit_of_measurement": {
+              "default": "g/m\u00b3"
+            },
+            "icon": {
+              "default": "mdi:water"
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "id": {
+              "id_type": {
+                "class": "absolute_humidity::AbsoluteHumidityComponent",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "temperature": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that is used to measure the current temperature, in \u00b0C.\n\n*See also: [Absolute Humidity](https://esphome.io/components/sensor/absolute_humidity.html#configuration-variables)*"
+            },
+            "humidity": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The sensor that is used to measure the current relative humidity, in %.\n\n*See also: [Absolute Humidity](https://esphome.io/components/sensor/absolute_humidity.html#configuration-variables)*"
+            },
+            "equation": {
+              "key": "Optional",
+              "default": "WOBUS",
+              "type": "enum",
+              "values": {
+                "BUCK": null,
+                "TETENS": null,
+                "WOBUS": null
+              },
+              "docs": "The saturated vapor pressure equation to use (see below).\n\n*See also: [Absolute Humidity](https://esphome.io/components/sensor/absolute_humidity.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

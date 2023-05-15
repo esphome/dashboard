@@ -62,7 +62,7 @@
               "docs": "The information for the light level sensor.\n  * **name** (**Required**, string): The name for the light level sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [AM43 Sensor](https://esphome.io/components/sensor/am43.html#configuration-variables)*"
             },
             "ble_client_id": {
-              "key": "Required",
+              "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the `ble_client` entry associated with the device.\n\n*See also: [AM43 Sensor](https://esphome.io/components/sensor/am43.html#configuration-variables)*"
@@ -115,7 +115,7 @@
               "docs": "**boolean**: Inverts the position value to and from the device. Set if ESPHome is swapping around the open/close state of the cover.\n\n*See also: [AM43 Cover](https://esphome.io/components/cover/am43.html#configuration-variables)*"
             },
             "ble_client_id": {
-              "key": "Required",
+              "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id of the `ble_client` entry associated with the device.\n\n*See also: [AM43 Cover](https://esphome.io/components/cover/am43.html#configuration-variables)*"

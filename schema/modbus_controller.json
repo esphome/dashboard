@@ -25,7 +25,7 @@
                   "core.positive_time_period_milliseconds"
                 ]
               },
-              "docs": "**int**: minimum time in milliseconds between 2 requests to the device. Default is 0ms Because some modbus devices limit the rate of requests the interval between sending requests to the device can be modified.\n\n*See also: [Modbus Controller](https://esphome.io/components/modbus_controller.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: minimum time in between 2 requests to the device. Default is 0ms Because some modbus devices limit the rate of requests the interval between sending requests to the device can be modified.\n\n*See also: [Modbus Controller](https://esphome.io/components/modbus_controller.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",
@@ -144,55 +144,67 @@
             "register_type": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "custom",
-                "coil",
-                "holding",
-                "discrete_input",
-                "read"
-              ],
-              "docs": "type of the modbus register.\n  * `coil`: coils are also called discrete output. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access. Modbus function code 1 (Read Coil Status) will be used\n  \n  * `discrete_input`: discrete input register (read only coil) are similar to coils but can only be read. Modbus function code 2 (Read Input Status) will be used.\n  \n  * `holding`: Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access. Modbus function code 3 (Read Holding Registers) will be used.\n  \n  * `read`: Read Input Registers - registers are 16-bit registers used for input, and may only be read. Modbus function code 4 (Read Input Registers) will be used.\n  \n  \n\n*See also: [Modbus Controller Sensor](https://esphome.io/components/sensor/modbus_controller.html#configuration-variables)*",
-              "values_docs": {
-                "coil": "coils are also called discrete output. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access. Modbus function code 1 (Read Coil Status) will be used",
-                "discrete_input": "discrete input register (read only coil) are similar to coils but can only be read. Modbus function code 2 (Read Input Status) will be used.",
-                "holding": "Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access. Modbus function code 3 (Read Holding Registers) will be used.",
-                "read": "Read Input Registers - registers are 16-bit registers used for input, and may only be read. Modbus function code 4 (Read Input Registers) will be used."
-              }
+              "values": {
+                "custom": null,
+                "coil": {
+                  "docs": "coils are also called discrete output. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access. Modbus function code 1 (Read Coil Status) will be used"
+                },
+                "holding": {
+                  "docs": "Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access. Modbus function code 3 (Read Holding Registers) will be used."
+                },
+                "discrete_input": {
+                  "docs": "discrete input register (read only coil) are similar to coils but can only be read. Modbus function code 2 (Read Input Status) will be used."
+                },
+                "read": {
+                  "docs": "Read Input Registers - registers are 16-bit registers used for input, and may only be read. Modbus function code 4 (Read Input Registers) will be used."
+                }
+              },
+              "docs": "type of the modbus register.\n  * `coil`: coils are also called discrete output. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access. Modbus function code 1 (Read Coil Status) will be used\n  \n  * `discrete_input`: discrete input register (read only coil) are similar to coils but can only be read. Modbus function code 2 (Read Input Status) will be used.\n  \n  * `holding`: Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access. Modbus function code 3 (Read Holding Registers) will be used.\n  \n  * `read`: Read Input Registers - registers are 16-bit registers used for input, and may only be read. Modbus function code 4 (Read Input Registers) will be used.\n  \n  \n\n*See also: [Modbus Controller Sensor](https://esphome.io/components/sensor/modbus_controller.html#configuration-variables)*"
             },
             "value_type": {
               "key": "Optional",
               "default": "U_WORD",
               "type": "enum",
-              "values": [
-                "RAW",
-                "U_WORD",
-                "S_WORD",
-                "U_DWORD",
-                "U_DWORD_R",
-                "S_DWORD",
-                "S_DWORD_R",
-                "U_QWORD",
-                "U_QWORD_R",
-                "S_QWORD",
-                "S_QWORD_R",
-                "FP32",
-                "FP32_R"
-              ],
-              "docs": "datatype of the mod_bus register data. The default data type for modbus is a 16 bit integer in big endian format (MSB first)\n  * `U_WORD`: unsigned 16 bit integer from 1 register = 16bit\n  \n  * `S_WORD`: signed 16 bit integer from 1 register = 16bit\n  \n  * `U_DWORD`: unsigned 32 bit integer from 2 registers = 32bit\n  \n  * `S_DWORD`: signed 32 bit integer from 2 registers = 32bit\n  \n  * `U_DWORD_R`: unsigned 32 bit integer from 2 registers low word first\n  \n  * `S_DWORD_R`: signed 32 bit integer from 2 registers low word first\n  \n  * `U_QWORD`: unsigned 64 bit integer from 4 registers = 64bit\n  \n  * `S_QWORD`: signed 64 bit integer from 4 registers = 64bit\n  \n  * `U_QWORD_R`: unsigned 64 bit integer from 4 registers low word first\n  \n  * `S_QWORD_R`: signed 64 bit integer from 4 registers low word first\n  \n  * `FP32`: 32 bit IEEE 754 floating point from 2 registers\n  \n  * `FP32_R`: 32 bit IEEE 754 floating point - same as FP32 but low word first\n  \n  \n\n*See also: [Modbus Controller Sensor](https://esphome.io/components/sensor/modbus_controller.html#configuration-variables)*",
-              "values_docs": {
-                "U_WORD": "unsigned 16 bit integer from 1 register = 16bit",
-                "S_WORD": "signed 16 bit integer from 1 register = 16bit",
-                "U_DWORD": "unsigned 32 bit integer from 2 registers = 32bit",
-                "S_DWORD": "signed 32 bit integer from 2 registers = 32bit",
-                "U_DWORD_R": "unsigned 32 bit integer from 2 registers low word first",
-                "S_DWORD_R": "signed 32 bit integer from 2 registers low word first",
-                "U_QWORD": "unsigned 64 bit integer from 4 registers = 64bit",
-                "S_QWORD": "signed 64 bit integer from 4 registers = 64bit",
-                "U_QWORD_R": "unsigned 64 bit integer from 4 registers low word first",
-                "S_QWORD_R": "signed 64 bit integer from 4 registers low word first",
-                "FP32": "32 bit IEEE 754 floating point from 2 registers",
-                "FP32_R": "32 bit IEEE 754 floating point - same as FP32 but low word first"
-              }
+              "values": {
+                "RAW": null,
+                "U_WORD": {
+                  "docs": "unsigned 16 bit integer from 1 register = 16bit"
+                },
+                "S_WORD": {
+                  "docs": "signed 16 bit integer from 1 register = 16bit"
+                },
+                "U_DWORD": {
+                  "docs": "unsigned 32 bit integer from 2 registers = 32bit"
+                },
+                "U_DWORD_R": {
+                  "docs": "unsigned 32 bit integer from 2 registers low word first"
+                },
+                "S_DWORD": {
+                  "docs": "signed 32 bit integer from 2 registers = 32bit"
+                },
+                "S_DWORD_R": {
+                  "docs": "signed 32 bit integer from 2 registers low word first"
+                },
+                "U_QWORD": {
+                  "docs": "unsigned 64 bit integer from 4 registers = 64bit"
+                },
+                "U_QWORD_R": {
+                  "docs": "unsigned 64 bit integer from 4 registers low word first"
+                },
+                "S_QWORD": {
+                  "docs": "signed 64 bit integer from 4 registers = 64bit"
+                },
+                "S_QWORD_R": {
+                  "docs": "signed 64 bit integer from 4 registers low word first"
+                },
+                "FP32": {
+                  "docs": "32 bit IEEE 754 floating point from 2 registers"
+                },
+                "FP32_R": {
+                  "docs": "32 bit IEEE 754 floating point - same as FP32 but low word first"
+                }
+              },
+              "docs": "datatype of the mod_bus register data. The default data type for modbus is a 16 bit integer in big endian format (MSB first)\n  * `U_WORD`: unsigned 16 bit integer from 1 register = 16bit\n  \n  * `S_WORD`: signed 16 bit integer from 1 register = 16bit\n  \n  * `U_DWORD`: unsigned 32 bit integer from 2 registers = 32bit\n  \n  * `S_DWORD`: signed 32 bit integer from 2 registers = 32bit\n  \n  * `U_DWORD_R`: unsigned 32 bit integer from 2 registers low word first\n  \n  * `S_DWORD_R`: signed 32 bit integer from 2 registers low word first\n  \n  * `U_QWORD`: unsigned 64 bit integer from 4 registers = 64bit\n  \n  * `S_QWORD`: signed 64 bit integer from 4 registers = 64bit\n  \n  * `U_QWORD_R`: unsigned 64 bit integer from 4 registers low word first\n  \n  * `S_QWORD_R`: signed 64 bit integer from 4 registers low word first\n  \n  * `FP32`: 32 bit IEEE 754 floating point from 2 registers\n  \n  * `FP32_R`: 32 bit IEEE 754 floating point - same as FP32 but low word first\n  \n  \n\n*See also: [Modbus Controller Sensor](https://esphome.io/components/sensor/modbus_controller.html#configuration-variables)*"
             },
             "register_count": {
               "key": "Optional",
@@ -232,20 +244,22 @@
             "register_type": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "custom",
-                "coil",
-                "holding",
-                "discrete_input",
-                "read"
-              ],
-              "docs": "type of the modbus register.\n  * `coil`: Function 01 (01hex) Read Coils - Reads the ON/OFF status of discrete coils in the device.\n  \n  * `discrete_input`: Function 02(02hex) - Reads the ON/OFF status of discrete inputs in the device.\n  \n  * `holding`: Function 03 (03hex) Read Holding Registers - Read the binary contents of holding registers in the device.\n  \n  * `read`: Function 04 (04hex) Read Input Registers - Read the binary contents of input registers in the device.\n  \n  \n\n*See also: [Modbus Controller Binary Sensor](https://esphome.io/components/binary_sensor/modbus_controller.html#configuration-variables)*",
-              "values_docs": {
-                "coil": "Function 01 (01hex) Read Coils - Reads the ON/OFF status of discrete coils in the device.",
-                "discrete_input": "Function 02(02hex) - Reads the ON/OFF status of discrete inputs in the device.",
-                "holding": "Function 03 (03hex) Read Holding Registers - Read the binary contents of holding registers in the device.",
-                "read": "Function 04 (04hex) Read Input Registers - Read the binary contents of input registers in the device."
-              }
+              "values": {
+                "custom": null,
+                "coil": {
+                  "docs": "Function 01 (01hex) Read Coils - Reads the ON/OFF status of discrete coils in the device."
+                },
+                "holding": {
+                  "docs": "Function 03 (03hex) Read Holding Registers - Read the binary contents of holding registers in the device."
+                },
+                "discrete_input": {
+                  "docs": "Function 02(02hex) - Reads the ON/OFF status of discrete inputs in the device."
+                },
+                "read": {
+                  "docs": "Function 04 (04hex) Read Input Registers - Read the binary contents of input registers in the device."
+                }
+              },
+              "docs": "type of the modbus register.\n  * `coil`: Function 01 (01hex) Read Coils - Reads the ON/OFF status of discrete coils in the device.\n  \n  * `discrete_input`: Function 02(02hex) - Reads the ON/OFF status of discrete inputs in the device.\n  \n  * `holding`: Function 03 (03hex) Read Holding Registers - Read the binary contents of holding registers in the device.\n  \n  * `read`: Function 04 (04hex) Read Input Registers - Read the binary contents of input registers in the device.\n  \n  \n\n*See also: [Modbus Controller Binary Sensor](https://esphome.io/components/binary_sensor/modbus_controller.html#configuration-variables)*"
             }
           }
         }
@@ -263,6 +277,7 @@
           ],
           "config_vars": {
             "id": {
+              "key": "GeneratedID",
               "id_type": {
                 "class": "modbus_controller::ModbusNumber",
                 "parents": [
@@ -278,31 +293,31 @@
               "key": "Optional",
               "default": "holding",
               "type": "enum",
-              "values": [
-                "custom",
-                "coil",
-                "holding"
-              ]
+              "values": {
+                "custom": null,
+                "coil": null,
+                "holding": null
+              }
             },
             "value_type": {
               "key": "Optional",
               "default": "U_WORD",
               "type": "enum",
-              "values": [
-                "RAW",
-                "U_WORD",
-                "S_WORD",
-                "U_DWORD",
-                "U_DWORD_R",
-                "S_DWORD",
-                "S_DWORD_R",
-                "U_QWORD",
-                "U_QWORD_R",
-                "S_QWORD",
-                "S_QWORD_R",
-                "FP32",
-                "FP32_R"
-              ],
+              "values": {
+                "RAW": null,
+                "U_WORD": null,
+                "S_WORD": null,
+                "U_DWORD": null,
+                "U_DWORD_R": null,
+                "S_DWORD": null,
+                "S_DWORD_R": null,
+                "U_QWORD": null,
+                "U_QWORD_R": null,
+                "S_QWORD": null,
+                "S_QWORD_R": null,
+                "FP32": null,
+                "FP32_R": null
+              },
               "docs": "datatype of the mod_bus register data. The default data type for modbus is a 16 bit integer in big endian format (MSB first)\n  * `U_WORD` (unsigned 16 bit integer from 1 register = 16bit)\n  \n  * `S_WORD` (signed 16 bit integer from 1 register = 16bit)\n  \n  * `U_DWORD` (unsigned 32 bit integer from 2 registers = 32bit)\n  \n  * `S_DWORD` (signed 32 bit integer from 2 registers = 32bit)\n  \n  * `U_DWORD_R` (unsigned 32 bit integer from 2 registers low word first)\n  \n  * `S_DWORD_R` (signed 32 bit integer from 2 registers low word first)\n  \n  * `U_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `S_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `U_QWORD_R` (unsigned 64 bit integer from 4 registers low word first)\n  \n  * `U_QWORD_R` signed 64 bit integer from 4 registers low word first)\n  \n  * `FP32` (32 bit IEEE 754 floating point from 2 registers)\n  \n  * `FP32_R` (32 bit IEEE 754 floating point - same as FP32 but low word first)\n  \n  \n\n*See also: [Modbus Controller Number](https://esphome.io/components/number/modbus_controller.html#configuration-variables)*"
             },
             "write_lambda": {
@@ -399,22 +414,22 @@
                 "key": "Optional",
                 "default": "U_WORD",
                 "type": "enum",
-                "values": [
-                  "RAW",
-                  "U_WORD",
-                  "S_WORD",
-                  "U_DWORD",
-                  "U_DWORD_R",
-                  "S_DWORD",
-                  "S_DWORD_R",
-                  "U_QWORD",
-                  "U_QWORD_R",
-                  "S_QWORD",
-                  "S_QWORD_R",
-                  "FP32",
-                  "FP32_R"
-                ],
-                "docs": "datatype of the modbus register data. The default data type for modbus is a 16 bit integer in big endian format (MSB first)\n  * `U_WORD` (unsigned 16 bit integer from 1 register = 16bit)\n  \n  * `S_WORD` (signed 16 bit integer from 1 register = 16bit)\n  \n  * `U_DWORD` (unsigned 32 bit integer from 2 registers = 32bit)\n  \n  * `S_DWORD` (signed 32 bit integer from 2 registers = 32bit)\n  \n  * `U_DWORD_R` (unsigned 32 bit integer from 2 registers low word first)\n  \n  * `S_DWORD_R` (signed 32 bit integer from 2 registers low word first)\n  \n  * `U_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `S_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `U_QWORD_R` (unsigned 64 bit integer from 4 registers low word first)\n  \n  * `U_QWORD_R` signed 64 bit integer from 4 registers low word first)\n  \n  * `FP32` (32 bit IEEE 754 floating point from 2 registers)\n  \n  * `FP32_R` (32 bit IEEE 754 floating point - same as FP32 but low word first)\n  \n  \n\n*See also: [Modbus Controller Output](https://esphome.io/components/output/modbus_controller.html#configuration-variables)*"
+                "values": {
+                  "RAW": null,
+                  "U_WORD": null,
+                  "S_WORD": null,
+                  "U_DWORD": null,
+                  "U_DWORD_R": null,
+                  "S_DWORD": null,
+                  "S_DWORD_R": null,
+                  "U_QWORD": null,
+                  "U_QWORD_R": null,
+                  "S_QWORD": null,
+                  "S_QWORD_R": null,
+                  "FP32": null,
+                  "FP32_R": null
+                },
+                "docs": "data type of the modbus register data. The default data type for modbus is a 16 bit integer in big endian format (MSB first)\n  * `U_WORD` (unsigned 16 bit integer from 1 register = 16bit)\n  \n  * `S_WORD` (signed 16 bit integer from 1 register = 16bit)\n  \n  * `U_DWORD` (unsigned 32 bit integer from 2 registers = 32bit)\n  \n  * `S_DWORD` (signed 32 bit integer from 2 registers = 32bit)\n  \n  * `U_DWORD_R` (unsigned 32 bit integer from 2 registers low word first)\n  \n  * `S_DWORD_R` (signed 32 bit integer from 2 registers low word first)\n  \n  * `U_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `S_QWORD` (signed 64 bit integer from 4 registers = 64bit)\n  \n  * `U_QWORD_R` (unsigned 64 bit integer from 4 registers low word first)\n  \n  * `S_QWORD_R` signed 64 bit integer from 4 registers low word first)\n  \n  * `FP32` (32 bit IEEE 754 floating point from 2 registers)\n  \n  * `FP32_R` (32 bit IEEE 754 floating point - same as FP32 but low word first)\n  \n  \n\n*See also: [Modbus Controller Output](https://esphome.io/components/output/modbus_controller.html#configuration-variables)*"
               },
               "write_lambda": {
                 "key": "Optional",
@@ -476,20 +491,20 @@
               "key": "Optional",
               "default": "U_WORD",
               "type": "enum",
-              "values": [
-                "RAW",
-                "U_WORD",
-                "S_WORD",
-                "U_DWORD",
-                "U_DWORD_R",
-                "S_DWORD",
-                "S_DWORD_R",
-                "U_QWORD",
-                "U_QWORD_R",
-                "S_QWORD",
-                "S_QWORD_R"
-              ],
-              "docs": "The datatype of the modbus data. Defaults to `U_WORD`.\n  * `U_WORD` (unsigned 16 bit integer from 1 register = 16bit)\n  \n  * `S_WORD` (signed 16 bit integer from 1 register = 16bit)\n  \n  * `U_DWORD` (unsigned 32 bit integer from 2 registers = 32bit)\n  \n  * `S_DWORD` (signed 32 bit integer from 2 registers = 32bit)\n  \n  * `U_DWORD_R` (unsigned 32 bit integer from 2 registers low word first)\n  \n  * `S_DWORD_R` (signed 32 bit integer from 2 registers low word first)\n  \n  * `U_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `S_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `U_QWORD_R` (unsigned 64 bit integer from 4 registers low word first)\n  \n  * `U_QWORD_R` (signed 64 bit integer from 4 registers low word first)\n  \n  \n\n*See also: [Modbus Controller Select](https://esphome.io/components/select/modbus_controller.html#configuration-variables)*"
+              "values": {
+                "RAW": null,
+                "U_WORD": null,
+                "S_WORD": null,
+                "U_DWORD": null,
+                "U_DWORD_R": null,
+                "S_DWORD": null,
+                "S_DWORD_R": null,
+                "U_QWORD": null,
+                "U_QWORD_R": null,
+                "S_QWORD": null,
+                "S_QWORD_R": null
+              },
+              "docs": "The datatype of the modbus data. Defaults to `U_WORD`.\n  * `U_WORD` (unsigned 16 bit integer from 1 register = 16bit)\n  \n  * `S_WORD` (signed 16 bit integer from 1 register = 16bit)\n  \n  * `U_DWORD` (unsigned 32 bit integer from 2 registers = 32bit)\n  \n  * `S_DWORD` (signed 32 bit integer from 2 registers = 32bit)\n  \n  * `U_DWORD_R` (unsigned 32 bit integer from 2 registers low word first)\n  \n  * `S_DWORD_R` (signed 32 bit integer from 2 registers low word first)\n  \n  * `U_QWORD` (unsigned 64 bit integer from 4 registers = 64bit)\n  \n  * `S_QWORD` (signed 64 bit integer from 4 registers = 64bit)\n  \n  * `U_QWORD_R` (unsigned 64 bit integer from 4 registers low word first)\n  \n  * `U_QWORD_R` (signed 64 bit integer from 4 registers low word first)\n  \n  \n\n*See also: [Modbus Controller Select](https://esphome.io/components/select/modbus_controller.html#configuration-variables)*"
             },
             "register_count": {
               "key": "Optional",
@@ -545,11 +560,26 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA",
             "modbus_controller.ModbusItemBaseSchema"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "DISABLED",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              },
+              "docs": "See [Switch](https://esphome.io/components/switch/index.html#config-switch), since this configuration variable is inherited. The default value for this setting is `DISABLED` (recommended). `DISABLED` leaves the initial state up to the hardware: usually the state lives in the device and ESPHome does not need to remember it. The switch frontend will show an undetermined state until the real state is retrieved from the device on the next refresh. Use any other setting if a reboot of your ESPHome device is tied to a reboot of the modbus device.\n\n*See also: [Modbus Controller Switch](https://esphome.io/components/switch/modbus_controller.html#configuration-variables)*"
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {
@@ -566,13 +596,13 @@
             "register_type": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "custom",
-                "coil",
-                "holding",
-                "discrete_input",
-                "read"
-              ],
+              "values": {
+                "custom": null,
+                "coil": null,
+                "holding": null,
+                "discrete_input": null,
+                "read": null
+              },
               "docs": "type of the modbus register.\n\n*See also: [Modbus Controller Switch](https://esphome.io/components/switch/modbus_controller.html#configuration-variables)*"
             },
             "use_write_multiple": {
@@ -616,20 +646,22 @@
             "register_type": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "custom",
-                "coil",
-                "holding",
-                "discrete_input",
-                "read"
-              ],
-              "docs": "type of the modbus register.\n  * `coil`: coils are also called discrete outout. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access\n  \n  * `discrete_input`: discrete input register (read only coil) are similar to coils but can only be read.\n  \n  * `holding`: Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access\n  \n  * `read`: Read Input Registers - registers are 16-bit registers used for input, and may only be read\n  \n  \n\n*See also: [Modbus Controller Text Sensor](https://esphome.io/components/text_sensor/modbus_controller.html#configuration-variables)*",
-              "values_docs": {
-                "coil": "coils are also called discrete outout. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access",
-                "discrete_input": "discrete input register (read only coil) are similar to coils but can only be read.",
-                "holding": "Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access",
-                "read": "Read Input Registers - registers are 16-bit registers used for input, and may only be read"
-              }
+              "values": {
+                "custom": null,
+                "coil": {
+                  "docs": "coils are also called discrete outout. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access"
+                },
+                "holding": {
+                  "docs": "Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access"
+                },
+                "discrete_input": {
+                  "docs": "discrete input register (read only coil) are similar to coils but can only be read."
+                },
+                "read": {
+                  "docs": "Read Input Registers - registers are 16-bit registers used for input, and may only be read"
+                }
+              },
+              "docs": "type of the modbus register.\n  * `coil`: coils are also called discrete outout. Coils are 1-bit registers (on/off values) that are used to control discrete outputs. Read and Write access\n  \n  * `discrete_input`: discrete input register (read only coil) are similar to coils but can only be read.\n  \n  * `holding`: Holding Registers - Holding registers are the most universal 16-bit register. Read and Write access\n  \n  * `read`: Read Input Registers - registers are 16-bit registers used for input, and may only be read\n  \n  \n\n*See also: [Modbus Controller Text Sensor](https://esphome.io/components/text_sensor/modbus_controller.html#configuration-variables)*"
             },
             "register_count": {
               "key": "Optional",
@@ -646,17 +678,18 @@
               "key": "Optional",
               "default": "NONE",
               "type": "enum",
-              "values": [
-                "NONE",
-                "HEXBYTES",
-                "COMMA"
-              ],
-              "docs": "**enum**: If the response is binary it can\u2019t be published directly. Since a text sensor only publishes strings the binary data can be encoded\n  * `NONE`: Don\u2019t encode data.\n  \n  * `HEXBYTES`:  2 byte hex string. 0x2011 will be sent as \u201c2011\u201d.\n  \n  * `COMMA`: Byte values as integers, delimited by a coma. 0x2011 will be sent as \u201c32,17\u201d\n  \n  \n\n*See also: [Modbus Controller Text Sensor](https://esphome.io/components/text_sensor/modbus_controller.html#configuration-variables)*",
-              "values_docs": {
-                "NONE": "Don\u2019t encode data.",
-                "HEXBYTES": "2 byte hex string. 0x2011 will be sent as \u201c2011\u201d.",
-                "COMMA": "Byte values as integers, delimited by a coma. 0x2011 will be sent as \u201c32,17\u201d"
-              }
+              "values": {
+                "NONE": {
+                  "docs": "Don\u2019t encode data."
+                },
+                "HEXBYTES": {
+                  "docs": "2 byte hex string. 0x2011 will be sent as \u201c2011\u201d."
+                },
+                "COMMA": {
+                  "docs": "Byte values as integers, delimited by a coma. 0x2011 will be sent as \u201c32,17\u201d"
+                }
+              },
+              "docs": "**enum**: If the response is binary it can\u2019t be published directly. Since a text sensor only publishes strings the binary data can be encoded\n  * `NONE`: Don\u2019t encode data.\n  \n  * `HEXBYTES`:  2 byte hex string. 0x2011 will be sent as \u201c2011\u201d.\n  \n  * `COMMA`: Byte values as integers, delimited by a coma. 0x2011 will be sent as \u201c32,17\u201d\n  \n  \n\n*See also: [Modbus Controller Text Sensor](https://esphome.io/components/text_sensor/modbus_controller.html#configuration-variables)*"
             }
           }
         }
