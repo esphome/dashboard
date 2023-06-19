@@ -92,6 +92,9 @@ class EWPicoConnectCard extends LitElement {
       mwc-list-item {
         --mdc-list-side-padding: 14px;
       }
+      .svg-filter {
+        fill: var(--primary-text-color);
+      }
     `,
   ];
 }

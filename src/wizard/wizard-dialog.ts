@@ -791,6 +791,9 @@ export class ESPHomeWizardDialog extends LitElement {
       :host {
         --mdc-dialog-max-width: 390px;
       }
+      .svg-filter {
+        fill: var(--primary-text-color);
+      }
       .center {
         text-align: center;
       }

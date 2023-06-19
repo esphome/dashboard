@@ -480,6 +480,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
       svg {
         fill: currentColor;
       }
+      .svg-filter {
+        fill: var(--primary-text-color);
+      }
       .center {
         text-align: center;
       }

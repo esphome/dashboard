@@ -161,6 +161,7 @@ class EWDashboard extends LitElement {
       margin-left: 16px;
       padding-right: 8px;
       flex: 1;
+      color: var(--primary-text-color);
     }
     .promote-adopt {
       margin-left: 180px;
@@ -184,6 +185,9 @@ class EWDashboard extends LitElement {
     }
     .promote-logs.right-arrow svg {
       left: 108px;
+    }
+    .svg-filter {
+      fill: var(--primary-text-color);
     }
   `;
 }

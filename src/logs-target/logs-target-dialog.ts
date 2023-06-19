@@ -204,6 +204,9 @@ class ESPHomeLogsTargetDialog extends LitElement {
       mwc-list-item {
         margin: 0 -20px;
       }
+      .svg-filter {
+        fill: var(--primary-text-color);
+      }
     `,
   ];
 }

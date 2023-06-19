@@ -109,7 +109,7 @@ export class ESPHomeHeaderMenu extends LitElement {
       z-index: 1;
     }
     mwc-button {
-      --mdc-theme-primary: black;
+      --mdc-theme-primary: var(--primary-text-color);
       margin-left: 16px;
       line-height: 1em;
     }
