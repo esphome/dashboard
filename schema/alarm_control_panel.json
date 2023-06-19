@@ -1,0 +1,86 @@
+{
+  "alarm_control_panel": {
+    "components": {
+      "template": {
+        "docs": "The `template` alarm control panel platform allows you to turn your binary sensors into a state machine managed alarm control panel.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#template-alarm-control-panel)*"
+      }
+    },
+    "schemas": {
+      "ALARM_CONTROL_PANEL_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "alarm_control_panel::AlarmControlPanel",
+              "type": "use_id"
+            },
+            "code": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "arm_away": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "arm_home": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "disarm": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "pending": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "triggered": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "is_armed": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "alarm_control_panel::AlarmControlPanel",
+              "type": "use_id"
+            }
+          }
+        },
+        "maybe": "id"
+      }
+    }
+  }
+}

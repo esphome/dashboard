@@ -337,6 +337,7 @@
       "sensor": {
         "docs": "ESPHome has support for many different sensors. Each of them is a platform of the `sensor` domain and each sensor has several base configuration options.\n\n*See also: [Sensor Component](https://esphome.io/components/sensor/index.html#sensor-component)*"
       },
+      "alarm_control_panel": {},
       "binary_sensor": {
         "docs": "With ESPHome you can use different types of binary sensors. They will automatically appear in the Home Assistant front-end and have several configuration options.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#binary-sensor-component)*"
       },
@@ -875,7 +876,7 @@
         "dependencies": [
           "spi"
         ],
-        "docs": "The `rc522_spi` component allows you to use RC522 RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [SPI](https://esphome.io/components/spi.html#spi) (also available over I\u00b2C). Using the [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-tag) you can then create individual binary sensors that track if an RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over SPI](https://esphome.io/components/binary_sensor/rc522.html#over-spi)*"
+        "docs": "The `rc522_spi` component allows you to use RC522 NFC/RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [SPI](https://esphome.io/components/spi.html#spi). Using [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor), you can then create individual binary sensors that track if an NFC/RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over SPI](https://esphome.io/components/binary_sensor/rc522.html#over-spi)*"
       },
       "rdm6300": {
         "dependencies": [
