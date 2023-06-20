@@ -98,3 +98,9 @@ export const esphomeDialogStyles = css`
     padding: 0 24px;
   }
 `;
+
+export const esphomeSvgStyles = css`
+  .svg-fill-primary {
+    fill: var(--primary-text-color);
+  }
+`;

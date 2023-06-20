@@ -29,7 +29,9 @@ class ESPHomeEditor extends LitElement {
   private editorValidationScheduled = false;
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
-  private darkQuery: MediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+  private darkQuery: MediaQueryList = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  );
 
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;

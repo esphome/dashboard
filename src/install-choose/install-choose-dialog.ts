@@ -15,7 +15,7 @@ import {
   getConfiguration,
   getDownloadUrl,
 } from "../api/configuration";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import "../components/esphome-alert";
 
 const WARNING_ICON = "👀";
@@ -473,15 +473,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       mwc-list-item {
         margin: 0 -20px;
-      }
-      svg {
-        fill: currentColor;
-      }
-      .svg-filter {
-        fill: var(--primary-text-color);
       }
       .center {
         text-align: center;
