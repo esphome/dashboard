@@ -2,6 +2,7 @@ import { css, html, LitElement, TemplateResult } from "lit";
 import { property, state, customElement } from "lit/decorators.js";
 import "@material/mwc-button";
 import { supportsWebSerial } from "../../../src/const";
+import "../../../src/components/esphome-theme";
 
 const isWideListener = window.matchMedia("(min-width: 601px)");
 
@@ -18,9 +19,10 @@ export class EWHeaderMenu extends LitElement {
       return html``;
     }
     return html`
+      <esphome-theme display-text=${this._isWide}></esphome-theme>
       <a href=${this._pico ? "/" : "/?pico"}>
         <mwc-button
-          icon="arrow_forward"
+          icon="${this._isWide ? "arrow_forward" : ""}"
           .label=${!this._isWide
             ? ""
             : this._pico

@@ -21,6 +21,7 @@ if (loc.protocol === "https:") {
   wsLoc.protocol = "wss:";
 }
 const wsUrl = wsLoc.href;
+const darkQuery: MediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
 
 @customElement("esphome-editor")
 class ESPHomeEditor extends LitElement {
@@ -29,9 +30,6 @@ class ESPHomeEditor extends LitElement {
   private editorValidationScheduled = false;
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
-  private darkQuery: MediaQueryList = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  );
 
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
@@ -133,10 +131,6 @@ class ESPHomeEditor extends LitElement {
     this._snackbar.show();
   }
 
-  private _getTheme(): string {
-    return this.darkQuery.matches ? "esphome-dark" : "esphome";
-  }
-
   firstUpdated() {
     // @ts-ignore
     self.MonacoEnvironment = {
@@ -144,13 +138,13 @@ class ESPHomeEditor extends LitElement {
         return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
-    this.darkQuery.addEventListener("change", () => {
-      monaco.editor.setTheme(this._getTheme());
+    darkQuery.addEventListener("change", () => {
+      monaco.editor.setTheme(darkQuery.matches ? "esphome-dark" : "esphome");
     });
     this.editor = monaco.editor.create(this.container, {
       value: "",
       language: "yaml",
-      theme: this._getTheme(),
+      theme: document.documentElement.getAttribute("data-theme") === "Dark" ? "esphome-dark" : "esphome",
       minimap: {
         enabled: false,
       },

@@ -1,6 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { property, state, customElement } from "lit/decorators.js";
 import "./esphome-button-menu";
+import "./esphome-theme";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
@@ -10,7 +11,7 @@ import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
 
-const isWideListener = window.matchMedia("(min-width: 601px)");
+const isWideListener = window.matchMedia("(min-width: 641px)");
 
 @customElement("esphome-header-menu")
 export class ESPHomeHeaderMenu extends LitElement {
@@ -21,6 +22,7 @@ export class ESPHomeHeaderMenu extends LitElement {
   protected render(): TemplateResult {
     if (this._isWide) {
       return html`
+        <esphome-theme></esphome-theme>
         <mwc-button
           icon="system_update"
           label="Update All"
@@ -49,6 +51,7 @@ export class ESPHomeHeaderMenu extends LitElement {
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
         <mwc-list-item>Update All</mwc-list-item>
         <mwc-list-item>Secrets Editor</mwc-list-item>
+        <esphome-theme display-type="list-item"></esphome-theme>
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
