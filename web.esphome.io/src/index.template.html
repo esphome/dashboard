@@ -1,9 +1,16 @@
-{% extends "../../raw_package/base_with_header_footer.template.html" %} {% block
-title %}Web{% end %} {% block header %}
+{% extends "../../raw_package/base_with_header_footer.template.html" %}
+
+{% block title %}Web{% end %}
+
+{% block header %}
 <ew-header-menu></ew-header-menu>
-{% end %} {% block main %}
+{% end %}
+
+{% block main %}
 <ew-dashboard></ew-dashboard>
-{% end %} {% block footer %}
+{% end %}
+
+{% block footer %}
 <script
   src="{{ get_static_file_url('js/esphome/index.js') }}"
   type="module"
