@@ -73,7 +73,7 @@ class EWPicoDeviceCard extends LitElement {
     esphomeCardStyles,
     css`
       esphome-card {
-        --status-color: rgba(0, 0, 0, 0.5);
+        --status-color: var(--status-connected);
       }
     `,
   ];

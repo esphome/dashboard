@@ -8,6 +8,7 @@ import type { EwtConsole } from "./ewt-console";
 import { basename } from "../util/basename";
 import { openEditDialog } from "../editor";
 import { getConfiguration } from "../api/configuration";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-logs-webserial-dialog")
 class ESPHomeLogsWebSerialDialog extends LitElement {
@@ -101,15 +102,18 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
     );
   }
 
-  static styles = css`
-    mwc-dialog {
-      --mdc-dialog-max-width: 90vw;
-    }
-    ewt-console {
-      width: calc(80vw - 48px);
-      height: calc(90vh - 128px);
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      mwc-dialog {
+        --mdc-dialog-max-width: 90vw;
+      }
+      ewt-console {
+        width: calc(80vw - 48px);
+        height: calc(90vh - 128px);
+      }
+    `,
+  ];
 }
 
 declare global {

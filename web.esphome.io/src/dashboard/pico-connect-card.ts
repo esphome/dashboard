@@ -2,7 +2,7 @@ import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-card";
 import { metaChevronRight } from "../../../src/const";
-import { esphomeCardStyles } from "../../../src/styles";
+import { esphomeCardStyles, esphomeSvgStyles } from "../../../src/styles";
 import { picoPortFilters } from "../../../src/util/pico-port-filter";
 import { openInstallPicoDialog } from "../install-pico";
 import "./pico-device-card";
@@ -85,6 +85,7 @@ class EWPicoConnectCard extends LitElement {
 
   static styles = [
     esphomeCardStyles,
+    esphomeSvgStyles,
     css`
       esphome-card {
         --status-color: var(--alert-warning-color);

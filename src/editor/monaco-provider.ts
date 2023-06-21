@@ -63,3 +63,13 @@ monaco.editor.defineTheme("esphome", {
     "editor.foreground": "#000000",
   },
 });
+
+monaco.editor.defineTheme("esphome-dark", {
+  base: "vs-dark",
+  inherit: true,
+  rules: [{ token: "type", foreground: "E8E8E9", fontStyle: "" }],
+
+  colors: {
+    "editor.foreground": "#E8E8E9",
+  },
+});

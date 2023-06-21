@@ -9,7 +9,7 @@ import { openLogsDialog } from "../logs";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openLogsWebSerialDialog } from "../logs-webserial";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_logs";
 
@@ -200,6 +200,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       mwc-list-item {
         margin: 0 -20px;
