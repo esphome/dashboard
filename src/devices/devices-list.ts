@@ -1,19 +1,23 @@
 import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { subscribeDevices, ListDevicesResult } from "../api/devices";
+import { subscribeDevices, ListDevicesResult, ImportableDevice, ConfiguredDevice } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
+import "@material/mwc-textfield";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
 import { MetadataRefresher } from "./device-metadata-refresher";
+import { TextField } from "@material/mwc-textfield";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
   @state() private _devices?: ListDevicesResult;
   @state() private _onlineStatus?: Record<string, boolean>;
+
+  @query("mwc-textfield[name=search]") private _inputSearch!: TextField;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -44,14 +48,15 @@ class ESPHomeDevicesList extends LitElement {
       `;
     }
 
-    const importable = this._devices.importable;
-
     return html`
+      <div class="search">
+        <mwc-textfield label="Search" name="search" icon="search"></mwc-textfield>
+      </div>
       <div class="grid">
-        ${importable.length
+        ${this._devices.importable.length
           ? html`
               ${repeat(
-                importable,
+                this._devices.importable.filter((item) => this._filter(item)),
                 (device) => device.name,
                 (device) => html`
                   <esphome-importable-device-card
@@ -65,7 +70,7 @@ class ESPHomeDevicesList extends LitElement {
             `
           : ""}
         ${repeat(
-          this._devices.configured,
+          this._devices.configured.filter((item) => this._filter(item)),
           (device) => device.name,
           (device) => html`<esphome-configured-device-card
             ${animate({
@@ -82,6 +87,17 @@ class ESPHomeDevicesList extends LitElement {
         )}
       </div>
     `;
+  }
+
+  private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
+    if (this._inputSearch && this._inputSearch.value) {
+      if (item.name.indexOf(this._inputSearch.value) >= 0 || (
+          item.friendly_name && item.friendly_name.indexOf(this._inputSearch.value) >= 0)) {
+        return true;
+      }
+      return false;
+    }
+    return true;
   }
 
   private _handleOpenWizardClick() {
@@ -132,6 +148,10 @@ class ESPHomeDevicesList extends LitElement {
       margin-top: 16px;
       margin-bottom: 16px;
     }
+    mwc-textfield {
+      color: var(--mdc-theme-primary);
+      width: 100%;
+    }
   `;
 
   private async _updateDevices() {
@@ -164,6 +184,7 @@ class ESPHomeDevicesList extends LitElement {
           }
         }
       }
+      // TODO: don't replace the list and apply status to existing devices so they dont appear as new after clearing the search...
       this._devices = devices;
 
       if (newName) {
