@@ -21,6 +21,9 @@ if (loc.protocol === "https:") {
   wsLoc.protocol = "wss:";
 }
 const wsUrl = wsLoc.href;
+const darkQuery: MediaQueryList = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+);
 
 @customElement("esphome-editor")
 class ESPHomeEditor extends LitElement {
@@ -56,9 +59,6 @@ class ESPHomeEditor extends LitElement {
           align-items: center;
           align-content: stretch;
         }
-        .esphome-header mwc-button {
-          --mdc-theme-primary: black;
-        }
         h2 {
           line-height: 100%;
           /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
@@ -72,6 +72,9 @@ class ESPHomeEditor extends LitElement {
         }
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
+        }
+        mwc-button {
+          --mdc-theme-primary: var(--primary-text-color);
         }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
@@ -140,10 +143,13 @@ class ESPHomeEditor extends LitElement {
         return "./static/js/esphome/monaco-editor/esm/vs/editor/editor.worker.js";
       },
     };
+    darkQuery.addEventListener("change", () => {
+      monaco.editor.setTheme(darkQuery.matches ? "esphome-dark" : "esphome");
+    });
     this.editor = monaco.editor.create(this.container, {
       value: "",
       language: "yaml",
-      theme: "esphome",
+      theme: darkQuery.matches ? "esphome-dark" : "esphome",
       minimap: {
         enabled: false,
       },

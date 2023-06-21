@@ -6,6 +6,7 @@ import "./esp-connect-card";
 import "./pico-connect-card";
 import { supportsWebSerial } from "../../../src/const";
 import { ARROW, ARROW_RIGHT } from "./arrow";
+import { esphomeSvgStyles } from "../../../src/styles";
 
 @customElement("ew-dashboard")
 class EWDashboard extends LitElement {
@@ -111,81 +112,87 @@ class EWDashboard extends LitElement {
     }
   }
 
-  static styles = css`
-    .container {
-      display: flex;
-      flex-direction: column;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
-      align-items: center;
-    }
-    a {
-      color: var(--mdc-theme-primary);
-    }
-    .container > * {
-      display: block;
-      box-sizing: border-box;
-      width: 100%;
-      max-width: 450px;
-    }
-    .intro,
-    .promote {
-      position: relative;
-      display: flex;
-      padding-top: 32px;
-    }
-    .intro {
-      padding-left: 32px;
-    }
-    ew-esp-connect-card[connected] + .intro {
-      display: none;
-    }
-    ew-esp-connect-card ~ .promote,
-    ew-pico-connect-card ~ .promote,
-    ew-unsupported-card ~ .promote {
-      display: none;
-    }
-    :host([dashboard_logs]) ew-esp-connect-card[connected] ~ .promote-logs {
-      display: flex;
-    }
-    :host([dashboard_install])
-      ew-esp-connect-card[connected]
-      ~ .promote-install {
-      display: flex;
-    }
-    :host([dashboard_wizard]) ew-esp-connect-card[connected] ~ .promote-adopt {
-      display: flex;
-    }
-    .text {
-      margin-left: 16px;
-      padding-right: 8px;
-      flex: 1;
-    }
-    .promote-adopt {
-      margin-left: 180px;
-    }
-    .promote-install {
-      padding-left: 5px;
-    }
-    .promote-logs {
-      padding-left: 80px;
-    }
-    .arrow svg {
-      position: relative;
-      top: -13px;
-    }
-    .right-arrow p:first-child {
-      margin-top: 0;
-    }
-    .right-arrow svg {
-      position: relative;
-      bottom: -5px;
-    }
-    .promote-logs.right-arrow svg {
-      left: 108px;
-    }
-  `;
+  static styles = [
+    esphomeSvgStyles,
+    css`
+      .container {
+        display: flex;
+        flex-direction: column;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1920px;
+        align-items: center;
+      }
+      a {
+        color: var(--mdc-theme-primary);
+      }
+      .container > * {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 450px;
+      }
+      .intro,
+      .promote {
+        position: relative;
+        display: flex;
+        padding-top: 32px;
+      }
+      .intro {
+        padding-left: 32px;
+      }
+      ew-esp-connect-card[connected] + .intro {
+        display: none;
+      }
+      ew-esp-connect-card ~ .promote,
+      ew-pico-connect-card ~ .promote,
+      ew-unsupported-card ~ .promote {
+        display: none;
+      }
+      :host([dashboard_logs]) ew-esp-connect-card[connected] ~ .promote-logs {
+        display: flex;
+      }
+      :host([dashboard_install])
+        ew-esp-connect-card[connected]
+        ~ .promote-install {
+        display: flex;
+      }
+      :host([dashboard_wizard])
+        ew-esp-connect-card[connected]
+        ~ .promote-adopt {
+        display: flex;
+      }
+      .text {
+        margin-left: 16px;
+        padding-right: 8px;
+        flex: 1;
+        color: var(--primary-text-color);
+      }
+      .promote-adopt {
+        margin-left: 180px;
+      }
+      .promote-install {
+        padding-left: 5px;
+      }
+      .promote-logs {
+        padding-left: 80px;
+      }
+      .arrow svg {
+        position: relative;
+        top: -13px;
+      }
+      .right-arrow p:first-child {
+        margin-top: 0;
+      }
+      .right-arrow svg {
+        position: relative;
+        bottom: -5px;
+      }
+      .promote-logs.right-arrow svg {
+        left: 108px;
+      }
+    `,
+  ];
 }
 
 declare global {

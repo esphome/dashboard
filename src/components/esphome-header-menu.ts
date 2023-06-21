@@ -4,13 +4,14 @@ import "./esphome-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
+import "@material/mwc-icon";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
 
-const isWideListener = window.matchMedia("(min-width: 601px)");
+const isWideListener = window.matchMedia("(min-width: 641px)");
 
 @customElement("esphome-header-menu")
 export class ESPHomeHeaderMenu extends LitElement {
@@ -47,8 +48,13 @@ export class ESPHomeHeaderMenu extends LitElement {
         @action=${this._handleOverflowAction}
       >
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-        <mwc-list-item>Update All</mwc-list-item>
-        <mwc-list-item>Secrets Editor</mwc-list-item>
+        <mwc-list-item graphic="icon"
+          ><mwc-icon slot="graphic">system_update</mwc-icon>Update
+          All</mwc-list-item
+        >
+        <mwc-list-item graphic="icon"
+          ><mwc-icon slot="graphic">lock</mwc-icon>Secrets Editor</mwc-list-item
+        >
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
@@ -109,9 +115,12 @@ export class ESPHomeHeaderMenu extends LitElement {
       z-index: 1;
     }
     mwc-button {
-      --mdc-theme-primary: black;
+      --mdc-theme-primary: var(--primary-text-color);
       margin-left: 16px;
       line-height: 1em;
+    }
+    mwc-icon {
+      --mdc-theme-text-icon-on-background: var(--primary-text-color);
     }
     a {
       text-decoration: none;

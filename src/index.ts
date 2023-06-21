@@ -1,1 +1,1 @@
-import "./esphome-main.ts";
+import "./esphome-main";

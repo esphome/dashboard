@@ -132,9 +132,6 @@ class ESPHomeDevicesList extends LitElement {
       margin-top: 16px;
       margin-bottom: 16px;
     }
-    mwc-button {
-      --mdc-theme-primary: #4caf50;
-    }
   `;
 
   private async _updateDevices() {

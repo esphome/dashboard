@@ -54,7 +54,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
     esphomeCardStyles,
     css`
       esphome-card {
-        --status-color: #4caf50;
+        --status-color: var(--status-imported);
       }
       .inlinecode {
         box-sizing: border-box;
