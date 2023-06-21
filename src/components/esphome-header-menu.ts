@@ -1,10 +1,10 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { property, state, customElement } from "lit/decorators.js";
 import "./esphome-button-menu";
-import "./esphome-theme";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
+import "@material/mwc-icon";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
@@ -22,7 +22,6 @@ export class ESPHomeHeaderMenu extends LitElement {
   protected render(): TemplateResult {
     if (this._isWide) {
       return html`
-        <esphome-theme></esphome-theme>
         <mwc-button
           icon="system_update"
           label="Update All"
@@ -49,9 +48,13 @@ export class ESPHomeHeaderMenu extends LitElement {
         @action=${this._handleOverflowAction}
       >
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-        <mwc-list-item>Update All</mwc-list-item>
-        <mwc-list-item>Secrets Editor</mwc-list-item>
-        <esphome-theme display-type="list-item"></esphome-theme>
+        <mwc-list-item graphic="icon"
+          ><mwc-icon slot="graphic">system_update</mwc-icon>Update
+          All</mwc-list-item
+        >
+        <mwc-list-item graphic="icon"
+          ><mwc-icon slot="graphic">lock</mwc-icon>Secrets Editor</mwc-list-item
+        >
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
@@ -115,6 +118,9 @@ export class ESPHomeHeaderMenu extends LitElement {
       --mdc-theme-primary: var(--primary-text-color);
       margin-left: 16px;
       line-height: 1em;
+    }
+    mwc-icon {
+      --mdc-theme-text-icon-on-background: var(--primary-text-color);
     }
     a {
       text-decoration: none;

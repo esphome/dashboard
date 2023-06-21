@@ -6,6 +6,7 @@ import "../components/remote-process";
 import { openEditDialog } from "../editor";
 import "../components/process-dialog";
 import { openLogsDialog } from ".";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-logs-dialog")
 class ESPHomeLogsDialog extends LitElement {
@@ -59,6 +60,8 @@ class ESPHomeLogsDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
+
+  static styles = [esphomeDialogStyles];
 }
 
 declare global {

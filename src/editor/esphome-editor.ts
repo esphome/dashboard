@@ -21,7 +21,9 @@ if (loc.protocol === "https:") {
   wsLoc.protocol = "wss:";
 }
 const wsUrl = wsLoc.href;
-const darkQuery: MediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+const darkQuery: MediaQueryList = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+);
 
 @customElement("esphome-editor")
 class ESPHomeEditor extends LitElement {
@@ -70,6 +72,9 @@ class ESPHomeEditor extends LitElement {
         }
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
+        }
+        mwc-button {
+          --mdc-theme-primary: var(--primary-text-color);
         }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
@@ -144,7 +149,7 @@ class ESPHomeEditor extends LitElement {
     this.editor = monaco.editor.create(this.container, {
       value: "",
       language: "yaml",
-      theme: document.documentElement.getAttribute("data-theme") === "Dark" ? "esphome-dark" : "esphome",
+      theme: darkQuery.matches ? "esphome-dark" : "esphome",
       minimap: {
         enabled: false,
       },
