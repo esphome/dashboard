@@ -19,7 +19,7 @@
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this entry for use in lambdas.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
             },
             "source_id": {
-              "key": "GeneratedID",
+              "key": "Optional",
               "use_id_type": "key_provider::KeyProvider",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the key input device.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"

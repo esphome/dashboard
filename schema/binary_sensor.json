@@ -110,7 +110,7 @@
         "dependencies": [
           "rc522"
         ],
-        "docs": "The `rc522` binary sensor platform lets you track if an RFID tag with a given unique id (`uid`) is currently being detected by the RC522 or not.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor)*"
+        "docs": "The `rc522` binary sensor platform lets you track if an NFC/RFID tag with a given unique id (`uid`) is currently being detected by the RC522 or not.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor)*"
       },
       "rc522_spi": {
         "dependencies": [
@@ -206,6 +206,35 @@
       "xpt2046": {}
     },
     "schemas": {
+      "MULTI_CLICK_TIMING_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "state": {
+              "key": "Optional",
+              "type": "boolean"
+            },
+            "min_length": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "max_length": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            }
+          }
+        }
+      },
       "BINARY_SENSOR_SCHEMA": {
         "type": "schema",
         "schema": {
@@ -278,7 +307,6 @@
             "filters": {
               "key": "Optional",
               "type": "registry",
-              "schema": {},
               "is_list": true,
               "registry": "binary_sensor.filter",
               "docs": "**list**: A list of filters to apply on the binary sensor values such as inverting signals. See [Binary Sensor Filters](https://esphome.io/components/binary_sensor/index.html#binary-sensor-filters).\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#base-binary-sensor-configuration)*"

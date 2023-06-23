@@ -34,6 +34,7 @@
       "fujitsu_general": {},
       "haier": {
         "dependencies": [
+          "climate",
           "uart"
         ],
         "docs": "The `haier` climate platform creates a Haier climate device. The component can be used as a replacement of a Haier proprietary WiFi modules such as KZW-W001 and KZW-W002.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#haier-climate)*"
@@ -79,6 +80,21 @@
       "yashima": {}
     },
     "schemas": {
+      "VISUAL_TEMPERATURE_STEP_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "target_temperature": {
+              "key": "Required",
+              "docs": "**float**: The granularity for target temperature\n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#base-climate-configuration)*"
+            },
+            "current_temperature": {
+              "key": "Required",
+              "docs": "**float**: The granularity for current temperature\n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#base-climate-configuration)*"
+            }
+          }
+        }
+      },
       "CLIMATE_SCHEMA": {
         "type": "schema",
         "schema": {
@@ -124,16 +140,9 @@
                     "key": "Optional",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "target_temperature": {
-                          "key": "Required",
-                          "docs": "**float**: The granularity for target temperature\n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#base-climate-configuration)*"
-                        },
-                        "current_temperature": {
-                          "key": "Required",
-                          "docs": "**float**: The granularity for current temperature\n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#base-climate-configuration)*"
-                        }
-                      }
+                      "extends": [
+                        "climate.VISUAL_TEMPERATURE_STEP_SCHEMA"
+                      ]
                     },
                     "docs": "**float**: The granularity with which the target temperature can be controlled. Can be a single number, or split as below:\n  * **target_temperature** (**Required**, float): The granularity for target temperature\n  \n  * **current_temperature** (**Required**, float): The granularity for current temperature\n  \n  \n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#base-climate-configuration)*"
                   }
@@ -221,10 +230,8 @@
             }
           }
         }
-      }
-    },
-    "action": {
-      "control": {
+      },
+      "CLIMATE_CONTROL_ACTION_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -337,6 +344,16 @@
               "docs": "**string, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: Set the swing mode of the climate device. One of `OFF`, `BOTH`, `VERTICAL`, `HORIZONTAL`.\n\n*See also: [Climate Component](https://esphome.io/components/climate/index.html#climate-control-action)*"
             }
           }
+        }
+      }
+    },
+    "action": {
+      "control": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_CONTROL_ACTION_SCHEMA"
+          ]
         },
         "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for setting parameters for climate devices.\n\n*See also: [`climate.control` Action](https://esphome.io/components/climate/index.html#climate-control-action)*"
       }

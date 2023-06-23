@@ -330,6 +330,307 @@
               }
             }
           },
+          "deltasol_bs_2009": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolBS2009Sensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "temperature_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_3": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "temperature_4": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "1"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "pump_speed_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "%"
+                    },
+                    "icon": {
+                      "default": "mdi:percent"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": ""
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_1": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "operating_hours_2": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "h"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "heat_quantity": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "Wh"
+                    },
+                    "icon": {
+                      "default": "mdi:radiator"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "energy"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              },
+              "time": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "min"
+                    },
+                    "icon": {
+                      "default": "mdi:timer-outline"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "duration"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              },
+              "version": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "accuracy_decimals": {
+                      "default": "2"
+                    },
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "deltasol_c": {
             "extends": [
               "core.COMPONENT_SCHEMA"
@@ -1242,7 +1543,7 @@
           }
         },
         "typed_key": "model",
-        "docs": "Specify the model of the connected controller. Currently supported models are: `deltasol_bs_plus`, `deltasol_c`, `deltasol_cs2`, `deltasol_cs_plus`.\n\n*See also: [vbus Sensor](https://esphome.io/components/vbus.html#sensor)*"
+        "docs": "Specify the model of the connected controller. Choose one of the config values listed in the table of supported models above.\n\n*See also: [vbus Sensor](https://esphome.io/components/vbus.html#sensor)*"
       }
     }
   },
@@ -1427,6 +1728,109 @@
                 }
               },
               "hqm": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "deltasol_bs_2009": {
+            "extends": [
+              "core.COMPONENT_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "vbus::DeltaSolBS2009BSensor",
+                  "parents": [
+                    "Component"
+                  ]
+                }
+              },
+              "vbus_id": {
+                "key": "GeneratedID",
+                "use_id_type": "vbus::VBus",
+                "type": "use_id"
+              },
+              "sensor1_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor2_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor3_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "sensor4_error": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "binary_sensor.BINARY_SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "entity_category": {
+                      "default": "diagnostic"
+                    },
+                    "device_class": {
+                      "default": "problem"
+                    }
+                  }
+                }
+              },
+              "frost_protection_active": {
                 "key": "Optional",
                 "type": "schema",
                 "schema": {
@@ -1770,7 +2174,7 @@
           }
         },
         "typed_key": "model",
-        "docs": "Specify the model of the connected controller. Currently supported models are: `deltasol_bs_plus`, `deltasol_c`, `deltasol_cs2`, `deltasol_cs_plus`.\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
+        "docs": "Specify the model of the connected controller. Choose one of the config values listed in the table of supported models above.\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
       }
     }
   }

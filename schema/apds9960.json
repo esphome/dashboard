@@ -142,11 +142,11 @@
               "key": "Required",
               "type": "enum",
               "values": {
-                "CLEAR": null,
-                "RED": null,
-                "GREEN": null,
-                "BLUE": null,
-                "PROXIMITY": null
+                "clear": null,
+                "red": null,
+                "green": null,
+                "blue": null,
+                "proximity": null
               },
               "docs": "**string**: The type of sensor measurement. One of\n  * `CLEAR`\n  \n  * `RED`\n  \n  * `GREEN`\n  \n  * `BLUE`\n  \n  * `PROXIMITY`\n  \n  \n\n*See also: [apds9960 Sensor](https://esphome.io/components/sensor/apds9960.html#sensor)*"
             },
@@ -181,10 +181,10 @@
               "key": "Required",
               "type": "enum",
               "values": {
-                "UP": null,
-                "DOWN": null,
-                "LEFT": null,
-                "RIGHT": null
+                "up": null,
+                "down": null,
+                "left": null,
+                "right": null
               },
               "docs": "**string**: The direction to measure. One of:\n  * `UP`\n  \n  * `DOWN`\n  \n  * `LEFT`\n  \n  * `RIGHT`\n  \n  \n\n*See also: [apds9960 Binary Sensor](https://esphome.io/components/sensor/apds9960.html#binary-sensor)*"
             }

@@ -1,0 +1,113 @@
+{
+  "tmp1075.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tmp1075::TMP1075Sensor",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for lambdas/multiple sensors.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "\u00b0C"
+            },
+            "icon": {
+              "default": "mdi:thermometer"
+            },
+            "accuracy_decimals": {
+              "default": "2"
+            },
+            "device_class": {
+              "default": "temperature"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "conversion_rate": {
+              "key": "Optional",
+              "type": "enum",
+              "values": {
+                "27.5ms": null,
+                "55ms": null,
+                "110ms": null,
+                "220ms": null
+              },
+              "docs": "The interval at which the IC performs a temperature measurement. This setting also determines how fast the alert pin responds to temperature changes, and is thus independent of how often ESPHome checks the sensor. Possible values are `27.5ms`, `55ms`, `110ms`, and `220ms`. Defaults to `27.5ms`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+            },
+            "alert": {
+              "key": "Optional",
+              "default": "{}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "limit_low": {
+                    "key": "Optional",
+                    "docs": "**int**: Lower temperature limit, in \u00b0C. Defaults to `-128` (the lowest possible limit value).\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+                  },
+                  "limit_high": {
+                    "key": "Optional",
+                    "docs": "**int**: Higher temperature limit, in \u00b0C. Defaults to `127.9375` (the highest possible limit value).\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+                  },
+                  "fault_count": {
+                    "key": "Optional",
+                    "type": "integer",
+                    "docs": "**int**: Number of measurements. required for the alert pin to act. Must be between `1` and `4`, inclusive. Defaults to `1`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+                  },
+                  "polarity": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": {
+                      "ACTIVE_LOW": null,
+                      "ACTIVE_HIGH": null
+                    },
+                    "docs": "**enum**: Polarity of the alert pin, either `active_high` or `active_low`. Defaults to `active_high`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+                  },
+                  "function": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": {
+                      "COMPARATOR": null,
+                      "INTERRUPT": null
+                    },
+                    "docs": "**enum**: Function of the alert pin, either `comparator` or `interrupt`. Defaults to `comparator`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Configure the alert pin behaviour.\n  * **function** (*Optional*, enum): Function of the alert pin, either `comparator` or `interrupt`. Defaults to `comparator`.\n  \n  * **polarity** (*Optional*, enum): Polarity of the alert pin, either `active_high` or `active_low`. Defaults to `active_high`.\n  \n  * **limit_low** (*Optional*, int): Lower temperature limit, in \u00b0C. Defaults to `-128` (the lowest possible limit value).\n  \n  * **limit_high** (*Optional*, int): Higher temperature limit, in \u00b0C. Defaults to `127.9375` (the highest possible limit value).\n  \n  * **fault_count** (*Optional*, int): Number of measurements. required for the alert pin to act. Must be between `1` and `4`, inclusive. Defaults to `1`.\n  \n  \n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor temperature. Defaults to `60s`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "72",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The I\u00b2C address of the sensor. See [I\u00b2C Addresses](https://esphome.io/components/sensor/tmp1075.html#tmp1075-i2c-addresses) for more information. Defaults to `0x48`.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

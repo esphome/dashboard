@@ -340,7 +340,8 @@
       "hyt271": {
         "dependencies": [
           "i2c"
-        ]
+        ],
+        "docs": "The HYT271 Temperature & Humidity sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [HYT271 Temperature & Humidity Sensor](https://esphome.io/components/sensor/hyt271.html#hyt271-temperature-humidity-sensor)*"
       },
       "ina219": {
         "dependencies": [
@@ -451,13 +452,13 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `mhz19` sensor platform allows you to use MH-Z19 CO_2 and temperature sensors ([refspace](https://revspace.nl/MHZ19)) with ESPHome. The CO_2 measurement also works with the MH-Z16 and MH-Z14 sensors.\n\n*See also: [MH-Z19 CO_2 and Temperature Sensor](https://esphome.io/components/sensor/mhz19.html#mh-z19-co-2-and-temperature-sensor)*"
+        "docs": "The `mhz19` sensor platform allows you to use MH-Z19 CO_2 and temperature sensors ([Revspace](https://revspace.nl/MHZ19)) with ESPHome. The CO_2 measurement also works with the MH-Z16 and MH-Z14 sensors.\n\n*See also: [MH-Z19 CO_2 and Temperature Sensor](https://esphome.io/components/sensor/mhz19.html#mh-z19-co-2-and-temperature-sensor)*"
       },
       "mics_4514": {
         "dependencies": [
           "i2c"
         ],
-        "docs": "This component exposes the different gas concentration sensors from the [MiCS-4514](https://www.dfrobot.com/product-2417.html).\n\n*See also: [MiCS 4514 Gas Sensor](https://esphome.io/components/sensor/mics_4514.html#mics-4514-gas-sensor)*"
+        "docs": "This component exposes the different gas concentration sensors from the [MiCS-4514](https://www.dfrobot.com/product-2417.html). This is a differnet sensor than the MICS-4514 being sold on AliExpress.\n\n*See also: [MiCS 4514 Gas Sensor](https://esphome.io/components/sensor/mics_4514.html#mics-4514-gas-sensor)*"
       },
       "mlx90393": {
         "dependencies": [
@@ -468,7 +469,8 @@
       "mlx90614": {
         "dependencies": [
           "i2c"
-        ]
+        ],
+        "docs": "The `mlx90614` sensor platform allows you to use your Melexis MLX90614 non-contact infrared thermometer ([Datasheet](https://www.melexis.com/en/documents/documentation/datasheets/datasheet-mlx90614), [Product Page](https://www.melexis.com/en/product/MLX90614/Digital-Plug-Play-Infrared-Thermometer-TO-Can)) with ESPHome. Sensor measures both ambient and object temperature that can be enabled independently.\n\n*See also: [MLX90614  non-contact thermometer](https://esphome.io/components/sensor/mlx90614.html#mlx90614-non-contact-thermometer)*"
       },
       "mmc5603": {
         "dependencies": [
@@ -617,7 +619,7 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `scd30` sensor platform allows you to use your Sensirion SCD30 CO\u2082 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SCD30 CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd30.html#scd30-co2-temperature-and-relative-humidity-sensor)*"
+        "docs": "The `scd30` sensor platform allows you to use your Sensirion SCD30 CO\u2082 ([datasheet](https://sensirion.com/media/documents/4EAF6AF8/61652C3C/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SCD30 CO\u2082, Temperature and Relative Humidity Sensor](https://esphome.io/components/sensor/scd30.html#scd30-co2-temperature-and-relative-humidity-sensor)*"
       },
       "scd4x": {
         "dependencies": [
@@ -632,7 +634,7 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The SDP3x Differential Pressure sensor allows you to use your SDP3x ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/8_Differential_Pressure/Datasheets/Sensirion_Differential_Pressure_Datasheet_SDP3x_Digital.pdf), [sparkfun](https://www.sparkfun.com/products/17874)) or SDP800 Series ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/8_Differential_Pressure/Datasheets/Sensirion_Differential_Pressure_Datasheet_SDP8xx_Digital.pdf)) sensors with ESPHome.\n\n*See also: [SDP3x / SDP800 Series Differential Pressure Sensor](https://esphome.io/components/sensor/sdp3x.html#sdp3x-sdp800-series-differential-pressure-sensor)*"
+        "docs": "The SDP3x Differential Pressure sensor allows you to use your SDP3x ([datasheet](https://sensirion.com/media/documents/4D045D69/6375F34F/DP_DS_SDP3x_digital_D1.pdf), [sparkfun](https://www.sparkfun.com/products/17874)) or SDP800 Series ([datasheet](https://sensirion.com/media/documents/90500156/6167E43B/Sensirion_Differential_Pressure_Datasheet_SDP8xx_Digital.pdf)) sensors with ESPHome.\n\n*See also: [SDP3x / SDP800 Series Differential Pressure Sensor](https://esphome.io/components/sensor/sdp3x.html#sdp3x-sdp800-series-differential-pressure-sensor)*"
       },
       "sds011": {
         "dependencies": [
@@ -684,13 +686,13 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `sht4x` sensor platform  allows you to use your SHT4X temperature and humidity sensor ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/2_Humidity_Sensors/Datasheets/Sensirion_Humidity_Sensors_SHT4x_Datasheet.pdf), [Adafruit](https://www.adafruit.com/product/4885)) with ESPHome.\n\n*See also: [SHT4X Temperature and Humidity Sensor](https://esphome.io/components/sensor/sht4x.html#sht4x-temperature-and-humidity-sensor)*"
+        "docs": "The `sht4x` sensor platform  allows you to use your SHT4X temperature and humidity sensor ([datasheet](https://sensirion.com/media/documents/33FD6951/63E1087C/Datasheet_SHT4x_1.pdf), [Adafruit](https://www.adafruit.com/product/4885)) with ESPHome.\n\n*See also: [SHT4X Temperature and Humidity Sensor](https://esphome.io/components/sensor/sht4x.html#sht4x-temperature-and-humidity-sensor)*"
       },
       "shtcx": {
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `shtcx` sensor platform Temperature+Humidity sensor allows you to use your Sensirion SHTC1 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/2_Humidity_Sensors/Datasheets/Sensirion_Humidity_Sensors_SHTC1_Datasheet.pdf), [Sensirion STHC1](https://www.sensirion.com/en/environmental-sensors/humidity-sensors/digital-humidity-sensor-for-consumer-electronics-and-iot/)) and the newer SHTC3 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/2_Humidity_Sensors/Datasheets/Sensirion_Humidity_Sensors_SHTC3_Datasheet.pdf), [SparkFun](https://www.sparkfun.com/products/15074) ) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SHTCx Temperature+Humidity Sensors](https://esphome.io/components/sensor/shtcx.html#shtcx-temperature-humidity-sensors)*"
+        "docs": "The `shtcx` sensor platform Temperature+Humidity sensor allows you to use your Sensirion SHTC1 ([datasheet](https://sensirion.com/media/documents/21BF77EA/63A5A411/Datasheet_SHTC1.pdf), [Sensirion STHC1](https://www.sensirion.com/en/environmental-sensors/humidity-sensors/digital-humidity-sensor-for-consumer-electronics-and-iot/)) and the newer SHTC3 ([datasheet](https://sensirion.com/media/documents/643F9C8E/63A5A436/Datasheet_SHTC3.pdf), [SparkFun](https://www.sparkfun.com/products/15074) ) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SHTCx Temperature+Humidity Sensors](https://esphome.io/components/sensor/shtcx.html#shtcx-temperature-humidity-sensors)*"
       },
       "sim800l": {
         "dependencies": [
@@ -717,13 +719,13 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `sps30` sensor platform allows you to use your Sensirion SPS30 ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.6_Particulate_Matter/Datasheets/Sensirion_PM_Sensors_Datasheet_SPS30.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. This sensor supports both UART and I\u00b2C communication. However, at the moment only I\u00b2C communication is implemented.\n\n*See also: [SPS30 Particulate Matter Sensor](https://esphome.io/components/sensor/sps30.html#sps30-particulate-matter-sensor)*"
+        "docs": "The `sps30` sensor platform allows you to use your Sensirion SPS30 ([datasheet](https://sensirion.com/media/documents/8600FF88/616542B5/Sensirion_PM_Sensors_Datasheet_SPS30.pdf)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. This sensor supports both UART and I\u00b2C communication. However, at the moment only I\u00b2C communication is implemented.\n\n*See also: [SPS30 Particulate Matter Sensor](https://esphome.io/components/sensor/sps30.html#sps30-particulate-matter-sensor)*"
       },
       "sts3x": {
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `sts3x` sensor platform Temperature sensor allows you to use your Sensirion STS30-DIS, STS31-DIS or STS35-DIS ([datasheet](https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/3_Temperature_Sensors/Sensirion_Temperature_Sensors_Table_Overview.pdf), [Sensirion STS3x](https://www.sensirion.com/sts3x/)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [STS3X Temperature Sensor](https://esphome.io/components/sensor/sts3x.html#sts3x-temperature-sensor)*"
+        "docs": "The `sts3x` sensor platform Temperature sensor allows you to use your Sensirion STS30-DIS, STS31-DIS or STS35-DIS ([datasheet](https://sensirion.com/media/documents/1DA31AFD/61641F76/Sensirion_Temperature_Sensors_STS3x_Datasheet.pdf), [Sensirion STS3x](https://www.sensirion.com/sts3x/)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [STS3X Temperature Sensor](https://esphome.io/components/sensor/sts3x.html#sts3x-temperature-sensor)*"
       },
       "sun": {
         "dependencies": [
@@ -761,6 +763,12 @@
         ],
         "docs": "The TMP102 Temperature sensor allows you to use your TMP102 ([Sparkfun](https://www.sparkfun.com/products/13314)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [TMP102 Temperature Sensor](https://esphome.io/components/sensor/tmp102.html#tmp102-temperature-sensor)*"
       },
+      "tmp1075": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The TMP1075 Temperature sensor allows you to use your TMP1075 ([datasheet](https://www.ti.com/lit/gpn/tmp1075)) sensors with ESPHome.\n\n*See also: [TMP1075 Temperature Sensor](https://esphome.io/components/sensor/tmp1075.html#tmp1075-temperature-sensor)*"
+      },
       "tmp117": {
         "dependencies": [
           "i2c"
@@ -777,7 +785,7 @@
         "dependencies": [
           "time"
         ],
-        "docs": "The `total_daily_energy` sensor is a helper sensor that can use the energy value of other sensors like the [HLW8012](https://esphome.io/components/sensor/hlw8012.html), [CSE7766](https://esphome.io/components/sensor/cse7766.html), [ATM90E32](https://esphome.io/components/sensor/atm90e32.html), etc and integrate it over time.\n\n*See also: [Total Daily Energy Sensor](https://esphome.io/components/sensor/total_daily_energy.html#total-daily-energy-sensor)*"
+        "docs": "The `total_daily_energy` sensor is a helper sensor that can use the power value of other sensors like the [HLW8012](https://esphome.io/components/sensor/hlw8012.html), [CSE7766](https://esphome.io/components/sensor/cse7766.html), [ATM90E32](https://esphome.io/components/sensor/atm90e32.html), etc and integrate it over time.\n\n*See also: [Total Daily Energy Sensor](https://esphome.io/components/sensor/total_daily_energy.html#total-daily-energy-sensor)*"
       },
       "tsl2561": {
         "dependencies": [
@@ -994,6 +1002,7 @@
                 "temperature": null,
                 "timestamp": null,
                 "volatile_organic_compounds": null,
+                "volatile_organic_compounds_parts": null,
                 "voltage": null,
                 "volume": null,
                 "volume_storage": null,
@@ -1072,42 +1081,8 @@
             }
           }
         }
-      }
-    },
-    "condition": {
-      "in_range": {
-        "type": "schema",
-        "schema": {
-          "config_vars": {
-            "id": {
-              "key": "Required",
-              "use_id_type": "sensor::Sensor",
-              "type": "use_id"
-            },
-            "above": {
-              "key": "Optional",
-              "docs": "**float**: The minimum for the condition.\n\n*See also: [lambda](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
-            },
-            "below": {
-              "key": "Optional",
-              "docs": "**float**: The maximum for the condition.\n\n*See also: [lambda](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
-            }
-          }
-        },
-        "docs": "This condition passes if the state of the given sensor is inside a range.\n\n*See also: [`sensor.in_range` Condition](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
-      }
-    },
-    "filter": {
-      "offset": {
-        "docs": "Adds a constant value to each sensor value.\n\n*See also: [`offset`](https://esphome.io/components/sensor/index.html#offset)*"
       },
-      "multiply": {
-        "docs": "Multiplies each value by a constant value.\n\n*See also: [`multiply`](https://esphome.io/components/sensor/index.html#multiply)*"
-      },
-      "filter_out": {
-        "docs": "**number**: Filter out specific values to be displayed. For example to filter out the value `85.0`\n\n*See also: [`filter_out`](https://esphome.io/components/sensor/index.html#filter-out)*"
-      },
-      "quantile": {
+      "QUANTILE_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1139,10 +1114,9 @@
               "docs": "**float**: value from 0 to 1 to determine which quantile to pick. Defaults to `.9`.\n\n*See also: [quantile](https://esphome.io/components/sensor/index.html#quantile)*"
             }
           }
-        },
-        "docs": "A [simple moving quantile](https://en.wikipedia.org/wiki/Quantile) over the last few values. This can be used to filter outliers from the received sensor data. A large window size will make the filter slow to react to input changes.\n\n*See also: [`quantile`](https://esphome.io/components/sensor/index.html#quantile)*"
+        }
       },
-      "median": {
+      "MEDIAN_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1168,15 +1142,9 @@
               "docs": "**int**: By default, the very first raw value on boot is immediately published. With this parameter you can specify when the very first value is to be sent. Must be smaller than or equal to `send_every` Defaults to `1`.\n\n*See also: [median](https://esphome.io/components/sensor/index.html#median)*"
             }
           }
-        },
-        "docs": "A [simple moving median](https://en.wikipedia.org/wiki/Median_filter#Worked_1D_example) over the last few values. This can be used to filter outliers from the received sensor data. A large window size will make the filter slow to react to input changes.\n\n*See also: [`median`](https://esphome.io/components/sensor/index.html#median)*"
+        }
       },
-      "skip_initial": {
-        "type": "integer",
-        "data_type": "positive_not_null_int",
-        "docs": "A simple skip filter; `skip_initial: N` skips the first `N` sensor readings and passes on the rest. This can be used when the sensor needs a few readings to \u2018warm up\u2019. After the initial readings have been skipped, this filter does nothing.\n\n*See also: [`skip_initial`](https://esphome.io/components/sensor/index.html#skip-initial)*"
-      },
-      "min": {
+      "MIN_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1202,10 +1170,9 @@
               "docs": "**int**: By default, the very first raw value on boot is immediately published. With this parameter you can specify when the very first value is to be sent. Must be smaller than or equal to `send_every` Defaults to `1`.\n\n*See also: [min](https://esphome.io/components/sensor/index.html#min)*"
             }
           }
-        },
-        "docs": "A moving minimum over the last few values. A large window size will make the filter slow to react to input changes.\n\n*See also: [`min`](https://esphome.io/components/sensor/index.html#min)*"
+        }
       },
-      "max": {
+      "MAX_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1231,10 +1198,9 @@
               "docs": "**int**: By default, the very first raw value on boot is immediately published. With this parameter you can specify when the very first value is to be sent. Must be smaller than or equal to `send_every` Defaults to `1`.\n\n*See also: [max](https://esphome.io/components/sensor/index.html#max)*"
             }
           }
-        },
-        "docs": "A moving maximum over the last few values. A large window size will make the filter slow to react to input changes.\n\n*See also: [`max`](https://esphome.io/components/sensor/index.html#max)*"
+        }
       },
-      "sliding_window_moving_average": {
+      "SLIDING_AVERAGE_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1260,10 +1226,9 @@
               "docs": "**int**: By default, the very first raw value on boot is immediately published. With this parameter you can specify when the very first value is to be sent. Defaults to `1`.\n\n*See also: [sliding_window_moving_average](https://esphome.io/components/sensor/index.html#sliding-window-moving-average)*"
             }
           }
-        },
-        "docs": "A [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average) over the last few values. It can be used to have a short update interval on the sensor but only push out an average on a specific interval (thus increasing resolution).\n\n*See also: [`sliding_window_moving_average`](https://esphome.io/components/sensor/index.html#sliding-window-moving-average)*"
+        }
       },
-      "exponential_moving_average": {
+      "EXPONENTIAL_AVERAGE_SCHEMA": {
         "type": "schema",
         "schema": {
           "config_vars": {
@@ -1288,6 +1253,126 @@
               "docs": "**int**: By default, the very first raw value on boot is immediately published. With this parameter you can specify when the very first value is to be sent. Defaults to `1`.\n\n*See also: [exponential_moving_average](https://esphome.io/components/sensor/index.html#exponential-moving-average)*"
             }
           }
+        }
+      },
+      "DELTA_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "value": {
+              "key": "Required",
+              "data_type": "positive_float"
+            },
+            "type": {
+              "key": "Optional",
+              "default": "absolute",
+              "type": "enum",
+              "values": {
+                "absolute": null,
+                "percentage": null
+              }
+            }
+          }
+        }
+      },
+      "SENSOR_IN_RANGE_CONDITION_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "sensor::Sensor",
+              "type": "use_id"
+            },
+            "above": {
+              "key": "Optional",
+              "docs": "**float**: The minimum for the condition.\n\n*See also: [lambda](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
+            },
+            "below": {
+              "key": "Optional",
+              "docs": "**float**: The maximum for the condition.\n\n*See also: [lambda](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
+            }
+          }
+        }
+      }
+    },
+    "condition": {
+      "in_range": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_IN_RANGE_CONDITION_SCHEMA"
+          ]
+        },
+        "docs": "This condition passes if the state of the given sensor is inside a range.\n\n*See also: [`sensor.in_range` Condition](https://esphome.io/components/sensor/index.html#sensor-in-range-condition)*"
+      }
+    },
+    "filter": {
+      "offset": {
+        "docs": "Adds a constant value to each sensor value.\n\n*See also: [`offset`](https://esphome.io/components/sensor/index.html#offset)*"
+      },
+      "multiply": {
+        "docs": "Multiplies each value by a constant value.\n\n*See also: [`multiply`](https://esphome.io/components/sensor/index.html#multiply)*"
+      },
+      "filter_out": {
+        "docs": "**number**: Filter out specific values to be displayed. For example to filter out the value `85.0`\n\n*See also: [`filter_out`](https://esphome.io/components/sensor/index.html#filter-out)*"
+      },
+      "quantile": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.QUANTILE_SCHEMA"
+          ]
+        },
+        "docs": "A [simple moving quantile](https://en.wikipedia.org/wiki/Quantile) over the last few values. This can be used to filter outliers from the received sensor data. A large window size will make the filter slow to react to input changes.\n\n*See also: [`quantile`](https://esphome.io/components/sensor/index.html#quantile)*"
+      },
+      "median": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.MEDIAN_SCHEMA"
+          ]
+        },
+        "docs": "A [simple moving median](https://en.wikipedia.org/wiki/Median_filter#Worked_1D_example) over the last few values. This can be used to filter outliers from the received sensor data. A large window size will make the filter slow to react to input changes.\n\n*See also: [`median`](https://esphome.io/components/sensor/index.html#median)*"
+      },
+      "skip_initial": {
+        "type": "integer",
+        "data_type": "positive_not_null_int",
+        "docs": "A simple skip filter; `skip_initial: N` skips the first `N` sensor readings and passes on the rest. This can be used when the sensor needs a few readings to \u2018warm up\u2019. After the initial readings have been skipped, this filter does nothing.\n\n*See also: [`skip_initial`](https://esphome.io/components/sensor/index.html#skip-initial)*"
+      },
+      "min": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.MIN_SCHEMA"
+          ]
+        },
+        "docs": "A moving minimum over the last few values. A large window size will make the filter slow to react to input changes.\n\n*See also: [`min`](https://esphome.io/components/sensor/index.html#min)*"
+      },
+      "max": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.MAX_SCHEMA"
+          ]
+        },
+        "docs": "A moving maximum over the last few values. A large window size will make the filter slow to react to input changes.\n\n*See also: [`max`](https://esphome.io/components/sensor/index.html#max)*"
+      },
+      "sliding_window_moving_average": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SLIDING_AVERAGE_SCHEMA"
+          ]
+        },
+        "docs": "A [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average) over the last few values. It can be used to have a short update interval on the sensor but only push out an average on a specific interval (thus increasing resolution).\n\n*See also: [`sliding_window_moving_average`](https://esphome.io/components/sensor/index.html#sliding-window-moving-average)*"
+      },
+      "exponential_moving_average": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.EXPONENTIAL_AVERAGE_SCHEMA"
+          ]
         },
         "docs": "A simple [exponential moving average](https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/quantile.htm) over the last few values. It can be used to have a short update interval on the sensor but only push out an average on a specific interval (thus increasing resolution).\n\n*See also: [`exponential_moving_average`](https://esphome.io/components/sensor/index.html#exponential-moving-average)*"
       },
@@ -1306,21 +1391,9 @@
       "delta": {
         "type": "schema",
         "schema": {
-          "config_vars": {
-            "value": {
-              "key": "Required",
-              "data_type": "positive_float"
-            },
-            "type": {
-              "key": "Optional",
-              "default": "absolute",
-              "type": "enum",
-              "values": {
-                "absolute": null,
-                "percentage": null
-              }
-            }
-          }
+          "extends": [
+            "sensor.DELTA_SCHEMA"
+          ]
         },
         "docs": "This filter stores the last value passed through this filter and only passes incoming values through if incoming value is sufficiently different from the previously passed one. This difference can be calculated in two ways an absolute difference or a percentage difference.\n\n*See also: [`delta`](https://esphome.io/components/sensor/index.html#delta)*"
       },

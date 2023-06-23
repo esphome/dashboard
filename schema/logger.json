@@ -288,6 +288,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "alarm_control_panel": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "am2320": {
                     "type": "enum",
                     "values": {
@@ -1692,6 +1704,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "esp32_rmt_led_strip": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "esp32_touch": {
                     "type": "enum",
                     "values": {
@@ -1884,6 +1908,30 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "gp8403": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "gp8403.output": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "gpio.binary_sensor": {
                     "type": "enum",
                     "values": {
@@ -1968,7 +2016,7 @@
                       "VERY_VERBOSE": null
                     }
                   },
-                  "haier": {
+                  "haier.climate": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -2148,6 +2196,30 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "host": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "host.preferences": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "hrxl.maxsonar.wr.sensor": {
                     "type": "enum",
                     "values": {
@@ -2293,6 +2365,18 @@
                     }
                   },
                   "i2s_audio.microphone": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "i2s_audio.speaker": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -5616,6 +5700,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "template.alarm_control_panel": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "template.binary_sensor": {
                     "type": "enum",
                     "values": {
@@ -5869,6 +5965,18 @@
                     }
                   },
                   "tmp102": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "tmp1075": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -6769,6 +6877,18 @@
                     }
                   },
                   "xiaomi_wx08zm": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "xl9535": {
                     "type": "enum",
                     "values": {
                       "NONE": null,

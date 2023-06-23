@@ -16,7 +16,7 @@ interface ConfigVarBase {
 
 export interface ConfigVarRegistry extends ConfigVarBase {
   type: "registry";
-  registry: string;
+  registry: ComponentRegistry;
   filter?: string[];
 }
 
@@ -95,6 +95,9 @@ export interface Schema {
 interface Registry {
   [name: string]: ConfigVar;
 }
+
+type ComponentRegistry = "action" | "condition" | "filter" | "effects";
+
 interface Component {
   schemas: {
     [name: string]: ConfigVar;
@@ -260,16 +263,14 @@ export class ESPHomeSchema {
   }
 
   async *getRegistry(
-    registry: string,
+    registry: ComponentRegistry,
     doc: Document
   ): AsyncGenerator<[string, ConfigVar]> {
     if (registry.includes(".")) {
       // e.g. sensor.filter only items from one component
       const [domain, registryName] = registry.split(".");
       if (this.isRegistry(registryName)) {
-        // @ts-ignore
         for (const name in (await this.getSchema())[domain][registryName]) {
-          // @ts-ignore
           yield [name, (await this.getSchema())[domain][registryName][name]];
         }
       }
@@ -280,9 +281,8 @@ export class ESPHomeSchema {
           doc
         )) {
           // component might be undefined if this component has no registries
-          // @ts-ignore
-          const componentRegistry = component[registry];
-          if (component && componentRegistry !== undefined) {
+          const componentRegistry = component ? component[registry] : undefined;
+          if (componentRegistry !== undefined) {
             for (const name in componentRegistry) {
               if (componentName === "core") {
                 yield [name, componentRegistry[name]];
@@ -305,7 +305,6 @@ export class ESPHomeSchema {
     if (registry.includes(".")) {
       const [domain, registryName] = registry.split(".");
       if (this.isRegistry(registryName))
-        //@ts-ignore
         return (await this.getComponent(domain))[registryName][entry];
     } else {
       if (this.isRegistry(registry)) {
@@ -313,25 +312,20 @@ export class ESPHomeSchema {
           const parts = entry.split(".");
           if (parts.length === 3) {
             const [domain, platform, actionName] = parts;
-            //@ts-ignore
             return (await this.getComponent(platform, domain))[registry][
               actionName
             ];
           } else {
             const [domain, actionName] = parts;
-            //@ts-ignore
             return (await this.getComponent(domain))[registry][actionName];
           }
         }
         for (const c in this.schema) {
           const schema = await this.getComponent(c);
           if (
-            //@ts-ignore
             schema[registry] !== undefined &&
-            //@ts-ignore
             schema[registry][entry] !== undefined
           ) {
-            //@ts-ignore
             return schema[registry][entry];
           }
         }
@@ -339,7 +333,7 @@ export class ESPHomeSchema {
     }
     return undefined;
   }
-  isRegistry(name: string) {
+  isRegistry(name: string): name is ComponentRegistry {
     return (
       name === "filter" ||
       name === "effects" ||
@@ -386,7 +380,7 @@ export class ESPHomeSchema {
       return c;
     };
     cv = await appendCvs(schema, cv);
-    return cv;
+    return await this.getConfigVarComplete2(cv);
   }
 
   async getConfigVarComplete2(cv: ConfigVar): Promise<ConfigVar> {
@@ -399,6 +393,7 @@ export class ESPHomeSchema {
           ...s_cv,
           ...ret,
         };
+        ret.type = s_cv.type;
       }
     }
 
@@ -443,6 +438,8 @@ export class ESPHomeSchema {
           )) {
             yield pair;
           }
+        } else if (s.type === "typed") {
+          yield [s.typed_key, s];
         }
       }
     }

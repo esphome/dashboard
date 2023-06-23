@@ -1,0 +1,115 @@
+{
+  "esp32_rmt_led_strip.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.ADDRESSABLE_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "esp32_rmt_led_strip::ESP32RMTLEDStripLightOutput",
+                "parents": [
+                  "light::AddressableLight",
+                  "light::LightOutput",
+                  "Component"
+                ]
+              }
+            },
+            "pin": {
+              "key": "Required",
+              "internal": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            },
+            "num_leds": {
+              "key": "Required",
+              "type": "integer",
+              "data_type": "positive_not_null_int"
+            },
+            "rgb_order": {
+              "key": "Required",
+              "type": "enum",
+              "values": {
+                "RGB": null,
+                "RBG": null,
+                "GRB": null,
+                "GBR": null,
+                "BGR": null,
+                "BRG": null
+              }
+            },
+            "rmt_channel": {
+              "key": "Required"
+            },
+            "max_refresh_rate": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              }
+            },
+            "chipset": {
+              "key": "Optional",
+              "type": "enum",
+              "values": {
+                "WS2812": null,
+                "SK6812": null,
+                "APA106": null,
+                "SM16703": null
+              }
+            },
+            "is_rgbw": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "bit0_high": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              }
+            },
+            "bit0_low": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              }
+            },
+            "bit1_high": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              }
+            },
+            "bit1_low": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_microseconds"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

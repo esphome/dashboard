@@ -13,6 +13,12 @@
       "cwww": {
         "docs": "The `cwww` light platform creates a cold white + warm white light from 2 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel). The two channels can be controlled individually or together.\n\n*See also: [Cold White + Warm White Light](https://esphome.io/components/light/cwww.html#cold-white-warm-white-light)*"
       },
+      "esp32_rmt_led_strip": {
+        "dependencies": [
+          "esp32"
+        ],
+        "docs": "This is a component using the ESP32 RMT peripheral to drive most addressable LED strips.\n\n*See also: [ESP32 RMT LED Strip](https://esphome.io/components/light/esp32_rmt_led_strip.html#esp32-rmt-led-strip)*"
+      },
       "fastled_clockless": {
         "docs": "The `fastled_clockless` light platform allows you to create RGB lights in ESPHome for a [number of supported chipsets](https://esphome.io/components/light/fastled.html#fastled-clockless-chipsets).\n\n*See also: [Clockless](https://esphome.io/components/light/fastled.html#clockless)*"
       },
@@ -26,7 +32,7 @@
         "docs": "The `monochromatic` light platform creates a simple brightness-only light from an [float output component](https://esphome.io/components/output/index.html#output).\n\n*See also: [Monochromatic Light](https://esphome.io/components/light/monochromatic.html#monochromatic-light)*"
       },
       "neopixelbus": {
-        "docs": "The `neopixelbus` light platform allows you to create RGB lights in ESPHome for an individually addressable lights like NeoPixel or WS2812.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#neopixelbus-light)*"
+        "docs": "NeoPixelBus does **not** work with ESP-IDF.\n\n*See also: [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html#neopixelbus-light)*"
       },
       "partition": {
         "docs": "The `partition` light platform allows you to combine multiple addressable light segments (like [FastLED Light](https://esphome.io/components/light/fastled.html) or [NeoPixelBus Light](https://esphome.io/components/light/neopixelbus.html)) and/or individual lights (like [RGB Light](https://esphome.io/components/light/rgb.html)) into a single addressable light. This platform also allows splitting up an addressable light into multiple segments, so that segments can be individually controlled.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#light-partition)*"
@@ -42,6 +48,12 @@
       },
       "rgbww": {
         "docs": "The `rgbww` light platform creates an RGBWW (cold white + warm white) light from 5 [float output components](https://esphome.io/components/output/index.html#output) (one for each channel). The cold and warm white channels can be controlled individually or together, see [Mixing](https://esphome.io/components/light/cwww.html#cwww-mixing) for more information.\n\n*See also: [RGBWW Light](https://esphome.io/components/light/rgbww.html#rgbww-light)*"
+      },
+      "rp2040_pio_led_strip": {
+        "dependencies": [
+          "rp2040"
+        ],
+        "docs": "This is a component using the RP2040 PIO peripheral to drive most addressable LED strips.\n\n*See also: [RP2040 PIO LED Strip](https://esphome.io/components/light/rp2040_pio_led_strip.html#rp2040-pio-led-strip)*"
       },
       "shelly_dimmer": {
         "dependencies": [
@@ -782,6 +794,16 @@
                 ]
               },
               "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval when the new transition is started. Defaults to `1s`.\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+            },
+            "min_brightness": {
+              "key": "Optional",
+              "default": "0%",
+              "docs": "**percentage**: The minimum brightness value. Defaults to `0%`\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
+            },
+            "max_brightness": {
+              "key": "Optional",
+              "default": "100%",
+              "docs": "**percentage**: The maximum brightness value. Defaults to `100%`\n\n*See also: [Pulse Effect](https://esphome.io/components/light/index.html#pulse-effect)*"
             },
             "name": {
               "key": "Optional",

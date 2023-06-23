@@ -32,6 +32,41 @@
               ],
               "type": "pin",
               "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The pin which SCLK is connected to.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
+            },
+            "rgb_current": {
+              "key": "Optional",
+              "default": "20mA",
+              "type": "enum",
+              "values": {
+                "10mA": null,
+                "15mA": null,
+                "20mA": null,
+                "25mA": null,
+                "30mA": null,
+                "35mA": null,
+                "40mA": null,
+                "45mA": null
+              },
+              "docs": "**current**: The current used for the RGB channel. Defaults to `20mA`. Can be one of `10mA`, `15mA`, `20mA`, `25mA`, `30mA`, `35mA`, `40mA`, `45mA`.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
+            },
+            "cw_current": {
+              "key": "Optional",
+              "default": "10mA",
+              "type": "enum",
+              "values": {
+                "10mA": null,
+                "15mA": null,
+                "20mA": null,
+                "25mA": null,
+                "30mA": null,
+                "35mA": null,
+                "40mA": null,
+                "45mA": null,
+                "50mA": null,
+                "55mA": null,
+                "60mA": null
+              },
+              "docs": "**current**: The current used for the white channel. Defaults to `10mA`. Can be one of `10mA`, `15mA`, `20mA`, `25mA`, `30mA`, `35mA`, `40mA`, `45mA`, `50mA`, `55mA`, `60mA`.\n\n*See also: [sm2135 Component/Hub](https://esphome.io/components/output/sm2135.html#configuration-variables)*"
             }
           },
           "extends": [

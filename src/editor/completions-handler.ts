@@ -683,12 +683,19 @@ export class CompletionsHandler {
       path[pathIndex],
       this.document.yaml
     );
-    const innerNode =
+    if (cv === undefined) return [];
+    let innerNode =
       pathElement !== null
         ? (pathElement.get(path[pathIndex]) as YAMLMap)
         : null;
-    pathIndex++;
-    return await this.resolveConfigVar(path, pathIndex, cv!, innerNode, node);
+
+    return await this.resolveConfigVar(
+      path,
+      pathIndex + 1,
+      cv,
+      innerNode,
+      node
+    );
   }
 
   private async addEnums(cv: ConfigVarEnum): Promise<CompletionItem[]> {
