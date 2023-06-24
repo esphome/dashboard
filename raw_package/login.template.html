@@ -34,6 +34,9 @@
 
   #login-head {
     margin-top: 0;
+  }
+
+  .center {
     text-align: center;
   }
 
@@ -108,7 +111,8 @@
 
 <div class="container">
   <div class="card">
-    <h3 id="login-head">Login</h3>    
+    <h3 id="login-head" class="center">Login</h3>
+    <p class="center">Enter your {% if ha_addon %}Home Assistant{% else %}ESPHome{% end %} credentials.</p>
     <form action="./login" method="post" id="login-form">
       {% if has_username or ha_addon %}
       <div class="row">
