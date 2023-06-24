@@ -119,7 +119,7 @@
             },
             "min_version": {
               "key": "Optional",
-              "default": "2023.5.0-dev",
+              "default": "2023.7.0-dev",
               "docs": "**string**: The minimum ESPHome version required to compile this configuration. See [Minimum ESPHome version](https://esphome.io/components/esphome.html#esphome-min-version).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             },
             "compile_process_limit": {
@@ -337,6 +337,9 @@
       "sensor": {
         "docs": "ESPHome has support for many different sensors. Each of them is a platform of the `sensor` domain and each sensor has several base configuration options.\n\n*See also: [Sensor Component](https://esphome.io/components/sensor/index.html#sensor-component)*"
       },
+      "alarm_control_panel": {
+        "docs": "Configuration variables:\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-component)*"
+      },
       "binary_sensor": {
         "docs": "With ESPHome you can use different types of binary sensors. They will automatically appear in the Home Assistant front-end and have several configuration options.\n\n*See also: [Binary Sensor Component](https://esphome.io/components/binary_sensor/index.html#binary-sensor-component)*"
       },
@@ -377,6 +380,7 @@
       "select": {
         "docs": "ESPHome has support for components to create a select entity. A select entity is basically an option list that can be set by either yaml, hardware or the user/frontend.\n\n*See also: [Select Component](https://esphome.io/components/select/index.html#select-component)*"
       },
+      "speaker": {},
       "stepper": {
         "docs": "The `stepper` component allows you to use stepper motors with ESPHome. Currently only the A4988 stepper driver ([datasheet](https://www.pololu.com/file/0J450/a4988_DMOS_microstepping_driver_with_translator.pdf)) and ULN2003 ([datasheet](http://www.ti.com/lit/ds/symlink/uln2003a.pdf)) are supported.\n\n*See also: [Stepper Component](https://esphome.io/components/stepper/index.html#stepper-component)*"
       },
@@ -643,6 +647,12 @@
       "globals": {
         "docs": "In some cases you might require to share a global variable across multiple lambdas. For example, global variables can be used to store the state of a garage door.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
       },
+      "gp8403": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [gp8403 Component/Hub](https://esphome.io/components/output/gp8403.html#component-hub)*"
+      },
       "gps": {
         "dependencies": [
           "uart"
@@ -656,6 +666,7 @@
         ],
         "docs": "You can display a graph of a sensor value(s) using this component. The states used for the graph are stored in memory at the time the sensor updates and will be lost when the device reboots.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
       },
+      "host": {},
       "http_request": {
         "dependencies": [
           "network"
@@ -709,7 +720,8 @@
       "max6956": {
         "dependencies": [
           "i2c"
-        ]
+        ],
+        "docs": "The `max6956` is an [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) slave. Its address is configured using A0 and A1 hardware pins from 0x40 to 0x4F.\n\n*See also: [max6956 Component/Hub](https://esphome.io/components/max6956.html#component-hub)*"
       },
       "mcp23008": {
         "dependencies": [
@@ -807,7 +819,8 @@
       "pca6416a": {
         "dependencies": [
           "i2c"
-        ]
+        ],
+        "docs": "The PCA6416A component allows you to use **PCA6416A** or **PCAL6416A** I/O expanders in ESPHome. It uses [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) for communication.\n\n*See also: [PCA6416A I/O Expander](https://esphome.io/components/pca6416a.html#pca6416a-i-o-expander)*"
       },
       "pca9554": {
         "dependencies": [
@@ -869,13 +882,13 @@
         "dependencies": [
           "i2c"
         ],
-        "docs": "The `rc522_i2c` component allows you to use RC522 RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [I\u00b2C](https://esphome.io/components/i2c.html#i2c) (also available over SPI). Using the [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-tag) you can then create individual binary sensors that track if an RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#over-i2c)*"
+        "docs": "The `rc522_i2c` component allows you to use RC522 NFC/RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [I\u00b2C](https://esphome.io/components/i2c.html#i2c) (also available over SPI). Using the [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor) you can then create individual binary sensors that track if an NFC/RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#over-i2c)*"
       },
       "rc522_spi": {
         "dependencies": [
           "spi"
         ],
-        "docs": "The `rc522_spi` component allows you to use RC522 RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [SPI](https://esphome.io/components/spi.html#spi) (also available over I\u00b2C). Using the [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-tag) you can then create individual binary sensors that track if an RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over SPI](https://esphome.io/components/binary_sensor/rc522.html#over-spi)*"
+        "docs": "The `rc522_spi` component allows you to use RC522 NFC/RFID controllers with ESPHome. This component is a global hub that establishes the connection to the RC522 via [SPI](https://esphome.io/components/spi.html#spi). Using [RC522 binary sensors](https://esphome.io/components/binary_sensor/rc522.html#rc522-binary-sensor), you can then create individual binary sensors that track if an NFC/RFID tag is currently detected by the RC522.\n\n*See also: [rc522 Over SPI](https://esphome.io/components/binary_sensor/rc522.html#over-spi)*"
       },
       "rdm6300": {
         "dependencies": [
@@ -984,9 +997,6 @@
         "docs": "The `tm1651` display platform allows you to use battery display units based on TM1651 chip, like [this one](https://aliexpress.com/item/32811491559.html) with ESPHome. Currently integration supports level and brightness setting. All updates can be made via lambda expressions.\n\n*See also: [TM1651 Battery Display](https://esphome.io/components/tm1651.html#tm1651-battery-display)*"
       },
       "ttp229_bsf": {
-        "dependencies": [
-          "i2c"
-        ],
         "docs": "The configuration is made up of two parts: The central component, and individual Binary sensors per channel.\n\n*See also: [ttp229_bsf Component](https://esphome.io/components/binary_sensor/ttp229.html#ttp229-bsf-component)*"
       },
       "ttp229_lsf": {
@@ -1008,17 +1018,17 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `VBus` Component provides status reading connectivity to solar heat energy collector controllers using VBus protocol. These devices are mainly produced by Resol, often also found under different brand names like Viessmann, Kioto, Wagner etc. The component currently supports natively Resol DeltaSol C, DeltaSol CS2, DeltaSol CS Plus, and DeltaSol BS Plus but any device can be added via lambda by knowing [its packet structure](https://danielwippermann.github.io/resol-vbus).\n\n*See also: [VBus Component](https://esphome.io/components/vbus.html#vbus-component)*"
+        "docs": "The `VBus` Component provides status reading connectivity to solar heat energy collector controllers using VBus protocol. These devices are mainly produced by Resol, often also found under different brand names like Viessmann, Kioto, Wagner etc. The component currently supports natively the models in the table below but any device can be added via lambda by knowing [its packet structure](https://danielwippermann.github.io/resol-vbus).\n\n*See also: [VBus Component](https://esphome.io/components/vbus.html#vbus-component)*"
       },
       "voice_assistant": {
         "dependencies": [
           "api",
           "microphone"
         ],
-        "docs": "ESPHome devices with a microphone are able to stream the audio to Home Assistant and be processed there by [assist](https://www.home-assistant.io/docs/assist/).\n\n*See also: [Voice Assistant](https://esphome.io/components/voice_assistant.html#voice-assistant)*"
+        "docs": "ESPHome devices with a microphone are able to stream the audio to Home Assistant and be processed there by [assist](https://www.home-assistant.io/voice_control/).\n\n*See also: [Voice Assistant](https://esphome.io/components/voice_assistant.html#voice-assistant)*"
       },
       "web_server": {
-        "docs": "The `web_server` component creates a simple web server on the node that can be accessed through any browser and a simple [REST API](https://esphome.io/web-api/index.html). Please note that enabling this component will take up *a lot* of memory and can lead to problems, especially on the ESP8266.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#web-server-component)*"
+        "docs": "The `web_server` component creates a simple web server on the node that can be accessed through any browser and a simple [REST API](https://esphome.io/web-api/index.html#api-rest). Please note that enabling this component will take up *a lot* of memory and may decrease stability, especially on ESP8266.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#web-server-component)*"
       },
       "web_server_base": {
         "dependencies": [
@@ -1040,6 +1050,11 @@
       "xiaomi_rtcgq02lm": {
         "dependencies": [
           "esp32_ble_tracker"
+        ]
+      },
+      "xl9535": {
+        "dependencies": [
+          "i2c"
         ]
       },
       "xpt2046": {}
@@ -1206,6 +1221,7 @@
     "pins": [
       "esp32",
       "esp8266",
+      "host",
       "max6956",
       "mcp23xxx",
       "mcp23016",
@@ -1215,7 +1231,8 @@
       "rp2040",
       "sn74hc165",
       "sn74hc595",
-      "sx1509"
+      "sx1509",
+      "xl9535"
     ]
   }
 }

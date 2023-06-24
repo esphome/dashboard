@@ -37,15 +37,18 @@
             },
             "on_passkey_request": {
               "key": "Optional",
-              "type": "trigger"
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to enter the passkey required by the other BLE device. See [on_passkey_request](https://esphome.io/components/ble_client.html#ble-client-on-passkey-request).\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
             },
             "on_passkey_notification": {
               "key": "Optional",
-              "type": "trigger"
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to display the passkey to the user. See [on_passkey_notification](https://esphome.io/components/ble_client.html#ble-client-on-passkey-notification).\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
             },
             "on_numeric_comparison_request": {
               "key": "Optional",
-              "type": "trigger"
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to compare the passkeys shown on the two BLE devices. See [on_numeric_comparison_request](https://esphome.io/components/ble_client.html#ble-client-on-numeric-comparison-request).\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#configuration-variables)*"
             },
             "esp32_ble_id": {
               "key": "GeneratedID",
@@ -110,15 +113,18 @@
             "id": {
               "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-numeric-comparison-reply-action)*"
             },
             "accept": {
               "key": "Required",
               "templatable": true,
-              "type": "boolean"
+              "type": "boolean",
+              "docs": "**boolean**: Should be `true` if the passkeys displayed on both BLE devices are matching.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-numeric-comparison-reply-action)*"
             }
           }
-        }
+        },
+        "docs": "This action triggers an authentication attempt after a numeric comparison.\n\n*See also: [`ble_client.numeric_comparison_reply` Action](https://esphome.io/components/ble_client.html#ble-client-numeric-comparison-reply-action)*"
       },
       "passkey_reply": {
         "type": "schema",
@@ -127,15 +133,18 @@
             "id": {
               "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-passkey-reply-action)*"
             },
             "passkey": {
               "key": "Required",
               "templatable": true,
-              "type": "integer"
+              "type": "integer",
+              "docs": "**int**: The 6-digit passkey.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-passkey-reply-action)*"
             }
           }
-        }
+        },
+        "docs": "This action triggers an authentication attempt using the specified `passkey`.\n\n*See also: [`ble_client.passkey_reply` Action](https://esphome.io/components/ble_client.html#ble-client-passkey-reply-action)*"
       },
       "remove_bond": {
         "type": "schema",
@@ -144,10 +153,12 @@
             "id": {
               "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
-              "type": "use_id"
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of the associated BLE client.\n\n*See also: [BLE Client](https://esphome.io/components/ble_client.html#ble-client-remove-bond-action)*"
             }
           }
-        }
+        },
+        "docs": "This action removes a device from the security database and manages unpairing.\n\n*See also: [`ble_client.remove_bond` Action](https://esphome.io/components/ble_client.html#ble-client-remove-bond-action)*"
       }
     }
   },

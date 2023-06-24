@@ -720,7 +720,7 @@
             },
             "run_duration": {
               "key": "Optional",
-              "default": "0",
+              "default": "0s",
               "templatable": true,
               "type": "schema",
               "schema": {

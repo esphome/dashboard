@@ -68,11 +68,10 @@
             }
           }
         }
-      }
-    },
-    "action": {
-      "press": {
+      },
+      "BUTTON_PRESS_SCHEMA": {
         "type": "schema",
+        "maybe": "id",
         "schema": {
           "config_vars": {
             "id": {
@@ -82,8 +81,17 @@
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the button to set.\n\n*See also: [Button Component](https://esphome.io/components/button/index.html#button-press-action)*"
             }
           }
+        }
+      }
+    },
+    "action": {
+      "press": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "button.BUTTON_PRESS_SCHEMA"
+          ]
         },
-        "maybe": "id",
         "docs": "This is an [Action](https://esphome.io/guides/automations.html#config-action) for pressing a button in an Automation.\n\n*See also: [`button.press` Action](https://esphome.io/components/button/index.html#button-press-action)*"
       }
     }

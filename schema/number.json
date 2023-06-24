@@ -126,6 +126,7 @@
                 "sulphur_dioxide": null,
                 "temperature": null,
                 "volatile_organic_compounds": null,
+                "volatile_organic_compounds_parts": null,
                 "voltage": null,
                 "volume": null,
                 "volume_storage": null,
@@ -134,6 +135,26 @@
                 "wind_speed": null
               },
               "docs": "**string**: The device class for the number. See [https://developers.home-assistant.io/docs/core/entity/number/#available-device-classes](https://developers.home-assistant.io/docs/core/entity/number/#available-device-classes) for a list of available options.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#base-number-configuration)*"
+            }
+          }
+        }
+      },
+      "NUMBER_IN_RANGE_CONDITION_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "number::Number",
+              "type": "use_id"
+            },
+            "above": {
+              "key": "Optional",
+              "docs": "**float**: The minimum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
+            },
+            "below": {
+              "key": "Optional",
+              "docs": "**float**: The maximum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
             }
           }
         }
@@ -296,21 +317,9 @@
       "in_range": {
         "type": "schema",
         "schema": {
-          "config_vars": {
-            "id": {
-              "key": "Required",
-              "use_id_type": "number::Number",
-              "type": "use_id"
-            },
-            "above": {
-              "key": "Optional",
-              "docs": "**float**: The minimum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
-            },
-            "below": {
-              "key": "Optional",
-              "docs": "**float**: The maximum for the condition.\n\n*See also: [Number Component](https://esphome.io/components/number/index.html#number-in-range-condition)*"
-            }
-          }
+          "extends": [
+            "number.NUMBER_IN_RANGE_CONDITION_SCHEMA"
+          ]
         },
         "docs": "This condition passes if the state of the given number is inside a range.\n\n*See also: [`number.in_range` Condition](https://esphome.io/components/number/index.html#number-in-range-condition)*"
       }

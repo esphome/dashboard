@@ -86,7 +86,8 @@
                 "config_vars": {
                   "mac_address": {
                     "key": "Optional",
-                    "docs": "**MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-advertise-trigger)*"
+                    "is_list": true,
+                    "docs": "**list of MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-advertise-trigger)*"
                   },
                   "then": {
                     "type": "trigger"

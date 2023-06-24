@@ -43,6 +43,12 @@
         ],
         "docs": "The ESP8266 Software PWM platform allows you to use a software PWM on the pins GPIO0-GPIO16 on your ESP8266. Note that this is a software PWM, so there can be some flickering during periods of high WiFi activity. Hardware PWMs like the one on the ESP32 (see [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html)) are preferred.\n\n*See also: [ESP8266 Software PWM Output](https://esphome.io/components/output/esp8266_pwm.html#esp8266-software-pwm-output)*"
       },
+      "gp8403": {
+        "dependencies": [
+          "gp8403"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [gp8403 Output](https://esphome.io/components/output/gp8403.html#output)*"
+      },
       "gpio": {
         "docs": "The GPIO output component is quite simple: It exposes a single GPIO pin as an output component. Note that output components are **not** switches and will not show up in Home Assistant. See [GPIO Switch](https://esphome.io/components/switch/gpio.html).\n\n*See also: [GPIO Output](https://esphome.io/components/output/gpio.html#gpio-output)*"
       },
