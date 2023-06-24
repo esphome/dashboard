@@ -34,7 +34,10 @@
                 "CUSTOM": null,
                 "20LB_V": null,
                 "30LB_V": null,
-                "40LB_V": null
+                "40LB_V": null,
+                "EUROPE_6KG": null,
+                "EUROPE_11KG": null,
+                "EUROPE_14KG": null
               },
               "docs": "The tank type the sensor is measuring. See below.\n\n*See also: [Mopeka Pro Check BLE Sensor](https://esphome.io/components/sensor/mopeka_pro_check.html#configuration-variables)*"
             },

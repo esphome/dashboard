@@ -35,12 +35,15 @@
                 "ILI9481": null,
                 "ILI9486": null,
                 "ILI9488": null,
-                "ST7796": null
+                "ST7796": null,
+                "S3BOX": null,
+                "S3BOX_LITE": null
               },
-              "docs": "The model of the display. Options are:\n  * `M5STACK`, `TFT 2.4`, `TFT 2.4R`\n  \n  * `ILI9341`, `ILI9342`, `ILI9481`, `ILI9486`, `ILI9488`, `ST7796`\n  \n  \n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
+              "docs": "The model of the display. Options are:\n  * `M5STACK`, `TFT 2.4`, `TFT 2.4R`, `S3BOX`, `S3BOX_LITE`\n  \n  * `ILI9341`, `ILI9342`, `ILI9481`, `ILI9486`, `ILI9488`, `ST7796`\n  \n  \n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
             },
             "dimensions": {
-              "key": "Optional"
+              "key": "Optional",
+              "docs": "Dimensions of the screen with WIDTHxHEIGHT. Usually not needed since `model:` has good defaults.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
             },
             "dc_pin": {
               "key": "Required",
@@ -100,8 +103,7 @@
               "modes": [
                 "output"
               ],
-              "type": "pin",
-              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
+              "type": "pin"
             }
           }
         }

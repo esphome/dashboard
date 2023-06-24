@@ -32,7 +32,8 @@
               "data_type": "hex_uint8_t"
             }
           }
-        }
+        },
+        "is_list": true
       }
     }
   }

@@ -19,6 +19,25 @@
               "use_id_type": "microphone::Microphone",
               "type": "use_id"
             },
+            "speaker": {
+              "key": "Optional",
+              "use_id_type": "speaker::Speaker",
+              "type": "use_id"
+            },
+            "media_player": {
+              "key": "Optional",
+              "use_id_type": "media_player::MediaPlayer",
+              "type": "use_id"
+            },
+            "silence_detection": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean"
+            },
+            "on_listening": {
+              "key": "Optional",
+              "type": "trigger"
+            },
             "on_start": {
               "key": "Optional",
               "type": "trigger"
@@ -71,7 +90,25 @@
           ]
         }
       },
+      "start_continuous": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "voice_assistant.VOICE_ASSISTANT_ACTION_SCHEMA"
+          ]
+        }
+      },
       "stop": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "voice_assistant.VOICE_ASSISTANT_ACTION_SCHEMA"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "is_running": {
         "type": "schema",
         "schema": {
           "extends": [

@@ -144,7 +144,6 @@
             "filters": {
               "key": "Optional",
               "type": "registry",
-              "schema": {},
               "is_list": true,
               "registry": "text_sensor.filter"
             },

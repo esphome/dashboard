@@ -29,7 +29,7 @@
             "dump": {
               "key": "Optional",
               "default": "[]",
-              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **aeha**: Decode and dump AEHA infrared codes.\n  \n  * **canalsat**: Decode and dump CanalSat infrared codes.\n  \n  * **canalsatld**: Decode and dump CanalSatLD infrared codes.\n  \n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **aeha**: Decode and dump AEHA infrared codes.\n  \n  * **canalsat**: Decode and dump CanalSat infrared codes.\n  \n  * **canalsatld**: Decode and dump CanalSatLD infrared codes.\n  \n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **drayton**: Decode and dump Drayton Digistat RF codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
             },
             "tolerance": {
               "key": "Optional",
@@ -381,16 +381,20 @@
               "schema": {
                 "config_vars": {
                   "address": {
-                    "key": "Required"
+                    "key": "Required",
+                    "docs": "**int**: The 16-bit ID code to trigger on, see dumper output for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   },
                   "channel": {
-                    "key": "Required"
+                    "key": "Required",
+                    "docs": "**int**: The 7-bit switch/channel to listen for.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   },
                   "command": {
-                    "key": "Required"
+                    "key": "Required",
+                    "docs": "**int**: The 5-bit command to listen for.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
                 }
-              }
+              },
+              "docs": "Trigger on a decoded Drayton Digistat RF remote code with the given data.\n  * **address** (**Required**, int): The 16-bit ID code to trigger on, see dumper output for more info.\n  \n  * **channel** (**Required**, int): The 7-bit switch/channel to listen for.\n  \n  * **command** (**Required**, int): The 5-bit command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
             },
             "rc5": {
               "type": "schema",

@@ -68,7 +68,7 @@
                   }
                 }
               },
-              "docs": "Enables basic authentication with username and password.\n  * **username** (**Required**, string): The username to use for authentication.\n  \n  * **password** (**Required**, string): The password to check for authentication.\n  \n  \n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
+              "docs": "Enables a simple *Digest* authentication with username and password.\n  * **username** (**Required**, string): The username to use for authentication.\n  \n  * **password** (**Required**, string): The password to check for authentication.\n  \n  \n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
             },
             "web_server_base_id": {
               "key": "GeneratedID",

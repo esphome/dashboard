@@ -29,9 +29,10 @@
                 "TTGO_TDISPLAY_135X240": null,
                 "ADAFRUIT_FUNHOUSE_240X240": null,
                 "ADAFRUIT_RR_280X240": null,
+                "ADAFRUIT_S2_TFT_FEATHER_240X135": null,
                 "CUSTOM": null
               },
-              "docs": "**string**: The display model to use. One of the following options:\n  * `TTGO TDisplay 135x240`\n  \n  * `Adafruit Funhouse 240x240`\n  \n  * `Adafruit RR 280x240` (round-rectangular display \u2013 some pixels are \u201cdeleted\u201d from corners to form rounded shape)\n  \n  * `Custom` (see details below)\n  \n  \n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
+              "docs": "**string**: The display model to use. One of the following options:\n  * `TTGO TDisplay 135x240`\n  \n  * `Adafruit Funhouse 240x240`\n  \n  * `Adafruit RR 280x240` (round-rectangular display \u2013 some pixels are \u201cdeleted\u201d from corners to form rounded shape)\n  \n  * `Adafruit S2 TFT FEATHER 240X135` (requires `power_supply` be specified, see below)\n  \n  * `Custom` (see details below)\n  \n  \n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
             },
             "reset_pin": {
               "key": "Required",
@@ -59,6 +60,12 @@
               ],
               "type": "pin",
               "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The display\u2019s backlight pin.\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
+            },
+            "power_supply": {
+              "key": "Optional",
+              "use_id_type": "power_supply::PowerSupply",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [power supply](https://esphome.io/components/power_supply.html) to connect to this display. The power supply will be turned on before attempting to initialize the display. When `model` is set to \u201cAdafruit S2 TFT FEATHER 240X135\u201d this option is required as there are variations of this board sold with differing pin assignments.\n\n*See also: [ST7789V TFT LCD](https://esphome.io/components/display/st7789v.html#configuration-variables)*"
             },
             "eightbitcolor": {
               "key": "Optional",

@@ -1,0 +1,66 @@
+{
+  "host": {
+    "schemas": {
+      "CONFIG_SCHEMA": {}
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "config_vars": {
+          "id": {
+            "key": "GeneratedID",
+            "id_type": {
+              "class": "host::HostGPIOPin",
+              "parents": [
+                "InternalGPIOPin",
+                "GPIOPin"
+              ]
+            }
+          },
+          "number": {
+            "key": "Required"
+          },
+          "mode": {
+            "key": "Optional",
+            "default": "{}",
+            "type": "schema",
+            "schema": {
+              "config_vars": {
+                "input": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "output": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "open_drain": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "pullup": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                },
+                "pulldown": {
+                  "key": "Optional",
+                  "default": "False",
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "inverted": {
+            "key": "Optional",
+            "default": "False",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
