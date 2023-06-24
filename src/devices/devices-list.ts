@@ -146,6 +146,7 @@ class ESPHomeDevicesList extends LitElement {
     .welcome-container {
       text-align: center;
       margin-top: 40px;
+      color: var(--primary-text-color);
     }
     h5 {
       font-size: 1.64rem;
