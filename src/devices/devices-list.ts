@@ -2,7 +2,11 @@ import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { subscribeDevices, ImportableDevice, ConfiguredDevice } from "../api/devices";
+import {
+  subscribeDevices,
+  ImportableDevice,
+  ConfiguredDevice,
+} from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import "@material/mwc-textfield";
@@ -27,10 +31,7 @@ class ESPHomeDevicesList extends LitElement {
   private _new = new Set<string>();
 
   protected render() {
-    if (
-      this._configured?.size === 0 &&
-      this._importable?.size === 0
-    ) {
+    if (this._configured?.size === 0 && this._importable?.size === 0) {
       return html`
         <div class="welcome-container">
           <h5>Welcome to ESPHome</h5>
@@ -51,7 +52,9 @@ class ESPHomeDevicesList extends LitElement {
       <esphome-search></esphome-search>
       <div class="grid">
         ${repeat(
-          Array.from(this._importable?.values() || []).filter((item) => this._filter(item)),
+          Array.from(this._importable?.values() || []).filter((item) =>
+            this._filter(item)
+          ),
           (device) => device.name,
           (device) => html`
             <esphome-importable-device-card
@@ -61,7 +64,9 @@ class ESPHomeDevicesList extends LitElement {
           `
         )}
         ${repeat(
-          Array.from(this._configured?.values() || []).filter((item) => this._filter(item)),
+          Array.from(this._configured?.values() || []).filter((item) =>
+            this._filter(item)
+          ),
           (device) => device.name,
           (device) => html`<esphome-configured-device-card
             ${animate({
@@ -85,10 +90,18 @@ class ESPHomeDevicesList extends LitElement {
       if (item.name!.indexOf(this._search.value) >= 0) {
         return true;
       }
-      if ("friendly_name" in item && item.friendly_name && item.friendly_name!.indexOf(this._search.value) >= 0) {
+      if (
+        "friendly_name" in item &&
+        item.friendly_name &&
+        item.friendly_name!.indexOf(this._search.value) >= 0
+      ) {
         return true;
       }
-      if ("comment" in item && item.comment && item.comment!.indexOf(this._search.value) >= 0) {
+      if (
+        "comment" in item &&
+        item.comment &&
+        item.comment!.indexOf(this._search.value) >= 0
+      ) {
         return true;
       }
       return false;
@@ -176,14 +189,17 @@ class ESPHomeDevicesList extends LitElement {
         if (this._configured) {
           const toRemove: string[] = [];
           this._configured.forEach((device: ConfiguredDevice) => {
-            if (devices.configured.filter(d => d.name === device.name).length === 0) {
+            if (
+              devices.configured.filter((d) => d.name === device.name)
+                .length === 0
+            ) {
               toRemove.push(device.name);
             }
           });
-          toRemove.forEach(n => this._configured?.delete(n));
+          toRemove.forEach((n) => this._configured?.delete(n));
         }
         // update / add items
-        devices.configured.forEach(d => {
+        devices.configured.forEach((d) => {
           if (!configured.has(d.name)) {
             if (this._configured) {
               // not the 1st time, so this is a new device
@@ -212,14 +228,17 @@ class ESPHomeDevicesList extends LitElement {
         if (this._importable) {
           const toRemove: string[] = [];
           this._importable.forEach((device: ImportableDevice) => {
-            if (devices.configured.filter(d => d.name === device.name).length === 0) {
+            if (
+              devices.configured.filter((d) => d.name === device.name)
+                .length === 0
+            ) {
               toRemove.push(device.name);
             }
           });
-          toRemove.forEach(n => this._configured?.delete(n));
+          toRemove.forEach((n) => this._configured?.delete(n));
         }
         // update / add items
-        devices.importable.forEach(d => {
+        devices.importable.forEach((d) => {
           importable.set(d.name, d);
         });
         if (!this._importable) {

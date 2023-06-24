@@ -76,7 +76,7 @@ class ESPHomeInstallServerDialog extends LitElement {
         text-decoration: none;
         line-height: 32px;
       }
-    `
+    `,
   ];
 }
 

@@ -51,7 +51,7 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
       .warning {
         --mdc-theme-primary: var(--alert-error-color);
       }
-    `
+    `,
   ];
 }
 

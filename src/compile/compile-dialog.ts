@@ -79,9 +79,10 @@ class ESPHomeCompileDialog extends LitElement {
   static styles = [
     esphomeDialogStyles,
     css`
-    a {
-      text-decoration: none;
-    }`
+      a {
+        text-decoration: none;
+      }
+    `,
   ];
 }
 

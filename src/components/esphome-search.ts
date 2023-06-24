@@ -3,10 +3,8 @@ import { customElement, query } from "lit/decorators.js";
 import { ESPHomeSearchInput } from "./esphome-search-input";
 import "./esphome-search-input";
 
-
 @customElement("esphome-search")
 export class ESPHomeSearch extends LitElement {
-
   @query("esphome-search-input") private _textField!: ESPHomeSearchInput;
 
   protected override render(): TemplateResult {
@@ -15,7 +13,8 @@ export class ESPHomeSearch extends LitElement {
         label="Search"
         name="esphome-search"
         type="search"
-        icon="search">
+        icon="search"
+      >
       </esphome-search-input>
     `;
   }
@@ -29,13 +28,12 @@ export class ESPHomeSearch extends LitElement {
       .mdc-text-field__icon {
         color: var(--primary-text-color);
       }
-    `
+    `,
   ];
 
   public get value(): string {
     return this._textField?.value ? this._textField?.value : "";
   }
-
 }
 
 declare global {

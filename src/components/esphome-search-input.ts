@@ -14,11 +14,9 @@ export class ESPHomeSearchInput extends TextFieldBase {
     return html`
       <span
         class="mdc-text-field__icon mdc-text-field__icon--${type}"
-        tabindex=${isTrailingIcon ? 1 : -1}>
-        <mwc-icon
-            tabindex="-1"
-            class="prefix"
-          >${_icon}</mwc-icon>
+        tabindex=${isTrailingIcon ? 1 : -1}
+      >
+        <mwc-icon tabindex="-1" class="prefix">${_icon}</mwc-icon>
       </span>
     `;
   }
@@ -29,15 +27,16 @@ export class ESPHomeSearchInput extends TextFieldBase {
       .mdc-text-field__input {
         width: 100%;
       }
-      .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
+      .mdc-text-field:not(.mdc-text-field--disabled)
+        .mdc-text-field__icon--leading {
         color: var(--primary-text-color);
       }
-    `
+    `,
   ];
 }
 
 declare global {
-    interface HTMLElementTagNameMap {
-      "esphome-search-input": ESPHomeSearchInput;
-    }
+  interface HTMLElementTagNameMap {
+    "esphome-search-input": ESPHomeSearchInput;
+  }
 }
