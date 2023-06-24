@@ -2,35 +2,34 @@ import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { subscribeDevices, ListDevicesResult, ImportableDevice, ConfiguredDevice } from "../api/devices";
+import { subscribeDevices, ImportableDevice, ConfiguredDevice } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
 import "@material/mwc-textfield";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import "../components/esphome-search";
 import { MetadataRefresher } from "./device-metadata-refresher";
-import { TextField } from "@material/mwc-textfield";
+import { ESPHomeSearch } from "../components/esphome-search";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
-  @state() private _devices?: ListDevicesResult;
+  @state() private _configured?: Map<string, ConfiguredDevice>;
+  @state() private _importable?: Map<string, ImportableDevice>;
   @state() private _onlineStatus?: Record<string, boolean>;
 
-  @query("mwc-textfield[name=search]") private _inputSearch!: TextField;
+  @query("esphome-search") private _search!: ESPHomeSearch;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
-  private _highlightOnAdd = false;
   private _metadataRefresher = new MetadataRefresher();
+  private _new = new Set<string>();
 
   protected render() {
-    if (this._devices === undefined) {
-      return html``;
-    }
     if (
-      this._devices.configured.length === 0 &&
-      this._devices.importable.length === 0
+      this._configured?.size === 0 &&
+      this._importable?.size === 0
     ) {
       return html`
         <div class="welcome-container">
@@ -49,28 +48,20 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     return html`
-      <div class="search">
-        <mwc-textfield label="Search" name="search" icon="search"></mwc-textfield>
-      </div>
+      <esphome-search></esphome-search>
       <div class="grid">
-        ${this._devices.importable.length
-          ? html`
-              ${repeat(
-                this._devices.importable.filter((item) => this._filter(item)),
-                (device) => device.name,
-                (device) => html`
-                  <esphome-importable-device-card
-                    ${animate({ id: device.name, skipInitial: true })}
-                    .device=${device}
-                    @adopted=${this._updateDevices}
-                    .highlightOnAdd=${this._highlightOnAdd}
-                  ></esphome-importable-device-card>
-                `
-              )}
-            `
-          : ""}
         ${repeat(
-          this._devices.configured.filter((item) => this._filter(item)),
+          Array.from(this._importable?.values() || []).filter((item) => this._filter(item)),
+          (device) => device.name,
+          (device) => html`
+            <esphome-importable-device-card
+              .device=${device}
+              @adopted=${this._updateDevices}
+            ></esphome-importable-device-card>
+          `
+        )}
+        ${repeat(
+          Array.from(this._configured?.values() || []).filter((item) => this._filter(item)),
           (device) => device.name,
           (device) => html`<esphome-configured-device-card
             ${animate({
@@ -78,11 +69,11 @@ class ESPHomeDevicesList extends LitElement {
               inId: device.name,
               skipInitial: true,
             })}
-            .device=${device}
-            @deleted=${this._updateDevices}
-            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
             data-name=${device.name}
-            .highlightOnAdd=${this._highlightOnAdd}
+            .device=${device}
+            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
+            .highlightOnAdd=${this._new.has(device.name)}
+            @deleted=${this._updateDevices}
           ></esphome-configured-device-card>`
         )}
       </div>
@@ -90,9 +81,14 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
-    if (this._inputSearch && this._inputSearch.value) {
-      if (item.name.indexOf(this._inputSearch.value) >= 0 || (
-          item.friendly_name && item.friendly_name.indexOf(this._inputSearch.value) >= 0)) {
+    if (this._search?.value) {
+      if (item.name!.indexOf(this._search.value) >= 0) {
+        return true;
+      }
+      if ("friendly_name" in item && item.friendly_name && item.friendly_name!.indexOf(this._search.value) >= 0) {
+        return true;
+      }
+      if ("comment" in item && item.comment && item.comment!.indexOf(this._search.value) >= 0) {
         return true;
       }
       return false;
@@ -148,10 +144,6 @@ class ESPHomeDevicesList extends LitElement {
       margin-top: 16px;
       margin-bottom: 16px;
     }
-    mwc-textfield {
-      color: var(--mdc-theme-primary);
-      width: 100%;
-    }
   `;
 
   private async _updateDevices() {
@@ -171,31 +163,74 @@ class ESPHomeDevicesList extends LitElement {
     super.connectedCallback();
 
     this._devicesUnsub = subscribeDevices(async (devices) => {
+      if (!devices) return;
       let newName: string | undefined;
 
-      if (this._devices !== undefined) {
-        this._highlightOnAdd = true;
-        const oldNames = new Set(this._devices.configured.map((d) => d.name));
-
-        for (const device of devices.configured) {
-          if (!oldNames.has(device.name)) {
-            newName = device.name;
-            break;
+      // don't replace the list and apply status to existing devices so they dont appear as new after clearing the search...
+      let configured = new Map<string, ConfiguredDevice>();
+      if (this._configured) {
+        configured = this._configured;
+      }
+      if (devices.configured) {
+        // remove deleted items 1st
+        if (this._configured) {
+          const toRemove: string[] = [];
+          this._configured.forEach((device: ConfiguredDevice) => {
+            if (devices.configured.filter(d => d.name === device.name).length === 0) {
+              toRemove.push(device.name);
+            }
+          });
+          toRemove.forEach(n => this._configured?.delete(n));
+        }
+        // update / add items
+        devices.configured.forEach(d => {
+          if (!configured.has(d.name)) {
+            if (this._configured) {
+              // not the 1st time, so this is a new device
+              this._new.add(d.name);
+              newName = d.name;
+            }
           }
+          configured.set(d.name, d);
+        });
+        if (!this._configured) {
+          this._configured = configured;
         }
       }
-      // TODO: don't replace the list and apply status to existing devices so they dont appear as new after clearing the search...
-      this._devices = devices;
 
       if (newName) {
         await this.updateComplete;
         this._scrollToDevice(newName);
       }
 
+      let importable = new Map<string, ImportableDevice>();
+      if (this._importable) {
+        importable = this._importable;
+      }
+      if (devices.importable) {
+        // remove deleted items 1st
+        if (this._importable) {
+          const toRemove: string[] = [];
+          this._importable.forEach((device: ImportableDevice) => {
+            if (devices.configured.filter(d => d.name === device.name).length === 0) {
+              toRemove.push(device.name);
+            }
+          });
+          toRemove.forEach(n => this._configured?.delete(n));
+        }
+        // update / add items
+        devices.importable.forEach(d => {
+          importable.set(d.name, d);
+        });
+        if (!this._importable) {
+          this._importable = importable;
+        }
+      }
+
       // check if any YAML has been copied in and needs to
       // have it's metadata generated
       for (const device of devices.configured) {
-        if (device.loaded_integrations.length === 0) {
+        if (device.loaded_integrations?.length === 0) {
           this._metadataRefresher.add(device.configuration);
         }
       }
