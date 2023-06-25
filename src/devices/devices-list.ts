@@ -19,9 +19,8 @@ import { ESPHomeSearch } from "../components/esphome-search";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
-  @state() private _configured?: Map<string, ConfiguredDevice>;
-  @state() private _importable?: Map<string, ImportableDevice>;
-  @state() private _onlineStatus?: Record<string, boolean>;
+  @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
+  @state() private _onlineStatus: Record<string, boolean> = {};
 
   @query("esphome-search") private _search!: ESPHomeSearch;
 
@@ -30,10 +29,14 @@ class ESPHomeDevicesList extends LitElement {
   private _metadataRefresher = new MetadataRefresher();
   private _new = new Set<string>();
 
+  private _isImportable = (item: any): item is ImportableDevice => {
+    return "package_import_url" in item;
+  }
+
   protected render() {
-    if (this._configured?.size === 0 && this._importable?.size === 0) {
+    if (this._devices?.length === 0) {
       return html`
-        <div class="welcome-container">
+        <div class="no-result-container">
           <h5>Welcome to ESPHome</h5>
           <p>It looks like you don't yet have any devices.</p>
           <p>
@@ -48,59 +51,78 @@ class ESPHomeDevicesList extends LitElement {
       `;
     }
 
-    return html`
-      <esphome-search></esphome-search>
-      <div class="grid">
-        ${repeat(
-          Array.from(this._importable?.values() || []).filter((item) =>
-            this._filter(item)
-          ),
-          (device) => device.name,
-          (device) => html`
-            <esphome-importable-device-card
+    // catch when 1st load there is no data yet, and we don't want to show no devices message
+    if (!this._devices) {
+      return  html``;
+    }
+
+    const filtered: Array<ImportableDevice | ConfiguredDevice> = this._devices!.filter((item) => this._filter(item));
+
+    let htmlClass = "no-result-container"
+    let htmlDevices = html`
+      <h5>No devices found</h5>
+      <p>Adjust your search criteria.</p>
+    `;
+    if ((filtered?.length ? filtered?.length : 0) > 0) {
+      htmlClass = "grid";
+      htmlDevices = html`${repeat(filtered!,
+        (device) => device.name,
+        (device) => html`
+          ${this._isImportable(device)
+            ? html`<esphome-importable-device-card
               .device=${device}
               @adopted=${this._updateDevices}
-            ></esphome-importable-device-card>
-          `
-        )}
-        ${repeat(
-          Array.from(this._configured?.values() || []).filter((item) =>
-            this._filter(item)
-          ),
-          (device) => device.name,
-          (device) => html`<esphome-configured-device-card
-            ${animate({
-              id: device.name,
-              inId: device.name,
-              skipInitial: true,
-            })}
-            data-name=${device.name}
-            .device=${device}
-            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-            .highlightOnAdd=${this._new.has(device.name)}
-            @deleted=${this._updateDevices}
-          ></esphome-configured-device-card>`
-        )}
+            ></esphome-importable-device-card>`
+            : html`<esphome-configured-device-card
+              ${animate({
+                id: device.name,
+                inId: device.name,
+                skipInitial: true,
+                disabled: !this._new.has(device.name)
+              })}
+              data-name=${device.name}
+              .device=${device}
+              .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
+              .highlightOnAdd=${this._new.has(device.name)}
+              @deleted=${this._updateDevices}
+            ></esphome-configured-device-card>`
+          }
+        `
+      )}`;
+    }
+
+    return html`
+      <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+      <div class="${htmlClass}">
+        ${htmlDevices}
       </div>
     `;
   }
 
   private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
     if (this._search?.value) {
-      if (item.name!.indexOf(this._search.value) >= 0) {
+      const searchValue = this._search!.value.toLowerCase();
+      if (item.name!.toLowerCase().indexOf(searchValue) >= 0) {
         return true;
       }
       if (
         "friendly_name" in item &&
         item.friendly_name &&
-        item.friendly_name!.indexOf(this._search.value) >= 0
+        item.friendly_name!.toLowerCase().indexOf(searchValue) >= 0
       ) {
         return true;
       }
       if (
         "comment" in item &&
         item.comment &&
-        item.comment!.indexOf(this._search.value) >= 0
+        item.comment!.toLowerCase().indexOf(searchValue) >= 0
+      ) {
+        return true;
+      }
+      if (
+        "project_name" in item &&
+        item.project_name &&
+        item.project_name!.toLowerCase().indexOf(searchValue) >= 0
       ) {
         return true;
       }
@@ -143,7 +165,7 @@ class ESPHomeDevicesList extends LitElement {
     esphome-importable-device-card {
       margin: 0.5rem 0 1rem 0;
     }
-    .welcome-container {
+    .no-result-container {
       text-align: center;
       margin-top: 40px;
       color: var(--primary-text-color);
@@ -180,71 +202,29 @@ class ESPHomeDevicesList extends LitElement {
       if (!devices) return;
       let newName: string | undefined;
 
-      // don't replace the list and apply status to existing devices so they dont appear as new after clearing the search...
-      let configured = new Map<string, ConfiguredDevice>();
-      if (this._configured) {
-        configured = this._configured;
+      const newDevices = new Set<string>();
+      const newList: Array<ImportableDevice | ConfiguredDevice> = [];
+
+      if (devices.importable) {
+        devices.importable.forEach(d => newList.push(d));
       }
+
       if (devices.configured) {
-        // remove deleted items 1st
-        if (this._configured) {
-          const toRemove: string[] = [];
-          this._configured.forEach((device: ConfiguredDevice) => {
-            if (
-              devices.configured.filter((d) => d.name === device.name)
-                .length === 0
-            ) {
-              toRemove.push(device.name);
-            }
-          });
-          toRemove.forEach((n) => this._configured?.delete(n));
-        }
-        // update / add items
-        devices.configured.forEach((d) => {
-          if (!configured.has(d.name)) {
-            if (this._configured) {
-              // not the 1st time, so this is a new device
-              this._new.add(d.name);
-              newName = d.name;
-            }
+        devices.configured.forEach(d => {
+          if (this._devices && this._devices.filter((old) => old.name === d.name).length === 0) {
+            newDevices.add(d.name);
+            newName = d.name;
           }
-          configured.set(d.name, d);
+          newList.push(d);
         });
-        if (!this._configured) {
-          this._configured = configured;
-        }
       }
+
+      this._devices = newList;
+      this._new = newDevices;
 
       if (newName) {
         await this.updateComplete;
         this._scrollToDevice(newName);
-      }
-
-      let importable = new Map<string, ImportableDevice>();
-      if (this._importable) {
-        importable = this._importable;
-      }
-      if (devices.importable) {
-        // remove deleted items 1st
-        if (this._importable) {
-          const toRemove: string[] = [];
-          this._importable.forEach((device: ImportableDevice) => {
-            if (
-              devices.configured.filter((d) => d.name === device.name)
-                .length === 0
-            ) {
-              toRemove.push(device.name);
-            }
-          });
-          toRemove.forEach((n) => this._configured?.delete(n));
-        }
-        // update / add items
-        devices.importable.forEach((d) => {
-          importable.set(d.name, d);
-        });
-        if (!this._importable) {
-          this._importable = importable;
-        }
       }
 
       // check if any YAML has been copied in and needs to

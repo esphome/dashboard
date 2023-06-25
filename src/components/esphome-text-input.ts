@@ -4,8 +4,8 @@ import { TextFieldBase } from "@material/mwc-textfield/mwc-textfield-base";
 import { styles } from "@material/mwc-textfield/mwc-textfield.css";
 import "@material/mwc-icon";
 
-@customElement("esphome-search-input")
-export class ESPHomeSearchInput extends TextFieldBase {
+@customElement("esphome-text-input")
+export class ESPHomeTextInput extends TextFieldBase {
   protected override renderIcon(
     _icon: string,
     isTrailingIcon = false
@@ -37,6 +37,6 @@ export class ESPHomeSearchInput extends TextFieldBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "esphome-search-input": ESPHomeSearchInput;
+    "esphome-text-input": ESPHomeTextInput;
   }
 }
