@@ -37,7 +37,7 @@ export const createPollingCollection = <T>(
       // No subscribers anymore, cleanup
       if (subscribers.length === 0) {
         // Clear next scheduled instance
-        clearTimeout(pollSubscription);
+        if (pollSubscription) clearTimeout(pollSubscription);
         pollSubscription = undefined;
         // Clear last result as it will be stale
         lastResult = undefined;
@@ -45,7 +45,7 @@ export const createPollingCollection = <T>(
     };
 
     unsubscribe.refresh = async () => {
-      clearTimeout(pollSubscription);
+      if (pollSubscription) clearTimeout(pollSubscription);
       pollSubscription = undefined;
       await updateData();
     };
