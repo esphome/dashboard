@@ -31,7 +31,7 @@ class ESPHomeDevicesList extends LitElement {
 
   private _isImportable = (item: any): item is ImportableDevice => {
     return "package_import_url" in item;
-  }
+  };
 
   protected render() {
     if (this._devices?.length === 0) {
@@ -53,49 +53,50 @@ class ESPHomeDevicesList extends LitElement {
 
     // catch when 1st load there is no data yet, and we don't want to show no devices message
     if (!this._devices) {
-      return  html``;
+      return html``;
     }
 
-    const filtered: Array<ImportableDevice | ConfiguredDevice> = this._devices!.filter((item) => this._filter(item));
+    const filtered: Array<ImportableDevice | ConfiguredDevice> =
+      this._devices!.filter((item) => this._filter(item));
 
-    let htmlClass = "no-result-container"
+    let htmlClass = "no-result-container";
     let htmlDevices = html`
       <h5>No devices found</h5>
       <p>Adjust your search criteria.</p>
     `;
     if ((filtered?.length ? filtered?.length : 0) > 0) {
       htmlClass = "grid";
-      htmlDevices = html`${repeat(filtered!,
+      htmlDevices = html`${repeat(
+        filtered!,
         (device) => device.name,
         (device) => html`
           ${this._isImportable(device)
             ? html`<esphome-importable-device-card
-              .device=${device}
-              @adopted=${this._updateDevices}
-            ></esphome-importable-device-card>`
+                .device=${device}
+                @adopted=${this._updateDevices}
+              ></esphome-importable-device-card>`
             : html`<esphome-configured-device-card
-              ${animate({
-                id: device.name,
-                inId: device.name,
-                skipInitial: true,
-                disabled: !this._new.has(device.name)
-              })}
-              data-name=${device.name}
-              .device=${device}
-              .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-              .highlightOnAdd=${this._new.has(device.name)}
-              @deleted=${this._updateDevices}
-            ></esphome-configured-device-card>`
-          }
+                ${animate({
+                  id: device.name,
+                  inId: device.name,
+                  skipInitial: true,
+                  disabled: !this._new.has(device.name),
+                })}
+                data-name=${device.name}
+                .device=${device}
+                .onlineStatus=${(this._onlineStatus || {})[
+                  device.configuration
+                ]}
+                .highlightOnAdd=${this._new.has(device.name)}
+                @deleted=${this._updateDevices}
+              ></esphome-configured-device-card>`}
         `
       )}`;
     }
 
     return html`
       <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
-      <div class="${htmlClass}">
-        ${htmlDevices}
-      </div>
+      <div class="${htmlClass}">${htmlDevices}</div>
     `;
   }
 
@@ -206,12 +207,15 @@ class ESPHomeDevicesList extends LitElement {
       const newList: Array<ImportableDevice | ConfiguredDevice> = [];
 
       if (devices.importable) {
-        devices.importable.forEach(d => newList.push(d));
+        devices.importable.forEach((d) => newList.push(d));
       }
 
       if (devices.configured) {
-        devices.configured.forEach(d => {
-          if (this._devices && this._devices.filter((old) => old.name === d.name).length === 0) {
+        devices.configured.forEach((d) => {
+          if (
+            this._devices &&
+            this._devices.filter((old) => old.name === d.name).length === 0
+          ) {
             newDevices.add(d.name);
             newName = d.name;
           }

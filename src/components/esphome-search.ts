@@ -37,7 +37,7 @@ export class ESPHomeSearch extends LitElement {
   }
 
   private _inputEvent() {
-    const event = new InputEvent('input');
+    const event = new InputEvent("input");
     this.dispatchEvent(event);
   }
 }
