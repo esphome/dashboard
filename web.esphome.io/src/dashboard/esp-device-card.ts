@@ -108,10 +108,10 @@ class EWESPDeviceCard extends LitElement {
     esphomeCardStyles,
     css`
       esphome-card {
-        --status-color: rgba(0, 0, 0, 0.5);
+        --status-color: var(--status-connected);
       }
       esphome-button-menu {
-        --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.56);
+        --mdc-theme-text-icon-on-background: var(--primary-text-color);
       }
       mwc-button.first-use {
         --mdc-theme-primary: var(--update-available-color);

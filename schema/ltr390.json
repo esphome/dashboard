@@ -116,27 +116,27 @@
               "key": "Optional",
               "default": "X3",
               "type": "enum",
-              "values": [
-                "X1",
-                "X3",
-                "X6",
-                "X9",
-                "X18"
-              ],
+              "values": {
+                "X1": null,
+                "X3": null,
+                "X6": null,
+                "X9": null,
+                "X18": null
+              },
               "docs": "**string**: Adjusts the sensitivity of the sensor. A larger value means higher sensitivity. See table below for details. Default is `\"X3\"`.\n\n*See also: [LTR390 UV and Ambient Light Sensor](https://esphome.io/components/sensor/ltr390.html#configuration-variables)*"
             },
             "resolution": {
               "key": "Optional",
               "default": "18",
               "type": "enum",
-              "values": [
-                20,
-                19,
-                18,
-                17,
-                16,
-                13
-              ],
+              "values": {
+                "20": null,
+                "19": null,
+                "18": null,
+                "17": null,
+                "16": null,
+                "13": null
+              },
               "docs": "**int**: ADC resolution. Higher resolutions require longer sensor integration times. See table below for details. Default is `18`.\n\n*See also: [LTR390 UV and Ambient Light Sensor](https://esphome.io/components/sensor/ltr390.html#configuration-variables)*"
             },
             "window_correction_factor": {

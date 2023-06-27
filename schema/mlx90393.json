@@ -20,16 +20,16 @@
               "key": "Optional",
               "default": "2_5X",
               "type": "enum",
-              "values": [
-                "1X",
-                "1_33X",
-                "1_67X",
-                "2X",
-                "2_5X",
-                "3X",
-                "4X",
-                "5X"
-              ],
+              "values": {
+                "1X": null,
+                "1_33X": null,
+                "1_67X": null,
+                "2X": null,
+                "2_5X": null,
+                "3X": null,
+                "4X": null,
+                "5X": null
+              },
               "docs": "**int**: Specify the gain. Defaults to `2_5X`. Must be one of\n  * `1X`\n  \n  * `1_33X`\n  \n  * `1_67X`\n  \n  * `2X`\n  \n  * `2_5X`\n  \n  * `3X`\n  \n  * `4X`\n  \n  * `5X`\n  \n  \n\n*See also: [MLX90393 Triple-axis Magnetometer](https://esphome.io/components/sensor/mlx90393.html#configuration-variables)*"
             },
             "drdy_pin": {
@@ -77,12 +77,12 @@
                     "key": "Optional",
                     "default": "19BIT",
                     "type": "enum",
-                    "values": [
-                      "16BIT",
-                      "17BIT",
-                      "18BIT",
-                      "19BIT"
-                    ],
+                    "values": {
+                      "16BIT": null,
+                      "17BIT": null,
+                      "18BIT": null,
+                      "19BIT": null
+                    },
                     "docs": "**int**: Set resolution. Defaults to `19BIT`. Must be one of:\n  * `16BIT`\n  \n  * `17BIT`\n  \n  * `18BIT`\n  \n  * `19BIT`\n  \n  \n\n*See also: [MLX90393 Triple-axis Magnetometer](https://esphome.io/components/sensor/mlx90393.html#configuration-variables)*"
                   }
                 }
@@ -113,12 +113,12 @@
                     "key": "Optional",
                     "default": "19BIT",
                     "type": "enum",
-                    "values": [
-                      "16BIT",
-                      "17BIT",
-                      "18BIT",
-                      "19BIT"
-                    ],
+                    "values": {
+                      "16BIT": null,
+                      "17BIT": null,
+                      "18BIT": null,
+                      "19BIT": null
+                    },
                     "docs": "**int**: Set resolution. Defaults to `19BIT`. Must be one of:\n  * `16BIT`\n  \n  * `17BIT`\n  \n  * `18BIT`\n  \n  * `19BIT`\n  \n  \n\n*See also: [MLX90393 Triple-axis Magnetometer](https://esphome.io/components/sensor/mlx90393.html#configuration-variables)*"
                   }
                 }
@@ -149,12 +149,12 @@
                     "key": "Optional",
                     "default": "16BIT",
                     "type": "enum",
-                    "values": [
-                      "16BIT",
-                      "17BIT",
-                      "18BIT",
-                      "19BIT"
-                    ],
+                    "values": {
+                      "16BIT": null,
+                      "17BIT": null,
+                      "18BIT": null,
+                      "19BIT": null
+                    },
                     "docs": "**int**: Set resolution. Defaults to `16BIT`. Must be one of:\n  * `16BIT`\n  \n  * `17BIT`\n  \n  * `18BIT`\n  \n  * `19BIT`\n  \n  \n\n*See also: [MLX90393 Triple-axis Magnetometer](https://esphome.io/components/sensor/mlx90393.html#configuration-variables)*"
                   }
                 }

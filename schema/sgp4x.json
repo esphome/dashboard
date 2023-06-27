@@ -87,7 +87,7 @@
                     "default": "0"
                   },
                   "device_class": {
-                    "default": "volatile_organic_compounds"
+                    "default": "aqi"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -112,7 +112,7 @@
                     "default": "0"
                   },
                   "device_class": {
-                    "default": "nitrous_oxide"
+                    "default": "aqi"
                   },
                   "state_class": {
                     "default": "measurement"

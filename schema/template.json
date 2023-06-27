@@ -31,7 +31,7 @@
             "update_interval": {
               "key": "Optional",
               "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to publish the value of the sensor, either the result of the lambda function or if no lambda function the last value published using the publish action. Set to `never` to disable updates. Defaults to `60s`.\n\n*See also: [Template Sensor](https://esphome.io/components/sensor/template.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Set to `never` to disable updates. Defaults to `60s`.\n\n*See also: [Template Sensor](https://esphome.io/components/sensor/template.html#configuration-variables)*"
             }
           }
         }
@@ -56,6 +56,120 @@
           }
         },
         "docs": "You can also publish a state to a template sensor from elsewhere in your YAML file with the `sensor.template.publish` action.\n\n*See also: [`sensor.template.publish` Action](https://esphome.io/components/sensor/template.html#sensor-template-publish-action)*"
+      }
+    }
+  },
+  "template.alarm_control_panel": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "template_::TemplateAlarmControlPanel",
+                "parents": [
+                  "alarm_control_panel::AlarmControlPanel",
+                  "EntityBase",
+                  "Component"
+                ]
+              }
+            },
+            "codes": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "string",
+              "docs": "**list of string**: A list of codes for disarming the alarm, if *requires_code_to_arm* set to true then for arming the alarm too.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "requires_code_to_arm": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Code required for arming the alarm, *codes* must be provided.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "arming_home_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The exit delay before the alarm is armed to home mode.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "arming_away_time": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The exit delay before the alarm is armed to away mode. Defaults to `0s`.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "pending_time": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The entry delay before the alarm is triggered. Defaults to `0s`.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "trigger_time": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The time after a triggered alarm before resetting to previous state if the sensors are cleared/off. Defaults to `0s`.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "binary_sensors": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "input": {
+                    "key": "Required",
+                    "use_id_type": "binary_sensor::BinarySensor",
+                    "type": "use_id",
+                    "docs": "**string**: The id of the binary sensor component\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+                  },
+                  "bypass_armed_home": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean",
+                    "docs": "**boolean**: This binary sensor will not trigger the alarm when in `armed_home` state.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+                  }
+                }
+              },
+              "maybe": "input",
+              "docs": "***list***: A list of binary sensors the panel should use. Each consists of:\n  * **input** (**Required**, string): The id of the binary sensor component\n  \n  * **bypass_armed_home** (*Optional*, boolean): This binary sensor will not trigger the alarm when in `armed_home` state.\n  \n  \n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_DISARMED",
+              "type": "enum",
+              "values": {
+                "ALWAYS_DISARMED": null,
+                "RESTORE_DEFAULT_DISARMED": {
+                  "docs": "Restore state or default to `disarmed` state if no saved state was found."
+                }
+              },
+              "docs": "**enum**: Always start in `disarmed` state.\n  \n  * `RESTORE_DEFAULT_DISARMED`: Restore state or default to `disarmed` state if no saved state was found.\n  \n  \n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            }
+          }
+        }
       }
     }
   },
@@ -212,11 +326,11 @@
               "key": "Optional",
               "default": "RESTORE",
               "type": "enum",
-              "values": [
-                "NO_RESTORE",
-                "RESTORE",
-                "RESTORE_AND_CALL"
-              ]
+              "values": {
+                "NO_RESTORE": null,
+                "RESTORE": null,
+                "RESTORE_AND_CALL": null
+              }
             }
           }
         }
@@ -237,10 +351,10 @@
               "key": "Optional",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "OPEN",
-                "CLOSED"
-              ],
+              "values": {
+                "OPEN": null,
+                "CLOSED": null
+              },
               "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable)**: The state to publish. One of `OPEN`, `CLOSED`. If using a lambda, use `COVER_OPEN` or `COVER_CLOSED`.\n\n*See also: [Template Cover](https://esphome.io/components/cover/template.html#cover-template-publish-action)*"
             },
             "position": {
@@ -253,11 +367,11 @@
               "key": "Optional",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "IDLE",
-                "OPENING",
-                "CLOSING"
-              ],
+              "values": {
+                "IDLE": null,
+                "OPENING": null,
+                "CLOSING": null
+              },
               "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), string**: The current operation mode to publish. One of `IDLE`, `OPENING` and `CLOSING`. If using a lambda, use `COVER_OPERATION_IDLE`, `COVER_OPERATION_OPENING`, and `COVER_OPERATION_CLOSING`.\n\n*See also: [Template Cover](https://esphome.io/components/cover/template.html#cover-template-publish-action)*"
             },
             "tilt": {
@@ -343,13 +457,13 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "LOCKED",
-                "UNLOCKED",
-                "JAMMED",
-                "LOCKING",
-                "UNLOCKING"
-              ],
+              "values": {
+                "LOCKED": null,
+                "UNLOCKED": null,
+                "JAMMED": null,
+                "LOCKING": null,
+                "UNLOCKING": null
+              },
               "docs": "**boolean, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The state to publish.\n\n*See also: [Template Lock](https://esphome.io/components/lock/template.html#lock-template-publish-action)*"
             }
           }
@@ -369,6 +483,7 @@
           ],
           "config_vars": {
             "id": {
+              "key": "GeneratedID",
               "id_type": {
                 "class": "template_::TemplateNumber",
                 "parents": [
@@ -552,10 +667,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {
@@ -656,7 +785,7 @@
             "update_interval": {
               "key": "Optional",
               "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to publish the value of the text sensor, either the result of the lambda function or if no lambda function the last value published using the publish action. Defaults to `60s`.\n\n*See also: [Template Text Sensor](https://esphome.io/components/text_sensor/template.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the text sensor. Set to `never` to disable updates. Defaults to `60s`.\n\n*See also: [Template Text Sensor](https://esphome.io/components/text_sensor/template.html#configuration-variables)*"
             }
           }
         }

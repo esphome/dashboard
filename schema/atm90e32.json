@@ -286,31 +286,31 @@
             "line_frequency": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "50HZ",
-                "60HZ"
-              ],
+              "values": {
+                "50HZ": null,
+                "60HZ": null
+              },
               "docs": "**string**: The AC line frequency of the supply voltage. One of `50Hz`, `60Hz`.\n\n*See also: [ATM90E32 Power Sensor](https://esphome.io/components/sensor/atm90e32.html#configuration-variables)*"
             },
             "current_phases": {
               "key": "Optional",
               "default": "3",
               "type": "enum",
-              "values": [
-                "2",
-                "3"
-              ],
+              "values": {
+                "2": null,
+                "3": null
+              },
               "docs": "The number of phases the meter has, `2` or, `3` The 6 Channel Expandable Energy Meter should be set to `3`, and the Split Single Phase meter should be set to `2`. Defaults to `3`.\n\n*See also: [ATM90E32 Power Sensor](https://esphome.io/components/sensor/atm90e32.html#configuration-variables)*"
             },
             "gain_pga": {
               "key": "Optional",
               "default": "2X",
               "type": "enum",
-              "values": [
-                "1X",
-                "2X",
-                "4X"
-              ],
+              "values": {
+                "1X": null,
+                "2X": null,
+                "4X": null
+              },
               "docs": "**string**: The gain for the CT clamp, `2X` for 100A, `4X` for 100A - 200A. One of `1X`, `2X`, `4X`. Defaults to `2X` which is suitable for the popular SCT-013-000 clamp.\n\n*See also: [ATM90E32 Power Sensor](https://esphome.io/components/sensor/atm90e32.html#configuration-variables)*"
             },
             "update_interval": {

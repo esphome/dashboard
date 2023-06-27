@@ -1,0 +1,47 @@
+{
+  "pca6416a": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "id_type": {
+                "class": "pca6416a::PCA6416AComponent",
+                "parents": [
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The id to use for this `pca6416a` component.\n\n*See also: [PCA6416A I/O Expander](https://esphome.io/components/pca6416a.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "33",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: The I\u00b2C address of the driver. Defaults to `0x20`.\n\n*See also: [PCA6416A I/O Expander](https://esphome.io/components/pca6416a.html#configuration-variables)*"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        },
+        "is_list": true
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "pca6416a.PCA6416A_PIN_SCHEMA"
+        ]
+      }
+    }
+  }
+}

@@ -29,7 +29,7 @@
             "dump": {
               "key": "Optional",
               "default": "[]",
-              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **aeha**: Decode and dump AEHA infrared codes.\n  \n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "docs": "**list**: Decode and dump these remote codes in the logs (at log.level=DEBUG). Set to `all` to dump all available codecs:\n  * **aeha**: Decode and dump AEHA infrared codes.\n  \n  * **canalsat**: Decode and dump CanalSat infrared codes.\n  \n  * **canalsatld**: Decode and dump CanalSatLD infrared codes.\n  \n  * **coolix**: Decode and dump Coolix infrared codes.\n  \n  * **dish**: Decode and dump Dish infrared codes.\n  \n  * **drayton**: Decode and dump Drayton Digistat RF codes.\n  \n  * **jvc**: Decode and dump JVC infrared codes.\n  \n  * **lg**: Decode and dump LG infrared codes.\n  \n  * **magiquest**: Decode and dump MagiQuest wand infrared codes.\n  \n  * **midea**: Decode and dump Midea infrared codes.\n  \n  * **nec**: Decode and dump NEC infrared codes.\n  \n  * **nexa**: Decode and dump Nexa (RF) codes.\n  \n  * **panasonic**: Decode and dump Panasonic infrared codes.\n  \n  * **pioneer**: Decode and dump Pioneer infrared codes.\n  \n  * **pronto**: Print remote code in Pronto form. Useful for using arbitrary protocols.\n  \n  * **raw**: Print all remote codes in their raw form. Also useful for using arbitrary protocols.\n  \n  * **rc5**: Decode and dump RC5 IR codes.\n  \n  * **rc6**: Decode and dump RC6 IR codes.\n  \n  * **rc_switch**: Decode and dump RCSwitch RF codes.\n  \n  * **samsung**: Decode and dump Samsung infrared codes.\n  \n  * **samsung36**: Decode and dump Samsung36 infrared codes.\n  \n  * **sony**: Decode and dump Sony infrared codes.\n  \n  * **toshiba_ac**: Decode and dump Toshiba AC infrared codes.\n  \n  \n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
             },
             "tolerance": {
               "key": "Optional",
@@ -68,345 +68,97 @@
               "default": "3",
               "docs": "**int**: The number of RMT memory blocks used. Only used on ESP32 platform. Defaults to `3`.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
             },
+            "on_canalsat": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_canalsatld": {
+              "key": "Optional",
+              "type": "trigger"
+            },
             "on_coolix": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Coolix remote code has been decoded. A variable `x` of type [remote_base::CoolixData](https://esphome.io/api/classesphome_1_1remote__base_1_1_coolix_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_dish": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a dish network remote code has been decoded. A variable `x` of type [remote_base::DishData](https://esphome.io/api/structesphome_1_1remote__base_1_1_dish_data.html) is passed to the automation for use in lambdas. Beware that Dish remotes use a different carrier frequency (57.6kHz) that many receiver hardware don\u2019t decode.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_jvc": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a JVC remote code has been decoded. A variable `x` of type [remote_base::JVCData](https://esphome.io/api/structesphome_1_1remote__base_1_1_j_v_c_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_lg": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a LG remote code has been decoded. A variable `x` of type [remote_base::LGData](https://esphome.io/api/structesphome_1_1remote__base_1_1_l_g_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_magiquest": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a MagiQuest wand remote code has been decoded. A variable `x` of type [remote_base::MagiQuestData](https://esphome.io/api/classesphome_1_1remote__base_1_1_magi_quest_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_nec": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a NEC remote code has been decoded. A variable `x` of type [remote_base::NECData](https://esphome.io/api/structesphome_1_1remote__base_1_1_n_e_c_data.html) is passed to the automation for use in lambdas.\n   > In version 2021.12, the order of transferring bits was corrected from MSB to LSB in accordance with the NEC standard. Therefore, if the configuration file has come from an earlier version of ESPhome, it is necessary to reverse the order of the address and command bits when moving to 2021.12 or above. For example, address: 0x84ED, command: 0x13EC becomes 0xB721 and 0x37C8 respectively.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_pioneer": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a pioneer remote code has been decoded. A variable `x` of type [remote_base::PioneerData](https://esphome.io/api/structesphome_1_1remote__base_1_1_pioneer_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_pronto": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Pronto remote code has been decoded. A variable `x` of type `std::string` is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_sony": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Sony remote code has been decoded. A variable `x` of type [remote_base::SonyData](https://esphome.io/api/structesphome_1_1remote__base_1_1_sony_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_raw": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a raw remote code has been decoded. A variable `x` of type `std::vector<int>` is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
+            },
+            "on_drayton": {
+              "key": "Optional",
+              "type": "trigger"
             },
             "on_rc5": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a RC5 remote code has been decoded. A variable `x` of type [remote_base::RC5Data](https://esphome.io/api/structesphome_1_1remote__base_1_1_r_c5_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_rc6": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a RC6 remote code has been decoded. A variable `x` of type [remote_base::RC6Data](https://esphome.io/api/structesphome_1_1remote__base_1_1_r_c6_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_rc_switch": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a RCSwitch RF code has been decoded. A variable `x` of type [remote_base::RCSwitchData](https://esphome.io/api/structesphome_1_1remote__base_1_1_r_c_switch_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_samsung": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Samsung remote code has been decoded. A variable `x` of type [remote_base::SamsungData](https://esphome.io/api/structesphome_1_1remote__base_1_1_samsung_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_samsung36": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Samsung36 remote code has been decoded. A variable `x` of type [remote_base::Samsung36Data](https://esphome.io/api/structesphome_1_1remote__base_1_1_samsung36_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_toshiba_ac": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Toshiba AC remote code has been decoded. A variable `x` of type [remote_base::ToshibaAcData](https://esphome.io/api/structesphome_1_1remote__base_1_1_toshiba_ac_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_panasonic": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Panasonic remote code has been decoded. A variable `x` of type [remote_base::PanasonicData](https://esphome.io/api/structesphome_1_1remote__base_1_1_panasonic_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_nexa": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Nexa RF code has been decoded. A variable `x` of type [remote_base::NexaData](https://esphome.io/api/classesphome_1_1remote__base_1_1_nexa_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_midea": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a Midea remote code has been decoded. A variable `x` of type [remote_base::MideaData](https://esphome.io/api/classesphome_1_1remote__base_1_1_midea_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             },
             "on_aeha": {
               "key": "Optional",
-              "type": "trigger",
-              "schema": {
-                "config_vars": {
-                  "receiver_id": {
-                    "key": "GeneratedID",
-                    "use_id_type": "remote_base::RemoteReceiverBase",
-                    "type": "use_id"
-                  },
-                  "then": {
-                    "type": "trigger"
-                  }
-                }
-              },
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a AEHA remote code has been decoded. A variable `x` of type [remote_base::AEHAData](https://esphome.io/api/classesphome_1_1remote__base_1_1_a_e_h_a_data.html) is passed to the automation for use in lambdas.\n\n*See also: [Remote Receiver](https://esphome.io/components/remote_receiver.html#configuration-variables)*"
+              "type": "trigger"
             }
           },
           "extends": [
@@ -427,6 +179,24 @@
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "canalsat": {
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "remote_base.CANALSAT_SCHEMA"
+                ]
+              },
+              "docs": "Trigger on a decoded CanalSat remote code with the given data.\n  * **device** (**Required**, int): The device to trigger on, see dumper output for more info.\n  \n  * **address** (*Optional*, int): The address (or subdevice) to trigger on, see dumper output for more info. Defaults to `0`\n  \n  * **command** (**Required**, int): The command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
+            "canalsatld": {
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "remote_base.CANALSAT_SCHEMA"
+                ]
+              },
+              "docs": "Trigger on a decoded CanalSatLD remote code with the given data.\n  * **device** (**Required**, int): The device to trigger on, see dumper output for more info.\n  \n  * **address** (*Optional*, int): The address (or subdevice) to trigger on, see dumper output for more info. Defaults to `0`\n  \n  * **command** (**Required**, int): The command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
             "coolix": {
               "type": "schema",
               "schema": {
@@ -485,10 +255,10 @@
                     "key": "Optional",
                     "default": "28",
                     "type": "enum",
-                    "values": [
-                      28,
-                      32
-                    ],
+                    "values": {
+                      "28": null,
+                      "32": null
+                    },
                     "docs": "**int**: The number of bits of the remote code. Defaults to `28`.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
                 }
@@ -530,7 +300,7 @@
                   }
                 }
               },
-              "docs": "Trigger on a decoded NEC remote code with the given data.\n   > In version 2021.12, the order of transferring bits was corrected from MSB to LSB in accordance with the NEC standard. Therefore, if the configuration file has come from an earlier version of ESPhome, it is necessary to reverse the order of the address and command bits when moving to 2021.12 or above. For example, address: 0x84ED, command: 0x13EC becomes 0xB721 and 0x37C8 respectively.\n  * **address** (**Required**, int): The address to trigger on, see dumper output for more info.\n  \n  * **command** (**Required**, int): The NEC command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+              "docs": "Trigger on a decoded NEC remote code with the given data.\n  * **address** (**Required**, int): The address to trigger on, see dumper output for more info.\n  \n  * **command** (**Required**, int): The NEC command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
             },
             "pioneer": {
               "type": "schema",
@@ -576,11 +346,11 @@
                     "key": "Optional",
                     "default": "12",
                     "type": "enum",
-                    "values": [
-                      12,
-                      15,
-                      20
-                    ],
+                    "values": {
+                      "12": null,
+                      "15": null,
+                      "20": null
+                    },
                     "docs": "**int**: The number of bits of the remote code. Defaults to `12`.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
                 }
@@ -605,6 +375,26 @@
                 }
               },
               "docs": "Trigger on a raw remote code with the given code.\n  * **code** (**Required**, list): The code to listen for, see [remote_transmitter.transmit_raw Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-raw) for more info. Usually you only need to copy this directly from the dumper output.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+            },
+            "drayton": {
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "address": {
+                    "key": "Required",
+                    "docs": "**int**: The 16-bit ID code to trigger on, see dumper output for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+                  },
+                  "channel": {
+                    "key": "Required",
+                    "docs": "**int**: The 7-bit switch/channel to listen for.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+                  },
+                  "command": {
+                    "key": "Required",
+                    "docs": "**int**: The 5-bit command to listen for.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
+                  }
+                }
+              },
+              "docs": "Trigger on a decoded Drayton Digistat RF remote code with the given data.\n  * **address** (**Required**, int): The 16-bit ID code to trigger on, see dumper output for more info.\n  \n  * **channel** (**Required**, int): The 7-bit switch/channel to listen for.\n  \n  * **command** (**Required**, int): The 5-bit command to listen for.\n  \n  \n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
             },
             "rc5": {
               "type": "schema",
@@ -653,33 +443,9 @@
                     "default": "1",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "pulse_length": {
-                          "key": "Required",
-                          "type": "integer",
-                          "data_type": "uint32_t"
-                        },
-                        "sync": {
-                          "key": "Optional",
-                          "default": "[1, 31]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "zero": {
-                          "key": "Optional",
-                          "default": "[1, 3]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "one": {
-                          "key": "Optional",
-                          "default": "[3, 1]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "inverted": {
-                          "key": "Optional",
-                          "default": "False",
-                          "type": "boolean"
-                        }
-                      }
+                      "extends": [
+                        "remote_base.RC_SWITCH_PROTOCOL_SCHEMA"
+                      ]
                     },
                     "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
@@ -709,33 +475,9 @@
                     "default": "1",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "pulse_length": {
-                          "key": "Required",
-                          "type": "integer",
-                          "data_type": "uint32_t"
-                        },
-                        "sync": {
-                          "key": "Optional",
-                          "default": "[1, 31]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "zero": {
-                          "key": "Optional",
-                          "default": "[1, 3]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "one": {
-                          "key": "Optional",
-                          "default": "[3, 1]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "inverted": {
-                          "key": "Optional",
-                          "default": "False",
-                          "type": "boolean"
-                        }
-                      }
+                      "extends": [
+                        "remote_base.RC_SWITCH_PROTOCOL_SCHEMA"
+                      ]
                     },
                     "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
@@ -767,33 +509,9 @@
                     "default": "1",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "pulse_length": {
-                          "key": "Required",
-                          "type": "integer",
-                          "data_type": "uint32_t"
-                        },
-                        "sync": {
-                          "key": "Optional",
-                          "default": "[1, 31]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "zero": {
-                          "key": "Optional",
-                          "default": "[1, 3]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "one": {
-                          "key": "Optional",
-                          "default": "[3, 1]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "inverted": {
-                          "key": "Optional",
-                          "default": "False",
-                          "type": "boolean"
-                        }
-                      }
+                      "extends": [
+                        "remote_base.RC_SWITCH_PROTOCOL_SCHEMA"
+                      ]
                     },
                     "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
@@ -808,24 +526,24 @@
                   "family": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "a",
-                      "b",
-                      "c",
-                      "d",
-                      "e",
-                      "f",
-                      "g",
-                      "h",
-                      "i",
-                      "j",
-                      "k",
-                      "l",
-                      "m",
-                      "n",
-                      "o",
-                      "p"
-                    ],
+                    "values": {
+                      "a": null,
+                      "b": null,
+                      "c": null,
+                      "d": null,
+                      "e": null,
+                      "f": null,
+                      "g": null,
+                      "h": null,
+                      "i": null,
+                      "j": null,
+                      "k": null,
+                      "l": null,
+                      "m": null,
+                      "n": null,
+                      "o": null,
+                      "p": null
+                    },
                     "docs": "**string**: The family. Range is `a` to `p`.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   },
                   "group": {
@@ -848,33 +566,9 @@
                     "default": "1",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "pulse_length": {
-                          "key": "Required",
-                          "type": "integer",
-                          "data_type": "uint32_t"
-                        },
-                        "sync": {
-                          "key": "Optional",
-                          "default": "[1, 31]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "zero": {
-                          "key": "Optional",
-                          "default": "[1, 3]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "one": {
-                          "key": "Optional",
-                          "default": "[3, 1]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "inverted": {
-                          "key": "Optional",
-                          "default": "False",
-                          "type": "boolean"
-                        }
-                      }
+                      "extends": [
+                        "remote_base.RC_SWITCH_PROTOCOL_SCHEMA"
+                      ]
                     },
                     "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
@@ -889,12 +583,12 @@
                   "group": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "a",
-                      "b",
-                      "c",
-                      "d"
-                    ],
+                    "values": {
+                      "a": null,
+                      "b": null,
+                      "c": null,
+                      "d": null
+                    },
                     "docs": "**int**: The group. Range is 1 to 4.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   },
                   "device": {
@@ -912,33 +606,9 @@
                     "default": "1",
                     "type": "schema",
                     "schema": {
-                      "config_vars": {
-                        "pulse_length": {
-                          "key": "Required",
-                          "type": "integer",
-                          "data_type": "uint32_t"
-                        },
-                        "sync": {
-                          "key": "Optional",
-                          "default": "[1, 31]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "zero": {
-                          "key": "Optional",
-                          "default": "[1, 3]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "one": {
-                          "key": "Optional",
-                          "default": "[3, 1]",
-                          "data_type": "RC_SWITCH_TIMING_SCHEMA"
-                        },
-                        "inverted": {
-                          "key": "Optional",
-                          "default": "False",
-                          "type": "boolean"
-                        }
-                      }
+                      "extends": [
+                        "remote_base.RC_SWITCH_PROTOCOL_SCHEMA"
+                      ]
                     },
                     "docs": "The RC Switch protocol to use, see [RC Switch Protocol](https://esphome.io/components/remote_transmitter.html#remote-transmitter-rc-switch-protocol) for more info.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   },
@@ -1085,6 +755,7 @@
                 "config_vars": {
                   "code": {
                     "key": "Required",
+                    "templatable": true,
                     "docs": "**5-bytes list**: The code to listen for, see [remote_transmitter.transmit_midea Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-midea) for more info. Usually you only need to copy first 5 bytes directly from the dumper output.\n\n*See also: [remote_receiver Binary Sensor](https://esphome.io/components/remote_receiver.html#id1)*"
                   }
                 }

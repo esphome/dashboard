@@ -37,7 +37,7 @@ import {
   storeWifiSecrets,
 } from "../api/wifi";
 import { openInstallChooseDialog } from "../install-choose";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
@@ -787,6 +787,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       :host {
         --mdc-dialog-max-width: 390px;

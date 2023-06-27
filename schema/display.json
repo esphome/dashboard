@@ -4,11 +4,12 @@
       "addressable_light": {
         "docs": "The `addressable_light` display platform allows to display text and graphics on an addressable light that has been arranged in a display matrix.\n\n*See also: [Addressable Light](https://esphome.io/components/display/addressable_light.html#addressable-light)*"
       },
-      "ili9341": {
+      "ili9341": {},
+      "ili9xxx": {
         "dependencies": [
           "spi"
         ],
-        "docs": "The `ili9341` display platform allows you to use ILI9341 ([datasheet](https://cdn-shop.adafruit.com/datasheets/ILI9341.pdf), [Aliexpress](https://www.aliexpress.com/af/Ili9341.html)) displays with ESPHome. As this is a somewhat higher resolution display and may require pins beyond the typical SPI connections, it is better suited for use with the ESP32.\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#ili9341-tft-lcd)*"
+        "docs": "This component is the successor of the ILI9341 component allowing to control more display drivers and use 16bit colors when enough free ram.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#ili9xxx-tft-lcd-series)*"
       },
       "inkplate6": {
         "dependencies": [
@@ -18,7 +19,7 @@
         "docs": "All-in-one e-paper display `Inkplate 6`, `Inkplate 10` and `Inkplate 6 Plus`.\n\n*See also: [Inkplate 6, 10 and 6 Plus](https://esphome.io/components/display/inkplate6.html#inkplate-6-10-and-6-plus)*"
       },
       "lcd_gpio": {
-        "docs": "The `lcd_gpio` version of this component addresses the screen directly and does not employ a PCF8574 module. Each of the data pins of the LCD needs a dedicated GPIO pin on the ESP. Connecting the screen this way offers faster refresh, especially in conjunction with an [LCD menu](https://esphome.io/components/display_menu/lcd_menu.html#id1).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio-component)*"
+        "docs": "The `lcd_gpio` version of this component addresses the screen directly and does not employ a GPIO expander module. Each of the data pins of the LCD needs a dedicated GPIO pin on the ESP. Connecting the screen this way offers faster refresh, especially in conjunction with an [LCD Menu](https://esphome.io/components/display_menu/lcd_menu.html#lcd-menu).\n\n*See also: [lcd_gpio Component](https://esphome.io/components/display/lcd_display.html#lcd-gpio-component)*"
       },
       "lcd_pcf8574": {
         "dependencies": [
@@ -202,7 +203,7 @@
               "key": "Optional",
               "default": "True",
               "type": "boolean",
-              "docs": "**boolean**: Whether to automatically clear the display in each loop (\u2018\u2019true\u2019\u2019, default), or to keep the existing display content (must overwrite explicitly, e.g., only on data change).\n\n*See also: [ILI9341 TFT LCD](https://esphome.io/components/display/ili9341.html#configuration-variables)*"
+              "docs": "**boolean**: Whether to automatically clear the display in each loop (\u2018\u2019true\u2019\u2019, default), or to keep the existing display content (must overwrite explicitly, e.g., only on data change).\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
             }
           }
         }

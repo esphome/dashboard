@@ -47,7 +47,7 @@
             "idf_send_async": {
               "key": "Optional",
               "type": "boolean",
-              "docs": "**bool**: Only with `esp-idf`. If true publishing the message happens from the internal mqtt task. The client only enqueues the message. Defaults to `false`. The advantage of asyncronous publishing is that it doesn\u2019t block the esphome main thread. The disadvantage is a delay (up to 1-2 seconds) until the messages are actually sent out. Set this to true if ypi send large amounts of of data over mqtt.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+              "docs": "**bool**: Only with `esp-idf`. If true publishing the message happens from the internal mqtt task. The client only enqueues the message. Defaults to `false`. The advantage of asyncronous publishing is that it doesn\u2019t block the esphome main thread. The disadvantage is a delay (up to 1-2 seconds) until the messages are actually sent out. Set this to true if you send large amounts of of data over mqtt.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
             "certificate_authority": {
               "key": "Optional",
@@ -63,9 +63,9 @@
               "key": "Optional",
               "default": "True",
               "type": "enum",
-              "values": [
-                "CLEAN"
-              ],
+              "values": {
+                "CLEAN": null
+              },
               "docs": "**boolean**: If Home Assistant automatic discovery should be enabled. Defaults to `true`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
             "discovery_retain": {
@@ -83,20 +83,20 @@
               "key": "Optional",
               "default": "legacy",
               "type": "enum",
-              "values": [
-                "legacy",
-                "mac"
-              ],
+              "values": {
+                "legacy": null,
+                "mac": null
+              },
               "docs": "**string**: The unique_id generator to use. Can be one of `legacy` or `mac`. Defaults to `legacy`, which generates unique_id in format `ESP<component_type><default_object_id>`. `mac` generator uses format `<mac_address>-<component_type>-<fnv1_hash(friendly_name)>`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
             "discovery_object_id_generator": {
               "key": "Optional",
               "default": "none",
               "type": "enum",
-              "values": [
-                "none",
-                "device_name"
-              ],
+              "values": {
+                "none": null,
+                "device_name": null
+              },
               "docs": "**string**: The object_id generator to use. Can be one of `none` or `device_name`. Defaults to `none` which does not generate object_id. `device_name` generator uses format `<device_name>_<friendly_name>`.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
             "use_abbreviations": {
@@ -110,13 +110,8 @@
               "type": "schema",
               "schema": {
                 "extends": [
-                  "mqtt.MQTT_MESSAGE_BASE"
-                ],
-                "config_vars": {
-                  "payload": {
-                    "key": "Required"
-                  }
-                }
+                  "mqtt.MQTT_MESSAGE_SCHEMA"
+                ]
               },
               "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when a connection to the broker is established. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
@@ -125,13 +120,8 @@
               "type": "schema",
               "schema": {
                 "extends": [
-                  "mqtt.MQTT_MESSAGE_BASE"
-                ],
-                "config_vars": {
-                  "payload": {
-                    "key": "Required"
-                  }
-                }
+                  "mqtt.MQTT_MESSAGE_SCHEMA"
+                ]
               },
               "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when the MQTT connection is dropped. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
@@ -140,13 +130,8 @@
               "type": "schema",
               "schema": {
                 "extends": [
-                  "mqtt.MQTT_MESSAGE_BASE"
-                ],
-                "config_vars": {
-                  "payload": {
-                    "key": "Required"
-                  }
-                }
+                  "mqtt.MQTT_MESSAGE_SCHEMA"
+                ]
               },
               "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The message to send when the node shuts down and the connection is closed cleanly. See [Last Will And Birth Messages](https://esphome.io/components/mqtt.html#mqtt-last-will-birth) for more information.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
@@ -165,15 +150,15 @@
                   "level": {
                     "key": "Optional",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "ERROR",
-                      "WARN",
-                      "INFO",
-                      "DEBUG",
-                      "VERBOSE",
-                      "VERY_VERBOSE"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    },
                     "docs": "**string**: The log level to use for MQTT logs. See [Log Levels](https://esphome.io/components/logger.html#logger-log-levels) for options.\n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
                   }
                 }
@@ -287,6 +272,19 @@
               "default": "True",
               "type": "boolean",
               "docs": "**boolean**: If the published message should have a retain flag on or not. Defaults to `true`.\n\n*See also: [MQTTMessage](https://esphome.io/components/mqtt.html#mqttmessage)*"
+            }
+          }
+        }
+      },
+      "MQTT_MESSAGE_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "mqtt.MQTT_MESSAGE_BASE"
+          ],
+          "config_vars": {
+            "payload": {
+              "key": "Required"
             }
           }
         }

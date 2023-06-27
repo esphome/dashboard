@@ -130,11 +130,11 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                1,
-                2,
-                3
-              ],
+              "values": {
+                "1": null,
+                "2": null,
+                "3": null
+              },
               "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), int**: There is three levels of brightness (`1`, `2` or `3`) from lowest to highest brightness.\n\n*See also: [TM1651 Battery Display](https://esphome.io/components/tm1651.html#tm1651-set-brightness-action)*"
             }
           }

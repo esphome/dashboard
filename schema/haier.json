@@ -1,0 +1,291 @@
+{
+  "haier.climate": {
+    "schemas": {
+      "BASE_CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "climate.CLIMATE_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "supported_modes": {
+              "key": "Optional",
+              "is_list": true,
+              "type": "enum",
+              "values": {
+                "OFF": null,
+                "AUTO": null,
+                "COOL": null,
+                "HEAT": null,
+                "DRY": null,
+                "FAN_ONLY": null
+              }
+            },
+            "supported_swing_modes": {
+              "key": "Optional",
+              "default": "['OFF', 'VERTICAL', 'HORIZONTAL', 'BOTH']",
+              "is_list": true,
+              "type": "enum",
+              "values": {
+                "OFF": null,
+                "VERTICAL": null,
+                "HORIZONTAL": null,
+                "BOTH": null
+              }
+            },
+            "uart_id": {
+              "key": "GeneratedID",
+              "use_id_type": "uart::UARTComponent",
+              "type": "use_id"
+            }
+          }
+        }
+      },
+      "CONFIG_SCHEMA": {
+        "type": "typed",
+        "types": {
+          "SMARTAIR2": {
+            "extends": [
+              "haier.climate.BASE_CONFIG_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "haier::Smartair2Climate",
+                  "parents": [
+                    "haier::HaierClimateBase",
+                    "uart::UARTDevice",
+                    "climate::Climate",
+                    "EntityBase",
+                    "Component"
+                  ]
+                },
+                "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+              }
+            }
+          },
+          "HON": {
+            "extends": [
+              "haier.climate.BASE_CONFIG_SCHEMA"
+            ],
+            "config_vars": {
+              "id": {
+                "key": "GeneratedID",
+                "id_type": {
+                  "class": "haier::HonClimate",
+                  "parents": [
+                    "haier::HaierClimateBase",
+                    "uart::UARTDevice",
+                    "climate::Climate",
+                    "EntityBase",
+                    "Component"
+                  ]
+                },
+                "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+              },
+              "wifi_signal": {
+                "key": "Optional",
+                "default": "True",
+                "type": "boolean"
+              },
+              "beeper": {
+                "key": "Optional",
+                "default": "True",
+                "type": "boolean"
+              },
+              "outdoor_temperature": {
+                "key": "Optional",
+                "type": "schema",
+                "schema": {
+                  "extends": [
+                    "sensor.SENSOR_SCHEMA"
+                  ],
+                  "config_vars": {
+                    "unit_of_measurement": {
+                      "default": "\u00b0C"
+                    },
+                    "icon": {
+                      "default": "mdi:thermometer"
+                    },
+                    "accuracy_decimals": {
+                      "default": "0"
+                    },
+                    "device_class": {
+                      "default": "temperature"
+                    },
+                    "state_class": {
+                      "default": "measurement"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "typed_key": "protocol"
+      },
+      "HAIER_BASE_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "haier::HaierClimateBase",
+              "type": "use_id"
+            }
+          }
+        }
+      },
+      "HAIER_HON_BASE_ACTION_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "haier::HonClimate",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "display_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "display_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "beeper_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "beeper_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "start_steri_cleaning": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "start_self_cleaning": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "set_vertical_airflow": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "haier::HonClimate",
+              "type": "use_id"
+            },
+            "vertical_airflow": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": {
+                "UP": null,
+                "CENTER": null,
+                "DOWN": null
+              }
+            }
+          }
+        }
+      },
+      "set_horizontal_airflow": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "haier::HonClimate",
+              "type": "use_id"
+            },
+            "horizontal_airflow": {
+              "key": "Required",
+              "templatable": true,
+              "type": "enum",
+              "values": {
+                "LEFT": null,
+                "CENTER": null,
+                "RIGHT": null
+              }
+            }
+          }
+        }
+      },
+      "health_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "health_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "power_toggle": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "power_off": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "power_on": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "haier.climate.HAIER_BASE_ACTION_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import { LitElement, html, CSSResultGroup, css } from "lit";
+import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
 import { deleteConfiguration } from "../api/configuration";
 import { fireEvent } from "../util/fire-event";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-delete-device-dialog")
 class ESPHomeDeleteDeviceDialog extends LitElement {
@@ -44,13 +45,14 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
     fireEvent(this, "deleted");
   }
 
-  static get styles(): CSSResultGroup {
-    return css`
+  static styles = [
+    esphomeDialogStyles,
+    css`
       .warning {
         --mdc-theme-primary: var(--alert-error-color);
       }
-    `;
-  }
+    `,
+  ];
 }
 
 declare global {

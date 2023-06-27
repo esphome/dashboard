@@ -5,7 +5,6 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "core.COMPONENT_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
@@ -25,7 +24,7 @@
               "key": "Optional",
               "use_id_type": "time::RealTimeClock",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of a [Time Component](https://esphome.io/components/time.html#time) which can be used to set the time on the BedJet device.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of a [Time Component](https://esphome.io/components/time/index.html) which can be used to set the time on the BedJet device.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
             },
             "receive_timeout": {
               "key": "Optional",
@@ -38,7 +37,7 @@
               }
             },
             "ble_client_id": {
-              "key": "Required",
+              "key": "GeneratedID",
               "use_id_type": "ble_client::BLEClient",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the BLE Client.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#configuration-variables)*"
@@ -94,14 +93,13 @@
               "key": "Optional",
               "default": "heat",
               "type": "enum",
-              "values": [
-                "heat",
-                "extended"
-              ],
-              "docs": "**string**: The primary heating mode to use for `HVACMode.HEAT`:\n  * `heat` (Default) - Setting `hvac_mode=heat` uses the BedJet \u201cHEAT\u201d mode.\n  \n  * `extended` - Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode.\n  \n  Whichever is not selected will be made available as a custom preset.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*",
-              "values_docs": {
-                "extended": "Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode."
-              }
+              "values": {
+                "heat": null,
+                "extended": {
+                  "docs": "Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode."
+                }
+              },
+              "docs": "**string**: The primary heating mode to use for `HVACMode.HEAT`:\n  * `heat` (Default) - Setting `hvac_mode=heat` uses the BedJet \u201cHEAT\u201d mode.\n  \n  * `extended` - Setting `hvac_mode=heat` uses BedJet \u201cEXT HEAT\u201d mode.\n  \n  Whichever is not selected will be made available as a custom preset.\n\n*See also: [bedjet Climate](https://esphome.io/components/climate/bedjet.html#id1)*"
             },
             "update_interval": {
               "key": "Optional",

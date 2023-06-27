@@ -178,7 +178,7 @@
               "key": "Optional",
               "use_id_type": "time::RealTimeClock",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of a [Time](https://esphome.io/components/time.html) component. If set, the time will be synchronized with every connection.\n\n*See also: [PVVX MiThermometer Display](https://esphome.io/components/display/pvvx_mithermometer.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: ID of a [Time Component](https://esphome.io/components/time/index.html). If set, the time will be synchronized with every connection.\n\n*See also: [PVVX MiThermometer Display](https://esphome.io/components/display/pvvx_mithermometer.html#configuration-variables)*"
             },
             "auto_clear_enabled": {
               "key": "Optional",

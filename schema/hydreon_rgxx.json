@@ -19,10 +19,10 @@
             "model": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "RG_9",
-                "RG_15"
-              ],
+              "values": {
+                "RG_9": null,
+                "RG_15": null
+              },
               "docs": "**int**: Specify which rain sensor you have connected. Must be either `RG_9` or `RG_15`.\n\n*See also: [Hydreon Rain Sensor](https://esphome.io/components/sensor/hydreon_rgxx.html#configuration-variables)*"
             },
             "acc": {
@@ -40,7 +40,7 @@
                     "default": "2"
                   },
                   "device_class": {
-                    "default": "humidity"
+                    "default": "precipitation"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -64,7 +64,7 @@
                     "default": "2"
                   },
                   "device_class": {
-                    "default": "humidity"
+                    "default": "precipitation"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -88,10 +88,10 @@
                     "default": "2"
                   },
                   "device_class": {
-                    "default": "humidity"
+                    "default": "precipitation"
                   },
                   "state_class": {
-                    "default": "measurement"
+                    "default": "total_increasing"
                   }
                 }
               },
@@ -112,7 +112,7 @@
                     "default": "2"
                   },
                   "device_class": {
-                    "default": "humidity"
+                    "default": "precipitation_intensity"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -136,7 +136,7 @@
                     "default": "0"
                   },
                   "device_class": {
-                    "default": "humidity"
+                    "default": "precipitation_intensity"
                   },
                   "state_class": {
                     "default": "measurement"

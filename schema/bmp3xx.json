@@ -40,14 +40,14 @@
                     "key": "Optional",
                     "default": "2X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X",
-                      "32X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null,
+                      "32X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bmp3xx.html#bmp3xx-oversampling).\n\n*See also: [BMP388 / BMP390 Temperature+Pressure Sensor](https://esphome.io/components/sensor/bmp3xx.html#configuration-variables)*"
                   }
                 }
@@ -78,14 +78,14 @@
                     "key": "Optional",
                     "default": "16X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X",
-                      "32X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null,
+                      "32X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bmp3xx.html#bmp3xx-oversampling).\n\n*See also: [BMP388 / BMP390 Temperature+Pressure Sensor](https://esphome.io/components/sensor/bmp3xx.html#configuration-variables)*"
                   }
                 }
@@ -96,16 +96,16 @@
               "key": "Optional",
               "default": "OFF",
               "type": "enum",
-              "values": [
-                "OFF",
-                "2X",
-                "4X",
-                "8X",
-                "16X",
-                "32X",
-                "64X",
-                "128X"
-              ],
+              "values": {
+                "OFF": null,
+                "2X": null,
+                "4X": null,
+                "8X": null,
+                "16X": null,
+                "32X": null,
+                "64X": null,
+                "128X": null
+              },
               "docs": "Set up an Infinite Impulse Response filter to increase accuracy. One of `OFF`, `2x`, `4x`, `16x`, `32`, `64x`, `128x`. Defaults to `OFF`.\n\n*See also: [BMP388 / BMP390 Temperature+Pressure Sensor](https://esphome.io/components/sensor/bmp3xx.html#configuration-variables)*"
             },
             "update_interval": {

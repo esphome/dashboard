@@ -20,7 +20,7 @@ export class EWHeaderMenu extends LitElement {
     return html`
       <a href=${this._pico ? "/" : "/?pico"}>
         <mwc-button
-          icon="arrow_forward"
+          icon="${this._isWide ? "arrow_forward" : ""}"
           .label=${!this._isWide
             ? ""
             : this._pico
@@ -54,9 +54,9 @@ export class EWHeaderMenu extends LitElement {
 
   static styles = css`
     mwc-button {
-      --mdc-theme-primary: black;
       margin-left: 16px;
       line-height: 1em;
+      --mdc-theme-primary: var(--primary-text-color);
     }
     mwc-button img {
       height: 32px;

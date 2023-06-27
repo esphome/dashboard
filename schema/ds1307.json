@@ -28,8 +28,7 @@
             "address": {
               "key": "Optional",
               "default": "104",
-              "data_type": "hex_uint8_t",
-              "docs": "**int**: Manually specify the I\u00b2C address of the RTC. Defaults to `0x68`.\n\n*See also: [DS1307 Time Source](https://esphome.io/components/time.html#ds1307-time-source)*"
+              "data_type": "hex_uint8_t"
             }
           }
         }
@@ -49,7 +48,7 @@
             }
           }
         },
-        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time to the RTC hardware.\n\n*See also: [`ds1307.write_time` Action](https://esphome.io/components/time.html#ds1307-write-time-action)*"
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time to the RTC hardware.\n\n*See also: [`ds1307.write_time` Action](https://esphome.io/components/time/ds1307.html#ds1307-write-time-action)*"
       },
       "read_time": {
         "type": "schema",
@@ -63,7 +62,7 @@
             }
           }
         },
-        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time from the RTC hardware.\n\n*See also: [`ds1307.read_time` Action](https://esphome.io/components/time.html#ds1307-read-time-action)*"
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time from the RTC hardware.\n\n*See also: [`ds1307.read_time` Action](https://esphome.io/components/time/ds1307.html#ds1307-read-time-action)*"
       }
     }
   }

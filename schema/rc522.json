@@ -28,7 +28,12 @@
             "on_tag": {
               "key": "Optional",
               "type": "trigger",
-              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is read. See [on_tag Action](https://esphome.io/components/binary_sensor/rc522.html#rc522-on-tag).\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#id1)*"
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform when a tag is read. See [on_tag Trigger](https://esphome.io/components/binary_sensor/rc522.html#rc522-on-tag).\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#id1)*"
+            },
+            "on_tag_removed": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Automation](https://esphome.io/guides/automations.html#automation)**: An automation to perform after a tag is removed. See [on_tag_removed Trigger](https://esphome.io/components/binary_sensor/rc522.html#rc522-on-tag-removed).\n\n*See also: [rc522 Over I\u00b2C](https://esphome.io/components/binary_sensor/rc522.html#id1)*"
             },
             "update_interval": {
               "key": "Optional",
@@ -60,7 +65,7 @@
                   "EntityBase"
                 ]
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#id2)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#id3)*"
             },
             "rc522_id": {
               "key": "GeneratedID",
@@ -69,7 +74,7 @@
             },
             "uid": {
               "key": "Required",
-              "docs": "**string**: The unique ID of the RFID tag. This is a hyphen-separated list of hexadecimal values. For example `74-10-37-94`.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#id2)*"
+              "docs": "**string**: The unique ID of the NFC/RFID tag. This is a hyphen-separated list of hexadecimal values. For example `74-10-37-94`.\n\n*See also: [rc522 Binary Sensor](https://esphome.io/components/binary_sensor/rc522.html#id3)*"
             }
           }
         }

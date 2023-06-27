@@ -40,31 +40,39 @@
             "type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "RESULT",
-                "ERROR",
-                "PROPORTIONAL",
-                "INTEGRAL",
-                "DERIVATIVE",
-                "HEAT",
-                "COOL",
-                "KP",
-                "KI",
-                "KD"
-              ],
-              "docs": "**string**: The value to monitor. One of\n  * `RESULT` - The resulting value (sum of P, I, and D terms).\n  \n  * `ERROR` - The calculated error (setpoint - process_variable)\n  \n  * `PROPORTIONAL` - The proportional term of the PID controller.\n  \n  * `INTEGRAL` - The integral term of the PID controller.\n  \n  * `DERIVATIVE` - The derivative term of the PID controller.\n  \n  * `HEAT` - The resulting heating power to the supplied to the `heat_output`.\n  \n  * `COOL` - The resulting cooling power to the supplied to the `cool_output`.\n  \n  * `KP` - The current factor for the proportional term of the PID controller.\n  \n  * `KI` - The current factor for the integral term of the PID controller.\n  \n  * `KD` - The current factor for the differential term of the PID controller.\n  \n  \n\n*See also: [pid Sensor](https://esphome.io/components/climate/pid.html#pid-sensor)*",
-              "values_docs": {
-                "RESULT": "The resulting value (sum of P, I, and D terms).",
-                "ERROR": "The calculated error (setpoint - process_variable)",
-                "PROPORTIONAL": "The proportional term of the PID controller.",
-                "INTEGRAL": "The integral term of the PID controller.",
-                "DERIVATIVE": "The derivative term of the PID controller.",
-                "HEAT": "The resulting heating power to the supplied to the `heat_output`.",
-                "COOL": "The resulting cooling power to the supplied to the `cool_output`.",
-                "KP": "The current factor for the proportional term of the PID controller.",
-                "KI": "The current factor for the integral term of the PID controller.",
-                "KD": "The current factor for the differential term of the PID controller."
-              }
+              "values": {
+                "RESULT": {
+                  "docs": "The resulting value (sum of P, I, and D terms)."
+                },
+                "ERROR": {
+                  "docs": "The calculated error (setpoint - process_variable)"
+                },
+                "PROPORTIONAL": {
+                  "docs": "The proportional term of the PID controller."
+                },
+                "INTEGRAL": {
+                  "docs": "The integral term of the PID controller."
+                },
+                "DERIVATIVE": {
+                  "docs": "The derivative term of the PID controller."
+                },
+                "HEAT": {
+                  "docs": "The resulting heating power to the supplied to the `heat_output`."
+                },
+                "COOL": {
+                  "docs": "The resulting cooling power to the supplied to the `cool_output`."
+                },
+                "KP": {
+                  "docs": "The current factor for the proportional term of the PID controller."
+                },
+                "KI": {
+                  "docs": "The current factor for the integral term of the PID controller."
+                },
+                "KD": {
+                  "docs": "The current factor for the differential term of the PID controller."
+                }
+              },
+              "docs": "**string**: The value to monitor. One of\n  * `RESULT` - The resulting value (sum of P, I, and D terms).\n  \n  * `ERROR` - The calculated error (setpoint - process_variable)\n  \n  * `PROPORTIONAL` - The proportional term of the PID controller.\n  \n  * `INTEGRAL` - The integral term of the PID controller.\n  \n  * `DERIVATIVE` - The derivative term of the PID controller.\n  \n  * `HEAT` - The resulting heating power to the supplied to the `heat_output`.\n  \n  * `COOL` - The resulting cooling power to the supplied to the `cool_output`.\n  \n  * `KP` - The current factor for the proportional term of the PID controller.\n  \n  * `KI` - The current factor for the integral term of the PID controller.\n  \n  * `KD` - The current factor for the differential term of the PID controller.\n  \n  \n\n*See also: [pid Sensor](https://esphome.io/components/climate/pid.html#pid-sensor)*"
             }
           }
         }
@@ -112,6 +120,44 @@
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of a [float output](https://esphome.io/components/output/index.html#config-output) that increases the current temperature. At least one of `heat_output` and `cool_output` must be specified.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
             },
+            "deadband_parameters": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "threshold_high": {
+                    "key": "Required",
+                    "docs": "**float**: Specifies a high/low threshold defining the deadband around the target temperature. For instance with `default_target_temperature` of `21\u00b0C` and thresholds of `+/-0.5\u00b0C`, the deadband will be between `20.5\u00b0C - 21.5\u00b0C`. The PID controller will limit output changes within the deadband.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "threshold_low": {
+                    "key": "Required",
+                    "docs": "**float**: Specifies a high/low threshold defining the deadband around the target temperature. For instance with `default_target_temperature` of `21\u00b0C` and thresholds of `+/-0.5\u00b0C`, the deadband will be between `20.5\u00b0C - 21.5\u00b0C`. The PID controller will limit output changes within the deadband.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "kp_multiplier": {
+                    "key": "Optional",
+                    "default": "0.1",
+                    "docs": "**float**: Set the `kp` gain when inside the deadband. Defaults to `0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "ki_multiplier": {
+                    "key": "Optional",
+                    "default": "0.0",
+                    "docs": "**float**: Set the `ki` gain when inside the deadband. Defaults to `0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "kd_multiplier": {
+                    "key": "Optional",
+                    "default": "0.0",
+                    "docs": "**float**: Set the `kd` gain when inside the deadband. Recommended this is set to `0`. Defaults to `0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "deadband_output_averaging_samples": {
+                    "key": "Optional",
+                    "default": "1",
+                    "type": "integer",
+                    "docs": "**int**: Typically when inside the deadband the PID Controller has reached a state of equilibrium, so it advantageous to use a higher number of output samples like 10-30 samples. Defaults to `1` which is no sampling/averaging.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  }
+                }
+              },
+              "docs": "Enables a deadband to stabilise and minimise changes in the output when the temperature is close to the target temperature. See [Deadband Setup](https://esphome.io/components/climate/pid.html#deadband-setup).\n  * **threshold_high/threshold_low** (**Required**, float): Specifies a high/low threshold defining the deadband around the target temperature. For instance with `default_target_temperature` of `21\u00b0C` and thresholds of `+/-0.5\u00b0C`, the deadband will be between `20.5\u00b0C - 21.5\u00b0C`. The PID controller will limit output changes within the deadband.\n  \n  * **kp_multiplier** (*Optional*, float): Set the `kp` gain when inside the deadband. Defaults to `0`.\n  \n  * **ki_multiplier** (*Optional*, float): Set the `ki` gain when inside the deadband. Defaults to `0`.\n  \n  * **kd_multiplier** (*Optional*, float): Set the `kd` gain when inside the deadband. Recommended this is set to `0`. Defaults to `0`.\n  \n  * **deadband_output_averaging_samples** (*Optional*, int): Typically when inside the deadband the PID Controller has reached a state of equilibrium, so it advantageous to use a higher number of output samples like 10-30 samples. Defaults to `1` which is no sampling/averaging.\n  \n  \n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+            },
             "control_parameters": {
               "key": "Required",
               "type": "schema",
@@ -131,6 +177,11 @@
                     "default": "0.0",
                     "docs": "**float**: The factor for the derivative term of the PID controller. Defaults to `0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
                   },
+                  "starting_integral_term": {
+                    "key": "Optional",
+                    "default": "0.0",
+                    "docs": "**float**: Set the initial output, by priming the integral term. This is useful for when your system is rebooted and you don\u2019t want to wait for it to get back equilibrium.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
                   "min_integral": {
                     "key": "Optional",
                     "default": "-1",
@@ -140,10 +191,22 @@
                     "key": "Optional",
                     "default": "1",
                     "docs": "**float**: The minimum value of the integral term multiplied by `ki` to prevent windup. Defaults to `1`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "derivative_averaging_samples": {
+                    "key": "Optional",
+                    "default": "1",
+                    "type": "integer",
+                    "docs": "**int**: average the derivative term over this many samples. Many controllers don\u2019t use the derivative term because it is sensitive to slight changes in the input sensor. By taking an average of the derivative term it might become more useful for you. Most PID controllers call this derivative filtering. The derivative term is used to pre-act so don\u2019t filter too much. Defaults to `1` which is no sampling/averaging.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+                  },
+                  "output_averaging_samples": {
+                    "key": "Optional",
+                    "default": "1",
+                    "type": "integer",
+                    "docs": "**int**: average the output over this many samples. PID controllers can be quite sensitive to small changes on the input sensor. By averaging the last X output samples, the temperature can be more stable. However, the larger the sampling window, the less responsive the PID controller. Defaults to `1` which is no sampling/averaging.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
                   }
                 }
               },
-              "docs": "Control parameters of the PID controller.\n  * **kp** (**Required**, float): The factor for the proportional term of the PID controller.\n  \n  * **ki** (*Optional*, float): The factor for the integral term of the PID controller. Defaults to `0`.\n  \n  * **kd** (*Optional*, float): The factor for the derivative term of the PID controller. Defaults to `0`.\n  \n  * **min_integral** (*Optional*, float): The maximum value of the integral term multiplied by `ki` to prevent windup. Defaults to `-1`.\n  \n  * **max_integral** (*Optional*, float): The minimum value of the integral term multiplied by `ki` to prevent windup. Defaults to `1`.\n  \n  \n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
+              "docs": "Control parameters of the PID controller.\n  * **kp** (**Required**, float): The factor for the proportional term of the PID controller.\n  \n  * **ki** (*Optional*, float): The factor for the integral term of the PID controller. Defaults to `0`.\n  \n  * **kd** (*Optional*, float): The factor for the derivative term of the PID controller. Defaults to `0`.\n  \n  * **min_integral** (*Optional*, float): The maximum value of the integral term multiplied by `ki` to prevent windup. Defaults to `-1`.\n  \n  * **max_integral** (*Optional*, float): The minimum value of the integral term multiplied by `ki` to prevent windup. Defaults to `1`.\n  \n  * **starting_integral_term** (*Optional*, float): Set the initial output, by priming the integral term. This is useful for when your system is rebooted and you don\u2019t want to wait for it to get back equilibrium.\n  \n  * **output_averaging_samples** (*Optional*, int): average the output over this many samples. PID controllers can be quite sensitive to small changes on the input sensor. By averaging the last X output samples, the temperature can be more stable. However, the larger the sampling window, the less responsive the PID controller. Defaults to `1` which is no sampling/averaging.\n  \n  * **derivative_averaging_samples** (*Optional*, int): average the derivative term over this many samples. Many controllers don\u2019t use the derivative term because it is sensitive to slight changes in the input sensor. By taking an average of the derivative term it might become more useful for you. Most PID controllers call this derivative filtering. The derivative term is used to pre-act so don\u2019t filter too much. Defaults to `1` which is no sampling/averaging.\n  \n  \n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#configuration-variables)*"
             }
           }
         }
@@ -189,7 +252,7 @@
             "negative_output": {
               "key": "Optional",
               "default": "-1.0",
-              "docs": "**float**: The positive output power to drive the cool output at. Defaults to `-1.0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#climate-pid-autotune-action)*"
+              "docs": "**float**: The negative output power to drive the cool output at. Defaults to `-1.0`.\n\n*See also: [PID Climate](https://esphome.io/components/climate/pid.html#climate-pid-autotune-action)*"
             }
           }
         },

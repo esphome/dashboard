@@ -1,35 +1,42 @@
 import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { subscribeDevices, ListDevicesResult } from "../api/devices";
+import {
+  subscribeDevices,
+  ImportableDevice,
+  ConfiguredDevice,
+} from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
+import "@material/mwc-textfield";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
 import "./importable-device-card";
+import "../components/esphome-search";
 import { MetadataRefresher } from "./device-metadata-refresher";
+import { ESPHomeSearch } from "../components/esphome-search";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
-  @state() private _devices?: ListDevicesResult;
-  @state() private _onlineStatus?: Record<string, boolean>;
+  @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
+  @state() private _onlineStatus: Record<string, boolean> = {};
+
+  @query("esphome-search") private _search!: ESPHomeSearch;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
-  private _highlightOnAdd = false;
   private _metadataRefresher = new MetadataRefresher();
+  private _new = new Set<string>();
+
+  private _isImportable = (item: any): item is ImportableDevice => {
+    return "package_import_url" in item;
+  };
 
   protected render() {
-    if (this._devices === undefined) {
-      return html``;
-    }
-    if (
-      this._devices.configured.length === 0 &&
-      this._devices.importable.length === 0
-    ) {
+    if (this._devices?.length === 0) {
       return html`
-        <div class="welcome-container">
+        <div class="no-result-container">
           <h5>Welcome to ESPHome</h5>
           <p>It looks like you don't yet have any devices.</p>
           <p>
@@ -44,44 +51,85 @@ class ESPHomeDevicesList extends LitElement {
       `;
     }
 
-    const importable = this._devices.importable;
+    // catch when 1st load there is no data yet, and we don't want to show no devices message
+    if (!this._devices) {
+      return html``;
+    }
+
+    const filtered: Array<ImportableDevice | ConfiguredDevice> =
+      this._devices!.filter((item) => this._filter(item));
+
+    let htmlClass = "no-result-container";
+    let htmlDevices = html`
+      <h5>No devices found</h5>
+      <p>Adjust your search criteria.</p>
+    `;
+    if ((filtered?.length ? filtered?.length : 0) > 0) {
+      htmlClass = "grid";
+      htmlDevices = html`${repeat(
+        filtered!,
+        (device) => device.name,
+        (device) => html`
+          ${this._isImportable(device)
+            ? html`<esphome-importable-device-card
+                .device=${device}
+                @adopted=${this._updateDevices}
+              ></esphome-importable-device-card>`
+            : html`<esphome-configured-device-card
+                ${animate({
+                  id: device.name,
+                  inId: device.name,
+                  skipInitial: true,
+                  disabled: !this._new.has(device.name),
+                })}
+                data-name=${device.name}
+                .device=${device}
+                .onlineStatus=${(this._onlineStatus || {})[
+                  device.configuration
+                ]}
+                .highlightOnAdd=${this._new.has(device.name)}
+                @deleted=${this._updateDevices}
+              ></esphome-configured-device-card>`}
+        `
+      )}`;
+    }
 
     return html`
-      <div class="grid">
-        ${importable.length
-          ? html`
-              ${repeat(
-                importable,
-                (device) => device.name,
-                (device) => html`
-                  <esphome-importable-device-card
-                    ${animate({ id: device.name, skipInitial: true })}
-                    .device=${device}
-                    @adopted=${this._updateDevices}
-                    .highlightOnAdd=${this._highlightOnAdd}
-                  ></esphome-importable-device-card>
-                `
-              )}
-            `
-          : ""}
-        ${repeat(
-          this._devices.configured,
-          (device) => device.name,
-          (device) => html`<esphome-configured-device-card
-            ${animate({
-              id: device.name,
-              inId: device.name,
-              skipInitial: true,
-            })}
-            .device=${device}
-            @deleted=${this._updateDevices}
-            .onlineStatus=${(this._onlineStatus || {})[device.configuration]}
-            data-name=${device.name}
-            .highlightOnAdd=${this._highlightOnAdd}
-          ></esphome-configured-device-card>`
-        )}
-      </div>
+      <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+      <div class="${htmlClass}">${htmlDevices}</div>
     `;
+  }
+
+  private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
+    if (this._search?.value) {
+      const searchValue = this._search!.value.toLowerCase();
+      if (item.name!.toLowerCase().indexOf(searchValue) >= 0) {
+        return true;
+      }
+      if (
+        "friendly_name" in item &&
+        item.friendly_name &&
+        item.friendly_name!.toLowerCase().indexOf(searchValue) >= 0
+      ) {
+        return true;
+      }
+      if (
+        "comment" in item &&
+        item.comment &&
+        item.comment!.toLowerCase().indexOf(searchValue) >= 0
+      ) {
+        return true;
+      }
+      if (
+        "project_name" in item &&
+        item.project_name &&
+        item.project_name!.toLowerCase().indexOf(searchValue) >= 0
+      ) {
+        return true;
+      }
+      return false;
+    }
+    return true;
   }
 
   private _handleOpenWizardClick() {
@@ -118,9 +166,10 @@ class ESPHomeDevicesList extends LitElement {
     esphome-importable-device-card {
       margin: 0.5rem 0 1rem 0;
     }
-    .welcome-container {
+    .no-result-container {
       text-align: center;
       margin-top: 40px;
+      color: var(--primary-text-color);
     }
     h5 {
       font-size: 1.64rem;
@@ -131,9 +180,6 @@ class ESPHomeDevicesList extends LitElement {
     hr {
       margin-top: 16px;
       margin-bottom: 16px;
-    }
-    mwc-button {
-      --mdc-theme-primary: #4caf50;
     }
   `;
 
@@ -154,20 +200,31 @@ class ESPHomeDevicesList extends LitElement {
     super.connectedCallback();
 
     this._devicesUnsub = subscribeDevices(async (devices) => {
+      if (!devices) return;
       let newName: string | undefined;
 
-      if (this._devices !== undefined) {
-        this._highlightOnAdd = true;
-        const oldNames = new Set(this._devices.configured.map((d) => d.name));
+      const newDevices = new Set<string>();
+      const newList: Array<ImportableDevice | ConfiguredDevice> = [];
 
-        for (const device of devices.configured) {
-          if (!oldNames.has(device.name)) {
-            newName = device.name;
-            break;
-          }
-        }
+      if (devices.importable) {
+        devices.importable.forEach((d) => newList.push(d));
       }
-      this._devices = devices;
+
+      if (devices.configured) {
+        devices.configured.forEach((d) => {
+          if (
+            this._devices &&
+            this._devices.filter((old) => old.name === d.name).length === 0
+          ) {
+            newDevices.add(d.name);
+            newName = d.name;
+          }
+          newList.push(d);
+        });
+      }
+
+      this._devices = newList;
+      this._new = newDevices;
 
       if (newName) {
         await this.updateComplete;
@@ -177,7 +234,7 @@ class ESPHomeDevicesList extends LitElement {
       // check if any YAML has been copied in and needs to
       // have it's metadata generated
       for (const device of devices.configured) {
-        if (device.loaded_integrations.length === 0) {
+        if (device.loaded_integrations?.length === 0) {
           this._metadataRefresher.add(device.configuration);
         }
       }

@@ -154,7 +154,7 @@
                     "default": "2"
                   },
                   "device_class": {
-                    "default": "power"
+                    "default": "current"
                   }
                 }
               },

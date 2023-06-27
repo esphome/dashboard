@@ -41,7 +41,7 @@
                   }
                 }
               },
-              "docs": "The eCO_2 data from the sensor in parts per million (ppm).\n  * **name** (**Required**, string): The name for the CO_2 sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "The eCO_2 data from the sensor in parts per million (ppm).\n  * **name** (**Required**, string): The name for the CO_2 sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "tvoc": {
               "key": "Required",
@@ -68,7 +68,7 @@
                   }
                 }
               },
-              "docs": "The information for the total volatile organic compound sensor in parts per billion (ppb).\n  * **name** (**Required**, string): The name for the tvoc sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "The information for the total volatile organic compound sensor in parts per billion (ppb).\n  * **name** (**Required**, string): The name for the tvoc sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "version": {
               "key": "Optional",
@@ -83,29 +83,29 @@
                   }
                 }
               },
-              "docs": "This sensor reports the firmware (\u2018application\u2019) version in text, with the internal hex representation of the version number behind it, so version 1.0.0 will be reported as \u20181.0.0 (0x1000)\u2019.\n  * **name** (**Required**, string): The name for the version sensor.\n  \n  \n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "This sensor reports the firmware (\u2018application\u2019) version in text, with the internal hex representation of the version number behind it, so version 1.0.0 will be reported as \u20181.0.0 (0x1000)\u2019.\n  * **name** (**Required**, string): The name for the version sensor.\n  \n  \n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "baseline": {
               "key": "Optional",
               "data_type": "hex_uint16_t",
-              "docs": "**int**: The baseline value for the unit, for calibration purposes. See [Calibrating Baseline](https://esphome.io/components/sensor/ccs811.html#ccs811-calibrating) for more info.\n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "**int**: The baseline value for the unit, for calibration purposes. See [Calibrating Baseline](https://esphome.io/components/sensor/ccs811.html#ccs811-calibrating) for more info.\n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "temperature": {
               "key": "Optional",
               "use_id_type": "sensor::Sensor",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Give an external temperature sensor ID here. This can improve the sensor\u2019s internal calculations.\n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Give an external temperature sensor ID here. This can improve the sensor\u2019s internal calculations.\n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "humidity": {
               "key": "Optional",
               "use_id_type": "sensor::Sensor",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Give an external humidity sensor ID here. This can improve the sensor\u2019s internal calculations.\n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Give an external humidity sensor ID here. This can improve the sensor\u2019s internal calculations.\n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",
               "default": "60s",
-              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             },
             "i2c_id": {
               "key": "GeneratedID",
@@ -116,7 +116,7 @@
               "key": "Optional",
               "default": "90",
               "data_type": "hex_uint8_t",
-              "docs": "**int**: The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) address of the sensor.\n\n*See also: [CCS811 CO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
+              "docs": "**int**: The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) address of the sensor.\n\n*See also: [CCS811 eCO_2 and Volatile Organic Compound Sensor](https://esphome.io/components/sensor/ccs811.html#configuration-variables)*"
             }
           },
           "extends": [

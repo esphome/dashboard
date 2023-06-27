@@ -51,17 +51,18 @@
               "key": "Optional",
               "default": "leading pulse",
               "type": "enum",
-              "values": [
-                "LEADING_PULSE",
-                "LEADING",
-                "TRAILING"
-              ],
-              "docs": "Set the method for dimming, can be:\n  * `leading pulse`: (default) a short pulse to trigger a triac.\n  \n  * `leading`: gate pin driven high until the zero cross is detected\n  \n  * `trailing`: gate pin driven high from zero cross until dim period, this method is suitable for mosfet dimmers only.\n  \n  \n\n*See also: [AC Dimmer Component](https://esphome.io/components/output/ac_dimmer.html#configuration-variables)*",
-              "values_docs": {
-                "LEADING_PULSE": "(default) a short pulse to trigger a triac.",
-                "LEADING": "gate pin driven high until the zero cross is detected",
-                "TRAILING": "gate pin driven high from zero cross until dim period, this method is suitable for mosfet dimmers only."
-              }
+              "values": {
+                "LEADING_PULSE": {
+                  "docs": "(default) a short pulse to trigger a triac."
+                },
+                "LEADING": {
+                  "docs": "gate pin driven high until the zero cross is detected"
+                },
+                "TRAILING": {
+                  "docs": "gate pin driven high from zero cross until dim period, this method is suitable for mosfet dimmers only."
+                }
+              },
+              "docs": "Set the method for dimming, can be:\n  * `leading pulse`: (default) a short pulse to trigger a triac.\n  \n  * `leading`: gate pin driven high until the zero cross is detected\n  \n  * `trailing`: gate pin driven high from zero cross until dim period, this method is suitable for mosfet dimmers only.\n  \n  \n\n*See also: [AC Dimmer Component](https://esphome.io/components/output/ac_dimmer.html#configuration-variables)*"
             }
           }
         }

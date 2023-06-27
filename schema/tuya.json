@@ -19,7 +19,7 @@
               "key": "Optional",
               "use_id_type": "time::RealTimeClock",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Some Tuya devices support obtaining local time from ESPHome. Specify the ID of the [Time Component](https://esphome.io/components/time.html#time) which will be used.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Some Tuya devices support obtaining local time from ESPHome. Specify the ID of the [Time Component](https://esphome.io/components/time/index.html) which will be used.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#configuration-variables)*"
             },
             "ignore_mcu_update_on_datapoints": {
               "key": "Optional",
@@ -52,16 +52,16 @@
                     "key": "Optional",
                     "default": "any",
                     "type": "enum",
-                    "values": [
-                      "any",
-                      "raw",
-                      "bool",
-                      "int",
-                      "uint",
-                      "string",
-                      "enum",
-                      "bitmask"
-                    ],
+                    "values": {
+                      "any": null,
+                      "raw": null,
+                      "bool": null,
+                      "int": null,
+                      "uint": null,
+                      "string": null,
+                      "enum": null,
+                      "bitmask": null
+                    },
                     "docs": "**string**: The datapoint type one of *raw*, *string*, *bool*, *int*, *uint*, *enum*, *bitmask* or *any*.\n\n*See also: [Tuya MCU](https://esphome.io/components/tuya.html#on-datapoint-update)*"
                   },
                   "then": {
@@ -276,6 +276,12 @@
             "eco_temperature": {
               "key": "Optional",
               "docs": "**float**: The target temperature the controller uses while the eco mode is active.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
+            },
+            "reports_fahrenheit": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Set to `true` if the device reports temperatures in Fahrenheit. ESPHome expects all climate temperatures to be in Celcius, otherwise unexpected conversions will take place when it is published to Home Assistant. Defaults to `false`.\n\n*See also: [Tuya Climate](https://esphome.io/components/climate/tuya.html#configuration-variables)*"
             }
           }
         }
@@ -354,11 +360,11 @@
               "key": "Optional",
               "default": "RESTORE",
               "type": "enum",
-              "values": [
-                "NO_RESTORE",
-                "RESTORE",
-                "RESTORE_AND_CALL"
-              ]
+              "values": {
+                "NO_RESTORE": null,
+                "RESTORE": null,
+                "RESTORE_AND_CALL": null
+              }
             }
           }
         }
@@ -469,17 +475,27 @@
               "data_type": "uint8_t",
               "docs": "**int**: The datapoint id number of the power switch.  My dimmer required this to be able to turn the light on and off.  Without this you would only be able to change the brightness and would have to toggle the light using the physical buttons.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
             },
-            "rgb_datapoint": {
+            "color_datapoint": {
               "key": "Optional",
               "type": "integer",
               "data_type": "uint8_t",
-              "docs": "**int**: The datapoint id number of the RGB (red/green/blue) value. If this is set then ESPHome will set the color using a 6 digit hex RGB value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+              "docs": "**int**: The datapoint id number of the color value. If this is set, along with **color_type**, then ESPHome will set the color value formatted based on the **color_type**.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
             },
-            "hsv_datapoint": {
+            "color_type": {
               "key": "Optional",
-              "type": "integer",
-              "data_type": "uint8_t",
-              "docs": "**int**: The datapoint id number of the HSV (hue/saturation/value) value. If this is set then ESPHome will set the color using a 12 digit hex HSV value.\n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
+              "type": "enum",
+              "values": {
+                "RGB": {
+                  "docs": "Use a 6 digit hex RGB value"
+                },
+                "HSV": {
+                  "docs": "Use a 12 digit hex HSV value"
+                },
+                "RGBHSV": {
+                  "docs": "Use a 14 digit hex RGBHSV value"
+                }
+              },
+              "docs": "**enum**: The color type to use when setting the **color_datapoint**. If this is set, along with **color_datapoint**, then ESPHome will use this value to format the color sent to **color_datapoint**.\n  * `rgb`: Use a 6 digit hex RGB value\n  \n  * `hsv`: Use a 12 digit hex HSV value\n  \n  * `rgbhsv`: Use a 14 digit hex RGBHSV value\n  \n  \n\n*See also: [Tuya Dimmer](https://esphome.io/components/light/tuya.html#configuration-variables)*"
             },
             "color_interlock": {
               "key": "Optional",
@@ -543,6 +559,7 @@
           ],
           "config_vars": {
             "id": {
+              "key": "GeneratedID",
               "id_type": {
                 "class": "tuya::TuyaNumber",
                 "parents": [
@@ -635,10 +652,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {

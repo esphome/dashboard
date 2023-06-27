@@ -43,10 +43,10 @@
               "key": "Optional",
               "default": "1",
               "type": "enum",
-              "values": [
-                1,
-                2
-              ],
+              "values": {
+                "1": null,
+                "2": null
+              },
               "docs": "**int**: The number of stop bits to send. Options: 1, 2. Defaults to 1.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
             },
             "data_bits": {
@@ -59,11 +59,11 @@
               "key": "Optional",
               "default": "NONE",
               "type": "enum",
-              "values": [
-                "NONE",
-                "EVEN",
-                "ODD"
-              ],
+              "values": {
+                "NONE": null,
+                "EVEN": null,
+                "ODD": null
+              },
               "docs": "The parity used on the UART bus. Options: `NONE`, `EVEN`, `ODD`. Defaults to `NONE`.\n\n*See also: [UART Bus](https://esphome.io/components/uart.html#configuration-variables)*"
             },
             "debug": {
@@ -85,7 +85,7 @@
               "key": "GeneratedID",
               "use_id_type": "uart::UARTComponent",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub.\n\n*See also: [UART Switch](https://esphome.io/components/switch/uart.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the UART hub used to connect to the device.\n\n*See also: [Component](https://esphome.io/components/vbus.html#component)*"
             }
           }
         }
@@ -118,11 +118,25 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "uart.UART_DEVICE_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {

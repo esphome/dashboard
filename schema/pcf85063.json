@@ -1,0 +1,69 @@
+{
+  "pcf85063.time": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "time.TIME_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "pcf85063::PCF85063Component",
+                "parents": [
+                  "time::RealTimeClock",
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "81",
+              "data_type": "hex_uint8_t"
+            }
+          }
+        }
+      }
+    }
+  },
+  "pcf85063": {
+    "action": {
+      "write_time": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "pcf85063::PCF85063Component",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time to the RTC hardware.\n\n*See also: [`pcf85063.write_time` Action](https://esphome.io/components/time/pcf85063.html#pcf85063-write-time-action)*"
+      },
+      "read_time": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "pcf85063::PCF85063Component",
+              "type": "use_id"
+            }
+          }
+        },
+        "docs": "This [Action](https://esphome.io/guides/automations.html#config-action) triggers a synchronization of the current system time from the RTC hardware.\n\n*See also: [`pcf85063.read_time` Action](https://esphome.io/components/time/pcf85063.html#pcf85063-read-time-action)*"
+      }
+    }
+  }
+}

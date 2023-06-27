@@ -82,54 +82,54 @@
               "key": "Optional",
               "is_list": true,
               "type": "enum",
-              "values": [
-                "HEAT_COOL",
-                "COOL",
-                "HEAT",
-                "DRY",
-                "FAN_ONLY"
-              ],
+              "values": {
+                "HEAT_COOL": null,
+                "COOL": null,
+                "HEAT": null,
+                "DRY": null,
+                "FAN_ONLY": null
+              },
               "docs": "**list**: List of supported modes. Possible values are: `HEAT_COOL`, `COOL`, `HEAT`, `DRY`, `FAN_ONLY`.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#configuration-variables)*"
             },
             "supported_swing_modes": {
               "key": "Optional",
               "is_list": true,
               "type": "enum",
-              "values": [
-                "BOTH",
-                "VERTICAL",
-                "HORIZONTAL"
-              ],
+              "values": {
+                "BOTH": null,
+                "VERTICAL": null,
+                "HORIZONTAL": null
+              },
               "docs": "**list**: List of supported swing modes. Possible values are: `VERTICAL`, `HORIZONTAL`, `BOTH`.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#configuration-variables)*"
             },
             "supported_presets": {
               "key": "Optional",
               "is_list": true,
               "type": "enum",
-              "values": [
-                "ECO",
-                "BOOST",
-                "SLEEP"
-              ],
+              "values": {
+                "ECO": null,
+                "BOOST": null,
+                "SLEEP": null
+              },
               "docs": "**list**: List of supported presets. Possible values are: `ECO`, `BOOST`, `SLEEP`.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#configuration-variables)*"
             },
             "custom_presets": {
               "key": "Optional",
               "is_list": true,
               "type": "enum",
-              "values": [
-                "FREEZE_PROTECTION"
-              ],
+              "values": {
+                "FREEZE_PROTECTION": null
+              },
               "docs": "**list**: List of supported custom presets. Possible values are: `FREEZE_PROTECTION`.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#configuration-variables)*"
             },
             "custom_fan_modes": {
               "key": "Optional",
               "is_list": true,
               "type": "enum",
-              "values": [
-                "SILENT",
-                "TURBO"
-              ],
+              "values": {
+                "SILENT": null,
+                "TURBO": null
+              },
               "docs": "**list**: List of supported custom fan modes. Possible values are: `SILENT`, `TURBO`.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#configuration-variables)*"
             },
             "outdoor_temperature": {

@@ -35,10 +35,10 @@ import {
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
-  NEW: "rgb(255, 165, 0)",
+  NEW: "var(--status-new)",
   OFFLINE: "var(--alert-error-color)",
   "UPDATE AVAILABLE": "var(--update-available-color)",
-  ONLINE: "rgba(0,0,0,.5)",
+  ONLINE: "var(--status-connected)",
 };
 
 @customElement("esphome-configured-device-card")
@@ -81,13 +81,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
-      : this.onlineStatus === false
-      ? "OFFLINE"
-      : updateAvailable
+      : this.onlineStatus && updateAvailable
       ? "UPDATE AVAILABLE"
-      : this.onlineStatus === true
+      : this.onlineStatus
       ? "ONLINE"
-      : undefined;
+      : "OFFLINE";
     return html`
       <esphome-card
         .status=${status}
@@ -121,7 +119,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 </div>
               `
             : ""}
-          ${this.device.loaded_integrations.includes("web_server")
+          ${this.device.loaded_integrations?.includes("web_server")
             ? html`
                 <a
                   href=${`http://${this.device.address}${
@@ -194,7 +192,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiDelete}
               ></esphome-svg-icon>
             </mwc-list-item>
-            ${"mqtt" in this.device.loaded_integrations
+            ${this.device.loaded_integrations?.includes("mqtt")
               ? html`<mwc-list-item graphic="icon">
                   Clean MQTT
                   <esphome-svg-icon
@@ -219,9 +217,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   static styles = [
     esphomeCardStyles,
     css`
-      :host {
-        --update-available-color: #2e3dd4;
-      }
       .device-config-path {
         margin-bottom: 8px;
         font-size: 14px;
@@ -231,7 +226,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         padding: 0.2em 0.4em;
         margin: 0;
         font-size: 85%;
-        background-color: rgba(27, 31, 35, 0.05);
+        background-color: var(--card-background-color)
         border-radius: 3px;
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
           Courier, monospace;
@@ -240,13 +235,16 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         --mdc-theme-primary: var(--update-available-color);
       }
       esphome-button-menu {
-        --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.56);
+        --mdc-theme-text-icon-on-background: var(--primary-text-color);
       }
       .tooltip-container {
         display: inline-block;
       }
       .warning {
         color: var(--alert-error-color);
+      }
+      .mdc-icon-button {
+        color: var(--primary-text-color);
       }
     `,
   ];

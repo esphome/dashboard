@@ -103,11 +103,11 @@
               "key": "Optional",
               "default": "none",
               "type": "enum",
-              "values": [
-                "NONE",
-                "LIGHT",
-                "HIGH"
-              ],
+              "values": {
+                "NONE": null,
+                "LIGHT": null,
+                "HIGH": null
+              },
               "docs": "**string**: The power save mode for the WiFi interface. See [Power Save Mode](https://esphome.io/components/wifi.html#wifi-power-save-mode)\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
             },
             "fast_connect": {
@@ -135,6 +135,18 @@
               "key": "Optional",
               "type": "boolean",
               "docs": "**bool**: Only on `esp32` with `esp-idf`. Enable 802.11k Radio Resource Management support.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
+            },
+            "passive_scan": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: If enabled, then the device will perform WiFi scans in a passive fashion. Defaults to `false`.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
+            },
+            "enable_on_boot": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**boolean**: If enabled, the WiFi interface will be enabled on boot. Defaults to `true`.\n\n*See also: [WiFi Component](https://esphome.io/components/wifi.html#configuration-variables)*"
             }
           }
         }
@@ -239,9 +251,20 @@
         }
       }
     },
+    "action": {
+      "enable": {
+        "docs": "This action turns on the WiFi interface on demand.\n\n*See also: [`wifi.enable` Action](https://esphome.io/components/wifi.html#wifi-enable-action)*"
+      },
+      "disable": {
+        "docs": "This action turns off the WiFi interface on demand.\n\n*See also: [`wifi.disable` Action](https://esphome.io/components/wifi.html#wifi-disable-action)*"
+      }
+    },
     "condition": {
       "connected": {
         "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if the WiFi client is currently connected to a station.\n\n*See also: [`wifi.connected` Condition](https://esphome.io/components/wifi.html#wifi-connected-condition)*"
+      },
+      "enabled": {
+        "docs": "This [Condition](https://esphome.io/guides/automations.html#config-condition) checks if WiFi is currently enabled or not.\n\n*See also: [`wifi.enabled` Condition](https://esphome.io/components/wifi.html#wifi-enabled-condition)*"
       }
     }
   }

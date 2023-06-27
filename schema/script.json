@@ -17,19 +17,21 @@
               "key": "Optional",
               "default": "single",
               "type": "enum",
-              "values": [
-                "single",
-                "restart",
-                "queued",
-                "parallel"
-              ],
-              "docs": "**string**: Controls what happens when a script is invoked while it is still running from one or more previous invocations. Default to `single`.\n  * `single`: Do not start a new run. Issue a warning.\n  \n  * `restart`: Start a new run after first stopping previous run.\n  \n  * `queued`: Start a new run after previous runs complete.\n  \n  * `parallel`: Start a new, independent run in parallel with previous runs.\n  \n  \n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*",
-              "values_docs": {
-                "single": "Do not start a new run. Issue a warning.",
-                "restart": "Start a new run after first stopping previous run.",
-                "queued": "Start a new run after previous runs complete.",
-                "parallel": "Start a new, independent run in parallel with previous runs."
-              }
+              "values": {
+                "single": {
+                  "docs": "Do not start a new run. Issue a warning."
+                },
+                "restart": {
+                  "docs": "Start a new run after first stopping previous run."
+                },
+                "queued": {
+                  "docs": "Start a new run after previous runs complete."
+                },
+                "parallel": {
+                  "docs": "Start a new, independent run in parallel with previous runs."
+                }
+              },
+              "docs": "**string**: Controls what happens when a script is invoked while it is still running from one or more previous invocations. Default to `single`.\n  * `single`: Do not start a new run. Issue a warning.\n  \n  * `restart`: Start a new run after first stopping previous run.\n  \n  * `queued`: Start a new run after previous runs complete.\n  \n  * `parallel`: Start a new, independent run in parallel with previous runs.\n  \n  \n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
             },
             "max_runs": {
               "key": "Optional",
@@ -70,7 +72,7 @@
               "use_id_type": "script::Script",
               "type": "use_id"
             },
-            "<function validate_parameter_name at 0x000001EE51F035B0>": {
+            "<function validate_parameter_name at 0x0000022224485440>": {
               "key": "Optional",
               "templatable": true
             }

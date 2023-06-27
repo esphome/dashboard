@@ -58,6 +58,26 @@
         },
         "docs": "Plays the previously played track.\n\n*See also: [`dfplayer.play_previous` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-previous-action)*"
       },
+      "play_mp3": {
+        "type": "schema",
+        "maybe": "file",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "use_id_type": "dfplayer::DFPlayer",
+              "type": "use_id"
+            },
+            "file": {
+              "key": "Required",
+              "templatable": true,
+              "type": "integer",
+              "docs": "**int, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: The file number inside the `mp3` folder to play.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-play-mp3-action)*"
+            }
+          }
+        },
+        "docs": "Plays a track inside the folder `mp3`. Files inside the folder must be numbered from 1 to 9999, like `0001.mp3`, `0002.mp3`, \u2026 etc. The folder name needs to be `mp3`, placed under the SD card root directory, and the mp3 file name needs to be 4 digits, for example, \u201c0001.mp3\u201d, placed under the mp3 folder. If you want, you can add additional text after the number in the filename, for example, `0001hello.mp3`, but must always be referenced by number only in yaml.\n\n*See also: [`dfplayer.play_mp3` Action](https://esphome.io/components/dfplayer.html#dfplayer-play-mp3-action)*"
+      },
       "play": {
         "type": "schema",
         "maybe": "file",
@@ -128,10 +148,10 @@
             "device": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "USB",
-                "TF_CARD"
-              ]
+              "values": {
+                "USB": null,
+                "TF_CARD": null
+              }
             }
           }
         },
@@ -197,14 +217,14 @@
               "key": "Required",
               "templatable": true,
               "type": "enum",
-              "values": [
-                "NORMAL",
-                "POP",
-                "ROCK",
-                "JAZZ",
-                "CLASSIC",
-                "BASS"
-              ],
+              "values": {
+                "NORMAL": null,
+                "POP": null,
+                "ROCK": null,
+                "JAZZ": null,
+                "CLASSIC": null,
+                "BASS": null
+              },
               "docs": "Eq Preset value. Valid values are `NORMAL`, `POP`, `ROCK`, `JAZZ`, `CLASSIC` and `BASS`.\n\n*See also: [DF-Player mini](https://esphome.io/components/dfplayer.html#dfplayer-set-eq-action)*"
             }
           }

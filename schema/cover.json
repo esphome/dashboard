@@ -67,19 +67,19 @@
             "device_class": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "",
-                "awning",
-                "blind",
-                "curtain",
-                "damper",
-                "door",
-                "garage",
-                "gate",
-                "shade",
-                "shutter",
-                "window"
-              ],
+              "values": {
+                "awning": null,
+                "blind": null,
+                "curtain": null,
+                "damper": null,
+                "door": null,
+                "": null,
+                "garage": null,
+                "gate": null,
+                "shade": null,
+                "shutter": null,
+                "window": null
+              },
               "docs": "**string**: The device class for the sensor. See [https://www.home-assistant.io/components/cover/](https://www.home-assistant.io/components/cover/) for a list of available options.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#base-cover-configuration)*"
             },
             "position_command_topic": {
@@ -118,6 +118,45 @@
               "key": "Required",
               "use_id_type": "cover::Cover",
               "type": "use_id"
+            }
+          }
+        }
+      },
+      "COVER_CONTROL_ACTION_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "cover::Cover",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The cover to control.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
+            },
+            "stop": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "boolean",
+              "docs": "**boolean**: Whether to stop the cover.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
+            },
+            "state": {
+              "key": "Optional",
+              "templatable": true,
+              "type": "enum",
+              "values": {
+                "OPEN": null,
+                "CLOSED": null
+              },
+              "docs": "**string**: The state to set the cover to - one of `OPEN` or `CLOSE`.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
+            },
+            "position": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**float**: The cover position to set.\n  * `0.0` = `0%` = `CLOSED`\n  \n  * `1.0` = `100%` = `OPEN`\n  \n  \n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
+            },
+            "tilt": {
+              "key": "Optional",
+              "templatable": true,
+              "docs": "**float**: The tilt position to set. In range 0% - 100%.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
             }
           }
         }
@@ -163,40 +202,9 @@
       "control": {
         "type": "schema",
         "schema": {
-          "config_vars": {
-            "id": {
-              "key": "Required",
-              "use_id_type": "cover::Cover",
-              "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The cover to control.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
-            },
-            "stop": {
-              "key": "Optional",
-              "templatable": true,
-              "type": "boolean",
-              "docs": "**boolean**: Whether to stop the cover.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
-            },
-            "state": {
-              "key": "Optional",
-              "templatable": true,
-              "type": "enum",
-              "values": [
-                "OPEN",
-                "CLOSED"
-              ],
-              "docs": "**string**: The state to set the cover to - one of `OPEN` or `CLOSE`.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
-            },
-            "position": {
-              "key": "Optional",
-              "templatable": true,
-              "docs": "**float**: The cover position to set.\n  * `0.0` = `0%` = `CLOSED`\n  \n  * `1.0` = `100%` = `OPEN`\n  \n  \n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
-            },
-            "tilt": {
-              "key": "Optional",
-              "templatable": true,
-              "docs": "**float**: The tilt position to set. In range 0% - 100%.\n\n*See also: [Cover Component](https://esphome.io/components/cover/index.html#cover-control-action)*"
-            }
-          }
+          "extends": [
+            "cover.COVER_CONTROL_ACTION_SCHEMA"
+          ]
         },
         "docs": "This [action](https://esphome.io/guides/automations.html#config-action) is a more generic version of the other cover actions and allows all cover attributes to be set.\n\n*See also: [`cover.control` Action](https://esphome.io/components/cover/index.html#cover-control-action)*"
       }
