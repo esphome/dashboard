@@ -5,6 +5,7 @@ import "../components/remote-process";
 import "../components/process-dialog";
 import { openInstallServerDialog } from ".";
 import { openEditDialog } from "../editor";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-install-server-dialog")
 class ESPHomeInstallServerDialog extends LitElement {
@@ -68,12 +69,15 @@ class ESPHomeInstallServerDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a[slot="secondaryAction"] {
-      text-decoration: none;
-      line-height: 32px;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      a[slot="secondaryAction"] {
+        text-decoration: none;
+        line-height: 32px;
+      }
+    `,
+  ];
 }
 
 declare global {

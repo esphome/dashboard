@@ -5,6 +5,7 @@ import "../components/remote-process";
 import "../components/process-dialog";
 import { openCompileDialog } from ".";
 import { getDownloadUrl } from "../api/configuration";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-compile-dialog")
 class ESPHomeCompileDialog extends LitElement {
@@ -75,11 +76,14 @@ class ESPHomeCompileDialog extends LitElement {
     this.parentNode!.removeChild(this);
   }
 
-  static styles = css`
-    a {
-      text-decoration: none;
-    }
-  `;
+  static styles = [
+    esphomeDialogStyles,
+    css`
+      a {
+        text-decoration: none;
+      }
+    `,
+  ];
 }
 
 declare global {

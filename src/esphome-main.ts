@@ -51,7 +51,7 @@ class ESPHomeMainView extends LitElement {
           >
           |
           <a href=${this.docsLink} target="_blank" rel="noreferrer"
-            >v${this.version} Documentation</a
+            >${this.version} Documentation</a
           >
         </div>
       </footer>

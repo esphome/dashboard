@@ -4,6 +4,7 @@
   /* Colors */
   --primary-bg-color: #fafafa;
   --primary-footer-bg-color: #212121;
+  --card-background-color: #fafafa;
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
   --alert-info-color: #00539f;
@@ -38,7 +39,6 @@
     --esphome-background-header: #282828;
     --card-background-color: #282828;
     --card-text-color: #e1e1e1;
-    /* --mdc-theme-primary: #e1e1e1; */
     --primary-text-color: #e1e1e1;
     --mdc-theme-surface: #282828;
     --mdc-theme-on-surface: #e1e1e1;

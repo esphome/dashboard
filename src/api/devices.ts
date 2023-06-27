@@ -4,21 +4,21 @@ import { createPollingCollection } from "../util/polling-collection";
 
 export interface ConfiguredDevice {
   name: string;
-  friendly_name: string;
+  friendly_name?: string;
   configuration: string;
-  loaded_integrations: string[];
-  deployed_version: string;
-  current_version: string;
+  loaded_integrations?: string[];
+  deployed_version?: string;
+  current_version?: string;
   path: string;
-  comment: string;
-  address: string;
-  web_port: number;
+  comment?: string;
+  address?: string;
+  web_port?: number;
   target_platform: SupportedPlatforms;
 }
 
 export interface ImportableDevice {
   name: string;
-  friendly_name: string | null;
+  friendly_name?: string;
   package_import_url: string;
   project_name: string;
   project_version: string;

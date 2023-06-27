@@ -5,6 +5,7 @@ import "../components/remote-process";
 import { openInstallChooseDialog } from "../install-choose";
 import "../components/process-dialog";
 import { openEditDialog } from "../editor";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-validate-dialog")
 class ESPHomeValidateDialog extends LitElement {
@@ -54,6 +55,8 @@ class ESPHomeValidateDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
+
+  static styles = [esphomeDialogStyles];
 }
 
 declare global {
