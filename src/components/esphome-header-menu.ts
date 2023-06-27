@@ -88,7 +88,6 @@ export class ESPHomeHeaderMenu extends LitElement {
   };
 
   private _handleSearch() {
-    console.log("search...");
     toggleSearch();
   }
 

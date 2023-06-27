@@ -50,8 +50,7 @@ export class ESPHomeSearch extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
-    document.body.addEventListener<any>("toggle-search", (ev) => {
-      console.log("toggle-search event...");
+    document.body.addEventListener<any>("toggle-search", () => {
       this.show = !this.show;
       if (!this.show)
         this._inputEvent();
