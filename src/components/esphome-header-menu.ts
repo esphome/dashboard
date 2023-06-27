@@ -1,12 +1,12 @@
 import { css, html, LitElement, TemplateResult } from "lit";
-import { property, state, customElement } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import "./esphome-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
 import "@material/mwc-icon";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
-import { openEditDialog } from "../editor";
+import { openEditDialog, toggleSearch } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
 import { showConfirmationDialog } from "../dialogs";
@@ -39,6 +39,9 @@ export class ESPHomeHeaderMenu extends LitElement {
               ></a>
             `
           : ""}
+        <mwc-button class="search" @click=${this._handleSearch}>
+          <mwc-icon>search</mwc-icon>
+        </mwc-button>
       `;
     }
 
@@ -48,6 +51,9 @@ export class ESPHomeHeaderMenu extends LitElement {
         @action=${this._handleOverflowAction}
       >
         <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+        <mwc-list-item graphic="icon"
+          ><mwc-icon slot="graphic">search</mwc-icon>Search</mwc-list-item
+        >
         <mwc-list-item graphic="icon"
           ><mwc-icon slot="graphic">system_update</mwc-icon>Update
           All</mwc-list-item
@@ -81,6 +87,11 @@ export class ESPHomeHeaderMenu extends LitElement {
     this._isWide = isWideListener.matches;
   };
 
+  private _handleSearch() {
+    console.log("search...");
+    toggleSearch();
+  }
+
   private async _handleUpdateAll() {
     if (
       !(await showConfirmationDialog({
@@ -102,9 +113,12 @@ export class ESPHomeHeaderMenu extends LitElement {
   private async _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        this._handleUpdateAll();
+        this._handleSearch();
         break;
       case 1:
+        this._handleUpdateAll();
+        break;
+      case 2:
         this._handleEditSecrets();
         break;
     }
@@ -118,6 +132,11 @@ export class ESPHomeHeaderMenu extends LitElement {
       --mdc-theme-primary: var(--primary-text-color);
       margin-left: 16px;
       line-height: 1em;
+    }
+    mwc-button.search {
+      margin: 0;
+      padding: 0;
+      width: 30px;
     }
     mwc-icon {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
