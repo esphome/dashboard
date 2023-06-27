@@ -5,7 +5,6 @@ import "./esphome-text-input";
 
 @customElement("esphome-search")
 export class ESPHomeSearch extends LitElement {
-
   @state() public show = false;
 
   @query("esphome-text-input") private _textField!: ESPHomeTextInput;
@@ -52,10 +51,8 @@ export class ESPHomeSearch extends LitElement {
     super.firstUpdated(changedProps);
     document.body.addEventListener<any>("toggle-search", () => {
       this.show = !this.show;
-      if (!this.show)
-        this._inputEvent();
-      else
-        setTimeout(() => this._textField?.focus(), 100);
+      if (!this.show) this._inputEvent();
+      else setTimeout(() => this._textField?.focus(), 100);
     });
   }
 }
