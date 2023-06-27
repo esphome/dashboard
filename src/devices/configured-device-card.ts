@@ -81,13 +81,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
-      : this.onlineStatus === false
-      ? "OFFLINE"
-      : updateAvailable
+      : this.onlineStatus && updateAvailable
       ? "UPDATE AVAILABLE"
-      : this.onlineStatus === true
+      : this.onlineStatus
       ? "ONLINE"
-      : undefined;
+      : "OFFLINE";
     return html`
       <esphome-card
         .status=${status}
@@ -121,7 +119,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 </div>
               `
             : ""}
-          ${this.device.loaded_integrations.includes("web_server")
+          ${this.device.loaded_integrations?.includes("web_server")
             ? html`
                 <a
                   href=${`http://${this.device.address}${
@@ -194,7 +192,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiDelete}
               ></esphome-svg-icon>
             </mwc-list-item>
-            ${"mqtt" in this.device.loaded_integrations
+            ${this.device.loaded_integrations?.includes("mqtt")
               ? html`<mwc-list-item graphic="icon">
                   Clean MQTT
                   <esphome-svg-icon

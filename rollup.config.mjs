@@ -24,6 +24,7 @@ const config = {
     entryFileNames: isProdBuild ? "[name]-[hash].js" : "[name].js",
     chunkFileNames: isProdBuild ? "c.[hash].js" : "[name].js",
     assetFileNames: isProdBuild ? "a.[hash].js" : "[name].js",
+    sourcemap: true
   },
   preserveEntrySignatures: false,
   plugins: [

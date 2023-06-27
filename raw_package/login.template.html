@@ -4,36 +4,45 @@
 
 {% block main %}
 <style>
+  :root {
+    --placeholder-color: #bababa;
+    --button-bg-color: #0075aa;
+    --button-text-color: #efefef;
+  }
+
+  /* dark theme */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --placeholder-color: #8a8a8a;
+    }
+  }
+
   .container {
-    display: flex;
+    margin-top: 40px;
+    display: grid;
     justify-content: center;
+    align-items: flex-start;
   }
+
   .card {
-    max-width: 500px;
+    width: 250px;
+    padding: 30px;
+    color: var(--primary-text-color);
+    background-color: var(--card-background-color);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px
   }
 
-  /* Login Page */
-  .row.no-bottom-margin {
-    margin-bottom: 0 !important;
+  #login-head {
+    margin-top: 0;
   }
 
-  .input-field input:focus + label {
-    color: #000;
-  }
-
-  .input-field input:focus {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-  }
-
-  .input-field .prefix.active {
-    color: #000;
+  .center {
+    text-align: center;
   }
 
   /* Alerts & Errors */
   .alert {
-    width: 100%;
-    margin: 10px auto;
+    margin-top: 20px;
     padding: 10px;
     border-radius: 2px;
     border-left-width: 4px;
@@ -55,61 +64,76 @@
     background-color: var(--alert-error-color-bg);
   }
 
-  .card.card-error {
-    border-top: 4px solid var(--alert-error-color);
+  #login-form {
+    align-self: flex-start;
+    display: grid;
+    justify-items: left;
+    align-items: center;
+  }
+
+  #login-form .row {
+    display: flex;
+    width: 100%;
+  }
+
+  #login-form .material-icons {
+    margin-top: -5px;
+  }
+
+  .login-form-field::placeholder {
+    color: var(--placeholder-color);
+  }
+
+  .login-form-field {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--primary-text-color);
+    margin-bottom: 15px;
+    outline: none;
+    padding: 0px 0px 5px 5px;
+    color: var(--primary-text-color);
+    background-color: var(--card-background-color);
+  }
+
+  #login-form-submit {
+    width: 50%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: var(--button-text-color);
+    font-weight: bold;
+    background-color: var(--button-bg-color);
+    cursor: pointer;
+    outline: none;
+    margin-left: 25px;
   }
 </style>
+
 <div class="container">
-  <div class="card" id="login-card">
-    <div class="card-content">
-      <span class="card-title black-text center">Dashboard Login</span>
-      <p class="center">
-        {% if ha_addon %} Login by entering your Home Assistant login
-        credentials. {% else %} Login by entering your ESPHome login
-        credentials. {% end %}
-      </p>
-
-      {% if error is not None %}
-      <div class="alert alert-error">
-        <span class="title">Error!</span>
-        {{ escape(error) }}
+  <div class="card">
+    <h3 id="login-head" class="center">Login</h3>
+    <p class="center">Enter your {% if ha_addon %}Home Assistant{% else %}ESPHome{% end %} credentials.</p>
+    <form action="./login" method="post" id="login-form">
+      {% if has_username or ha_addon %}
+      <div class="row">
+        <i class="material-icons prefix">person</i>
+        <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
       </div>
-
-      <script>
-        document.getElementById("login-card").classList.add("card-error");
-      </script>
       {% end %}
-
-      <form action="./login" method="post" id="login-form">
-        {% if has_username or ha_addon %}
-        <div class="row no-bottom-margin">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">person</i>
-            <input name="username" id="username" type="text" />
-            <label for="username">Username</label>
-          </div>
-        </div>
-        {% end %}
-
-        <div class="row no-bottom-margin">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">lock</i>
-            <input name="password" id="password" type="password" />
-            <label for="password">Password</label>
-          </div>
-        </div>
-      </form>
+      <div class="row">
+        <i class="material-icons prefix">lock</i>
+        <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+      </div>
+      <div class="row">
+        <input type="submit" value="Login" id="login-form-submit">
+      </div>
+    </form>
+    {% if error is not None %}
+    <div class="alert alert-error">
+      <span class="title">Error!</span>
+      {{ escape(error) }}
     </div>
-
-    <div class="card-action center">
-      <input
-        type="submit"
-        class="btn blue-grey darken-2"
-        name="action"
-        form="login-form"
-        value="Login"
-      />
-    </div>
+    {% end %}
   </div>
 </div>
 {% end %}
