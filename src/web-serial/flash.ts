@@ -53,15 +53,15 @@ export const flashFiles = async (
   let totalWritten = 0;
   writeProgress(0);
 
-  await esploader.write_flash(
+  await esploader.write_flash({
     fileArray,
-    "keep",
-    "keep",
-    "keep",
-    false,
-    true,
+    flashSize: "keep",
+    flashMode: "keep",
+    flashFreq: "keep",
+    eraseAll: false,
+    compress: true,
     // report progress
-    (fileIndex: number, written: number, total: number) => {
+    reportProgress: (fileIndex: number, written: number, total: number) => {
       const uncompressedWritten =
         (written / total) * fileArray[fileIndex].data.length;
 
@@ -76,8 +76,8 @@ export const flashFiles = async (
       }
 
       writeProgress(newPct);
-    }
-  );
+    },
+  });
 
   writeProgress(100);
 };

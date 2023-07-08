@@ -45,7 +45,7 @@
     "@mdi/js": "^7.2.96",
     "@polymer/paper-tooltip": "^3.0.1",
     "@types/w3c-web-serial": "^1.0.3",
-    "esptool-js": "^0.2.1",
+    "esptool-js": "^0.3.0",
     "improv-wifi-serial-sdk": "^2.5.0",
     "lit": "^2.7.5",
     "tslib": "^2.5.0",
