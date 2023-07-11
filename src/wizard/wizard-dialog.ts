@@ -503,8 +503,7 @@ export class ESPHomeWizardDialog extends LitElement {
               slot="primaryAction"
               dialogAction="ok"
               label="Install"
-              @click=${() =>
-                openInstallChooseDialog(`${this._data.name!}.yaml`)}
+              @click=${() => openInstallChooseDialog(this._configFilename)}
             ></mwc-button>
             <mwc-button
               no-attention
