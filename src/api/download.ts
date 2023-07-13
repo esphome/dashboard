@@ -9,7 +9,7 @@ export type DownloadType = {
 
 export const getDownloadTypes = (configuration: string) =>
   fetchApiJson<DownloadType[]>(
-    `./download.bin?configuration=${encodeURIComponent(configuration)}&list=1`
+    `./downloads?configuration=${encodeURIComponent(configuration)}`
   );
 
 export const getDownloadUrl = (configuration: string, type: DownloadType) =>

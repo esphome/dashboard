@@ -114,3 +114,9 @@ class ESPHomeDownloadTypeDialog extends LitElement {
     `,
   ];
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "esphome-download-type-dialog": ESPHomeDownloadTypeDialog;
+  }
+}
