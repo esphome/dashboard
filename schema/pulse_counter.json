@@ -46,21 +46,21 @@
                   "rising_edge": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "DISABLE",
-                      "INCREMENT",
-                      "DECREMENT"
-                    ],
+                    "values": {
+                      "DISABLE": null,
+                      "INCREMENT": null,
+                      "DECREMENT": null
+                    },
                     "docs": "What to do when a rising edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `INCREMENT`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
                   },
                   "falling_edge": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "DISABLE",
-                      "INCREMENT",
-                      "DECREMENT"
-                    ],
+                    "values": {
+                      "DISABLE": null,
+                      "INCREMENT": null,
+                      "DECREMENT": null
+                    },
                     "docs": "What to do when a falling edge is detected. One of `DISABLE`, `INCREMENT` and `DECREMENT`. Defaults to `DISABLE`.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#configuration-variables)*"
                   }
                 }

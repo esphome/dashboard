@@ -52,13 +52,13 @@
             "attenuation": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "0db",
-                "2.5db",
-                "6db",
-                "11db",
-                "auto"
-              ],
+              "values": {
+                "0db": null,
+                "2.5db": null,
+                "6db": null,
+                "11db": null,
+                "auto": null
+              },
               "docs": "Only on ESP32. Specify the ADC attenuation to use. See [ESP32 Attenuation](https://esphome.io/components/sensor/adc.html#adc-esp32-attenuation). Defaults to `0db`.\n\n*See also: [Analog To Digital Sensor](https://esphome.io/components/sensor/adc.html#configuration-variables)*"
             },
             "update_interval": {

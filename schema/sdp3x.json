@@ -37,10 +37,10 @@
               "key": "Optional",
               "default": "differential_pressure",
               "type": "enum",
-              "values": [
-                "mass_flow",
-                "differential_pressure"
-              ],
+              "values": {
+                "mass_flow": null,
+                "differential_pressure": null
+              },
               "docs": "The measurement mode of the sensor. Valid options are `differential_pressure` and `mass_flow`. Defaults to `differential_pressure`.\n\n*See also: [SDP3x / SDP800 Series Differential Pressure Sensor](https://esphome.io/components/sensor/sdp3x.html#configuration-variables)*"
             },
             "update_interval": {

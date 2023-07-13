@@ -77,15 +77,15 @@
               "key": "Optional",
               "default": "auto detect",
               "type": "enum",
-              "values": [
-                "AUTO_DETECT",
-                "DHT11",
-                "DHT22",
-                "AM2302",
-                "RHT03",
-                "SI7021",
-                "DHT22_TYPE2"
-              ],
+              "values": {
+                "AUTO_DETECT": null,
+                "DHT11": null,
+                "DHT22": null,
+                "AM2302": null,
+                "RHT03": null,
+                "SI7021": null,
+                "DHT22_TYPE2": null
+              },
               "docs": "**int**: Manually specify the DHT model, can be one of `AUTO_DETECT`, `DHT11`, `DHT22`, `DHT22_TYPE2`, `AM2302`, `RHT03`, `SI7021` and helps with some connection issues. Defaults to `AUTO_DETECT`.  Auto detection doesn\u2019t work for the SI7021 chip.\n\n*See also: [DHT Temperature+Humidity Sensor](https://esphome.io/components/sensor/dht.html#configuration-variables)*"
             },
             "update_interval": {

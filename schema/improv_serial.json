@@ -13,11 +13,11 @@
                   "Component"
                 ]
               }
+            },
+            "next_url": {
+              "key": "Optional"
             }
-          },
-          "extends": [
-            "core.COMPONENT_SCHEMA"
-          ]
+          }
         }
       }
     }

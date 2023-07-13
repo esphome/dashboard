@@ -14,6 +14,7 @@ export const esphomeCardStyles = css`
   }
   mwc-button {
     line-height: 1em;
+    --mdc-theme-primary: var(--primary-text-color);
   }
   .card-actions {
     display: flex;
@@ -23,22 +24,12 @@ export const esphomeCardStyles = css`
   .card-actions a {
     text-decoration: none;
   }
-  .card-actions mwc-button {
-    --mdc-theme-primary: rgba(0, 0, 0, 0.88);
-  }
-  esphome-button-menu {
-    color: rgba(0, 0, 0, 0.88);
-  }
   .card-actions mwc-icon-button {
     --mdc-icon-button-size: 32px;
   }
 `;
 
 export const esphomeDialogStyles = css`
-  :host {
-    --mdc-dialog-content-ink-color: #212121;
-  }
-
   a {
     color: var(--mdc-theme-primary);
   }
@@ -85,8 +76,8 @@ export const esphomeDialogStyles = css`
   }
 
   mwc-button[no-attention] {
-    --mdc-theme-primary: #444;
-    --mdc-theme-on-primary: white;
+    --mdc-theme-primary: var(--mdc-theme-primary-no-attention);
+    --mdc-theme-on-primary: var(--mdc-theme-on-primary-no-attention);
   }
 
   @media only screen and (max-width: 450px) {
@@ -106,5 +97,15 @@ export const esphomeDialogStyles = css`
 
   mwc-list.platforms mwc-list-item {
     padding: 0 24px;
+  }
+
+  mwc-button {
+    --mdc-theme-primary: var(--primary-text-color);
+  }
+`;
+
+export const esphomeSvgStyles = css`
+  .svg-fill-primary {
+    fill: var(--primary-text-color);
   }
 `;

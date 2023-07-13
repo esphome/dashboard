@@ -123,10 +123,10 @@
                   "calculation_type": {
                     "key": "Required",
                     "type": "enum",
-                    "values": [
-                      "CAQI",
-                      "AQI"
-                    ],
+                    "values": {
+                      "CAQI": null,
+                      "AQI": null
+                    },
                     "docs": "One of: `AQI` or `CAQI`.\n\n*See also: [The Grove - Laser PM2.5 Sensor (HM3301)](https://esphome.io/components/sensor/hm3301.html#configuration-variables)*"
                   }
                 }

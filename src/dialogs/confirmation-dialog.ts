@@ -54,6 +54,10 @@ class ESPHomeConfirmationDialog extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
+      mwc-button {
+        --mdc-theme-primary: var(--primary-text-color);
+      }
+
       .destructive {
         --mdc-theme-primary: var(--alert-error-color);
       }

@@ -41,10 +41,10 @@
             "configuration": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "DOWNSTREAM",
-                "UPSTREAM"
-              ],
+              "values": {
+                "DOWNSTREAM": null,
+                "UPSTREAM": null
+              },
               "docs": "**string**: The type of circuit, one of `DOWNSTREAM` or `UPSTREAM`.\n\n*See also: [Resistance Sensor](https://esphome.io/components/sensor/resistance.html#configuration-variables)*"
             },
             "resistor": {

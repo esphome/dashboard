@@ -40,14 +40,14 @@
                     "key": "Optional",
                     "default": "16X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "1X",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "1X": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bme280.html#bme280-oversampling).\n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
                   }
                 }
@@ -78,14 +78,14 @@
                     "key": "Optional",
                     "default": "16X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "1X",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "1X": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bme280.html#bme280-oversampling).\n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
                   }
                 }
@@ -116,14 +116,14 @@
                     "key": "Optional",
                     "default": "16X",
                     "type": "enum",
-                    "values": [
-                      "NONE",
-                      "1X",
-                      "2X",
-                      "4X",
-                      "8X",
-                      "16X"
-                    ],
+                    "values": {
+                      "NONE": null,
+                      "1X": null,
+                      "2X": null,
+                      "4X": null,
+                      "8X": null,
+                      "16X": null
+                    },
                     "docs": "The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bme280.html#bme280-oversampling).\n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
                   }
                 }
@@ -134,13 +134,13 @@
               "key": "Optional",
               "default": "OFF",
               "type": "enum",
-              "values": [
-                "OFF",
-                "2X",
-                "4X",
-                "8X",
-                "16X"
-              ],
+              "values": {
+                "OFF": null,
+                "2X": null,
+                "4X": null,
+                "8X": null,
+                "16X": null
+              },
               "docs": "Set up an Infinite Impulse Response filter to increase accuracy. One of `OFF`, `2x`, `4x`, `16x`. Defaults to `OFF`.\n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
             },
             "update_interval": {

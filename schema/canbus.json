@@ -38,38 +38,47 @@
               "key": "Optional",
               "default": "125KBPS",
               "type": "enum",
-              "values": [
-                "5KBPS",
-                "10KBPS",
-                "20KBPS",
-                "31K25BPS",
-                "33KBPS",
-                "40KBPS",
-                "50KBPS",
-                "80KBPS",
-                "83K3BPS",
-                "95KBPS",
-                "100KBPS",
-                "125KBPS",
-                "200KBPS",
-                "250KBPS",
-                "500KBPS",
-                "1000KBPS"
-              ],
-              "docs": "**enum**: One of the supported bitrates. Defaults to `125KBPS`.\n  * `5KBPS` - Not supported by `esp32_can`\n  \n  * `10KBPS` - Not supported by `esp32_can`\n  \n  * `20KBPS` - Not supported by `esp32_can`\n  \n  * `31K25BPS` - Not supported by `esp32_can`\n  \n  * `33KBPS` - Not supported by `esp32_can`\n  \n  * `40KBPS` - Not supported by `esp32_can`\n  \n  * `50KBPS`\n  \n  * `80KBPS` - Not supported by `esp32_can`\n  \n  * `83K3BPS` - Not supported by `esp32_can`\n  \n  * `95KBPS` - Not supported by `esp32_can`\n  \n  * `100KBPS`\n  \n  * `125KBPS` - (Default)\n  \n  * `200KBPS` - Not supported by `esp32_can`\n  \n  * `250KBPS`\n  \n  * `500KBPS`\n  \n  * `1000KBPS`\n  \n  \n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*",
-              "values_docs": {
-                "5KBPS": "Not supported by `esp32_can`",
-                "10KBPS": "Not supported by `esp32_can`",
-                "20KBPS": "Not supported by `esp32_can`",
-                "31K25BPS": "Not supported by `esp32_can`",
-                "33KBPS": "Not supported by `esp32_can`",
-                "40KBPS": "Not supported by `esp32_can`",
-                "80KBPS": "Not supported by `esp32_can`",
-                "83K3BPS": "Not supported by `esp32_can`",
-                "95KBPS": "Not supported by `esp32_can`",
-                "125KBPS": "(Default)",
-                "200KBPS": "Not supported by `esp32_can`"
-              }
+              "values": {
+                "5KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "10KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "20KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "31K25BPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "33KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "40KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "50KBPS": null,
+                "80KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "83K3BPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "95KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "100KBPS": null,
+                "125KBPS": {
+                  "docs": "(Default)"
+                },
+                "200KBPS": {
+                  "docs": "Not supported by `esp32_can`"
+                },
+                "250KBPS": null,
+                "500KBPS": null,
+                "1000KBPS": null
+              },
+              "docs": "**enum**: One of the supported bitrates. Defaults to `125KBPS`.\n  * `5KBPS` - Not supported by `esp32_can`\n  \n  * `10KBPS` - Not supported by `esp32_can`\n  \n  * `20KBPS` - Not supported by `esp32_can`\n  \n  * `31K25BPS` - Not supported by `esp32_can`\n  \n  * `33KBPS` - Not supported by `esp32_can`\n  \n  * `40KBPS` - Not supported by `esp32_can`\n  \n  * `50KBPS`\n  \n  * `80KBPS` - Not supported by `esp32_can`\n  \n  * `83K3BPS` - Not supported by `esp32_can`\n  \n  * `95KBPS` - Not supported by `esp32_can`\n  \n  * `100KBPS`\n  \n  * `125KBPS` - (Default)\n  \n  * `200KBPS` - Not supported by `esp32_can`\n  \n  * `250KBPS`\n  \n  * `500KBPS`\n  \n  * `1000KBPS`\n  \n  \n\n*See also: [Base CAN Bus Configuration](https://esphome.io/components/canbus.html#configuration-variables)*"
             },
             "use_extended_id": {
               "key": "Optional",

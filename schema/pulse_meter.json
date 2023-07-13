@@ -72,10 +72,10 @@
               "key": "Optional",
               "default": "EDGE",
               "type": "enum",
-              "values": [
-                "EDGE",
-                "PULSE"
-              ],
+              "values": {
+                "EDGE": null,
+                "PULSE": null
+              },
               "docs": "**string**: Determines how the internal filter is applied. One of `EDGE` and `PULSE`. Defaults to `EDGE`. In `EDGE` mode subsequent rising edges are compared and if they fall into an interval lesser than the internal filter value, the last one is discarded. In `PULSE` mode the rising edge is discarded if any further interrupts are detected before the internal_filter time has passed. In other words, a high pulse must be at least internal_filter long to be counted. This is useful if you are detecting long pulses that may bounces before and/or after the main pulse.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#configuration-variables)*"
             }
           }

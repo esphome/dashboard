@@ -140,10 +140,10 @@
             "type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "elevation",
-                "azimuth"
-              ],
+              "values": {
+                "elevation": null,
+                "azimuth": null
+              },
               "docs": "**string**: The type of value to track. One of `elevation` and `azimuth`.\n\n*See also: [sun Sensor](https://esphome.io/components/sun.html#sun-sensor)*"
             },
             "update_interval": {
@@ -185,10 +185,10 @@
             "type": {
               "key": "Required",
               "type": "enum",
-              "values": [
-                "sunset",
-                "sunrise"
-              ],
+              "values": {
+                "sunset": null,
+                "sunrise": null
+              },
               "docs": "**string**: The type of value to track. One of `sunrise` and `sunset`.\n\n*See also: [sun Text Sensor](https://esphome.io/components/sun.html#sun-text-sensor)*"
             },
             "elevation": {
@@ -200,7 +200,7 @@
               "key": "Optional",
               "default": "%X",
               "type": "string",
-              "docs": "**string**: The format to format the time value with, see [strftime](https://esphome.io/components/time.html#strftime) for more information. Defaults to `%X`.\n\n*See also: [sun Text Sensor](https://esphome.io/components/sun.html#sun-text-sensor)*"
+              "docs": "**string**: The format to format the time value with, see [strftime](https://esphome.io/components/time/index.html#strftime) for more information. Defaults to `%X`.\n\n*See also: [sun Text Sensor](https://esphome.io/components/sun.html#sun-text-sensor)*"
             },
             "update_interval": {
               "key": "Optional",

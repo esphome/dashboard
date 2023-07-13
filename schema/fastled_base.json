@@ -29,14 +29,14 @@
             "rgb_order": {
               "key": "Optional",
               "type": "enum",
-              "values": [
-                "RGB",
-                "RBG",
-                "GRB",
-                "GBR",
-                "BRG",
-                "BGR"
-              ],
+              "values": {
+                "RGB": null,
+                "RBG": null,
+                "GRB": null,
+                "GBR": null,
+                "BRG": null,
+                "BGR": null
+              },
               "docs": "**string**: The order of the RGB channels. Use this if your light doesn\u2019t seem to map the RGB light channels correctly. For example if your light shows up green when you set a red color through the frontend. Valid values are `RGB`, `RBG`, `GRB`, `GBR`, `BRG` and `BGR`. Defaults to `RGB`.\n\n*See also: [SPI](https://esphome.io/components/light/fastled.html#id1)*"
             },
             "max_refresh_rate": {

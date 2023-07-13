@@ -4,7 +4,7 @@
   /* Colors */
   --primary-bg-color: #fafafa;
   --primary-footer-bg-color: #212121;
-
+  --card-background-color: #fafafa;
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
   --alert-info-color: #00539f;
@@ -15,11 +15,51 @@
   --alert-warning-color-bg: #fff5e6;
   --alert-error-color: #d93025;
   --alert-error-color-bg: #faefeb;
-
   --mdc-theme-primary: #03a9f4;
+  --primary-text-color: #212121;
   --mdc-dialog-z-index: 998;
-
+  --mdc-theme-primary-no-attention: #444444;
+  --mdc-theme-on-primary-no-attention: white;
   --esphome-background-header: #e0e0e0;
+  --mdc-theme-on-primary: white;
+  --mdc-dialog-heading-ink-color: #212121;
+  --mdc-dialog-content-ink-color: #212121;
+  --update-available-color: #2e3dd4;
+  --status-connected: #444444;
+  --status-new: #ffa500;
+  --status-imported: #4caf50;
+}
+
+/* dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg-color: #000000;
+    --primary-text-color: #e1e1e1;
+    --primary-footer-bg-color: #101e24;
+    --esphome-background-header: #282828;
+    --card-background-color: #282828;
+    --card-text-color: #e1e1e1;
+    --primary-text-color: #e1e1e1;
+    --mdc-theme-surface: #282828;
+    --mdc-theme-on-surface: #e1e1e1;
+    --mdc-theme-text-primary-on-background: #e1e1e1;
+    --mdc-dialog-heading-ink-color: #e1e1e1;
+    --mdc-theme-primary-no-attention: #cecece;
+    --mdc-theme-on-primary-no-attention: #222222;
+    --mdc-dialog-content-ink-color: #e1e1e1;
+    --mdc-text-field-ink-color: #e1e1e1;
+    --mdc-text-field-label-ink-color: #e1e1e1;
+    --mdc-ripple-color: #282828;
+    --mdc-text-field-fill-color: #3d3d3d;
+    --mdc-theme-text-secondary-on-background: #e1e1e1;
+    --update-available-color: #5f7eeb;
+    --status-connected: #cecece;
+    --mdc-ripple-color: #bebebe;
+  }
+
+  .esphome-header img {
+    filter: invert(1);
+  }
 }
 
 html {
@@ -61,6 +101,7 @@ esphome-main {
   align-items: center;
   height: 56px;
   background-color: var(--esphome-background-header);
+  color: var(--primary-text-color);
   padding: 0 24px;
   z-index: 1;
 }

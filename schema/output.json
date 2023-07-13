@@ -10,6 +10,18 @@
         ],
         "docs": "The `ble_client` component is a output that can write a binary value to service characteristics of BLE devices.\n\n*See also: [BLE Client Binary Output](https://esphome.io/components/output/ble_client.html#ble-client-binary-output)*"
       },
+      "bp1658cj": {
+        "dependencies": [
+          "bp1658cj"
+        ],
+        "docs": "The BP1658CJ output component exposes a BP1658CJ channel of a global [Component/Hub](https://esphome.io/components/output/bp1658cj.html#bp1658cj-component) as a float output.\n\n*See also: [bp1658cj Output](https://esphome.io/components/output/bp1658cj.html#output)*"
+      },
+      "bp5758d": {
+        "dependencies": [
+          "bp5758d"
+        ],
+        "docs": "The BP5758D output component exposes a BP5758D channel of a global [Component/Hub](https://esphome.io/components/output/bp5758d.html#bp5758d-component) as a float output.\n\n*See also: [bp5758d Output](https://esphome.io/components/output/bp5758d.html#output)*"
+      },
       "custom": {
         "docs": "This integration can be used to create custom binary and float [outputs](https://esphome.io/components/output/index.html) in ESPHome using the C++ (Arduino) API.\n\n*See also: [Custom Output](https://esphome.io/components/output/custom.html#custom-output)*"
       },
@@ -31,6 +43,12 @@
         ],
         "docs": "The ESP8266 Software PWM platform allows you to use a software PWM on the pins GPIO0-GPIO16 on your ESP8266. Note that this is a software PWM, so there can be some flickering during periods of high WiFi activity. Hardware PWMs like the one on the ESP32 (see [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html)) are preferred.\n\n*See also: [ESP8266 Software PWM Output](https://esphome.io/components/output/esp8266_pwm.html#esp8266-software-pwm-output)*"
       },
+      "gp8403": {
+        "dependencies": [
+          "gp8403"
+        ],
+        "docs": "Configuration variables:\n\n*See also: [gp8403 Output](https://esphome.io/components/output/gp8403.html#output)*"
+      },
       "gpio": {
         "docs": "The GPIO output component is quite simple: It exposes a single GPIO pin as an output component. Note that output components are **not** switches and will not show up in Home Assistant. See [GPIO Switch](https://esphome.io/components/switch/gpio.html).\n\n*See also: [GPIO Output](https://esphome.io/components/output/gpio.html#gpio-output)*"
       },
@@ -39,6 +57,11 @@
           "esp32"
         ],
         "docs": "The LEDC output component exposes a [LEDC PWM channel](https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/peripherals/ledc.html) of the ESP32 as an output component.\n\n*See also: [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html#esp32-ledc-output)*"
+      },
+      "max6956": {
+        "dependencies": [
+          "max6956"
+        ]
       },
       "mcp4725": {
         "dependencies": [
@@ -87,6 +110,9 @@
           "rp2040"
         ]
       },
+      "sigma_delta_output": {
+        "docs": "This integration uses [sigma-delta modulation](https://en.wikipedia.org/wiki/Delta-sigma_modulation) to output a floating-point value on a binary output. Unlike with [Slow PWM Output](https://esphome.io/components/output/slow_pwm.html), it is possible to update the output value with each update cycle, not just at the end of a longer period.\n\n*See also: [Sigma-Delta Output](https://esphome.io/components/output/sigma_delta_output.html#sigma-delta-output)*"
+      },
       "slow_pwm": {
         "docs": "Similar to PWM, the Slow PWM Output platform allows you to control GPIO pins by pulsing them on/off over a longer time period. It could be used to control a heating element through a relay where a fast PWM update cycle would not be appropriate.\n\n*See also: [Slow PWM Output](https://esphome.io/components/output/slow_pwm.html#slow-pwm-output)*"
       },
@@ -101,6 +127,18 @@
           "sm2135"
         ],
         "docs": "The SM2135 output component exposes a SM2135 channel of a global [Component/Hub](https://esphome.io/components/output/sm2135.html#sm2135-component) as a float output.\n\n*See also: [sm2135 Output](https://esphome.io/components/output/sm2135.html#output)*"
+      },
+      "sm2235": {
+        "dependencies": [
+          "sm2235"
+        ],
+        "docs": "The SM2235 output component exposes a SM2235 channel of a global [Component/Hub](https://esphome.io/components/output/sm2235.html#sm2235-component) as a float output.\n\n*See also: [sm2235 Output](https://esphome.io/components/output/sm2235.html#output)*"
+      },
+      "sm2335": {
+        "dependencies": [
+          "sm2335"
+        ],
+        "docs": "The SM2335 output component exposes a SM2335 channel of a global [Component/Hub](https://esphome.io/components/output/sm2335.html#sm2335-component) as a float output.\n\n*See also: [sm2335 Output](https://esphome.io/components/output/sm2335.html#output)*"
       },
       "sx1509": {
         "dependencies": [
@@ -122,7 +160,10 @@
         ],
         "docs": "The tlc5947 output component exposes a tlc5947 channel of a global [Component/Hub](https://esphome.io/components/output/tlc5947.html#tlc5947-component) as a float output.\n\n*See also: [tlc5947 Output](https://esphome.io/components/output/tlc5947.html#output)*"
       },
-      "tm1638": {}
+      "tm1638": {},
+      "x9c": {
+        "docs": "The `x9c` output platform allows you to an output that controls a [X9C digital potentiometer](https://www.renesas.com/us/en/document/dst/x9c102-x9c103-x9c104-x9c503-datasheet).\n\n*See also: [X9C Potentiometer Output](https://esphome.io/components/output/x9c.html#x9c-potentiometer-output)*"
+      }
     },
     "schemas": {
       "BINARY_OUTPUT_SCHEMA": {
@@ -156,7 +197,7 @@
             },
             "min_power": {
               "key": "Optional",
-              "docs": "**float**: Sets the minimum output value of this output platform. Must be in range from 0 to max_power. Defaults to `0`.\n\n*See also: [Base Output Configuration](https://esphome.io/components/output/index.html#base-output-configuration)*"
+              "docs": "**float**: Sets the minimum output value of this output platform. Must be in range from 0 to max_power. Defaults to `0`.  If zero_means_zero is `false` this will be output value when the entity is turned off.\n\n*See also: [Base Output Configuration](https://esphome.io/components/output/index.html#base-output-configuration)*"
             },
             "zero_means_zero": {
               "key": "Optional",
@@ -218,7 +259,7 @@
             }
           }
         },
-        "docs": "This action sets the float output to the given level when executed. Note: This only works with floating point outputs like ESP8266 PWM, LEDC or `slow_pwm`.\n\n*See also: [`output.set_level` Action](https://esphome.io/components/output/index.html#output-set-level-action)*"
+        "docs": "This action sets the float output to the given level when executed. Note: This only works with floating point outputs like [ESP8266 Software PWM Output](https://esphome.io/components/output/esp8266_pwm.html), [ESP32 LEDC Output](https://esphome.io/components/output/ledc.html), [Sigma-Delta Output](https://esphome.io/components/output/sigma_delta_output.html), [Slow PWM Output](https://esphome.io/components/output/slow_pwm.html).\n\n*See also: [`output.set_level` Action](https://esphome.io/components/output/index.html#output-set-level-action)*"
       }
     }
   },
@@ -304,10 +345,24 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "switch.SWITCH_SCHEMA",
+            "switch._SWITCH_SCHEMA",
             "core.COMPONENT_SCHEMA"
           ],
           "config_vars": {
+            "restore_mode": {
+              "key": "Optional",
+              "default": "ALWAYS_OFF",
+              "type": "enum",
+              "values": {
+                "RESTORE_DEFAULT_OFF": null,
+                "RESTORE_DEFAULT_ON": null,
+                "ALWAYS_OFF": null,
+                "ALWAYS_ON": null,
+                "RESTORE_INVERTED_DEFAULT_OFF": null,
+                "RESTORE_INVERTED_DEFAULT_ON": null,
+                "DISABLED": null
+              }
+            },
             "id": {
               "key": "GeneratedID",
               "id_type": {
@@ -325,27 +380,6 @@
               "use_id_type": "output::BinaryOutput",
               "type": "use_id",
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the output component to use.\n\n*See also: [Generic Output Switch](https://esphome.io/components/switch/output.html#configuration-variables)*"
-            },
-            "restore_mode": {
-              "key": "Optional",
-              "default": "RESTORE_DEFAULT_OFF",
-              "type": "enum",
-              "values": [
-                "RESTORE_DEFAULT_OFF",
-                "RESTORE_DEFAULT_ON",
-                "ALWAYS_OFF",
-                "ALWAYS_ON",
-                "RESTORE_INVERTED_DEFAULT_OFF",
-                "RESTORE_INVERTED_DEFAULT_ON"
-              ],
-              "docs": "Control how the switch attempts to restore state on bootup. For restoring on ESP8266s, also see `esp8266_restore_from_flash` in the [esphome section](https://esphome.io/components/esphome.html).\n  * `RESTORE_DEFAULT_OFF` (Default) - Attempt to restore state and default to OFF if not possible to restore.\n  \n  * `RESTORE_DEFAULT_ON` - Attempt to restore state and default to ON.\n  \n  * `RESTORE_INVERTED_DEFAULT_OFF` - Attempt to restore state inverted from the previous state and default to OFF.\n  \n  * `RESTORE_INVERTED_DEFAULT_ON` - Attempt to restore state inverted from the previous state and default to ON.\n  \n  * `ALWAYS_OFF` - Always initialize the pin as OFF on bootup.\n  \n  * `ALWAYS_ON` - Always initialize the pin as ON on bootup.\n  \n  \n\n*See also: [Generic Output Switch](https://esphome.io/components/switch/output.html#configuration-variables)*",
-              "values_docs": {
-                "RESTORE_DEFAULT_ON": "Attempt to restore state and default to ON.",
-                "RESTORE_INVERTED_DEFAULT_OFF": "Attempt to restore state inverted from the previous state and default to OFF.",
-                "RESTORE_INVERTED_DEFAULT_ON": "Attempt to restore state inverted from the previous state and default to ON.",
-                "ALWAYS_OFF": "Always initialize the pin as OFF on bootup.",
-                "ALWAYS_ON": "Always initialize the pin as ON on bootup."
-              }
             }
           }
         }

@@ -1,0 +1,94 @@
+{
+  "key_collector": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "key_collector::KeyCollector",
+                "parents": [
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this entry for use in lambdas.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "source_id": {
+              "key": "Optional",
+              "use_id_type": "key_provider::KeyProvider",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the key input device.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "min_length": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**integer**: The minimal length of the desired key sequence. Below this, `on_result` automation will not trigger even if any of the `end_keys` was pressed.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "max_length": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**integer**: The maximum length of the desired key sequence, after which the sequence will trigger the `on_result` automation witout having to press any of the `end_keys`\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "start_keys": {
+              "key": "Optional",
+              "type": "string"
+            },
+            "end_keys": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Keys used to *enter* the sequence.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "end_key_required": {
+              "key": "Optional",
+              "type": "boolean",
+              "docs": "**boolean**: Only trigger `on_result` automation when one of the `end_keys` was pressed. Defaults to `false`.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "back_keys": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Keys used to delete the last pressed key. Like *Backspace* on a keyboard.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "clear_keys": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Keys used to entirely clear the sequence, all the pressed keys.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "allowed_keys": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: Keys allowed to be used. If not specified, then any otherwise unused keys will be allowed.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            },
+            "on_progress": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_result": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "on_timeout": {
+              "key": "Optional",
+              "type": "trigger"
+            },
+            "timeout": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Timeout after which to cancel building the sequence and delete all the keys.\n\n*See also: [Component](https://esphome.io/components/key_collector.html#component)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

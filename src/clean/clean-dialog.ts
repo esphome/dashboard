@@ -5,6 +5,7 @@ import "../components/remote-process";
 import { openInstallChooseDialog } from "../install-choose";
 import "../components/process-dialog";
 import { openEditDialog } from "../editor";
+import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-clean-dialog")
 class ESPHomeCleanDialog extends LitElement {
@@ -45,6 +46,8 @@ class ESPHomeCleanDialog extends LitElement {
   private _handleClose() {
     this.parentNode!.removeChild(this);
   }
+
+  static styles = [esphomeDialogStyles];
 }
 
 declare global {

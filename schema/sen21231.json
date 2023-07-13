@@ -1,0 +1,47 @@
+{
+  "sen21231.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "sen21231_sensor::Sen21231Sensor",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "icon": {
+              "default": "mdi:motion-sensor"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "98",
+              "data_type": "hex_uint8_t"
+            }
+          }
+        }
+      }
+    }
+  }
+}

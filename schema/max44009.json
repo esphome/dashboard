@@ -38,11 +38,11 @@
               "key": "Optional",
               "default": "low_power",
               "type": "enum",
-              "values": [
-                "auto",
-                "low_power",
-                "continuous"
-              ],
+              "values": {
+                "auto": null,
+                "low_power": null,
+                "continuous": null
+              },
               "docs": "**string**: Measurement mode. One of `auto`, `low_power`, `continuous`.\n\n*See also: [MAX44009 Ambient Light Sensor](https://esphome.io/components/sensor/max44009.html#configuration-variables)*"
             },
             "update_interval": {

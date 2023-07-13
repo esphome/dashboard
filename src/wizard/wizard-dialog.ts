@@ -37,7 +37,7 @@ import {
   storeWifiSecrets,
 } from "../api/wifi";
 import { openInstallChooseDialog } from "../install-choose";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import { openNoPortPickedDialog } from "../no-port-picked";
 import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
@@ -503,8 +503,7 @@ export class ESPHomeWizardDialog extends LitElement {
               slot="primaryAction"
               dialogAction="ok"
               label="Install"
-              @click=${() =>
-                openInstallChooseDialog(`${this._data.name!}.yaml`)}
+              @click=${() => openInstallChooseDialog(this._configFilename)}
             ></mwc-button>
             <mwc-button
               no-attention
@@ -787,6 +786,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       :host {
         --mdc-dialog-max-width: 390px;

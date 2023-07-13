@@ -27,7 +27,7 @@
               "key": "Optional",
               "default": "",
               "type": "string",
-              "docs": "**string**: The password to protect the API Server with. Defaults to no password.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
+              "docs": "****Deprecated**, string**: The password to protect the API Server with. Defaults to no password. It is recommended to use the `encryption` -> `key` above instead of the the `password`.\n\n*See also: [Native API Component](https://esphome.io/components/api.html#configuration-variables)*"
             },
             "reboot_timeout": {
               "key": "Optional",
@@ -58,16 +58,16 @@
                       "config_vars": {
                         "string": {
                           "type": "enum",
-                          "values": [
-                            "bool",
-                            "int",
-                            "float",
-                            "string",
-                            "bool[]",
-                            "int[]",
-                            "float[]",
-                            "string[]"
-                          ]
+                          "values": {
+                            "bool": null,
+                            "int": null,
+                            "float": null,
+                            "string": null,
+                            "bool[]": null,
+                            "int[]": null,
+                            "float[]": null,
+                            "string[]": null
+                          }
                         }
                       }
                     }

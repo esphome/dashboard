@@ -111,6 +111,12 @@ class ESPHomeInstallUploadDialog extends LitElement {
       input.error {
         border-color: var(--alert-error-color);
       }
+
+      input[type="file"] {
+        background-color: var(--mdc-text-field-fill-color);
+        width: 95%;
+        padding: 10px;
+      }
     `,
   ];
 }

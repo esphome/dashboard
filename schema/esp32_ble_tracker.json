@@ -10,10 +10,19 @@
               "id_type": {
                 "class": "esp32_ble_tracker::ESP32BLETracker",
                 "parents": [
-                  "Component"
+                  "Component",
+                  "esp32_ble::GAPEventHandler",
+                  "esp32_ble::GATTcEventHandler",
+                  "Parented<esp32_ble::ESP32BLE>",
+                  "Parented"
                 ]
               },
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID for this ESP32 BLE Hub.\n\n*See also: [ESP32 Bluetooth Low Energy Tracker Hub](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)*"
+            },
+            "ble_id": {
+              "key": "GeneratedID",
+              "use_id_type": "esp32_ble::ESP32BLE",
+              "type": "use_id"
             },
             "scan_parameters": {
               "key": "Optional",
@@ -77,7 +86,8 @@
                 "config_vars": {
                   "mac_address": {
                     "key": "Optional",
-                    "docs": "**MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-advertise-trigger)*"
+                    "is_list": true,
+                    "docs": "**list of MAC Address**: The MAC address to filter for this automation.\n\n*See also: [on_ble_advertise Trigger](https://esphome.io/components/esp32_ble_tracker.html#on-ble-advertise-trigger)*"
                   },
                   "then": {
                     "type": "trigger"

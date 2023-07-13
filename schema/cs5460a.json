@@ -31,10 +31,10 @@
               "key": "Optional",
               "default": "10X",
               "type": "enum",
-              "values": [
-                "10X",
-                "50X"
-              ],
+              "values": {
+                "10X": null,
+                "50X": null
+              },
               "docs": "If set to `10X` (default), the differential voltage at the current inputs must be between -250mV and +250mV.  If set to `50X` it must be within -100mV to +100mV.\n\n*See also: [CS5460A Power Sensor](https://esphome.io/components/sensor/cs5460a.html#configuration-variables)*"
             },
             "current_gain": {

@@ -5,7 +5,7 @@ import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
 import { metaChevronRight } from "../const";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import "../components/esphome-alert";
 import {
   DownloadType,
@@ -104,12 +104,10 @@ class ESPHomeDownloadTypeDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       mwc-list-item {
         margin: 0 -20px;
-      }
-      svg {
-        fill: currentColor;
       }
     `,
   ];

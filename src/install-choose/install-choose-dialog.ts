@@ -11,7 +11,7 @@ import { openInstallServerDialog } from "../install-server";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from "../install-web";
 import { compileConfiguration, getConfiguration } from "../api/configuration";
-import { esphomeDialogStyles } from "../styles";
+import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import "../components/esphome-alert";
 import { openDownloadTypeDialog } from "../download-type";
 
@@ -427,12 +427,10 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   static styles = [
     esphomeDialogStyles,
+    esphomeSvgStyles,
     css`
       mwc-list-item {
         margin: 0 -20px;
-      }
-      svg {
-        fill: currentColor;
       }
       .center {
         text-align: center;
