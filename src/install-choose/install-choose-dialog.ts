@@ -14,6 +14,7 @@ import { compileConfiguration, getConfiguration } from "../api/configuration";
 import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
 import "../components/esphome-alert";
 import { openDownloadTypeDialog } from "../download-type";
+import { getFactoryDownloadUrl } from "../api/download";
 
 const WARNING_ICON = "👀";
 const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_install";
@@ -24,6 +25,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   @state() private _ethernet = false;
   @state() private _isPico = false;
+  @state() private _shouldDownloadFactory = false;
 
   @state() private _ports?: ServerSerialPort[];
 
@@ -305,6 +307,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
     getConfiguration(this.configuration).then((config) => {
       this._ethernet = config.loaded_integrations.includes("ethernet");
       this._isPico = config.esp_platform === "RP2040";
+      // download firmware-factory.bin automatically, when compiling for web flashing
+      // remove along with removal of legacy format
+      this._shouldDownloadFactory = config.esp_platform === "ESP32";
     });
   }
 
@@ -322,18 +327,23 @@ class ESPHomeInstallChooseDialog extends LitElement {
       this._abortCompilation = new AbortController();
       this._compileConfiguration = compileConfiguration(this.configuration)
         .then(
-          () => html`
-            <button
-              class="link"
-              @click=${() => {
-                openDownloadTypeDialog(
-                  this.configuration,
-                  this._platformSupportsWebSerial
-                );
-              }}
-              >Download project</a
-            >
-          `,
+          () =>
+            this._shouldDownloadFactory
+              ? html`<a
+                  download
+                  href="${getFactoryDownloadUrl(this.configuration)}"
+                  >Download project</a
+                >`
+              : html`<button
+                  class="link"
+                  @click=${() => {
+                    openDownloadTypeDialog(
+                      this.configuration,
+                      this._platformSupportsWebSerial
+                    );
+                  }}
+                  >Download project</a
+                >`,
           () => html`
             <a download disabled href="#">Download project</a>
             <span class="prepare-error">preparation failed:</span>
