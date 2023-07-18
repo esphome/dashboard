@@ -10,7 +10,6 @@ interface ConsoleState {
 }
 
 export class ColoredConsole {
-
   public static blurSecrets = false;
 
   public state: ConsoleState = {
@@ -28,7 +27,7 @@ export class ColoredConsole {
 
   logs(): string {
     const logs = this.targetElement.cloneNode(true) as HTMLElement;
-    logs.querySelectorAll('.log-secret').forEach(e => e.innerHTML = '');
+    logs.querySelectorAll(".log-secret").forEach((e) => (e.innerHTML = ""));
     return logs.innerText;
   }
 

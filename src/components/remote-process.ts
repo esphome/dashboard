@@ -28,7 +28,9 @@ class ESPHomeRemoteProcess extends HTMLElement {
         }
         ${coloredConsoleStyles}
       </style>
-      <div class="log${ColoredConsole.blurSecrets ? " blur-secrets" : ""}"></div>
+      <div class="log${
+        ColoredConsole.blurSecrets ? " blur-secrets" : ""
+      }"></div>
     `;
 
     const coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);

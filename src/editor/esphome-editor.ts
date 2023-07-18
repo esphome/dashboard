@@ -49,37 +49,38 @@ class ESPHomeEditor extends LitElement {
     return this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
   }
 
-
   protected render() {
     const commonStyle = html`
-      html,
-      body {
-        height: 100vh;
-        overflow: hidden;
-      }
-      .esphome-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        align-content: stretch;
-      }
-      .esphome-header h2 {
-        line-height: 100%;
-        /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
-        padding: 0.8rem 0.5rem 1rem 0.5rem;
-        margin: 0px;
-        font-size: 1.4rem;
-        flex: 1 1 auto;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    `
+      <style>
+        html,
+        body {
+          height: 100vh;
+          overflow: hidden;
+        }
+        .esphome-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          align-content: stretch;
+        }
+        .esphome-header h2 {
+          line-height: 100%;
+          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+          padding: 0.8rem 0.5rem 1rem 0.5rem;
+          margin: 0px;
+          font-size: 1.4rem;
+          flex: 1 1 auto;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      </style>
+    `;
     const isSecrets = this._isSecrets();
     if (isSecrets && this.streamerMode && !this._showSecrets) {
       return html`
+        ${commonStyle}
         <style>
-          ${commonStyle}
           .secrets-warning-container {
             text-align: center;
             padding: 40px;
@@ -107,8 +108,15 @@ class ESPHomeEditor extends LitElement {
           <div class="secrets-warning-container">
             <esphome-svg-icon .path=${mdiIncognito}></esphome-svg-icon>
             <h1>Show Secrets Warning</h1>
-            <p>Streaming mode enabled, are you sure you want to disclose some secrets?</p>
-            <mwc-button raised label="Show My Secrets" @click="${() => this._showSecrets = true}"></mwc-button>
+            <p>
+              Streaming mode enabled, are you sure you want to disclose some
+              secrets?
+            </p>
+            <mwc-button
+              raised
+              label="Show My Secrets"
+              @click="${() => (this._showSecrets = true)}"
+            ></mwc-button>
           </div>
         </main>
       `;
@@ -118,8 +126,8 @@ class ESPHomeEditor extends LitElement {
     }
 
     return html`
+      ${commonStyle}
       <style>
-        ${commonStyle}
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
         }
@@ -186,7 +194,7 @@ class ESPHomeEditor extends LitElement {
     this._snackbar.show();
   }
 
-  firstUpdated() { 
+  firstUpdated() {
     const isSecrets = this._isSecrets();
     if (isSecrets && this.streamerMode && !this._showSecrets) {
       return;
