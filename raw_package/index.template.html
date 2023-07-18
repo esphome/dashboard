@@ -8,6 +8,7 @@
 <esphome-main
   version="{{ version }}"
   docsLink="{{ docs_link }}"
+  {% if streamer_mode %}streamerMode="true"{% end %}
   {% if login_enabled %}logoutUrl="{{ relative_url }}logout"{% end %}
 ></esphome-main>
 {% end %}

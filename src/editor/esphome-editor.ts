@@ -1,6 +1,6 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { LitElement, html } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "@material/mwc-snackbar";
@@ -12,6 +12,7 @@ import type { Snackbar } from "@material/mwc-snackbar";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
+import { mdiIncognito } from "@mdi/js";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -34,42 +35,91 @@ class ESPHomeEditor extends LitElement {
   private editorActiveSecrets = false;
 
   @property() public fileName!: string;
+  @property({ type: Boolean }) streamerMode = false;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
   @query(".esphome-header", true) private editor_header!: HTMLElement;
+  @state() private _showSecrets = false;
 
   createRenderRoot() {
     return this;
   }
 
+  private _isSecrets() {
+    return this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+  }
+
+
   protected render() {
-    const isSecrets =
-      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+    const commonStyle = html`
+      html,
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+      .esphome-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: stretch;
+      }
+      .esphome-header h2 {
+        line-height: 100%;
+        /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+        padding: 0.8rem 0.5rem 1rem 0.5rem;
+        margin: 0px;
+        font-size: 1.4rem;
+        flex: 1 1 auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    `
+    const isSecrets = this._isSecrets();
+    if (isSecrets && this.streamerMode && !this._showSecrets) {
+      return html`
+        <style>
+          ${commonStyle}
+          .secrets-warning-container {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary-text-color);
+          }
+          h1 {
+            font-size: 2.5rem;
+            line-height: 110%;
+            font-weight: 400;
+            margin: 1rem 0 0.65rem 0;
+          }
+          esphome-svg-icon {
+            --mdc-icon-size: 56px;
+          }
+        </style>
+        <div class="esphome-header">
+          <mwc-icon-button
+            icon="clear"
+            @click=${this._handleClose}
+            aria-label="close"
+          ></mwc-icon-button>
+          <h2>${this.fileName}</h2>
+        </div>
+        <main>
+          <div class="secrets-warning-container">
+            <esphome-svg-icon .path=${mdiIncognito}></esphome-svg-icon>
+            <h1>Show Secrets Warning</h1>
+            <p>Streaming mode enabled, are you sure you want to disclose some secrets?</p>
+            <mwc-button raised label="Show My Secrets" @click="${() => this._showSecrets = true}"></mwc-button>
+          </div>
+        </main>
+      `;
+    } else if (isSecrets && this.streamerMode && this._showSecrets) {
+      // as the 1st update was skipped, fire firstUpdated again
+      setTimeout(() => this.firstUpdated(), 50);
+    }
 
     return html`
       <style>
-        html,
-        body {
-          height: 100vh;
-          overflow: hidden;
-        }
-        .esphome-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          align-content: stretch;
-        }
-        h2 {
-          line-height: 100%;
-          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
-          padding: 0.8rem 0.5rem 1rem 0.5rem;
-          margin: 0px;
-          font-size: 1.4rem;
-          flex: 1 1 auto;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
+        ${commonStyle}
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
         }
@@ -136,7 +186,11 @@ class ESPHomeEditor extends LitElement {
     this._snackbar.show();
   }
 
-  firstUpdated() {
+  firstUpdated() { 
+    const isSecrets = this._isSecrets();
+    if (isSecrets && this.streamerMode && !this._showSecrets) {
+      return;
+    }
     // @ts-ignore
     self.MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
@@ -158,9 +212,6 @@ class ESPHomeEditor extends LitElement {
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
-
-    const isSecrets =
-      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
 
     getFile(this.fileName).then((response) => {
       if (response === null && isSecrets) {

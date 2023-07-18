@@ -10,6 +10,9 @@ interface ConsoleState {
 }
 
 export class ColoredConsole {
+
+  public static blurSecrets = false;
+
   public state: ConsoleState = {
     bold: false,
     italic: false,
@@ -24,7 +27,9 @@ export class ColoredConsole {
   constructor(public targetElement: HTMLElement) {}
 
   logs(): string {
-    return this.targetElement.innerText;
+    const logs = this.targetElement.cloneNode(true) as HTMLElement;
+    logs.querySelectorAll('.log-secret').forEach(e => e.innerHTML = '');
+    return logs.innerText;
   }
 
   addLine(line: string) {
@@ -228,9 +233,11 @@ export const coloredConsoleStyles = `
     -ms-user-select: none;
     user-select: none;
   }
+  .log.blur-secrets .log-secret {
+    filter: blur(5px);
+  }
   .log-secret-redacted {
     opacity: 0;
-    width: 1px;
     font-size: 1px;
   }
   .log-fg-black {
@@ -280,5 +287,14 @@ export const coloredConsoleStyles = `
   }
   .log-bg-white {
     background-color: rgb(255, 255, 255);
+  }
+  @media not screen {
+    .log-secret {
+      display: none;
+    }
+    .log-secret-redacted {
+      opacity: 0;
+      font-size: 12px;
+    }
   }
 `;
