@@ -92,9 +92,6 @@
                   "unit_of_measurement": {
                     "default": "\u00b0C"
                   },
-                  "icon": {
-                    "default": "mdi:thermometer"
-                  },
                   "accuracy_decimals": {
                     "default": "1"
                   },
@@ -128,14 +125,11 @@
                   "unit_of_measurement": {
                     "default": "hPa"
                   },
-                  "icon": {
-                    "default": "mdi:gauge"
-                  },
                   "accuracy_decimals": {
                     "default": "1"
                   },
                   "device_class": {
-                    "default": "pressure"
+                    "default": "atmospheric_pressure"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -163,9 +157,6 @@
                 "config_vars": {
                   "unit_of_measurement": {
                     "default": "%"
-                  },
-                  "icon": {
-                    "default": "mdi:water-percent"
                   },
                   "accuracy_decimals": {
                     "default": "1"
@@ -269,11 +260,11 @@
                   "unit_of_measurement": {
                     "default": "ppm"
                   },
-                  "icon": {
-                    "default": "mdi:test-tube"
-                  },
                   "accuracy_decimals": {
                     "default": "1"
+                  },
+                  "device_class": {
+                    "default": "carbon_dioxide"
                   },
                   "state_class": {
                     "default": "measurement"
@@ -293,11 +284,11 @@
                   "unit_of_measurement": {
                     "default": "ppm"
                   },
-                  "icon": {
-                    "default": "mdi:test-tube"
-                  },
                   "accuracy_decimals": {
                     "default": "1"
+                  },
+                  "device_class": {
+                    "default": "volatile_organic_compounds_parts"
                   },
                   "state_class": {
                     "default": "measurement"

@@ -61,7 +61,7 @@
                     "default": "0"
                   },
                   "device_class": {
-                    "default": "volatile_organic_compounds"
+                    "default": "volatile_organic_compounds_parts"
                   },
                   "state_class": {
                     "default": "measurement"

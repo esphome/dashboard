@@ -35,11 +35,12 @@
                 "ILI9481": null,
                 "ILI9486": null,
                 "ILI9488": null,
+                "ILI9488_A": null,
                 "ST7796": null,
                 "S3BOX": null,
                 "S3BOX_LITE": null
               },
-              "docs": "The model of the display. Options are:\n  * `M5STACK`, `TFT 2.4`, `TFT 2.4R`, `S3BOX`, `S3BOX_LITE`\n  \n  * `ILI9341`, `ILI9342`, `ILI9481`, `ILI9486`, `ILI9488`, `ST7796`\n  \n  \n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
+              "docs": "The model of the display. Options are:\n  * `M5STACK`, `TFT 2.4`, `TFT 2.4R`, `S3BOX`, `S3BOX_LITE`\n  \n  * `ILI9341`, `ILI9342`, `ILI9481`, `ILI9486`, `ILI9488`, `ILI9488_A` (alternative gamma configuration for ILI9488), `ST7796`\n  \n  \n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
             },
             "dimensions": {
               "key": "Optional",
@@ -86,6 +87,24 @@
               "default": "[]",
               "is_list": true,
               "docs": "A list of image files that will be used to generate the color pallet for the display.  This should only be used in conjunction with `-color_palette: IMAGE_ADAPTIVE` above.  The images will be analysed at compile time and a custom color pallet will be created based on the most commonly occuring colors.  A typical setting would be a sample image that represented the fully populated display.  This can significantly improve the quality of displayed images.  Note that these images are not stored on the ESP device, just the 256byte color pallet created from them.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
+            },
+            "data_rate": {
+              "key": "Optional",
+              "default": "40MHz",
+              "type": "enum",
+              "values": {
+                "80000000.0": null,
+                "40000000.0": null,
+                "20000000.0": null,
+                "10000000.0": null,
+                "5000000.0": null,
+                "2000000.0": null,
+                "1000000.0": null,
+                "200000.0": null,
+                "75000.0": null,
+                "1000.0": null
+              },
+              "docs": "Set the data rate of the SPI interface to the display. One of `80MHz`, `40MHz` (default), `20MHz`, `10MHz`, `5MHz`, `2MHz`, `1MHz`, `200kHz`, `75kHz` or `1kHz`. If you have multiple ILI9xxx displays they must all use the same **data_rate**.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#configuration-variables)*"
             },
             "update_interval": {
               "key": "Optional",

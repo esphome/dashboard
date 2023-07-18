@@ -722,12 +722,6 @@
               "key": "Optional",
               "type": "trigger",
               "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action that should be performed when the remote (like Home Assistant\u2019s frontend) requests the switch to be turned on.\n\n*See also: [Template Switch](https://esphome.io/components/switch/template.html#configuration-variables)*"
-            },
-            "restore_state": {
-              "key": "Optional",
-              "default": "False",
-              "type": "boolean",
-              "docs": "**boolean**: Sets whether ESPHome should attempt to restore the state on boot-up and call the turn on/off actions with the recovered values. Defaults to `no`.\n\n*See also: [Template Switch](https://esphome.io/components/switch/template.html#configuration-variables)*"
             }
           }
         }
