@@ -109,7 +109,7 @@ class ESPHomeEditor extends LitElement {
             <esphome-svg-icon .path=${mdiIncognito}></esphome-svg-icon>
             <h1>Show Secrets Warning</h1>
             <p>
-              Streaming mode enabled, are you sure you want to disclose some
+              Streamer mode enabled, are you sure you want to disclose your
               secrets?
             </p>
             <mwc-button
