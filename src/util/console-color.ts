@@ -285,13 +285,4 @@ export const coloredConsoleStyles = `
   .log-bg-white {
     background-color: rgb(255, 255, 255);
   }
-  @media not screen {
-    .log-secret {
-      display: none;
-    }
-    .log-secret-redacted {
-      opacity: 0;
-      font-size: 12px;
-    }
-  }
 `;
