@@ -1,0 +1,158 @@
+{
+  "duty_time.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "duty_time_sensor::DutyTimeSensor",
+                "parents": [
+                  "sensor::Sensor",
+                  "EntityBase",
+                  "PollingComponent",
+                  "Component"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Set the ID of this sensor for use in lambdas.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            },
+            "unit_of_measurement": {
+              "default": "s"
+            },
+            "icon": {
+              "default": "mdi:timer-play-outline"
+            },
+            "accuracy_decimals": {
+              "default": "3"
+            },
+            "device_class": {
+              "default": "duration"
+            },
+            "state_class": {
+              "default": "total_increasing"
+            },
+            "entity_category": {
+              "default": "diagnostic"
+            },
+            "sensor": {
+              "key": "Optional",
+              "use_id_type": "binary_sensor::BinarySensor",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the `binary_sensor` to track the duty time. *May not be used with* `lambda`.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            },
+            "lambda": {
+              "key": "Optional",
+              "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Lambda that will be called in a loop to get the current state of the tracked object. *May not be used with* `sensor`.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            },
+            "restore": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean",
+              "docs": "**boolean**: Whether to store the intermediate result on the device so that the value can be restored upon power cycle or reboot. Warning: this option can wear out your flash. Defaults to `false`.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            },
+            "last_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "s"
+                  },
+                  "icon": {
+                    "default": "mdi:timer-marker-outline"
+                  },
+                  "accuracy_decimals": {
+                    "default": "3"
+                  },
+                  "device_class": {
+                    "default": "duration"
+                  },
+                  "state_class": {
+                    "default": "total"
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              },
+              "docs": "Information of the last switch-on time sensor. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The update interval. Defaults to `60s`.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#configuration-variables)*"
+            }
+          }
+        }
+      },
+      "DUTY_TIME_ID_SCHEMA": {
+        "type": "schema",
+        "maybe": "id",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "Required",
+              "use_id_type": "duty_time_sensor::DutyTimeSensor",
+              "type": "use_id"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "start": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "duty_time.sensor.DUTY_TIME_ID_SCHEMA"
+          ]
+        },
+        "docs": "This action starts/resume time tracking. In lambdas, you may use the `start()` method.\n\n*See also: [`sensor.duty_time.start` Action](https://esphome.io/components/sensor/duty_time.html#sensor-duty-time-start-action)*"
+      },
+      "stop": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "duty_time.sensor.DUTY_TIME_ID_SCHEMA"
+          ]
+        },
+        "docs": "This action suspends time tracking. Causes the sensor to be updated, including the `last_time` sensor. In lambdas, you may use the `stop()` method.\n\n*See also: [`sensor.duty_time.stop` Action](https://esphome.io/components/sensor/duty_time.html#sensor-duty-time-stop-action)*"
+      },
+      "reset": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "duty_time.sensor.DUTY_TIME_ID_SCHEMA"
+          ]
+        },
+        "docs": "This action resets the duty time counter. Causes a sensor update. Does not affect the `last_time` sensor. In lambdas, you may use the `reset()` method.\n\n*See also: [`sensor.duty_time.reset` Action](https://esphome.io/components/sensor/duty_time.html#sensor-duty-time-reset-action)*"
+      }
+    },
+    "condition": {
+      "is_running": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "duty_time.sensor.DUTY_TIME_ID_SCHEMA"
+          ]
+        }
+      },
+      "is_not_running": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "duty_time.sensor.DUTY_TIME_ID_SCHEMA"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -88,12 +88,14 @@
               "wifi_signal": {
                 "key": "Optional",
                 "default": "True",
-                "type": "boolean"
+                "type": "boolean",
+                "docs": "**boolean**: If true - send wifi signal level to AC. Supported only by hOn protocol.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               },
               "beeper": {
                 "key": "Optional",
                 "default": "True",
-                "type": "boolean"
+                "type": "boolean",
+                "docs": "**boolean**: Can be used to disable beeping on commands from AC. Supported only by hOn protocol.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               },
               "outdoor_temperature": {
                 "key": "Optional",
@@ -119,12 +121,14 @@
                       "default": "measurement"
                     }
                   }
-                }
+                },
+                "docs": "Temperature sensor for outdoor temperature. Supported only by hOn protocol.\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): ID of the sensor, can be used for code generation\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               }
             }
           }
         },
-        "typed_key": "protocol"
+        "typed_key": "protocol",
+        "docs": "**string**: Defines protocol of communication with AC. Possible values: hon or smartair2. Default value is smartair2.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
       },
       "HAIER_BASE_ACTION_SCHEMA": {
         "type": "schema",
@@ -160,7 +164,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "This action turns the AC display off\n\n*See also: [climate.haier.display_off Action](https://esphome.io/components/climate/haier.html#climate-haier-display-off-action)*"
       },
       "display_on": {
         "type": "schema",
@@ -168,7 +173,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "This action turns the AC display on\n\n*See also: [climate.haier.display_on Action](https://esphome.io/components/climate/haier.html#climate-haier-display-on-action)*"
       },
       "beeper_off": {
         "type": "schema",
@@ -176,7 +182,8 @@
           "extends": [
             "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "(supported only by hOn) This action disables beep feedback on every command sent to AC (keep in mind that this will not work for IR remote commands)\n\n*See also: [climate.haier.beeper_off Action](https://esphome.io/components/climate/haier.html#climate-haier-beeper-off-action)*"
       },
       "beeper_on": {
         "type": "schema",
@@ -184,7 +191,8 @@
           "extends": [
             "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "(supported only by hOn) This action enables beep feedback on every command sent to AC\n\n*See also: [climate.haier.beeper_on Action](https://esphome.io/components/climate/haier.html#climate-haier-beeper-on-action)*"
       },
       "start_steri_cleaning": {
         "type": "schema",
@@ -192,7 +200,8 @@
           "extends": [
             "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "(supported only by hOn) Start 56\u00b0C steri-cleaning\n\n*See also: [climate.haier.start_steri_cleaning Action](https://esphome.io/components/climate/haier.html#climate-haier-start-steri-cleaning-action)*"
       },
       "start_self_cleaning": {
         "type": "schema",
@@ -200,7 +209,8 @@
           "extends": [
             "haier.climate.HAIER_HON_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "(supported only by hOn) Start [self-cleaning](https://www.haier.com/in/blogs/beat-the-summer-heat-with-haier-self-cleaning-ac.shtml)\n\n*See also: [climate.haier.start_self_cleaning Action](https://esphome.io/components/climate/haier.html#climate-haier-start-self-cleaning-action)*"
       },
       "set_vertical_airflow": {
         "type": "schema",
@@ -222,7 +232,8 @@
               }
             }
           }
-        }
+        },
+        "docs": "(supported only by hOn) Set direction for vertical airflow if the vertical swing is disabled. Possible values: Health_Up, Max_Up, Up, Center, Down, Health_Down.\n\n*See also: [climate.haier.set_vertical_airflow Action](https://esphome.io/components/climate/haier.html#climate-haier-set-vertical-airflow-action)*"
       },
       "set_horizontal_airflow": {
         "type": "schema",
@@ -244,7 +255,8 @@
               }
             }
           }
-        }
+        },
+        "docs": "(supported only by hOn) Set direction for horizontal airflow if the horizontal swing is disabled. Possible values: Max_Left, Left, Center, Right, Max_Right.\n\n*See also: [climate.haier.set_horizontal_airflow Action](https://esphome.io/components/climate/haier.html#climate-haier-set-horizontal-airflow-action)*"
       },
       "health_off": {
         "type": "schema",
@@ -252,7 +264,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "Turn off health mode\n\n*See also: [climate.haier.health_off Action](https://esphome.io/components/climate/haier.html#climate-haier-health-off-action)*"
       },
       "health_on": {
         "type": "schema",
@@ -260,7 +273,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "Turn on health mode ([UV light sterilization](https://www.haierhvac.eu/en/node/1809))\n\n*See also: [climate.haier.health_on Action](https://esphome.io/components/climate/haier.html#climate-haier-health-on-action)*"
       },
       "power_toggle": {
         "type": "schema",
@@ -268,7 +282,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "This action toggles AC power\n\n*See also: [climate.haier.power_toggle Action](https://esphome.io/components/climate/haier.html#climate-haier-power-toggle-action)*"
       },
       "power_off": {
         "type": "schema",
@@ -276,7 +291,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "This action turns AC power off\n\n*See also: [climate.haier.power_off Action](https://esphome.io/components/climate/haier.html#climate-haier-power-off-action)*"
       },
       "power_on": {
         "type": "schema",
@@ -284,7 +300,8 @@
           "extends": [
             "haier.climate.HAIER_BASE_ACTION_SCHEMA"
           ]
-        }
+        },
+        "docs": "This action turns AC power on.\n\n*See also: [climate.haier.power_on Action](https://esphome.io/components/climate/haier.html#climate-haier-power-on-action)*"
       }
     }
   }

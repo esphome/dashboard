@@ -1,0 +1,57 @@
+{
+  "zio_ultrasonic.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "zio_ultrasonic::ZioUltrasonicComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice",
+                  "sensor::Sensor",
+                  "EntityBase"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "mm"
+            },
+            "accuracy_decimals": {
+              "default": "0"
+            },
+            "device_class": {
+              "default": "distance"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [Zio Ultrasonic Distance Sensor](https://esphome.io/components/sensor/zio_ultrasonic.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "0",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specifiy the I\u00b2C address of the sensor. Defaults to `0x00`.\n\n*See also: [Zio Ultrasonic Distance Sensor](https://esphome.io/components/sensor/zio_ultrasonic.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

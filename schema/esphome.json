@@ -119,7 +119,7 @@
             },
             "min_version": {
               "key": "Optional",
-              "default": "2023.7.0-dev",
+              "default": "2023.7.0b2",
               "docs": "**string**: The minimum ESPHome version required to compile this configuration. See [Minimum ESPHome version](https://esphome.io/components/esphome.html#esphome-min-version).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             },
             "compile_process_limit": {
@@ -477,7 +477,7 @@
           "api",
           "esp32"
         ],
-        "docs": "Home Assistant can expand its Bluetooth reach by communicating through the Bluetooth proxy component in ESPHome. The Individual device integrations in Home Assistant (such as BTHome) will receive the data from the Bluetooth Integration in Home Assistant which automatically aggregates all ESPHome bluetooth proxies with any USB Bluetooth Adapters you might have. This exceptional feature offers fault tolerant connection between the Bluetooth devices and Home Assistant.\n\n*See also: [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy.html#bluetooth-proxy)*"
+        "docs": "Home Assistant can expand its Bluetooth reach by communicating through the Bluetooth proxy component in ESPHome. The individual device integrations in Home Assistant (such as BTHome) will receive the data from the Bluetooth Integration in Home Assistant which automatically aggregates all ESPHome Bluetooth proxies with any USB Bluetooth Adapters you might have. This exceptional feature offers fault tolerant connection between the Bluetooth devices and Home Assistant.\n\n*See also: [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy.html#bluetooth-proxy)*"
       },
       "bme680_bsec": {
         "dependencies": [
@@ -666,6 +666,12 @@
         ],
         "docs": "You can display a graph of a sensor value(s) using this component. The states used for the graph are stored in memory at the time the sensor updates and will be lost when the device reboots.\n\n*See also: [Graph Component](https://esphome.io/components/display/index.html#graph-component)*"
       },
+      "grove_tb6612fng": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The Grove TBB6612FNG a runs over  I\u00b2C bus and has the capability to control DC and Stepper motors. At the current stage of implementation only DC motor is implemented.\n\n*See also: [Grove TB6612FNG Motor Drive](https://esphome.io/components/grove_tb6612fng.html#grove-tb6612fng-motor-drive)*"
+      },
       "host": {},
       "http_request": {
         "dependencies": [
@@ -709,7 +715,7 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `ld2410` sensor platform allows you to use HI-LINK LD2410 motion and presence sensor. ([datasheet and user manual](https://drive.google.com/drive/folders/1p4dhbEJA3YubyIjIIC7wwVsSo8x29Fq-?spm=a2g0o.detail.1000023.17.93465697yFwVxH)) with ESPHome. The [UART](https://esphome.io/components/uart.html#uart) is required to be set up in your configuration for this sensor to work.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#component-hub)*"
+        "docs": "The `ld2410` sensor platform allows you to use HI-LINK LD2410 motion and presence sensor ([datasheet and user manual](https://drive.google.com/drive/folders/1p4dhbEJA3YubyIjIIC7wwVsSo8x29Fq-?spm=a2g0o.detail.1000023.17.93465697yFwVxH)) with ESPHome. The [UART](https://esphome.io/components/uart.html#uart) is required to be set up in your configuration for this sensor to work.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#component-hub)*"
       },
       "logger": {
         "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics (if there is an MQTT client in the configuration). By default, all logs with a severity higher than `DEBUG` will be shown. Decreasing the log level can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
@@ -1035,6 +1041,7 @@
           "network"
         ]
       },
+      "web_server_idf": {},
       "wiegand": {
         "docs": "The `wiegand` component allows you to integrate Wiegand-standard key input and card or tag reader panels in Home Assistant.\n\n*See also: [Wiegand keypad and tag reader](https://esphome.io/components/wiegand.html#wiegand-keypad-and-tag-reader)*"
       },
@@ -1055,7 +1062,8 @@
       "xl9535": {
         "dependencies": [
           "i2c"
-        ]
+        ],
+        "docs": "The XL9535 component allows you to use **XL9535** I/O expander in ESPHome. It uses [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) for communication.\n\n*See also: [XL9535 I/O Expander](https://esphome.io/components/xl9535.html#xl9535-i-o-expander)*"
       },
       "xpt2046": {}
     },

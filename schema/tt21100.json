@@ -1,0 +1,96 @@
+{
+  "tt21100.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "binary_sensor.BINARY_SENSOR_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "tt21100::TT21100Button",
+                "parents": [
+                  "binary_sensor::BinarySensor",
+                  "EntityBase",
+                  "Component",
+                  "tt21100::TT21100ButtonListener",
+                  "Parented<tt21100::TT21100Touchscreen>",
+                  "Parented"
+                ]
+              }
+            },
+            "tt21100_id": {
+              "key": "GeneratedID",
+              "use_id_type": "tt21100::TT21100Touchscreen",
+              "type": "use_id",
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID of the touchscreen.\n\n*See also: [tt21100 Binary Sensor](https://esphome.io/components/touchscreen/tt21100.html#id1)*"
+            },
+            "index": {
+              "key": "Required",
+              "type": "integer",
+              "docs": "**int**: Internal index of the touch button, between 0 and 3.\n\n*See also: [tt21100 Binary Sensor](https://esphome.io/components/touchscreen/tt21100.html#id1)*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tt21100.touchscreen": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "touchscreen.TOUCHSCREEN_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "tt21100::TT21100Touchscreen",
+                "parents": [
+                  "touchscreen::Touchscreen",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              },
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually set the ID of this touchscreen.\n\n*See also: [TT21100 Touch Screen Controller](https://esphome.io/components/touchscreen/tt21100.html#configuration-variables)*"
+            },
+            "interrupt_pin": {
+              "key": "Required",
+              "schema": true,
+              "internal": true,
+              "modes": [
+                "input"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The touch detection pin.\n\n*See also: [TT21100 Touch Screen Controller](https://esphome.io/components/touchscreen/tt21100.html#configuration-variables)*"
+            },
+            "reset_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The reset pin of the controller.\n\n*See also: [TT21100 Touch Screen Controller](https://esphome.io/components/touchscreen/tt21100.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "36",
+              "data_type": "hex_uint8_t"
+            }
+          }
+        }
+      }
+    }
+  }
+}

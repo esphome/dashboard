@@ -160,12 +160,12 @@
                   },
                   "name_font": {
                     "key": "Required",
-                    "use_id_type": "display::Font",
+                    "use_id_type": "font::Font",
                     "type": "use_id"
                   },
                   "value_font": {
                     "key": "Optional",
-                    "use_id_type": "display::Font",
+                    "use_id_type": "font::Font",
                     "type": "use_id"
                   },
                   "width": {

@@ -157,6 +157,9 @@
         ],
         "docs": "The `touchscreen` binary sensor allows you to setup areas on the touch screen as virtual buttons.\n\n*See also: [touchscreen Binary Sensor](https://esphome.io/components/touchscreen/index.html#binary-sensor)*"
       },
+      "tt21100": {
+        "docs": "In addition to touch areas on the screen configured through the [Touchscreen](https://esphome.io/components/touchscreen/index.html#config-touchscreen) component, the TT21100 supports up to four buttons located outside of the normal touchscreen area. On the ESP32-S3-BOX and the ESP32-S3-Korvo-2-LCD, the red circle below the display is such a button. A binary sensor can be configured to react to touching these buttons.\n\n*See also: [tt21100 Binary Sensor](https://esphome.io/components/touchscreen/tt21100.html#binary-sensor)*"
+      },
       "ttp229_bsf": {
         "dependencies": [
           "ttp229_bsf"
@@ -462,31 +465,58 @@
         "docs": "Simple filter that just inverts every value from the binary sensor.\n\n*See also: [`invert`](https://esphome.io/components/binary_sensor/index.html#invert)*"
       },
       "delayed_on_off": {
+        "templatable": true,
         "type": "schema",
         "schema": {
           "extends": [
             "core.positive_time_period_milliseconds"
-          ]
+          ],
+          "config_vars": {
+            "time_on": {
+              "key": "Required",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**time, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: ON delay.\n\n*See also: [delayed_on_off](https://esphome.io/components/binary_sensor/index.html#delayed-on-off)*"
+            },
+            "time_off": {
+              "key": "Required",
+              "templatable": true,
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**time, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: OFF delay.\n\n*See also: [delayed_on_off](https://esphome.io/components/binary_sensor/index.html#delayed-on-off)*"
+            }
+          }
         },
-        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: Only send an ON or OFF value if the binary sensor has stayed in the same state for at least the specified time period. **Useful for debouncing binary switches**.\n\n*See also: [`delayed_on_off`](https://esphome.io/components/binary_sensor/index.html#delayed-on-off)*"
+        "docs": "Only send an ON or OFF value if the binary sensor has stayed in the same state for at least the specified time period.\n\n*See also: [`delayed_on_off`](https://esphome.io/components/binary_sensor/index.html#delayed-on-off)*"
       },
       "delayed_on": {
+        "templatable": true,
         "type": "schema",
         "schema": {
           "extends": [
             "core.positive_time_period_milliseconds"
           ]
         },
-        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: When a signal ON is received, wait for the specified time period until publishing an ON state. If an OFF value is received while waiting, the ON action is discarded. Or in other words: Only send an ON value if the binary sensor has stayed ON for at least the specified time period. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_on`](https://esphome.io/components/binary_sensor/index.html#delayed-on)*"
+        "docs": "**time, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: When a signal ON is received, wait for the specified time period until publishing an ON state. If an OFF value is received while waiting, the ON action is discarded. Or in other words: Only send an ON value if the binary sensor has stayed ON for at least the specified time period. When using a lambda call, you should return the delay value in milliseconds. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_on`](https://esphome.io/components/binary_sensor/index.html#delayed-on)*"
       },
       "delayed_off": {
+        "templatable": true,
         "type": "schema",
         "schema": {
           "extends": [
             "core.positive_time_period_milliseconds"
           ]
         },
-        "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: When a signal OFF is received, wait for the specified time period until publishing an OFF state. If an ON value is received while waiting, the OFF action is discarded. Or in other words: Only send an OFF value if the binary sensor has stayed OFF for at least the specified time period. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_off`](https://esphome.io/components/binary_sensor/index.html#delayed-off)*"
+        "docs": "**time, [templatable](https://esphome.io/guides/automations.html#config-templatable)**: When a signal OFF is received, wait for the specified time period until publishing an OFF state. If an ON value is received while waiting, the OFF action is discarded. Or in other words: Only send an OFF value if the binary sensor has stayed OFF for at least the specified time period. When using a lambda call, you should return the delay value in milliseconds. **Useful for debouncing push buttons**.\n\n*See also: [`delayed_off`](https://esphome.io/components/binary_sensor/index.html#delayed-off)*"
       },
       "autorepeat": {
         "is_list": true,

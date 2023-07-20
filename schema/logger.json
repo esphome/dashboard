@@ -264,6 +264,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "airthings_wave_base": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "airthings_wave_mini": {
                     "type": "enum",
                     "values": {
@@ -289,6 +301,18 @@
                     }
                   },
                   "alarm_control_panel": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "alpha3": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -469,6 +493,18 @@
                     }
                   },
                   "atc_mithermometer": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "atm90e26": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -1440,6 +1476,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "duty_time_sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "e131": {
                     "type": "enum",
                     "values": {
@@ -1884,6 +1932,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "font": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "fs3000": {
                     "type": "enum",
                     "values": {
@@ -1993,6 +2053,18 @@
                     }
                   },
                   "graph": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "GroveMotorDriveTB6612FNG": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -3877,6 +3949,18 @@
                     }
                   },
                   "pcf85063": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "PCF8563": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -6072,6 +6156,30 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "tt21100.binary_sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "tt21100": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "ttp229_bsf": {
                     "type": "enum",
                     "values": {
@@ -6516,6 +6624,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "web_server_idf": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "whirlpool.climate": {
                     "type": "enum",
                     "values": {
@@ -6913,6 +7033,18 @@
                     }
                   },
                   "yashima.climate": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "zio_ultrasonic": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
