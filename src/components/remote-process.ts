@@ -2,7 +2,7 @@ import { customElement } from "lit/decorators.js";
 import { StreamError, streamLogs } from "../api";
 import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { fireEvent } from "../util/fire-event";
-import { classMap } from "lit/directives/class-map";
+import { classMap } from "lit/directives/class-map.js";
 
 export class ESPHomeBlurSecrets {
   public static enabled = false;
