@@ -3,7 +3,7 @@ import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { ColoredConsole } from "./util/console-color";
+import { ESPHomeBlurSecrets } from "./components/remote-process";
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
@@ -63,7 +63,7 @@ class ESPHomeMainView extends LitElement {
   }
 
   connectedCallback() {
-    ColoredConsole.blurSecrets = this.streamerMode;
+    ESPHomeBlurSecrets.enabled = this.streamerMode;
     super.connectedCallback();
   }
 

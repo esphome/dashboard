@@ -2,6 +2,11 @@ import { customElement } from "lit/decorators.js";
 import { StreamError, streamLogs } from "../api";
 import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { fireEvent } from "../util/fire-event";
+import { classMap } from "lit/directives/class-map";
+
+export class ESPHomeBlurSecrets {
+  public static enabled = false;
+}
 
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
@@ -19,6 +24,10 @@ class ESPHomeRemoteProcess extends HTMLElement {
     if (this._coloredConsole) {
       return;
     }
+    const classes = {
+      log: true,
+      "blur-secrets": ESPHomeBlurSecrets.enabled,
+    };
     const shadowRoot = this.attachShadow({ mode: "open" });
 
     shadowRoot.innerHTML = `
@@ -28,9 +37,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
         }
         ${coloredConsoleStyles}
       </style>
-      <div class="log${
-        ColoredConsole.blurSecrets ? " blur-secrets" : ""
-      }"></div>
+      <div class="${classMap(classes)}"></div>
     `;
 
     const coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);

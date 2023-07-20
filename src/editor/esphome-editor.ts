@@ -26,6 +26,33 @@ const darkQuery: MediaQueryList = window.matchMedia(
   "(prefers-color-scheme: dark)"
 );
 
+const commonStyle = html`
+  <style>
+    html,
+    body {
+      height: 100vh;
+      overflow: hidden;
+    }
+    .esphome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-content: stretch;
+    }
+    .esphome-header h2 {
+      line-height: 100%;
+      /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+      padding: 0.8rem 0.5rem 1rem 0.5rem;
+      margin: 0px;
+      font-size: 1.4rem;
+      flex: 1 1 auto;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+`;
+
 @customElement("esphome-editor")
 class ESPHomeEditor extends LitElement {
   private editor?: monaco.editor.IStandaloneCodeEditor;
@@ -50,32 +77,6 @@ class ESPHomeEditor extends LitElement {
   }
 
   protected render() {
-    const commonStyle = html`
-      <style>
-        html,
-        body {
-          height: 100vh;
-          overflow: hidden;
-        }
-        .esphome-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          align-content: stretch;
-        }
-        .esphome-header h2 {
-          line-height: 100%;
-          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
-          padding: 0.8rem 0.5rem 1rem 0.5rem;
-          margin: 0px;
-          font-size: 1.4rem;
-          flex: 1 1 auto;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      </style>
-    `;
     const isSecrets = this._isSecrets();
     if (isSecrets && this.streamerMode && !this._showSecrets) {
       return html`

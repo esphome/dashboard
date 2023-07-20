@@ -10,8 +10,6 @@ interface ConsoleState {
 }
 
 export class ColoredConsole {
-  public static blurSecrets = false;
-
   public state: ConsoleState = {
     bold: false,
     italic: false,
