@@ -24,9 +24,10 @@
                 "DP83848": null,
                 "IP101": null,
                 "JL1101": null,
-                "KSZ8081": null
+                "KSZ8081": null,
+                "KSZ8081RNA": null
               },
-              "docs": "**string**: The type of LAN chipset/phy.Supported chipsets are:\n  * `LAN8720`\n  \n  * `RTL8201`\n  \n  * `DP83848`\n  \n  * `IP101`\n  \n  * `JL1101`\n  \n  * `KSZ8081`\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
+              "docs": "**string**: The type of LAN chipset/phy.Supported chipsets are:\n  * `LAN8720`\n  \n  * `RTL8201`\n  \n  * `DP83848`\n  \n  * `IP101`\n  \n  * `JL1101`\n  \n  * `KSZ8081`\n  \n  * `KSZ8081RNA`\n  \n  \n\n*See also: [Ethernet Component](https://esphome.io/components/ethernet.html#configuration-variables)*"
             },
             "mdc_pin": {
               "key": "Required",

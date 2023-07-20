@@ -43,6 +43,9 @@
         ],
         "docs": "AirThings Wave Plus tracks radon (24h and long term), airborne chemicals, CO2, temperature, atmospheric pressure and humidity.\n\n*See also: [Airthings Wave Plus Sensor](https://esphome.io/components/sensor/airthings_ble.html#airthings-wave-plus-sensor)*"
       },
+      "alpha3": {
+        "docs": "The `alpha3` component allows you to monitor a Grundfos Alpha3 Model B circulator pump over BLE.\n\n*See also: [Grundfos Alpha3](https://esphome.io/components/sensor/alpha3.html#grundfos-alpha3)*"
+      },
       "am2320": {
         "dependencies": [
           "i2c"
@@ -74,6 +77,9 @@
         "dependencies": [
           "esp32_ble_tracker"
         ]
+      },
+      "atm90e26": {
+        "docs": "The `atm90e26` sensor platform allows you to use your ATM90E26 voltage/current and power sensors ([datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-46002-SE-M90E26-Datasheet.pdf)) with ESPHome. This sensor is found in the [DitroniX GTEM ESP32](https://ditronix.net/wiki/gtem-esp32-atm90e26-sdk-v1-specification/) energy meter and other devices.\n\n*See also: [ATM90E26 Power Sensor](https://esphome.io/components/sensor/atm90e26.html#atm90e26-power-sensor)*"
       },
       "atm90e32": {
         "docs": "The `atm90e32` sensor platform allows you to use your ATM90E32 voltage/current and power sensors ([datasheet](http://ww1.microchip.com/downloads/en/devicedoc/Atmel-46003-SE-M90E32AS-Datasheet.pdf)) with ESPHome. This sensor is commonly found in CircuitSetup 2 and 6 channel energy meters.\n\n*See also: [ATM90E32 Power Sensor](https://esphome.io/components/sensor/atm90e32.html#atm90e32-power-sensor)*"
@@ -232,6 +238,9 @@
       },
       "duty_cycle": {
         "docs": "The duty cycle sensor allows you to measure for what percentage of time a signal on a GPIO pin is HIGH or LOW.\n\n*See also: [Duty Cycle Sensor](https://esphome.io/components/sensor/duty_cycle.html#duty-cycle-sensor)*"
+      },
+      "duty_time": {
+        "docs": "The `duty_time` sensor allows you to track the total duty time of the some object, for example, a light bulb, in seconds. Able to calculate the last turn-on time when an optional sensor `last_time` is included in the configuration.\n\n*See also: [Duty Time](https://esphome.io/components/sensor/duty_time.html#duty-time)*"
       },
       "ee895": {
         "dependencies": [
@@ -913,6 +922,12 @@
           "xiaomi_rtcgq02lm"
         ]
       },
+      "zio_ultrasonic": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The Zio Ultrasonic Distance sensor allows you to use your compatible ([datasheet](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf), [sparkfun](https://www.sparkfun.com/products/17777)) sensors with ESPHome.\n\n*See also: [Zio Ultrasonic Distance Sensor](https://esphome.io/components/sensor/zio_ultrasonic.html#zio-ultrasonic-distance-sensor)*"
+      },
       "zyaura": {
         "docs": "The ZyAura CO2 & Temperature & Humidity sensor allows you to use your [ZGm05(3)(U)](http://www.zyaura.com/products/ZGm05.asp) ([MT8057](https://masterkit.ru/shop/1266110), [MT8057S](https://medgadgets.ru/shop/kit-mt8057.html)), [ZG1683R(U)](http://www.zyaura.com/products/ZG1683R.asp) ([MT8060](https://masterkit.ru/shop/1921398)), [ZG1583RUD](http://www.zyaura.com/products/ZG1583RUD.asp) monitors with ESPHome.\n\n*See also: [ZyAura CO2 & Temperature & Humidity Sensor](https://esphome.io/components/sensor/zyaura.html#zyaura-co2-temperature-humidity-sensor)*"
       }
@@ -1420,6 +1435,15 @@
           ]
         },
         "docs": "Send the value periodically with the specified time interval. If the sensor value changes during the interval the interval will not reset. The last value of the sensor will be sent.\n\n*See also: [`heartbeat`](https://esphome.io/components/sensor/index.html#heartbeat)*"
+      },
+      "timeout": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "core.positive_time_period_milliseconds"
+          ]
+        },
+        "docs": "After the first value has been sent, if no subsequent value is published within the `specified time period`, send `NaN`. Especially useful when data is derived from some other communication channel, e.g. a serial port, which can potentially be interrupted.\n\n*See also: [`timeout`](https://esphome.io/components/sensor/index.html#timeout)*"
       },
       "debounce": {
         "type": "schema",

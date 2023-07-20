@@ -18,7 +18,7 @@
               "key": "GeneratedID",
               "use_id_type": "speaker::Speaker",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The speaker to check. Defaults to the only one in YAML.\n\n*See also: [Speaker Components](https://esphome.io/components/speaker/index.html#speaker-conditions)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The speaker to check. Defaults to the only one in YAML.\n\n*See also: [Speaker Components](https://esphome.io/components/speaker/index.html#speaker-is-playing-condition)*"
             }
           }
         }
