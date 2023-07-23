@@ -117,8 +117,10 @@ class ESPHomeEditor extends LitElement {
             ></mwc-button>`}
       </div>
       <main></main>
-      ${(isSecrets && this.streamerMode && !this._showSecrets)
-        ? html`<streamer-warning @closed=${this.__handleSecretsWarning}></streamer-warning>`
+      ${isSecrets && this.streamerMode && !this._showSecrets
+        ? html`<streamer-warning
+            @closed=${this.__handleSecretsWarning}
+          ></streamer-warning>`
         : ""}
     `;
   }

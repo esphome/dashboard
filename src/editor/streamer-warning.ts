@@ -5,14 +5,14 @@ import { mdiIncognito } from "@mdi/js";
 
 @customElement("streamer-warning")
 export class ESPHomeStreamerWarning extends LitElement {
-
   protected render() {
     return html`
       <mwc-dialog
         open
         scrimClickAction=""
-        @escapeKeyAction=${() => fireEvent(this, "closed", {action: "close"})}
-        @closed=${(e: any) => fireEvent(this, "closed", {action: e.detail.action})}
+        @escapeKeyAction=${() => fireEvent(this, "closed", { action: "close" })}
+        @closed=${(e: any) =>
+          fireEvent(this, "closed", { action: e.detail.action })}
       >
         <div class="dialog-content">
             <esphome-svg-icon .path=${mdiIncognito}></esphome-svg-icon> 
@@ -35,18 +35,17 @@ export class ESPHomeStreamerWarning extends LitElement {
 
   static styles = css`
     .dialog-content {
-        text-align: center;
-        --mdc-theme-primary: var(--primary-text-color);
+      text-align: center;
+      --mdc-theme-primary: var(--primary-text-color);
     }
     esphome-svg-icon {
-        --mdc-icon-size: 56px;
+      --mdc-icon-size: 56px;
     }
     mwc-button {
-        --mdc-theme-primary: var(--primary-text-color);
+      --mdc-theme-primary: var(--primary-text-color);
     }
   `;
-
-}  
+}
 
 declare global {
   interface HTMLElementTagNameMap {
