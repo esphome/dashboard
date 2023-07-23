@@ -78,11 +78,6 @@ class ESPHomeEditor extends LitElement {
 
   protected render() {
     const isSecrets = this._isSecrets();
-    if (isSecrets && this.streamerMode && this._showSecrets) {
-      // as the 1st update was skipped, fire firstUpdated again
-      setTimeout(() => this.firstUpdated(), 50);
-    }
-
     return html`
       ${commonStyle}
       <style>
@@ -130,6 +125,8 @@ class ESPHomeEditor extends LitElement {
       this._handleClose();
     } else if (e.detail.action === "accept") {
       this._showSecrets = true;
+      // as the 1st update was skipped, fire firstUpdated again
+      setTimeout(() => this.firstUpdated(), 50);
     }
   }
 
