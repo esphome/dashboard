@@ -12,7 +12,7 @@ import type { Snackbar } from "@material/mwc-snackbar";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
-import { mdiIncognito } from "@mdi/js";
+import "./streamer-warning";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -78,50 +78,7 @@ class ESPHomeEditor extends LitElement {
 
   protected render() {
     const isSecrets = this._isSecrets();
-    if (isSecrets && this.streamerMode && !this._showSecrets) {
-      return html`
-        ${commonStyle}
-        <style>
-          .secrets-warning-container {
-            text-align: center;
-            padding: 40px;
-            color: var(--primary-text-color);
-          }
-          h1 {
-            font-size: 2.5rem;
-            line-height: 110%;
-            font-weight: 400;
-            margin: 1rem 0 0.65rem 0;
-          }
-          esphome-svg-icon {
-            --mdc-icon-size: 56px;
-          }
-        </style>
-        <div class="esphome-header">
-          <mwc-icon-button
-            icon="clear"
-            @click=${this._handleClose}
-            aria-label="close"
-          ></mwc-icon-button>
-          <h2>${this.fileName}</h2>
-        </div>
-        <main>
-          <div class="secrets-warning-container">
-            <esphome-svg-icon .path=${mdiIncognito}></esphome-svg-icon>
-            <h1>Show Secrets Warning</h1>
-            <p>
-              Streamer mode enabled, are you sure you want to disclose your
-              secrets?
-            </p>
-            <mwc-button
-              raised
-              label="Show My Secrets"
-              @click="${() => (this._showSecrets = true)}"
-            ></mwc-button>
-          </div>
-        </main>
-      `;
-    } else if (isSecrets && this.streamerMode && this._showSecrets) {
+    if (isSecrets && this.streamerMode && this._showSecrets) {
       // as the 1st update was skipped, fire firstUpdated again
       setTimeout(() => this.firstUpdated(), 50);
     }
@@ -160,7 +117,18 @@ class ESPHomeEditor extends LitElement {
             ></mwc-button>`}
       </div>
       <main></main>
+      ${(isSecrets && this.streamerMode && !this._showSecrets)
+        ? html`<streamer-warning @closed=${this.__handleSecretsWarning}></streamer-warning>`
+        : ""}
     `;
+  }
+
+  private __handleSecretsWarning(e: CustomEvent) {
+    if (e.detail.action === "close") {
+      this._handleClose();
+    } else if (e.detail.action === "accept") {
+      this._showSecrets = true;
+    }
   }
 
   public getValue() {
