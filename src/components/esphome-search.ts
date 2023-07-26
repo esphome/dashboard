@@ -27,7 +27,6 @@ export class ESPHomeSearch extends LitElement {
 
   static styles = [
     css`
-
       esphome-text-input {
         --mdc-theme-primary: var(--primary-text-color);
         width: 100%;

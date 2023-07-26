@@ -23,7 +23,11 @@ class ESPHomeConfirmationDialog extends LitElement {
       return html``;
     }
     return html`
-      <mwc-dialog .heading=${this._params.title || ""} @closed=${this._handleClose} open>
+      <mwc-dialog
+        .heading=${this._params.title || ""}
+        @closed=${this._handleClose}
+        open
+      >
         ${this._params.text ? html`<div>${this._params.text}</div>` : ""}
         <mwc-button
           slot="secondaryAction"

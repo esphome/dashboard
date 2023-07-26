@@ -39,7 +39,6 @@ export class ESPHomeButtonMenu extends LitElement {
       display: inline-block;
       position: relative;
     }
-
   `;
 }
 

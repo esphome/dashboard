@@ -245,10 +245,7 @@ export class ESPHomeWizardDialog extends LitElement {
         target="_blank"
         rel="noopener"
       >
-        <mwc-button
-          dialogAction="close"
-          label="Open ESPHome Web"
-        ></mwc-button>
+        <mwc-button dialogAction="close" label="Open ESPHome Web"></mwc-button>
       </a>
     `;
 

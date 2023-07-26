@@ -7,7 +7,12 @@ import { openWizardDialog } from "../wizard";
 export class ESPHomeFab extends LitElement {
   protected override render(): TemplateResult {
     return html` <div class="fab-container">
-      <mwc-fab extended icon="add" label="New device" @click=${this._handleClick}></mwc-fab>
+      <mwc-fab
+        extended
+        icon="add"
+        label="New device"
+        @click=${this._handleClick}
+      ></mwc-fab>
     </div>`;
   }
 
