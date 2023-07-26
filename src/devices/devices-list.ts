@@ -67,7 +67,7 @@ class ESPHomeDevicesList extends LitElement {
           ${emptySvg}
           <h5>No devices found</h5>
           <p class="helper-text">
-            Please try a different entering search term or
+            Please try entering a different search term or
             <a href="#" @click=${this._handleOpenWizardClick}>add a new device</a>.
           </p>
         </div>
