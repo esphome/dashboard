@@ -33,11 +33,6 @@ class ESPHomeMainView extends LitElement {
         <div class="flex"></div>
         <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
       </header>
-      <style>
-        esphome-devices-list {
-          background-color: var(--card-background-color);
-        }
-      </style>
       <main>
         <esphome-devices-list></esphome-devices-list>
       </main>

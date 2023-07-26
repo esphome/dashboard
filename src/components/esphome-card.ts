@@ -10,7 +10,7 @@ export class ESPHomeCard extends LitElement {
 
   static styles = css`
     :host {
-      background: white;
+      background: var(--card-background-color);
       border-radius: 12px;
       border: var(--status-color) /* rgba(0, 0, 0, 0.12) */ 1px solid;
       color: var(--primary-text-color);
