@@ -80,7 +80,9 @@ export class ESPHomeCard extends LitElement {
       ${this?.status !== undefined
         ? html`
             <div class="card-status-text">
-              ${this.status !== "ONLINE" && this.status !== undefined ? this.status : ""}
+              ${this.status !== "ONLINE" && this.status !== undefined
+                ? this.status
+                : ""}
             </div>
           `
         : ""}

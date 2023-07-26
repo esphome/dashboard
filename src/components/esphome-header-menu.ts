@@ -48,7 +48,10 @@ export class ESPHomeHeaderMenu extends LitElement {
         if (typeof icon !== "string") {
           return html`
             <div class="tooltip-container">
-              <mwc-icon-button @click=${clickHandler} class=${label.toLowerCase().replace(" ", "-") + " custom-icon"}>
+              <mwc-icon-button
+                @click=${clickHandler}
+                class=${label.toLowerCase().replace(" ", "-") + " custom-icon"}
+              >
                 ${icon}
               </mwc-icon-button>
               <paper-tooltip> ${label} </paper-tooltip>
@@ -69,11 +72,23 @@ export class ESPHomeHeaderMenu extends LitElement {
       };
       return html`
         <div class="esphome-header-menu">
-          ${customIconButton("system_update", "Update All", this._handleUpdateAll)}
-          ${customIconButton("lock_outlined", "Secrets", this._handleEditSecrets)}
+          ${customIconButton(
+            "system_update",
+            "Update All",
+            this._handleUpdateAll
+          )}
+          ${customIconButton(
+            "lock_outlined",
+            "Secrets",
+            this._handleEditSecrets
+          )}
           ${customIconButton("search", "Search", this._handleSearch)}
           ${this.logoutUrl
-            ? html` <a href=${this.logoutUrl}> ${customIconButton(logoutIcon, "Log Out", () => {})} </a> `
+            ? html`
+                <a href=${this.logoutUrl}>
+                  ${customIconButton(logoutIcon, "Log Out", () => {})}
+                </a>
+              `
             : ""}
         </div>
       `;
@@ -81,12 +96,29 @@ export class ESPHomeHeaderMenu extends LitElement {
 
     return html`
       <div class="esphome-header-menu">
-        <esphome-button-menu corner="BOTTOM_START" @action=${this._handleOverflowAction}>
+        <esphome-button-menu
+          corner="BOTTOM_START"
+          @action=${this._handleOverflowAction}
+        >
           <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-          <mwc-list-item graphic="icon"><mwc-icon slot="graphic">search</mwc-icon>Search</mwc-list-item>
-          <mwc-list-item graphic="icon"><mwc-icon slot="graphic">system_update</mwc-icon>Update All</mwc-list-item>
-          <mwc-list-item graphic="icon"><mwc-icon slot="graphic">lock_outlined</mwc-icon>Secrets Editor</mwc-list-item>
-          ${this.logoutUrl ? html` <a href=${this.logoutUrl}><mwc-list-item>Log Out</mwc-list-item></a> ` : ""}
+          <mwc-list-item graphic="icon"
+            ><mwc-icon slot="graphic">search</mwc-icon>Search</mwc-list-item
+          >
+          <mwc-list-item graphic="icon"
+            ><mwc-icon slot="graphic">system_update</mwc-icon>Update
+            All</mwc-list-item
+          >
+          <mwc-list-item graphic="icon"
+            ><mwc-icon slot="graphic">lock_outlined</mwc-icon>Secrets
+            Editor</mwc-list-item
+          >
+          ${this.logoutUrl
+            ? html`
+                <a href=${this.logoutUrl}
+                  ><mwc-list-item>Log Out</mwc-list-item></a
+                >
+              `
+            : ""}
           <slot></slot>
         </esphome-button-menu>
       </div>
