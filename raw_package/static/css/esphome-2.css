@@ -109,9 +109,9 @@ esphome-main {
   /* padding: 0 96px; */
   display: flex;
   align-items: center;
-}
-
-.header-container {
+  height: 55px;
+  background: var(--card-background-color);
+  border: rgba(0, 0, 0, 0.12) 1px solid;
   color: var(--primary-text-color);
   display: flex;
   align-items: center;
