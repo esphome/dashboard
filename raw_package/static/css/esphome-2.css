@@ -5,7 +5,7 @@
   --primary-bg-color: #fafafa;
   --primary-footer-bg-color: #212121;
   --disabled-text-color: #bdbdbd;
-  --card-background-color: #fafafa;
+  --card-background-color: #ffffff;
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
   --alert-info-color: #00539f;
@@ -30,40 +30,42 @@
   --status-connected: #444444;
   --status-new: #ffa500;
   --status-imported: #4caf50;
+  --divider-color: #e8e8e8;
+  --invert-logo: 0;
 }
 
 /* dark theme */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-bg-color: #000000;
-    --primary-text-color: #e1e1e1;
-    --secondary-text-color: #727272;
-    --disabled-text-color: #bdbdbd;
-    --primary-footer-bg-color: #101e24;
-    --esphome-background-header: #e0e0e0;
-    --card-background-color: #282828;
-    --card-text-color: #e1e1e1;
-    --primary-text-color: #e1e1e1;
-    --mdc-theme-surface: #282828;
-    --mdc-theme-on-surface: #e1e1e1;
-    --mdc-theme-text-primary-on-background: #e1e1e1;
-    --mdc-dialog-heading-ink-color: #e1e1e1;
-    --mdc-theme-primary-no-attention: #cecece;
-    --mdc-theme-on-primary-no-attention: #222222;
-    --mdc-dialog-content-ink-color: #e1e1e1;
-    --mdc-text-field-ink-color: #e1e1e1;
-    --mdc-text-field-label-ink-color: #e1e1e1;
-    --mdc-ripple-color: #282828;
-    --mdc-text-field-fill-color: #3d3d3d;
-    --mdc-theme-text-secondary-on-background: #e1e1e1;
-    --update-available-color: #5f7eeb;
-    --status-connected: #cecece;
-    --mdc-ripple-color: #bebebe;
-  }
+[data-theme="dark"] {
+  --primary-bg-color: #282828;
+  --primary-text-color: #e1e1e1;
+  --secondary-text-color: #727272;
+  --disabled-text-color: #bdbdbd;
+  --primary-footer-bg-color: #101e24;
+  --esphome-background-header: #e0e0e0;
+  --card-background-color: #000000;
+  --card-text-color: #e1e1e1;
+  --primary-text-color: #e1e1e1;
+  --mdc-theme-surface: #282828;
+  --mdc-theme-on-surface: #e1e1e1;
+  --mdc-theme-text-primary-on-background: #e1e1e1;
+  --mdc-dialog-heading-ink-color: #e1e1e1;
+  --mdc-theme-primary-no-attention: #cecece;
+  --mdc-theme-on-primary-no-attention: #222222;
+  --mdc-dialog-content-ink-color: #e1e1e1;
+  --mdc-text-field-ink-color: #e1e1e1;
+  --mdc-text-field-label-ink-color: #e1e1e1;
+  --mdc-ripple-color: #282828;
+  --mdc-text-field-fill-color: #3d3d3d;
+  --mdc-theme-text-secondary-on-background: #e1e1e1;
+  --update-available-color: #5f7eeb;
+  --status-connected: #cecece;
+  --mdc-ripple-color: #bebebe;
+  --divider-color: #3d3d3d;
+  --invert-logo: 1;
+}
 
-  .esphome-header img {
-    filter: invert(1);
-  }
+.esphome-header img {
+  filter: invert(var(--invert-logo));
 }
 
 html {
@@ -102,7 +104,7 @@ esphome-main {
   right: 0;
   left: 0;
   height: 55px;
-  background: white;
+  background: var(--card-background-color);
   border: rgba(0, 0, 0, 0.12) 1px solid;
   /* padding: 0 96px; */
   display: flex;
