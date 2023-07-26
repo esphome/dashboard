@@ -10,9 +10,9 @@ export class ESPHomeSearch extends LitElement {
   @query("esphome-text-input") private _textField!: ESPHomeTextInput;
 
   protected override render(): TemplateResult {
-    if (!this.show) {
+    /* if (!this.show) {
       return html``;
-    }
+    } */
     return html`
       <esphome-text-input
         label="Search"
@@ -27,9 +27,11 @@ export class ESPHomeSearch extends LitElement {
 
   static styles = [
     css`
+
       esphome-text-input {
         --mdc-theme-primary: var(--primary-text-color);
-        width: 100vw;
+        width: 100%;
+        margin: 0;
       }
       .mdc-text-field__icon {
         color: var(--primary-text-color);

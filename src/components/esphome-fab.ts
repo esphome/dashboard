@@ -28,6 +28,7 @@ export class ESPHomeFab extends LitElement {
       height: 100px;
       max-width: 1920px;
       justify-content: stretch;
+      pointer-events: none;
     }
 
     mwc-fab {

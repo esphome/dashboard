@@ -54,6 +54,7 @@ class ESPHomeEditor extends LitElement {
           overflow: hidden;
         }
         .esphome-header {
+          padding: 0 2rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -72,9 +73,6 @@ class ESPHomeEditor extends LitElement {
         }
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
-        }
-        mwc-button {
-          --mdc-theme-primary: var(--primary-text-color);
         }
       </style>
       <mwc-snackbar leading></mwc-snackbar>

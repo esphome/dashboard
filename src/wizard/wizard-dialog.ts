@@ -233,6 +233,7 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-button
         slot="primaryAction"
         label="Continue"
+        raised
         @click=${() => {
           this._state = "basic_config";
         }}
@@ -245,7 +246,6 @@ export class ESPHomeWizardDialog extends LitElement {
         rel="noopener"
       >
         <mwc-button
-          no-attention
           dialogAction="close"
           label="Open ESPHome Web"
         ></mwc-button>
@@ -302,6 +302,7 @@ export class ESPHomeWizardDialog extends LitElement {
       <mwc-button
         slot="primaryAction"
         label="Next"
+        raised
         @click=${this._handleBasicConfigSubmit}
       ></mwc-button>
 

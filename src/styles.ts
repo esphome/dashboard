@@ -75,8 +75,7 @@ export const esphomeDialogStyles = css`
   }
 
   mwc-button[no-attention] {
-    --mdc-theme-primary: var(--mdc-theme-primary-no-attention);
-    --mdc-theme-on-primary: var(--mdc-theme-on-primary-no-attention);
+    --mdc-theme-primary: var(--mdc-theme-primary);
   }
 
   @media only screen and (max-width: 450px) {
@@ -98,9 +97,9 @@ export const esphomeDialogStyles = css`
     padding: 0 24px;
   }
 
-  mwc-button {
-    --mdc-theme-primary: var(--primary-text-color);
-  }
+  /* mwc-button {
+    --mdc-theme-primary: var(--primary-theme-color);
+  } */
 `;
 
 export const esphomeSvgStyles = css`

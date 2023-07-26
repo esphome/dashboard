@@ -32,40 +32,47 @@
   --status-imported: #4caf50;
   --divider-color: #e8e8e8;
   --invert-logo: 0;
+  --divider-color: #e8e8e8;
+  --invert-logo: 0;
+  --mdc-shape-medium: 12px;
+  --mdc-shape-small: 6px;
+  --mdc-theme-primary: #03a9f4;
 }
 
 /* dark theme */
-[data-theme="dark"] {
-  --primary-bg-color: #282828;
-  --primary-text-color: #e1e1e1;
-  --secondary-text-color: #727272;
-  --disabled-text-color: #bdbdbd;
-  --primary-footer-bg-color: #101e24;
-  --esphome-background-header: #e0e0e0;
-  --card-background-color: #000000;
-  --card-text-color: #e1e1e1;
-  --primary-text-color: #e1e1e1;
-  --mdc-theme-surface: #282828;
-  --mdc-theme-on-surface: #e1e1e1;
-  --mdc-theme-text-primary-on-background: #e1e1e1;
-  --mdc-dialog-heading-ink-color: #e1e1e1;
-  --mdc-theme-primary-no-attention: #cecece;
-  --mdc-theme-on-primary-no-attention: #222222;
-  --mdc-dialog-content-ink-color: #e1e1e1;
-  --mdc-text-field-ink-color: #e1e1e1;
-  --mdc-text-field-label-ink-color: #e1e1e1;
-  --mdc-ripple-color: #282828;
-  --mdc-text-field-fill-color: #3d3d3d;
-  --mdc-theme-text-secondary-on-background: #e1e1e1;
-  --update-available-color: #5f7eeb;
-  --status-connected: #cecece;
-  --mdc-ripple-color: #bebebe;
-  --divider-color: #3d3d3d;
-  --invert-logo: 1;
-}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg-color: #282828;
+    --primary-text-color: #e1e1e1;
+    --secondary-text-color: #727272;
+    --disabled-text-color: #bdbdbd;
+    --primary-footer-bg-color: #101e24;
+    --esphome-background-header: #e0e0e0;
+    --card-background-color: #000000;
+    --card-text-color: #e1e1e1;
+    --primary-text-color: #e1e1e1;
+    --mdc-theme-surface: #282828;
+    --mdc-theme-on-surface: #e1e1e1;
+    --mdc-theme-text-primary-on-background: #e1e1e1;
+    --mdc-dialog-heading-ink-color: #e1e1e1;
+    --mdc-theme-primary-no-attention: #cecece;
+    --mdc-theme-on-primary-no-attention: #222222;
+    --mdc-dialog-content-ink-color: #e1e1e1;
+    --mdc-text-field-ink-color: #e1e1e1;
+    --mdc-text-field-label-ink-color: #e1e1e1;
+    --mdc-ripple-color: #282828;
+    --mdc-text-field-fill-color: #3d3d3d;
+    --mdc-theme-text-secondary-on-background: #e1e1e1;
+    --update-available-color: #5f7eeb;
+    --status-connected: #cecece;
+    --mdc-ripple-color: #bebebe;
+    --divider-color: #3d3d3d;
+    --invert-logo: 1;
+  }
 
-.esphome-header img {
-  filter: invert(var(--invert-logo));
+  .esphome-header img {
+    filter: invert(var(--invert-logo));
+  }
 }
 
 html {
@@ -109,9 +116,9 @@ esphome-main {
   /* padding: 0 96px; */
   display: flex;
   align-items: center;
-  height: 55px;
-  background: var(--card-background-color);
-  border: rgba(0, 0, 0, 0.12) 1px solid;
+}
+
+.header-container {
   color: var(--primary-text-color);
   display: flex;
   align-items: center;
@@ -197,7 +204,7 @@ ul.browser-default li {
 }
 
 .page-footer a:hover {
-  color: var(--mdc-theme-primary-no-attention);
+  color: var(--mdc-theme-primary);
 }
 
 @media only screen and (max-width: 992px) {

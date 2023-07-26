@@ -60,7 +60,6 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const filtered: Array<ImportableDevice | ConfiguredDevice> = this._devices!.filter((item) => this._filter(item));
-
     if (filtered?.length === 0) {
       return html`
         <div class="no-result-container">
@@ -100,8 +99,10 @@ class ESPHomeDevicesList extends LitElement {
     )}`;
 
     return html`
-      <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
-      <div class="grid">${htmlDevices}</div>
+      <div class="page-container">
+        <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+        <div class="grid">${htmlDevices}</div>
+      </div>
     `;
   }
 
@@ -134,14 +135,22 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   static styles = css`
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin: 20px auto;
+      align-items: stretch;
+      max-width: 1920px;
+      gap: 20px;
+    }
+
     .grid {
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr;
       grid-template-columns: 1fr 1fr 1fr;
       grid-column-gap: 1.5rem;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
       justify-content: stretch;
     }
     @media only screen and (max-width: 1100px) {
