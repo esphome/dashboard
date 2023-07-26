@@ -101,13 +101,22 @@ esphome-main {
   top: 0;
   right: 0;
   left: 0;
-  display: flex;
-  align-items: center;
   height: 55px;
   background: white;
   border: rgba(0, 0, 0, 0.12) 1px solid;
+  /* padding: 0 96px; */
+  display: flex;
+  align-items: center;
+}
+
+.header-container {
   color: var(--primary-text-color);
-  padding: 0 96px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  max-width: 1920px;
+  justify-content: stretch;
   z-index: 1;
 }
 
@@ -172,7 +181,11 @@ ul.browser-default li {
 .page-footer {
   display: flex;
   align-items: center;
-  height: 50px;
+  margin: auto;
+  width: 90%;
+  max-width: 1920px;
+  justify-content: stretch;
+  height: 100px;
   color: var(--disabled-text-color);
 }
 
@@ -183,12 +196,6 @@ ul.browser-default li {
 
 .page-footer a:hover {
   color: var(--mdc-theme-primary-no-attention);
-}
-
-@media only screen and (min-width: 993px) {
-  .page-footer {
-    padding: 0 96px;
-  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -203,7 +210,7 @@ ul.browser-default li {
     margin-top: 52px;
   }
   .page-footer {
-    padding-bottom: 72px; /* allow reading footer while fab hovers */
+    padding-bottom: 168px; /* allow reading footer while fab hovers */
     box-sizing: border-box;
     justify-content: center;
   }
