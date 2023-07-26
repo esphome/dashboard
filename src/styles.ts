@@ -14,7 +14,6 @@ export const esphomeCardStyles = css`
   }
   mwc-button {
     line-height: 1em;
-    --mdc-theme-primary: var(--primary-text-color);
   }
   .card-actions {
     display: flex;

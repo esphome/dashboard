@@ -24,10 +24,7 @@ class ESPHomeMainView extends LitElement {
             flex: 1 0 auto;
           }
         </style>
-        <esphome-editor
-          @close=${this._handleEditorClose}
-          fileName=${this.editing}
-        ></esphome-editor>
+        <esphome-editor @close=${this._handleEditorClose} fileName=${this.editing}></esphome-editor>
       `;
     }
     return html`
@@ -36,7 +33,11 @@ class ESPHomeMainView extends LitElement {
         <div class="flex"></div>
         <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
       </header>
-
+      <style>
+        esphome-devices-list {
+          background-color: var(--card-background-color);
+        }
+      </style>
       <main>
         <esphome-devices-list></esphome-devices-list>
       </main>
@@ -46,13 +47,9 @@ class ESPHomeMainView extends LitElement {
       <footer class="page-footer">
         <div>
           ESPHome by Nabu Casa |
-          <a href="https://esphome.io/guides/supporters.html" target="_blank"
-            >Fund development</a
-          >
+          <a href="https://esphome.io/guides/supporters.html" target="_blank">Fund development</a>
           |
-          <a href=${this.docsLink} target="_blank" rel="noreferrer"
-            >${this.version} Documentation</a
-          >
+          <a href=${this.docsLink} target="_blank" rel="noreferrer">${this.version} Documentation</a>
         </div>
       </footer>
     `;

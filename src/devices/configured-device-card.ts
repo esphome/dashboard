@@ -23,15 +23,7 @@ import { openShowApiKeyDialog } from "../show-api-key";
 import { openEditDialog } from "../editor";
 import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
-import {
-  mdiBroom,
-  mdiCodeBraces,
-  mdiDelete,
-  mdiKey,
-  mdiRenameBox,
-  mdiSpellcheck,
-  mdiUploadNetwork,
-} from "@mdi/js";
+import { mdiBroom, mdiCodeBraces, mdiDelete, mdiKey, mdiRenameBox, mdiSpellcheck, mdiUploadNetwork } from "@mdi/js";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -43,9 +35,9 @@ const STATUS_COLORS = {
 
 @customElement("esphome-configured-device-card")
 class ESPHomeConfiguredDeviceCard extends LitElement {
-  @property() public device!: ConfiguredDevice;
-  @property() public onlineStatus?: boolean;
-  @property() public highlightOnAdd = false;
+  @property({ attribute: false }) public device!: ConfiguredDevice;
+  @property({ type: Boolean }) public onlineStatus?: boolean;
+  @property({ type: Boolean }) public highlightOnAdd = false;
   @state() private _highlight = false;
 
   public async highlight() {
@@ -91,16 +83,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         .status=${status}
         .noStatusBar=${status === "ONLINE"}
         style=${styleMap({
-          "--status-color": status === undefined ? "" : STATUS_COLORS[status],
+          "--status-color": status === undefined || status === "ONLINE" ? "rgba(0, 0, 0, 0.12)" : STATUS_COLORS[status],
         })}
       >
-        <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
-        </div>
+        <div class="card-header">${this.device.friendly_name || this.device.name}</div>
 
-        ${content.length
-          ? html`<div class="card-content flex">${content}</div>`
-          : html`<div class="flex"></div>`}
+        ${content.length ? html`<div class="card-content flex">${content}</div>` : html`<div class="flex"></div>`}
 
         <div class="card-actions">
           ${updateAvailable
@@ -113,8 +101,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                     label="Update"
                   ></mwc-button>
                   <paper-tooltip>
-                    Update Available: ${this.device.deployed_version}
-                    ${UPDATE_TO_ICON} ${this.device.current_version}
+                    Update Available: ${this.device.deployed_version} ${UPDATE_TO_ICON} ${this.device.current_version}
                   </paper-tooltip>
                 </div>
               `
@@ -123,9 +110,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             ? html`
                 <a
                   href=${`http://${this.device.address}${
-                    this.device.web_port && this.device.web_port != 80
-                      ? `:${this.device.web_port}`
-                      : ``
+                    this.device.web_port && this.device.web_port != 80 ? `:${this.device.web_port}` : ``
                   }`}
                   target="_blank"
                   ><mwc-button label="Visit"></mwc-button
@@ -136,69 +121,41 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
           <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
           <div class="flex"></div>
-          <esphome-button-menu
-            corner="BOTTOM_RIGHT"
-            @action=${this._handleOverflowAction}
-          >
+          <esphome-button-menu corner="BOTTOM_RIGHT" @action=${this._handleOverflowAction} class="esphome-button-menu">
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item graphic="icon">
               Validate
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiSpellcheck}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiSpellcheck}></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
               Install
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiUploadNetwork}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiUploadNetwork}></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
               Show API Key
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiKey}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiKey}></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
               Download YAML
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiCodeBraces}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiCodeBraces}></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
               Rename hostname
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiRenameBox}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiRenameBox}></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
               Clean Build Files
-              <esphome-svg-icon
-                slot="graphic"
-                .path=${mdiBroom}
-              ></esphome-svg-icon>
+              <esphome-svg-icon slot="graphic" .path=${mdiBroom}></esphome-svg-icon>
             </mwc-list-item>
             <li divider role="separator"></li>
             <mwc-list-item class="warning" graphic="icon">
               Delete
-              <esphome-svg-icon
-                class="warning"
-                slot="graphic"
-                .path=${mdiDelete}
-              ></esphome-svg-icon>
+              <esphome-svg-icon class="warning" slot="graphic" .path=${mdiDelete}></esphome-svg-icon>
             </mwc-list-item>
             ${this.device.loaded_integrations?.includes("mqtt")
               ? html`<mwc-list-item graphic="icon">
                   Clean MQTT
-                  <esphome-svg-icon
-                    slot="graphic"
-                    .path=${mdiBroom}
-                  ></esphome-svg-icon>
+                  <esphome-svg-icon slot="graphic" .path=${mdiBroom}></esphome-svg-icon>
                 </mwc-list-item>`
               : ""}
           </esphome-button-menu>
@@ -226,17 +183,17 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         padding: 0.2em 0.4em;
         margin: 0;
         font-size: 85%;
-        background-color: var(--card-background-color)
+        background-color: var(--card-background-color);
         border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-          Courier, monospace;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
       }
       .card-actions mwc-button.update-available {
         --mdc-theme-primary: var(--update-available-color);
       }
       esphome-button-menu {
-        --mdc-theme-text-icon-on-background: var(--primary-text-color);
+        --mdc-theme-text-icon-on-background: var(--mdc-theme-primary);
       }
+
       .tooltip-container {
         display: inline-block;
       }
@@ -244,7 +201,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         color: var(--alert-error-color);
       }
       .mdc-icon-button {
-        color: var(--primary-text-color);
+        color: var(--mdc-theme-primary);
       }
     `,
   ];
@@ -270,11 +227,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 6:
-        openDeleteDeviceDialog(
-          this.device.name,
-          this.device.configuration,
-          () => fireEvent(this, "deleted")
-        );
+        openDeleteDeviceDialog(this.device.name, this.device.configuration, () => fireEvent(this, "deleted"));
         break;
       case 7:
         openCleanMQTTDialog(this.device.configuration);

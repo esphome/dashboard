@@ -6,14 +6,7 @@ import { openWizardDialog } from "../wizard";
 @customElement("esphome-fab")
 export class ESPHomeFab extends LitElement {
   protected override render(): TemplateResult {
-    return html`
-      <mwc-fab
-        extended
-        icon="add"
-        label="New device"
-        @click=${this._handleClick}
-      ></mwc-fab>
-    `;
+    return html` <mwc-fab extended icon="add" label="New device" @click=${this._handleClick}></mwc-fab> `;
   }
 
   private _handleClick() {
@@ -23,10 +16,10 @@ export class ESPHomeFab extends LitElement {
   static styles = css`
     mwc-fab {
       position: fixed;
-      right: 23px;
-      bottom: 23px;
+      right: 42px;
+      bottom: 42px;
       z-index: 997;
-      --mdc-theme-secondary: var(--alert-success-color);
+      --mdc-theme-secondary: #03a9f4;
     }
   `;
 }

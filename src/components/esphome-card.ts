@@ -10,10 +10,9 @@ export class ESPHomeCard extends LitElement {
 
   static styles = css`
     :host {
-      background: var(--card-background-color, white);
-      border-radius: 2px;
-      box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
-        0 1px 5px 0 rgb(0 0 0 / 20%);
+      background: white;
+      border-radius: 12px;
+      border: var(--status-color) /* rgba(0, 0, 0, 0.12) */ 1px solid;
       color: var(--primary-text-color);
       display: block;
       position: relative;
@@ -45,37 +44,19 @@ export class ESPHomeCard extends LitElement {
       padding: 5px 16px;
     }
 
-    .status-bar {
-      display: block;
-      background-color: var(--status-color);
-      color: var(--status-color);
-      position: absolute;
-      height: 4px;
-      left: 0;
-      right: 0;
-      top: 0;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-      transition: all 0.2s ease-in-out;
-    }
-    .status-bar::after {
-      display: block;
-      position: absolute;
-      right: 2px;
-      top: 3px;
-      font-weight: bold;
-      font-size: 12px;
-      content: attr(data-status);
-    }
-    :host([no-status-bar]) .status-bar {
-      height: 0px;
-    }
-    :host([no-status-bar]) .status-bar::after {
-      top: -1px;
-    }
-
     :host(.highlight) {
       animation: highlight 0.5s alternate infinite ease-in;
+    }
+
+    .card-status-text {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--status-color);
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
     @keyframes highlight {
@@ -96,8 +77,12 @@ export class ESPHomeCard extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      ${this.status
-        ? html`<div class="status-bar" data-status=${this.status}></div>`
+      ${this?.status !== undefined
+        ? html`
+            <div class="card-status-text">
+              ${this.status !== "ONLINE" && this.status !== undefined ? this.status : ""}
+            </div>
+          `
         : ""}
       <slot></slot>
     `;

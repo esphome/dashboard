@@ -4,6 +4,7 @@
   /* Colors */
   --primary-bg-color: #fafafa;
   --primary-footer-bg-color: #212121;
+  --disabled-text-color: #bdbdbd;
   --card-background-color: #fafafa;
   --alert-standard-color: #666666;
   --alert-standard-color-bg: #e6e6e6;
@@ -17,6 +18,7 @@
   --alert-error-color-bg: #faefeb;
   --mdc-theme-primary: #03a9f4;
   --primary-text-color: #212121;
+  --secondary-text-color: #727272;
   --mdc-dialog-z-index: 998;
   --mdc-theme-primary-no-attention: #444444;
   --mdc-theme-on-primary-no-attention: white;
@@ -35,8 +37,10 @@
   :root {
     --primary-bg-color: #000000;
     --primary-text-color: #e1e1e1;
+    --secondary-text-color: #727272;
+    --disabled-text-color: #bdbdbd;
     --primary-footer-bg-color: #101e24;
-    --esphome-background-header: #282828;
+    --esphome-background-header: #e0e0e0;
     --card-background-color: #282828;
     --card-text-color: #e1e1e1;
     --primary-text-color: #e1e1e1;
@@ -67,8 +71,8 @@ html {
   line-height: 1.5;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+    sans-serif;
 }
 
 body {
@@ -99,10 +103,11 @@ esphome-main {
   left: 0;
   display: flex;
   align-items: center;
-  height: 56px;
-  background-color: var(--esphome-background-header);
+  height: 55px;
+  background: white;
+  border: rgba(0, 0, 0, 0.12) 1px solid;
   color: var(--primary-text-color);
-  padding: 0 24px;
+  padding: 0 96px;
   z-index: 1;
 }
 
@@ -112,7 +117,7 @@ esphome-main {
 
 .esphome-header img {
   width: auto;
-  height: 48px;
+  height: 32px;
 }
 
 #js-loading-indicator {
@@ -136,8 +141,7 @@ esphome-main {
   font-size: 85%;
   background-color: rgba(27, 31, 35, 0.05);
   border-radius: 3px;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
-    monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 ul.browser-default {
@@ -168,18 +172,22 @@ ul.browser-default li {
 .page-footer {
   display: flex;
   align-items: center;
-  min-height: 50px;
-  color: grey;
-  background-color: var(--primary-footer-bg-color);
+  height: 50px;
+  color: var(--disabled-text-color);
 }
 
 .page-footer a {
-  color: #afafaf;
+  color: var(--mdc-theme-primary);
+  transition: color 0.2s ease-in-out;
+}
+
+.page-footer a:hover {
+  color: var(--mdc-theme-primary-no-attention);
 }
 
 @media only screen and (min-width: 993px) {
   .page-footer {
-    padding-left: 10%;
+    padding: 0 96px;
   }
 }
 
