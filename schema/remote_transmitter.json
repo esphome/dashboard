@@ -27,7 +27,7 @@
             },
             "carrier_duty_percent": {
               "key": "Required",
-              "docs": "**int**: How much of the time the remote is on. For example, infrared protocols modulate the signal using a carrier signal. Set this is `50%` if you\u2019re working with IR LEDs and to `100%` if working with other things like 433MHz transmitters.\n\n*See also: [Remote Transmitter](https://esphome.io/components/remote_transmitter.html#configuration-variables)*"
+              "docs": "**int**: How much of the time the remote is on. For example, infrared protocols modulate the signal using a carrier signal. Set this to `50%` if you\u2019re working with IR LEDs and to `100%` if working with other things like 433MHz transmitters.\n\n*See also: [Remote Transmitter](https://esphome.io/components/remote_transmitter.html#configuration-variables)*"
             }
           },
           "extends": [

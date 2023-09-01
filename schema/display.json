@@ -9,7 +9,7 @@
         "dependencies": [
           "spi"
         ],
-        "docs": "This component is the successor of the ILI9341 component allowing to control more display drivers and use 16bit colors when enough free ram.\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#ili9xxx-tft-lcd-series)*"
+        "docs": "ILI9341\n\n*See also: [ILI9xxx TFT LCD Series](https://esphome.io/components/display/ili9xxx.html#ili9xxx-tft-lcd-series)*"
       },
       "inkplate6": {
         "dependencies": [
@@ -132,7 +132,7 @@
         "dependencies": [
           "spi"
         ],
-        "docs": "The `waveshare_epaper` display platform allows you to use some E-Paper displays sold by [Waveshare](https://www.waveshare.com/product/displays/e-paper.htm) with ESPHome. The 2.13\u201d [TTGO module](https://github.com/lewisxhe/TTGO-EPaper-Series) with an ESP32 on the board is supported as well. Depending on your specific revision of the board you might need to try out the `-b73` or `-b1` version (see below). Similar modules sold by other vendors might also work but not have been tested yet. Currently only single-color E-Ink displays are implemented and of those only a few modules.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#waveshare-e-paper-display)*"
+        "docs": "The `waveshare_epaper` display platform allows you to use some E-Paper displays sold by [Waveshare](https://www.waveshare.com/product/displays/e-paper.htm) with ESPHome. The 2.13\u201d [TTGO module](https://github.com/lewisxhe/TTGO-EPaper-Series) with an ESP32 on the board is supported as well. Depending on your specific revision of the board you might need to try out the `-b73` or `-b1` version (see below). The 1.54\u201d [Good Display gdew0154m09](https://www.good-display.com/product/206.html) as used in the [M5Stack Core Ink](https://shop.m5stack.com/products/m5stack-esp32-core-ink-development-kit1-54-elnk-display) is also supported. Similar modules sold by other vendors might also work but not have been tested yet. Currently only single-color E-Ink displays are implemented and of those only a few modules.\n\n*See also: [Waveshare E-Paper Display](https://esphome.io/components/display/waveshare_epaper.html#waveshare-e-paper-display)*"
       }
     },
     "schemas": {

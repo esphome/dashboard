@@ -52,7 +52,7 @@
                   }
                 }
               },
-              "docs": "The information for the temperature. sensor\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **oversampling** (*Optional*): The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bme280.html#bme280-oversampling).\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
+              "docs": "The information for the temperature sensor.\n  * **name** (**Required**, string): The name for the temperature sensor.\n  \n  * **oversampling** (*Optional*): The oversampling parameter for the temperature sensor. See [Oversampling Options](https://esphome.io/components/sensor/bme280.html#bme280-oversampling).\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [BME280 Temperature+Pressure+Humidity Sensor](https://esphome.io/components/sensor/bme280.html#configuration-variables)*"
             },
             "pressure": {
               "key": "Optional",

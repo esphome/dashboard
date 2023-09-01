@@ -25,6 +25,12 @@
         ],
         "docs": "You first need to set up the [I2C](https://esphome.io/components/i2c.html) component.\n\n*See also: [PCF85063 Time Source](https://esphome.io/components/time/pcf85063.html#pcf85063-time-source)*"
       },
+      "pcf8563": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "You first need to set up the [I2C](https://esphome.io/components/i2c.html) component.\n\n*See also: [PCF8563 Time Source](https://esphome.io/components/time/pcf8563.html#pcf8563-time-source)*"
+      },
       "sntp": {
         "dependencies": [
           "network"

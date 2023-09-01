@@ -72,7 +72,7 @@
               "use_id_type": "script::Script",
               "type": "use_id"
             },
-            "<function validate_parameter_name at 0x0000022224485440>": {
+            "<function validate_parameter_name at 0x000002670C3E3920>": {
               "key": "Optional",
               "templatable": true
             }

@@ -87,6 +87,11 @@
               "type": "boolean",
               "docs": "**boolean**: Turn on or off the OTA feature inside webserver. Strongly not suggested without enabled authentication settings. Defaults to `true`.\n\n*See also: [Web Server Component](https://esphome.io/components/web_server.html#configuration-variables)*"
             },
+            "log": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean"
+            },
             "local": {
               "key": "Optional",
               "type": "boolean",

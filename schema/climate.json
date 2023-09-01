@@ -37,7 +37,7 @@
           "climate",
           "uart"
         ],
-        "docs": "The `haier` climate platform creates a Haier climate device. The component can be used as a replacement of a Haier proprietary WiFi modules such as KZW-W001 and KZW-W002.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#haier-climate)*"
+        "docs": "This is an implementation of the ESPHome component to control HVAC on the base of the SmartAir2 and hOn Haier protocols (AC that is controlled by the hOn or SmartAir2 application).\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#haier-climate)*"
       },
       "heatpumpir": {},
       "hitachi_ac344": {},

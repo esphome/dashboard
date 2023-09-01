@@ -8,9 +8,9 @@
             "id": {
               "key": "Required",
               "id_type": {
-                "class": "display::Animation",
+                "class": "animation::Animation",
                 "parents": [
-                  "display::Image"
+                  "image::Image"
                 ]
               },
               "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID with which you will be able to reference the animation later in your display code.\n\n*See also: [Animation](https://esphome.io/components/display/index.html#configuration-variables)*"
@@ -101,7 +101,7 @@
           "config_vars": {
             "id": {
               "key": "GeneratedID",
-              "use_id_type": "display::Animation",
+              "use_id_type": "animation::Animation",
               "type": "use_id"
             },
             "frame": {
@@ -118,7 +118,7 @@
           "config_vars": {
             "id": {
               "key": "GeneratedID",
-              "use_id_type": "display::Animation",
+              "use_id_type": "animation::Animation",
               "type": "use_id"
             }
           }
@@ -131,7 +131,7 @@
           "config_vars": {
             "id": {
               "key": "GeneratedID",
-              "use_id_type": "display::Animation",
+              "use_id_type": "animation::Animation",
               "type": "use_id"
             }
           }

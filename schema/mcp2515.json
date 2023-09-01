@@ -24,10 +24,11 @@
               "type": "enum",
               "values": {
                 "8MHZ": null,
+                "12MHZ": null,
                 "16MHZ": null,
                 "20MHZ": null
               },
-              "docs": "One of `8MHZ`, `16MHZ` or `20MHZ`. Clock crystal used on the MCP2515 device. Defaults to `8MHZ`.\n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#id3)*"
+              "docs": "One of `8MHZ`, `12MHz`, `16MHZ` or `20MHZ`. Clock crystal used on the MCP2515 device. Defaults to `8MHZ`.\n\n*See also: [MCP2515 Component](https://esphome.io/components/canbus.html#id3)*"
             },
             "mode": {
               "key": "Optional",

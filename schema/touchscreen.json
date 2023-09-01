@@ -13,6 +13,12 @@
         ],
         "docs": "The `liygo_t5_47` touchscreen platform allows using the touchscreen controller for the Lilygo T5 4.7\u201d e-Paper Display with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this touchscreen to work.\n\n*See also: [Lilygo T5 4.7\u201d Touchscreen](https://esphome.io/components/touchscreen/lilygo_t5_47.html#lilygo-t5-4-7-touchscreen)*"
       },
+      "tt21100": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `tt21100` touchscreen platform allows using the touch screen controllers based on the TT21100 chip with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this touchscreen to work.\n\n*See also: [TT21100 Touch Screen Controller](https://esphome.io/components/touchscreen/tt21100.html#tt21100-touch-screen-controller)*"
+      },
       "xpt2046": {
         "dependencies": [
           "spi"
