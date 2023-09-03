@@ -1,11 +1,11 @@
-const preload = () => import("./compile-dialog");
+const preload = () => import("./download-type-dialog");
 
-export const openCompileDialog = (
+export const openDownloadTypeDialog = (
   configuration: string,
   platformSupportsWebSerial: boolean
 ) => {
   preload();
-  const dialog = document.createElement("esphome-compile-dialog");
+  const dialog = document.createElement("esphome-download-type-dialog");
   dialog.configuration = configuration;
   dialog.platformSupportsWebSerial = platformSupportsWebSerial;
   document.body.append(dialog);
