@@ -4,12 +4,13 @@ import "@material/mwc-button";
 import "../components/remote-process";
 import "../components/process-dialog";
 import { openCompileDialog } from ".";
-import { getDownloadUrl } from "../api/configuration";
+import { openDownloadTypeDialog } from "../download-type";
 import { esphomeDialogStyles } from "../styles";
 
 @customElement("esphome-compile-dialog")
 class ESPHomeCompileDialog extends LitElement {
   @property() public configuration!: string;
+  @property() public platformSupportsWebSerial!: boolean;
 
   @property() public downloadFactoryFirmware = true;
 
@@ -28,15 +29,11 @@ class ESPHomeCompileDialog extends LitElement {
           ? ""
           : this._result === 0
           ? html`
-              <a
+              <mwc-button
                 slot="secondaryAction"
-                href="${getDownloadUrl(
-                  this.configuration,
-                  this.downloadFactoryFirmware
-                )}"
-              >
-                <mwc-button label="Download"></mwc-button>
-              </a>
+                label="Download"
+                @click=${this._handleDownload}
+              ></mwc-button>
             `
           : html`
               <mwc-button
@@ -57,19 +54,15 @@ class ESPHomeCompileDialog extends LitElement {
       return;
     }
 
-    const link = document.createElement("a");
-    link.download = this.configuration + ".bin";
-    link.href = getDownloadUrl(
-      this.configuration,
-      this.downloadFactoryFirmware
-    );
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    openDownloadTypeDialog(this.configuration, this.platformSupportsWebSerial);
+  }
+
+  private _handleDownload() {
+    openDownloadTypeDialog(this.configuration, this.platformSupportsWebSerial);
   }
 
   private _handleRetry() {
-    openCompileDialog(this.configuration, this.downloadFactoryFirmware);
+    openCompileDialog(this.configuration, this.platformSupportsWebSerial);
   }
 
   private _handleClose() {

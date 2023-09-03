@@ -1,5 +1,5 @@
 import { ESPLoader } from "esptool-js";
-import { getDownloadUrl } from "../api/configuration";
+import { getFactoryDownloadUrl } from "../api/download";
 
 export interface FileToFlash {
   data: string;
@@ -11,7 +11,7 @@ export const getConfigurationFiles = async (
 ): Promise<FileToFlash[]> => {
   let resp: Response;
   try {
-    resp = await fetch(getDownloadUrl(filename, true));
+    resp = await fetch(getFactoryDownloadUrl(filename));
   } catch (err) {
     throw new Error(`Downloading firmware failed: ${err}`);
   }
