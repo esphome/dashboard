@@ -6,10 +6,10 @@ This repository contains the JavaScript frontend and is embedded in ESPHome rele
 
 ## Development
 
-Check out this repository, run `npm install --legacy-peer-deps` and then run
+Check out this repository, run `npm install` and then run
 
 ```
-script/develop
+npm run develop
 ```
 
 It will start the dev server and will automatically re-bundle updated JavaScript (except for the `static` folder).
