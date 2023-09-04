@@ -54,17 +54,6 @@ export const compileConfigurationMetadata = (
     abortController
   );
 
-export const getDownloadUrl = (
-  configuration: string,
-  factoryFirmware: boolean
-) => {
-  let url = `./download.bin?configuration=${encodeURIComponent(configuration)}`;
-  if (factoryFirmware) {
-    url += "&type=firmware-factory.bin";
-  }
-  return url;
-};
-
 // null if file not found.
 // status 404 = file not found
 // status 422 = invalid config
