@@ -171,7 +171,7 @@ export class ESPHomeWizardDialog extends LitElement {
           <mwc-circular-progress
             active
             ?indeterminate=${progress === undefined}
-            .progress=${progress !== undefined ? progress / 100 : undefined}
+            .progress=${progress !== undefined ? progress / 100 : 1}
             density="8"
           ></mwc-circular-progress>
           ${progress !== undefined
@@ -332,7 +332,9 @@ export class ESPHomeWizardDialog extends LitElement {
               .platform=${key}
               @click=${this._handlePickPlatformClick}
             >
-              <span>${supportedPlatforms[key].label}</span>
+              <span
+                >${supportedPlatforms[key as SupportedPlatforms].label}</span
+              >
               ${metaChevronRight}
             </mwc-list-item>
           `

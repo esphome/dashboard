@@ -226,7 +226,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         padding: 0.2em 0.4em;
         margin: 0;
         font-size: 85%;
-        background-color: var(--card-background-color)
+        background-color: var(--card-background-color);
         border-radius: 3px;
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
           Courier, monospace;
