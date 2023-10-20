@@ -75,6 +75,9 @@
                 "bpi-bit": {
                   "docs": "BPI-Bit"
                 },
+                "bpi_leaf_s3": {
+                  "docs": "BPI-Leaf-S3"
+                },
                 "briki_abc_esp32": {
                   "docs": "Briki ABC (MBC-WB) - ESP32"
                 },
@@ -87,11 +90,17 @@
                 "connaxio_espoir": {
                   "docs": "Connaxio's Espoir"
                 },
+                "cytron_maker_feather_aiot_s3": {
+                  "docs": "Cytron Maker Feather AIoT S3"
+                },
                 "d-duino-32": {
                   "docs": "D-duino-32"
                 },
                 "deneyapkart1A": {
                   "docs": "Deneyap Kart 1A"
+                },
+                "deneyapkart1Av2": {
+                  "docs": "Deneyap Kart 1A v2"
                 },
                 "deneyapkartg": {
                   "docs": "Deneyap Kart G"
@@ -101,6 +110,9 @@
                 },
                 "deneyapmini": {
                   "docs": "Deneyap Mini"
+                },
+                "deneyapminiv2": {
+                  "docs": "Deneyap Mini v2"
                 },
                 "denky32": {
                   "docs": "Denky32 (WROOM32)"
@@ -122,6 +134,9 @@
                 },
                 "esp32-c3-devkitm-1": {
                   "docs": "Espressif ESP32-C3-DevKitM-1"
+                },
+                "esp32-c3-m1i-kit": {
+                  "docs": "Ai-Thinker ESP-C3-M1-I-Kit"
                 },
                 "esp32cam": {
                   "docs": "AI Thinker ESP32-CAM"
@@ -170,6 +185,9 @@
                 },
                 "esp32-s3-devkitc-1": {
                   "docs": "Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)"
+                },
+                "esp32-s3-korvo-2": {
+                  "docs": "Espressif ESP32-S3-Korvo-2"
                 },
                 "esp32thing": {
                   "docs": "SparkFun ESP32 Thing"
@@ -402,6 +420,9 @@
                 "quantum": {
                   "docs": "Noduino Quantum"
                 },
+                "redpill_esp32s3": {
+                  "docs": "Munich Labs RedPill ESP32-S3"
+                },
                 "seeed_xiao_esp32c3": {
                   "docs": "Seeed Studio XIAO ESP32C3"
                 },
@@ -559,10 +580,12 @@
                 "ESP32": null,
                 "ESP32S2": null,
                 "ESP32S3": null,
+                "ESP32C2": null,
                 "ESP32C3": null,
+                "ESP32C6": null,
                 "ESP32H2": null
               },
-              "docs": "**boolean**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c3` and `esp32h2`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
+              "docs": "**string**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c3` and `esp32h2`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
             },
             "framework": {
               "key": "Optional",
@@ -598,7 +621,7 @@
                           }
                         }
                       },
-                      "docs": "**mapping**: Custom sdkconfig options to set in the ESP-IDF project.\n\n*See also: [ESP-IDF framework](https://esphome.io/components/esp32.html#id2)*"
+                      "docs": "**mapping**: Custom sdkconfig [compiler options](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/kconfig.html#compiler-options) to set in the ESP-IDF project.\n\n*See also: [ESP-IDF framework](https://esphome.io/components/esp32.html#id2)*"
                     },
                     "advanced": {
                       "key": "Optional",

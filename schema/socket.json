@@ -11,6 +11,7 @@
               "type": "enum",
               "values": {
                 "lwip_tcp": null,
+                "lwip_sockets": null,
                 "bsd_sockets": null
               }
             }

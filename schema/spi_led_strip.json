@@ -1,0 +1,68 @@
+{
+  "spi_led_strip.light": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "light.ADDRESSABLE_LIGHT_SCHEMA"
+          ],
+          "config_vars": {
+            "output_id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "spi_led_strip::SpiLedStrip",
+                "parents": [
+                  "light::AddressableLight",
+                  "light::LightOutput",
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              }
+            },
+            "num_leds": {
+              "key": "Optional",
+              "default": "1",
+              "type": "integer",
+              "data_type": "positive_not_null_int",
+              "docs": "**int**: The number of LEDs attached. The default is 1.\n\n*See also: [SPI LED Strip Light](https://esphome.io/components/light/spi_led_strip.html#configuration-variables)*"
+            },
+            "data_rate": {
+              "key": "Optional",
+              "default": "1MHz",
+              "type": "enum",
+              "values": {
+                "80000000.0": null,
+                "40000000.0": null,
+                "20000000.0": null,
+                "10000000.0": null,
+                "8000000.0": null,
+                "5000000.0": null,
+                "4000000.0": null,
+                "2000000.0": null,
+                "1000000.0": null,
+                "200000.0": null,
+                "75000.0": null,
+                "1000.0": null
+              },
+              "docs": "Set the data rate of the SPI interface to the display. One of `80MHz`, `40MHz`, `20MHz`, `10MHz`, `5MHz`, `2MHz`, `1MHz` (default), `200kHz`, `75kHz` or `1kHz`.\n\n*See also: [SPI LED Strip Light](https://esphome.io/components/light/spi_led_strip.html#configuration-variables)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -65,6 +65,12 @@
               },
               "docs": "The information for the humidity sensor.\n  * **name** (**Required**, string): The name for the humidity sensor.\n  \n  * **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types.html#config-id)): Set the ID of this sensor for use in lambdas.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [SHT3X-D Temperature+Humidity Sensor](https://esphome.io/components/sensor/sht3xd.html#configuration-variables)*"
             },
+            "heater_enabled": {
+              "key": "Optional",
+              "default": "True",
+              "type": "boolean",
+              "docs": "**bool**: Turn on/off heater at boot. This may help provide [more accurate readings in condensing conditions](https://forum.arduino.cc/t/atmospheric-sensors-in-condensing-conditions/412167), but can also increase temperature readings and decrease humidity readings as a side effect. Defaults to `true`.\n\n*See also: [SHT3X-D Temperature+Humidity Sensor](https://esphome.io/components/sensor/sht3xd.html#configuration-variables)*"
+            },
             "update_interval": {
               "key": "Optional",
               "default": "60s",

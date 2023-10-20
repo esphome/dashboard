@@ -54,6 +54,18 @@
         ],
         "docs": "The `homeassistant` text sensor platform allows you to create a sensors that import states from your Home Assistant instance using the [native API](https://esphome.io/components/api.html).\n\n*See also: [Home Assistant Text Sensor](https://esphome.io/components/text_sensor/homeassistant.html#home-assistant-text-sensor)*"
       },
+      "ld2410": {
+        "dependencies": [
+          "ld2410"
+        ],
+        "docs": "The `ld2410` text sensor allows you get information about your [LD2410 Sensor.\n\n*See also: [ld2410 Text Sensor](https://esphome.io/components/sensor/ld2410.html#text-sensor)*"
+      },
+      "libretiny": {
+        "dependencies": [
+          "libretiny"
+        ],
+        "docs": "The `libretiny` text sensor platform exposes various LibreTiny core information via text sensors.\n\n*See also: [LibreTiny Text Sensor](https://esphome.io/components/text_sensor/libretiny.html#libretiny-text-sensor)*"
+      },
       "modbus_controller": {
         "dependencies": [
           "modbus_controller"

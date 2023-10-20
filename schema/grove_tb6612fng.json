@@ -26,6 +26,9 @@
               "default": "20",
               "data_type": "hex_uint8_t",
               "docs": "**int**: The I\u00b2C address of the driver. Defaults to `0x14`.\n\n*See also: [Grove TB6612FNG Motor Drive](https://esphome.io/components/grove_tb6612fng.html#configuration-variables)*"
+            },
+            "name": {
+              "docs": "**boolean**: The name of the component\n\n*See also: [Grove TB6612FNG Motor Drive](https://esphome.io/components/grove_tb6612fng.html#configuration-variables)*"
             }
           },
           "extends": [

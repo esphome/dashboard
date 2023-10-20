@@ -1,0 +1,155 @@
+{
+  "wireguard": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "wireguard::Wireguard",
+                "parents": [
+                  "Component",
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "time_id": {
+              "key": "GeneratedID",
+              "use_id_type": "time::RealTimeClock",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Required"
+            },
+            "netmask": {
+              "key": "Optional",
+              "default": "255.255.255.255"
+            },
+            "private_key": {
+              "key": "Required"
+            },
+            "peer_endpoint": {
+              "key": "Required",
+              "type": "string"
+            },
+            "peer_public_key": {
+              "key": "Required"
+            },
+            "peer_port": {
+              "key": "Optional",
+              "default": "51820",
+              "type": "integer",
+              "data_type": "port"
+            },
+            "peer_preshared_key": {
+              "key": "Optional"
+            },
+            "peer_allowed_ips": {
+              "key": "Optional",
+              "default": "['0.0.0.0/0']",
+              "is_list": true
+            },
+            "peer_persistent_keepalive": {
+              "key": "Optional",
+              "default": "0s",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_seconds"
+                ]
+              }
+            },
+            "reboot_timeout": {
+              "key": "Optional",
+              "default": "15min",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "require_connection_to_proceed": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "10s"
+            }
+          },
+          "extends": [
+            "core.COMPONENT_SCHEMA"
+          ]
+        }
+      }
+    }
+  },
+  "wireguard.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "wireguard_id": {
+              "key": "GeneratedID",
+              "use_id_type": "wireguard::Wireguard",
+              "type": "use_id"
+            },
+            "latest_handshake": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "device_class": {
+                    "default": "timestamp"
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "wireguard.binary_sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "wireguard_id": {
+              "key": "GeneratedID",
+              "use_id_type": "wireguard::Wireguard",
+              "type": "use_id"
+            },
+            "status": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "binary_sensor.BINARY_SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "device_class": {
+                    "default": "connectivity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

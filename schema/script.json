@@ -72,7 +72,7 @@
               "use_id_type": "script::Script",
               "type": "use_id"
             },
-            "<function validate_parameter_name at 0x000002670C3E3920>": {
+            "<function validate_parameter_name at 0x000002411BE2EFC0>": {
               "key": "Optional",
               "templatable": true
             }
@@ -92,7 +92,7 @@
             }
           }
         },
-        "docs": "This action allows you to stop a given script during execution. If the script is not running, it does nothing. This is useful right now if your want to stop a script that contains a `delay` action, `wait_until` action, or is inside a `while` loop, etc. You can also call this action from the script itself, and any subsequent action will not be executed.\n\n*See also: [`script.stop` Action](https://esphome.io/guides/automations.html#script-stop-action)*"
+        "docs": "This action allows you to stop a given script during execution. If the script is not running, it does nothing. This is useful if you want to stop a script that contains a `delay` action, `wait_until` action, or is inside a `while` loop, etc. You can also call this action from the script itself, and any subsequent action will not be executed.\n\n*See also: [`script.stop` Action](https://esphome.io/guides/automations.html#script-stop-action)*"
       },
       "wait": {
         "type": "schema",

@@ -69,6 +69,10 @@
               "key": "Optional",
               "type": "boolean",
               "docs": "**boolean**: For pads where row pins are outputs, and the keys are connected with diodes. Defaults to `false`.\n\n*See also: [Component](https://esphome.io/components/matrix_keypad.html#component)*"
+            },
+            "has_pulldowns": {
+              "key": "Optional",
+              "type": "boolean"
             }
           }
         },

@@ -100,6 +100,16 @@
               },
               "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The exit delay before the alarm is armed to home mode.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
             },
+            "arming_night_time": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              },
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The exit delay before the alarm is armed to night mode.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+            },
             "arming_away_time": {
               "key": "Optional",
               "default": "0s",
@@ -150,11 +160,17 @@
                     "default": "False",
                     "type": "boolean",
                     "docs": "**boolean**: This binary sensor will not trigger the alarm when in `armed_home` state.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+                  },
+                  "bypass_armed_night": {
+                    "key": "Optional",
+                    "default": "False",
+                    "type": "boolean",
+                    "docs": "**boolean**: This binary sensor will not trigger the alarm when in `armed_night` state.\n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
                   }
                 }
               },
               "maybe": "input",
-              "docs": "***list***: A list of binary sensors the panel should use. Each consists of:\n  * **input** (**Required**, string): The id of the binary sensor component\n  \n  * **bypass_armed_home** (*Optional*, boolean): This binary sensor will not trigger the alarm when in `armed_home` state.\n  \n  \n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
+              "docs": "***list***: A list of binary sensors the panel should use. Each consists of:\n  * **input** (**Required**, string): The id of the binary sensor component\n  \n  * **bypass_armed_home** (*Optional*, boolean): This binary sensor will not trigger the alarm when in `armed_home` state.\n  \n  * **bypass_armed_night** (*Optional*, boolean): This binary sensor will not trigger the alarm when in `armed_night` state.\n  \n  \n\n*See also: [Template Alarm Control Panel](https://esphome.io/components/alarm_control_panel/template.html#configuration-variables)*"
             },
             "restore_mode": {
               "key": "Optional",

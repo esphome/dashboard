@@ -120,6 +120,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "a01nyub.sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "a4988.stepper": {
                     "type": "enum",
                     "values": {
@@ -840,6 +852,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "bmi160": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "bmp085.sensor": {
                     "type": "enum",
                     "values": {
@@ -865,6 +889,18 @@
                     }
                   },
                   "bmp3xx.sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "bmp581": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -1968,6 +2004,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "gcja5": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "gp8403": {
                     "type": "enum",
                     "values": {
@@ -2604,6 +2652,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "kmeteriso.sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "kuntze": {
                     "type": "enum",
                     "values": {
@@ -2688,6 +2748,54 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "lt.gpio": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "lt.component": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "lt.preferences": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "libretiny.pwm": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "light.addressable": {
                     "type": "enum",
                     "values": {
@@ -2713,6 +2821,18 @@
                     }
                   },
                   "light": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "lightwaverf.sensor": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -4092,6 +4212,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "pmwcs3": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "pn532": {
                     "type": "enum",
                     "values": {
@@ -4656,6 +4788,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "remote_receiver.libretiny": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "remote_transmitter": {
                     "type": "enum",
                     "values": {
@@ -4920,6 +5064,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "sen0321_sensor.sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "sen21231_sensor.sensor": {
                     "type": "enum",
                     "values": {
@@ -5077,6 +5233,18 @@
                     }
                   },
                   "shutdown.switch": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "output.sigma_delta": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -5304,7 +5472,31 @@
                       "VERY_VERBOSE": null
                     }
                   },
-                  "spi": {
+                  "spi-esp-arduino": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "spi-esp-idf": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "spi_device": {
                     "type": "enum",
                     "values": {
                       "NONE": null,
@@ -6408,6 +6600,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "uart.lt": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "uart.arduino_rp2040": {
                     "type": "enum",
                     "values": {
@@ -6708,6 +6912,18 @@
                       "VERY_VERBOSE": null
                     }
                   },
+                  "wifi_lt": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
                   "wifi_pico_w": {
                     "type": "enum",
                     "values": {
@@ -6733,6 +6949,18 @@
                     }
                   },
                   "wifi_signal.sensor": {
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "ERROR": null,
+                      "WARN": null,
+                      "INFO": null,
+                      "DEBUG": null,
+                      "VERBOSE": null,
+                      "VERY_VERBOSE": null
+                    }
+                  },
+                  "wireguard": {
                     "type": "enum",
                     "values": {
                       "NONE": null,

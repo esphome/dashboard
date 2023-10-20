@@ -1,0 +1,55 @@
+{
+  "sen0321.sensor": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.SENSOR_SCHEMA",
+            "core.COMPONENT_SCHEMA"
+          ],
+          "config_vars": {
+            "id": {
+              "id_type": {
+                "class": "sen0321_sensor::Sen0321Sensor",
+                "parents": [
+                  "PollingComponent",
+                  "Component",
+                  "i2c::I2CDevice"
+                ]
+              }
+            },
+            "unit_of_measurement": {
+              "default": "ppb"
+            },
+            "icon": {
+              "default": "mdi:chemical-weapon"
+            },
+            "accuracy_decimals": {
+              "default": "1"
+            },
+            "state_class": {
+              "default": "measurement"
+            },
+            "update_interval": {
+              "key": "Optional",
+              "default": "60s",
+              "docs": "**[Time](https://esphome.io/guides/configuration-types.html#config-time)**: The interval to check the sensor. Defaults to `60s`.\n\n*See also: [SEN0321 DFRobot Ozone Sensor](https://esphome.io/components/sensor/sen0321.html#configuration-variables)*"
+            },
+            "i2c_id": {
+              "key": "GeneratedID",
+              "use_id_type": "i2c::I2CBus",
+              "type": "use_id"
+            },
+            "address": {
+              "key": "Optional",
+              "default": "115",
+              "data_type": "hex_uint8_t",
+              "docs": "**int**: Manually specify the I\u00b2C address of the sensor. Defaults to `0x73`. Sensor can be configured to `0x70`, `0x71`, `0x72`, or `0x73` using jumpers on the board.\n\n*See also: [SEN0321 DFRobot Ozone Sensor](https://esphome.io/components/sensor/sen0321.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

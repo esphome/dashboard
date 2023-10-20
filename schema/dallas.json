@@ -79,6 +79,7 @@
             },
             "address": {
               "key": "Optional",
+              "data_type": "hex_uint64_t",
               "docs": "**int**: The address of the sensor. Use either this option or index.\n\n*See also: [dallas Sensor](https://esphome.io/components/sensor/dallas.html#id1)*"
             },
             "index": {

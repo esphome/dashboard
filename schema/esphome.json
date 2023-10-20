@@ -119,7 +119,7 @@
             },
             "min_version": {
               "key": "Optional",
-              "default": "2023.7.0b2",
+              "default": "2023.9.3",
               "docs": "**string**: The minimum ESPHome version required to compile this configuration. See [Minimum ESPHome version](https://esphome.io/components/esphome.html#esphome-min-version).\n\n*See also: [ESPHome Core Configuration](https://esphome.io/components/esphome.html#configuration-variables)*"
             },
             "compile_process_limit": {
@@ -466,6 +466,9 @@
         ],
         "docs": "This component is a global hub that maintains the connection to the BedJet device and delegates status updates to individual platform components.\n\n*See also: [bedjet Component/Hub](https://esphome.io/components/climate/bedjet.html#component-hub)*"
       },
+      "bk72xx": {
+        "docs": "This component contains platform-specific options for the [LibreTiny](https://docs.libretiny.eu/) platform. It provides support for the following microcontrollers:\n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#libretiny-platform)*"
+      },
       "ble_client": {
         "dependencies": [
           "esp32_ble_tracker"
@@ -609,7 +612,7 @@
         "dependencies": [
           "esp32"
         ],
-        "docs": "The `esp32_touch` component creates a global hub for detecting touches on the eight touch pads of the ESP32 as [binary sensors](https://esphome.io/components/binary_sensor/esp32_touch.html#esp32-touch-binary-sensor).\n\n*See also: [esp32_touch Component/Hub](https://esphome.io/components/binary_sensor/esp32_touch.html#component-hub)*"
+        "docs": "The `esp32_touch` component creates a global hub enabling (capacitive) touch detection on GPIO pins [supported by ESP32, ESP32-S2 or ESP32-S3 processors](https://esphome.io/components/binary_sensor/esp32_touch.html#esp32-touch-pad-pins). With this enabled, [binary sensors](https://esphome.io/components/binary_sensor/esp32_touch.html#esp32-touch-binary-sensor) may then be configured to permit touch detection.\n\n*See also: [esp32_touch Component/Hub](https://esphome.io/components/binary_sensor/esp32_touch.html#component-hub)*"
       },
       "ethernet": {
         "dependencies": [
@@ -715,10 +718,14 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "The `ld2410` sensor platform allows you to use HI-LINK LD2410 motion and presence sensor ([datasheet and user manual](https://drive.google.com/drive/folders/1p4dhbEJA3YubyIjIIC7wwVsSo8x29Fq-?spm=a2g0o.detail.1000023.17.93465697yFwVxH)) with ESPHome. The [UART](https://esphome.io/components/uart.html#uart) is required to be set up in your configuration for this sensor to work.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#component-hub)*"
+        "docs": "The `ld2410` sensor platform allows you to use HI-LINK LD2410 motion and presence sensor ([datasheet and user manual](https://drive.google.com/drive/folders/1p4dhbEJA3YubyIjIIC7wwVsSo8x29Fq-?spm=a2g0o.detail.1000023.17.93465697yFwVxH)) with ESPHome.\n\n*See also: [ld2410 Component/Hub](https://esphome.io/components/sensor/ld2410.html#component-hub)*"
+      },
+      "libretiny": {},
+      "lightwaverf": {
+        "docs": "The `LightWaveRF` light platform creates a module to dump and send commands to light switches\n\n*See also: [LightWaveRF](https://esphome.io/components/lightwaverf.html#lightwaverf)*"
       },
       "logger": {
-        "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics (if there is an MQTT client in the configuration). By default, all logs with a severity higher than `DEBUG` will be shown. Decreasing the log level can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
+        "docs": "The logger component automatically logs all log messages through the serial port and through MQTT topics (if there is an MQTT client in the configuration). By default, all logs with a severity `DEBUG` or higher will be shown. Increasing the log level severity (to e.g `INFO` or `WARNING`) can help with the performance of the application and memory size.\n\n*See also: [Logger Component](https://esphome.io/components/logger.html#logger-component)*"
       },
       "matrix_keypad": {
         "docs": "The `matrix_keypad` component allows you to integrate pads which have the keys connected at the intersection points of the rows and columns of a matrix.\n\n*See also: [Matrix keypad](https://esphome.io/components/matrix_keypad.html#matrix-keypad)*"
@@ -872,7 +879,9 @@
       "prometheus": {
         "docs": "The `prometheus` component enables an HTTP endpoint for the [Web Server Component](https://esphome.io/components/web_server.html) in order to integrate a [Prometheus](https://prometheus.io/) installation.\n\n*See also: [Prometheus Component](https://esphome.io/components/prometheus.html#prometheus-component)*"
       },
-      "psram": {},
+      "psram": {
+        "docs": "This component enables and configures PSRAM if/when available on ESP32 modules/boards. It is automatically loaded and enabled by components that require it.\n\n*See also: [PSRAM](https://esphome.io/components/psram.html#psram)*"
+      },
       "qr_code": {
         "dependencies": [
           "display"
@@ -917,6 +926,7 @@
       "rp2040": {
         "docs": "This component contains platform-specific options for the RP2040 platform.\n\n*See also: [RP2040 Platform](https://esphome.io/components/rp2040.html#rp2040-platform)*"
       },
+      "rtl87xx": {},
       "rtttl": {
         "docs": "The `rtttl`, component allows you to easily connect a passive piezo buzzer to your microcontroller and play monophonic songs. It accepts the Ring Tone Text Transfer Language, rtttl format ([Wikipedia](https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language)) which allows to store simple melodies.\n\n*See also: [Rtttl Buzzer](https://esphome.io/components/rtttl.html#rtttl-buzzer)*"
       },
@@ -963,7 +973,13 @@
       },
       "socket": {},
       "spi": {
-        "docs": "SPI is a very common high-speed protocol for a lot of devices. The SPI bus usually consists of 4 wires:\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#spi-bus)*"
+        "docs": "SPI is a very common high-speed protocol for a lot of devices. The ESPHome SPI component implements only the host controller role, where it controls the bus, and writes or reads data from peripherals attached to the bus.\n\n*See also: [SPI Bus](https://esphome.io/components/spi.html#spi-bus)*"
+      },
+      "spi_device": {
+        "dependencies": [
+          "spi"
+        ],
+        "docs": "Other components that depend on the SPI component will reference it, typically to communicate with specific peripheral devices. There is also a general-purpose SPI device component that can be used to communicate with hardware not supported by a specific component. It allows selection of the SPI mode, data_rate, CS pin and bit order. Reads and writes on the device can be performed with lambdas. For example:\n\n*See also: [Generic SPI device component:](https://esphome.io/components/spi.html#generic-spi-device-component)*"
       },
       "sprinkler": {
         "docs": "The `sprinkler` controller component aims to behave like a sprinkler/irrigation valve controller, much like those made by companies such as Rain Bird or Hunter. It does so by automating control of a number of [switch](https://esphome.io/components/switch/index.html#config-switch) components, each of which would typically be used to control an individual electric valve via a relay or other switching device. It provides a number of features you\u2019d expect of a sprinkler controller, including:\n\n*See also: [Sprinkler Controller](https://esphome.io/components/sprinkler.html#sprinkler-controller)*"
@@ -1047,6 +1063,13 @@
       },
       "wifi": {
         "docs": "WPA2_EAP Enterprise Authentication is supported on ESP32s and ESP8266s. In order to configure this feature you must use the [Connecting to Multiple Networks](https://esphome.io/components/wifi.html#wifi-networks) style configuration. The ESP32 is known to work with PEAP, EAP-TTLS, and the certificate based EAP-TLS. These are advanced settings and you will usually need to consult your enterprise network administrator.\n\n*See also: [Enterprise Authentication](https://esphome.io/components/wifi.html#enterprise-authentication)*"
+      },
+      "wireguard": {
+        "dependencies": [
+          "time",
+          "esp32"
+        ],
+        "docs": "[WireGuard\u00ae](https://www.wireguard.org/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. This component uses a **custom** implementation not developed by original authors and currently available for **ESP32 platform only**.\n\n*See also: [WireGuard Component](https://esphome.io/components/wireguard.html#wireguard-component)*"
       },
       "wled": {},
       "xiaomi_ble": {
@@ -1229,6 +1252,7 @@
     "pins": [
       "esp32",
       "esp8266",
+      "bk72xx",
       "host",
       "max6956",
       "mcp23xxx",
@@ -1237,6 +1261,7 @@
       "pca9554",
       "pcf8574",
       "rp2040",
+      "rtl87xx",
       "sn74hc165",
       "sn74hc595",
       "sx1509",

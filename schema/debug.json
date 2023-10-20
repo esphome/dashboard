@@ -60,7 +60,7 @@
                   }
                 }
               },
-              "docs": "Reports the free heap size in bytes.\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
+              "docs": "Reports the free heap size in bytes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
             },
             "block": {
               "key": "Optional",
@@ -84,7 +84,7 @@
                   }
                 }
               },
-              "docs": "Reports the largest contiguous free RAM block on the heap in bytes.\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
+              "docs": "Reports the largest contiguous free RAM block on the heap in bytes. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
             },
             "fragmentation": {
               "key": "Optional",
@@ -108,7 +108,7 @@
                   }
                 }
               },
-              "docs": "Reports the fragmentation metric of the heap (0% is clean, more than ~50% is not harmless). Only available on ESP8266 with Arduino 2.5.2+.\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
+              "docs": "Reports the fragmentation metric of the heap (0% is clean, more than ~50% is not harmless). Only available on ESP8266 with Arduino 2.5.2+. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
             },
             "loop_time": {
               "key": "Optional",
@@ -132,7 +132,31 @@
                   }
                 }
               },
-              "docs": "Reports the longest time between successive iterations of the main loop.\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n  \n  \n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
+              "docs": "Reports the longest time between successive iterations of the main loop. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
+            },
+            "psram": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "sensor.SENSOR_SCHEMA"
+                ],
+                "config_vars": {
+                  "unit_of_measurement": {
+                    "default": "B"
+                  },
+                  "icon": {
+                    "default": "mdi:counter"
+                  },
+                  "accuracy_decimals": {
+                    "default": "0"
+                  },
+                  "entity_category": {
+                    "default": "diagnostic"
+                  }
+                }
+              },
+              "docs": "Reports the free PSRAM in bytes. Only available on ESP32. All options from [Sensor](https://esphome.io/components/sensor/index.html#config-sensor).\n\n*See also: [debug Sensor](https://esphome.io/components/debug.html#sensor)*"
             }
           }
         }
@@ -166,7 +190,7 @@
                   }
                 }
               },
-              "docs": "Reports the following device information:\n  * ESPHome Version\n  \n  * Free heap size at startup\n  \n  * Flash chip size, speed and mode\n  \n  * ESP32:\n    * Chip model, cores, revision\n    \n    * Chip features (BLE / BT / WiFi_BGN / EMB_FLASH / \u2026)\n    \n    * ESP-IDF version\n    \n    * EFuse MAC\n    \n    * Reset reason\n    \n    * Wakeup reason\n    \n    \n  \n  * ESP8266:\n    * Chip id, frequency\n    \n    * Flash id\n    \n    * SDK, Core & Boot versions\n    \n    * Reset reason & information\n    \n    \n  \n  Accepts these options:\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
+              "docs": "Reports the following device information:\n  * ESPHome Version\n  \n  * Free heap size at startup\n  \n  * Flash chip size, speed and mode\n  \n  * ESP32:\n    * Chip model, cores, revision\n    \n    * Chip features (BLE / BT / WiFi_BGN / EMB_FLASH / EMB_PSRAM / \u2026)\n    \n    * ESP-IDF version\n    \n    * EFuse MAC\n    \n    * Reset reason\n    \n    * Wakeup reason\n    \n    \n  \n  * ESP8266:\n    * Chip id, frequency\n    \n    * Flash id\n    \n    * SDK, Core & Boot versions\n    \n    * Reset reason & information\n    \n    \n  \n  Accepts all options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
             },
             "reset_reason": {
               "key": "Optional",
@@ -184,7 +208,7 @@
                   }
                 }
               },
-              "docs": "Reports the last reboot reason in a human-readable form.Accepts these options:\n  * **name** (**Required**, string): The name of the sensor.\n  \n  * All other options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n  \n  \n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
+              "docs": "Reports the last reboot reason in a human-readable form. Accepts all options from [Text Sensor](https://esphome.io/components/text_sensor/index.html#config-text-sensor).\n\n*See also: [debug Text Sensor](https://esphome.io/components/debug.html#text-sensor)*"
             }
           }
         }
