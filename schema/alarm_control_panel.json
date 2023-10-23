@@ -32,6 +32,36 @@
               "type": "trigger",
               "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm triggers. See [on_triggered Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-triggered-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
             },
+            "on_arming": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `arming`. See [on_arming Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-arming-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
+            "on_pending": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `pending`. See [on_pending Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-pending-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
+            "on_armed_home": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `armed_home`. See [on_armed_home Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-armed-home-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
+            "on_armed_night": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `armed_night`. See [on_armed_night Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-armed-night-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
+            "on_armed_away": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `armed_away`. See [on_armed_away Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-armed-away-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
+            "on_disarmed": {
+              "key": "Optional",
+              "type": "trigger",
+              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: An automation to perform when the alarm state changes to `disarmed`. See [on_disarmed Trigger](https://esphome.io/components/alarm_control_panel/index.html#alarm-control-panel-on-disarmed-trigger).\n\n*See also: [Alarm Control Panel Component](https://esphome.io/components/alarm_control_panel/index.html#base-alarm-control-panel-configuration)*"
+            },
             "on_cleared": {
               "key": "Optional",
               "type": "trigger",
@@ -82,6 +112,14 @@
         }
       },
       "arm_home": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "alarm_control_panel.ALARM_CONTROL_PANEL_ACTION_SCHEMA"
+          ]
+        }
+      },
+      "arm_night": {
         "type": "schema",
         "schema": {
           "extends": [

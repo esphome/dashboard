@@ -163,7 +163,7 @@
                   }
                 }
               },
-              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The topic to send MQTT log messages to.The `log_topic` has an additional configuration option:\n  * **level** (*Optional*, string): The log level to use for MQTT logs. See [Log Levels](https://esphome.io/components/logger.html#logger-log-levels) for options.\n  \n  \n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
+              "docs": "**[MQTTMessage](https://esphome.io/components/mqtt.html#mqtt-message)**: The topic to send MQTT log messages to. Use `null` if you want to disable sending logs to MQTT.The `log_topic` has an additional configuration option:\n  * **level** (*Optional*, string): The log level to use for MQTT logs. See [Log Levels](https://esphome.io/components/logger.html#logger-log-levels) for options.\n  \n  \n\n*See also: [MQTT Client Component](https://esphome.io/components/mqtt.html#configuration-variables)*"
             },
             "ssl_fingerprints": {
               "key": "Optional",

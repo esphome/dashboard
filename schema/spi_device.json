@@ -1,0 +1,84 @@
+{
+  "spi_device": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "spi_device::SPIDeviceComponent",
+                "parents": [
+                  "Component",
+                  "spi::SPIDevice"
+                ]
+              }
+            },
+            "data_rate": {
+              "key": "Optional",
+              "default": "1MHz",
+              "type": "enum",
+              "values": {
+                "80000000.0": null,
+                "40000000.0": null,
+                "20000000.0": null,
+                "10000000.0": null,
+                "8000000.0": null,
+                "5000000.0": null,
+                "4000000.0": null,
+                "2000000.0": null,
+                "1000000.0": null,
+                "200000.0": null,
+                "75000.0": null,
+                "1000.0": null
+              },
+              "docs": "Set the data rate of the controller. One of `80MHz`, `40MHz`, `20MHz`, `10MHz`, `5MHz`, `4MHz`, `2MHz`, `1MHz` (default), `200kHz`, `75kHz` or `1kHz`. A numeric value in Hz can alternatively be specified.\n\n*See also: [Generic SPI device component:](https://esphome.io/components/spi.html#id1)*"
+            },
+            "bit_order": {
+              "key": "Optional",
+              "default": "msb_first",
+              "type": "enum",
+              "values": {
+                "msb_first": null,
+                "lsb_first": null
+              },
+              "docs": "Set the bit order - choose one of `msb_first` (default) or `lsb_first`.\n\n*See also: [Generic SPI device component:](https://esphome.io/components/spi.html#id1)*"
+            },
+            "mode": {
+              "key": "Optional",
+              "default": "0",
+              "type": "enum",
+              "values": {
+                "0": null,
+                "1": null,
+                "2": null,
+                "3": null,
+                "MODE0": null,
+                "MODE1": null,
+                "MODE2": null,
+                "MODE3": null
+              },
+              "docs": "Set the controller mode - one of `mode0`, `mode1`, `mode2`, `mode3`. The default is `mode3`. See table below for more information\n\n*See also: [Generic SPI device component:](https://esphome.io/components/spi.html#id1)*"
+            },
+            "spi_id": {
+              "key": "GeneratedID",
+              "use_id_type": "spi::SPIComponent",
+              "type": "use_id"
+            },
+            "cs_pin": {
+              "key": "Optional",
+              "schema": true,
+              "modes": [
+                "output"
+              ],
+              "type": "pin",
+              "docs": "**[Pin Schema](https://esphome.io/guides/configuration-types.html#config-pin-schema)**: The CS pin.\n\n*See also: [Generic SPI device component:](https://esphome.io/components/spi.html#id1)*"
+            }
+          }
+        },
+        "is_list": true
+      }
+    }
+  }
+}

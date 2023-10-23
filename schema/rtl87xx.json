@@ -1,0 +1,22 @@
+{
+  "rtl87xx": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "bk72xx.CONFIG_SCHEMA"
+          ]
+        }
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "bk72xx.PIN_SCHEMA"
+        ]
+      }
+    }
+  }
+}

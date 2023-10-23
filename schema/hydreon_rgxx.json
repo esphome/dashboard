@@ -23,7 +23,7 @@
                 "RG_9": null,
                 "RG_15": null
               },
-              "docs": "**int**: Specify which rain sensor you have connected. Must be either `RG_9` or `RG_15`.\n\n*See also: [Hydreon Rain Sensor](https://esphome.io/components/sensor/hydreon_rgxx.html#configuration-variables)*"
+              "docs": "**string**: Specify which rain sensor you have connected. Must be either `RG_9` or `RG_15`.\n\n*See also: [Hydreon Rain Sensor](https://esphome.io/components/sensor/hydreon_rgxx.html#configuration-variables)*"
             },
             "acc": {
               "key": "Optional",

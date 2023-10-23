@@ -4,6 +4,9 @@
       "copy": {
         "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The select that should be mirrored.\n\n*See also: [Copy Select](https://esphome.io/components/copy.html#copy-select)*"
       },
+      "ld2410": {
+        "docs": "The `ld2410` select allows you control your [LD2410 Sensor.\n\n*See also: [ld2410 Select](https://esphome.io/components/sensor/ld2410.html#select)*"
+      },
       "modbus_controller": {
         "dependencies": [
           "modbus_controller"

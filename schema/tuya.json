@@ -592,7 +592,12 @@
             "step": {
               "key": "Required",
               "data_type": "positive_float",
-              "docs": "**float**: The granularity with which the number can be set.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+              "docs": "**float**: The granularity with which the number can be set. Defaults to 1.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
+            },
+            "multiply": {
+              "key": "Optional",
+              "default": "1.0",
+              "docs": "**float**: multiply the new value with this factor before sending the requests.\n\n*See also: [Tuya Number](https://esphome.io/components/number/tuya.html#configuration-variables)*"
             }
           }
         }
