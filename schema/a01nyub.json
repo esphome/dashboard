@@ -1,5 +1,5 @@
 {
-  "hrxl_maxsonar_wr.sensor": {
+  "a01nyub.sensor": {
     "schemas": {
       "CONFIG_SCHEMA": {
         "type": "schema",
@@ -10,7 +10,7 @@
           "config_vars": {
             "id": {
               "id_type": {
-                "class": "hrxl_maxsonar_wr::HrxlMaxsonarWrComponent",
+                "class": "a01nyub::A01nyubComponent",
                 "parents": [
                   "sensor::Sensor",
                   "EntityBase",
@@ -28,6 +28,9 @@
             "accuracy_decimals": {
               "default": "3"
             },
+            "device_class": {
+              "default": "distance"
+            },
             "state_class": {
               "default": "measurement"
             },
@@ -35,7 +38,7 @@
               "key": "GeneratedID",
               "use_id_type": "uart::UARTComponent",
               "type": "use_id",
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [UART bus](https://esphome.io/components/uart.html#uart) you wish to use for this sensor. Use this if you want to use multiple UART buses at once.\n\n*See also: [HRXL/XL MaxSonar WR Series](https://esphome.io/components/sensor/hrxl_maxsonar_wr.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The ID of the [UART bus](https://esphome.io/components/uart.html#uart) you wish to use for this sensor. Use this if you want to use multiple UART buses at once.\n\n*See also: [A01NYUB Waterproof Ultrasonic Sensor](https://esphome.io/components/sensor/a01nyub.html#configuration-variables)*"
             }
           }
         }

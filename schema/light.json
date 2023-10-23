@@ -70,6 +70,9 @@
         ],
         "docs": "The `sonoff_d1` light platform creates a simple brightness-only light for the hardware found in [Sonoff D1 dimmer](https://itead.cc/product/sonoff-d1-smart-dimmer-switch/). Installations with Sonoff RM433 433MHz radio remotes are also supported. Use this component to integrate Sonoff D1 dimmer into ESPHome / Home Assistant ecosystem.\n\n*See also: [Sonoff D1 Dimmer](https://esphome.io/components/light/sonoff_d1.html#sonoff-d1-dimmer)*"
       },
+      "spi_led_strip": {
+        "docs": "The `spi_led_strip` light platform drives one or more SPI interfaced RGB LEDs. These LEDs are often used in strips, where each LED is individually addressable. This component requires an SPI interface to be configured.\n\n*See also: [SPI LED Strip Light](https://esphome.io/components/light/spi_led_strip.html#spi-led-strip-light)*"
+      },
       "status_led": {
         "docs": "The `status_led` light platform allows to share a single LED for indicating the status of the device (when on error/warning state) or as binary light (when on OK state). This is useful for devices with only one LED available. You can also use a binary [Output Component](https://esphome.io/components/output/index.html#output).\n\n*See also: [Status LED Light](https://esphome.io/components/light/status_led.html#status-led-light)*"
       },
@@ -297,7 +300,7 @@
                   "Component"
                 ]
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#configuration-variables)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [SPI LED Strip Light](https://esphome.io/components/light/spi_led_strip.html#configuration-variables)*"
             },
             "effects": {
               "filter": [
@@ -319,7 +322,7 @@
                 "e131",
                 "wled"
               ],
-              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [Light Partition](https://esphome.io/components/light/partition.html#configuration-variables)*"
+              "docs": "**list**: A list of [light effects](https://esphome.io/components/light/index.html#light-effects) to use for this light.\n\n*See also: [SPI LED Strip Light](https://esphome.io/components/light/spi_led_strip.html#configuration-variables)*"
             },
             "color_correct": {
               "key": "Optional",

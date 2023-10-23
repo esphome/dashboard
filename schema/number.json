@@ -4,6 +4,9 @@
       "copy": {
         "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The number that should be mirrored.\n\n*See also: [Copy Number](https://esphome.io/components/copy.html#copy-number)*"
       },
+      "ld2410": {
+        "docs": "The `ld2410` number allows you to control the configuration of your [LD2410 Sensor.\n\n*See also: [ld2410 Number](https://esphome.io/components/sensor/ld2410.html#number)*"
+      },
       "modbus_controller": {
         "dependencies": [
           "modbus_controller"
@@ -97,6 +100,7 @@
                 "data_rate": null,
                 "data_size": null,
                 "distance": null,
+                "duration": null,
                 "": null,
                 "energy": null,
                 "energy_storage": null,
@@ -111,6 +115,7 @@
                 "nitrogen_monoxide": null,
                 "nitrous_oxide": null,
                 "ozone": null,
+                "ph": null,
                 "pm1": null,
                 "pm10": null,
                 "pm25": null,

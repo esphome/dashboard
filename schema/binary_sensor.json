@@ -136,7 +136,7 @@
         "docs": "Configuration variables:\n\n*See also: [sim800l Binary Sensor](https://esphome.io/components/sim800l.html#binary-sensor)*"
       },
       "status": {
-        "docs": "The Status Binary Sensor exposes the node state (if it\u2019s connected to via MQTT/native API) for Home Assistant.\n\n*See also: [Status Binary Sensor](https://esphome.io/components/binary_sensor/status.html#status-binary-sensor)*"
+        "docs": "This binary sensor tracks the connection status (*online*/*offline*) of the remote peer.\n\n*See also: [Status Binary Sensor](https://esphome.io/components/wireguard.html#status-binary-sensor)*"
       },
       "sx1509": {
         "dependencies": [
@@ -179,7 +179,12 @@
         "docs": "The `tuya` binary sensor platform creates a binary sensor from a tuya component and requires [Tuya MCU](https://esphome.io/components/tuya.html) to be configured.\n\n*See also: [Tuya Binary Sensor](https://esphome.io/components/binary_sensor/tuya.html#tuya-binary-sensor)*"
       },
       "vbus": {
-        "docs": "Configuration variables:\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
+        "docs": "Configuration variables:\n\n*See also: [`custom` VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
+      },
+      "wireguard": {
+        "dependencies": [
+          "wireguard"
+        ]
       },
       "xiaomi_cgpr1": {
         "dependencies": [

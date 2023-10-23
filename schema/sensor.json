@@ -1,6 +1,12 @@
 {
   "sensor": {
     "components": {
+      "a01nyub": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "This sensor allows you to use A01NYUB waterproof ultrasonic sensor by DFRobot ([datasheet](https://wiki.dfrobot.com/A01NYUB%20Waterproof%20Ultrasonic%20Sensor%20SKU:%20SEN0313)) with ESPHome to measure distances. This sensor can measure ranges between 28 centimeters and 750 centimeters with a resolution of 1 milimeter.\n\n*See also: [A01NYUB Waterproof Ultrasonic Sensor](https://esphome.io/components/sensor/a01nyub.html#a01nyub-waterproof-ultrasonic-sensor)*"
+      },
       "absolute_humidity": {
         "docs": "The `absolute_humidity` platform allows you to calculate absolute humidity from air temperature and relative humidity.\n\n*See also: [Absolute Humidity](https://esphome.io/components/sensor/absolute_humidity.html#absolute-humidity)*"
       },
@@ -143,6 +149,12 @@
         ],
         "docs": "Configuration variables:\n\n*See also: [bme680_bsec Sensor](https://esphome.io/components/sensor/bme680_bsec.html#sensor)*"
       },
+      "bmi160": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `bmi160` sensor platform allows you to use your BMI160 Accelerometer/Gyroscope ([datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi160-ds000.pdf), [SparkFun](https://www.sparkfun.com/products/18794)) sensors with ESPHome. The [I\u00b2C Bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [BMI160 Accelerometer/Gyroscope Sensor](https://esphome.io/components/sensor/bmi160.html#bmi160-accelerometer-gyroscope-sensor)*"
+      },
       "bmp085": {
         "dependencies": [
           "i2c"
@@ -160,6 +172,12 @@
           "i2c"
         ],
         "docs": "The `bmp3xx` sensor platform allows you to use your BMP388 or BMP390 ([datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp390-ds002.pdf), [BMP390 product page](https://www.bosch-sensortec.com/products/environmental-sensors/pressure-sensors/bmp390/)) temperature and pressure sensors with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) bus is required to be set up in your configuration for this sensor to work.\n\n*See also: [BMP388 / BMP390 Temperature+Pressure Sensor](https://esphome.io/components/sensor/bmp3xx.html#bmp388-bmp390-temperature-pressure-sensor)*"
+      },
+      "bmp581": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `bmp581` sensor platform allows you to use your BMP581 ([datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf), [SparkFun](https://www.sparkfun.com/products/20170)) temperature and pressure sensors with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) bus is required to be set up in your configuration for this sensor to work.\n\n*See also: [BMP581 Temperature+Pressure Sensor](https://esphome.io/components/sensor/bmp581.html#bmp581-temperature-pressure-sensor)*"
       },
       "b_parasite": {
         "dependencies": [
@@ -283,6 +301,12 @@
         ],
         "docs": "The FS3000 Air Velocity sensor allows you to use your FS3000 ([datasheet](https://www.renesas.com/kr/en/document/dst/fs3000-datasheet?r=1395551), [sparkfun](https://www.sparkfun.com/products/18377)) sensors with ESPHome.\n\n*See also: [FS3000 Air Velocity Sensor](https://esphome.io/components/sensor/fs3000.html#fs3000-air-velocity-sensor)*"
       },
+      "gcja5": {
+        "dependencies": [
+          "uart"
+        ],
+        "docs": "The `gcja5` sensor platform allows you to use your Panasonic SN-GCJA5 laser based particulate matter sensor ([datasheet](https://na.industrial.panasonic.com/products/sensors/air-quality-gas-flow-sensors/lineup/laser-type-pm-sensor/series/123557/model/123559)) sensors with ESPHome.\n\n*See also: [Panasonic SN-GCJA5 Particulate Matter Sensor](https://esphome.io/components/sensor/gcja5.html#panasonic-sn-gcja5-particulate-matter-sensor)*"
+      },
       "growatt_solar": {
         "docs": "The `Growatt Inverter` sensor platform allows you to use growatt inverter data reading on modbus with ESPHome.\n\n*See also: [Growatt Solar](https://esphome.io/components/sensor/growatt_solar.html#growatt-solar)*"
       },
@@ -326,7 +350,7 @@
         "dependencies": [
           "uart"
         ],
-        "docs": "This sensor allows you to use HRXL MaxSonar WR series ultrasonic sensors by MaxBotix ([datasheet](https://www.maxbotix.com/documents/HRXL-MaxSonar-WR_Datasheet.pdf)) with ESPHome to measure distances. Depending on the model, these sensors can measure in a range between 30 centimeters and 10 meters.\n\n*See also: [HRXL MaxSonar WR Series](https://esphome.io/components/sensor/hrxl_maxsonar_wr.html#hrxl-maxsonar-wr-series)*"
+        "docs": "This sensor allows you to use HRXL MaxSonar WR series ultrasonic sensors by MaxBotix ([datasheet](https://www.maxbotix.com/documents/HRXL-MaxSonar-WR_Datasheet.pdf)) or the XL MaxSonar WR series ([datasheet](https://www.maxbotix.com/documents/XL-MaxSonar-WR_Datasheet.pdf)) with ESPHome to measure distances. Depending on the model, these sensors can measure in a range between 30 centimeters and 10 meters.\n\n*See also: [HRXL/XL MaxSonar WR Series](https://esphome.io/components/sensor/hrxl_maxsonar_wr.html#hrxl-xl-maxsonar-wr-series)*"
       },
       "hte501": {
         "dependencies": [
@@ -390,6 +414,12 @@
       },
       "kalman_combinator": {
         "docs": "The `kalman_combinator` sensor platform allows you to filter one or several sensors into one with a reduced error. If using a single sensor as data source, it acts like a [exponential_moving_average](https://esphome.io/components/sensor/index.html#sensor-filter-exponential-moving-average) filter. With multiple sensors, it combines their values based on their respective standard deviation.\n\n*See also: [Kalman filter-based sensor fusion](https://esphome.io/components/sensor/kalman_combinator.html#kalman-filter-based-sensor-fusion)*"
+      },
+      "kmeteriso": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `kmeteriso` sensor platform allows you to use your KMeterISO ([product](https://docs.m5stack.com/en/unit/KMeterISO%20Unit), [M5Stack](https://docs.m5stack.com/en/unit/KMeterISO%20Unit)) K-Type thermocouple temperature sensor with ESPHome. The [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [M5Stack KMeterISO I2C K-Type probe temperature sensor](https://esphome.io/components/sensor/kmeteriso.html#m5stack-kmeteriso-i2c-k-type-probe-temperature-sensor)*"
       },
       "kuntze": {
         "docs": "The `kuntze` component allows you to integrate the Kuntze water measurement instrument in ESPHome. It uses [UART](https://esphome.io/components/uart.html#uart) (ModBUS) for communication.\n\n*See also: [Kuntze pool monitor](https://esphome.io/components/sensor/kuntze.html#kuntze-pool-monitor)*"
@@ -568,6 +598,12 @@
         ],
         "docs": "The `pmsx003` sensor platform allows you to use your Plantower PMS5003, PMS7003, \u2026 laser based particulate matter sensors ([datasheet](http://www.aqmd.gov/docs/default-source/aq-spec/resources-page/plantower-pms5003-manual_v2-3.pdf)) sensors with ESPHome.\n\n*See also: [PMSX003 Particulate Matter Sensor](https://esphome.io/components/sensor/pmsx003.html#pmsx003-particulate-matter-sensor)*"
       },
+      "pmwcs3": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `pmwcs3` sensor platform allows you to use your PMWCS3 ([informations](https://tinovi.com/wp-content/uploads/2020/01/PM-WCS-3-I2C.pdf)) capacitive soil moisture and temperature sensor with ESPHome. The [I\u00b2C bus](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work. Wiring scheme: red is 3.3V, black & shield is GND, green is SDA and white is SCL. 2.2kOhm resistors are advised to pullup both SDA & SDA lines.\n\n*See also: [PMWCS3 Capacitive Soil Moisture and Temperature Sensor](https://esphome.io/components/sensor/pmwcs3.html#pmwcs3-capacitive-soil-moisture-and-temperature-sensor)*"
+      },
       "pulse_counter": {
         "docs": "The pulse counter sensor allows you to count the number of pulses and the frequency of a signal on any pin.\n\n*See also: [Pulse Counter Sensor](https://esphome.io/components/sensor/pulse_counter.html#pulse-counter-sensor)*"
       },
@@ -575,7 +611,7 @@
         "docs": "The pulse meter sensor allows you to count the number and frequency of pulses on any pin. It is intended to be a drop-in replacement for [integration sensor](https://esphome.io/components/sensor/pulse_counter.html), but offering better resolution. It measures the time between rising edges on a pin, for each pulse it outputs the frequency in pulses/min.\n\n*See also: [Pulse Meter Sensor](https://esphome.io/components/sensor/pulse_meter.html#pulse-meter-sensor)*"
       },
       "pulse_width": {
-        "docs": "The `pulse_width` sensor allows you to measure how long a given digital signal is HIGH. For example this can be used to measure PWM signals to transmit some value over a simple protocol.\n\n*See also: [Pulse Width Sensor](https://esphome.io/components/sensor/pulse_width.html#pulse-width-sensor)*"
+        "docs": "The `pulse_width` sensor allows you to measure how long a given digital signal is HIGH. For example this can be used to measure PWM signals to transmit some value over a simple protocol. The unit of measurement for this sensor is seconds.\n\n*See also: [Pulse Width Sensor](https://esphome.io/components/sensor/pulse_width.html#pulse-width-sensor)*"
       },
       "pvvx_mithermometer": {
         "dependencies": [
@@ -653,6 +689,12 @@
       },
       "selec_meter": {
         "docs": "The `selec_meter` sensor platform allows you to use Selec Modbus energy monitors ([website](https://www.selec.com/product-details/energy-meter-direct-operated-em2m)) with ESPHome.\n\n*See also: [Selec Energy Monitor](https://esphome.io/components/sensor/selec_meter.html#selec-energy-monitor)*"
+      },
+      "sen0321": {
+        "dependencies": [
+          "i2c"
+        ],
+        "docs": "The `sen0321` sensor platform allows you to use your DFRobot ([product wiki](https://wiki.dfrobot.com/Gravity_IIC_Ozone_Sensor_(0-10ppm)%20SKU_SEN0321), [DFRobot](https://www.dfrobot.com/product-2005.html)) ozone sensors with ESPHome. The sensor is used in automatic mode where the sensor actively updates its measurements every 2 seconds. [I\u00b2C](https://esphome.io/components/i2c.html#i2c) is required to be set up in your configuration for this sensor to work.\n\n*See also: [SEN0321 DFRobot Ozone Sensor](https://esphome.io/components/sensor/sen0321.html#sen0321-dfrobot-ozone-sensor)*"
       },
       "sen21231": {
         "dependencies": [
@@ -836,7 +878,7 @@
         "docs": "The `uptime` sensor allows you to track the time the ESP has stayed up for in seconds. Time rollovers are automatically handled.\n\n*See also: [Uptime Sensor](https://esphome.io/components/sensor/uptime.html#uptime-sensor)*"
       },
       "vbus": {
-        "docs": "Configuration variables:\n\n*See also: [vbus Sensor](https://esphome.io/components/vbus.html#sensor)*"
+        "docs": "Devices on a VBus are identified with a source address. There can be multiple devices on the same bus, each device type has a different address.\n\n*See also: [`custom` VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
       },
       "vl53l0x": {
         "dependencies": [
@@ -849,6 +891,11 @@
           "wifi"
         ],
         "docs": "The `wifi_signal` sensor platform allows you to read the signal strength of the currently connected [WiFi Access Point](https://esphome.io/components/wifi.html).\n\n*See also: [WiFi Signal Sensor](https://esphome.io/components/sensor/wifi_signal.html#wifi-signal-sensor)*"
+      },
+      "wireguard": {
+        "dependencies": [
+          "wireguard"
+        ]
       },
       "xiaomi_cgd1": {
         "dependencies": [
@@ -1001,6 +1048,7 @@
                 "nitrogen_monoxide": null,
                 "nitrous_oxide": null,
                 "ozone": null,
+                "ph": null,
                 "pm1": null,
                 "pm10": null,
                 "pm25": null,
@@ -1290,6 +1338,44 @@
           }
         }
       },
+      "TIMEOUT_SCHEMA": {
+        "type": "schema",
+        "maybe": "timeout",
+        "schema": {
+          "config_vars": {
+            "timeout": {
+              "key": "Required",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
+              }
+            },
+            "value": {
+              "key": "Optional",
+              "default": "nan"
+            }
+          }
+        }
+      },
+      "CLAMP_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "min_value": {
+              "key": "Optional",
+              "default": "NaN",
+              "docs": "**float**: The lower bound of the range.\n\n*See also: [clamp](https://esphome.io/components/sensor/index.html#clamp)*"
+            },
+            "max_value": {
+              "key": "Optional",
+              "default": "NaN",
+              "docs": "**float**: The upper bound of the range.\n\n*See also: [clamp](https://esphome.io/components/sensor/index.html#clamp)*"
+            }
+          }
+        }
+      },
       "SENSOR_IN_RANGE_CONDITION_SCHEMA": {
         "type": "schema",
         "schema": {
@@ -1440,10 +1526,10 @@
         "type": "schema",
         "schema": {
           "extends": [
-            "core.positive_time_period_milliseconds"
+            "sensor.TIMEOUT_SCHEMA"
           ]
         },
-        "docs": "After the first value has been sent, if no subsequent value is published within the `specified time period`, send `NaN`. Especially useful when data is derived from some other communication channel, e.g. a serial port, which can potentially be interrupted.\n\n*See also: [`timeout`](https://esphome.io/components/sensor/index.html#timeout)*"
+        "docs": "After the first value has been sent, if no subsequent value is published within the `specified time period`, send a value which defaults to `NaN`. Especially useful when data is derived from some other communication channel, e.g. a serial port, which can potentially be interrupted.\n\n*See also: [`timeout`](https://esphome.io/components/sensor/index.html#timeout)*"
       },
       "debounce": {
         "type": "schema",
@@ -1455,7 +1541,27 @@
         "docs": "Only send values if the last incoming value is at least `specified time period` old. For example if two values come in at almost the same time, this filter will only output the last value and only after the specified time period has passed without any new incoming values.\n\n*See also: [`debounce`](https://esphome.io/components/sensor/index.html#debounce)*"
       },
       "calibrate_linear": {
-        "is_list": true,
+        "type": "schema",
+        "maybe": "datapoints",
+        "schema": {
+          "config_vars": {
+            "datapoints": {
+              "key": "Required",
+              "is_list": true,
+              "docs": "The list of datapoints.\n\n*See also: [calibrate_linear](https://esphome.io/components/sensor/index.html#calibrate-linear)*"
+            },
+            "method": {
+              "key": "Optional",
+              "default": "least_squares",
+              "type": "enum",
+              "values": {
+                "least_squares": null,
+                "exact": null
+              },
+              "docs": "**string**: The method for calculating the linear function(s). One of `least_squares` or `exact`. Defaults to `least_squares`.\n\n*See also: [calibrate_linear](https://esphome.io/components/sensor/index.html#calibrate-linear)*"
+            }
+          }
+        },
         "docs": "Calibrate your sensor values by using values you measured with an accurate \u201ctruth\u201d source.\n\n*See also: [`calibrate_linear`](https://esphome.io/components/sensor/index.html#calibrate-linear)*"
       },
       "calibrate_polynomial": {
@@ -1474,6 +1580,15 @@
           }
         },
         "docs": "Calibrate your sensor values by fitting them to a polynomial functions. This is similar to the `calibrate_linear` filter, but also allows for higher-order functions like quadratic polynomials.\n\n*See also: [`calibrate_polynomial`](https://esphome.io/components/sensor/index.html#calibrate-polynomial)*"
+      },
+      "clamp": {
+        "type": "schema",
+        "schema": {
+          "extends": [
+            "sensor.CLAMP_SCHEMA"
+          ]
+        },
+        "docs": "Limits the value to the range between `min_value` and `max_value`. Sensor values outside these bounds will be set to `min_value` or `max_value`, respectively. If `min_value` is not set, there is no lower bound, if `max_value` is not set there is no upper bound.\n\n*See also: [`clamp`](https://esphome.io/components/sensor/index.html#clamp)*"
       }
     }
   }

@@ -30,6 +30,11 @@
               "default": "False",
               "type": "boolean",
               "docs": "**boolean**: Whether to try to restore the state on boot up. Be careful: on the ESP8266, you only have a total of 96 bytes available for this! Defaults to `no`. This will use storage in \u201cRTC memory\u201d, so it won\u2019t survive a power-cycle unless you use the `esp8266_restore_from_flash` option to save to flash. See [esp8266_restore_from_flash](https://esphome.io/components/esphome.html) for details.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
+            },
+            "max_restore_data_length": {
+              "key": "Optional",
+              "type": "integer",
+              "docs": "**integer**: Only applies to variables of type `std::string`.  ESPHome will allocate enough space for this many characters, plus single character of overhead. Strings longer than this will not be saved. The max value of this variable is 254 characters, and the default is 63 characters.\n\n*See also: [Global Variables](https://esphome.io/guides/automations.html#global-variables)*"
             }
           },
           "extends": [

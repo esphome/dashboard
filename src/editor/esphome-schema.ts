@@ -170,6 +170,10 @@ export class ESPHomeSchema {
 
   async getExtendedConfigVar(name: string): Promise<ConfigVar> {
     const parts = name.split(".");
+    if (parts.length === 3) {
+      const c = await this.getComponent(parts[0], parts[1]);
+      return c.schemas[parts[2]];
+    }
     const c = await this.getComponent(parts[0]);
     return c.schemas[parts[1]];
   }

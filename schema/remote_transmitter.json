@@ -102,18 +102,27 @@
         "type": "schema",
         "schema": {
           "config_vars": {
-            "data": {
+            "first": {
               "key": "Required",
               "templatable": true,
-              "data_type": "hex_uint32_t",
-              "docs": "**int**: The Coolix code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), uint32_t**: The first 24-bit Coolix code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+            },
+            "second": {
+              "key": "Optional",
+              "default": "0",
+              "templatable": true,
+              "docs": "**[templatable](https://esphome.io/guides/automations.html#config-templatable), uint32_t**: The second 24-bit Coolix code to send, see dumper output for more info.\n\n*See also: [Remote Transmitter Actions](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+            },
+            "data": {
+              "key": "Optional",
+              "templatable": true
             }
           },
           "extends": [
             "remote_base.BASE_REMOTE_TRANSMITTER_SCHEMA"
           ]
         },
-        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends a 24-bit Coolix infrared remote code to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_coolix` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
+        "docs": "This [action](https://esphome.io/guides/automations.html#config-action) sends one or two (stricted or not) 24-bit Coolix infrared remote codes to a remote transmitter.\n\n*See also: [`remote_transmitter.transmit_coolix` Action](https://esphome.io/components/remote_transmitter.html#remote-transmitter-transmit-coolix-action)*"
       },
       "transmit_dish": {
         "type": "schema",

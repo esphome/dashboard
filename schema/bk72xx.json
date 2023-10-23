@@ -1,0 +1,140 @@
+{
+  "bk72xx": {
+    "schemas": {
+      "CONFIG_SCHEMA": {
+        "type": "schema",
+        "schema": {
+          "config_vars": {
+            "id": {
+              "key": "GeneratedID",
+              "id_type": {
+                "class": "libretiny::LTComponent",
+                "parents": [
+                  "PollingComponent",
+                  "Component"
+                ]
+              }
+            },
+            "board": {
+              "key": "Required",
+              "type": "string",
+              "docs": "**string**: The PlatformIO board ID that should be used. Choose the appropriate board from [this list](https://registry.platformio.org/packages/platforms/kuba2k2/libretiny/boards) (the icon next to the name can be used to copy the board ID).**This affects CPU selection and some internal settings** - make sure to choose the right CPU. If unsure about the choice of a particular board, choose a generic board such as `generic-bk7231n-qfn32-tuya`.\n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#configuration-variables)*"
+            },
+            "family": {
+              "key": "Optional",
+              "type": "enum",
+              "values": {
+                "BK7231N": null,
+                "BK7231Q": null,
+                "BK7231T": null,
+                "BK7251": null,
+                "RTL8710B": null,
+                "RTL8720C": null
+              },
+              "docs": "**boolean**: The family of LibreTiny-supported microcontrollers that is used on this board. One of `bk7231n`, `bk7231t`, `rtl8710b`, `rtl8720c`, `bk7251`, `bk7231q`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory. **It\u2019s recommended not to include this option**.\n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#configuration-variables)*"
+            },
+            "framework": {
+              "key": "Optional",
+              "default": "{}",
+              "type": "schema",
+              "schema": {
+                "config_vars": {
+                  "version": {
+                    "key": "Optional",
+                    "default": "recommended",
+                    "type": "string",
+                    "docs": "**string**: The LibreTiny version number to use, from [LibreTiny platform releases](https://github.com/kuba2k2/libretiny/releases). Defaults to `recommended`. Additional values\n  * `dev`: Use the latest commit from [https://github.com/kuba2k2/libretiny](https://github.com/kuba2k2/libretiny), note this may break at any time\n  \n  * `latest`: Use the latest *release* from [https://github.com/kuba2k2/libretiny/releases](https://github.com/kuba2k2/libretiny/releases), even if it hasn\u2019t been recommended yet.\n  \n  * `recommended`: Use the recommended framework version.\n  \n  \n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#configuration-variables)*"
+                  },
+                  "source": {
+                    "key": "Optional",
+                    "type": "string",
+                    "docs": "**string**: The PlatformIO package or repository to use for the framework. This can be used to use a custom or patched version of the framework.\n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#configuration-variables)*"
+                  },
+                  "loglevel": {
+                    "key": "Optional",
+                    "default": "warn",
+                    "type": "enum",
+                    "values": {
+                      "VERBOSE": null,
+                      "TRACE": null,
+                      "DEBUG": null,
+                      "INFO": null,
+                      "WARN": null,
+                      "ERROR": null,
+                      "FATAL": null,
+                      "NONE": null
+                    }
+                  },
+                  "debug": {
+                    "key": "Optional",
+                    "default": "[]",
+                    "is_list": true,
+                    "type": "enum",
+                    "values": {
+                      "NONE": null,
+                      "WIFI": null,
+                      "CLIENT": null,
+                      "SERVER": null,
+                      "SSL": null,
+                      "OTA": null,
+                      "FDB": null,
+                      "MDNS": null,
+                      "LWIP": null,
+                      "LWIP_ASSERT": null
+                    }
+                  },
+                  "sdk_silent": {
+                    "key": "Optional",
+                    "default": "all",
+                    "type": "enum",
+                    "values": {
+                      "all": null,
+                      "auto": null,
+                      "none": null
+                    }
+                  },
+                  "uart_port": {
+                    "key": "Optional",
+                    "type": "enum",
+                    "values": {
+                      "0": null,
+                      "1": null,
+                      "2": null
+                    }
+                  },
+                  "gpio_recover": {
+                    "key": "Optional",
+                    "default": "True",
+                    "type": "boolean"
+                  },
+                  "options": {
+                    "key": "String",
+                    "default": "{}",
+                    "key_type": "string_strict",
+                    "type": "schema",
+                    "schema": {
+                      "config_vars": {
+                        "string": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "docs": "Options for the underlying framework used by ESPHome.\n  * **version** (*Optional*, string): The LibreTiny version number to use, from [LibreTiny platform releases](https://github.com/kuba2k2/libretiny/releases). Defaults to `recommended`. Additional values\n    * `dev`: Use the latest commit from [https://github.com/kuba2k2/libretiny](https://github.com/kuba2k2/libretiny), note this may break at any time\n    \n    * `latest`: Use the latest *release* from [https://github.com/kuba2k2/libretiny/releases](https://github.com/kuba2k2/libretiny/releases), even if it hasn\u2019t been recommended yet.\n    \n    * `recommended`: Use the recommended framework version.\n    \n    \n  \n  * **source** (*Optional*, string): The PlatformIO package or repository to use for the framework. This can be used to use a custom or patched version of the framework.\n  \n  * [Advanced options](https://esphome.io/components/libretiny.html#advanced-options)\n  \n  \n\n*See also: [LibreTiny Platform](https://esphome.io/components/libretiny.html#configuration-variables)*"
+            }
+          }
+        }
+      }
+    },
+    "pin": {
+      "type": "schema",
+      "schema": {
+        "extends": [
+          "bk72xx.PIN_SCHEMA"
+        ]
+      }
+    }
+  }
+}

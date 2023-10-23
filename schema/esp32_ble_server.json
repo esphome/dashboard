@@ -28,6 +28,10 @@
               "type": "string",
               "docs": "**string**: The name of the manufacturer/firmware creator. Defaults to `ESPHome`.\n\n*See also: [BLE Server](https://esphome.io/components/esp32_ble_server.html#configuration-variables)*"
             },
+            "manufacturer_data": {
+              "key": "Optional",
+              "docs": "**list of bytes**: The manufacturer-specific data to include in the advertising packet. Should be a list of bytes, where the first two are the little-endian representation of the 16-bit manufacturer ID as assigned by the Bluetooth SIG.\n\n*See also: [BLE Server](https://esphome.io/components/esp32_ble_server.html#configuration-variables)*"
+            },
             "model": {
               "key": "Optional",
               "type": "string",

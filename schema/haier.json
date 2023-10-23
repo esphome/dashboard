@@ -15,7 +15,7 @@
               "type": "enum",
               "values": {
                 "OFF": null,
-                "AUTO": null,
+                "HEAT_COOL": null,
                 "COOL": null,
                 "HEAT": null,
                 "DRY": null,
@@ -32,6 +32,24 @@
                 "VERTICAL": null,
                 "HORIZONTAL": null,
                 "BOTH": null
+              }
+            },
+            "wifi_signal": {
+              "key": "Optional",
+              "default": "False",
+              "type": "boolean"
+            },
+            "display": {
+              "key": "Optional",
+              "type": "boolean"
+            },
+            "answer_timeout": {
+              "key": "Optional",
+              "type": "schema",
+              "schema": {
+                "extends": [
+                  "core.positive_time_period_milliseconds"
+                ]
               }
             },
             "uart_id": {
@@ -63,6 +81,17 @@
                   ]
                 },
                 "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+              },
+              "supported_presets": {
+                "key": "Optional",
+                "default": "['BOOST', 'COMFORT']",
+                "is_list": true,
+                "type": "enum",
+                "values": {
+                  "BOOST": null,
+                  "COMFORT": null
+                },
+                "docs": "**list**: Can be used to disable some presets. Possible values for smartair2 are: BOOST, COMFORT. Possible values for hOn are: ECO, BOOST, SLEEP\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               }
             }
           },
@@ -85,17 +114,23 @@
                 },
                 "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: Manually specify the ID used for code generation.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               },
-              "wifi_signal": {
-                "key": "Optional",
-                "default": "True",
-                "type": "boolean",
-                "docs": "**boolean**: If true - send wifi signal level to AC. Supported only by hOn protocol.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
-              },
               "beeper": {
                 "key": "Optional",
                 "default": "True",
                 "type": "boolean",
                 "docs": "**boolean**: Can be used to disable beeping on commands from AC. Supported only by hOn protocol.\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
+              },
+              "supported_presets": {
+                "key": "Optional",
+                "default": "['ECO', 'BOOST', 'SLEEP']",
+                "is_list": true,
+                "type": "enum",
+                "values": {
+                  "ECO": null,
+                  "BOOST": null,
+                  "SLEEP": null
+                },
+                "docs": "**list**: Can be used to disable some presets. Possible values for smartair2 are: BOOST, COMFORT. Possible values for hOn are: ECO, BOOST, SLEEP\n\n*See also: [Haier Climate](https://esphome.io/components/climate/haier.html#configuration-variables)*"
               },
               "outdoor_temperature": {
                 "key": "Optional",
@@ -226,9 +261,12 @@
               "templatable": true,
               "type": "enum",
               "values": {
+                "HEALTH_UP": null,
+                "MAX_UP": null,
                 "UP": null,
                 "CENTER": null,
-                "DOWN": null
+                "DOWN": null,
+                "HEALTH_DOWN": null
               }
             }
           }
@@ -249,9 +287,11 @@
               "templatable": true,
               "type": "enum",
               "values": {
+                "MAX_LEFT": null,
                 "LEFT": null,
                 "CENTER": null,
-                "RIGHT": null
+                "RIGHT": null,
+                "MAX_RIGHT": null
               }
             }
           }

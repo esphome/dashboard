@@ -45,8 +45,7 @@
       "midea": {
         "dependencies": [
           "climate",
-          "uart",
-          "wifi"
+          "uart"
         ],
         "docs": "The `midea` component creates a Midea air conditioner climate device.\n\n*See also: [Midea Air Conditioner](https://esphome.io/components/climate/midea.html#midea-air-conditioner)*"
       },

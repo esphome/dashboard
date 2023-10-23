@@ -1504,17 +1504,20 @@
               "command": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The `command` corresponding to your device (see below).\n\n*See also: [custom VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
               },
               "source": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The address corresponding to `your device model` (see below).\n\n*See also: [custom VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
               },
               "dest": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The `DFA` value corresponding to your device (see below).\n\n*See also: [custom VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
               },
               "sensors": {
                 "key": "Optional",
@@ -1537,7 +1540,11 @@
                       "key": "Required"
                     }
                   }
-                }
+                },
+                "docs": "A list of [Sensor](https://esphome.io/components/sensor/index.html#config-sensor) definitions that include a `lambda` to do the decoding and return a `float` value.\n\n*See also: [custom VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
+              },
+              "lambda": {
+                "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Code to parse a value from the incoming data packets and return it. The data packet is in a `std::vector<uint8_t>` called `x`.\n\n*See also: [custom VBus sensors](https://esphome.io/components/vbus.html#custom-vbus-sensors)*"
               }
             }
           }
@@ -2135,17 +2142,20 @@
               "command": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The `command` corresponding to your device (see below).\n\n*See also: [custom VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
               },
               "source": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The address corresponding to `your device model` (see below).\n\n*See also: [custom VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
               },
               "dest": {
                 "key": "Optional",
                 "type": "integer",
-                "data_type": "uint16_t"
+                "data_type": "uint16_t",
+                "docs": "The `DFA` value corresponding to your device (see below).\n\n*See also: [custom VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
               },
               "binary_sensors": {
                 "key": "Optional",
@@ -2168,13 +2178,17 @@
                       "key": "Required"
                     }
                   }
-                }
+                },
+                "docs": "A list of [Binary Sensor](https://esphome.io/components/binary_sensor/index.html#config-binary-sensor) definitions that include a `lambda` to do the decoding and return a `bool` value.\n\n*See also: [custom VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
+              },
+              "lambda": {
+                "docs": "**[lambda](https://esphome.io/guides/automations.html#config-lambda)**: Code to parse a value from the incoming data packets and return it. The data packet is in a `std::vector<uint8_t>` called `x`.\n\n*See also: [custom VBus binary sensors](https://esphome.io/components/vbus.html#custom-vbus-binary-sensors)*"
               }
             }
           }
         },
         "typed_key": "model",
-        "docs": "Specify the model of the connected controller. Choose one of the config values listed in the table of supported models above.\n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
+        "docs": "Specify the model of the connected controller. Choose one of the config values listed in the table of supported models above.Supported models:\n  * **``deltasol_bs_plus``**: `relay1`,  `relay2`, `sensor1_error`, `sensor2_error`, `sensor3_error`, `sensor4_error`, `collector_max`, `collector_min`, `collector_frost`, `tube_collector`, `recooling`, `hqm`.\n  \n  * **``deltasol_bs_2009``**: `sensor1_error`, `sensor2_error`, `sensor3_error`, `sensor4_error`, `frost_protection_active`.\n  \n  * **``deltasol_c``**: `sensor1_error`, `sensor2_error`, `sensor3_error`, `sensor4_error`.\n  \n  * **``deltasol_cs2``**: `sensor1_error`, `sensor2_error`, `sensor3_error`, `sensor4_error`.\n  \n  * **``deltasol_cs_plus``**: `sensor1_error`, `sensor2_error`, `sensor3_error`, `sensor4_error`.\n  \n  * **``custom``**: See below.\n  \n  \n\n*See also: [vbus Binary Sensor](https://esphome.io/components/vbus.html#binary-sensor)*"
       }
     }
   }

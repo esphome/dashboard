@@ -41,7 +41,7 @@
                 "input"
               ],
               "type": "pin",
-              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to measure the voltage on. Or on the ESP8266 alternatively also `VCC`, see [ESP8266 Measuring VCC](https://esphome.io/components/sensor/adc.html#adc-esp8266-vcc).\n\n*See also: [Analog To Digital Sensor](https://esphome.io/components/sensor/adc.html#configuration-variables)*"
+              "docs": "**[Pin](https://esphome.io/guides/configuration-types.html#config-pin)**: The pin to measure the voltage on. Or on the ESP8266 or Raspberry Pi Pico it could alternatively be set to `VCC`, see [Measuring VCC](https://esphome.io/components/sensor/adc.html#adc-vcc).\n\n*See also: [Analog To Digital Sensor](https://esphome.io/components/sensor/adc.html#configuration-variables)*"
             },
             "raw": {
               "key": "Optional",
