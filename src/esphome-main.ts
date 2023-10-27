@@ -32,11 +32,19 @@ class ESPHomeMainView extends LitElement {
     }
     return html`
       <header class="esphome-header">
-        <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
-        <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+        <div class="header-container">
+          <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
+          <div class="flex"></div>
+          <esphome-header-menu
+            .logoutUrl=${this.logoutUrl}
+          ></esphome-header-menu>
+        </div>
       </header>
-
+      <style>
+        esphome-devices-list {
+          background-color: var(--card-background-color);
+        }
+      </style>
       <main>
         <esphome-devices-list></esphome-devices-list>
       </main>

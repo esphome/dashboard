@@ -43,9 +43,9 @@ const STATUS_COLORS = {
 
 @customElement("esphome-configured-device-card")
 class ESPHomeConfiguredDeviceCard extends LitElement {
-  @property() public device!: ConfiguredDevice;
-  @property() public onlineStatus?: boolean;
-  @property() public highlightOnAdd = false;
+  @property({ attribute: false }) public device!: ConfiguredDevice;
+  @property({ type: Boolean }) public onlineStatus?: boolean;
+  @property({ type: Boolean }) public highlightOnAdd = false;
   @state() private _highlight = false;
 
   public async highlight() {
@@ -91,7 +91,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         .status=${status}
         .noStatusBar=${status === "ONLINE"}
         style=${styleMap({
-          "--status-color": status === undefined ? "" : STATUS_COLORS[status],
+          "--status-color":
+            status === undefined || status === "ONLINE"
+              ? "rgba(0, 0, 0, 0.12)"
+              : STATUS_COLORS[status],
         })}
       >
         <div class="card-header">
@@ -139,6 +142,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <esphome-button-menu
             corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
+            class="esphome-button-menu"
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item graphic="icon">
@@ -226,7 +230,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         padding: 0.2em 0.4em;
         margin: 0;
         font-size: 85%;
-        background-color: var(--card-background-color)
+        background-color: var(--card-background-color);
         border-radius: 3px;
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
           Courier, monospace;
@@ -235,8 +239,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         --mdc-theme-primary: var(--update-available-color);
       }
       esphome-button-menu {
-        --mdc-theme-text-icon-on-background: var(--primary-text-color);
+        --mdc-theme-text-icon-on-background: var(--mdc-theme-primary);
       }
+
       .tooltip-container {
         display: inline-block;
       }
@@ -244,7 +249,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         color: var(--alert-error-color);
       }
       .mdc-icon-button {
-        color: var(--primary-text-color);
+        color: var(--mdc-theme-primary);
       }
     `,
   ];

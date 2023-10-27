@@ -39,6 +39,10 @@ export class ESPHomeButtonMenu extends LitElement {
       display: inline-block;
       position: relative;
     }
+
+    mwc-menu {
+      --mdc-shape-medium: 12px;
+    }
   `;
 }
 
