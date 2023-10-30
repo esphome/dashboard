@@ -9,10 +9,40 @@ import { esphomeCardStyles } from "../styles";
 
 @customElement("esphome-importable-device-card")
 class ESPHomeImportableDeviceCard extends LitElement {
-  @property() public device!: ImportableDevice;
-  @property() public highlightOnAdd = false;
+  @property({ attribute: false }) public device!: ImportableDevice;
+  @property({ type: Boolean }) public highlightOnAdd = false;
+  @property({ type: Boolean }) public skeleton = false;
 
   protected render() {
+    if (this.skeleton || !this.device) {
+      return html`
+        <esphome-card class="skeleton">
+          <div class="card-header">
+            <div class="skeleton skeleton-text skeleton-effect-fade">
+              ${" "}
+            </div>
+          </div>
+          <div class="card-content flex">
+            <div class="skeleton skeleton-text skeleton-effect-fade">
+              ${" "} ${" "}
+            </div>
+          </div>
+          <div class="card-actions">
+            <mwc-button label="Visit" disabled></mwc-button>
+            <mwc-button label="Edit" disabled></mwc-button>
+            <mwc-button label="Logs" disabled></mwc-button>
+            <div class="flex"></div>
+            <esphome-button-menu corner="BOTTOM_RIGHT">
+              <mwc-icon-button
+                slot="trigger"
+                icon="more_vert"
+                disabled
+              ></mwc-icon-button>
+            </esphome-button-menu>
+          </div>
+        </esphome-card>
+      `;
+    }
     return html`
       <esphome-card status="DISCOVERED">
         <div class="card-header">
@@ -56,6 +86,28 @@ class ESPHomeImportableDeviceCard extends LitElement {
       esphome-card {
         --status-color: var(--status-imported);
       }
+
+      esphome-card.skeleton {
+        min-height: 145px;
+        /* skeleton animation on background */
+        background: #eee;
+        background: linear-gradient(
+          110deg,
+          #ececec 8%,
+          #f5f5f5 18%,
+          #ececec 33%
+        );
+
+        background-size: 200% 100%;
+        animation: 1.5s shine linear infinite;
+      }
+
+      @keyframes shine {
+        to {
+          background-position-x: -200%;
+        }
+      }
+
       .inlinecode {
         box-sizing: border-box;
         padding: 0.2em 0.4em;

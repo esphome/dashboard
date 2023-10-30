@@ -41,6 +41,7 @@ class ESPHomeConfirmationDialog extends LitElement {
           class=${classMap({
             destructive: this._params.destructive || false,
           })}
+          raised
           dialogAction="confirm"
         ></mwc-button>
       </mwc-dialog>
@@ -54,10 +55,10 @@ class ESPHomeConfirmationDialog extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      mwc-button {
-        --mdc-theme-primary: var(--primary-text-color);
+      mwc-button button {
+        display: flex;
+        align-items: center;
       }
-
       .destructive {
         --mdc-theme-primary: var(--alert-error-color);
       }
