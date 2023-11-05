@@ -16,7 +16,7 @@ export const getSecretKeys = async (): Promise<string[]> => {
 
 export const appendSecrets = async (
   secrets: Record<string, string>,
-  comment?: string
+  comment?: string,
 ): Promise<void> => {
   let content = await getFile(SECRETS_FILE);
   if (content === null) {

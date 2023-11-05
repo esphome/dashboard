@@ -70,7 +70,7 @@ export class ESPHomeProcessDialog extends LitElement {
 
     textDownload(
       this.shadowRoot!.querySelector("esphome-remote-process")!.logs(),
-      filename
+      filename,
     );
   }
 
@@ -92,8 +92,9 @@ export class ESPHomeProcessDialog extends LitElement {
       @media only screen and (max-width: 450px) {
         esphome-remote-process {
           height: calc(
-            90vh - var(--height-header-footer-padding) -
-              env(safe-area-inset-bottom)
+            90vh - var(--height-header-footer-padding) - env(
+                safe-area-inset-bottom
+              )
           );
           margin-left: -24px;
           margin-right: -24px;

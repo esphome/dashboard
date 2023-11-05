@@ -38,7 +38,7 @@ export class DefinitionHandler {
         const range = await coreSchema.findComponentDefinition(
           typeId,
           targetId,
-          document.yaml
+          document.yaml,
         );
         if (!range) {
           return null;

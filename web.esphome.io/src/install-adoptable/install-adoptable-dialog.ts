@@ -59,17 +59,17 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           if (!SUPPORTED_PLATFORMS.includes(platform)) {
             throw new Error(
               `Unsupported platform ${platform}. Only ${SUPPORTED_PLATFORMS.join(
-                ", "
-              )} are supported.`
+                ", ",
+              )} are supported.`,
             );
           }
           const platformLower = platform.toLowerCase();
           const resp = await fetch(
-            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.bin`
+            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.bin`,
           );
           if (!resp.ok) {
             throw new Error(
-              `Downlading ESPHome firmware for ${platform} failed (${resp.status})`
+              `Downlading ESPHome firmware for ${platform} failed (${resp.status})`,
             );
           }
 
@@ -78,7 +78,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
 
           const data = await new Promise<string>((resolve) => {
             reader.addEventListener("load", () =>
-              resolve(reader.result as string)
+              resolve(reader.result as string),
             );
             reader.readAsBinaryString(blob);
           });
@@ -91,13 +91,13 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           }
           import("improv-wifi-serial-sdk/dist/serial-provision-dialog");
           const improv = document.createElement(
-            "improv-wifi-serial-provision-dialog"
+            "improv-wifi-serial-provision-dialog",
           );
           improv.port = this.port;
           document.body.appendChild(improv);
         },
       },
-      () => this._close()
+      () => this._close(),
     );
   }
 

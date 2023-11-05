@@ -2,7 +2,7 @@ const preload = () => import("./compile-dialog");
 
 export const openCompileDialog = (
   configuration: string,
-  platformSupportsWebSerial: boolean
+  platformSupportsWebSerial: boolean,
 ) => {
   preload();
   const dialog = document.createElement("esphome-compile-dialog");

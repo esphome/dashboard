@@ -12,7 +12,7 @@ class ESPHomeConfirmationDialog extends LitElement {
 
   public async showDialog(
     params: ConfirmationDialogParams,
-    resolve: (value: boolean | PromiseLike<boolean>) => void
+    resolve: (value: boolean | PromiseLike<boolean>) => void,
   ): Promise<void> {
     this._params = params;
     this._resolve = resolve;

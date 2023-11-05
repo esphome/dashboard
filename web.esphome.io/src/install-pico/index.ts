@@ -1,7 +1,7 @@
 export const preloadInstallPicoDialog = () => import("./install-pico-dialog");
 
 export const openInstallPicoDialog = (
-  portSelectedCallback: (port: SerialPort) => void
+  portSelectedCallback: (port: SerialPort) => void,
 ) => {
   preloadInstallPicoDialog();
   const dialog = document.createElement("esphome-install-pico-dialog");

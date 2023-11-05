@@ -9,7 +9,7 @@ export interface ConfirmationDialogParams {
 }
 
 export const showConfirmationDialog = (
-  dialogParams: ConfirmationDialogParams
+  dialogParams: ConfirmationDialogParams,
 ): Promise<boolean> =>
   new Promise((resolve) => {
     preload().then(() => {

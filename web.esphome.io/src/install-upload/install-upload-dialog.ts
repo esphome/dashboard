@@ -81,7 +81,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
         erase: true,
         filesCallback: async () => files,
       },
-      () => this._close()
+      () => this._close(),
     );
   }
 

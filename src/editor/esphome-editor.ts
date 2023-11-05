@@ -22,7 +22,7 @@ if (loc.protocol === "https:") {
 }
 const wsUrl = wsLoc.href;
 const darkQuery: MediaQueryList = window.matchMedia(
-  "(prefers-color-scheme: dark)"
+  "(prefers-color-scheme: dark)",
 );
 
 @customElement("esphome-editor")
@@ -176,7 +176,7 @@ class ESPHomeEditor extends LitElement {
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
         this.editorValidationScheduled = !this.editorActiveSecrets;
-      }, 250)
+      }, 250),
     );
 
     this.editor.addAction({
@@ -237,7 +237,7 @@ class ESPHomeEditor extends LitElement {
           }
           for (const v of msg.yaml_errors) {
             let yamlError = (v.message as string).match(
-              /Invalid YAML syntax:[\r\n][\r\n](.*)[\r\n]\s\sin "([^"]*)", line (\d*), column (\d*):/
+              /Invalid YAML syntax:[\r\n][\r\n](.*)[\r\n]\s\sin "([^"]*)", line (\d*), column (\d*):/,
             );
             console.log("YAML", v, yamlError);
             if (yamlError) {

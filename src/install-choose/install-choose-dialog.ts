@@ -140,7 +140,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
                       <br /><br />
                       This list automatically refreshes if you plug one in.
                     `,
-                    false
+                    false,
                   )
                 : html`
                     ${this._ports.map(
@@ -155,7 +155,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
                           <span slot="secondary">${port.port}</span>
                           ${metaChevronRight}
                         </mwc-list-item>
-                      `
+                      `,
                     )}
                   `}
               <mwc-button
@@ -176,7 +176,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           <mwc-circular-progress
             density="-8"
             indeterminate
-          ></mwc-circular-progress>`
+          ></mwc-circular-progress>`,
       );
 
       if (this._isPico) {
@@ -282,7 +282,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   _renderMessage(
     icon: string,
     label: string | TemplateResult,
-    showClose: boolean
+    showClose: boolean,
   ) {
     return html`
       <div class="center">
@@ -339,7 +339,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
                   @click=${() => {
                     openDownloadTypeDialog(
                       this.configuration,
-                      this._platformSupportsWebSerial
+                      this._platformSupportsWebSerial,
                     );
                   }}
                   >Download project</a
@@ -353,13 +353,13 @@ class ESPHomeInstallChooseDialog extends LitElement {
               @click=${() => {
                 openCompileDialog(
                   this.configuration,
-                  this._platformSupportsWebSerial
+                  this._platformSupportsWebSerial,
                 );
               }}
             >
               see what went wrong
             </button>
-          `
+          `,
         )
         .finally(() => {
           this._abortCompilation = undefined;
@@ -390,7 +390,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     // Set the min width to avoid the dialog shrinking
     this.style.setProperty(
       "--mdc-dialog-min-width",
-      `${this.shadowRoot!.querySelector("mwc-list-item")!.clientWidth + 4}px`
+      `${this.shadowRoot!.querySelector("mwc-list-item")!.clientWidth + 4}px`,
     );
   }
 
@@ -417,7 +417,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
     }
 
     openInstallWebDialog({ configuration: this.configuration }, () =>
-      this._close()
+      this._close(),
     );
   }
 

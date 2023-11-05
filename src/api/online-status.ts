@@ -6,5 +6,5 @@ export const getOnlineStatus = () =>
 
 export const subscribeOnlineStatus = createPollingCollection(
   getOnlineStatus,
-  2000
+  2000,
 );

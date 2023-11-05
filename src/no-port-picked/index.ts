@@ -1,7 +1,7 @@
 const preload = () => import("./no-port-picked-dialog");
 
 export const openNoPortPickedDialog = async (
-  doTryAgain?: () => void
+  doTryAgain?: () => void,
 ): Promise<boolean> => {
   preload();
 

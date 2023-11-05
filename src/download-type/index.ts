@@ -2,7 +2,7 @@ const preload = () => import("./download-type-dialog");
 
 export const openDownloadTypeDialog = (
   configuration: string,
-  platformSupportsWebSerial: boolean
+  platformSupportsWebSerial: boolean,
 ) => {
   preload();
   const dialog = document.createElement("esphome-download-type-dialog");

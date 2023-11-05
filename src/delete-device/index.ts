@@ -3,7 +3,7 @@ const preload = () => import("./delete-device-dialog");
 export const openDeleteDeviceDialog = (
   name: string,
   configuration: string,
-  onDelete?: () => unknown
+  onDelete?: () => unknown,
 ) => {
   preload();
   const dialog = document.createElement("esphome-delete-device-dialog");

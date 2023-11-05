@@ -2,7 +2,7 @@ const preload = () => import("./rename-dialog");
 
 export const openRenameDialog = (
   configuration: string,
-  suggestedName: string
+  suggestedName: string,
 ) => {
   preload();
   const dialog = document.createElement("esphome-rename-dialog");
