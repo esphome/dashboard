@@ -23,4 +23,4 @@ jobs:
       - run: tsc
       - run: script/build
       - run: web.esphome.io/script/build_web
-      - run: npm exec -- prettier --check src
+      - run: npm exec -- prettier --check src web.esphome.io/src

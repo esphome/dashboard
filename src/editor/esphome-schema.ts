@@ -141,7 +141,7 @@ export class ESPHomeSchema {
 
   async getComponent(
     domain: string,
-    platform: string | null = null
+    platform: string | null = null,
   ): Promise<Component> {
     if (!this.loaded_schemas.includes(domain)) {
       this.schema = {
@@ -162,7 +162,7 @@ export class ESPHomeSchema {
   }
   async getComponentPlatformSchema(
     domain: string,
-    platform: string
+    platform: string,
   ): Promise<ConfigVar> {
     const component = await this.getComponent(domain, platform);
     return component.schemas.CONFIG_SCHEMA;
@@ -183,7 +183,7 @@ export class ESPHomeSchema {
   }
 
   async *getDocComponents(
-    doc: Document
+    doc: Document,
   ): AsyncGenerator<[string, Component, Node?]> {
     const docMap = doc.contents as YAMLMap;
     let addPollingComponent = false;
@@ -216,11 +216,11 @@ export class ESPHomeSchema {
                   if (!addPollingComponent) {
                     const platComponent = await this.getComponent(
                       platCompName,
-                      componentName
+                      componentName,
                     );
                     if (
                       platComponent.schemas.CONFIG_SCHEMA?.schema?.config_vars.id?.id_type?.parents?.includes(
-                        "PollingComponent"
+                        "PollingComponent",
                       )
                     ) {
                       addPollingComponent = true;
@@ -242,7 +242,7 @@ export class ESPHomeSchema {
           if (
             !addPollingComponent &&
             component.schemas.CONFIG_SCHEMA?.schema?.config_vars.id?.id_type?.parents?.includes(
-              "PollingComponent"
+              "PollingComponent",
             )
           ) {
             addPollingComponent = true;
@@ -268,7 +268,7 @@ export class ESPHomeSchema {
 
   async *getRegistry(
     registry: ComponentRegistry,
-    doc: Document
+    doc: Document,
   ): AsyncGenerator<[string, ConfigVar]> {
     if (registry.includes(".")) {
       // e.g. sensor.filter only items from one component
@@ -282,7 +282,7 @@ export class ESPHomeSchema {
       // e.g. action, condition: search in all domains
       if (this.isRegistry(registry))
         for await (const [componentName, component] of this.getDocComponents(
-          doc
+          doc,
         )) {
           // component might be undefined if this component has no registries
           const componentRegistry = component ? component[registry] : undefined;
@@ -304,7 +304,7 @@ export class ESPHomeSchema {
 
   async getRegistryConfigVar(
     registry: string,
-    entry: string
+    entry: string,
   ): Promise<ConfigVar | undefined> {
     if (registry.includes(".")) {
       const [domain, registryName] = registry.split(".");
@@ -348,7 +348,7 @@ export class ESPHomeSchema {
   async getActionConfigVar(entry: string): Promise<ConfigVarTrigger> {
     return (await this.getRegistryConfigVar(
       "action",
-      entry
+      entry,
     )) as ConfigVarTrigger;
   }
   async getPinConfigVar(component: string): Promise<ConfigVar> {
@@ -407,7 +407,7 @@ export class ESPHomeSchema {
   async *iterConfigVars(
     schema: Schema,
     doc: Document,
-    yielded: string[] = []
+    yielded: string[] = [],
   ): AsyncGenerator<[string, ConfigVar]> {
     const docMap = doc.contents as YAMLMap;
     for (var prop in schema.config_vars) {
@@ -438,7 +438,7 @@ export class ESPHomeSchema {
           for await (const pair of this.iterConfigVars(
             s.schema,
             doc,
-            yielded
+            yielded,
           )) {
             yield pair;
           }
@@ -452,7 +452,7 @@ export class ESPHomeSchema {
   async findConfigVar(
     schema: Schema,
     prop: string,
-    doc: Document
+    doc: Document,
   ): Promise<ConfigVar | undefined> {
     for await (const [p, config] of this.iterConfigVars(schema, doc)) {
       if (p === prop) {
@@ -466,7 +466,7 @@ export class ESPHomeSchema {
     idType: string,
     map: YAMLMap,
     declaringCv: ConfigVar,
-    doc: Document
+    doc: Document,
   ): AsyncGenerator<Node> {
     let schema: Schema;
     if (declaringCv.type === "schema") {
@@ -495,7 +495,7 @@ export class ESPHomeSchema {
               idType,
               k.value,
               cv,
-              doc
+              doc,
             )) {
               yield yieldNode;
             }
@@ -506,7 +506,7 @@ export class ESPHomeSchema {
                   idType,
                   seqItem,
                   cv,
-                  doc
+                  doc,
                 )) {
                   yield yieldNode;
                 }
@@ -534,7 +534,7 @@ export class ESPHomeSchema {
               idType,
               k.value,
               cv,
-              doc
+              doc,
             )) {
               yield yieldNode;
             }
@@ -546,7 +546,7 @@ export class ESPHomeSchema {
                   idType,
                   item,
                   cv,
-                  doc
+                  doc,
                 )) {
                   yield yieldNode;
                 }
@@ -563,14 +563,14 @@ export class ESPHomeSchema {
                   if (platCompName in component.components) {
                     const component = await this.getComponent(
                       platCompName,
-                      componentName
+                      componentName,
                     );
                     const platCv = component.schemas.CONFIG_SCHEMA;
                     for await (const yieldNode of this.iterDeclaringIdsInner(
                       idType,
                       seqItemNode,
                       platCv,
-                      doc
+                      doc,
                     )) {
                       yield yieldNode;
                     }
@@ -582,14 +582,14 @@ export class ESPHomeSchema {
               if (platCompName in component.components) {
                 const component = await this.getComponent(
                   platCompName,
-                  componentName
+                  componentName,
                 );
                 const platCv = component.schemas.CONFIG_SCHEMA;
                 for await (const yieldNode of this.iterDeclaringIdsInner(
                   idType,
                   platNode,
                   platCv,
-                  doc
+                  doc,
                 )) {
                   yield yieldNode;
                 }
@@ -604,7 +604,7 @@ export class ESPHomeSchema {
   async findComponentDefinition(
     id_type: string,
     id: string,
-    doc: Document
+    doc: Document,
   ): Promise<Range | null | undefined> {
     for await (const item of this.iterDeclaringIds(id_type, doc)) {
       if (isScalar(item) && item.value === id) {

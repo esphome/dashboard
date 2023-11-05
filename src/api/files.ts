@@ -14,7 +14,7 @@ export const getFile = async (filename: string): Promise<string | null> => {
 
 export const writeFile = async (
   filename: string,
-  content: string
+  content: string,
 ): Promise<string> =>
   fetchApiText(`./edit?configuration=${filename}`, {
     method: "POST",

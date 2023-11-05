@@ -54,7 +54,7 @@ class EWPicoDeviceCard extends LitElement {
 
   private configureWiFi() {
     const improv = document.createElement(
-      "improv-wifi-serial-provision-dialog"
+      "improv-wifi-serial-provision-dialog",
     );
     improv.port = this.port;
     document.body.appendChild(improv);

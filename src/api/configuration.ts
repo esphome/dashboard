@@ -40,18 +40,18 @@ export const deleteConfiguration = (configuration: string) =>
 
 export const compileConfiguration = (
   configuration: string,
-  abortController?: AbortController
+  abortController?: AbortController,
 ) => streamLogs("compile", { configuration }, undefined, abortController);
 
 export const compileConfigurationMetadata = (
   configuration: string,
-  abortController?: AbortController
+  abortController?: AbortController,
 ) =>
   streamLogs(
     "compile",
     { configuration, only_generate: true },
     undefined,
-    abortController
+    abortController,
   );
 
 // null if file not found.
@@ -59,7 +59,7 @@ export const compileConfigurationMetadata = (
 // status 422 = invalid config
 // status 500 = json serialization failed
 export const getJsonConfig = async (
-  filename: string
+  filename: string,
 ): Promise<Record<string, any> | null> => {
   try {
     return fetchApiJson(`./json-config?configuration=${filename}`);
@@ -72,7 +72,7 @@ export const getJsonConfig = async (
 };
 
 export const getConfigurationApiKey = async (
-  configuration: string
+  configuration: string,
 ): Promise<string | null> => {
   let config;
   try {

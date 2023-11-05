@@ -156,7 +156,7 @@ export class ESPHomeDocument {
   }
 
   public async getConfigVarAndPathNode(
-    path: (string | number)[]
+    path: (string | number)[],
   ): Promise<[ConfigVar, Node] | undefined> {
     let pathNode = this.yaml.contents;
     let cv: ConfigVar | undefined = undefined;
@@ -171,7 +171,7 @@ export class ESPHomeDocument {
               if (c.components !== undefined && componentName in c.components) {
                 cv = await coreSchema.getComponentPlatformSchema(
                   componentName,
-                  path[0]
+                  path[0],
                 );
               }
             }
@@ -193,7 +193,7 @@ export class ESPHomeDocument {
                   await coreSchema.findConfigVar(
                     cv.schema,
                     pathIndex,
-                    this.yaml
+                    this.yaml,
                   );
                 if (schema_cv !== undefined) {
                   cv = schema_cv;
@@ -215,7 +215,7 @@ export class ESPHomeDocument {
             if (cv.type === "registry") {
               cv = await coreSchema.getRegistryConfigVar(
                 cv.registry,
-                pathIndex
+                pathIndex,
               );
             }
           }

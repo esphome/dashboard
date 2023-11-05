@@ -90,7 +90,7 @@ class ESPHomeDevicesList extends LitElement {
                 .highlightOnAdd=${this._new.has(device.name)}
                 @deleted=${this._updateDevices}
               ></esphome-configured-device-card>`}
-        `
+        `,
       )}`;
     }
 
@@ -189,7 +189,7 @@ class ESPHomeDevicesList extends LitElement {
 
   private _scrollToDevice(name: string) {
     const elem = this.renderRoot!.querySelector(
-      `esphome-configured-device-card[data-name='${name}']`
+      `esphome-configured-device-card[data-name='${name}']`,
     ) as HTMLElementTagNameMap["esphome-configured-device-card"];
     if (elem) {
       elem.scrollIntoView({ behavior: "smooth" });

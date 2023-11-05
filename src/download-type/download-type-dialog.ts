@@ -43,7 +43,7 @@ class ESPHomeDownloadTypeDialog extends LitElement {
                   <span slot="secondary">${type.description}</span>
                   ${metaChevronRight}
                 </mwc-list-item>
-              `
+              `,
             )}
           `}
     `;

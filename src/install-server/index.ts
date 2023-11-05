@@ -2,7 +2,7 @@ const preload = () => import("./install-server-dialog");
 
 export const openInstallServerDialog = (
   configuration: string,
-  target: string
+  target: string,
 ) => {
   preload();
   const dialog = document.createElement("esphome-install-server-dialog");

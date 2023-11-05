@@ -1,6 +1,6 @@
 export const createPollingCollection = <T>(
   fetchData: () => Promise<T>,
-  interval: number
+  interval: number,
 ) => {
   let pollSubscription: number | undefined;
   let lastResult: T | undefined;

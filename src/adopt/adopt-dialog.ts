@@ -243,7 +243,7 @@ class ESPHomeAdoptDialog extends LitElement {
       try {
         await storeWifiSecrets(
           this._inputSSID.value,
-          this._inputPassword.value
+          this._inputPassword.value,
         );
       } catch (err) {
         console.error(err);
