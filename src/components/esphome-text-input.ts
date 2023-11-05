@@ -8,7 +8,7 @@ import "@material/mwc-icon";
 export class ESPHomeTextInput extends TextFieldBase {
   protected override renderIcon(
     _icon: string,
-    isTrailingIcon = false
+    isTrailingIcon = false,
   ): TemplateResult {
     const type = isTrailingIcon ? "trailing" : "leading";
     return html`

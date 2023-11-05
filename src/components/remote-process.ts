@@ -41,14 +41,14 @@ class ESPHomeRemoteProcess extends HTMLElement {
       (line) => {
         coloredConsole.addLine(line);
       },
-      this._abortController
+      this._abortController,
     ).then(
       () => {
         fireEvent(this, "process-done", 0);
       },
       (error: StreamError) => {
         fireEvent(this, "process-done", error.code);
-      }
+      },
     );
   }
 

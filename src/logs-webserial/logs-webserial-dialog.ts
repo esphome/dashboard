@@ -98,7 +98,7 @@ class ESPHomeLogsWebSerialDialog extends LitElement {
       this._console.logs(),
       `${
         this.configuration ? `${basename(this.configuration)}_logs` : "logs"
-      }.txt`
+      }.txt`,
     );
   }
 

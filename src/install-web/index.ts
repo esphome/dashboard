@@ -7,7 +7,7 @@ const preload = () => import("./install-web-dialog");
 export const openInstallWebDialog = async (
   params: ESPHomeInstallWebDialog["params"],
   // Called if a port has been picked and the dialog will be opened.
-  onDialogOpen?: () => void
+  onDialogOpen?: () => void,
 ): Promise<void> => {
   preload();
 
@@ -22,7 +22,7 @@ export const openInstallWebDialog = async (
     } catch (err: any) {
       if ((err as DOMException).name === "NotFoundError") {
         openNoPortPickedDialog(() =>
-          openInstallWebDialog(params, onDialogOpen)
+          openInstallWebDialog(params, onDialogOpen),
         );
       } else {
         alert(`Unable to connect: ${err.message}`);

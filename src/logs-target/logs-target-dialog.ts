@@ -132,7 +132,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
                   <span slot="secondary">${port.port}</span>
                   ${metaChevronRight}
                 </mwc-list-item>
-              `
+              `,
             )}
 
         <mwc-button

@@ -9,17 +9,17 @@ export type DownloadType = {
 
 export const getDownloadTypes = (configuration: string) =>
   fetchApiJson<DownloadType[]>(
-    `./downloads?configuration=${encodeURIComponent(configuration)}`
+    `./downloads?configuration=${encodeURIComponent(configuration)}`,
   );
 
 export const getDownloadUrl = (configuration: string, type: DownloadType) =>
   `./download.bin?configuration=${encodeURIComponent(
-    configuration
+    configuration,
   )}&file=${encodeURIComponent(type.file)}&download=${encodeURIComponent(
-    type.download
+    type.download,
   )}`;
 
 export const getFactoryDownloadUrl = (configuration: string) =>
   `./download.bin?configuration=${encodeURIComponent(
-    configuration
+    configuration,
   )}&file=firmware-factory.bin`;

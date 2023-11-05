@@ -82,7 +82,7 @@ class ESPHomeInstallPicoDialog extends LitElement {
     }
 
     const improv = document.createElement(
-      "improv-wifi-serial-provision-dialog"
+      "improv-wifi-serial-provision-dialog",
     );
     improv.port = port;
     improv.addEventListener("closed", (ev: any) => {

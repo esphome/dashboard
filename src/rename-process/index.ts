@@ -3,7 +3,7 @@ export const preloadRenameProcessDialog = () =>
 
 export const openRenameProcessDialog = (
   configuration: string,
-  newName: string
+  newName: string,
 ) => {
   preloadRenameProcessDialog();
   const dialog = document.createElement("esphome-rename-process-dialog");

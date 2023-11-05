@@ -14,7 +14,7 @@ monaco.languages.registerHoverProvider("yaml", {
     documents.update(model.uri.toString(), new TextBuffer(model));
     const hover = await hoverHandler.getHover(
       model.uri.toString(),
-      fromMonacoPosition(position)
+      fromMonacoPosition(position),
     );
     return hover;
   },
@@ -26,7 +26,7 @@ monaco.languages.registerCompletionItemProvider("yaml", {
     documents.update(model.uri.toString(), new TextBuffer(model));
     const completions = await completionsHandler.getCompletions(
       model.uri.toString(),
-      fromMonacoPosition(position)
+      fromMonacoPosition(position),
     );
     return { suggestions: completions };
   },
@@ -38,7 +38,7 @@ monaco.languages.registerDefinitionProvider("yaml", {
     documents.update(model.uri.toString(), new TextBuffer(model));
     const ret = await definitionHandler.getDefinition(
       model.uri.toString(),
-      fromMonacoPosition(position)
+      fromMonacoPosition(position),
     );
     if (!ret) return;
 

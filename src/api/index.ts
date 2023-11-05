@@ -1,5 +1,8 @@
 export class APIError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
     this.name = "APIError";
   }
@@ -7,7 +10,7 @@ export class APIError extends Error {
 
 const fetchApiBase = async (
   path: Parameters<typeof fetch>[0],
-  options?: Parameters<typeof fetch>[1]
+  options?: Parameters<typeof fetch>[1],
 ): ReturnType<typeof fetch> => {
   if (!options) {
     options = {};
@@ -22,7 +25,7 @@ const fetchApiBase = async (
 
 export const fetchApiText = async (
   path: Parameters<typeof fetch>[0],
-  options?: Parameters<typeof fetch>[1]
+  options?: Parameters<typeof fetch>[1],
 ): Promise<string> => {
   const resp = await fetchApiBase(path, options);
   return resp.text();
@@ -30,7 +33,7 @@ export const fetchApiText = async (
 
 export const fetchApiJson = async <T>(
   path: Parameters<typeof fetch>[0],
-  options?: Parameters<typeof fetch>[1]
+  options?: Parameters<typeof fetch>[1],
 ): Promise<T> => {
   const resp = await fetchApiBase(path, options);
   return resp.json();
@@ -44,7 +47,7 @@ export const streamLogs = (
   path: string,
   spawnParams: Record<string, any>,
   lineReceived?: (line: string) => void,
-  abortController?: AbortController
+  abortController?: AbortController,
 ) => {
   const url = new URL(`./${path}`, location.href);
   url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
@@ -72,7 +75,7 @@ export const streamLogs = (
         resolve(undefined);
       } else {
         const error = new StreamError(
-          `Error compiling configuration (${data.code})`
+          `Error compiling configuration (${data.code})`,
         );
         error.code = data.code;
         reject(error);
@@ -84,7 +87,7 @@ export const streamLogs = (
         JSON.stringify({
           type: "spawn",
           ...spawnParams,
-        })
+        }),
       );
     });
 

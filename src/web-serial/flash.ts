@@ -7,7 +7,7 @@ export interface FileToFlash {
 }
 
 export const getConfigurationFiles = async (
-  filename: string
+  filename: string,
 ): Promise<FileToFlash[]> => {
   let resp: Response;
   try {
@@ -40,7 +40,7 @@ export const flashFiles = async (
   esploader: ESPLoader,
   fileArray: FileToFlash[],
   erase: boolean,
-  writeProgress: (pct: number) => void
+  writeProgress: (pct: number) => void,
 ) => {
   if (erase) {
     await esploader.erase_flash();
@@ -66,7 +66,7 @@ export const flashFiles = async (
         (written / total) * fileArray[fileIndex].data.length;
 
       const newPct = Math.floor(
-        ((totalWritten + uncompressedWritten) / totalSize) * 100
+        ((totalWritten + uncompressedWritten) / totalSize) * 100,
       );
 
       // we're done with this file

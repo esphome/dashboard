@@ -13,7 +13,7 @@ export const createHover = (contents: string, range: Range) => {
       range.start.line + 1,
       range.start.character + 1,
       range.end.line + 1,
-      range.end.character + 1
+      range.end.character + 1,
     ),
     contents: [{ value: contents }],
   };
@@ -93,7 +93,7 @@ export const createCompletion = (
   preselect?: boolean,
   snippet?: boolean,
   sortText?: string,
-  detail?: string
+  detail?: string,
 ) => {
   const completion: monaco.languages.CompletionItem = {
     label: label,
@@ -122,7 +122,7 @@ export const createCompletionSnippet = (
   label: string,
   insertText: string,
   kind: monaco.languages.CompletionItemKind,
-  documentation: string | undefined = undefined
+  documentation: string | undefined = undefined,
 ) => {
   const completion: CompletionItem = {
     label: label,

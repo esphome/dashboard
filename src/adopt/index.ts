@@ -4,7 +4,7 @@ const preload = () => import("./adopt-dialog");
 
 export const openAdoptDialog = (
   device: ImportableDevice,
-  onAdopt: () => void
+  onAdopt: () => void,
 ) => {
   preload();
   const dialog = document.createElement("esphome-adopt-dialog");

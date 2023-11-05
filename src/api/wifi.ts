@@ -16,5 +16,5 @@ export const storeWifiSecrets = async (ssid: string, password: string) =>
       [SECRET_WIFI_SSID]: ssid,
       [SECRET_WIFI_PASSWORD]: password,
     },
-    "Your Wi-Fi SSID and password"
+    "Your Wi-Fi SSID and password",
   );

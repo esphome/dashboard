@@ -36,7 +36,7 @@ export class CompletionsHandler {
 
   public async getCompletions(
     uri: string,
-    position: Position
+    position: Position,
   ): Promise<CompletionItem[]> {
     try {
       this.document = this.documents.getDocument(uri);
@@ -142,7 +142,7 @@ export class CompletionsHandler {
                   : "- platform: ",
                 CompletionItemKind.EnumMember,
                 undefined,
-                true
+                true,
               ),
             ];
           }
@@ -159,7 +159,7 @@ export class CompletionsHandler {
         pathIndex,
         cv!,
         pathElement as YAMLMap,
-        node
+        node,
       );
     } catch (e) {
       console.log(`Error during evaluating completions ${e}`);
@@ -183,8 +183,8 @@ export class CompletionsHandler {
           component + "\n  ",
           CompletionItemKind.EnumMember,
           c.components[component].docs,
-          true
-        )
+          true,
+        ),
       );
     }
 
@@ -208,8 +208,8 @@ export class CompletionsHandler {
           platformName + ":\n  - platform: ",
           CompletionItemKind.Class,
           platformList[platformName].docs,
-          true
-        )
+          true,
+        ),
       );
     }
     // suggest component/hub e.g. dallas:, sim800l:
@@ -245,8 +245,8 @@ export class CompletionsHandler {
           componentName + ":\n  ",
           CompletionItemKind.Field,
           components[componentName].docs,
-          true
-        )
+          true,
+        ),
       );
     }
     return result;
@@ -288,7 +288,7 @@ export class CompletionsHandler {
     pathIndex: number,
     cv: ConfigVar,
     pathNode: YAMLMap | null,
-    cursorNode: Node
+    cursorNode: Node,
   ): Promise<CompletionItem[]> {
     if (cv.is_list && isNumber(path[pathIndex])) {
       if (isSeq(pathNode)) {
@@ -306,7 +306,7 @@ export class CompletionsHandler {
           pathIndex,
           cv.schema,
           pathNode,
-          cursorNode
+          cursorNode,
         );
       } else {
         if (pathIndex === path.length) {
@@ -316,14 +316,14 @@ export class CompletionsHandler {
               const maybe_cv = await coreSchema.findConfigVar(
                 cv.schema,
                 complete["maybe"],
-                this.document.yaml
+                this.document.yaml,
               );
               return this.resolveConfigVar(
                 path,
                 pathIndex,
                 maybe_cv!,
                 null,
-                cursorNode
+                cursorNode,
               );
             }
           }
@@ -346,7 +346,7 @@ export class CompletionsHandler {
             pathIndex + 1,
             isMap(elem) ? elem : null,
             cv,
-            cursorNode
+            cursorNode,
           );
         }
       }
@@ -358,7 +358,7 @@ export class CompletionsHandler {
         pathIndex,
         isMap(elem) ? elem : null,
         cv,
-        cursorNode
+        cursorNode,
       );
     } else if (cv.type === "typed") {
       if (!pathNode) {
@@ -368,7 +368,7 @@ export class CompletionsHandler {
             cv.typed_key + ": ",
             CompletionItemKind.Enum,
             undefined,
-            true
+            true,
           ),
         ];
       } else if (
@@ -383,8 +383,8 @@ export class CompletionsHandler {
               schema_type + "\n",
               CompletionItemKind.EnumMember,
               undefined,
-              true
-            )
+              true,
+            ),
           );
         }
         return result;
@@ -400,7 +400,7 @@ export class CompletionsHandler {
               pathIndex,
               cv.types[type],
               pathNode,
-              cursorNode
+              cursorNode,
             );
           }
           let result: CompletionItem[] = [];
@@ -411,8 +411,8 @@ export class CompletionsHandler {
               cv.typed_key + ": ",
               CompletionItemKind.EnumMember,
               undefined,
-              true
-            )
+              true,
+            ),
           );
           return result;
         }
@@ -423,7 +423,7 @@ export class CompletionsHandler {
           createCompletionSnippet(
             "!lambda",
             '!lambda return "${0:<string expression>}";',
-            CompletionItemKind.Function
+            CompletionItemKind.Function,
           ),
         ];
       }
@@ -493,7 +493,7 @@ export class CompletionsHandler {
         pathIndex,
         pinCv,
         pathNode,
-        cursorNode
+        cursorNode,
       );
     } else if (cv.type === "boolean") {
       let result: CompletionItem[] = [];
@@ -502,8 +502,8 @@ export class CompletionsHandler {
           createCompletionSnippet(
             "!lambda ",
             '!lambda return "${0:<boolean expression>}";',
-            CompletionItemKind.Function
-          )
+            CompletionItemKind.Function,
+          ),
         );
       }
       for (var value of ["True", "False"]) {
@@ -514,8 +514,8 @@ export class CompletionsHandler {
             CompletionItemKind.Constant,
             undefined,
             false,
-            cv.default === value
-          )
+            cv.default === value,
+          ),
         );
       }
       return result;
@@ -523,11 +523,11 @@ export class CompletionsHandler {
       let result: CompletionItem[] = [];
       const usableIds = await coreSchema.getUsableIds(
         cv.use_id_type,
-        this.document.yaml
+        this.document.yaml,
       );
       for (var usableId of usableIds) {
         result.push(
-          createCompletion(usableId, usableId, CompletionItemKind.Variable)
+          createCompletion(usableId, usableId, CompletionItemKind.Variable),
         );
       }
       return result;
@@ -549,7 +549,7 @@ export class CompletionsHandler {
           "!lambda",
           insertText,
           CompletionItemKind.Function,
-          cv.docs
+          cv.docs,
         ),
       ];
     }
@@ -562,7 +562,7 @@ export class CompletionsHandler {
       this.position.character > 1 &&
       this.lineContent.substring(
         this.position.character - 2,
-        this.position.character
+        this.position.character,
       ) === "- "
     )
       return key + ": ";
@@ -572,13 +572,13 @@ export class CompletionsHandler {
   private async getConfigVars(
     schema: Schema,
     node: YAMLMap | null,
-    isList = false
+    isList = false,
   ): Promise<CompletionItem[]> {
     const ret: CompletionItem[] = [];
 
     for await (const [prop, config] of coreSchema.iterConfigVars(
       schema,
-      this.document.yaml
+      this.document.yaml,
     )) {
       // Skip existent properties
       if (node !== null && this.mapHasScalarKey(node, prop)) {
@@ -663,8 +663,8 @@ export class CompletionsHandler {
           undefined,
           snippet,
           sortText,
-          detail
-        )
+          detail,
+        ),
       );
     }
     return ret;
@@ -675,13 +675,13 @@ export class CompletionsHandler {
     pathIndex: number,
     schema: Schema,
     pathElement: YAMLMap | null,
-    node: Node
+    node: Node,
   ): Promise<CompletionItem[]> {
     console.log("component: " + path[pathIndex]);
     const cv = await coreSchema.findConfigVar(
       schema,
       path[pathIndex],
-      this.document.yaml
+      this.document.yaml,
     );
     if (cv === undefined) return [];
     let innerNode =
@@ -694,7 +694,7 @@ export class CompletionsHandler {
       pathIndex + 1,
       cv,
       innerNode,
-      node
+      node,
     );
   }
 
@@ -706,8 +706,8 @@ export class CompletionsHandler {
         createCompletionSnippet(
           "!lambda",
           '!lambda return "${0:<enum expression>}";',
-          CompletionItemKind.Function
-        )
+          CompletionItemKind.Function,
+        ),
       );
     }
     for (var value in cv.values) {
@@ -721,8 +721,8 @@ export class CompletionsHandler {
           CompletionItemKind.EnumMember,
           cv.values[value]?.docs,
           false,
-          cv.default === value
-        )
+          cv.default === value,
+        ),
       );
     }
     return result;
@@ -733,7 +733,7 @@ export class CompletionsHandler {
     pathIndex: number,
     pathNode: Node | null,
     cv: ConfigVarTrigger,
-    node: Node
+    node: Node,
   ): Promise<CompletionItem[]> {
     console.log("trigger: " + path[pathIndex]);
     // trigger can be a single item on a map or otherwise a seq.
@@ -748,7 +748,7 @@ export class CompletionsHandler {
           pathIndex + 1,
           innerNode,
           cv,
-          node
+          node,
         );
       }
       if (cv.schema && !cv.has_required_var) {
@@ -763,7 +763,7 @@ export class CompletionsHandler {
       pathIndex,
       isMap(pathNode) ? pathNode : null,
       cv,
-      node
+      node,
     );
   }
 
@@ -772,7 +772,7 @@ export class CompletionsHandler {
     pathIndex: number,
     pathNode: Node | null,
     cv: ConfigVarTrigger,
-    node: Node
+    node: Node,
   ): Promise<CompletionItem[]> {
     const final = pathIndex === path.length;
     if (final) {
@@ -811,7 +811,7 @@ export class CompletionsHandler {
           schema: undefined,
           has_required_var: false,
         },
-        node
+        node,
       );
     }
 
@@ -821,7 +821,7 @@ export class CompletionsHandler {
       const innerProp = await coreSchema.findConfigVar(
         cv.schema,
         path[pathIndex],
-        this.document.yaml
+        this.document.yaml,
       );
       if (innerProp !== undefined) {
         return this.resolveSchema(
@@ -829,7 +829,7 @@ export class CompletionsHandler {
           pathIndex,
           cv.schema,
           isMap(pathNode) ? pathNode : null,
-          node
+          node,
         );
       }
     }
@@ -850,7 +850,7 @@ export class CompletionsHandler {
             const maybe_cv = await coreSchema.findConfigVar(
               action.schema,
               complete["maybe"],
-              this.document.yaml
+              this.document.yaml,
             );
             if (!maybe_cv) {
               return [];
@@ -868,18 +868,18 @@ export class CompletionsHandler {
         pathIndex + 1,
         action.schema,
         innerNode as YAMLMap,
-        node
+        node,
       );
     }
     return [];
   }
   private async addRegistry(
-    configVar: ConfigVarRegistry
+    configVar: ConfigVarRegistry,
   ): Promise<CompletionItem[]> {
     const result: CompletionItem[] = [];
     for await (const [value, props] of await coreSchema.getRegistry(
       configVar.registry,
-      this.document.yaml
+      this.document.yaml,
     )) {
       if (configVar.filter && !configVar.filter.includes(value)) {
         continue;
@@ -896,8 +896,8 @@ export class CompletionsHandler {
           insertText,
           CompletionItemKind.Keyword,
           props.docs,
-          true
-        )
+          true,
+        ),
       );
     }
     return result;
@@ -908,7 +908,7 @@ export class CompletionsHandler {
     pathIndex: number,
     pathNode: YAMLMap | null,
     cv: ConfigVarRegistry,
-    node: Node
+    node: Node,
   ): Promise<CompletionItem[]> {
     const final = pathIndex === path.length;
     if (final && pathNode === null) {
@@ -916,7 +916,7 @@ export class CompletionsHandler {
     }
     const registryCv = await coreSchema.getRegistryConfigVar(
       cv.registry,
-      path[pathIndex]
+      path[pathIndex],
     );
     if (!registryCv) {
       return [];
@@ -927,7 +927,7 @@ export class CompletionsHandler {
       pathIndex + 1,
       registryCv,
       isMap(inner) ? inner : null,
-      node
+      node,
     );
   }
 
@@ -960,7 +960,7 @@ export class CompletionsHandler {
     if (closestNode !== undefined && indentation === position.character) {
       closestNode = this.getProperParentByIndentation(
         indentation,
-        closestNode
+        closestNode,
       )!;
     }
 
@@ -985,7 +985,7 @@ export class CompletionsHandler {
 
   private getProperParentByIndentation(
     indentation: number,
-    node: Node
+    node: Node,
   ): Node | undefined {
     if (!node) {
       return this.document.yaml.contents as Node;

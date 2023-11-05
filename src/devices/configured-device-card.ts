@@ -273,7 +273,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
-          () => fireEvent(this, "deleted")
+          () => fireEvent(this, "deleted"),
         );
         break;
       case 7:
