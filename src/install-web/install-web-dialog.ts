@@ -126,7 +126,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
           <mwc-circular-progress
             active
             ?indeterminate=${progress === undefined}
-            .progress=${progress !== undefined ? progress / 100 : undefined}
+            .progress=${progress !== undefined ? progress / 100 : 1}
             density="8"
           ></mwc-circular-progress>
           ${progress !== undefined

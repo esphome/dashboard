@@ -12,7 +12,13 @@ import { basename } from "../util/basename";
 export class ESPHomeProcessDialog extends LitElement {
   @property() public heading!: string;
   @property() public spawnParams?: Record<string, any>;
-  @property() public type!: string;
+  @property() public type!:
+    | "validate"
+    | "logs"
+    | "upload"
+    | "clean-mqtt"
+    | "clean"
+    | "rename";
 
   @property({ type: Boolean, attribute: "always-show-close" })
   public alwaysShowClose = false;
