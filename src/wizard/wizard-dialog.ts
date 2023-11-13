@@ -326,7 +326,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       <mwc-list class="platforms">
         ${Object.keys(supportedPlatforms).map(
-          (key) => html`
+          (key) => supportedPlatforms[key].showInDeviceType ? html`
             <mwc-list-item
               hasMeta
               .platform=${key}
@@ -335,7 +335,7 @@ export class ESPHomeWizardDialog extends LitElement {
               <span>${supportedPlatforms[key].label}</span>
               ${metaChevronRight}
             </mwc-list-item>
-          `,
+          `: html``,
         )}
       </mwc-list>
 
