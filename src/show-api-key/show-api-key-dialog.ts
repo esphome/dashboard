@@ -26,16 +26,16 @@ class ESPHomeShowApiKeyDialogDialog extends LitElement {
         ${this._apiKey === undefined
           ? "Loading…"
           : this._apiKey === null
-          ? html`Unable to automatically extract API key. It may not be set.
-              Open the configuration and look for <code>api:</code>.`
-          : html`
-              <div class="key" @click=${this._copyApiKey}>
-                <code>${this._apiKey}</code>
-                <mwc-button ?disabled=${this._showCopied}
-                  >${this._showCopied ? "Copied!" : "Copy"}</mwc-button
-                >
-              </div>
-            `}
+            ? html`Unable to automatically extract API key. It may not be set.
+                Open the configuration and look for <code>api:</code>.`
+            : html`
+                <div class="key" @click=${this._copyApiKey}>
+                  <code>${this._apiKey}</code>
+                  <mwc-button ?disabled=${this._showCopied}
+                    >${this._showCopied ? "Copied!" : "Copy"}</mwc-button
+                  >
+                </div>
+              `}
         ${this._apiKey === null
           ? html`
               <mwc-button

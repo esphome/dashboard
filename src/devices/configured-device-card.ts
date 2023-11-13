@@ -82,10 +82,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const status = this._highlight
       ? "NEW"
       : this.onlineStatus && updateAvailable
-      ? "UPDATE AVAILABLE"
-      : this.onlineStatus
-      ? "ONLINE"
-      : "OFFLINE";
+        ? "UPDATE AVAILABLE"
+        : this.onlineStatus
+          ? "ONLINE"
+          : "OFFLINE";
     return html`
       <esphome-card
         .status=${status}

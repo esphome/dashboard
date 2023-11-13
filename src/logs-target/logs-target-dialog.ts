@@ -114,26 +114,26 @@ class ESPHomeLogsTargetDialog extends LitElement {
               </mwc-list-item>
             `
           : this._ports.length === 0
-          ? html`
-              <mwc-list-item>
-                <span>No serial ports found.</span>
-              </mwc-list-item>
-            `
-          : this._ports.map(
-              (port) => html`
-                <mwc-list-item
-                  twoline
-                  hasMeta
-                  dialogAction="close"
-                  .port=${port.port}
-                  @click=${this._pickPort}
-                >
-                  <span>${port.desc}</span>
-                  <span slot="secondary">${port.port}</span>
-                  ${metaChevronRight}
+            ? html`
+                <mwc-list-item>
+                  <span>No serial ports found.</span>
                 </mwc-list-item>
-              `,
-            )}
+              `
+            : this._ports.map(
+                (port) => html`
+                  <mwc-list-item
+                    twoline
+                    hasMeta
+                    dialogAction="close"
+                    .port=${port.port}
+                    @click=${this._pickPort}
+                  >
+                    <span>${port.desc}</span>
+                    <span slot="secondary">${port.port}</span>
+                    ${metaChevronRight}
+                  </mwc-list-item>
+                `,
+              )}
 
         <mwc-button
           no-attention

@@ -28,21 +28,21 @@ class ESPHomeCompileDialog extends LitElement {
         ${this._result === undefined
           ? ""
           : this._result === 0
-          ? html`
-              <mwc-button
-                slot="secondaryAction"
-                label="Download"
-                @click=${this._handleDownload}
-              ></mwc-button>
-            `
-          : html`
-              <mwc-button
-                slot="secondaryAction"
-                dialogAction="close"
-                label="Retry"
-                @click=${this._handleRetry}
-              ></mwc-button>
-            `}
+            ? html`
+                <mwc-button
+                  slot="secondaryAction"
+                  label="Download"
+                  @click=${this._handleDownload}
+                ></mwc-button>
+              `
+            : html`
+                <mwc-button
+                  slot="secondaryAction"
+                  dialogAction="close"
+                  label="Retry"
+                  @click=${this._handleRetry}
+                ></mwc-button>
+              `}
       </esphome-process-dialog>
     `;
   }
