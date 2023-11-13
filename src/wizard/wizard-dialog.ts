@@ -325,17 +325,19 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <mwc-list class="platforms">
-        ${Object.keys(supportedPlatforms).map(
-          (key) => supportedPlatforms[key].showInDeviceType ? html`
-            <mwc-list-item
-              hasMeta
-              .platform=${key}
-              @click=${this._handlePickPlatformClick}
-            >
-              <span>${supportedPlatforms[key].label}</span>
-              ${metaChevronRight}
-            </mwc-list-item>
-          `: html``,
+        ${Object.keys(supportedPlatforms).map((key) =>
+          supportedPlatforms[key].showInDeviceType
+            ? html`
+                <mwc-list-item
+                  hasMeta
+                  .platform=${key}
+                  @click=${this._handlePickPlatformClick}
+                >
+                  <span>${supportedPlatforms[key].label}</span>
+                  ${metaChevronRight}
+                </mwc-list-item>
+              `
+            : html``,
         )}
       </mwc-list>
 
