@@ -27,8 +27,8 @@ export const appendSecrets = async (
     content.length === 0
       ? ""
       : content.charAt(content.length - 1) !== "\n"
-      ? "\n\n"
-      : "\n";
+        ? "\n\n"
+        : "\n";
 
   if (comment) {
     toAppend += `# ${comment}\n`;

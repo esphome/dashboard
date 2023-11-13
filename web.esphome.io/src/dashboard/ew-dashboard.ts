@@ -18,8 +18,8 @@ class EWDashboard extends LitElement {
         ${!supportsWebSerial
           ? html`<ew-unsupported-card></ew-unsupported-card>`
           : this.pico
-          ? html`<ew-pico-connect-card></ew-pico-connect-card>`
-          : html`<ew-esp-connect-card></ew-esp-connect-card>`}
+            ? html`<ew-pico-connect-card></ew-pico-connect-card>`
+            : html`<ew-esp-connect-card></ew-esp-connect-card>`}
 
         <div class="intro">
           ${ARROW}

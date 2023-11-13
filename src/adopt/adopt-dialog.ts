@@ -59,39 +59,39 @@ class ESPHomeAdoptDialog extends LitElement {
         ${!this._needsWifiSecrets
           ? ""
           : this._hasWifiSecrets !== false
-          ? html`
-              <div>
-                This device will be configured to connect to the Wi-Fi network
-                stored in your secrets.
-              </div>
-            `
-          : html`
-              <div>
-                Enter the credentials of the Wi-Fi network that you want your
-                device to connect to.
-              </div>
-              <div>
-                This information will be stored in your secrets and used for
-                this and future devices. You can edit the information later by
-                editing your secrets at the top of the page.
-              </div>
+            ? html`
+                <div>
+                  This device will be configured to connect to the Wi-Fi network
+                  stored in your secrets.
+                </div>
+              `
+            : html`
+                <div>
+                  Enter the credentials of the Wi-Fi network that you want your
+                  device to connect to.
+                </div>
+                <div>
+                  This information will be stored in your secrets and used for
+                  this and future devices. You can edit the information later by
+                  editing your secrets at the top of the page.
+                </div>
 
-              <mwc-textfield
-                label="Network name"
-                name="ssid"
-                required
-                @blur=${this._cleanSSIDBlur}
-                .disabled=${this._busy}
-              ></mwc-textfield>
+                <mwc-textfield
+                  label="Network name"
+                  name="ssid"
+                  required
+                  @blur=${this._cleanSSIDBlur}
+                  .disabled=${this._busy}
+                ></mwc-textfield>
 
-              <mwc-textfield
-                label="Password"
-                name="password"
-                type="password"
-                helper="Leave blank if no password"
-                .disabled=${this._busy}
-              ></mwc-textfield>
-            `}
+                <mwc-textfield
+                  label="Password"
+                  name="password"
+                  type="password"
+                  helper="Leave blank if no password"
+                  .disabled=${this._busy}
+                ></mwc-textfield>
+              `}
 
         <mwc-button
           slot="primaryAction"

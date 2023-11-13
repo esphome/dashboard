@@ -24,8 +24,8 @@ export class EWHeaderMenu extends LitElement {
           .label=${!this._isWide
             ? ""
             : this._pico
-            ? "ESP device"
-            : "Raspberry Pi"}
+              ? "ESP device"
+              : "Raspberry Pi"}
         >
           <img
             src=${`static_web/logo/${
