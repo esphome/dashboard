@@ -326,7 +326,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       <mwc-list class="platforms">
         ${Object.keys(supportedPlatforms).map((key) =>
-          supportedPlatforms[key].showInDeviceType
+          supportedPlatforms[key].showInDeviceTypePicker
             ? html`
                 <mwc-list-item
                   hasMeta
