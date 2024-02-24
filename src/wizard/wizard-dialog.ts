@@ -142,7 +142,7 @@ export class ESPHomeWizardDialog extends LitElement {
                 Keep this page visible to prevent slow down
               `,
               // Show as undeterminate under 3% or else we don't show any pixels
-              this._writeProgress > 3 ? this._writeProgress : undefined
+              this._writeProgress > 3 ? this._writeProgress : undefined,
             );
       hideActions = true;
     } else if (this._state === "wait_come_online") {
@@ -337,7 +337,7 @@ export class ESPHomeWizardDialog extends LitElement {
                   ${metaChevronRight}
                 </mwc-list-item>
               `
-            : html``
+            : html``,
         )}
       </mwc-list>
 
@@ -390,7 +390,7 @@ export class ESPHomeWizardDialog extends LitElement {
                 const options = Object.keys(group.items).map((key) =>
                   key === defaultBoard
                     ? html``
-                    : html`<option value="${key}">${group.items[key]}</option>`
+                    : html`<option value="${key}">${group.items[key]}</option>`,
                 );
                 return group.title
                   ? html`<optgroup label="${group.title}">${options}</optgroup>`
@@ -528,7 +528,7 @@ export class ESPHomeWizardDialog extends LitElement {
     super.updated(changedProps);
     if (changedProps.has("_state") || changedProps.has("_hasWifiSecrets")) {
       const formEl: any = this.shadowRoot!.querySelector(
-        "mwc-textfield, mwc-radio, mwc-button"
+        "mwc-textfield, mwc-radio, mwc-button",
       );
       if (formEl) {
         formEl.updateComplete.then(() => formEl.focus());
@@ -626,7 +626,7 @@ export class ESPHomeWizardDialog extends LitElement {
         await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
       }
       const response = await createConfiguration(
-        this._data as CreateConfigParams
+        this._data as CreateConfigParams,
       );
       this._configFilename = response.configuration;
       refreshDevices();
@@ -694,7 +694,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       try {
         const { configuration } = await createConfiguration(
-          this._data as CreateConfigParams
+          this._data as CreateConfigParams,
         );
         this._configFilename = configuration;
       } catch (err) {
