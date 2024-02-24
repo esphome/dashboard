@@ -24,7 +24,7 @@ const config = {
     entryFileNames: isProdBuild ? "[name]-[hash].js" : "[name].js",
     chunkFileNames: isProdBuild ? "c.[hash].js" : "[name].js",
     assetFileNames: isProdBuild ? "a.[hash].js" : "[name].js",
-    sourcemap: true
+    sourcemap: true,
   },
   preserveEntrySignatures: false,
   plugins: [
@@ -39,7 +39,7 @@ const config = {
             fs.ensureDirSync(distFontsPath);
             const targetFontPath = path.join(
               "esphome_dashboard/static/fonts/",
-              asset.pathname
+              asset.pathname,
             );
             fs.copySync(asset.absolutePath, targetFontPath);
             return "./static/fonts/" + asset.pathname;
@@ -56,7 +56,10 @@ const config = {
       languages: ["yaml"],
       sourcemap: false,
     }),
-    nodeResolve(),
+    nodeResolve({
+      browser: true,
+      preferBuiltins: false,
+    }),
     commonjs(),
     json(),
     manifest(),
