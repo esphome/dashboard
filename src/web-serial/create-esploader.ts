@@ -6,5 +6,6 @@ export const createESPLoader = (port: SerialPort) => {
     transport,
     baudrate: 115200,
     romBaudrate: 115200,
+    enableTracing: false,
   });
 };
