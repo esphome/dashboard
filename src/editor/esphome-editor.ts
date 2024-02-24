@@ -148,7 +148,7 @@ class ESPHomeEditor extends LitElement {
     });
     this.editor = monaco.editor.create(this.container, {
       value: "",
-      language: "yaml",
+      language: "esphome",
       theme: darkQuery.matches ? "esphome-dark" : "esphome",
       minimap: {
         enabled: false,
@@ -196,6 +196,7 @@ class ESPHomeEditor extends LitElement {
       if (!this.editorValidationScheduled || this.editorValidationRunning)
         return;
       if (this.editorActiveWebSocket == null) return;
+      if (this.editorActiveWebSocket.readyState != 1) return;
 
       this.sendAceStdin({
         type: "validate",
