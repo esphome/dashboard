@@ -186,8 +186,8 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
     try {
       try {
-        await esploader.main_fn();
-        await esploader.flash_id();
+        await esploader.main();
+        await esploader.flashId();
       } catch (err) {
         console.error(err);
         this._state = "done";

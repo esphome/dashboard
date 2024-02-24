@@ -669,8 +669,8 @@ export class ESPHomeWizardDialog extends LitElement {
       this._state = "connecting_webserial";
 
       try {
-        await esploader.main_fn();
-        await esploader.flash_id();
+        await esploader.main();
+        await esploader.flashId();
       } catch (err) {
         console.error(err);
         this._state = "connect_webserial";

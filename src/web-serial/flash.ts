@@ -43,7 +43,7 @@ export const flashFiles = async (
   writeProgress: (pct: number) => void,
 ) => {
   if (erase) {
-    await esploader.erase_flash();
+    await esploader.eraseFlash();
   }
 
   let totalSize = 0;
@@ -53,7 +53,7 @@ export const flashFiles = async (
   let totalWritten = 0;
   writeProgress(0);
 
-  await esploader.write_flash({
+  await esploader.writeFlash({
     fileArray,
     flashSize: "keep",
     flashMode: "keep",
