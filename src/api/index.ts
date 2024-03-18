@@ -18,7 +18,7 @@ const fetchApiBase = async (
     options = {};
   }
   options.credentials = "same-origin";
-  let csrfCookie = getCookie("_xsrf");
+  const csrfCookie = getCookie("_xsrf");
   if (csrfCookie) {
     if (!options.headers) {
       options.headers = {};
