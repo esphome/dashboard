@@ -1,3 +1,5 @@
+import { getCookie } from "../util/cookie";
+
 export class APIError extends Error {
   constructor(
     message: string,
@@ -16,6 +18,13 @@ const fetchApiBase = async (
     options = {};
   }
   options.credentials = "same-origin";
+  let csrfCookie = getCookie("_xsrf");
+  if (csrfCookie) {
+    if (!options.headers) {
+      options.headers = {};
+    }
+    options.headers["X-CSRFToken"] = csrfCookie;
+  }
   const resp = await fetch(path, options);
   if (!resp.ok) {
     throw new APIError(`Request not successful (${resp.status})`, resp.status);
