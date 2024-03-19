@@ -114,6 +114,7 @@
     <h3 id="login-head" class="center">Login</h3>
     <p class="center">Enter your {% if ha_addon %}Home Assistant{% else %}ESPHome{% end %} credentials.</p>
     <form action="./login" method="post" id="login-form">
+      {% module xsrf_form_html() %}
       {% if has_username or ha_addon %}
       <div class="row">
         <i class="material-icons prefix">person</i>
