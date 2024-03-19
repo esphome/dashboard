@@ -53,6 +53,8 @@ class ESPHomeMainView extends LitElement {
           <a href=${this.docsLink} target="_blank" rel="noreferrer"
             >${this.version} Documentation</a
           >
+          |
+          <a href="https://esphome.io/changelog/" target="_blank">Change Log</a>
         </div>
       </footer>
     `;
