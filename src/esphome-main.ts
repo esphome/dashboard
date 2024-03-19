@@ -54,7 +54,7 @@ class ESPHomeMainView extends LitElement {
             >${this.version} Documentation</a
           >
           |
-          <a href="https://github.com/esphome/esphome/releases" target="_blank">Change Log</a>
+          <a href="https://esphome.io/changelog/" target="_blank">Change Log</a>
         </div>
       </footer>
     `;
