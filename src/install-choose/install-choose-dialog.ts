@@ -2,6 +2,7 @@ import { LitElement, html, PropertyValues, css, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { until } from "lit/directives/until.js";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
+import { getOTAPorts } from "../api/ota-ports";
 import "@material/mwc-dialog";
 import "@material/mwc-list/mwc-list-item.js";
 import "@material/mwc-circular-progress";
@@ -28,11 +29,14 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @state() private _shouldDownloadFactory = false;
 
   @state() private _ports?: ServerSerialPort[];
+  @state() private _all_ota_ports?: ServerSerialPort[];
+  @state() private _ota_ports?: ServerSerialPort[];
 
   @state() private _state:
     | "pick_option"
     | "download_instructions"
-    | "pick_server_port" = "pick_option";
+    | "pick_server_port"
+    | "pick_ota_port" = "pick_option";
 
   @state() private _error?: string | TemplateResult;
 
@@ -57,8 +61,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
         <mwc-list-item
           twoline
           hasMeta
-          .port=${"OTA"}
-          @click=${this._handleLegacyOption}
+          @click=${this._handleOTAPorts}
         >
           <span>${this._ethernet ? "Via the network" : "Wirelessly"}</span>
           <span slot="secondary">Requires the device to be online</span>
@@ -118,6 +121,53 @@ class ESPHomeInstallChooseDialog extends LitElement {
           label="Cancel"
         ></mwc-button>
       `;
+    } else if (this._state === "pick_ota_port") {
+      heading = "Pick OTA Port";
+      content =
+        this._ota_ports === undefined
+          ? this._renderProgress("Loading serial devices")
+          : html`
+              ${this._isPico
+                ? html`
+                    <esphome-alert type="warning">
+                      Installation via the server requires the Pico to already
+                      run ESPHome.
+                    </esphome-alert>
+                  `
+                : ""}
+              ${this._ota_ports.length === 0
+                ? this._renderMessage(
+                    WARNING_ICON,
+                    html`
+                      No OTA devices found.
+                      <br /><br />
+                      This list automatically refreshes if you plug one in.
+                    `,
+                    false,
+                  )
+                : html`
+                    ${this._ota_ports.map(
+                      (port) => html`
+                        <mwc-list-item
+                          hasMeta
+                          .port=${port.port}
+                          @click=${this._handleLegacyOption}
+                        >
+                          <span>${port.port.substr(4)}</span>
+                          ${metaChevronRight}
+                        </mwc-list-item>
+                      `,
+                    )}
+                  `}
+              <mwc-button
+                no-attention
+                slot="primaryAction"
+                label="Back"
+                @click=${() => {
+                  this._state = "pick_option";
+                }}
+              ></mwc-button>
+            `;
     } else if (this._state === "pick_server_port") {
       heading = "Pick Server Port";
       content =
@@ -315,6 +365,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   private async _updateSerialPorts() {
     this._ports = await getSerialPorts();
+    this._all_ota_ports = await getOTAPorts();
   }
 
   protected willUpdate(changedProps: PropertyValues) {
@@ -392,6 +443,20 @@ class ESPHomeInstallChooseDialog extends LitElement {
       "--mdc-dialog-min-width",
       `${this.shadowRoot!.querySelector("mwc-list-item")!.clientWidth + 4}px`,
     );
+  }
+
+  private _handleOTAPorts() {
+    this._storeDialogWidth();
+    if (this._all_ota_ports === undefined)
+      return;
+    this._ota_ports = this._all_ota_ports.filter((x) => x.desc == "Over-The-Air: "+this.configuration.substr(0, this.configuration.length -5));
+    if (this._ota_ports.length == 0)
+    {
+      openInstallServerDialog(this.configuration, "OTA");
+    } else 
+    {
+      this._state = "pick_ota_port";
+    }
   }
 
   private _handleServerInstall() {

@@ -7,6 +7,7 @@ import "../components/remote-process";
 import "../components/process-dialog";
 import { openLogsDialog } from "../logs";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
+import { getOTAPorts } from "../api/ota-ports";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openLogsWebSerialDialog } from "../logs-webserial";
 import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
@@ -18,8 +19,10 @@ class ESPHomeLogsTargetDialog extends LitElement {
   @property() public configuration!: string;
 
   @state() private _ports?: ServerSerialPort[];
+  @state() private _all_ota_ports?: ServerSerialPort[];
+  @state() private _ota_ports?: ServerSerialPort[];
 
-  @state() private _show: "options" | "web_instructions" | "server_ports" =
+  @state() private _show: "options" | "web_instructions" | "server_ports" | "ota_ports" =
     "options";
 
   protected render() {
@@ -32,9 +35,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
         <mwc-list-item
           twoline
           hasMeta
-          dialogAction="close"
-          .port=${"OTA"}
-          @click=${this._pickPort}
+          @click=${this._showOTAPorts}
         >
           <span>Wirelessly</span>
           <span slot="secondary">Requires the device to be online</span>
@@ -105,6 +106,42 @@ class ESPHomeLogsTargetDialog extends LitElement {
           }}
         ></mwc-button>
       `;
+    } else if (this._show == "ota_ports") {
+      heading = "Pick OTA port";
+      content = html`${this._ota_ports === undefined
+          ? html`
+              <mwc-list-item>
+                <span>Loading ports…</span>
+              </mwc-list-item>
+            `
+          : this._ota_ports.length === 0
+            ? html`
+                <mwc-list-item>
+                  <span>No serial ports found.</span>
+                </mwc-list-item>
+              `
+            : this._ota_ports.map(
+                (port) => html`
+                  <mwc-list-item
+                    hasMeta
+                    dialogAction="close"
+                    .port=${port.port}
+                    @click=${this._pickPort}
+                  >
+                    <span>${port.port.substr(4)}</span>
+                    ${metaChevronRight}
+                  </mwc-list-item>
+                `,
+              )}
+
+        <mwc-button
+          no-attention
+          slot="primaryAction"
+          label="Back"
+          @click=${() => {
+            this._show = "options";
+          }}
+        ></mwc-button>`;
     } else {
       heading = "Pick server port";
       content = html`${this._ports === undefined
@@ -159,19 +196,41 @@ class ESPHomeLogsTargetDialog extends LitElement {
 
   protected firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
-    getSerialPorts().then((ports) => {
-      if (ports.length === 0 && !supportsWebSerial) {
-        // Automatically pick wireless option if no other options available
-        this._handleClose();
-        openLogsDialog(this.configuration, "OTA");
-      } else {
-        this._ports = ports;
-      }
+    getOTAPorts().then((ota_ports) => {
+      this._all_ota_ports = ota_ports;
+      getSerialPorts().then((ports) => {
+        if (ports.length === 0 && !supportsWebSerial) {
+          if (ota_ports.length == 1)
+          {
+            // Automatically pick wireless option if no other options available
+            this._handleClose();
+            openLogsDialog(this.configuration, "OTA");
+          } else 
+          {
+            this._showOTAPorts();
+          }
+        } else {
+          this._ports = ports;
+        }
+      });
     });
   }
 
   private _showServerPorts() {
     this._show = "server_ports";
+  }
+
+  private _showOTAPorts() {
+    if (this._all_ota_ports === undefined)
+      return;
+    this._ota_ports = this._all_ota_ports.filter((x) => x.desc == "Over-The-Air: "+this.configuration.substr(0, this.configuration.length -5));
+    if (this._ota_ports.length == 0)
+    {
+      openLogsDialog(this.configuration, "OTA");
+    } else 
+    {
+      this._show = "ota_ports";
+    }
   }
 
   private _pickPort(ev: Event) {
