@@ -222,7 +222,9 @@ class ESPHomeDevicesList extends LitElement {
       newList.sort((a, b) => {
         const a_name = a.friendly_name || a.name;
         const b_name = b.friendly_name || b.name;
-        return a_name.toLocaleLowerCase().localeCompare(b_name.toLocaleLowerCase());
+        return a_name
+          .toLocaleLowerCase()
+          .localeCompare(b_name.toLocaleLowerCase());
       });
 
       if (devices.importable) {
