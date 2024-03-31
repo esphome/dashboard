@@ -228,7 +228,7 @@ class ESPHomeDevicesList extends LitElement {
       });
 
       if (devices.importable) {
-        devices.importable.forEach((d) => newList.unshift(d));
+        newList = [...devices.importable, ...newList];
       }
 
       this._devices = newList;
