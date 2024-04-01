@@ -204,7 +204,7 @@ class ESPHomeDevicesList extends LitElement {
       let newName: string | undefined;
 
       const newDevices = new Set<string>();
-      const newList: Array<ImportableDevice | ConfiguredDevice> = [];
+      let newList: Array<ImportableDevice | ConfiguredDevice> = [];
 
       if (devices.configured) {
         devices.configured.forEach((d) => {
