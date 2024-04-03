@@ -204,11 +204,7 @@ class ESPHomeDevicesList extends LitElement {
       let newName: string | undefined;
 
       const newDevices = new Set<string>();
-      const newList: Array<ImportableDevice | ConfiguredDevice> = [];
-
-      if (devices.importable) {
-        devices.importable.forEach((d) => newList.push(d));
-      }
+      let newList: Array<ImportableDevice | ConfiguredDevice> = [];
 
       if (devices.configured) {
         devices.configured.forEach((d) => {
@@ -221,6 +217,18 @@ class ESPHomeDevicesList extends LitElement {
           }
           newList.push(d);
         });
+      }
+
+      newList.sort((a, b) => {
+        const a_name = a.friendly_name || a.name;
+        const b_name = b.friendly_name || b.name;
+        return a_name
+          .toLocaleLowerCase()
+          .localeCompare(b_name.toLocaleLowerCase());
+      });
+
+      if (devices.importable) {
+        newList = [...devices.importable, ...newList];
       }
 
       this._devices = newList;
