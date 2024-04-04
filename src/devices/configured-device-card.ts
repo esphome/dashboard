@@ -23,6 +23,7 @@ import { openShowApiKeyDialog } from "../show-api-key";
 import { openEditDialog } from "../editor";
 import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
+import { openPublishDialog } from "../publish";
 import {
   mdiBroom,
   mdiCodeBraces,
@@ -31,6 +32,7 @@ import {
   mdiRenameBox,
   mdiSpellcheck,
   mdiUploadNetwork,
+  mdiPublish,
 } from "@mdi/js";
 
 const UPDATE_TO_ICON = "➡️";
@@ -183,6 +185,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiBroom}
               ></esphome-svg-icon>
             </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Publish
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiPublish}
+              ></esphome-svg-icon>
+            </mwc-list-item>
             <li divider role="separator"></li>
             <mwc-list-item class="warning" graphic="icon">
               Delete
@@ -270,6 +279,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 6:
+        openPublishDialog(this.device.configuration);
+        break;
+      case 7:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
