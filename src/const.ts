@@ -10,7 +10,9 @@ export type SupportedPlatforms =
   | "ESP32S3"
   | "ESP32C3"
   | "ESP32C6"
-  | "RP2040";
+  | "RP2040"
+  | "BK72XX"
+  | "RTL87XX";
 
 export type PlatformData = {
   label: string;
@@ -63,6 +65,18 @@ export const supportedPlatforms: { [key in SupportedPlatforms]: PlatformData } =
       showInPickerTitle: false,
       showInDeviceTypePicker: true,
       defaultBoard: "rpipicow",
+    },
+    BK72XX: {
+      label: "BK72xx",
+      showInPickerTitle: true,
+      showInDeviceTypePicker: true,
+      defaultBoard: null,
+    },
+    RTL87XX: {
+      label: "RTL87xx",
+      showInPickerTitle: true,
+      showInDeviceTypePicker: true,
+      defaultBoard: null,
     },
   };
 
