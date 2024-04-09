@@ -29,7 +29,8 @@ export class ESPHomeSearch extends LitElement {
     css`
       esphome-text-input {
         --mdc-theme-primary: var(--primary-text-color);
-        width: 100vw;
+        width: calc(100% + calc(100vw - 100%));
+        max-width: 100%;
       }
       .mdc-text-field__icon {
         color: var(--primary-text-color);
