@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -z "$PORT" ]; then
+  PORT=5006
+fi
+
 # Stop on errors
 set -e
 
@@ -16,7 +20,7 @@ node build/render-index.mjs
 # Quit all background tasks when script exits
 trap "kill 0" EXIT
 
-npm exec -- serve -p 5006 dist &
+npm exec -- serve -p "$PORT" dist &
 
 cd ..
 
