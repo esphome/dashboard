@@ -9,8 +9,12 @@ on:
 
 jobs:
   deploy:
+    name: Build and publish to PyPi
     runs-on: ubuntu-latest
-
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4.1.4
       - name: Use Node.js
@@ -26,11 +30,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install setuptools wheel twine
       - run: npm ci
-      - run: script/build
-      - name: Build and publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          python setup.py sdist bdist_wheel
-          twine upload dist/*
+      - name: Build dashboard
+        run: script/build
+      - name: Build python package
+        run: python setup.py sdist bdist_wheel
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@v1.8.14
