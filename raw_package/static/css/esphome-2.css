@@ -112,7 +112,7 @@ esphome-main {
 
 .esphome-header img {
   width: auto;
-  height: 48px;
+  height: 38px;
 }
 
 #js-loading-indicator {
@@ -187,9 +187,6 @@ ul.browser-default li {
   .esphome-header {
     height: 52px;
     padding: 0 8px;
-  }
-  .esphome-header img {
-    height: 38px;
   }
   main {
     margin-top: 52px;
