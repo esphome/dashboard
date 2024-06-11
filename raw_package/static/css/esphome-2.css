@@ -24,7 +24,7 @@
   --mdc-theme-on-primary: white;
   --mdc-dialog-heading-ink-color: #212121;
   --mdc-dialog-content-ink-color: #212121;
-  --update-available-color: #2e3dd4;
+  --highlight-button-color: #2e3dd4;
   --status-connected: #444444;
   --status-new: #ffa500;
   --status-imported: #4caf50;
@@ -52,7 +52,7 @@
     --mdc-ripple-color: #282828;
     --mdc-text-field-fill-color: #3d3d3d;
     --mdc-theme-text-secondary-on-background: #e1e1e1;
-    --update-available-color: #5f7eeb;
+    --highlight-button-color: #5f7eeb;
     --status-connected: #cecece;
     --mdc-ripple-color: #bebebe;
   }
