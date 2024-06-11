@@ -37,7 +37,6 @@ const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
   NEW: "var(--status-new)",
   OFFLINE: "var(--alert-error-color)",
-  "UPDATE AVAILABLE": "var(--update-available-color)",
   ONLINE: "var(--status-connected)",
 };
 
@@ -81,11 +80,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
-      : this.onlineStatus && updateAvailable
-        ? "UPDATE AVAILABLE"
-        : this.onlineStatus
-          ? "ONLINE"
-          : "OFFLINE";
+      : this.onlineStatus
+        ? "ONLINE"
+        : "OFFLINE";
     return html`
       <esphome-card
         .status=${status}
@@ -108,7 +105,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 <div class="tooltip-container">
                   <mwc-button
                     @click=${this._handleInstall}
-                    class="update-available"
                     icon="system_update"
                     label="Update"
                   ></mwc-button>
@@ -230,9 +226,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         border-radius: 3px;
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
           Courier, monospace;
-      }
-      .card-actions mwc-button.update-available {
-        --mdc-theme-primary: var(--update-available-color);
       }
       esphome-button-menu {
         --mdc-theme-text-icon-on-background: var(--primary-text-color);

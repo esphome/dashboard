@@ -114,7 +114,7 @@ class EWESPDeviceCard extends LitElement {
         --mdc-theme-text-icon-on-background: var(--primary-text-color);
       }
       mwc-button.first-use {
-        --mdc-theme-primary: var(--update-available-color);
+        --mdc-theme-primary: var(--highlight-button-color);
       }
     `,
   ];
