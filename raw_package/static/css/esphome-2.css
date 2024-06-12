@@ -192,7 +192,7 @@ ul.browser-default li {
     margin-top: 52px;
   }
   .page-footer {
-    padding-bottom: 72px; /* allow reading footer while fab hovers */
+    padding: 0 8px 72px; /* allow reading footer while fab hovers */
     box-sizing: border-box;
     justify-content: center;
   }
