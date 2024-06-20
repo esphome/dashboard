@@ -65,7 +65,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           }
           const platformLower = platform.toLowerCase();
           const resp = await fetch(
-            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.bin`,
+            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.factory.bin`,
           );
           if (!resp.ok) {
             throw new Error(
