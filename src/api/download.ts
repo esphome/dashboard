@@ -22,4 +22,4 @@ export const getDownloadUrl = (configuration: string, type: DownloadType) =>
 export const getFactoryDownloadUrl = (configuration: string) =>
   `./download.bin?configuration=${encodeURIComponent(
     configuration,
-  )}&file=firmware-factory.bin`;
+  )}&file=firmware.factory.bin`;
