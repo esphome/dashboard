@@ -333,7 +333,10 @@ export class ESPHomeWizardDialog extends LitElement {
                   .platform=${key}
                   @click=${this._handlePickPlatformClick}
                 >
-                  <span>${supportedPlatforms[key as SupportedPlatforms].label}</span>
+                  <span
+                    >${supportedPlatforms[key as SupportedPlatforms]
+                      .label}</span
+                  >
                   ${metaChevronRight}
                 </mwc-list-item>
               `
