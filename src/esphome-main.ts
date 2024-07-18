@@ -13,7 +13,8 @@ class ESPHomeMainView extends LitElement {
   @property() logoutUrl?: string;
 
   private url = new URL(document.baseURI);
-  @state() private editing?: string = this.url.searchParams.get("edit") || undefined;
+  @state() private editing?: string =
+    this.url.searchParams.get("edit") || undefined;
 
   protected render() {
     if (this.editing) {
@@ -75,7 +76,7 @@ class ESPHomeMainView extends LitElement {
       const url = new URL(document.baseURI);
       const editing = url.searchParams.get("edit") || undefined;
       this.editing = editing;
-    })
+    });
 
     import("./editor/esphome-editor");
   }
