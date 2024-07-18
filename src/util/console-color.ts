@@ -28,7 +28,7 @@ export class ColoredConsole {
   }
 
   addLine(line: string) {
-    const re = /(?:\033|\\033)(?:\[(.*?)[@-~]|\].*?(?:\007|\033\\))/g;
+    const re = /(?:\x1b|\\033)(?:\[(.*?)[@-~]|\].*?(?:\x07|\x07\\))/g;
     let i = 0;
 
     if (this.state.carriageReturn) {
