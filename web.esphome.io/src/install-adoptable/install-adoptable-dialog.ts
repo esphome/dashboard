@@ -63,9 +63,20 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
               )} are supported.`,
             );
           }
+
+          const manifestResp = await fetch(
+            "https://firmware.esphome.io/esphome-web/manifest.json",
+          );
+          if (!manifestResp.ok) {
+            throw new Error(
+              `Downloading ESPHome manifest failed (${manifestResp.status})`,
+            );
+          }
+          const version = (await manifestResp.json())["version"];
+
           const platformLower = platform.toLowerCase();
           const resp = await fetch(
-            `https://firmware.esphome.io/esphome-web/${platformLower}/esphome-web-${platformLower}.factory.bin`,
+            `https://firmware.esphome.io/esphome-web/${version}/esphome-web-${platformLower}.factory.bin`,
           );
           if (!resp.ok) {
             throw new Error(
