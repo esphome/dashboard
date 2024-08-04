@@ -23,6 +23,7 @@ const fetchApiBase = async (
     if (!options.headers) {
       options.headers = {};
     }
+    // @ts-ignore
     options.headers["X-CSRFToken"] = csrfCookie;
   }
   const resp = await fetch(path, options);
