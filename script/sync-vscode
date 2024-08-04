@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copies all files which are shared between vscode and dashboard editor
 
