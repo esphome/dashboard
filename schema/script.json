@@ -11,12 +11,12 @@
               "id_type": {
                 "class": "script::Script"
               },
-              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [ID](https://esphome.io/guides/configuration-types.html#config-id) of the script. Use this to interact with the script using the script actions.\n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
+              "docs": "**[ID](https://esphome.io/guides/configuration-types.html#config-id)**: The [ID](https://esphome.io/guides/configuration-types.html#config-id) of the script. Use this to interact with the script using the script actions.\n\n*See also: [script Component](https://esphome.io/components/script.html)*"
             },
             "mode": {
               "key": "Optional",
               "default": "single",
-              "type": "enum",
+              "type": "enum",f
               "values": {
                 "single": {
                   "docs": "Do not start a new run. Issue a warning."
@@ -31,13 +31,13 @@
                   "docs": "Start a new, independent run in parallel with previous runs."
                 }
               },
-              "docs": "**string**: Controls what happens when a script is invoked while it is still running from one or more previous invocations. Default to `single`.\n  * `single`: Do not start a new run. Issue a warning.\n  \n  * `restart`: Start a new run after first stopping previous run.\n  \n  * `queued`: Start a new run after previous runs complete.\n  \n  * `parallel`: Start a new, independent run in parallel with previous runs.\n  \n  \n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
+              "docs": "**string**: Controls what happens when a script is invoked while it is still running from one or more previous invocations. Default to `single`.\n  * `single`: Do not start a new run. Issue a warning.\n  \n  * `restart`: Start a new run after first stopping previous run.\n  \n  * `queued`: Start a new run after previous runs complete.\n  \n  * `parallel`: Start a new, independent run in parallel with previous runs.\n  \n  \n\n*See also: [script Component](https://esphome.io/components/script.html)*"
             },
             "max_runs": {
               "key": "Optional",
               "type": "integer",
               "data_type": "positive_int",
-              "docs": "**int**: Allows limiting the maxiumun number of runs when using script modes `queued` and `parallel`, use value `0` for unlimited runs. Defaults to `0`.\n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
+              "docs": "**int**: Allows limiting the maxiumun number of runs when using script modes `queued` and `parallel`, use value `0` for unlimited runs. Defaults to `0`.\n\n*See also: [script Component](https://esphome.io/components/script.html)*"
             },
             "parameters": {
               "key": "String",
@@ -49,11 +49,11 @@
                   "string": {}
                 }
               },
-              "docs": "**[Script Parameters](https://esphome.io/guides/automations.html#script-parameters)**: A script can define one or more parameters that must be provided in order to execute. All parameters defined here are mandatory and must be given when calling the script.\n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
+              "docs": "**[Script Parameters](https://esphome.io/components/script.html#script-parameters)**: A script can define one or more parameters that must be provided in order to execute. All parameters defined here are mandatory and must be given when calling the script.\n\n*See also: [script Component](https://esphome.io/components/script.html)*"
             },
             "then": {
               "type": "trigger",
-              "docs": "**[Action](https://esphome.io/guides/automations.html#config-action)**: The action to perform.\n\n*See also: [script Component](https://esphome.io/guides/automations.html#script-component)*"
+              "docs": "**[Action](https://esphome.io/components/script.html#config-action)**: The action to perform.\n\n*See also: [script Component](https://esphome.io/components/script.html)*"
             }
           }
         },
@@ -78,7 +78,7 @@
             }
           }
         },
-        "docs": "This action executes the script. The script **mode** dictates what will happen if the script was already running.\n\n*See also: [`script.execute` Action](https://esphome.io/guides/automations.html#script-execute-action)*"
+        "docs": "This action executes the script. The script **mode** dictates what will happen if the script was already running.\n\n*See also: [`script.execute` Action](https://esphome.io/components/script.html#script-execute-action)*"
       },
       "stop": {
         "type": "schema",
@@ -92,7 +92,7 @@
             }
           }
         },
-        "docs": "This action allows you to stop a given script during execution. If the script is not running, it does nothing. This is useful if you want to stop a script that contains a `delay` action, `wait_until` action, or is inside a `while` loop, etc. You can also call this action from the script itself, and any subsequent action will not be executed.\n\n*See also: [`script.stop` Action](https://esphome.io/guides/automations.html#script-stop-action)*"
+        "docs": "This action allows you to stop a given script during execution. If the script is not running, it does nothing. This is useful if you want to stop a script that contains a `delay` action, `wait_until` action, or is inside a `while` loop, etc. You can also call this action from the script itself, and any subsequent action will not be executed.\n\n*See also: [`script.stop` Action](https://esphome.io/components/script.html#script-stop-action)*"
       },
       "wait": {
         "type": "schema",
@@ -106,7 +106,7 @@
             }
           }
         },
-        "docs": "This action suspends execution of the automation until a script has finished executing.\n\n*See also: [`script.wait` Action](https://esphome.io/guides/automations.html#script-wait-action)*"
+        "docs": "This action suspends execution of the automation until a script has finished executing.\n\n*See also: [`script.wait` Action](https://esphome.io/components/script.html#script-wait-action)*"
       }
     },
     "condition": {
@@ -122,7 +122,7 @@
             }
           }
         },
-        "docs": "This [condition](https://esphome.io/guides/automations.html#config-condition) allows you to check if a given script is running. In case scripts are run in `parallel`, this condition only tells you if at least one script of the given id is running, not how many. Not designed for use with [while](https://esphome.io/guides/automations.html#while-action), instead try [script.wait](https://esphome.io/guides/automations.html#script-wait-action).\n\n*See also: [`script.is_running` Condition](https://esphome.io/guides/automations.html#script-is-running-condition)*"
+        "docs": "This [condition](https://esphome.io/automations/actions#config-condition) allows you to check if a given script is running. In case scripts are run in `parallel`, this condition only tells you if at least one script of the given id is running, not how many. Not designed for use with [while](https://esphome.io/components/script.html#while-action), instead try [script.wait](https://esphome.io/components/script.html#script-wait-action).\n\n*See also: [`script.is_running` Condition](https://esphome.io/components/script.html#script-is-running-condition)*"
       }
     }
   }
