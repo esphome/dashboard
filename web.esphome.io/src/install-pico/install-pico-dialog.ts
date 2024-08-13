@@ -6,7 +6,8 @@ import { esphomeDialogStyles } from "../../../src/styles";
 import { picoPortFilters } from "../../../src/util/pico-port-filter";
 
 const MANIFEST_URL = "https://firmware.esphome.io/esphome-web/manifest.json";
-const DOWNLOAD_URL = "https://firmware.esphome.io/esphome-web/{VERSION}/esphome-web-rp2040.uf2";
+const DOWNLOAD_URL =
+  "https://firmware.esphome.io/esphome-web/{VERSION}/esphome-web-rp2040.uf2";
 
 @customElement("esphome-install-pico-dialog")
 class ESPHomeInstallPicoDialog extends LitElement {
@@ -35,7 +36,9 @@ class ESPHomeInstallPicoDialog extends LitElement {
           </li>
           <li>
             Download
-            ${this._downloadUrl ? html`<a href=${this._downloadUrl}>ESPHome for Pico</a>` : html`URL loading...`}
+            ${this._downloadUrl
+              ? html`<a href=${this._downloadUrl}>ESPHome for Pico</a>`
+              : html`URL loading...`}
           </li>
           <li>
             Drag the downloaded file to the RPI-RP2 USB drive. The installation
@@ -64,18 +67,20 @@ class ESPHomeInstallPicoDialog extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
-    fetch(MANIFEST_URL).then(async (resp) => {
-      if (!resp.ok) {
-        alert(`Error loading manifest: ${resp.statusText}`);
+    fetch(MANIFEST_URL)
+      .then(async (resp) => {
+        if (!resp.ok) {
+          alert(`Error loading manifest: ${resp.statusText}`);
+          this._close();
+          return;
+        }
+        const manifest = await resp.json();
+        this._downloadUrl = DOWNLOAD_URL.replace("{VERSION}", manifest.version);
+      })
+      .catch((err) => {
+        alert(`Error loading manifest: ${err.message}`);
         this._close();
-        return;
-      }
-      const manifest = await resp.json();
-      this._downloadUrl = DOWNLOAD_URL.replace("{VERSION}", manifest.version);
-    }).catch((err) => {
-      alert(`Error loading manifest: ${err.message}`);
-      this._close();
-    });
+      });
   }
 
   private async _continue() {
