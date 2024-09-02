@@ -35,4 +35,4 @@ jobs:
       - name: Build python package
         run: python setup.py sdist bdist_wheel
       - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.9.0
+        uses: pypa/gh-action-pypi-publish@v1.10.0
