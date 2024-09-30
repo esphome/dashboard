@@ -3,6 +3,10 @@ import { StreamError, streamLogs } from "../api";
 import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { fireEvent } from "../util/fire-event";
 
+export class ESPHomeBlurSecrets {
+  public static enabled = false;
+}
+
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
   public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
@@ -28,7 +32,9 @@ class ESPHomeRemoteProcess extends HTMLElement {
         }
         ${coloredConsoleStyles}
       </style>
-      <div class="log"></div>
+      <div class="log${
+        ESPHomeBlurSecrets.enabled ? " blur-secrets" : ""
+      }"></div>
     `;
 
     const coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);
