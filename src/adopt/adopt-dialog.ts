@@ -37,12 +37,15 @@ class ESPHomeAdoptDialog extends LitElement {
     let content;
 
     if (this._state === "ask") {
-      heading = "Adopt device";
+      heading = "Take Control";
       content = html`
         <div>
-          Adopting ${this.device.friendly_name || this.device.name} will create
-          an ESPHome configuration for this device. This allows you to install
-          updates and customize the original firmware.
+          Taking control of ${this.device.friendly_name || this.device.name}
+          will create an ESPHome configuration for this device. This allows
+          you to install updates and customize the original firmware.
+          You will lose access to vendor provided firmware updates and will
+          be resposible for installing yourself when there are new ESPHome updates
+          or you want to change the configuration.
         </div>
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
@@ -95,7 +98,7 @@ class ESPHomeAdoptDialog extends LitElement {
 
         <mwc-button
           slot="primaryAction"
-          .label=${this._busy ? "Adopting…" : "Adopt"}
+          .label=${this._busy ? "Taking control…" : "Take control"}
           @click=${this._handleAdopt}
           .disabled=${this._needsWifiSecrets &&
           this._hasWifiSecrets === undefined}
@@ -115,7 +118,7 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Configuration created";
       content = html`
         <div>
-          To finish adoption of ${this._nameOverride || this.device.name}, the
+          To finish taking control of ${this._nameOverride || this.device.name}, the
           new configuration needs to be installed on the device.
         </div>
         ${this._apiKey

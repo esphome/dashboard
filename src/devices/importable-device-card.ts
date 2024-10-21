@@ -32,7 +32,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
         <div class="card-actions">
           <mwc-button
             icon="file_download"
-            label="Adopt"
+            label="Take Control"
             @click=${this._handleAdopt}
           ></mwc-button>
         </div>
