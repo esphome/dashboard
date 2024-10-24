@@ -41,11 +41,12 @@ class ESPHomeAdoptDialog extends LitElement {
       content = html`
         <div>
           Taking control of ${this.device.friendly_name || this.device.name}
-          will create an ESPHome configuration for this device. This allows you
-          to install updates and customize the original firmware. You will lose
-          access to vendor provided firmware updates and will be resposible for
-          installing yourself when there are new ESPHome updates or you want to
-          change the configuration.
+          will create a local ESPHome configuration for this device. This gives
+          you full control over the configuration. You will lose access to
+          vendor-provided firmware updates and will have to manually compile and
+          update the device in the ESPHome dashboard. You can always revert to
+          vendor-provided updates, but this will require re-installing the
+          device.
         </div>
 
         ${this._error ? html`<div class="error">${this._error}</div>` : ""}
