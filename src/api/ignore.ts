@@ -1,7 +1,7 @@
-import { fetchApiJson } from ".";
+import { fetchApiBase } from ".";
 
 export const ignoreDevice = (configuration: string, ignore: boolean) =>
-  fetchApiJson<{ configuration: string }>("./ignore-device", {
+  fetchApiBase<{ configuration: string }>("./ignore-device", {
     method: "post",
     body: JSON.stringify({ name: configuration, ignore }),
   });
