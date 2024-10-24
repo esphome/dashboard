@@ -1,6 +1,6 @@
 import { animate } from "@lit-labs/motion";
 import { LitElement, html, css } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
+import { customElement, property, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import {
   subscribeDevices,
@@ -19,6 +19,8 @@ import { ESPHomeSearch } from "../components/esphome-search";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
+  @property() public showIgnoredDevices = false;
+
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
 
@@ -73,7 +75,7 @@ class ESPHomeDevicesList extends LitElement {
           ${this._isImportable(device)
             ? html`<esphome-importable-device-card
                 .device=${device}
-                @adopted=${this._updateDevices}
+                @device-updated=${this._updateDevices}
               ></esphome-importable-device-card>`
             : html`<esphome-configured-device-card
                 ${animate({
@@ -101,6 +103,10 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
+    if (!this.showIgnoredDevices && "ignored" in item && item.ignored) {
+      return false;
+    }
+
     if (this._search?.value) {
       const searchValue = this._search!.value.toLowerCase();
       if (item.name!.toLowerCase().indexOf(searchValue) >= 0) {

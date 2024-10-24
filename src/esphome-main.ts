@@ -14,6 +14,9 @@ class ESPHomeMainView extends LitElement {
 
   @state() private editing?: string;
 
+  // temp for development set ot true
+  @state() private showIgnoredDevices = true;
+
   protected render() {
     if (this.editing) {
       return html`
@@ -34,11 +37,17 @@ class ESPHomeMainView extends LitElement {
       <header class="esphome-header">
         <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
         <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+        <esphome-header-menu
+          .logoutUrl=${this.logoutUrl}
+          .showIgnoredDevices=${this.showIgnoredDevices}
+          @toggle-ignored-devices=${this._toggleIgnoredDevices}
+        ></esphome-header-menu>
       </header>
 
       <main>
-        <esphome-devices-list></esphome-devices-list>
+        <esphome-devices-list
+          .showIgnoredDevices=${this.showIgnoredDevices}
+        ></esphome-devices-list>
       </main>
 
       <esphome-fab></esphome-fab>
@@ -71,6 +80,10 @@ class ESPHomeMainView extends LitElement {
 
   private _handleEditorClose() {
     this.editing = undefined;
+  }
+
+  private _toggleIgnoredDevices() {
+    this.showIgnoredDevices = !this.showIgnoredDevices;
   }
 }
 
