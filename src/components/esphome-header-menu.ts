@@ -18,7 +18,9 @@ const isWideListener = window.matchMedia("(min-width: 641px)");
 export class ESPHomeHeaderMenu extends LitElement {
   @property({ type: String, attribute: "logout-url" }) logoutUrl?: string;
 
-  @property() showIgnoredDevices = false;
+  @property() showDiscoveredDevices = false;
+
+  @property() discoveredDeviceCount = 0;
 
   @state() private _isWide = isWideListener.matches;
 
@@ -57,9 +59,9 @@ export class ESPHomeHeaderMenu extends LitElement {
 
         <mwc-list-item graphic="icon"
           ><mwc-icon slot="graphic">filter_list</mwc-icon>
-          ${this.showIgnoredDevices
-            ? "Hide ignored devices"
-            : "Show ignored devices"}
+          ${this.showDiscoveredDevices
+            ? "Hide discovered devices"
+            : "Show discovered devices"}
         </mwc-list-item>
 
         ${!this._isWide
@@ -125,7 +127,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     if (this._isWide) {
       switch (ev.detail.index) {
         case 0:
-          fireEvent(this, "toggle-ignored-devices");
+          fireEvent(this, "toggle-discovered-devices");
           break;
       }
       return;
@@ -135,7 +137,7 @@ export class ESPHomeHeaderMenu extends LitElement {
         this._handleSearch();
         break;
       case 1:
-        fireEvent(this, "toggle-ignored-devices");
+        fireEvent(this, "toggle-discovered-devices");
         break;
       case 2:
         this._handleUpdateAll();

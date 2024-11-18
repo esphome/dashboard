@@ -1,5 +1,5 @@
 import { animate } from "@lit-labs/motion";
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import {
@@ -16,10 +16,11 @@ import "./importable-device-card";
 import "../components/esphome-search";
 import { MetadataRefresher } from "./device-metadata-refresher";
 import { ESPHomeSearch } from "../components/esphome-search";
+import { fireEvent } from "../util/fire-event";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
-  @property() public showIgnoredDevices = false;
+  @property() public showDiscoveredDevices = false;
 
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
@@ -36,7 +37,12 @@ class ESPHomeDevicesList extends LitElement {
   };
 
   protected render() {
-    if (this._devices?.length === 0) {
+    // catch when 1st load there is no data yet, and we don't want to show no devices message
+    if (!this._devices) {
+      return html``;
+    }
+
+    if (this._devices.length === 0) {
       return html`
         <div class="no-result-container">
           <h5>Welcome to ESPHome</h5>
@@ -53,13 +59,11 @@ class ESPHomeDevicesList extends LitElement {
       `;
     }
 
-    // catch when 1st load there is no data yet, and we don't want to show no devices message
-    if (!this._devices) {
-      return html``;
-    }
-
     const filtered: Array<ImportableDevice | ConfiguredDevice> =
-      this._devices!.filter((item) => this._filter(item));
+      this._devices.filter((item) => this._filter(item));
+    const discoveredCount = this._devices.filter(
+      (item) => this._isImportable(item) && !item.ignored,
+    ).length;
 
     let htmlClass = "no-result-container";
     let htmlDevices = html`
@@ -98,12 +102,26 @@ class ESPHomeDevicesList extends LitElement {
 
     return html`
       <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+      ${!this.showDiscoveredDevices && discoveredCount > 0
+        ? html`
+            <div class="show-discovered-bar">
+              <span>
+                Discovered ${discoveredCount}
+                device${discoveredCount == 1 ? "" : "s"}
+              </span>
+              <mwc-button
+                label="Show"
+                @click=${this._handleShowDiscovered}
+              ></mwc-button>
+            </div>
+          `
+        : nothing}
       <div class="${htmlClass}">${htmlDevices}</div>
     `;
   }
 
   private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
-    if (!this.showIgnoredDevices && "ignored" in item && item.ignored) {
+    if (!this.showDiscoveredDevices && this._isImportable(item)) {
       return false;
     }
 
@@ -136,6 +154,10 @@ class ESPHomeDevicesList extends LitElement {
       return false;
     }
     return true;
+  }
+
+  private _handleShowDiscovered() {
+    fireEvent(this, "toggle-discovered-devices");
   }
 
   private _handleOpenWizardClick() {
@@ -187,6 +209,15 @@ class ESPHomeDevicesList extends LitElement {
       margin-top: 16px;
       margin-bottom: 16px;
     }
+    .show-discovered-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background-color: var(--primary-footer-bg-color);
+      border-top: 1px solid var(--divider-color);
+      color: var(--primary-text-color);
+    }
   `;
 
   private async _updateDevices() {
@@ -234,7 +265,20 @@ class ESPHomeDevicesList extends LitElement {
       });
 
       if (devices.importable) {
-        newList = [...devices.importable, ...newList];
+        newList = [
+          ...devices.importable.sort((a, b) => {
+            // Sort by "ignored" status (ignored items should be at the end)
+            if (a.ignored !== b.ignored) {
+              return Number(a.ignored) - Number(b.ignored); // false (0) comes before true (1)
+            }
+
+            // If "ignored" status is the same, sort by "name"
+            return a.name
+              .toLocaleLowerCase()
+              .localeCompare(b.name.toLocaleLowerCase());
+          }),
+          ...newList,
+        ];
       }
 
       this._devices = newList;
