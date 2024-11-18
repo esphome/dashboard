@@ -17,7 +17,10 @@ class ESPHomeImportableDeviceCard extends LitElement {
 
   protected render() {
     return html`
-      <esphome-card status="DISCOVERED" ?ignored=${this.device.ignored}>
+      <esphome-card
+        .status=${this.device.ignored ? "IGNORED DISCOVERY" : "DISCOVERED"}
+        ?ignored=${this.device.ignored}
+      >
         <div class="card-header">
           ${this.device.friendly_name || this.device.name}
         </div>

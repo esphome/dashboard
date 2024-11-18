@@ -14,8 +14,7 @@ class ESPHomeMainView extends LitElement {
 
   @state() private editing?: string;
 
-  // temp for development set ot true
-  @state() private showIgnoredDevices = true;
+  @state() private showDiscoveredDevices = false;
 
   protected render() {
     if (this.editing) {
@@ -39,14 +38,15 @@ class ESPHomeMainView extends LitElement {
         <div class="flex"></div>
         <esphome-header-menu
           .logoutUrl=${this.logoutUrl}
-          .showIgnoredDevices=${this.showIgnoredDevices}
-          @toggle-ignored-devices=${this._toggleIgnoredDevices}
+          .showDiscoveredDevices=${this.showDiscoveredDevices}
+          @toggle-discovered-devices=${this._toggleDiscoveredDevices}
         ></esphome-header-menu>
       </header>
 
       <main>
         <esphome-devices-list
-          .showIgnoredDevices=${this.showIgnoredDevices}
+          .showDiscoveredDevices=${this.showDiscoveredDevices}
+          @toggle-discovered-devices=${this._toggleDiscoveredDevices}
         ></esphome-devices-list>
       </main>
 
@@ -82,8 +82,8 @@ class ESPHomeMainView extends LitElement {
     this.editing = undefined;
   }
 
-  private _toggleIgnoredDevices() {
-    this.showIgnoredDevices = !this.showIgnoredDevices;
+  private _toggleDiscoveredDevices() {
+    this.showDiscoveredDevices = !this.showDiscoveredDevices;
   }
 }
 
