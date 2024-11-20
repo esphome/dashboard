@@ -213,10 +213,10 @@ class ESPHomeDevicesList extends LitElement {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px;
+      padding: 8px 8px 8px 16px;
       background-color: var(--primary-footer-bg-color);
       border-top: 1px solid var(--divider-color);
-      color: var(--primary-text-color);
+      color: var(--mdc-theme-on-primary);
     }
   `;
 
