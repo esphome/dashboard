@@ -265,16 +265,16 @@ monaco.languages.setMonarchTokensProvider("esphome", {
     ],
 
     // First line of a Block Style
-    multiString: [[/^( +).+$/, "string", "@multiStringContinued.$1"]],
+    multiString: [[/^([ \t]+).+$/, "string", "@multiStringContinued.$1"]],
 
     // Further lines of a Block Style
     //   Workaround for indentation detection
     multiStringContinued: [
       [
-        /^( *).+$/,
+        /^([ \t]*).+$/,
         {
           cases: {
-            "$1~$S2 *": "string",
+            "$1~$S2[ \t]*": "string",
             "@default": { token: "@rematch", next: "@popall" },
           },
         },
