@@ -351,7 +351,7 @@ monaco.languages.setMonarchTokensProvider("esphome", {
 
     lambdaNewline: [
       [/./, {token: ""}],
-      [/$/, {token: "white", next: "@pop", nextEmbedded: "@pop" }],
+      [/$/, {token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
     ],
   },
 });
