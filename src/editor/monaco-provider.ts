@@ -349,13 +349,13 @@ monaco.languages.setMonarchTokensProvider("esphome", {
         /^([ \t]+).+$/,
         {
           token: "@rematch",
-          switchTo: "@lambdaBlockMain.$1",
+          switchTo: "@lambdaBlockContinued.$1",
           nextEmbedded: "cpp",
         },
       ],
     ],
 
-    lambdaBlockMain: [
+    lambdaBlockContinued: [
       [/^($S2).+$/, { token: "" }],
       [
         /^(?!$S2).+$/,
