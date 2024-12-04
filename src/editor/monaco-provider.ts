@@ -332,7 +332,7 @@ monaco.languages.setMonarchTokensProvider("esphome", {
     lambda: [
       [
         /[ \t]*[>|][0-9]*[+-]?[ \t]*$/,
-        { token: "operators", switchTo: "@lambdaBlockFirst" },
+        { token: "operators", switchTo: "@lambdaBlock" },
       ],
       [
         /[ \t]*(['"])/,
@@ -344,10 +344,14 @@ monaco.languages.setMonarchTokensProvider("esphome", {
       ],
     ],
 
-    lambdaBlockFirst: [
+    lambdaBlock: [
       [
         /^([ \t]+).+$/,
-        { token: "@rematch", switchTo: "@lambdaBlockMain.$1", nextEmbedded: "cpp", },
+        {
+          token: "@rematch",
+          switchTo: "@lambdaBlockMain.$1",
+          nextEmbedded: "cpp",
+        },
       ],
     ],
 
