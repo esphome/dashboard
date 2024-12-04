@@ -323,7 +323,7 @@ monaco.languages.setMonarchTokensProvider("esphome", {
     ],
 
     tagHandle: [
-      [/\!lambda[ \t]/, "tag", "@lambda"],
+      [/\!lambda /, "tag", "@lambda"],
       [/\![^ ]*/, "tag"],
     ],
 
