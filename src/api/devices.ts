@@ -23,6 +23,7 @@ export interface ImportableDevice {
   project_name: string;
   project_version: string;
   network: "ethernet" | "wifi";
+  ignored: boolean;
 }
 
 export interface ListDevicesResult {

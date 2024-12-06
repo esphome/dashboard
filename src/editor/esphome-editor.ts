@@ -227,14 +227,21 @@ class ESPHomeEditor extends LitElement {
           const markers: monaco.editor.IMarkerData[] = [];
 
           for (const v of msg.validation_errors.reverse()) {
-            markers.push({
+            const marker: monaco.editor.IMarkerData = {
               message: v.message,
               severity: monaco.MarkerSeverity.Error,
-              startLineNumber: v.range?.start_line + 1 ?? 1,
-              startColumn: v.range?.start_col + 1 ?? 1,
-              endLineNumber: v.range?.end_line + 1 ?? 1,
-              endColumn: v.range?.end_col + 11 ?? 1,
-            });
+              startLineNumber: 1,
+              startColumn: 1,
+              endLineNumber: 1,
+              endColumn: 1,
+            };
+            if (v.range) {
+              marker.startLineNumber = v.range.start_line + 1;
+              marker.startColumn = v.range.start_col + 1;
+              marker.endLineNumber = v.range.end_line + 1;
+              marker.endColumn = v.range.end_col + 11;
+            }
+            markers.push(marker);
           }
           for (const v of msg.yaml_errors) {
             let yamlError = (v.message as string).match(

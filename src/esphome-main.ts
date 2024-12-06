@@ -14,6 +14,8 @@ class ESPHomeMainView extends LitElement {
 
   @state() private editing?: string;
 
+  @state() private showDiscoveredDevices = false;
+
   protected render() {
     if (this.editing) {
       return html`
@@ -34,11 +36,18 @@ class ESPHomeMainView extends LitElement {
       <header class="esphome-header">
         <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
         <div class="flex"></div>
-        <esphome-header-menu .logoutUrl=${this.logoutUrl}></esphome-header-menu>
+        <esphome-header-menu
+          .logoutUrl=${this.logoutUrl}
+          .showDiscoveredDevices=${this.showDiscoveredDevices}
+          @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+        ></esphome-header-menu>
       </header>
 
       <main>
-        <esphome-devices-list></esphome-devices-list>
+        <esphome-devices-list
+          .showDiscoveredDevices=${this.showDiscoveredDevices}
+          @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+        ></esphome-devices-list>
       </main>
 
       <esphome-fab></esphome-fab>
@@ -71,6 +80,10 @@ class ESPHomeMainView extends LitElement {
 
   private _handleEditorClose() {
     this.editing = undefined;
+  }
+
+  private _toggleDiscoveredDevices() {
+    this.showDiscoveredDevices = !this.showDiscoveredDevices;
   }
 }
 
