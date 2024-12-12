@@ -1,6 +1,6 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { LitElement, html } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "@material/mwc-snackbar";
@@ -12,6 +12,7 @@ import type { Snackbar } from "@material/mwc-snackbar";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
+import "./streamer-warning";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -25,6 +26,33 @@ const darkQuery: MediaQueryList = window.matchMedia(
   "(prefers-color-scheme: dark)",
 );
 
+const commonStyle = html`
+  <style>
+    html,
+    body {
+      height: 100vh;
+      overflow: hidden;
+    }
+    .esphome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-content: stretch;
+    }
+    .esphome-header h2 {
+      line-height: 100%;
+      /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
+      padding: 0.8rem 0.5rem 1rem 0.5rem;
+      margin: 0px;
+      font-size: 1.4rem;
+      flex: 1 1 auto;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+`;
+
 @customElement("esphome-editor")
 class ESPHomeEditor extends LitElement {
   private editor?: monaco.editor.IStandaloneCodeEditor;
@@ -34,42 +62,25 @@ class ESPHomeEditor extends LitElement {
   private editorActiveSecrets = false;
 
   @property() public fileName!: string;
+  @property({ type: Boolean }) streamerMode = false;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
   @query(".esphome-header", true) private editor_header!: HTMLElement;
+  @state() private _showSecrets = false;
 
   createRenderRoot() {
     return this;
   }
 
-  protected render() {
-    const isSecrets =
-      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+  private _isSecrets() {
+    return this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
+  }
 
+  protected render() {
+    const isSecrets = this._isSecrets();
     return html`
+      ${commonStyle}
       <style>
-        html,
-        body {
-          height: 100vh;
-          overflow: hidden;
-        }
-        .esphome-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          align-content: stretch;
-        }
-        h2 {
-          line-height: 100%;
-          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
-          padding: 0.8rem 0.5rem 1rem 0.5rem;
-          margin: 0px;
-          font-size: 1.4rem;
-          flex: 1 1 auto;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
         mwc-icon-button {
           --mdc-icon-button-size: 32px;
         }
@@ -101,7 +112,22 @@ class ESPHomeEditor extends LitElement {
             ></mwc-button>`}
       </div>
       <main></main>
+      ${isSecrets && this.streamerMode && !this._showSecrets
+        ? html`<streamer-warning
+            @closed=${this.__handleSecretsWarning}
+          ></streamer-warning>`
+        : ""}
     `;
+  }
+
+  private __handleSecretsWarning(e: CustomEvent) {
+    if (e.detail.action === "close") {
+      this._handleClose();
+    } else if (e.detail.action === "accept") {
+      this._showSecrets = true;
+      // as the 1st update was skipped, fire firstUpdated again
+      setTimeout(() => this.firstUpdated(), 50);
+    }
   }
 
   public getValue() {
@@ -137,6 +163,10 @@ class ESPHomeEditor extends LitElement {
   }
 
   firstUpdated() {
+    const isSecrets = this._isSecrets();
+    if (isSecrets && this.streamerMode && !this._showSecrets) {
+      return;
+    }
     // @ts-ignore
     self.MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
@@ -158,9 +188,6 @@ class ESPHomeEditor extends LitElement {
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
-
-    const isSecrets =
-      this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
 
     getFile(this.fileName).then((response) => {
       if (response === null && isSecrets) {
