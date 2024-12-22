@@ -26,7 +26,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
         </div>
         <div>To get the factory file of your ESPHome project:</div>
         <ol>
-          <li>Open your ESPHome dashboard</li>
+          <li>Open your ESPHome Device Builder</li>
           <li>
             Find your device card click on menu (<mwc-icon>more_vert</mwc-icon>)
           </li>
