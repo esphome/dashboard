@@ -217,13 +217,13 @@ export class ESPHomeWizardDialog extends LitElement {
       <div>
         ${allowsWebSerial
           ? "Your browser does not support WebSerial."
-          : "You are not browsing the dashboard over a secure connection (HTTPS)."}
+          : "You are not browsing the ESPHome Device Builder over a secure connection (HTTPS)."}
         This prevents ESPHome from being able to install this on devices
         connected to this computer.
       </div>
       <div>
         You will still be able to install ESPHome by connecting the device to
-        the computer that runs the ESPHome dashboard.
+        the computer that runs the ESPHome Device Builder.
       </div>
       <div>
         Alternatively, you can use ESPHome Web to prepare a device for being

@@ -31,9 +31,9 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           you connect it to your network.
         </div>
         <div>
-          Once installed, your ESPHome dashboard will prompt you to adopt the
-          device. This will set up a configuration for the device and allows you
-          to further manage it wirelessly.
+          Once installed, your ESPHome Device Builder will show the device and
+          allow you to "take control". This will create a local configuration
+          for the device and allows you to further manage it wirelessly.
         </div>
 
         <mwc-button

@@ -1,6 +1,6 @@
 # ESPHome Dashboard
 
-The ESPHome dashboard is a user facing dashboard embedded in ESPHome. It allows users to easily create and manage their configurations.
+The ESPHome Device Builder is a user facing dashboard embedded in ESPHome. It allows users to easily create and manage their configurations.
 
 This repository contains the JavaScript frontend and is embedded in ESPHome releases.
 

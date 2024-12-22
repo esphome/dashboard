@@ -48,7 +48,7 @@ class ESPHomeInstallPicoDialog extends LitElement {
         </ol>
         <div>
           Click CONTINUE to connect it to the Wi-Fi network. Once connected, it
-          will automatically show up on your ESPHome dashboard.
+          will automatically show up on your ESPHome Device Builder.
         </div>
         <mwc-button
           slot="primaryAction"
