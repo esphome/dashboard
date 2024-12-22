@@ -88,8 +88,8 @@ class EWDashboard extends LitElement {
               <b>Prepare for first use</b>
             </p>
             <p>
-              Install ESPHome on your device to add it to your ESPHome
-              dashboard. Once added, a device can be configured and updated
+              Install ESPHome on your device to manage it from your ESPHome
+              Device Builder. Once added, a device can be configured and updated
               wirelessly.
             </p>
           </div>

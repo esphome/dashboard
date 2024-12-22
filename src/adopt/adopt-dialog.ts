@@ -44,8 +44,8 @@ class ESPHomeAdoptDialog extends LitElement {
           will create a local ESPHome configuration for this device. This gives
           you full control over the configuration. You will lose access to
           vendor-provided firmware updates and will have to manually compile and
-          update the device in the ESPHome dashboard. You can always revert to
-          vendor-provided updates, but this will require re-installing the
+          update the device in the ESPHome Device Builder. You can always revert
+          to vendor-provided updates, but this will require re-installing the
           device.
         </div>
 
