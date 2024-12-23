@@ -1,8 +1,11 @@
-import { LitElement, html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { LitElement, PropertyValues, html } from "lit";
+import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
-import { openInstallWebDialog } from "../../../src/install-web";
+import {
+  openInstallWebDialog,
+  preloadInstallWebDialog,
+} from "../../../src/install-web";
 import { FileToFlash } from "../../../src/web-serial/flash";
 import { esphomeDialogStyles } from "../../../src/styles";
 
@@ -17,6 +20,14 @@ const SUPPORTED_PLATFORMS = [
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
   public port!: SerialPort;
+
+  @state()
+  private _installRequested = false;
+
+  protected firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    preloadInstallWebDialog();
+  }
 
   protected render() {
     return html`
@@ -40,18 +51,21 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           slot="primaryAction"
           label="Install"
           @click=${this._handleInstall}
+          .disabled=${this._installRequested}
         ></mwc-button>
         <mwc-button
           no-attention
           slot="secondaryAction"
           dialogAction="close"
           label="Close"
+          .disabled=${this._installRequested}
         ></mwc-button>
       </mwc-dialog>
     `;
   }
 
   private async _handleInstall() {
+    this._installRequested = true;
     openInstallWebDialog(
       {
         port: this.port,
@@ -96,7 +110,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
 
           return [{ data, address: 0 }];
         },
-        onClose(success) {
+        async onClose(success) {
           if (!success) {
             return;
           }

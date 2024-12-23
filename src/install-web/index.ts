@@ -2,14 +2,14 @@ import { openNoPortPickedDialog } from "../no-port-picked";
 import { createESPLoader } from "../web-serial/create-esploader";
 import type { ESPHomeInstallWebDialog } from "./install-web-dialog";
 
-const preload = () => import("./install-web-dialog");
+export const preloadInstallWebDialog = () => import("./install-web-dialog");
 
 export const openInstallWebDialog = async (
   params: ESPHomeInstallWebDialog["params"],
   // Called if a port has been picked and the dialog will be opened.
   onDialogOpen?: () => void,
 ): Promise<void> => {
-  preload();
+  preloadInstallWebDialog();
 
   let port = params.port;
 
