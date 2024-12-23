@@ -18,7 +18,6 @@ import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
 import { chipFamilyToPlatform } from "../const";
 import { esphomeDialogStyles } from "../styles";
-import { resetSerialDevice } from "../web-serial/reset-serial-device";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -239,16 +238,21 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      await resetSerialDevice(esploader.transport);
+      await esploader.hardReset();
       this._state = "done";
     } finally {
-      if (!this.params.port) {
-        console.log("Closing port");
-        try {
-          await esploader.transport.disconnect();
-        } catch (err) {
-          // can happen if we already closed in disconnect
+      console.log("Closing port");
+      try {
+        await esploader.transport.disconnect();
+        // If a port was passed in, we open it again
+        if (this.params.port) {
+          console.log("Reopening port");
+          await this.params.port.open({
+            baudRate: esploader.transport.baudrate,
+          });
         }
+      } catch (err) {
+        // can happen if we already closed in disconnect
       }
     }
   }
