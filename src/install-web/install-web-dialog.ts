@@ -18,6 +18,7 @@ import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
 import { chipFamilyToPlatform } from "../const";
 import { esphomeDialogStyles } from "../styles";
+import { sleep } from "../util/sleep";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -247,6 +248,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
         // If a port was passed in, we open it again
         if (this.params.port) {
           console.log("Reopening port");
+          await sleep(1000);
           await this.params.port.open({
             baudRate: esploader.transport.baudrate,
           });
