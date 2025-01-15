@@ -1,9 +1,11 @@
 import { LitElement, html, PropertyValues, css, TemplateResult } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-circular-progress";
 import "@material/mwc-button";
 import type { ESPLoader } from "esptool-js";
+import "./install-console";
+import type { InstallConsole } from "./install-console";
 import {
   compileConfiguration,
   Configuration,
@@ -43,6 +45,9 @@ export class ESPHomeInstallWebDialog extends LitElement {
   };
 
   @property() public esploader!: ESPLoader;
+  @property() public stream?: ReadableStream;
+
+  @query("install-console") private _console!: InstallConsole;
 
   @state() private _writeProgress?: number;
 
@@ -55,6 +60,23 @@ export class ESPHomeInstallWebDialog extends LitElement {
   @state() private _error?: string | TemplateResult;
 
   private _platform?: ValueOf<typeof chipFamilyToPlatform>;
+
+  @property() private _showLogs = false;
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // this._console won't be defined until after the first paint
+    setTimeout(() => {
+      this.stream?.pipeTo(
+        new WritableStream({
+          write: (chunk) => {
+            this._console.addLine(chunk);
+          },
+        }),
+      );
+    });
+  }
 
   protected render() {
     let heading;
@@ -106,6 +128,8 @@ export class ESPHomeInstallWebDialog extends LitElement {
       }
     }
 
+    hideActions = false;
+
     return html`
       <mwc-dialog
         open
@@ -115,6 +139,14 @@ export class ESPHomeInstallWebDialog extends LitElement {
         .hideActions=${hideActions}
       >
         ${content}
+        <install-console
+          class="${this._showLogs ? "" : "hidden"}"
+        ></install-console>
+        <mwc-button
+          slot="secondaryAction"
+          @click=${this._toggleLogs}
+          label="${this._showLogs ? "Hide" : "Show"} Logs"
+        ></mwc-button>
       </mwc-dialog>
     `;
   }
@@ -148,7 +180,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose
+      ${showClose || true
         ? html`
             <mwc-button
               slot="primaryAction"
@@ -303,6 +335,10 @@ export class ESPHomeInstallWebDialog extends LitElement {
     return await getConfigurationFiles(configuration);
   }
 
+  private _toggleLogs() {
+    this._showLogs = !this._showLogs;
+  }
+
   private _close() {
     this.shadowRoot!.querySelector("mwc-dialog")!.close();
   }
@@ -317,6 +353,18 @@ export class ESPHomeInstallWebDialog extends LitElement {
   static styles = [
     esphomeDialogStyles,
     css`
+      install-console {
+        width: 500px;
+        height: 300px;
+        margin-top: 16px;
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+      }
+      install-console.hidden {
+        margin-top: 0;
+        width: 230px;
+        height: 0;
+      }
       mwc-list-item {
         margin: 0 -20px;
       }
