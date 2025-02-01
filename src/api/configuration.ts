@@ -30,13 +30,21 @@ export const createConfiguration = (params: CreateConfigParams) =>
     body: JSON.stringify(params),
   });
 
-export const getConfiguration = (configuration: string) =>
-  fetchApiJson<Configuration>(`./info?configuration=${configuration}`);
+export const getConfiguration = (configuration: string) => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: configuration,
+  });
+  return fetchApiJson<Configuration>(`./info?${urlSearchParams.toString()}`);
+};
 
-export const deleteConfiguration = (configuration: string) =>
-  fetchApiText(`./delete?configuration=${configuration}`, {
+export const deleteConfiguration = (configuration: string) => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: configuration,
+  });
+  return fetchApiText(`./delete?${urlSearchParams.toString()}`, {
     method: "post",
   });
+};
 
 export const compileConfiguration = (
   configuration: string,
@@ -62,7 +70,10 @@ export const getJsonConfig = async (
   filename: string,
 ): Promise<Record<string, any> | null> => {
   try {
-    return fetchApiJson(`./json-config?configuration=${filename}`);
+    const urlSearchParams = new URLSearchParams({
+      configuration: filename,
+    });
+    return fetchApiJson(`./json-config?${urlSearchParams.toString()}`);
   } catch (err) {
     if (err instanceof APIError && err.status === 404) {
       return null;
