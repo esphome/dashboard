@@ -12,7 +12,9 @@ class ESPHomeMainView extends LitElement {
 
   @property() logoutUrl?: string;
 
-  @state() private editing?: string;
+  private url = new URL(document.baseURI);
+  @state() private editing?: string =
+    this.url.searchParams.get("edit") || undefined;
 
   @state() private showDiscoveredDevices = false;
 
@@ -72,13 +74,25 @@ class ESPHomeMainView extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
+
     document.body.addEventListener<any>("edit-file", (ev) => {
+      this.url.searchParams.set("edit", ev.detail);
+      window.history.pushState({}, "", this.url.toString());
       this.editing = ev.detail;
     });
+
+    window.addEventListener("popstate", () => {
+      const url = new URL(document.baseURI);
+      const editing = url.searchParams.get("edit") || undefined;
+      this.editing = editing;
+    });
+
     import("./editor/esphome-editor");
   }
 
   private _handleEditorClose() {
+    this.url.searchParams.delete("edit");
+    window.history.pushState({}, "", this.url.toString());
     this.editing = undefined;
   }
 
