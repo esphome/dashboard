@@ -3,14 +3,14 @@ import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { ESPHomeBlurSecrets } from "./components/remote-process";
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
   @property() version = "unknown";
-
   @property() docsLink = "";
-
   @property() logoutUrl?: string;
+  @property({ type: Boolean }) streamerMode = false;
 
   @state() private editing?: string;
 
@@ -29,6 +29,7 @@ class ESPHomeMainView extends LitElement {
         <esphome-editor
           @close=${this._handleEditorClose}
           fileName=${this.editing}
+          .streamerMode=${this.streamerMode}
         ></esphome-editor>
       `;
     }
@@ -68,6 +69,11 @@ class ESPHomeMainView extends LitElement {
   }
   createRenderRoot() {
     return this;
+  }
+
+  connectedCallback() {
+    ESPHomeBlurSecrets.enabled = this.streamerMode;
+    super.connectedCallback();
   }
 
   protected firstUpdated(changedProps: PropertyValues): void {
