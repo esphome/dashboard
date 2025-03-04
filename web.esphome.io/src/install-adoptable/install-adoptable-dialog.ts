@@ -14,7 +14,13 @@ const SUPPORTED_PLATFORMS = [
   "ESP32",
   "ESP32S2",
   "ESP32S3",
+  "ESP32C2",
   "ESP32C3",
+  "ESP32C5",
+  "ESP32C6",
+  "ESP32C61",
+  "ESP32H2",
+  "ESP32P4",
 ];
 
 @customElement("esphome-install-adoptable-dialog")
