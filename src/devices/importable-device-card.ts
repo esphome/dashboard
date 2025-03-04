@@ -74,7 +74,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
     switch (ev.detail.index) {
       case 0:
         ignoreDevice(this.device.name, !this.device.ignored).then(() =>
-          fireEvent(this, "device-updated"),
+          fireEvent(this, "device-updated")
         );
         break;
     }
