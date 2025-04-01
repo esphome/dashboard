@@ -22,73 +22,74 @@ export type PlatformData = {
 };
 
 // Platforms supported by ESPHome
-export const supportedPlatforms: { [key in SupportedPlatforms]: PlatformData } =
-  {
-    ESP32: {
-      label: "ESP32",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: "esp32dev",
-    },
-    ESP32S2: {
-      label: "ESP32-S2",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: "esp32-s2-saola-1",
-    },
-    ESP32S3: {
-      label: "ESP32-S3",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: "esp32-s3-devkitc-1",
-    },
-    ESP32C3: {
-      label: "ESP32-C3",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: "esp32-c3-devkitm-1",
-    },
-    ESP32C6: {
-      label: "ESP32-C6",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: false,
-      defaultBoard: "esp32-c6-devkitc-1",
-    },
-    ESP8266: {
-      label: "ESP8266",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: "esp01_1m",
-    },
-    RP2040: {
-      label: "Raspberry Pi Pico W",
-      showInPickerTitle: false,
-      showInDeviceTypePicker: true,
-      defaultBoard: "rpipicow",
-    },
-    BK72XX: {
-      label: "BK72xx",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: null,
-    },
-    RTL87XX: {
-      label: "RTL87xx",
-      showInPickerTitle: true,
-      showInDeviceTypePicker: true,
-      defaultBoard: null,
-    },
-  };
+export const supportedPlatforms = {
+  ESP32: {
+    label: "ESP32",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32dev",
+  },
+  ESP32S2: {
+    label: "ESP32-S2",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32-s2-saola-1",
+  },
+  ESP32S3: {
+    label: "ESP32-S3",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32-s3-devkitc-1",
+  },
+  ESP32C3: {
+    label: "ESP32-C3",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32-c3-devkitm-1",
+  },
+  ESP32C6: {
+    label: "ESP32-C6",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: false,
+    defaultBoard: "esp32-c6-devkitc-1",
+  },
+  ESP8266: {
+    label: "ESP8266",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp01_1m",
+  },
+  RP2040: {
+    label: "Raspberry Pi Pico W",
+    showInPickerTitle: false,
+    showInDeviceTypePicker: true,
+    defaultBoard: "rpipicow",
+  },
+  BK72XX: {
+    label: "BK72xx",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: null,
+  },
+  RTL87XX: {
+    label: "RTL87xx",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: null,
+  },
+} as const satisfies { [key in SupportedPlatforms]: PlatformData };
 
 // esploader.chip.CHIP_NAME mapped to ESPHome platform names
-export const chipFamilyToPlatform: { [key: string]: SupportedPlatforms } = {
+export const chipFamilyToPlatform = {
   ESP32: "ESP32",
   "ESP32-S2": "ESP32S2",
   "ESP32-S3": "ESP32S3",
   "ESP32-C3": "ESP32C3",
   "ESP32-C6": "ESP32C6",
   ESP8266: "ESP8266",
-};
+} as const satisfies { [key: string]: SupportedPlatforms };
+
+export type ChipFamily = keyof typeof chipFamilyToPlatform;
 
 export const metaChevronRight = svg`
   <svg class="svg-fill-primary" width="24" height="24" viewBox="0 0 24 24" slot="meta">
