@@ -573,6 +573,16 @@
               },
               "docs": "**string**: The PlatformIO board ID that should be used. Choose the appropriate board from [this list](https://registry.platformio.org/packages/platforms/platformio/espressif32/boards) (the icon next to the name can be used to copy the board ID). *This only affects pin aliases, flash size and some internal settings*, if unsure choose a generic board from Espressif such as `esp32dev`.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
             },
+            "flash_size": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The amount of flash memory available on the ESP32 board/module. One of `2MB`, `4MB`, `8MB`, `16MB` or `32MB`. Defaults to `4MB`. **Warning: specifying a size larger than that available on your board will cause the ESP32 to fail to boot.**"
+            },
+            "partitions": {
+              "key": "Optional",
+              "type": "string",
+              "docs": "**string**: The name of (optionally including the path to) the file containing the partitioning scheme to be used. When not specified, partitions are automatically generated based on `flash_size`."
+            },
             "variant": {
               "key": "Optional",
               "type": "enum",
@@ -607,6 +617,7 @@
                     },
                     "platform_version": {
                       "key": "Optional",
+                      "type": "string",
                       "docs": "**string**: The version of the [platformio/espressif32](https://github.com/platformio/platform-espressif32/releases/) package to use.\n\n*See also: [ESP-IDF framework](https://esphome.io/components/esp32.html#id2)*"
                     },
                     "sdkconfig_options": {
@@ -688,6 +699,7 @@
                     },
                     "platform_version": {
                       "key": "Optional",
+                      "type": "string",
                       "docs": "**string**: The version of the [platformio/espressif32](https://github.com/platformio/platform-espressif32/releases/) package to use.\n\n*See also: [Arduino framework](https://esphome.io/components/esp32.html#id1)*"
                     }
                   }
