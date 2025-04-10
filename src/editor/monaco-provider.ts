@@ -356,11 +356,11 @@ monaco.languages.setMonarchTokensProvider("esphome", {
     ],
 
     lambdaBlockContinued: [
-      [/^($S2).+$/, { token: "" }],
       [
         /^(?!$S2).+$/,
         { token: "@rematch", next: "@pop", nextEmbedded: "@pop" },
       ],
+      [/^($S2).+$/, { token: "" }],
     ],
 
     lambdaString: [
