@@ -1,16 +1,27 @@
-import { LitElement, html, css } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { LitElement, html, css, PropertyValues } from "lit";
+import { customElement, query, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
 import "@material/mwc-icon";
-import { openInstallWebDialog } from "../../../src/install-web";
+import {
+  openInstallWebDialog,
+  preloadInstallWebDialog,
+} from "../../../src/install-web";
 import { esphomeDialogStyles } from "../../../src/styles";
 
 @customElement("esphome-install-upload-dialog")
 class ESPHomeInstallUploadDialog extends LitElement {
   public port!: SerialPort;
 
+  @state()
+  private _installRequested = false;
+
   @query("input") private _input!: HTMLInputElement;
+
+  protected firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    preloadInstallWebDialog();
+  }
 
   protected render() {
     return html`
@@ -22,11 +33,16 @@ class ESPHomeInstallUploadDialog extends LitElement {
       >
         <div>Select the project that you want to install on your device.</div>
         <div>
-          <input type="file" accept=".bin" @change=${this._fileChanged} />
+          <input
+            type="file"
+            accept=".bin"
+            @change=${this._fileChanged}
+            .disabled=${this._installRequested}
+          />
         </div>
         <div>To get the factory file of your ESPHome project:</div>
         <ol>
-          <li>Open your ESPHome dashboard</li>
+          <li>Open your ESPHome Device Builder</li>
           <li>
             Find your device card click on menu (<mwc-icon>more_vert</mwc-icon>)
           </li>
@@ -38,12 +54,14 @@ class ESPHomeInstallUploadDialog extends LitElement {
           slot="primaryAction"
           label="Install"
           @click=${this._handleInstall}
+          .disabled=${this._installRequested}
         ></mwc-button>
         <mwc-button
           no-attention
           slot="secondaryAction"
           dialogAction="close"
           label="Close"
+          .disabled=${this._installRequested}
         ></mwc-button>
       </mwc-dialog>
     `;
@@ -54,6 +72,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
   }
 
   private async _handleInstall() {
+    this._installRequested = true;
     const input = this._input;
 
     if (!input.files || input.files.length === 0) {

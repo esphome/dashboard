@@ -83,7 +83,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
         </mwc-list-item>
 
         <mwc-list-item twoline hasMeta @click=${this._handleServerInstall}>
-          <span>Plug into the computer running ESPHome Dashboard</span>
+          <span>Plug into the computer running ESPHome Device Builder</span>
           <span slot="secondary">
             ${`For devices connected via USB to the server${
               this._isPico ? " and running ESPHome" : ""

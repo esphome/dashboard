@@ -27,11 +27,13 @@ import {
   mdiBroom,
   mdiCodeBraces,
   mdiDelete,
+  mdiDownload,
   mdiKey,
   mdiRenameBox,
   mdiSpellcheck,
   mdiUploadNetwork,
 } from "@mdi/js";
+import { DownloadType, getDownloadUrl } from "../api/download";
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -179,6 +181,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiBroom}
               ></esphome-svg-icon>
             </mwc-list-item>
+            <mwc-list-item graphic="icon">
+              Download ELF file
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiDownload}
+              ></esphome-svg-icon>
+            </mwc-list-item>
             <li divider role="separator"></li>
             <mwc-list-item class="warning" graphic="icon">
               Delete
@@ -263,6 +272,20 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 6:
+        const type: DownloadType = {
+          title: "ELF File",
+          description: "ELF File",
+          file: "firmware.elf",
+          download: `${this.device.name}.elf`,
+        };
+        const link = document.createElement("a");
+        link.download = type.download;
+        link.href = getDownloadUrl(this.device.configuration, type);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        break;
+      case 7:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,

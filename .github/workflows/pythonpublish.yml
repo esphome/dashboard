@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Use Node.js
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.3.0
         with:
           node-version: 16
       - name: Set up Python
@@ -35,4 +35,4 @@ jobs:
       - name: Build python package
         run: python setup.py sdist bdist_wheel
       - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.12.2
+        uses: pypa/gh-action-pypi-publish@v1.12.4

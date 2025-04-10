@@ -10,8 +10,8 @@ with open(os.path.join(here, "README.md"), encoding="utf-8") as readme:
 
 setup(
     name="esphome-dashboard",
-    version="20241120.0",
-    description="ESPHome dashboard",
+    version="20250212.0",
+    description="ESPHome Device Builder",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/esphome/dashboard",
