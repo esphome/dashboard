@@ -266,7 +266,7 @@ monaco.languages.setMonarchTokensProvider("esphome", {
     ],
 
     // First line of a Block Style
-    multiString: [[/^([ \t]*).*?$/, "string", "@multiStringContinued.$1"]],
+    multiString: [[/^([ \t]+).*?$/, "string", "@multiStringContinued.$1"]],
 
     // Further lines of a Block Style
     //   Workaround for indentation detection
@@ -339,7 +339,7 @@ monaco.languages.setMonarchTokensProvider("esphome", {
 
     lambdaBlock: [
       [
-        /^([ \t]*).*?$/,
+        /^([ \t]+).*?$/,
         {
           token: "@rematch",
           switchTo: "@lambdaBlockContinued.$1",
