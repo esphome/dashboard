@@ -18,6 +18,7 @@ import {
   supportedPlatforms,
   PlatformData,
   chipFamilyToPlatform,
+  ChipFamily,
 } from "../const";
 import {
   compileConfiguration,
@@ -325,22 +326,20 @@ export class ESPHomeWizardDialog extends LitElement {
       </div>
 
       <mwc-list class="platforms">
-        ${Object.keys(supportedPlatforms).map((key) =>
-          supportedPlatforms[key as SupportedPlatforms].showInDeviceTypePicker
-            ? html`
-                <mwc-list-item
-                  hasMeta
-                  .platform=${key}
-                  @click=${this._handlePickPlatformClick}
-                >
-                  <span
-                    >${supportedPlatforms[key as SupportedPlatforms]
-                      .label}</span
+        ${(Object.keys(supportedPlatforms) as SupportedPlatforms[]).map(
+          (key) =>
+            supportedPlatforms[key].showInDeviceTypePicker
+              ? html`
+                  <mwc-list-item
+                    hasMeta
+                    .platform=${key}
+                    @click=${this._handlePickPlatformClick}
                   >
-                  ${metaChevronRight}
-                </mwc-list-item>
-              `
-            : html``,
+                    <span>${supportedPlatforms[key].label}</span>
+                    ${metaChevronRight}
+                  </mwc-list-item>
+                `
+              : html``,
         )}
       </mwc-list>
 
@@ -686,8 +685,8 @@ export class ESPHomeWizardDialog extends LitElement {
 
       let platform: SupportedPlatforms;
       const chipFamily = esploader.chip.CHIP_NAME;
-      if (Object.keys(chipFamilyToPlatform).includes(chipFamily)) {
-        platform = chipFamilyToPlatform[chipFamily];
+      if (chipFamily in chipFamilyToPlatform) {
+        platform = chipFamilyToPlatform[chipFamily as ChipFamily];
       } else {
         this._state = "connect_webserial";
         this._error = `Unable to identify the connected device (${esploader.chip.CHIP_NAME}).`;

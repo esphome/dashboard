@@ -2,6 +2,7 @@ import { LitElement, PropertyValues, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
+import { supportedPlatforms, SupportedPlatforms } from "../../../src/const";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -9,13 +10,9 @@ import {
 import { FileToFlash } from "../../../src/web-serial/flash";
 import { esphomeDialogStyles } from "../../../src/styles";
 
-const SUPPORTED_PLATFORMS = [
-  "ESP8266",
-  "ESP32",
-  "ESP32S2",
-  "ESP32S3",
-  "ESP32C3",
-];
+const SUPPORTED_PLATFORMS = Object.keys(
+  supportedPlatforms,
+) as SupportedPlatforms[];
 
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
@@ -69,7 +66,9 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
     openInstallWebDialog(
       {
         port: this.port,
-        async filesCallback(platform: string): Promise<FileToFlash[]> {
+        async filesCallback(
+          platform: SupportedPlatforms,
+        ): Promise<FileToFlash[]> {
           if (!SUPPORTED_PLATFORMS.includes(platform)) {
             throw new Error(
               `Unsupported platform ${platform}. Only ${SUPPORTED_PLATFORMS.join(

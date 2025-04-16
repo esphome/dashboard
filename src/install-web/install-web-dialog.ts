@@ -16,14 +16,16 @@ import {
 } from "../web-serial/flash";
 import { openCompileDialog } from "../compile";
 import { openInstallWebDialog } from ".";
-import { chipFamilyToPlatform } from "../const";
+import {
+  chipFamilyToPlatform,
+  SupportedPlatforms,
+  type ChipFamily,
+} from "../const";
 import { esphomeDialogStyles } from "../styles";
 import { sleep } from "../util/sleep";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
-
-type ValueOf<T> = T[keyof T];
 
 @customElement("esphome-install-web-dialog")
 export class ESPHomeInstallWebDialog extends LitElement {
@@ -32,9 +34,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
     port?: SerialPort;
     // Pass either a configuration or a filesCallback. filesCallback receives platform of ESP device.
     configuration?: string;
-    filesCallback?: (
-      platform: ValueOf<typeof chipFamilyToPlatform>,
-    ) => Promise<FileToFlash[]>;
+    filesCallback?: (platform: SupportedPlatforms) => Promise<FileToFlash[]>;
     // Should the device be erased before installation
     erase?: boolean;
     // Callback when the dialog is closed. Note that if success is false,
@@ -54,7 +54,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   @state() private _error?: string | TemplateResult;
 
-  private _platform?: ValueOf<typeof chipFamilyToPlatform>;
+  private _platform?: SupportedPlatforms;
 
   protected render() {
     let heading;
@@ -196,11 +196,12 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      this._platform = chipFamilyToPlatform[esploader.chip.CHIP_NAME];
+      this._platform =
+        chipFamilyToPlatform[esploader.chip.CHIP_NAME as ChipFamily];
 
       const filesCallback =
         this.params.filesCallback ||
-        ((platform: ValueOf<typeof chipFamilyToPlatform>) =>
+        ((platform: SupportedPlatforms) =>
           this._getFilesForConfiguration(this.params.configuration!, platform));
 
       let files: FileToFlash[] | undefined = [];
@@ -261,7 +262,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _getFilesForConfiguration(
     configuration: string,
-    platform: ValueOf<typeof chipFamilyToPlatform>,
+    platform: SupportedPlatforms,
   ): Promise<FileToFlash[] | undefined> {
     let info: Configuration;
 
