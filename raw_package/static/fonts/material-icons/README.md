@@ -6,7 +6,7 @@ The recommended way to use the Material Icons font is by linking to the web font
 ```
 
 Read more in our full usage guide:
-http://google.github.io/material-design-icons/#icon-font-for-the-web
+https://developers.google.com/fonts/docs/material_icons
 
 Source:
 https://github.com/google/material-design-icons
