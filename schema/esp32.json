@@ -138,6 +138,12 @@
                 "esp32-c3-m1i-kit": {
                   "docs": "Ai-Thinker ESP-C3-M1-I-Kit"
                 },
+                "esp32-c6-devkitc-1": {
+                  "docs": "Espressif ESP32-C6-DevKitC-1"
+                },
+                "esp32-c6-devkitm-1": {
+                  "docs": "Espressif ESP32-C6-DevKitM-1"
+                },
                 "esp32cam": {
                   "docs": "AI Thinker ESP32-CAM"
                 },
@@ -585,7 +591,7 @@
                 "ESP32C6": null,
                 "ESP32H2": null
               },
-              "docs": "**string**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c3` and `esp32h2`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
+              "docs": "**string**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c3`, `esp32c6` and `esp32h2`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
             },
             "framework": {
               "key": "Optional",
