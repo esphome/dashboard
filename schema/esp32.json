@@ -598,10 +598,13 @@
                 "ESP32S3": null,
                 "ESP32C2": null,
                 "ESP32C3": null,
+                "ESP32C5": null,
                 "ESP32C6": null,
-                "ESP32H2": null
+                "ESP32C61": null,
+                "ESP32H2": null,
+                "ESP32P4": null
               },
-              "docs": "**string**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c3`, `esp32c6` and `esp32h2`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
+              "docs": "**string**: The variant of the ESP32 that is used on this board. One of `esp32`, `esp32s2`, `esp32s3`, `esp32c2`, `esp32c3`, `esp32c6`, `esp32h2` and `esp32p4`. Defaults to the variant that is detected from the board, if a board that\u2019s unknown to ESPHome is used, this option is mandatory.\n\n*See also: [ESP32 Platform](https://esphome.io/components/esp32.html#configuration-variables)*"
             },
             "framework": {
               "key": "Optional",
