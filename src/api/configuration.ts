@@ -85,12 +85,11 @@ export const getJsonConfig = async (
 export const getConfigurationApiKey = async (
   configuration: string,
 ): Promise<string | null> => {
-  let config;
   try {
-    config = await getJsonConfig(configuration);
+    const config = await getJsonConfig(configuration);
+    return config?.api?.encryption?.key ?? null;
   } catch {
     // invalid config or config not found.
     return null;
   }
-  return config?.api?.encryption?.key || null;
 };
