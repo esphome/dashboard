@@ -210,7 +210,7 @@ class ESPHomeEditor extends LitElement {
   sendAceStdin(data: any) {
     let send = JSON.stringify({
       type: "stdin",
-      data: JSON.stringify(data) + "\n",
+      data: `${JSON.stringify(data)}\n`,
     });
     this.editorActiveWebSocket!.send(send);
   }

@@ -124,7 +124,7 @@ export class EwtConsole extends HTMLElement {
     const command = input.value;
     const encoder = new TextEncoder();
     const writer = this.port.writable!.getWriter();
-    await writer.write(encoder.encode(command + "\r\n"));
+    await writer.write(encoder.encode(`${command}\r\n`));
     this._console!.addLine(`> ${command}\r\n`);
     input.value = "";
     input.focus();

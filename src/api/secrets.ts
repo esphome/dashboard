@@ -38,5 +38,5 @@ export const appendSecrets = async (
     toAppend += `${key}: ${JSON.stringify(value)}\n`;
   }
 
-  await writeFile(SECRETS_FILE, content + toAppend);
+  await writeFile(SECRETS_FILE, `${content}${toAppend}`);
 };

@@ -72,7 +72,7 @@ export class HoverHandler {
       }
       return;
     } catch (error) {
-      console.log("Hover:" + error);
+      console.log(`Hover: ${error}`);
     }
     return;
   }
