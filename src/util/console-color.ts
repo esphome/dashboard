@@ -207,7 +207,7 @@ export class ColoredConsole {
   }
 
   addLine(line: string) {
-    // processing of lines is deferred for performance reasons
+    // Processing of lines is deferred for performance reasons
     if (this.state.lines.length == 0) {
       setTimeout(() => this.processLines(), 0);
     }
