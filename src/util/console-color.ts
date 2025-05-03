@@ -227,7 +227,6 @@ export const coloredConsoleStyles = `
     line-height: 1.45;
     border-radius: 3px;
     white-space: pre-wrap;
-    will-change: scroll-position;
     overflow-wrap: break-word;
     color: #ddd;
   }
