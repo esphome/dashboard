@@ -300,7 +300,7 @@ export class ESPHomeSchema {
                 yield [name, componentRegistry[name]];
               } else {
                 yield [
-                  componentName.split(".").reverse().join(".") + "." + name,
+                  `${componentName.split(".").reverse().join(".")}.${name}`,
                   componentRegistry[name],
                 ];
               }

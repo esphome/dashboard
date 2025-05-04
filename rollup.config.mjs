@@ -42,7 +42,7 @@ const config = {
               asset.pathname,
             );
             fs.copySync(asset.absolutePath, targetFontPath);
-            return "./static/fonts/" + asset.pathname;
+            return `./static/fonts/${asset.pathname}`;
           },
         }),
       ],
