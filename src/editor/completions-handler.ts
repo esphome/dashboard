@@ -180,7 +180,7 @@ export class CompletionsHandler {
       result.push(
         createCompletion(
           component,
-          component + "\n  ",
+          `${component}\n  `,
           CompletionItemKind.EnumMember,
           c.components[component].docs,
           true,
@@ -205,7 +205,7 @@ export class CompletionsHandler {
       result.push(
         createCompletion(
           platformName,
-          platformName + ":\n  - platform: ",
+          `${platformName}:\n  - platform: `,
           CompletionItemKind.Class,
           platformList[platformName].docs,
           true,
@@ -242,7 +242,7 @@ export class CompletionsHandler {
       result.push(
         createCompletion(
           componentName,
-          componentName + ":\n  ",
+          `${componentName}:\n  `,
           CompletionItemKind.Field,
           components[componentName].docs,
           true,
@@ -330,7 +330,7 @@ export class CompletionsHandler {
 
           return this.getConfigVars(cv.schema, null, cv.is_list);
         }
-        throw new Error("Expected map not found in " + pathIndex);
+        throw new Error(`Expected map not found in ${pathIndex}`);
       }
     } else if (cv.type === "enum") {
       return this.addEnums(cv);
@@ -365,7 +365,7 @@ export class CompletionsHandler {
         return [
           createCompletion(
             cv.typed_key,
-            cv.typed_key + ": ",
+            `${cv.typed_key}: `,
             CompletionItemKind.Enum,
             undefined,
             true,
@@ -380,7 +380,7 @@ export class CompletionsHandler {
           result.push(
             createCompletion(
               schema_type,
-              schema_type + "\n",
+              `${schema_type}\n`,
               CompletionItemKind.EnumMember,
               undefined,
               true,
@@ -408,7 +408,7 @@ export class CompletionsHandler {
           result.push(
             createCompletion(
               cv.typed_key,
-              cv.typed_key + ": ",
+              `${cv.typed_key}: `,
               CompletionItemKind.EnumMember,
               undefined,
               true,
@@ -540,7 +540,7 @@ export class CompletionsHandler {
           if (strType === "string") {
             insertText = '!lambda return "${0:<string expression>}";';
           } else {
-            insertText = "!lambda return ${0:<" + strType + " expression>};";
+            insertText = `!lambda return \${0:<${strType} expression>};`;
           }
         }
       }
@@ -564,9 +564,10 @@ export class CompletionsHandler {
         this.position.character - 2,
         this.position.character,
       ) === "- "
-    )
-      return key + ": ";
-    return "- " + key + ": ";
+    ) {
+      return `${key}: `;
+    }
+    return `- ${key}: `;
   }
 
   private async getConfigVars(
@@ -585,7 +586,7 @@ export class CompletionsHandler {
         continue;
       }
 
-      let insertText = isList ? this.arrayItemPrefixed(prop) : prop + ": ";
+      let insertText = isList ? this.arrayItemPrefixed(prop) : `${prop}: `;
       let triggerSuggest = false;
       let snippet = false;
 
@@ -597,13 +598,13 @@ export class CompletionsHandler {
         triggerSuggest = true;
       } else {
         if (config.key === "Required") {
-          sortText = "00" + prop;
+          sortText = `00${prop}`;
           detail = "Required";
         } else {
           if (config.type === "integer" || config.type === "string") {
             if (config.default) {
               snippet = true;
-              insertText += "${0:" + config.default + "}";
+              insertText += `\${0:${config.default}}`;
             }
           }
         }
@@ -618,7 +619,7 @@ export class CompletionsHandler {
           break;
         case "typed":
           kind = CompletionItemKind.Struct;
-          insertText += "\n  " + config.typed_key + ": ";
+          insertText += `\n  ${config.typed_key}: `;
           triggerSuggest = true;
           break;
         case "enum":
@@ -677,7 +678,7 @@ export class CompletionsHandler {
     pathElement: YAMLMap | null,
     node: Node,
   ): Promise<CompletionItem[]> {
-    console.log("component: " + path[pathIndex]);
+    console.log(`component: ${path[pathIndex]}`);
     const cv = await coreSchema.findConfigVar(
       schema,
       path[pathIndex],
@@ -735,7 +736,7 @@ export class CompletionsHandler {
     cv: ConfigVarTrigger,
     node: Node,
   ): Promise<CompletionItem[]> {
-    console.log("trigger: " + path[pathIndex]);
+    console.log(`trigger: ${path[pathIndex]}`);
     // trigger can be a single item on a map or otherwise a seq.
     if (isSeq(pathNode)) {
       let innerNode: Node | null = null;
