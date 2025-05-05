@@ -252,6 +252,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
           await sleep(1000);
           await this.params.port.open({
             baudRate: esploader.transport.baudrate,
+            bufferSize: 8192,
           });
         }
       } catch (err) {
