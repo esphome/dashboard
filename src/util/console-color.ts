@@ -26,7 +26,9 @@ export class ColoredConsole {
   constructor(public targetElement: HTMLElement) {}
 
   logs(): string {
-    return this.targetElement.innerText;
+    const logs = this.targetElement.cloneNode(true) as HTMLElement;
+    logs.querySelectorAll(".log-secret").forEach((e) => (e.innerHTML = ""));
+    return logs.innerText;
   }
 
   processLine(line: string): Element {
@@ -252,9 +254,11 @@ export const coloredConsoleStyles = `
     -ms-user-select: none;
     user-select: none;
   }
+  .log.blur-secrets .log-secret {
+    filter: blur(5px);
+  }
   .log-secret-redacted {
     opacity: 0;
-    width: 1px;
     font-size: 1px;
   }
   .log-fg-black {
