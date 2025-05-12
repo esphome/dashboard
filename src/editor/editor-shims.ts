@@ -1,8 +1,33 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { ESPHomeSchema } from "./esphome-schema";
 
+let schema_ref = "heads/release";
+export async function setSchemaVersion(version: string) {
+  if (version.endsWith("dev")) schema_ref = "heads/dev";
+  else {
+    // check tag exists
+    const response = await fetch(
+      `https://api.github.com/repos/esphome/esphome-schema/git/refs/tags/${version}`,
+    );
+    const tag_info = JSON.parse(await response.text());
+    if (tag_info.ref !== undefined) {
+      schema_ref = `tags/${version}`;
+    } else
+      console.warn(
+        `${version} not found in esphome-schemas. Default to latest release.`,
+      );
+  }
+}
+
 export const coreSchema = new ESPHomeSchema(async (name: string) => {
-  const response = await fetch(`static/schema/${name}.json`);
+  const response = await fetch(
+    `https://api.github.com/repos/esphome/esphome-schema/contents/schema/${name}.json?ref=${schema_ref}`,
+    {
+      headers: {
+        Accept: "application/vnd.github.v3.raw",
+      },
+    },
+  );
   const fileContents = await response.text();
   return JSON.parse(fileContents);
 });
