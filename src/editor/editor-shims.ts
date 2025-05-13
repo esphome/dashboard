@@ -1,33 +1,25 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { ESPHomeSchema } from "./esphome-schema";
 
-let schema_ref = "heads/release";
+let schema_version = "dev";
+const schema_uri = (name: string, version?: string) =>
+  `https://schema.esphome.io/${version || schema_version}/${name}.json`;
+
 export async function setSchemaVersion(version: string) {
-  if (version.endsWith("dev")) schema_ref = "heads/dev";
+  if (version.endsWith("dev")) schema_version = "dev";
   else {
-    // check tag exists
-    const response = await fetch(
-      `https://api.github.com/repos/esphome/esphome-schema/git/refs/tags/${version}`,
-    );
-    const tag_info = JSON.parse(await response.text());
-    if (tag_info.ref !== undefined) {
-      schema_ref = `tags/${version}`;
-    } else
+    // check esphome schema exists for given schema
+    const response = await fetch(schema_uri("esphome", version));
+    if (response.ok) schema_version = version;
+    else
       console.warn(
-        `${version} not found in esphome-schemas. Default to latest release.`,
+        `Schema version ${version} not available in schema.esphome.io. Using latest dev schemas instead.`,
       );
   }
 }
 
 export const coreSchema = new ESPHomeSchema(async (name: string) => {
-  const response = await fetch(
-    `https://api.github.com/repos/esphome/esphome-schema/contents/schema/${name}.json?ref=${schema_ref}`,
-    {
-      headers: {
-        Accept: "application/vnd.github.v3.raw",
-      },
-    },
-  );
+  const response = await fetch(schema_uri(name));
   const fileContents = await response.text();
   return JSON.parse(fileContents);
 });
