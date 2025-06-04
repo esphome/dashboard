@@ -38,6 +38,10 @@ export class ESPHomeButtonMenu extends LitElement {
     :host {
       display: inline-block;
       position: relative;
+      z-index: 9999;
+    }
+    mwc-menu {
+      z-index: 9999 !important;
     }
   `;
 }

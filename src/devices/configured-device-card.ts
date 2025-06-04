@@ -46,6 +46,7 @@ const STATUS_COLORS = {
 class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
   @property() public onlineStatus?: boolean;
+  @property() public deviceIP?: string | null;
   @property() public highlightOnAdd = false;
   @state() private _highlight = false;
 
@@ -100,6 +101,26 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         ${content.length
           ? html`<div class="card-content flex">${content}</div>`
           : html`<div class="flex"></div>`}
+
+        <div class="card-info">
+          <div class="status-info">
+            <span
+              class="status-label ${this.onlineStatus ? "online" : "offline"}"
+            >
+              ${this.onlineStatus ? "Online" : "Offline"}
+            </span>
+          </div>
+          <div class="network-info">
+            <div class="network-row">
+              <span class="network-label">IP:</span>
+              <span class="network-value">${this._formatAddress()}</span>
+            </div>
+            <div class="network-row">
+              <span class="network-label">mDNS:</span>
+              <span class="network-value">${this._formatMDNS()}</span>
+            </div>
+          </div>
+        </div>
 
         <div class="card-actions">
           ${updateAvailable
@@ -248,6 +269,50 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       .mdc-icon-button {
         color: var(--primary-text-color);
       }
+      .card-info {
+        padding: 8px 16px 16px;
+        border-top: 1px solid var(--divider-color, #e8e8e8);
+      }
+      .status-info {
+        margin-bottom: 8px;
+      }
+      .status-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .status-label.online {
+        background-color: var(--alert-success-color-bg, #edf7ee);
+        color: var(--alert-success-color, #4caf50);
+      }
+      .status-label.offline {
+        background-color: var(--alert-error-color-bg, #faefeb);
+        color: var(--alert-error-color, #d93025);
+      }
+      .network-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .network-row {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+      }
+      .network-label {
+        font-weight: 500;
+        width: 50px;
+        color: var(--secondary-text-color);
+      }
+      .network-value {
+        color: var(--primary-text-color);
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      }
     `,
   ];
 
@@ -312,6 +377,36 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     getFile(this.device.configuration).then((config) => {
       textDownload(config!, this.device.configuration);
     });
+  }
+
+  private _formatAddress(): string {
+    // First check if we have a resolved IP from the API
+    if (this.deviceIP) {
+      return this.deviceIP;
+    }
+
+    // Fall back to existing logic for devices without resolved IPs
+    if (!this.device.address) {
+      return "-";
+    }
+    // If it's an mDNS address (ends with .local), return dash
+    if (this.device.address.endsWith(".local")) {
+      return "-";
+    }
+    // Otherwise it's an IP address
+    return this.device.address;
+  }
+
+  private _formatMDNS(): string {
+    if (!this.device.address) {
+      return `${this.device.name}.local`;
+    }
+    // If it's an mDNS address, return it
+    if (this.device.address.endsWith(".local")) {
+      return this.device.address;
+    }
+    // Otherwise return the default mDNS name
+    return `${this.device.name}.local`;
   }
 }
 

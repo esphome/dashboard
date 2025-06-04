@@ -40,6 +40,9 @@ class ESPHomeMainView extends LitElement {
           .logoutUrl=${this.logoutUrl}
           .showDiscoveredDevices=${this.showDiscoveredDevices}
           @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+          @view-mode-changed=${this._handleViewModeChanged}
+          @sort-changed=${this._handleSortChanged}
+          @filter-changed=${this._handleFilterChanged}
         ></esphome-header-menu>
       </header>
 
@@ -84,6 +87,36 @@ class ESPHomeMainView extends LitElement {
 
   private _toggleDiscoveredDevices() {
     this.showDiscoveredDevices = !this.showDiscoveredDevices;
+  }
+
+  private _handleViewModeChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("view-mode-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleSortChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("sort-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleFilterChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("filter-changed", { detail: e.detail }),
+      );
+    }
   }
 }
 

@@ -1,0 +1,419 @@
+import { LitElement, html, css, TemplateResult } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
+import { classMap } from "lit/directives/class-map.js";
+
+export interface DataTableColumnContainer {
+  [key: string]: DataTableColumnData;
+}
+
+export interface DataTableColumnData {
+  title: string;
+  sortable?: boolean;
+  filterable?: boolean;
+  type?: "numeric" | "icon" | "flex";
+  hidden?: boolean;
+  width?: string;
+  template?: (data: any, row: any) => TemplateResult | string;
+}
+
+export interface DataTableRowData {
+  [key: string]: any;
+}
+
+export interface SortingDirection {
+  column?: string;
+  direction: "asc" | "desc" | null;
+}
+
+@customElement("esphome-data-table")
+export class ESPHomeDataTable extends LitElement {
+  @property({ attribute: false }) public columns: DataTableColumnContainer = {};
+
+  @property({ attribute: false }) public data: DataTableRowData[] = [];
+
+  @property({ type: Boolean }) public selectable = false;
+
+  @property({ attribute: false }) public sortColumn?: string;
+
+  @property({ attribute: false }) public sortDirection: "asc" | "desc" | null =
+    null;
+
+  @property() public filter = "";
+
+  @property({ type: Boolean }) public noDataText = "No data to display";
+
+  @state() private _selection = new Set<number>();
+
+  @state() private _filteredData: DataTableRowData[] = [];
+
+  private _getFilteredSortedData(): DataTableRowData[] {
+    let data = [...this.data];
+
+    // Apply filtering
+    if (this.filter) {
+      const filterLower = this.filter.toLowerCase();
+      data = data.filter((row) => {
+        return Object.entries(this.columns).some(([key, col]) => {
+          if (!col.filterable) return false;
+          const value = row[key];
+          if (value == null) return false;
+          return String(value).toLowerCase().includes(filterLower);
+        });
+      });
+    }
+
+    // Apply sorting
+    if (this.sortColumn && this.sortDirection) {
+      const sortColumn = this.columns[this.sortColumn];
+      if (sortColumn?.sortable) {
+        data.sort((a, b) => {
+          const aVal = a[this.sortColumn!];
+          const bVal = b[this.sortColumn!];
+
+          let result = 0;
+          if (sortColumn.type === "numeric") {
+            result = Number(aVal || 0) - Number(bVal || 0);
+          } else {
+            result = String(aVal || "").localeCompare(String(bVal || ""));
+          }
+
+          return this.sortDirection === "desc" ? -result : result;
+        });
+      }
+    }
+
+    return data;
+  }
+
+  private _handleHeaderClick(columnKey: string) {
+    const column = this.columns[columnKey];
+    if (!column?.sortable) return;
+
+    let newDirection: "asc" | "desc" | null = "asc";
+
+    if (this.sortColumn === columnKey) {
+      if (this.sortDirection === "asc") {
+        newDirection = "desc";
+      } else if (this.sortDirection === "desc") {
+        newDirection = null;
+      }
+    }
+
+    this.sortColumn = newDirection ? columnKey : undefined;
+    this.sortDirection = newDirection;
+
+    this._fireEvent("sorting-changed", {
+      column: this.sortColumn,
+      direction: this.sortDirection,
+    });
+  }
+
+  private _handleRowClick(rowIndex: number) {
+    this._fireEvent("row-click", {
+      index: rowIndex,
+      data: this._filteredData[rowIndex],
+    });
+  }
+
+  private _handleSelectionChange(rowIndex: number, selected: boolean) {
+    if (selected) {
+      this._selection.add(rowIndex);
+    } else {
+      this._selection.delete(rowIndex);
+    }
+    this._selection = new Set(this._selection);
+
+    this._fireEvent("selection-changed", {
+      selection: Array.from(this._selection),
+      selectedRows: Array.from(this._selection).map(
+        (i) => this._filteredData[i],
+      ),
+    });
+  }
+
+  private _fireEvent(type: string, detail: any) {
+    this.dispatchEvent(
+      new CustomEvent(type, { detail, bubbles: true, composed: true }),
+    );
+  }
+
+  public clearSelection() {
+    this._selection.clear();
+    this._selection = new Set();
+  }
+
+  public selectAll() {
+    this._selection = new Set(this._filteredData.map((_, index) => index));
+    this._fireEvent("selection-changed", {
+      selection: Array.from(this._selection),
+      selectedRows: Array.from(this._selection).map(
+        (i) => this._filteredData[i],
+      ),
+    });
+  }
+
+  protected willUpdate() {
+    this._filteredData = this._getFilteredSortedData();
+  }
+
+  protected render() {
+    if (this._filteredData.length === 0) {
+      return html` <div class="no-data">${this.noDataText}</div> `;
+    }
+
+    const columnKeys = Object.keys(this.columns).filter(
+      (key) => !this.columns[key].hidden,
+    );
+
+    return html`
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              ${this.selectable
+                ? html`
+                    <th class="checkbox-column">
+                      <input
+                        type="checkbox"
+                        .checked=${this._selection.size ===
+                          this._filteredData.length &&
+                        this._filteredData.length > 0}
+                        .indeterminate=${this._selection.size > 0 &&
+                        this._selection.size < this._filteredData.length}
+                        @change=${(e: Event) => {
+                          const target = e.target as HTMLInputElement;
+                          if (target.checked) {
+                            this.selectAll();
+                          } else {
+                            this.clearSelection();
+                          }
+                        }}
+                      />
+                    </th>
+                  `
+                : ""}
+              ${columnKeys.map((key) => {
+                const column = this.columns[key];
+                const isSorted = this.sortColumn === key;
+                return html`
+                  <th
+                    class=${classMap({
+                      sortable: !!column.sortable,
+                      sorted: isSorted,
+                      [`sort-${this.sortDirection}`]:
+                        isSorted && !!this.sortDirection,
+                    })}
+                    style=${column.width ? `width: ${column.width}` : ""}
+                    @click=${() => this._handleHeaderClick(key)}
+                  >
+                    <div class="header-content">
+                      <span>${column.title}</span>
+                      ${column.sortable
+                        ? html`
+                            <span class="sort-indicator">
+                              ${isSorted
+                                ? this.sortDirection === "asc"
+                                  ? "↑"
+                                  : "↓"
+                                : "↕"}
+                            </span>
+                          `
+                        : ""}
+                    </div>
+                  </th>
+                `;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            ${repeat(
+              this._filteredData,
+              (row, index) => index,
+              (row, index) => html`
+                <tr
+                  class=${classMap({
+                    selected: this._selection.has(index),
+                  })}
+                  @click=${() => this._handleRowClick(index)}
+                >
+                  ${this.selectable
+                    ? html`
+                        <td class="checkbox-column">
+                          <input
+                            type="checkbox"
+                            .checked=${this._selection.has(index)}
+                            @change=${(e: Event) => {
+                              e.stopPropagation();
+                              const target = e.target as HTMLInputElement;
+                              this._handleSelectionChange(
+                                index,
+                                target.checked,
+                              );
+                            }}
+                            @click=${(e: Event) => e.stopPropagation()}
+                          />
+                        </td>
+                      `
+                    : ""}
+                  ${columnKeys.map((key) => {
+                    const column = this.columns[key];
+                    const cellData = row[key];
+                    const cellContent = column.template
+                      ? column.template(cellData, row)
+                      : cellData;
+
+                    return html`
+                      <td
+                        class=${classMap({
+                          [`type-${column.type}`]: !!column.type,
+                        })}
+                      >
+                        ${cellContent}
+                      </td>
+                    `;
+                  })}
+                </tr>
+              `,
+            )}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  static styles = css`
+    :host {
+      display: block;
+      position: relative;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      background: var(--card-background-color, white);
+      border-radius: 2px;
+      box-shadow:
+        0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    thead {
+      background-color: var(--table-header-background-color, #f5f5f5);
+      border-bottom: 1px solid var(--divider-color, #e0e0e0);
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--secondary-text-color, #606060);
+      border-bottom: 1px solid var(--divider-color, #e0e0e0);
+      position: relative;
+      user-select: none;
+    }
+
+    th.sortable {
+      cursor: pointer;
+    }
+
+    th.sortable:hover {
+      background-color: var(--table-header-background-color-hover, #eeeeee);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sort-indicator {
+      margin-left: 8px;
+      opacity: 0.5;
+      font-size: 12px;
+    }
+
+    th.sorted .sort-indicator {
+      opacity: 1;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--divider-color, #e0e0e0);
+      color: var(--primary-text-color, #212121);
+      font-size: 14px;
+    }
+
+    tbody tr {
+      background-color: var(--card-background-color, white);
+      transition: background-color 0.2s ease;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--table-row-alternative-background-color, #f9f9f9);
+    }
+
+    tbody tr:hover {
+      background-color: var(--table-row-background-color-hover, #f5f5f5);
+    }
+
+    tbody tr.selected {
+      background-color: var(--primary-color, #03a9f4) !important;
+      color: var(--text-primary-color, white);
+    }
+
+    tbody tr.selected td {
+      color: var(--text-primary-color, white);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .checkbox-column {
+      width: 40px;
+      padding: 8px 16px;
+    }
+
+    .checkbox-column input[type="checkbox"] {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .type-numeric {
+      text-align: right;
+    }
+
+    .type-flex {
+      width: 100%;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 32px;
+      color: var(--secondary-text-color, #606060);
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      th,
+      td {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+  `;
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "esphome-data-table": ESPHomeDataTable;
+  }
+}
