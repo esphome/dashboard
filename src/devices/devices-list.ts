@@ -721,6 +721,11 @@ class ESPHomeDevicesList extends LitElement {
     }
     esphome-button-menu {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
+      z-index: 1000;
+    }
+    esphome-button-menu esphome-svg-icon {
+      fill: var(--primary-text-color);
+      color: var(--primary-text-color);
     }
     .warning {
       color: var(--alert-error-color);

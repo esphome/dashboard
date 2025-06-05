@@ -410,7 +410,7 @@ export class ESPHomeHeaderMenu extends LitElement {
       width: 48px;
     }
     esphome-button-menu {
-      z-index: 1;
+      z-index: 10001;
     }
     mwc-icon {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
@@ -452,7 +452,7 @@ export class ESPHomeHeaderMenu extends LitElement {
       background: transparent;
       width: 140px;
       position: relative;
-      z-index: 1000;
+      z-index: 10002;
     }
     mwc-icon-button {
       --mdc-icon-button-size: 40px;
