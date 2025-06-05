@@ -69,7 +69,7 @@ class ESPHomeDevicesList extends LitElement {
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
   @state() private _cardColumns: number = parseInt(
     this._loadPreference("cardColumns", "3"),
-    10
+    10,
   );
 
   @query("esphome-search") private _search!: ESPHomeSearch;

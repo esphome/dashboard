@@ -63,7 +63,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       : this.onlineStatus
         ? "ONLINE"
         : "OFFLINE";
-    
+
     return html`
       <esphome-card
         .status=${status}
@@ -76,7 +76,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <div class="header-name">
             ${this.device.friendly_name || this.device.name}
           </div>
-          <div class="status-indicator ${this.onlineStatus ? "online" : "offline"}"></div>
+          <div
+            class="status-indicator ${this.onlineStatus ? "online" : "offline"}"
+          ></div>
         </div>
 
         <div class="card-content">
@@ -116,8 +118,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
-            <mwc-icon-button 
-              slot="trigger" 
+            <mwc-icon-button
+              slot="trigger"
               icon="more_vert"
               style="--mdc-icon-size: 20px; --mdc-icon-button-size: 28px;"
             ></mwc-icon-button>
@@ -215,14 +217,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       :host {
         display: block;
       }
-      
+
       .card-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 12px 16px !important;
       }
-      
+
       .header-name {
         flex: 1;
         overflow: hidden;
@@ -231,7 +233,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         font-size: 16px;
         font-weight: 500;
       }
-      
+
       .status-indicator {
         width: 8px;
         height: 8px;
@@ -239,20 +241,20 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         margin-left: 8px;
         flex-shrink: 0;
       }
-      
+
       .status-indicator.online {
         background-color: var(--alert-success-color, #4caf50);
         box-shadow: 0 0 4px var(--alert-success-color, #4caf50);
       }
-      
+
       .status-indicator.offline {
         background-color: var(--alert-error-color, #d93025);
       }
-      
+
       .device-config-path {
         margin-bottom: 8px;
       }
-      
+
       .device-config-path code {
         font-size: 11px;
         background-color: var(--code-background-color, rgba(0, 0, 0, 0.05));
@@ -260,28 +262,28 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         border-radius: 3px;
         font-family: monospace;
       }
-      
+
       .network-info {
         display: flex;
         flex-direction: column;
         gap: 4px;
         margin-top: 4px;
       }
-      
+
       .info-row {
         display: flex;
         align-items: center;
         font-size: 12px;
         line-height: 16px;
       }
-      
+
       .info-label {
         font-weight: 500;
         width: 48px;
         color: var(--secondary-text-color);
         flex-shrink: 0;
       }
-      
+
       .info-value {
         color: var(--primary-text-color);
         font-family: monospace;
@@ -290,7 +292,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      
+
       .card-actions {
         border-top: 1px solid var(--divider-color);
         padding: 4px 8px;
@@ -298,28 +300,28 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         align-items: center;
         gap: 4px;
       }
-      
+
       mwc-button[dense] {
         --mdc-button-horizontal-padding: 8px;
         --mdc-typography-button-font-size: 12px;
         --mdc-button-height: 28px;
       }
-      
+
       esphome-button-menu {
         --mdc-theme-text-icon-on-background: var(--primary-text-color);
       }
-      
+
       .warning {
         color: var(--alert-error-color);
       }
-      
+
       /* Dark mode support */
       @media (prefers-color-scheme: dark) {
         .device-config-path code {
           background-color: rgba(255, 255, 255, 0.05);
         }
       }
-      
+
       /* Support for HA dark mode */
       :host([data-theme="dark"]) .device-config-path code {
         background-color: rgba(255, 255, 255, 0.05);
@@ -328,12 +330,16 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   ];
 
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
-    const visitIndex = this.device.loaded_integrations?.includes("web_server") ? 2 : -1;
+    const visitIndex = this.device.loaded_integrations?.includes("web_server")
+      ? 2
+      : -1;
     const deleteIndex = visitIndex >= 0 ? 9 : 8;
-    const mqttIndex = this.device.loaded_integrations?.includes("mqtt") ? deleteIndex + 1 : -1;
-    
+    const mqttIndex = this.device.loaded_integrations?.includes("mqtt")
+      ? deleteIndex + 1
+      : -1;
+
     const actionIndex = ev.detail.index;
-    
+
     switch (actionIndex) {
       case 0:
         openValidateDialog(this.device.configuration);
@@ -421,19 +427,20 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   private _handleEdit() {
     openEditDialog(this.device.configuration);
   }
-  
+
   private _handleInstall() {
     openInstallChooseDialog(this.device.configuration);
   }
-  
+
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
   }
-  
+
   private _handleVisit() {
-    const host = this.device.address && !this.device.address.endsWith(".local")
-      ? this.device.address
-      : `${this.device.name}.local`;
+    const host =
+      this.device.address && !this.device.address.endsWith(".local")
+        ? this.device.address
+        : `${this.device.name}.local`;
     const url = `http://${host}${
       this.device.web_port && this.device.web_port != 80
         ? `:${this.device.web_port}`

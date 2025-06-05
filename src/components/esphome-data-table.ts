@@ -292,7 +292,12 @@ export class ESPHomeDataTable extends LitElement {
       overflow-x: auto;
       background: var(--card-background-color, white);
       border-radius: 4px;
-      box-shadow: var(--ha-card-box-shadow, 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2));
+      box-shadow: var(
+        --ha-card-box-shadow,
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2)
+      );
     }
 
     table {
@@ -302,7 +307,10 @@ export class ESPHomeDataTable extends LitElement {
     }
 
     thead {
-      background-color: var(--data-table-header-background-color, var(--secondary-background-color, rgba(0, 0, 0, 0.03)));
+      background-color: var(
+        --data-table-header-background-color,
+        var(--secondary-background-color, rgba(0, 0, 0, 0.03))
+      );
       border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
     }
 
@@ -322,7 +330,10 @@ export class ESPHomeDataTable extends LitElement {
     }
 
     th.sortable:hover {
-      background-color: var(--data-table-header-background-color-hover, rgba(0, 0, 0, 0.04));
+      background-color: var(
+        --data-table-header-background-color-hover,
+        rgba(0, 0, 0, 0.04)
+      );
     }
 
     .header-content {
@@ -354,11 +365,17 @@ export class ESPHomeDataTable extends LitElement {
     }
 
     tbody tr:nth-child(even) {
-      background-color: var(--table-row-alternative-background-color, var(--secondary-background-color, rgba(0, 0, 0, 0.02)));
+      background-color: var(
+        --table-row-alternative-background-color,
+        var(--secondary-background-color, rgba(0, 0, 0, 0.02))
+      );
     }
 
     tbody tr:hover {
-      background-color: var(--table-row-background-color-hover, rgba(0, 0, 0, 0.04));
+      background-color: var(
+        --table-row-background-color-hover,
+        rgba(0, 0, 0, 0.04)
+      );
       cursor: pointer;
     }
 
@@ -400,35 +417,52 @@ export class ESPHomeDataTable extends LitElement {
       font-style: italic;
       background: var(--card-background-color, white);
       border-radius: 4px;
-      box-shadow: var(--ha-card-box-shadow, 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2));
+      box-shadow: var(
+        --ha-card-box-shadow,
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2)
+      );
     }
 
     /* Dark mode support */
     @media (prefers-color-scheme: dark) {
       thead {
-        background-color: var(--data-table-header-background-color, rgba(255, 255, 255, 0.05));
+        background-color: var(
+          --data-table-header-background-color,
+          rgba(255, 255, 255, 0.05)
+        );
       }
-      
+
       th {
         color: var(--secondary-text-color, rgba(255, 255, 255, 0.7));
         border-bottom-color: var(--divider-color, rgba(255, 255, 255, 0.12));
       }
-      
+
       th.sortable:hover {
-        background-color: var(--data-table-header-background-color-hover, rgba(255, 255, 255, 0.08));
+        background-color: var(
+          --data-table-header-background-color-hover,
+          rgba(255, 255, 255, 0.08)
+        );
       }
-      
+
       td {
         color: var(--primary-text-color, rgba(255, 255, 255, 0.87));
         border-bottom-color: var(--divider-color, rgba(255, 255, 255, 0.12));
       }
-      
+
       tbody tr:nth-child(even) {
-        background-color: var(--table-row-alternative-background-color, rgba(255, 255, 255, 0.02));
+        background-color: var(
+          --table-row-alternative-background-color,
+          rgba(255, 255, 255, 0.02)
+        );
       }
-      
+
       tbody tr:hover {
-        background-color: var(--table-row-background-color-hover, rgba(255, 255, 255, 0.04));
+        background-color: var(
+          --table-row-background-color-hover,
+          rgba(255, 255, 255, 0.04)
+        );
       }
     }
 

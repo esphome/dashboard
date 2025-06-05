@@ -12,7 +12,12 @@ export class ESPHomeCard extends LitElement {
     :host {
       background: var(--card-background-color, white);
       border-radius: 4px;
-      box-shadow: var(--ha-card-box-shadow, 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2));
+      box-shadow: var(
+        --ha-card-box-shadow,
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2)
+      );
       color: var(--primary-text-color);
       display: block;
       position: relative;
@@ -20,7 +25,11 @@ export class ESPHomeCard extends LitElement {
     }
 
     :host(:hover) {
-      box-shadow: var(--ha-card-box-shadow-hover, 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08));
+      box-shadow: var(
+        --ha-card-box-shadow-hover,
+        0 4px 8px 0 rgba(0, 0, 0, 0.12),
+        0 2px 4px 0 rgba(0, 0, 0, 0.08)
+      );
     }
 
     :host ::slotted(.card-header) {

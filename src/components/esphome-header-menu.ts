@@ -39,7 +39,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
   @state() private _cardColumns: number = parseInt(
     this._loadPreference("cardColumns", "3"),
-    10
+    10,
   );
 
   protected render(): TemplateResult {
@@ -323,7 +323,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     // Then continues with sort and filter options
 
     let index = ev.detail.index;
-    
+
     switch (index) {
       case 0:
         this._handleSearch();
@@ -338,13 +338,15 @@ export class ESPHomeHeaderMenu extends LitElement {
             // Column selection (1-5 columns)
             this._cardColumns = index - 1;
             this._savePreference("cardColumns", String(this._cardColumns));
-            fireEvent(document, "columns-changed", { columns: this._cardColumns });
+            fireEvent(document, "columns-changed", {
+              columns: this._cardColumns,
+            });
             return;
           }
           // Adjust index for items after column selection
           index = index - 5;
         }
-        
+
         // Continue with adjusted index
         switch (index) {
           case 2:
