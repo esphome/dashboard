@@ -67,6 +67,10 @@ class ESPHomeDevicesList extends LitElement {
   ) as "name" | "ip" | "status";
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
+  @state() private _cardColumns: number = parseInt(
+    this._loadPreference("cardColumns", "3"),
+    10
+  );
 
   @query("esphome-search") private _search!: ESPHomeSearch;
 
@@ -92,6 +96,11 @@ class ESPHomeDevicesList extends LitElement {
   private _handleFilterChange = (e: CustomEvent) => {
     this._filterStatus = e.detail.filterStatus;
     this._savePreference("filterStatus", this._filterStatus);
+  };
+
+  private _handleColumnsChange = (e: CustomEvent) => {
+    this._cardColumns = e.detail.columns;
+    this._savePreference("cardColumns", String(this._cardColumns));
   };
 
   private _loadPreference(key: string, defaultValue: string): string {
@@ -411,7 +420,7 @@ class ESPHomeDevicesList extends LitElement {
       `;
 
       if (filteredData.length > 0) {
-        htmlClass = "grid";
+        htmlClass = `grid grid-${this._cardColumns}`;
         htmlDevices = html`${repeat(
           filteredData,
           (device) => device.name,
@@ -577,24 +586,48 @@ class ESPHomeDevicesList extends LitElement {
   static styles = css`
     .grid {
       display: grid;
-      grid-template-columns: 1fr;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-column-gap: 1.5rem;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
       margin: 20px auto;
       width: 90%;
       max-width: 1920px;
       justify-content: stretch;
     }
+    .grid-1 {
+      grid-template-columns: 1fr;
+    }
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .grid-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    @media only screen and (max-width: 1400px) {
+      .grid-5 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
     @media only screen and (max-width: 1100px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 1.5rem;
+      .grid-4,
+      .grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     @media only screen and (max-width: 750px) {
-      .grid {
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .grid-5 {
         grid-template-columns: 1fr;
-        grid-column-gap: 0;
       }
       .container {
         width: 100%;
@@ -602,7 +635,7 @@ class ESPHomeDevicesList extends LitElement {
     }
     esphome-configured-device-card,
     esphome-importable-device-card {
-      margin: 0.5rem 0 1rem 0;
+      margin: 0;
     }
     .no-result-container {
       text-align: center;
@@ -773,6 +806,10 @@ class ESPHomeDevicesList extends LitElement {
       "filter-changed",
       this._handleFilterChange as EventListener,
     );
+    document.addEventListener(
+      "columns-changed",
+      this._handleColumnsChange as EventListener,
+    );
 
     this._fetchDeviceIPs();
     this._deviceIPsRefreshInterval = window.setInterval(() => {
@@ -833,6 +870,10 @@ class ESPHomeDevicesList extends LitElement {
     document.removeEventListener(
       "filter-changed",
       this._handleFilterChange as EventListener,
+    );
+    document.removeEventListener(
+      "columns-changed",
+      this._handleColumnsChange as EventListener,
     );
   }
 }

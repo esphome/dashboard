@@ -37,6 +37,10 @@ export class ESPHomeHeaderMenu extends LitElement {
   ) as "name" | "ip" | "status";
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
+  @state() private _cardColumns: number = parseInt(
+    this._loadPreference("cardColumns", "3"),
+    10
+  );
 
   protected render(): TemplateResult {
     return html`
@@ -55,6 +59,22 @@ export class ESPHomeHeaderMenu extends LitElement {
                     : mdiViewGrid}
                 ></esphome-svg-icon>
               </mwc-icon-button>
+
+              ${this._viewMode === "cards"
+                ? html`
+                    <mwc-select
+                      .value=${String(this._cardColumns)}
+                      @change=${this._handleColumnsChange}
+                      label="Columns"
+                    >
+                      <mwc-list-item value="1">1 Column</mwc-list-item>
+                      <mwc-list-item value="2">2 Columns</mwc-list-item>
+                      <mwc-list-item value="3">3 Columns</mwc-list-item>
+                      <mwc-list-item value="4">4 Columns</mwc-list-item>
+                      <mwc-list-item value="5">5 Columns</mwc-list-item>
+                    </mwc-select>
+                  `
+                : nothing}
 
               <mwc-select
                 .value=${this._sortBy}
@@ -111,6 +131,31 @@ export class ESPHomeHeaderMenu extends LitElement {
                 >
                 ${this._viewMode === "cards" ? "Table View" : "Card View"}
               </mwc-list-item>
+              ${this._viewMode === "cards"
+                ? html`
+                    <li divider role="separator"></li>
+                    <mwc-list-item graphic="icon">
+                      <mwc-icon slot="graphic">view_column</mwc-icon>
+                      1 Column
+                    </mwc-list-item>
+                    <mwc-list-item graphic="icon">
+                      <mwc-icon slot="graphic">view_column</mwc-icon>
+                      2 Columns
+                    </mwc-list-item>
+                    <mwc-list-item graphic="icon">
+                      <mwc-icon slot="graphic">view_column</mwc-icon>
+                      3 Columns
+                    </mwc-list-item>
+                    <mwc-list-item graphic="icon">
+                      <mwc-icon slot="graphic">view_column</mwc-icon>
+                      4 Columns
+                    </mwc-list-item>
+                    <mwc-list-item graphic="icon">
+                      <mwc-icon slot="graphic">view_column</mwc-icon>
+                      5 Columns
+                    </mwc-list-item>
+                  `
+                : nothing}
               <li divider role="separator"></li>
               <mwc-list-item graphic="icon">
                 <mwc-icon slot="graphic">sort</mwc-icon>
@@ -182,6 +227,7 @@ export class ESPHomeHeaderMenu extends LitElement {
       fireEvent(document, "filter-changed", {
         filterStatus: this._filterStatus,
       });
+      fireEvent(document, "columns-changed", { columns: this._cardColumns });
     }, 0);
   }
 
@@ -236,6 +282,13 @@ export class ESPHomeHeaderMenu extends LitElement {
     fireEvent(document, "filter-changed", { filterStatus: this._filterStatus });
   }
 
+  private _handleColumnsChange(ev: Event) {
+    const select = ev.target as Select;
+    this._cardColumns = parseInt(select.value, 10);
+    this._savePreference("cardColumns", String(this._cardColumns));
+    fireEvent(document, "columns-changed", { columns: this._cardColumns });
+  }
+
   private _loadPreference(key: string, defaultValue: string): string {
     try {
       return localStorage.getItem(`esphome.devices.${key}`) || defaultValue;
@@ -265,68 +318,81 @@ export class ESPHomeHeaderMenu extends LitElement {
     // Mobile menu structure:
     // 0: Search
     // 1: View toggle
-    // 2: Sort by Name
-    // 3: Sort by IP
-    // 4: Sort by Status
-    // 5: Show All
-    // 6: Online Only
-    // 7: Offline Only
-    // 8: Show/Hide discovered devices
-    // 9: Update All
-    // 10: Secrets
+    // If cards mode, add column options:
+    // 2-6: Column options (1-5 columns)
+    // Then continues with sort and filter options
 
-    switch (ev.detail.index) {
+    let index = ev.detail.index;
+    
+    switch (index) {
       case 0:
         this._handleSearch();
         break;
       case 1:
         this._toggleViewMode();
         break;
-      case 2:
-        this._sortBy = "name";
-        this._savePreference("sortBy", this._sortBy);
-        fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-        break;
-      case 3:
-        this._sortBy = "ip";
-        this._savePreference("sortBy", this._sortBy);
-        fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-        break;
-      case 4:
-        this._sortBy = "status";
-        this._savePreference("sortBy", this._sortBy);
-        fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-        break;
-      case 5:
-        this._filterStatus = "all";
-        this._savePreference("filterStatus", this._filterStatus);
-        fireEvent(document, "filter-changed", {
-          filterStatus: this._filterStatus,
-        });
-        break;
-      case 6:
-        this._filterStatus = "online";
-        this._savePreference("filterStatus", this._filterStatus);
-        fireEvent(document, "filter-changed", {
-          filterStatus: this._filterStatus,
-        });
-        break;
-      case 7:
-        this._filterStatus = "offline";
-        this._savePreference("filterStatus", this._filterStatus);
-        fireEvent(document, "filter-changed", {
-          filterStatus: this._filterStatus,
-        });
-        break;
-      case 8:
-        fireEvent(this, "toggle-discovered-devices");
-        break;
-      case 9:
-        this._handleUpdateAll();
-        break;
-      case 10:
-        this._handleEditSecrets();
-        break;
+      default:
+        // Adjust index based on whether we're in cards mode
+        if (this._viewMode === "cards") {
+          if (index >= 2 && index <= 6) {
+            // Column selection (1-5 columns)
+            this._cardColumns = index - 1;
+            this._savePreference("cardColumns", String(this._cardColumns));
+            fireEvent(document, "columns-changed", { columns: this._cardColumns });
+            return;
+          }
+          // Adjust index for items after column selection
+          index = index - 5;
+        }
+        
+        // Continue with adjusted index
+        switch (index) {
+          case 2:
+            this._sortBy = "name";
+            this._savePreference("sortBy", this._sortBy);
+            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
+            break;
+          case 3:
+            this._sortBy = "ip";
+            this._savePreference("sortBy", this._sortBy);
+            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
+            break;
+          case 4:
+            this._sortBy = "status";
+            this._savePreference("sortBy", this._sortBy);
+            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
+            break;
+          case 5:
+            this._filterStatus = "all";
+            this._savePreference("filterStatus", this._filterStatus);
+            fireEvent(document, "filter-changed", {
+              filterStatus: this._filterStatus,
+            });
+            break;
+          case 6:
+            this._filterStatus = "online";
+            this._savePreference("filterStatus", this._filterStatus);
+            fireEvent(document, "filter-changed", {
+              filterStatus: this._filterStatus,
+            });
+            break;
+          case 7:
+            this._filterStatus = "offline";
+            this._savePreference("filterStatus", this._filterStatus);
+            fireEvent(document, "filter-changed", {
+              filterStatus: this._filterStatus,
+            });
+            break;
+          case 8:
+            fireEvent(this, "toggle-discovered-devices");
+            break;
+          case 9:
+            this._handleUpdateAll();
+            break;
+          case 10:
+            this._handleEditSecrets();
+            break;
+        }
     }
   }
 

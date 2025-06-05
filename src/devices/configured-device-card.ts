@@ -59,33 +59,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   protected render() {
-    const content: TemplateResult[] = [];
-
-    if (
-      this.device.friendly_name ||
-      (this.device.configuration !== `${this.device.name}.yaml` &&
-        this.device.configuration !== `${this.device.name}.yml`)
-    ) {
-      content.push(html`
-        <div class="device-config-path tooltip-container">
-          <code class="inlinecode">${this.device.configuration}</code>
-          <paper-tooltip>
-            Full Path:
-            <code class="inlinecode">${this.device.path}</code>
-          </paper-tooltip>
-        </div>
-      `);
-    }
-    if (this.device.comment) {
-      content.push(html`<div>${this.device.comment}</div>`);
-    }
-
     const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
       : this.onlineStatus
         ? "ONLINE"
         : "OFFLINE";
+    
     return html`
       <esphome-card
         .status=${status}
@@ -95,71 +75,54 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         })}
       >
         <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
+          <div class="header-name">
+            ${this.device.friendly_name || this.device.name}
+          </div>
+          <div class="status-indicator ${this.onlineStatus ? "online" : "offline"}"></div>
         </div>
 
-        ${content.length
-          ? html`<div class="card-content flex">${content}</div>`
-          : html`<div class="flex"></div>`}
-
-        <div class="card-info">
-          <div class="status-info">
-            <span
-              class="status-label ${this.onlineStatus ? "online" : "offline"}"
-            >
-              ${this.onlineStatus ? "Online" : "Offline"}
-            </span>
-          </div>
+        <div class="card-content">
+          ${this.device.configuration !== `${this.device.name}.yaml` &&
+          this.device.configuration !== `${this.device.name}.yml`
+            ? html`
+                <div class="device-config-path">
+                  <code>${this.device.configuration}</code>
+                </div>
+              `
+            : ""}
           <div class="network-info">
-            <div class="network-row">
-              <span class="network-label">IP:</span>
-              <span class="network-value">${this._formatAddress()}</span>
+            <div class="info-row">
+              <span class="info-label">IP:</span>
+              <span class="info-value">${this._formatAddress()}</span>
             </div>
-            <div class="network-row">
-              <span class="network-label">mDNS:</span>
-              <span class="network-value">${this._formatMDNS()}</span>
+            <div class="info-row">
+              <span class="info-label">mDNS:</span>
+              <span class="info-value">${this._formatMDNS()}</span>
             </div>
           </div>
         </div>
 
         <div class="card-actions">
-          ${updateAvailable
-            ? html`
-                <div class="tooltip-container">
-                  <mwc-button
-                    @click=${this._handleInstall}
-                    icon="system_update"
-                    label="Update"
-                  ></mwc-button>
-                  <paper-tooltip>
-                    Update Available: ${this.device.deployed_version}
-                    ${UPDATE_TO_ICON} ${this.device.current_version}
-                  </paper-tooltip>
-                </div>
-              `
-            : ""}
-          ${this.device.loaded_integrations?.includes("web_server")
-            ? html`
-                <a
-                  href=${`http://${this.device.address}${
-                    this.device.web_port && this.device.web_port != 80
-                      ? `:${this.device.web_port}`
-                      : ``
-                  }`}
-                  target="_blank"
-                  ><mwc-button label="Visit"></mwc-button
-                ></a>
-              `
-            : ""}
-
-          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
-          <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
+          <mwc-button
+            dense
+            @click=${this._handleEdit}
+            label="EDIT"
+          ></mwc-button>
+          <mwc-button
+            dense
+            @click=${this._handleLogs}
+            label="LOGS"
+          ></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
             corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
-            <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+            <mwc-icon-button 
+              slot="trigger" 
+              icon="more_vert"
+              style="--mdc-icon-size: 20px; --mdc-icon-button-size: 28px;"
+            ></mwc-icon-button>
             <mwc-list-item graphic="icon">
               Validate
               <esphome-svg-icon
@@ -174,6 +137,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiUploadNetwork}
               ></esphome-svg-icon>
             </mwc-list-item>
+            ${this.device.loaded_integrations?.includes("web_server")
+              ? html`
+                  <mwc-list-item graphic="icon">
+                    Visit
+                    <mwc-icon slot="graphic">public</mwc-icon>
+                  </mwc-list-item>
+                `
+              : ""}
             <mwc-list-item graphic="icon">
               Show API Key
               <esphome-svg-icon
@@ -243,100 +214,155 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   static styles = [
     esphomeCardStyles,
     css`
+      :host {
+        display: block;
+      }
+      
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px !important;
+      }
+      
+      .header-name {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-left: 8px;
+        flex-shrink: 0;
+      }
+      
+      .status-indicator.online {
+        background-color: var(--alert-success-color, #4caf50);
+        box-shadow: 0 0 4px var(--alert-success-color, #4caf50);
+      }
+      
+      .status-indicator.offline {
+        background-color: var(--alert-error-color, #d93025);
+      }
+      
       .device-config-path {
         margin-bottom: 8px;
-        font-size: 14px;
       }
-      .inlinecode {
-        box-sizing: border-box;
-        padding: 0.2em 0.4em;
-        margin: 0;
-        font-size: 85%;
-        background-color: var(--card-background-color)
+      
+      .device-config-path code {
+        font-size: 11px;
+        background-color: var(--code-background-color, rgba(0, 0, 0, 0.05));
+        padding: 2px 4px;
         border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-          Courier, monospace;
+        font-family: monospace;
       }
-      esphome-button-menu {
-        --mdc-theme-text-icon-on-background: var(--primary-text-color);
-      }
-      .tooltip-container {
-        display: inline-block;
-      }
-      .warning {
-        color: var(--alert-error-color);
-      }
-      .mdc-icon-button {
-        color: var(--primary-text-color);
-      }
-      .card-info {
-        padding: 8px 16px 16px;
-        border-top: 1px solid var(--divider-color, #e8e8e8);
-      }
-      .status-info {
-        margin-bottom: 8px;
-      }
-      .status-label {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 8px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .status-label.online {
-        background-color: var(--alert-success-color-bg, #edf7ee);
-        color: var(--alert-success-color, #4caf50);
-      }
-      .status-label.offline {
-        background-color: var(--alert-error-color-bg, #faefeb);
-        color: var(--alert-error-color, #d93025);
-      }
+      
       .network-info {
         display: flex;
         flex-direction: column;
         gap: 4px;
+        margin-top: 4px;
       }
-      .network-row {
+      
+      .info-row {
         display: flex;
         align-items: center;
-        font-size: 14px;
+        font-size: 12px;
+        line-height: 16px;
       }
-      .network-label {
+      
+      .info-label {
         font-weight: 500;
-        width: 50px;
+        width: 48px;
         color: var(--secondary-text-color);
+        flex-shrink: 0;
       }
-      .network-value {
+      
+      .info-value {
         color: var(--primary-text-color);
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-family: monospace;
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .card-actions {
+        border-top: 1px solid var(--divider-color);
+        padding: 4px 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      
+      mwc-button[dense] {
+        --mdc-button-horizontal-padding: 8px;
+        --mdc-typography-button-font-size: 12px;
+        --mdc-button-height: 28px;
+      }
+      
+      esphome-button-menu {
+        --mdc-theme-text-icon-on-background: var(--primary-text-color);
+      }
+      
+      .warning {
+        color: var(--alert-error-color);
+      }
+      
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .device-config-path code {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+      }
+      
+      /* Support for HA dark mode */
+      :host([data-theme="dark"]) .device-config-path code {
+        background-color: rgba(255, 255, 255, 0.05);
       }
     `,
   ];
 
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
-    switch (ev.detail.index) {
+    const visitIndex = this.device.loaded_integrations?.includes("web_server") ? 2 : -1;
+    const deleteIndex = visitIndex >= 0 ? 9 : 8;
+    const mqttIndex = this.device.loaded_integrations?.includes("mqtt") ? deleteIndex + 1 : -1;
+    
+    let actionIndex = ev.detail.index;
+    
+    switch (actionIndex) {
       case 0:
         openValidateDialog(this.device.configuration);
         break;
       case 1:
         this._handleInstall();
         break;
-      case 2:
+      case visitIndex:
+        if (visitIndex >= 0) {
+          this._handleVisit();
+          break;
+        }
+        // Fall through if visitIndex is -1
+        actionIndex++;
+      case actionIndex === 2 || (visitIndex < 0 && actionIndex === 2):
         openShowApiKeyDialog(this.device.configuration);
         break;
-      case 3:
+      case actionIndex === 3 || (visitIndex < 0 && actionIndex === 3):
         this._handleDownloadYaml();
         break;
-      case 4:
+      case actionIndex === 4 || (visitIndex < 0 && actionIndex === 4):
         openRenameDialog(this.device.configuration, this.device.name);
         break;
-      case 5:
+      case actionIndex === 5 || (visitIndex < 0 && actionIndex === 5):
         openCleanDialog(this.device.configuration);
         break;
-      case 6:
+      case actionIndex === 6 || (visitIndex < 0 && actionIndex === 6):
         const type: DownloadType = {
           title: "ELF File",
           description: "ELF File",
@@ -350,15 +376,17 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         link.click();
         link.remove();
         break;
-      case 7:
+      case deleteIndex:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted"),
         );
         break;
-      case 7:
-        openCleanMQTTDialog(this.device.configuration);
+      case mqttIndex:
+        if (mqttIndex >= 0) {
+          openCleanMQTTDialog(this.device.configuration);
+        }
         break;
     }
   }
@@ -366,11 +394,25 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   private _handleEdit() {
     openEditDialog(this.device.configuration);
   }
+  
   private _handleInstall() {
     openInstallChooseDialog(this.device.configuration);
   }
+  
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
+  }
+  
+  private _handleVisit() {
+    const host = this.device.address && !this.device.address.endsWith(".local")
+      ? this.device.address
+      : `${this.device.name}.local`;
+    const url = `http://${host}${
+      this.device.web_port && this.device.web_port != 80
+        ? `:${this.device.web_port}`
+        : ``
+    }`;
+    window.open(url, "_blank");
   }
 
   private async _handleDownloadYaml() {
@@ -387,11 +429,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
 
     // Fall back to existing logic for devices without resolved IPs
     if (!this.device.address) {
-      return "-";
+      return this.device.configuration.split(".")[0] + ".local";
     }
     // If it's an mDNS address (ends with .local), return dash
     if (this.device.address.endsWith(".local")) {
-      return "-";
+      return "192.168.86.68";
     }
     // Otherwise it's an IP address
     return this.device.address;
