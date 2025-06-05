@@ -1,7 +1,7 @@
-import { LitElement, html, css, TemplateResult, PropertyValues } from "lit";
+import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { canUpdateDevice, ConfiguredDevice } from "../api/devices";
+import { ConfiguredDevice } from "../api/devices";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
@@ -35,7 +35,6 @@ import {
 } from "@mdi/js";
 import { DownloadType, getDownloadUrl } from "../api/download";
 
-const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
   NEW: "var(--status-new)",
   OFFLINE: "var(--alert-error-color)",
@@ -59,7 +58,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   protected render() {
-    const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
       : this.onlineStatus
@@ -334,7 +332,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     const deleteIndex = visitIndex >= 0 ? 9 : 8;
     const mqttIndex = this.device.loaded_integrations?.includes("mqtt") ? deleteIndex + 1 : -1;
     
-    let actionIndex = ev.detail.index;
+    const actionIndex = ev.detail.index;
     
     switch (actionIndex) {
       case 0:
@@ -343,38 +341,67 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       case 1:
         this._handleInstall();
         break;
-      case visitIndex:
-        if (visitIndex >= 0) {
+      case 2:
+        if (visitIndex === 2) {
           this._handleVisit();
-          break;
+        } else {
+          openShowApiKeyDialog(this.device.configuration);
         }
-        // Fall through if visitIndex is -1
-        actionIndex++;
-      case actionIndex === 2 || (visitIndex < 0 && actionIndex === 2):
-        openShowApiKeyDialog(this.device.configuration);
         break;
-      case actionIndex === 3 || (visitIndex < 0 && actionIndex === 3):
-        this._handleDownloadYaml();
+      case 3:
+        if (visitIndex >= 0) {
+          openShowApiKeyDialog(this.device.configuration);
+        } else {
+          this._handleDownloadYaml();
+        }
         break;
-      case actionIndex === 4 || (visitIndex < 0 && actionIndex === 4):
-        openRenameDialog(this.device.configuration, this.device.name);
+      case 4:
+        if (visitIndex >= 0) {
+          this._handleDownloadYaml();
+        } else {
+          openRenameDialog(this.device.configuration, this.device.name);
+        }
         break;
-      case actionIndex === 5 || (visitIndex < 0 && actionIndex === 5):
-        openCleanDialog(this.device.configuration);
+      case 5:
+        if (visitIndex >= 0) {
+          openRenameDialog(this.device.configuration, this.device.name);
+        } else {
+          openCleanDialog(this.device.configuration);
+        }
         break;
-      case actionIndex === 6 || (visitIndex < 0 && actionIndex === 6):
-        const type: DownloadType = {
-          title: "ELF File",
-          description: "ELF File",
-          file: "firmware.elf",
-          download: `${this.device.name}.elf`,
-        };
-        const link = document.createElement("a");
-        link.download = type.download;
-        link.href = getDownloadUrl(this.device.configuration, type);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+      case 6:
+        if (visitIndex >= 0) {
+          openCleanDialog(this.device.configuration);
+        } else {
+          const type: DownloadType = {
+            title: "ELF File",
+            description: "ELF File",
+            file: "firmware.elf",
+            download: `${this.device.name}.elf`,
+          };
+          const link = document.createElement("a");
+          link.download = type.download;
+          link.href = getDownloadUrl(this.device.configuration, type);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+        break;
+      case 7:
+        if (visitIndex >= 0) {
+          const type: DownloadType = {
+            title: "ELF File",
+            description: "ELF File",
+            file: "firmware.elf",
+            download: `${this.device.name}.elf`,
+          };
+          const link = document.createElement("a");
+          link.download = type.download;
+          link.href = getDownloadUrl(this.device.configuration, type);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
         break;
       case deleteIndex:
         openDeleteDeviceDialog(
@@ -433,7 +460,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     }
     // If it's an mDNS address (ends with .local), return dash
     if (this.device.address.endsWith(".local")) {
-      return "192.168.86.68";
+      return "-";
     }
     // Otherwise it's an IP address
     return this.device.address;
