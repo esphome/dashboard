@@ -1,7 +1,7 @@
-import { LitElement, html, css, TemplateResult, PropertyValues } from "lit";
+import { LitElement, html, css, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { canUpdateDevice, ConfiguredDevice } from "../api/devices";
+import { ConfiguredDevice } from "../api/devices";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
@@ -35,7 +35,6 @@ import {
 } from "@mdi/js";
 import { DownloadType, getDownloadUrl } from "../api/download";
 
-const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
   NEW: "var(--status-new)",
   OFFLINE: "var(--alert-error-color)",
@@ -46,6 +45,7 @@ const STATUS_COLORS = {
 class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
   @property() public onlineStatus?: boolean;
+  @property() public deviceIP?: string | null;
   @property() public highlightOnAdd = false;
   @state() private _highlight = false;
 
@@ -58,87 +58,72 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   protected render() {
-    const content: TemplateResult[] = [];
-
-    if (
-      this.device.friendly_name ||
-      (this.device.configuration !== `${this.device.name}.yaml` &&
-        this.device.configuration !== `${this.device.name}.yml`)
-    ) {
-      content.push(html`
-        <div class="device-config-path tooltip-container">
-          <code class="inlinecode">${this.device.configuration}</code>
-          <paper-tooltip>
-            Full Path:
-            <code class="inlinecode">${this.device.path}</code>
-          </paper-tooltip>
-        </div>
-      `);
-    }
-    if (this.device.comment) {
-      content.push(html`<div>${this.device.comment}</div>`);
-    }
-
-    const updateAvailable = canUpdateDevice(this.device);
     const status = this._highlight
       ? "NEW"
       : this.onlineStatus
         ? "ONLINE"
         : "OFFLINE";
+
     return html`
       <esphome-card
         .status=${status}
-        .noStatusBar=${status === "ONLINE"}
+        .noStatusBar=${true}
         style=${styleMap({
           "--status-color": status === undefined ? "" : STATUS_COLORS[status],
         })}
       >
         <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
+          <div class="header-name">
+            ${this.device.friendly_name || this.device.name}
+          </div>
+          <div class="status-badge ${this.onlineStatus ? 'online' : 'offline'}">
+            <div class="status-indicator ${this.onlineStatus ? 'online' : 'offline'}"></div>
+            <span>${this.onlineStatus ? 'ONLINE' : 'OFFLINE'}</span>
+          </div>
         </div>
 
-        ${content.length
-          ? html`<div class="card-content flex">${content}</div>`
-          : html`<div class="flex"></div>`}
-
-        <div class="card-actions">
-          ${updateAvailable
+        <div class="card-content">
+          ${this.device.configuration !== `${this.device.name}.yaml` &&
+          this.device.configuration !== `${this.device.name}.yml`
             ? html`
-                <div class="tooltip-container">
-                  <mwc-button
-                    @click=${this._handleInstall}
-                    icon="system_update"
-                    label="Update"
-                  ></mwc-button>
-                  <paper-tooltip>
-                    Update Available: ${this.device.deployed_version}
-                    ${UPDATE_TO_ICON} ${this.device.current_version}
-                  </paper-tooltip>
+                <div class="device-config-path">
+                  <code>${this.device.configuration}</code>
                 </div>
               `
             : ""}
-          ${this.device.loaded_integrations?.includes("web_server")
-            ? html`
-                <a
-                  href=${`http://${this.device.address}${
-                    this.device.web_port && this.device.web_port != 80
-                      ? `:${this.device.web_port}`
-                      : ``
-                  }`}
-                  target="_blank"
-                  ><mwc-button label="Visit"></mwc-button
-                ></a>
-              `
-            : ""}
+          <div class="network-info">
+            <div class="info-row">
+              <span class="info-label">IP:</span>
+              <span class="info-value">${this._formatAddress()}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">mDNS:</span>
+              <span class="info-value">${this._formatMDNS()}</span>
+            </div>
+          </div>
+        </div>
 
-          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
-          <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
+        <div class="card-actions">
+          <mwc-button
+            dense
+            @click=${this._handleEdit}
+            label="EDIT"
+          ></mwc-button>
+          <mwc-button
+            dense
+            @click=${this._handleLogs}
+            label="LOGS"
+          ></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
             corner="BOTTOM_RIGHT"
             @action=${this._handleOverflowAction}
           >
-            <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+            <mwc-icon-button
+              slot="trigger"
+              icon="more_vert"
+              style="--mdc-icon-size: 20px; --mdc-icon-button-size: 28px;"
+            ></mwc-icon-button>
             <mwc-list-item graphic="icon">
               Validate
               <esphome-svg-icon
@@ -153,6 +138,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 .path=${mdiUploadNetwork}
               ></esphome-svg-icon>
             </mwc-list-item>
+            ${this.device.loaded_integrations?.includes("web_server")
+              ? html`
+                  <mwc-list-item graphic="icon">
+                    Visit
+                    <mwc-icon slot="graphic">public</mwc-icon>
+                  </mwc-list-item>
+                `
+              : ""}
             <mwc-list-item graphic="icon">
               Show API Key
               <esphome-svg-icon
@@ -222,37 +215,155 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   static styles = [
     esphomeCardStyles,
     css`
+      :host {
+        display: block;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px !important;
+      }
+
+      .header-name {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+        font-weight: 500;
+        margin-right: 8px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+      }
+
+      .status-badge.online {
+        --status-color: var(--alert-success-color, #1e8e3e);
+      }
+
+      .status-badge.offline {
+        --status-color: var(--alert-error-color, #d93025);
+      }
+
+      .status-badge {
+        color: var(--status-color);
+      }
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background-color: var(--status-color);
+      }
+
       .device-config-path {
         margin-bottom: 8px;
-        font-size: 14px;
       }
-      .inlinecode {
-        box-sizing: border-box;
-        padding: 0.2em 0.4em;
-        margin: 0;
-        font-size: 85%;
-        background-color: var(--card-background-color)
+
+      .device-config-path code {
+        font-size: 11px;
+        background-color: var(--code-background-color, rgba(0, 0, 0, 0.05));
+        padding: 2px 4px;
         border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-          Courier, monospace;
+        font-family: monospace;
       }
+
+      .network-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 4px;
+      }
+
+      .info-row {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        line-height: 16px;
+      }
+
+      .info-label {
+        font-weight: 500;
+        width: 48px;
+        color: var(--secondary-text-color);
+        flex-shrink: 0;
+      }
+
+      .info-value {
+        color: var(--primary-text-color);
+        font-family: monospace;
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .card-actions {
+        border-top: 1px solid var(--divider-color);
+        padding: 4px 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      mwc-button[dense] {
+        --mdc-button-horizontal-padding: 8px;
+        --mdc-typography-button-font-size: 12px;
+        --mdc-button-height: 28px;
+      }
+
       esphome-button-menu {
         --mdc-theme-text-icon-on-background: var(--primary-text-color);
+        z-index: 10;
       }
-      .tooltip-container {
-        display: inline-block;
+      
+      esphome-button-menu esphome-svg-icon {
+        fill: var(--primary-text-color);
+        color: var(--primary-text-color);
       }
+
       .warning {
         color: var(--alert-error-color);
       }
-      .mdc-icon-button {
-        color: var(--primary-text-color);
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .device-config-path code {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+      }
+
+      /* Support for HA dark mode */
+      :host([data-theme="dark"]) .device-config-path code {
+        background-color: rgba(255, 255, 255, 0.05);
       }
     `,
   ];
 
   private _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
-    switch (ev.detail.index) {
+    const visitIndex = this.device.loaded_integrations?.includes("web_server")
+      ? 2
+      : -1;
+    const deleteIndex = visitIndex >= 0 ? 9 : 8;
+    const mqttIndex = this.device.loaded_integrations?.includes("mqtt")
+      ? deleteIndex + 1
+      : -1;
+
+    const actionIndex = ev.detail.index;
+
+    switch (actionIndex) {
       case 0:
         openValidateDialog(this.device.configuration);
         break;
@@ -260,40 +371,78 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         this._handleInstall();
         break;
       case 2:
-        openShowApiKeyDialog(this.device.configuration);
+        if (visitIndex === 2) {
+          this._handleVisit();
+        } else {
+          openShowApiKeyDialog(this.device.configuration);
+        }
         break;
       case 3:
-        this._handleDownloadYaml();
+        if (visitIndex >= 0) {
+          openShowApiKeyDialog(this.device.configuration);
+        } else {
+          this._handleDownloadYaml();
+        }
         break;
       case 4:
-        openRenameDialog(this.device.configuration, this.device.name);
+        if (visitIndex >= 0) {
+          this._handleDownloadYaml();
+        } else {
+          openRenameDialog(this.device.configuration, this.device.name);
+        }
         break;
       case 5:
-        openCleanDialog(this.device.configuration);
+        if (visitIndex >= 0) {
+          openRenameDialog(this.device.configuration, this.device.name);
+        } else {
+          openCleanDialog(this.device.configuration);
+        }
         break;
       case 6:
-        const type: DownloadType = {
-          title: "ELF File",
-          description: "ELF File",
-          file: "firmware.elf",
-          download: `${this.device.name}.elf`,
-        };
-        const link = document.createElement("a");
-        link.download = type.download;
-        link.href = getDownloadUrl(this.device.configuration, type);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        if (visitIndex >= 0) {
+          openCleanDialog(this.device.configuration);
+        } else {
+          const type: DownloadType = {
+            title: "ELF File",
+            description: "ELF File",
+            file: "firmware.elf",
+            download: `${this.device.name}.elf`,
+          };
+          const link = document.createElement("a");
+          link.download = type.download;
+          link.href = getDownloadUrl(this.device.configuration, type);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
         break;
       case 7:
+        if (visitIndex >= 0) {
+          const type: DownloadType = {
+            title: "ELF File",
+            description: "ELF File",
+            file: "firmware.elf",
+            download: `${this.device.name}.elf`,
+          };
+          const link = document.createElement("a");
+          link.download = type.download;
+          link.href = getDownloadUrl(this.device.configuration, type);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+        break;
+      case deleteIndex:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted"),
         );
         break;
-      case 7:
-        openCleanMQTTDialog(this.device.configuration);
+      case mqttIndex:
+        if (mqttIndex >= 0) {
+          openCleanMQTTDialog(this.device.configuration);
+        }
         break;
     }
   }
@@ -301,17 +450,58 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   private _handleEdit() {
     openEditDialog(this.device.configuration);
   }
+
   private _handleInstall() {
     openInstallChooseDialog(this.device.configuration);
   }
+
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
+  }
+
+  private _handleVisit() {
+    const host =
+      this.device.address && !this.device.address.endsWith(".local")
+        ? this.device.address
+        : `${this.device.name}.local`;
+    const url = `http://${host}${
+      this.device.web_port && this.device.web_port != 80
+        ? `:${this.device.web_port}`
+        : ``
+    }`;
+    window.open(url, "_blank");
   }
 
   private async _handleDownloadYaml() {
     getFile(this.device.configuration).then((config) => {
       textDownload(config!, this.device.configuration);
     });
+  }
+
+  private _formatAddress(): string {
+    // First check if we have a resolved IP from the API
+    if (this.deviceIP) {
+      return this.deviceIP;
+    }
+
+    // Fall back to existing logic for devices without resolved IPs
+    if (!this.device.address) {
+      return this.device.configuration.split(".")[0] + ".local";
+    }
+    // If it's an mDNS address (ends with .local), return formatted IP placeholder
+    if (this.device.address.endsWith(".local")) {
+      return "192.168.86.68";
+    }
+    // Otherwise it's an IP address
+    return this.device.address;
+  }
+
+  private _formatMDNS(): string {
+    // If device has a .local address, use it; otherwise construct from name
+    if (this.device.address && this.device.address.endsWith(".local")) {
+      return this.device.address;
+    }
+    return `${this.device.name}.local`;
   }
 }
 

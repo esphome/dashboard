@@ -1,7 +1,7 @@
 import "./devices/devices-list";
 import "./components/esphome-header-menu";
 import "./components/esphome-fab";
-import { LitElement, html, PropertyValues } from "lit";
+import { LitElement, html, PropertyValues, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
 @customElement("esphome-main")
@@ -40,6 +40,9 @@ class ESPHomeMainView extends LitElement {
           .logoutUrl=${this.logoutUrl}
           .showDiscoveredDevices=${this.showDiscoveredDevices}
           @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+          @view-mode-changed=${this._handleViewModeChanged}
+          @sort-changed=${this._handleSortChanged}
+          @filter-changed=${this._handleFilterChanged}
         ></esphome-header-menu>
       </header>
 
@@ -85,6 +88,58 @@ class ESPHomeMainView extends LitElement {
   private _toggleDiscoveredDevices() {
     this.showDiscoveredDevices = !this.showDiscoveredDevices;
   }
+
+  private _handleViewModeChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("view-mode-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleSortChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("sort-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleFilterChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("filter-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  static styles = css`
+    :host {
+      display: block;
+      --primary-text-color: var(--mdc-theme-on-surface, #1d1d1d);
+      --secondary-text-color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+      color: var(--primary-text-color);
+    }
+    /* Global style for button menu icons */
+    esphome-button-menu esphome-svg-icon {
+      fill: var(--primary-text-color) !important;
+      color: var(--primary-text-color) !important;
+    }
+    /* Target Material list items with icons */
+    mwc-list-item[graphic="icon"] {
+      --mdc-theme-text-primary-on-background: var(--primary-text-color);
+    }
+    /* Ensure SVG paths get the right color */
+    esphome-svg-icon svg path {
+      fill: currentColor;
+    }
+  `;
 }
 
 declare global {

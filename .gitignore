@@ -4,3 +4,4 @@ esphome_dashboard.egg-info
 dist
 .vscode/settings.json
 venv
+deployment-notes.md
