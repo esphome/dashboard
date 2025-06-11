@@ -2,6 +2,7 @@ import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { sleep } from "../util/sleep";
 import { LineBreakTransformer } from "../util/line-break-transformer";
 import { TimestampTransformer } from "../util/timestamp-transformer";
+import { ESPHomeLogTransformer } from "../util/esphome-log-transformer";
 import { Logger } from "../const";
 
 export class EwtConsole extends HTMLElement {
@@ -96,6 +97,7 @@ export class EwtConsole extends HTMLElement {
           signal: abortSignal,
         })
         .pipeThrough(new TransformStream(new LineBreakTransformer()))
+        .pipeThrough(new TransformStream(new ESPHomeLogTransformer()))
         .pipeThrough(new TransformStream(new TimestampTransformer()))
         .pipeTo(
           new WritableStream({
