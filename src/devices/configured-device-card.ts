@@ -497,11 +497,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
 
   private _formatMDNS(): string {
-    // If device has a .local address, use it; otherwise construct from name
+    // If device has a .local address, use it; otherwise construct from configuration filename
     if (this.device.address && this.device.address.endsWith(".local")) {
       return this.device.address;
     }
-    return `${this.device.name}.local`;
+    // Use configuration filename without .yaml/.yml extension
+    const filename = this.device.configuration.replace(/\.(yaml|yml)$/, '');
+    return `${filename}.local`;
   }
 }
 
