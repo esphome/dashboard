@@ -223,11 +223,13 @@ class ESPHomeDevicesList extends LitElement {
       return "-";
     }
 
-    // If device has a .local address, use it; otherwise construct from name
+    // If device has a .local address, use it; otherwise construct from configuration filename
     if (row.address && row.address.endsWith(".local")) {
       return row.address;
     }
-    return `${row.name}.local`;
+    // Use configuration filename without .yaml/.yml extension
+    const filename = row.configuration.replace(/\.(yaml|yml)$/, '');
+    return `${filename}.local`;
   }
 
   private _renderActions(row: DataTableRowData): TemplateResult {
