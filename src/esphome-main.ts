@@ -123,7 +123,10 @@ class ESPHomeMainView extends LitElement {
     :host {
       display: block;
       --primary-text-color: var(--mdc-theme-on-surface, #1d1d1d);
-      --secondary-text-color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+      --secondary-text-color: var(
+        --mdc-theme-text-secondary-on-background,
+        rgba(0, 0, 0, 0.54)
+      );
       color: var(--primary-text-color);
     }
     /* Global style for button menu icons */

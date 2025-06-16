@@ -77,9 +77,9 @@ export class ESPHomeDataTable extends LitElement {
           } else if (this.sortColumn === "status") {
             // Special sorting for status: Online first, then Offline, then Discovered
             const statusOrder: { [key: string]: number } = {
-              "Online": 0,
-              "Offline": 1,
-              "Discovered": 2
+              Online: 0,
+              Offline: 1,
+              Discovered: 2,
             };
             const aOrder = statusOrder[aVal] ?? 3;
             const bOrder = statusOrder[bVal] ?? 3;
@@ -412,7 +412,7 @@ export class ESPHomeDataTable extends LitElement {
       position: relative;
       z-index: 10;
     }
-    
+
     /* Status badge styles */
     .status-badge {
       display: inline-flex;
@@ -425,25 +425,25 @@ export class ESPHomeDataTable extends LitElement {
       line-height: 1;
       color: var(--status-color);
     }
-    
+
     .status-badge.online {
       --status-color: var(--alert-success-color, #4caf50);
     }
-    
+
     .status-badge.offline {
       --status-color: var(--alert-error-color, #d93025);
     }
-    
+
     .status-badge.discovered {
       --status-color: var(--alert-info-color, #00539f);
     }
-    
+
     /* First column (status indicators) should be on top */
     td:first-child {
       position: relative;
       z-index: 5;
     }
-    
+
     /* Actions container styles */
     .actions-container {
       display: flex;
@@ -451,18 +451,18 @@ export class ESPHomeDataTable extends LitElement {
       align-items: center;
       flex-wrap: wrap;
     }
-    
+
     .actions-container mwc-button {
       --mdc-theme-primary: var(--primary-text-color);
       --mdc-button-horizontal-padding: 8px;
       font-size: 14px;
     }
-    
+
     .actions-container mwc-button[unelevated] {
       --mdc-theme-primary: var(--primary-text-color);
       --mdc-theme-on-primary: var(--card-background-color);
     }
-    
+
     /* Icon color fixes for action menus */
     esphome-button-menu {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
@@ -470,25 +470,25 @@ export class ESPHomeDataTable extends LitElement {
       position: relative;
       z-index: 1;
     }
-    
+
     esphome-button-menu mwc-list-item {
       --mdc-theme-text-primary-on-background: var(--primary-text-color);
       --mdc-list-item-graphic-color: var(--primary-text-color);
     }
-    
+
     esphome-button-menu esphome-svg-icon {
       fill: var(--primary-text-color) !important;
       color: var(--primary-text-color) !important;
     }
-    
+
     esphome-button-menu mwc-list-item [slot="graphic"] {
       color: var(--primary-text-color) !important;
     }
-    
+
     .warning {
       color: var(--alert-error-color);
     }
-    
+
     .warning mwc-icon,
     .warning esphome-svg-icon {
       color: var(--alert-error-color) !important;

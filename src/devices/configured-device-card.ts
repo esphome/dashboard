@@ -76,9 +76,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           <div class="header-name">
             ${this.device.friendly_name || this.device.name}
           </div>
-          <div class="status-badge ${this.onlineStatus ? 'online' : 'offline'}">
-            <div class="status-indicator ${this.onlineStatus ? 'online' : 'offline'}"></div>
-            <span>${this.onlineStatus ? 'ONLINE' : 'OFFLINE'}</span>
+          <div class="status-badge ${this.onlineStatus ? "online" : "offline"}">
+            <div
+              class="status-indicator ${this.onlineStatus
+                ? "online"
+                : "offline"}"
+            ></div>
+            <span>${this.onlineStatus ? "ONLINE" : "OFFLINE"}</span>
           </div>
         </div>
 
@@ -328,7 +332,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         --mdc-theme-text-icon-on-background: var(--primary-text-color);
         z-index: 10;
       }
-      
+
       esphome-button-menu esphome-svg-icon {
         fill: var(--primary-text-color);
         color: var(--primary-text-color);
@@ -502,7 +506,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       return this.device.address;
     }
     // Use configuration filename without .yaml/.yml extension
-    const filename = this.device.configuration.replace(/\.(yaml|yml)$/, '');
+    const filename = this.device.configuration.replace(/\.(yaml|yml)$/, "");
     return `${filename}.local`;
   }
 }
