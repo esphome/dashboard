@@ -228,7 +228,7 @@ class ESPHomeDevicesList extends LitElement {
       return row.address;
     }
     // Use configuration filename without .yaml/.yml extension
-    const filename = row.configuration.replace(/\.(yaml|yml)$/, '');
+    const filename = row.configuration.replace(/\.(yaml|yml)$/, "");
     return `${filename}.local`;
   }
 
@@ -412,17 +412,17 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const tableData = this._getTableData();
-    
+
     const discoveredCount = this._devices.filter(
       (item) => this._isImportable(item) && !item.ignored,
     ).length;
 
     if (this._viewMode === "cards") {
       let filteredData = tableData.filter((item) => this._filter(item));
-      
+
       // Apply sorting to card view
       filteredData = this._sortData(filteredData);
-      
+
       // Use existing card implementation
       let htmlClass = "no-result-container";
       let htmlDevices = html`
@@ -525,11 +525,11 @@ class ESPHomeDevicesList extends LitElement {
 
   private _sortData(data: DataTableRowData[]): DataTableRowData[] {
     const sortedData = [...data];
-    
+
     switch (this._sortBy) {
       case "name":
-        sortedData.sort((a, b) => 
-          (a.friendly_name || a.name).localeCompare(b.friendly_name || b.name)
+        sortedData.sort((a, b) =>
+          (a.friendly_name || a.name).localeCompare(b.friendly_name || b.name),
         );
         break;
       case "ip":
@@ -542,9 +542,9 @@ class ESPHomeDevicesList extends LitElement {
       case "status":
         // Sort by status: Online first, then Offline, then Discovered
         const statusOrder: { [key: string]: number } = {
-          "Online": 0,
-          "Offline": 1,
-          "Discovered": 2
+          Online: 0,
+          Offline: 1,
+          Discovered: 2,
         };
         sortedData.sort((a, b) => {
           const aOrder = statusOrder[a.status] ?? 3;
@@ -553,7 +553,7 @@ class ESPHomeDevicesList extends LitElement {
         });
         break;
     }
-    
+
     return sortedData;
   }
 
@@ -772,7 +772,10 @@ class ESPHomeDevicesList extends LitElement {
     /* Home Assistant dark mode */
     html[data-theme="dark"] esphome-button-menu mwc-list-item [slot="graphic"],
     html[data-theme="dark"] esphome-button-menu esphome-svg-icon,
-    html[data-theme="dark"] .actions-container esphome-button-menu esphome-svg-icon {
+    html[data-theme="dark"]
+      .actions-container
+      esphome-button-menu
+      esphome-svg-icon {
       color: var(--primary-text-color, rgba(255, 255, 255, 0.87)) !important;
       fill: var(--primary-text-color, rgba(255, 255, 255, 0.87)) !important;
     }
