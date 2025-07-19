@@ -17,6 +17,7 @@ export type SupportedPlatforms =
   | "ESP32P4"
   | "RP2040"
   | "BK72XX"
+  | "LN882X"
   | "RTL87XX";
 
 export type PlatformData = {
@@ -102,6 +103,12 @@ export const supportedPlatforms = {
   },
   BK72XX: {
     label: "BK72xx",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: null,
+  },
+  LN882X: {
+    label: "LN882x",
     showInPickerTitle: true,
     showInDeviceTypePicker: true,
     defaultBoard: null,
