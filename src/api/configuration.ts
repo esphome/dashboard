@@ -1,7 +1,7 @@
 import { APIError, fetchApiJson, fetchApiText, streamLogs } from ".";
 import { SupportedPlatforms } from "../const";
 
-export interface CreateConfigParams {
+export interface CreateBasicConfigParams {
   name: string;
   ssid: string;
   psk: string;
@@ -24,7 +24,7 @@ export interface Configuration {
   loaded_integrations: string[];
 }
 
-export const createConfiguration = (params: CreateConfigParams) =>
+export const createConfiguration = (params: CreateBasicConfigParams) =>
   fetchApiJson<{ configuration: string }>("./wizard", {
     method: "post",
     body: JSON.stringify(params),

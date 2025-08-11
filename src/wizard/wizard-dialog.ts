@@ -22,7 +22,7 @@ import {
 } from "../const";
 import {
   compileConfiguration,
-  CreateConfigParams,
+  CreateBasicConfigParams,
   createConfiguration,
   deleteConfiguration,
   getConfigurationApiKey,
@@ -66,7 +66,7 @@ export class ESPHomeWizardDialog extends LitElement {
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
 
-  private _data: Partial<CreateConfigParams> = {
+  private _data: Partial<CreateBasicConfigParams> = {
     ssid: `!secret ${SECRET_WIFI_SSID}`,
     psk: `!secret ${SECRET_WIFI_PASSWORD}`,
   };
@@ -628,7 +628,7 @@ export class ESPHomeWizardDialog extends LitElement {
         await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
       }
       const response = await createConfiguration(
-        this._data as CreateConfigParams,
+        this._data as CreateBasicConfigParams,
       );
       this._configFilename = response.configuration;
       refreshDevices();
@@ -696,7 +696,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       try {
         const { configuration } = await createConfiguration(
-          this._data as CreateConfigParams,
+          this._data as CreateBasicConfigParams,
         );
         this._configFilename = configuration;
       } catch (err) {
