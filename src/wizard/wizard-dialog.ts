@@ -793,7 +793,7 @@ export class ESPHomeWizardDialog extends LitElement {
     esphomeSvgStyles,
     css`
       :host {
-        --mdc-dialog-max-width: 390px;
+        --mdc-dialog-max-width: 490px;
       }
       .center {
         text-align: center;
