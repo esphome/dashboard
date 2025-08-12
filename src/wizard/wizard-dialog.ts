@@ -47,6 +47,7 @@ import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
 import { createESPLoader } from "../web-serial/create-esploader";
 import { resetSerialDevice } from "../web-serial/reset-serial-device";
+import { classMap } from "lit/directives/class-map.js";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -108,6 +109,8 @@ export class ESPHomeWizardDialog extends LitElement {
   @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
   @query("mwc-dialog") private _dialog!: HTMLDialogElement;
 
+  @state()
+  private _isDraggingOverConfigUpload = false;
   @query("#config-file-input") private _configFileInput!: HTMLInputElement;
 
   private _platformData(): PlatformData {
@@ -268,7 +271,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
     return [heading, content, hideActions];
   }
-  
+
   private _renderPickNewConfigType(): [string | undefined, TemplateResult, boolean] {
     const heading = "Create configuration";
     let hideActions = true;
@@ -276,12 +279,15 @@ export class ESPHomeWizardDialog extends LitElement {
       <div
         @dragover=${(ev: DragEvent) => {
           ev.preventDefault();
+          this._isDraggingOverConfigUpload = true;
         }}
         @dragleave=${(ev: DragEvent) => {
           ev.preventDefault();
+          this._isDraggingOverConfigUpload = false;
         }}
         @drop=${(ev: DragEvent) => {
           ev.preventDefault();
+          this._isDraggingOverConfigUpload = false;
 
           const file = ev.dataTransfer?.files?.[0];
           if (file) {
@@ -293,6 +299,9 @@ export class ESPHomeWizardDialog extends LitElement {
             this._handleConfigFileUpload();
           }
         }}
+        class="${classMap({
+          ["dragging-over"]: this._isDraggingOverConfigUpload,
+        })}"
       >
         <input
           type="file"
@@ -984,6 +993,10 @@ export class ESPHomeWizardDialog extends LitElement {
         left: 0;
         bottom: 4px;
         z-index: 1;
+      }
+      .dragging-over {
+        outline: 2px dashed var(--mdc-theme-primary);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     `,
   ];
