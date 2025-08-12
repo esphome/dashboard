@@ -28,6 +28,7 @@ import {
   createConfiguration,
   deleteConfiguration,
   getConfigurationApiKey,
+  CreateUploadConfigParams,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../web-serial/flash";
@@ -105,6 +106,8 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
   @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
+
+  @query("#config-file-input") private _configFileInput!: HTMLInputElement;
 
   private _platformData(): PlatformData {
     return supportedPlatforms[this._platform];
@@ -270,6 +273,13 @@ export class ESPHomeWizardDialog extends LitElement {
     let hideActions = true;
     const content = html`
       <div>
+        <input
+          type="file"
+          accept=".yaml,.yml"
+          style="display: none;"
+          id="config-file-input"
+          @change=${this._handleConfigFileChange}
+        />
         <p>How would you like to create your configuration?</p>
         <mwc-list>
           <mwc-list-item twoline hasMeta @click=${() => {
@@ -279,7 +289,13 @@ export class ESPHomeWizardDialog extends LitElement {
             <span slot="secondary">A guided process to get you started.</span>
             ${metaChevronRight}
           </mwc-list-item>
-
+          <mwc-list-item twoline hasMeta @click=${() => {
+            this._configFileInput.click();
+          }}>
+            <span>Import from File</span>
+            <span slot="secondary">Use an existing ESPHome configuration (.yaml).</span>
+            ${metaChevronRight}
+          </mwc-list-item>
           <mwc-list-item twoline hasMeta @click=${() => {
             this._state = "empty_config";
           }}>
@@ -686,6 +702,20 @@ export class ESPHomeWizardDialog extends LitElement {
     } finally {
       this._busy = false;
     }
+  }
+  
+  private async _handleConfigFileChange(ev: Event) {
+    const input = ev.target as HTMLInputElement;
+    const file = input.files?.[0];
+    const response = await createConfiguration({
+      type: "upload",
+      name: file?.name.replace(/\.ya?ml$/, ""),
+      file_content: btoa(file ? await file.text() : ""),
+    } as CreateUploadConfigParams)
+    this._configFilename = response.configuration;
+    refreshDevices();
+    this._state = "done";
+    this._busy = false;
   }
 
   private _handleUseRecommendedCheckbox(ev: Event) {
