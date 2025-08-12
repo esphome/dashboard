@@ -710,6 +710,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handlePickBoardSubmit() {
     if (!this._board) return;
+    if(this._data.type !== "basic") return;
     this._data.board = this._board!;
 
     this._busy = true;
@@ -742,6 +743,7 @@ export class ESPHomeWizardDialog extends LitElement {
     this._error = undefined;
     let esploader: ESPLoader | undefined;
     let removeConfig = false;
+    if(this._data.type !== "basic") return;
     try {
       let port: SerialPort | undefined;
 
