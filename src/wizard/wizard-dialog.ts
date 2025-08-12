@@ -22,7 +22,9 @@ import {
 } from "../const";
 import {
   compileConfiguration,
+  CreateConfigParams,
   CreateBasicConfigParams,
+  CreateEmptyConfigParams,
   createConfiguration,
   deleteConfiguration,
   getConfigurationApiKey,
@@ -66,7 +68,8 @@ export class ESPHomeWizardDialog extends LitElement {
   // undefined = not loaded
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
 
-  private _data: Partial<CreateBasicConfigParams> = {
+  private _data: Partial<CreateConfigParams> = {
+    type: "basic",
     ssid: `!secret ${SECRET_WIFI_SSID}`,
     psk: `!secret ${SECRET_WIFI_PASSWORD}`,
   };
@@ -81,7 +84,9 @@ export class ESPHomeWizardDialog extends LitElement {
 
   @state() private _state:
     | "ask_esphome_web"
+    | "pick_new_config_type"
     | "basic_config"
+    | "empty_config"
     | "connect_webserial"
     | "pick_platform"
     | "pick_board"
@@ -89,7 +94,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "prepare_flash"
     | "flashing"
     | "wait_come_online"
-    | "done" = supportsWebSerial ? "basic_config" : "ask_esphome_web";
+    | "done" = supportsWebSerial ? "pick_new_config_type" : "ask_esphome_web";
 
   @state() private _error?: string;
 
@@ -112,8 +117,12 @@ export class ESPHomeWizardDialog extends LitElement {
 
     if (this._state === "ask_esphome_web") {
       [heading, content, hideActions] = this._renderAskESPHomeWeb();
+    } else if (this._state === "pick_new_config_type") {
+      [heading, content, hideActions] = this._renderPickNewConfigType();
     } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
+    } else if (this._state === "empty_config") {
+      [heading, content, hideActions] = this._renderEmptyConfig();
     } else if (this._state === "pick_platform") {
       heading = "Select your device type";
       content = this._renderPickPlatform();
@@ -235,7 +244,7 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         label="Continue"
         @click=${() => {
-          this._state = "basic_config";
+          this._state = "pick_new_config_type";
         }}
       ></mwc-button>
 
@@ -251,6 +260,35 @@ export class ESPHomeWizardDialog extends LitElement {
           label="Open ESPHome Web"
         ></mwc-button>
       </a>
+    `;
+
+    return [heading, content, hideActions];
+  }
+  
+  private _renderPickNewConfigType(): [string | undefined, TemplateResult, boolean] {
+    const heading = "Create configuration";
+    let hideActions = true;
+    const content = html`
+      <div>
+        <p>How would you like to create your configuration?</p>
+        <mwc-list>
+          <mwc-list-item twoline hasMeta @click=${() => {
+            this._state = "basic_config";
+          }}>
+            <span>New Device Setup</span>
+            <span slot="secondary">A guided process to get you started.</span>
+            ${metaChevronRight}
+          </mwc-list-item>
+
+          <mwc-list-item twoline hasMeta @click=${() => {
+            this._state = "empty_config";
+          }}>
+            <span>Empty Configuration</span>
+            <span slot="secondary">For manually writing or pasting a configuration.</span>
+            ${metaChevronRight}
+          </mwc-list-item>
+        </mwc-list>
+      </div>
     `;
 
     return [heading, content, hideActions];
@@ -304,6 +342,32 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         label="Next"
         @click=${this._handleBasicConfigSubmit}
+      ></mwc-button>
+
+      <mwc-button
+        no-attention
+        slot="secondaryAction"
+        dialogAction="close"
+        label="Cancel"
+      ></mwc-button>
+    `;
+
+    return [heading, content, hideActions];
+  }
+
+  private _renderEmptyConfig(): [string | undefined, TemplateResult, boolean] {
+    const heading = "Create empty configuration";
+    this._data.type = "empty";
+    let hideActions = false;
+    const content = html`
+      ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+
+      <mwc-textfield label="Name" name="name" required></mwc-textfield>
+
+      <mwc-button
+        slot="primaryAction"
+        label="Next"
+        @click=${this._handleEmptyConfigSubmit}
       ></mwc-button>
 
       <mwc-button
@@ -595,6 +659,33 @@ export class ESPHomeWizardDialog extends LitElement {
           ? "connect_webserial"
           : "pick_platform";
     }, 0);
+  }
+
+  private async _handleEmptyConfigSubmit() {
+    const nameInput = this._inputName;
+
+    const nameValid = nameInput.reportValidity();
+    if (!nameValid) {
+      nameInput.focus();
+      return;
+    }
+
+    this._busy = true;
+    this._data.type = "empty";
+    this._data.name = nameInput.value;
+
+    try {
+      const response = await createConfiguration(
+        this._data as CreateEmptyConfigParams,
+      );
+      this._configFilename = response.configuration;
+      refreshDevices();
+      this._state = "done";
+    } catch (err: any) {
+      this._error = err.message || err;
+    } finally {
+      this._busy = false;
+    }
   }
 
   private _handleUseRecommendedCheckbox(ev: Event) {
