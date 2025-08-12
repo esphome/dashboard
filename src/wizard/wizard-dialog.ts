@@ -106,6 +106,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
   @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
+  @query("mwc-dialog") private _dialog!: HTMLDialogElement;
 
   @query("#config-file-input") private _configFileInput!: HTMLInputElement;
 
@@ -717,7 +718,7 @@ export class ESPHomeWizardDialog extends LitElement {
       );
       this._configFilename = response.configuration;
       refreshDevices();
-      this._state = "done";
+      this._dialog.close();
     } catch (err: any) {
       this._error = err.message || err;
     } finally {
