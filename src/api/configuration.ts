@@ -6,6 +6,12 @@ export interface CreateEmptyConfigParams {
   name: string;
 }
 
+export interface CreateUploadConfigParams {
+  type: "upload";
+  name: string;
+  file_content: string;
+}
+
 export interface CreateBasicConfigParams {
   type: "basic";
   name: string;
@@ -15,7 +21,7 @@ export interface CreateBasicConfigParams {
   platform: SupportedPlatforms;
 }
 
-export type CreateConfigParams = CreateEmptyConfigParams | CreateBasicConfigParams;
+export type CreateConfigParams = CreateEmptyConfigParams | CreateUploadConfigParams | CreateBasicConfigParams;
 
 export interface Configuration {
   storage_version: number;
