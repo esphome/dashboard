@@ -272,13 +272,33 @@ export class ESPHomeWizardDialog extends LitElement {
     const heading = "Create configuration";
     let hideActions = true;
     const content = html`
-      <div>
+      <div
+        @dragover=${(ev: DragEvent) => {
+          ev.preventDefault();
+        }}
+        @dragleave=${(ev: DragEvent) => {
+          ev.preventDefault();
+        }}
+        @drop=${(ev: DragEvent) => {
+          ev.preventDefault();
+
+          const file = ev.dataTransfer?.files?.[0];
+          if (file) {
+            if (!file.name.endsWith(".yaml") && !file.name.endsWith(".yml")) {
+              console.error("Invalid file type. Please provide a .yaml or .yml file.");
+              return;
+            }
+            this._configFileInput.files = ev.dataTransfer.files;
+            this._handleConfigFileUpload();
+          }
+        }}
+      >
         <input
           type="file"
           accept=".yaml,.yml"
           style="display: none;"
           id="config-file-input"
-          @change=${this._handleConfigFileChange}
+          @change=${this._handleConfigFileUpload}
         />
         <p>How would you like to create your configuration?</p>
         <mwc-list>
@@ -304,6 +324,7 @@ export class ESPHomeWizardDialog extends LitElement {
             ${metaChevronRight}
           </mwc-list-item>
         </mwc-list>
+        <small>You can also drag and drop your .yaml file here</small>
       </div>
     `;
 
@@ -703,9 +724,9 @@ export class ESPHomeWizardDialog extends LitElement {
       this._busy = false;
     }
   }
-  
-  private async _handleConfigFileChange(ev: Event) {
-    const input = ev.target as HTMLInputElement;
+
+  private async _handleConfigFileUpload() {
+    const input = this._configFileInput;
     const file = input.files?.[0];
     const response = await createConfiguration({
       type: "upload",
