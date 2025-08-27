@@ -1,7 +1,0 @@
-{
-  "async_tcp": {
-    "schemas": {
-      "CONFIG_SCHEMA": {}
-    }
-  }
-}

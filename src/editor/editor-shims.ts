@@ -1,8 +1,25 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { ESPHomeSchema } from "./esphome-schema";
 
+let schema_version = "dev";
+const schema_uri = (name: string, version?: string) =>
+  `https://schema.esphome.io/${version || schema_version}/${name}.json`;
+
+export async function setSchemaVersion(version: string) {
+  if (version.endsWith("dev")) schema_version = "dev";
+  else {
+    // check esphome schema exists for given schema
+    const response = await fetch(schema_uri("esphome", version));
+    if (response.ok) schema_version = version;
+    else
+      console.warn(
+        `Schema version ${version} not available in schema.esphome.io. Using latest dev schemas instead.`,
+      );
+  }
+}
+
 export const coreSchema = new ESPHomeSchema(async (name: string) => {
-  const response = await fetch(`static/schema/${name}.json`);
+  const response = await fetch(schema_uri(name));
   const fileContents = await response.text();
   return JSON.parse(fileContents);
 });

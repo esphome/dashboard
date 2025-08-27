@@ -7,19 +7,28 @@ export type DownloadType = {
   download: string;
 };
 
-export const getDownloadTypes = (configuration: string) =>
-  fetchApiJson<DownloadType[]>(
-    `./downloads?configuration=${encodeURIComponent(configuration)}`,
+export const getDownloadTypes = (configuration: string) => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: configuration,
+  });
+  return fetchApiJson<DownloadType[]>(
+    `./downloads?${urlSearchParams.toString()}`,
   );
+};
 
-export const getDownloadUrl = (configuration: string, type: DownloadType) =>
-  `./download.bin?configuration=${encodeURIComponent(
-    configuration,
-  )}&file=${encodeURIComponent(type.file)}&download=${encodeURIComponent(
-    type.download,
-  )}`;
+export const getDownloadUrl = (configuration: string, type: DownloadType) => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: configuration,
+    file: type.file,
+    download: type.download,
+  });
+  return `./download.bin?${urlSearchParams.toString()}`;
+};
 
-export const getFactoryDownloadUrl = (configuration: string) =>
-  `./download.bin?configuration=${encodeURIComponent(
-    configuration,
-  )}&file=firmware.factory.bin`;
+export const getFactoryDownloadUrl = (configuration: string) => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: configuration,
+    file: "firmware.factory.bin",
+  });
+  return `./download.bin?${urlSearchParams.toString()}`;
+};

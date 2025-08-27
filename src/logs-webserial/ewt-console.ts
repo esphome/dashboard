@@ -2,6 +2,7 @@ import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { sleep } from "../util/sleep";
 import { LineBreakTransformer } from "../util/line-break-transformer";
 import { TimestampTransformer } from "../util/timestamp-transformer";
+import { ESPHomeLogTransformer } from "../util/esphome-log-transformer";
 import { Logger } from "../const";
 
 export class EwtConsole extends HTMLElement {
@@ -92,10 +93,14 @@ export class EwtConsole extends HTMLElement {
     this.logger.debug("Starting console read loop");
     try {
       await this.port
-        .readable!.pipeThrough(new TextDecoderStream(), {
-          signal: abortSignal,
-        })
+        .readable!.pipeThrough(
+          new TextDecoderStream() as ReadableWritablePair<string, Uint8Array>,
+          {
+            signal: abortSignal,
+          },
+        )
         .pipeThrough(new TransformStream(new LineBreakTransformer()))
+        .pipeThrough(new TransformStream(new ESPHomeLogTransformer()))
         .pipeThrough(new TransformStream(new TimestampTransformer()))
         .pipeTo(
           new WritableStream({
@@ -124,7 +129,7 @@ export class EwtConsole extends HTMLElement {
     const command = input.value;
     const encoder = new TextEncoder();
     const writer = this.port.writable!.getWriter();
-    await writer.write(encoder.encode(command + "\r\n"));
+    await writer.write(encoder.encode(`${command}\r\n`));
     this._console!.addLine(`> ${command}\r\n`);
     input.value = "";
     input.focus();

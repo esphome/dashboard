@@ -53,7 +53,7 @@ export class DefinitionHandler {
         return definition;
       }
     } catch (error) {
-      console.log("Definition:" + error);
+      console.log(`Definition: ${error}`);
     }
     return null;
   }

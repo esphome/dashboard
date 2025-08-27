@@ -12,6 +12,7 @@ import type { Snackbar } from "@material/mwc-snackbar";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
+import { setSchemaVersion } from "./editor-shims";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -210,7 +211,7 @@ class ESPHomeEditor extends LitElement {
   sendAceStdin(data: any) {
     let send = JSON.stringify({
       type: "stdin",
-      data: JSON.stringify(data) + "\n",
+      data: `${JSON.stringify(data)}\n`,
     });
     this.editorActiveWebSocket!.send(send);
   }
@@ -223,7 +224,9 @@ class ESPHomeEditor extends LitElement {
       const raw = JSON.parse(event.data);
       if (raw.event === "line") {
         const msg = JSON.parse(raw.data);
-        if (msg.type === "result") {
+        if (msg.type === "version") {
+          setSchemaVersion(msg.value);
+        } else if (msg.type === "result") {
           const markers: monaco.editor.IMarkerData[] = [];
 
           for (const v of msg.validation_errors.reverse()) {

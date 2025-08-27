@@ -96,8 +96,9 @@ class ESPHomeImportableDeviceCard extends LitElement {
         font-size: 85%;
         background-color: rgba(27, 31, 35, 0.05);
         border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-          Courier, monospace;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+          monospace;
       }
       .card-actions mwc-button {
         --mdc-theme-primary: #4caf50;
