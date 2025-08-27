@@ -272,7 +272,11 @@ export class ESPHomeWizardDialog extends LitElement {
     return [heading, content, hideActions];
   }
 
-  private _renderPickNewConfigType(): [string | undefined, TemplateResult, boolean] {
+  private _renderPickNewConfigType(): [
+    string | undefined,
+    TemplateResult,
+    boolean,
+  ] {
     const heading = "Create configuration";
     let hideActions = true;
     const content = html`
@@ -292,7 +296,9 @@ export class ESPHomeWizardDialog extends LitElement {
           const file = ev.dataTransfer?.files?.[0];
           if (file) {
             if (!file.name.endsWith(".yaml") && !file.name.endsWith(".yml")) {
-              console.error("Invalid file type. Please provide a .yaml or .yml file.");
+              console.error(
+                "Invalid file type. Please provide a .yaml or .yml file.",
+              );
               return;
             }
             this._configFileInput.files = ev.dataTransfer.files;
@@ -312,25 +318,41 @@ export class ESPHomeWizardDialog extends LitElement {
         />
         <p>How would you like to create your configuration?</p>
         <mwc-list>
-          <mwc-list-item twoline hasMeta @click=${() => {
-            this._state = "basic_config";
-          }}>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._state = "basic_config";
+            }}
+          >
             <span>New Device Setup</span>
             <span slot="secondary">A guided process to get you started.</span>
             ${metaChevronRight}
           </mwc-list-item>
-          <mwc-list-item twoline hasMeta @click=${() => {
-            this._configFileInput.click();
-          }}>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._configFileInput.click();
+            }}
+          >
             <span>Import from File</span>
-            <span slot="secondary">Use an existing ESPHome configuration (.yaml).</span>
+            <span slot="secondary"
+              >Use an existing ESPHome configuration (.yaml).</span
+            >
             ${metaChevronRight}
           </mwc-list-item>
-          <mwc-list-item twoline hasMeta @click=${() => {
-            this._state = "empty_config";
-          }}>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._state = "empty_config";
+            }}
+          >
             <span>Empty Configuration</span>
-            <span slot="secondary">For manually writing or pasting a configuration.</span>
+            <span slot="secondary"
+              >For manually writing or pasting a configuration.</span
+            >
             ${metaChevronRight}
           </mwc-list-item>
         </mwc-list>
@@ -739,7 +761,7 @@ export class ESPHomeWizardDialog extends LitElement {
     const utf8Encoder = new TextEncoder();
     const utf8Bytes = utf8Encoder.encode(str);
 
-    let binaryString = '';
+    let binaryString = "";
     for (let i = 0; i < utf8Bytes.length; i++) {
       binaryString += String.fromCharCode(utf8Bytes[i]);
     }
@@ -754,7 +776,7 @@ export class ESPHomeWizardDialog extends LitElement {
       type: "upload",
       name: file?.name.replace(/\.ya?ml$/, ""),
       file_content: this._encodeToBase64(file ? await file.text() : ""),
-    } as CreateUploadConfigParams)
+    } as CreateUploadConfigParams);
     this._configFilename = response.configuration;
     refreshDevices();
     this._state = "done";
@@ -783,7 +805,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handlePickBoardSubmit() {
     if (!this._board) return;
-    if(this._data.type !== "basic") return;
+    if (this._data.type !== "basic") return;
     this._data.board = this._board!;
 
     this._busy = true;
@@ -816,7 +838,7 @@ export class ESPHomeWizardDialog extends LitElement {
     this._error = undefined;
     let esploader: ESPLoader | undefined;
     let removeConfig = false;
-    if(this._data.type !== "basic") return;
+    if (this._data.type !== "basic") return;
     try {
       let port: SerialPort | undefined;
 

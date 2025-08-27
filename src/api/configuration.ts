@@ -21,7 +21,10 @@ export interface CreateBasicConfigParams {
   platform: SupportedPlatforms;
 }
 
-export type CreateConfigParams = CreateEmptyConfigParams | CreateUploadConfigParams | CreateBasicConfigParams;
+export type CreateConfigParams =
+  | CreateEmptyConfigParams
+  | CreateUploadConfigParams
+  | CreateBasicConfigParams;
 
 export interface Configuration {
   storage_version: number;
