@@ -735,13 +735,25 @@ export class ESPHomeWizardDialog extends LitElement {
     }
   }
 
+  private _encodeToBase64(str: string): string {
+    const utf8Encoder = new TextEncoder();
+    const utf8Bytes = utf8Encoder.encode(str);
+
+    let binaryString = '';
+    for (let i = 0; i < utf8Bytes.length; i++) {
+      binaryString += String.fromCharCode(utf8Bytes[i]);
+    }
+
+    return btoa(binaryString);
+  }
+
   private async _handleConfigFileUpload() {
     const input = this._configFileInput;
     const file = input.files?.[0];
     const response = await createConfiguration({
       type: "upload",
       name: file?.name.replace(/\.ya?ml$/, ""),
-      file_content: btoa(file ? await file.text() : ""),
+      file_content: this._encodeToBase64(file ? await file.text() : ""),
     } as CreateUploadConfigParams)
     this._configFilename = response.configuration;
     refreshDevices();
