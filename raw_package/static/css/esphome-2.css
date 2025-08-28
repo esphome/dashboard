@@ -17,7 +17,7 @@
   --alert-error-color-bg: #faefeb;
   --mdc-theme-primary: #03a9f4;
   --primary-text-color: #212121;
-  --mdc-dialog-z-index: 998;
+  --mdc-dialog-z-index: 10000;
   --mdc-theme-primary-no-attention: #444444;
   --mdc-theme-on-primary-no-attention: white;
   --esphome-background-header: #e0e0e0;
@@ -103,7 +103,7 @@ esphome-main {
   background-color: var(--esphome-background-header);
   color: var(--primary-text-color);
   padding: 0 24px;
-  z-index: 1;
+  z-index: 50;
 }
 
 .flex {

@@ -39,6 +39,15 @@ export class ESPHomeButtonMenu extends LitElement {
       display: inline-block;
       position: relative;
     }
+    mwc-menu {
+      --mdc-theme-surface: var(--card-background-color);
+      --mdc-theme-on-surface: var(--primary-text-color);
+      --mdc-list-item-graphic-color: var(--primary-text-color);
+    }
+    /* Force icon colors */
+    ::slotted(mwc-list-item) {
+      --mdc-theme-text-primary-on-background: var(--primary-text-color);
+    }
   `;
 }
 
