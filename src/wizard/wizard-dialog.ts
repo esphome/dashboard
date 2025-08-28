@@ -280,6 +280,7 @@ export class ESPHomeWizardDialog extends LitElement {
     const heading = "Create configuration";
     let hideActions = true;
     const content = html`
+      ${this._error ? html`<div class="error">${this._error}</div>` : ""}
       <div
         @dragover=${(ev: DragEvent) => {
           ev.preventDefault();
@@ -772,15 +773,21 @@ export class ESPHomeWizardDialog extends LitElement {
   private async _handleConfigFileUpload() {
     const input = this._configFileInput;
     const file = input.files?.[0];
-    const response = await createConfiguration({
-      type: "upload",
-      name: file?.name.replace(/\.ya?ml$/, ""),
-      file_content: this._encodeToBase64(file ? await file.text() : ""),
-    } as CreateUploadConfigParams);
-    this._configFilename = response.configuration;
-    refreshDevices();
-    this._state = "done";
-    this._busy = false;
+    try {
+      const response = await createConfiguration({
+        type: "upload",
+        name: file?.name.replace(/\.ya?ml$/, ""),
+        file_content: this._encodeToBase64(file ? await file.text() : ""),
+      } as CreateUploadConfigParams);
+      this._configFilename = response.configuration;
+      refreshDevices();
+      this._state = "done";
+    } catch (err: any) {
+      console.error("err was", err.message);
+      this._error = err.message || err;
+    } finally {
+      this._busy = false;
+    }
   }
 
   private _handleUseRecommendedCheckbox(ev: Event) {
