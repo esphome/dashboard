@@ -1,13 +1,30 @@
 import { APIError, fetchApiJson, fetchApiText, streamLogs } from ".";
 import { SupportedPlatforms } from "../const";
 
-export interface CreateConfigParams {
+export interface CreateEmptyConfigParams {
+  type: "empty";
+  name: string;
+}
+
+export interface CreateUploadConfigParams {
+  type: "upload";
+  name: string;
+  file_content: string;
+}
+
+export interface CreateBasicConfigParams {
+  type: "basic";
   name: string;
   ssid: string;
   psk: string;
   board: string;
   platform: SupportedPlatforms;
 }
+
+export type CreateConfigParams =
+  | CreateEmptyConfigParams
+  | CreateUploadConfigParams
+  | CreateBasicConfigParams;
 
 export interface Configuration {
   storage_version: number;
