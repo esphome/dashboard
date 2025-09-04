@@ -28,7 +28,20 @@ const fetchApiBase = async (
   }
   const resp = await fetch(path, options);
   if (!resp.ok) {
-    throw new APIError(`Request not successful (${resp.status})`, resp.status);
+    let errMessage = `Request not successful (${resp.status})`;
+    try {
+      const contentType = resp.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        const json = await resp.json();
+        errMessage += `: ${json.error}`;
+      } else {
+        const text = await resp.text();
+        if (text) errMessage += `: ${text}`;
+      }
+    } catch {
+      // Ignore parsing errors, use generic message
+    }
+    throw new APIError(errMessage, resp.status);
   }
   return resp;
 };
