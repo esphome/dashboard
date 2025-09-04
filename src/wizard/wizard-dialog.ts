@@ -23,9 +23,12 @@ import {
 import {
   compileConfiguration,
   CreateConfigParams,
+  CreateBasicConfigParams,
+  CreateEmptyConfigParams,
   createConfiguration,
   deleteConfiguration,
   getConfigurationApiKey,
+  CreateUploadConfigParams,
 } from "../api/configuration";
 import { getSupportedPlatformBoards, SupportedBoards } from "../api/boards";
 import { getConfigurationFiles, flashFiles } from "../web-serial/flash";
@@ -44,6 +47,7 @@ import { copyToClipboard } from "../util/copy-clipboard";
 import { sleep } from "../util/sleep";
 import { createESPLoader } from "../web-serial/create-esploader";
 import { resetSerialDevice } from "../web-serial/reset-serial-device";
+import { classMap } from "lit/directives/class-map.js";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -67,6 +71,7 @@ export class ESPHomeWizardDialog extends LitElement {
   @state() private _hasWifiSecrets: undefined | boolean = undefined;
 
   private _data: Partial<CreateConfigParams> = {
+    type: "basic",
     ssid: `!secret ${SECRET_WIFI_SSID}`,
     psk: `!secret ${SECRET_WIFI_PASSWORD}`,
   };
@@ -81,7 +86,9 @@ export class ESPHomeWizardDialog extends LitElement {
 
   @state() private _state:
     | "ask_esphome_web"
+    | "pick_new_config_type"
     | "basic_config"
+    | "empty_config"
     | "connect_webserial"
     | "pick_platform"
     | "pick_board"
@@ -89,7 +96,7 @@ export class ESPHomeWizardDialog extends LitElement {
     | "prepare_flash"
     | "flashing"
     | "wait_come_online"
-    | "done" = supportsWebSerial ? "basic_config" : "ask_esphome_web";
+    | "done" = supportsWebSerial ? "pick_new_config_type" : "ask_esphome_web";
 
   @state() private _error?: string;
 
@@ -100,6 +107,11 @@ export class ESPHomeWizardDialog extends LitElement {
   @query("mwc-textfield[name=ssid]") private _inputSSID!: TextField;
   @query("mwc-textfield[name=password]") private _inputPassword!: TextField;
   @query(".api-key-banner") private _inputApiKeyBanner?: TextField;
+  @query("mwc-dialog") private _dialog!: HTMLDialogElement;
+
+  @state()
+  private _isDraggingOverConfigUpload = false;
+  @query("#config-file-input") private _configFileInput!: HTMLInputElement;
 
   private _platformData(): PlatformData {
     return supportedPlatforms[this._platform];
@@ -112,8 +124,12 @@ export class ESPHomeWizardDialog extends LitElement {
 
     if (this._state === "ask_esphome_web") {
       [heading, content, hideActions] = this._renderAskESPHomeWeb();
+    } else if (this._state === "pick_new_config_type") {
+      [heading, content, hideActions] = this._renderPickNewConfigType();
     } else if (this._state === "basic_config") {
       [heading, content, hideActions] = this._renderBasicConfig();
+    } else if (this._state === "empty_config") {
+      [heading, content, hideActions] = this._renderEmptyConfig();
     } else if (this._state === "pick_platform") {
       heading = "Select your device type";
       content = this._renderPickPlatform();
@@ -235,7 +251,7 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         label="Continue"
         @click=${() => {
-          this._state = "basic_config";
+          this._state = "pick_new_config_type";
         }}
       ></mwc-button>
 
@@ -251,6 +267,98 @@ export class ESPHomeWizardDialog extends LitElement {
           label="Open ESPHome Web"
         ></mwc-button>
       </a>
+    `;
+
+    return [heading, content, hideActions];
+  }
+
+  private _renderPickNewConfigType(): [
+    string | undefined,
+    TemplateResult,
+    boolean,
+  ] {
+    const heading = "Create configuration";
+    let hideActions = true;
+    const content = html`
+      ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+      <div
+        @dragover=${(ev: DragEvent) => {
+          ev.preventDefault();
+          this._isDraggingOverConfigUpload = true;
+        }}
+        @dragleave=${(ev: DragEvent) => {
+          ev.preventDefault();
+          this._isDraggingOverConfigUpload = false;
+        }}
+        @drop=${(ev: DragEvent) => {
+          ev.preventDefault();
+          this._isDraggingOverConfigUpload = false;
+
+          const file = ev.dataTransfer?.files?.[0];
+          if (file) {
+            if (!file.name.endsWith(".yaml") && !file.name.endsWith(".yml")) {
+              console.error(
+                "Invalid file type. Please provide a .yaml or .yml file.",
+              );
+              return;
+            }
+            this._configFileInput.files = ev.dataTransfer.files;
+            this._handleConfigFileUpload();
+          }
+        }}
+        class="${classMap({
+          ["dragging-over"]: this._isDraggingOverConfigUpload,
+        })}"
+      >
+        <input
+          type="file"
+          accept=".yaml,.yml"
+          style="display: none;"
+          id="config-file-input"
+          @change=${this._handleConfigFileUpload}
+        />
+        <p>How would you like to create your configuration?</p>
+        <mwc-list>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._state = "basic_config";
+            }}
+          >
+            <span>New Device Setup</span>
+            <span slot="secondary">A guided process to get you started.</span>
+            ${metaChevronRight}
+          </mwc-list-item>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._configFileInput.click();
+            }}
+          >
+            <span>Import from File</span>
+            <span slot="secondary"
+              >Use an existing ESPHome configuration (.yaml).</span
+            >
+            ${metaChevronRight}
+          </mwc-list-item>
+          <mwc-list-item
+            twoline
+            hasMeta
+            @click=${() => {
+              this._state = "empty_config";
+            }}
+          >
+            <span>Empty Configuration</span>
+            <span slot="secondary"
+              >For manually writing or pasting a configuration.</span
+            >
+            ${metaChevronRight}
+          </mwc-list-item>
+        </mwc-list>
+        <small>You can also drag and drop your .yaml file here</small>
+      </div>
     `;
 
     return [heading, content, hideActions];
@@ -304,6 +412,32 @@ export class ESPHomeWizardDialog extends LitElement {
         slot="primaryAction"
         label="Next"
         @click=${this._handleBasicConfigSubmit}
+      ></mwc-button>
+
+      <mwc-button
+        no-attention
+        slot="secondaryAction"
+        dialogAction="close"
+        label="Cancel"
+      ></mwc-button>
+    `;
+
+    return [heading, content, hideActions];
+  }
+
+  private _renderEmptyConfig(): [string | undefined, TemplateResult, boolean] {
+    const heading = "Create empty configuration";
+    this._data.type = "empty";
+    let hideActions = false;
+    const content = html`
+      ${this._error ? html`<div class="error">${this._error}</div>` : ""}
+
+      <mwc-textfield label="Name" name="name" required></mwc-textfield>
+
+      <mwc-button
+        slot="primaryAction"
+        label="Next"
+        @click=${this._handleEmptyConfigSubmit}
       ></mwc-button>
 
       <mwc-button
@@ -597,6 +731,65 @@ export class ESPHomeWizardDialog extends LitElement {
     }, 0);
   }
 
+  private async _handleEmptyConfigSubmit() {
+    const nameInput = this._inputName;
+
+    const nameValid = nameInput.reportValidity();
+    if (!nameValid) {
+      nameInput.focus();
+      return;
+    }
+
+    this._busy = true;
+    this._data.type = "empty";
+    this._data.name = nameInput.value;
+
+    try {
+      const response = await createConfiguration(
+        this._data as CreateEmptyConfigParams,
+      );
+      this._configFilename = response.configuration;
+      refreshDevices();
+      this._dialog.close();
+    } catch (err: any) {
+      this._error = err.message || err;
+    } finally {
+      this._busy = false;
+    }
+  }
+
+  private _encodeToBase64(str: string): string {
+    const utf8Encoder = new TextEncoder();
+    const utf8Bytes = utf8Encoder.encode(str);
+
+    let binaryString = "";
+    for (let i = 0; i < utf8Bytes.length; i++) {
+      binaryString += String.fromCharCode(utf8Bytes[i]);
+    }
+
+    return btoa(binaryString);
+  }
+
+  private async _handleConfigFileUpload() {
+    const input = this._configFileInput;
+    const file = input.files?.[0];
+    try {
+      const response = await createConfiguration({
+        type: "upload",
+        name: file?.name.replace(/\.ya?ml$/, ""),
+        file_content: this._encodeToBase64(file ? await file.text() : ""),
+      } as CreateUploadConfigParams);
+      this._configFilename = response.configuration;
+      refreshDevices();
+      this._state = "done";
+    } catch (err: any) {
+      console.error("err was", err.message);
+      this._error = err.message || err;
+    } finally {
+      this._busy = false;
+    }
+  }
+
   private _handleUseRecommendedCheckbox(ev: Event) {
     this._useRecommended = (ev.target as HTMLInputElement).checked;
   }
@@ -619,6 +812,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
   private async _handlePickBoardSubmit() {
     if (!this._board) return;
+    if (this._data.type !== "basic") return;
     this._data.board = this._board!;
 
     this._busy = true;
@@ -628,7 +822,7 @@ export class ESPHomeWizardDialog extends LitElement {
         await storeWifiSecrets(this._wifi.ssid, this._wifi.password);
       }
       const response = await createConfiguration(
-        this._data as CreateConfigParams,
+        this._data as CreateBasicConfigParams,
       );
       this._configFilename = response.configuration;
       refreshDevices();
@@ -651,6 +845,7 @@ export class ESPHomeWizardDialog extends LitElement {
     this._error = undefined;
     let esploader: ESPLoader | undefined;
     let removeConfig = false;
+    if (this._data.type !== "basic") return;
     try {
       let port: SerialPort | undefined;
 
@@ -696,7 +891,7 @@ export class ESPHomeWizardDialog extends LitElement {
 
       try {
         const { configuration } = await createConfiguration(
-          this._data as CreateConfigParams,
+          this._data as CreateBasicConfigParams,
         );
         this._configFilename = configuration;
       } catch (err) {
@@ -793,7 +988,7 @@ export class ESPHomeWizardDialog extends LitElement {
     esphomeSvgStyles,
     css`
       :host {
-        --mdc-dialog-max-width: 390px;
+        --mdc-dialog-max-width: 490px;
       }
       .center {
         text-align: center;
@@ -839,6 +1034,10 @@ export class ESPHomeWizardDialog extends LitElement {
         left: 0;
         bottom: 4px;
         z-index: 1;
+      }
+      .dragging-over {
+        outline: 2px dashed var(--mdc-theme-primary);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     `,
   ];
