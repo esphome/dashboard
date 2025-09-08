@@ -2,7 +2,7 @@ import { LitElement, PropertyValues, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
-import { supportedPlatforms, SupportedPlatforms } from "../../../src/const";
+import { ChipFamily, chipFamilyToPlatform, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -13,6 +13,8 @@ import { esphomeDialogStyles } from "../../../src/styles";
 const SUPPORTED_PLATFORMS = Object.keys(
   supportedPlatforms,
 ) as SupportedPlatforms[];
+
+const ADOPTION_FIRMWARE_URL_PREFIX = "https://firmware.esphome.io/esphome-web";
 
 @customElement("esphome-install-adoptable-dialog")
 class ESPHomeInstallAdoptableDialog extends LitElement {
@@ -78,36 +80,54 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           }
 
           const manifestResp = await fetch(
-            "https://firmware.esphome.io/esphome-web/manifest.json",
+            `${ADOPTION_FIRMWARE_URL_PREFIX}/manifest.json`,
           );
           if (!manifestResp.ok) {
             throw new Error(
               `Downloading ESPHome manifest failed (${manifestResp.status})`,
             );
           }
-          const version = (await manifestResp.json())["version"];
+          const response = await manifestResp.json();
+          const builds = response["builds"];
+          let build = undefined;
 
-          const platformLower = platform.toLowerCase();
-          const resp = await fetch(
-            `https://firmware.esphome.io/esphome-web/${version}/esphome-web-${platformLower}.factory.bin`,
-          );
-          if (!resp.ok) {
-            throw new Error(
-              `Downlading ESPHome firmware for ${platform} failed (${resp.status})`,
-            );
+          // Check all build objects for one with `"chipFamily": platform`
+          for (const key of Object.keys(builds)) {
+            const chipFamily = builds[key]["chipFamily"];
+            if (chipFamilyToPlatform[chipFamily as ChipFamily] === platform) {
+              build = builds[key];
+              break;
+            }
           }
 
-          const reader = new FileReader();
-          const blob = await resp.blob();
+          if (build == undefined) {
+            throw new Error(`${platform} is not supported by this feature. You must build your configuration first.`);
+          }
 
-          const data = await new Promise<string>((resolve) => {
-            reader.addEventListener("load", () =>
-              resolve(reader.result as string),
-            );
-            reader.readAsBinaryString(blob);
-          });
+          const parts: [] = build["parts"];
 
-          return [{ data, address: 0 }];
+          return await Promise.all(parts.map(async (part) => {
+            const path: string = part["path"];
+            const offset: number = part["offset"];
+            const resp = await fetch(`${ADOPTION_FIRMWARE_URL_PREFIX}/${path}`);
+            if (!resp.ok) {
+              throw new Error(
+                `Downloading ESPHome firmware part ${path} for ${platform} failed (${resp.status})`,
+              );
+            }
+
+            const reader = new FileReader();
+            const blob = await resp.blob();
+
+            const data = await new Promise<string>((resolve) => {
+              reader.addEventListener("load", () =>
+                resolve(reader.result as string),
+              );
+              reader.readAsBinaryString(blob);
+            });
+
+            return { data, address: offset };
+          }));
         },
         async onClose(success) {
           if (!success) {
