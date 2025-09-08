@@ -2,7 +2,7 @@ import { LitElement, PropertyValues, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
-import { ChipFamily, chipFamilyToPlatform, ManifestBuild, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
+import { chipFamilyToPlatform, ManifestBuild, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -93,7 +93,7 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
 
           for (const b of builds) {
             const { chipFamily } = b;
-            if (chipFamilyToPlatform[chipFamily as ChipFamily] === platform) {
+            if (chipFamilyToPlatform[chipFamily] === platform) {
               build = b;
               break;
             }
