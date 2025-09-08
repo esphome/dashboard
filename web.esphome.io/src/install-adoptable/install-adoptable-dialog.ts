@@ -2,7 +2,7 @@ import { LitElement, PropertyValues, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
-import { ChipFamily, chipFamilyToPlatform, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
+import { ChipFamily, chipFamilyToPlatform, ManifestBuild, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -88,14 +88,13 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
             );
           }
           const response = await manifestResp.json();
-          const builds = response["builds"];
+          const builds: Array<ManifestBuild> = response["builds"];
           let build = undefined;
 
-          // Check all build objects for one with `"chipFamily": platform`
-          for (const key of Object.keys(builds)) {
-            const chipFamily = builds[key]["chipFamily"];
+          for (const b of builds) {
+            const { chipFamily } = b;
             if (chipFamilyToPlatform[chipFamily as ChipFamily] === platform) {
-              build = builds[key];
+              build = b;
               break;
             }
           }
@@ -104,11 +103,10 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
             throw new Error(`${platform} is not supported by this feature. You must build your configuration first.`);
           }
 
-          const parts: [] = build["parts"];
+          const { parts } = build;
 
           return await Promise.all(parts.map(async (part) => {
-            const path: string = part["path"];
-            const offset: number = part["offset"];
+            const { path, offset } = part;
             const resp = await fetch(`${ADOPTION_FIRMWARE_URL_PREFIX}/${path}`);
             if (!resp.ok) {
               throw new Error(

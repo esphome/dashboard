@@ -155,3 +155,17 @@ export interface Logger {
   error(msg: string, ...args: any[]): void;
   debug(msg: string, ...args: any[]): void;
 }
+
+export type ManifestBuild = {
+  chipFamily: ChipFamily;
+  ota?: {
+    path: string;
+    md5: string;
+    summary: string;
+    release_url: string;
+  };
+  parts: Array<{
+    path: string;
+    offset: number;
+  }>;
+};
