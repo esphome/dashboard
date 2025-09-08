@@ -2,7 +2,12 @@ import { LitElement, PropertyValues, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-dialog";
 import "@material/mwc-button";
-import { chipFamilyToPlatform, ManifestBuild, supportedPlatforms, SupportedPlatforms } from "../../../src/const";
+import {
+  chipFamilyToPlatform,
+  ManifestBuild,
+  supportedPlatforms,
+  SupportedPlatforms,
+} from "../../../src/const";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -100,32 +105,38 @@ class ESPHomeInstallAdoptableDialog extends LitElement {
           }
 
           if (build == undefined) {
-            throw new Error(`${platform} is not supported by this feature. You must build your configuration first.`);
+            throw new Error(
+              `${platform} is not supported by this feature. You must build your configuration first.`,
+            );
           }
 
           const { parts } = build;
 
-          return await Promise.all(parts.map(async (part) => {
-            const { path, offset } = part;
-            const resp = await fetch(`${ADOPTION_FIRMWARE_URL_PREFIX}/${path}`);
-            if (!resp.ok) {
-              throw new Error(
-                `Downloading ESPHome firmware part ${path} for ${platform} failed (${resp.status})`,
+          return await Promise.all(
+            parts.map(async (part) => {
+              const { path, offset } = part;
+              const resp = await fetch(
+                `${ADOPTION_FIRMWARE_URL_PREFIX}/${path}`,
               );
-            }
+              if (!resp.ok) {
+                throw new Error(
+                  `Downloading ESPHome firmware part ${path} for ${platform} failed (${resp.status})`,
+                );
+              }
 
-            const reader = new FileReader();
-            const blob = await resp.blob();
+              const reader = new FileReader();
+              const blob = await resp.blob();
 
-            const data = await new Promise<string>((resolve) => {
-              reader.addEventListener("load", () =>
-                resolve(reader.result as string),
-              );
-              reader.readAsBinaryString(blob);
-            });
+              const data = await new Promise<string>((resolve) => {
+                reader.addEventListener("load", () =>
+                  resolve(reader.result as string),
+                );
+                reader.readAsBinaryString(blob);
+              });
 
-            return { data, address: offset };
-          }));
+              return { data, address: offset };
+            }),
+          );
         },
         async onClose(success) {
           if (!success) {
