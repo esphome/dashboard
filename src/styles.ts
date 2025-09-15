@@ -15,17 +15,21 @@ export const esphomeCardStyles = css`
   mwc-button {
     line-height: 1em;
     --mdc-theme-primary: var(--primary-text-color);
+    --mdc-button-horizontal-padding: 12px;
+    font-size: 13px;
   }
   .card-actions {
     display: flex;
-    padding: 4px;
+    padding: 4px 8px;
     align-items: center;
+    gap: 4px;
   }
   .card-actions a {
     text-decoration: none;
   }
   .card-actions mwc-icon-button {
     --mdc-icon-button-size: 32px;
+    --mdc-icon-size: 20px;
   }
 `;
 
