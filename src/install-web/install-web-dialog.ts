@@ -63,19 +63,18 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   @property() private _showLogs = false;
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
 
-    // this._console won't be defined until after the first paint
-    setTimeout(() => {
-      this.stream?.pipeTo(
-        new WritableStream({
-          write: (chunk) => {
-            this._console.addLine(chunk);
-          },
-        }),
-      );
-    });
+    await this.updateComplete;
+
+    this.stream?.pipeTo(
+      new WritableStream({
+        write: (chunk) => {
+          this._console.addLine(chunk);
+        },
+      }),
+    );
   }
 
   protected render() {
@@ -180,7 +179,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
         <div class="icon">${icon}</div>
         ${label}
       </div>
-      ${showClose || true
+      ${showClose
         ? html`
             <mwc-button
               slot="primaryAction"
