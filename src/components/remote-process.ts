@@ -5,7 +5,13 @@ import { fireEvent } from "../util/fire-event";
 
 @customElement("esphome-remote-process")
 class ESPHomeRemoteProcess extends HTMLElement {
-  public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
+  public type!:
+    | "validate"
+    | "logs"
+    | "upload"
+    | "clean-mqtt"
+    | "clean-platform"
+    | "clean";
   public spawnParams!: Record<string, any>;
 
   private _coloredConsole?: ColoredConsole;

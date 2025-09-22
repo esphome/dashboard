@@ -182,6 +182,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
+              Clean Platform Files
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiBroom}
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
               Download ELF file
               <esphome-svg-icon
                 slot="graphic"
@@ -269,9 +276,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openRenameDialog(this.device.configuration, this.device.name);
         break;
       case 5:
-        openCleanDialog(this.device.configuration);
+        openCleanDialog(this.device.configuration, "clean");
         break;
       case 6:
+        openCleanDialog(this.device.configuration, "clean-platform");
+        break;
+      case 7:
         const type: DownloadType = {
           title: "ELF File",
           description: "ELF File",
@@ -285,14 +295,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         link.click();
         link.remove();
         break;
-      case 7:
+      case 8:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted"),
         );
         break;
-      case 7:
+      case 9:
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
