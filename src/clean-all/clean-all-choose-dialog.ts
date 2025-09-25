@@ -9,7 +9,6 @@ import { openCleanAllDialog } from "./index";
 
 @customElement("esphome-clean-all-choose-dialog")
 class ESPHomeCleanAllChooseDialog extends LitElement {
-
   protected render() {
     return html`
       <mwc-dialog
@@ -18,21 +17,13 @@ class ESPHomeCleanAllChooseDialog extends LitElement {
         scrimClickAction
         @closed=${this._handleClose}
       >
-        <mwc-list-item
-          twoline
-          hasMeta
-          @click=${this._handleCleanAllConfig}
-        >
+        <mwc-list-item twoline hasMeta @click=${this._handleCleanAllConfig}>
           <span>Clean everything</span>
           <span slot="secondary">Remove all build and platform files</span>
           ${metaChevronRight}
         </mwc-list-item>
 
-        <mwc-list-item
-          twoline
-          hasMeta
-          @click=${this._handleCleanAllNoConfig}
-        >
+        <mwc-list-item twoline hasMeta @click=${this._handleCleanAllNoConfig}>
           <span>Clean the platform</span>
           <span slot="secondary">Remove only the platform files</span>
           ${metaChevronRight}
@@ -57,8 +48,6 @@ class ESPHomeCleanAllChooseDialog extends LitElement {
     this._handleClose();
     openCleanAllDialog(false);
   }
-
-
 
   private _handleClose() {
     this.parentNode!.removeChild(this);

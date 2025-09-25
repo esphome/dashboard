@@ -36,10 +36,7 @@ export class ESPHomeHeaderMenu extends LitElement {
               label="Update All"
               @click=${this._handleUpdateAll}
             ></mwc-button>
-            <mwc-button
-              label="Clean All"
-              @click=${this._handleCleanAll}
-            >
+            <mwc-button label="Clean All" @click=${this._handleCleanAll}>
               <esphome-svg-icon
                 slot="icon"
                 .path=${mdiBroom}
@@ -86,8 +83,8 @@ export class ESPHomeHeaderMenu extends LitElement {
                 ><esphome-svg-icon
                   slot="graphic"
                   .path=${mdiBroom}
-                ></esphome-svg-icon>Clean
-                All</mwc-list-item
+                ></esphome-svg-icon
+                >Clean All</mwc-list-item
               >
               <mwc-list-item graphic="icon"
                 ><mwc-icon slot="graphic">lock</mwc-icon>Secrets

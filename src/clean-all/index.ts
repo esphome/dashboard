@@ -10,5 +10,7 @@ export const openCleanAllDialog = (cleanBuildDir: boolean = true) => {
 
 export const openCleanAllChooseDialog = () => {
   preloadChoose();
-  document.body.append(document.createElement("esphome-clean-all-choose-dialog"));
+  document.body.append(
+    document.createElement("esphome-clean-all-choose-dialog"),
+  );
 };
