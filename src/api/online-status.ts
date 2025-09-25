@@ -13,5 +13,6 @@ export const subscribeOnlineStatus = (() => {
       [data.filename]: data.state,
     }),
   });
-  return (onChange: (data: Record<string, boolean>) => void) => collection.subscribe(onChange);
+  return (onChange: (data: Record<string, boolean>) => void) =>
+    collection.subscribe(onChange);
 })();

@@ -5,16 +5,16 @@ export interface WebSocketCollection<T> {
   refresh(): void;
 }
 
-export const createWebSocketCollection = <T>(
-  events: { [key: string]: (data: T, update: any) => T }
-): WebSocketCollection<T> => {
+export const createWebSocketCollection = <T>(events: {
+  [key: string]: (data: T, update: any) => T;
+}): WebSocketCollection<T> => {
   let data: T | undefined;
   const subscribers = new Set<(data: T) => void>();
   const unsubscribers: (() => void)[] = [];
 
   const notifySubscribers = () => {
     if (data !== undefined) {
-      subscribers.forEach(callback => callback(data!));
+      subscribers.forEach((callback) => callback(data!));
     }
   };
 
@@ -66,6 +66,6 @@ export const createWebSocketCollection = <T>(
       if (!dashboardWebSocket.isConnected()) {
         dashboardWebSocket.connect();
       }
-    }
+    },
   };
 };

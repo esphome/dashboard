@@ -83,7 +83,7 @@ class DashboardWebSocket {
   private handleMessage(message: WebSocketMessage): void {
     const handlers = this.handlers.get(message.event);
     if (handlers) {
-      handlers.forEach(handler => handler(message.data));
+      handlers.forEach((handler) => handler(message.data));
     }
   }
 
@@ -101,7 +101,10 @@ class DashboardWebSocket {
       this.reconnectTimeout = null;
       this.connect();
       // Exponential backoff with max delay
-      this.reconnectDelay = Math.min(this.reconnectDelay * 2, this.maxReconnectDelay);
+      this.reconnectDelay = Math.min(
+        this.reconnectDelay * 2,
+        this.maxReconnectDelay,
+      );
     }, this.reconnectDelay) as unknown as number;
   }
 

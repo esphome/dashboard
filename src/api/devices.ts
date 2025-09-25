@@ -41,44 +41,48 @@ export const importDevice = (params: ImportableDevice) =>
 
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
-    initial_state: (_, data) => data.devices,
-    entry_added: (current, data) => ({
+  initial_state: (_, data) => data.devices,
+  entry_added: (current, data) => ({
+    ...current,
+    configured: [...current.configured, data.device],
+    // Remove from importable if it exists there
+    importable: current.importable.filter((d) => d.name !== data.device.name),
+  }),
+  entry_removed: (current, data) => ({
+    ...current,
+    configured: current.configured.filter((d) => d.name !== data.device.name),
+  }),
+  entry_updated: (current, data) => ({
+    ...current,
+    configured: current.configured.map((d) =>
+      d.name === data.device.name ? data.device : d,
+    ),
+  }),
+  importable_device_added: (current, data) => {
+    // Don't add to importable if already in configured
+    const isConfigured = current.configured.some(
+      (d) => d.name === data.device.name,
+    );
+    if (isConfigured) {
+      return current;
+    }
+    return {
       ...current,
-      configured: [...current.configured, data.device],
-      // Remove from importable if it exists there
-      importable: current.importable.filter(d => d.name !== data.device.name),
-    }),
-    entry_removed: (current, data) => ({
-      ...current,
-      configured: current.configured.filter(d => d.name !== data.device.name),
-    }),
-    entry_updated: (current, data) => ({
-      ...current,
-      configured: current.configured.map(d =>
-        d.name === data.device.name ? data.device : d
-      ),
-    }),
-    importable_device_added: (current, data) => {
-      // Don't add to importable if already in configured
-      const isConfigured = current.configured.some(d => d.name === data.device.name);
-      if (isConfigured) {
-        return current;
-      }
-      return {
-        ...current,
-        importable: [
-          ...current.importable.filter(d => d.name !== data.device.name),
-          data.device
-        ],
-      };
-    },
-    importable_device_removed: (current, data) => ({
-      ...current,
-      importable: current.importable.filter(d => d.name !== data.name),
-    }),
+      importable: [
+        ...current.importable.filter((d) => d.name !== data.device.name),
+        data.device,
+      ],
+    };
+  },
+  importable_device_removed: (current, data) => ({
+    ...current,
+    importable: current.importable.filter((d) => d.name !== data.name),
+  }),
 });
 
-export const subscribeDevices = (onChange: (data: ListDevicesResult) => void) => {
+export const subscribeDevices = (
+  onChange: (data: ListDevicesResult) => void,
+) => {
   return devicesCollection.subscribe(onChange);
 };
 
