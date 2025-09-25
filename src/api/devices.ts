@@ -42,27 +42,36 @@ export const importDevice = (params: ImportableDevice) =>
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
     initial_state: (_, data) => data.devices,
-    device_added: (current, data) => ({
+    entry_added: (current, data) => ({
       ...current,
       configured: [...current.configured, data.device],
+      // Remove from importable if it exists there
+      importable: current.importable.filter(d => d.name !== data.device.name),
     }),
-    device_removed: (current, data) => ({
+    entry_removed: (current, data) => ({
       ...current,
       configured: current.configured.filter(d => d.name !== data.device.name),
     }),
-    device_updated: (current, data) => ({
+    entry_updated: (current, data) => ({
       ...current,
       configured: current.configured.map(d =>
         d.name === data.device.name ? data.device : d
       ),
     }),
-    importable_device_added: (current, data) => ({
-      ...current,
-      importable: [
-        ...current.importable.filter(d => d.name !== data.device.name),
-        data.device
-      ],
-    }),
+    importable_device_added: (current, data) => {
+      // Don't add to importable if already in configured
+      const isConfigured = current.configured.some(d => d.name === data.device.name);
+      if (isConfigured) {
+        return current;
+      }
+      return {
+        ...current,
+        importable: [
+          ...current.importable.filter(d => d.name !== data.device.name),
+          data.device
+        ],
+      };
+    },
     importable_device_removed: (current, data) => ({
       ...current,
       importable: current.importable.filter(d => d.name !== data.name),

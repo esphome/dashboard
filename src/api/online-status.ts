@@ -8,7 +8,7 @@ export const getOnlineStatus = () =>
 export const subscribeOnlineStatus = (() => {
   const collection = createWebSocketCollection<Record<string, boolean>>({
     initial_state: (_, data) => data.ping,
-    state_changed: (current, data) => ({
+    entry_state_changed: (current, data) => ({
       ...current,
       [data.filename]: data.state,
     }),

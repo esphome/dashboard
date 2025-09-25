@@ -1,4 +1,5 @@
 import type { ListDevicesResult } from "./devices";
+import { connectionStatus } from "../util/connection-status";
 
 export interface WebSocketMessage {
   event: string;
@@ -26,17 +27,19 @@ class DashboardWebSocket {
   private ws: WebSocket | null = null;
   private url: string;
   private reconnectTimeout: number | null = null;
+  private pingInterval: number | null = null;
   private handlers = new Map<string, Set<MessageHandler>>();
   private isConnecting = false;
   private reconnectDelay = 1000;
   private maxReconnectDelay = 30000;
+  private readonly PING_INTERVAL = 25000; // 25 seconds (less than server's 30s timeout)
 
   constructor() {
     // Build WebSocket URL based on current location
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const host = window.location.host;
     const path = window.location.pathname.replace(/\/$/, "");
-    this.url = `${protocol}//${host}${path}/status-ws`;
+    this.url = `${protocol}//${host}${path}/events`;
   }
 
   connect(): void {
@@ -50,6 +53,8 @@ class DashboardWebSocket {
     this.ws.onopen = () => {
       this.isConnecting = false;
       this.reconnectDelay = 1000; // Reset reconnect delay on successful connection
+      connectionStatus.setConnected();
+      this.startPing();
     };
 
     this.ws.onmessage = (event) => {
@@ -69,6 +74,8 @@ class DashboardWebSocket {
     this.ws.onclose = () => {
       this.ws = null;
       this.isConnecting = false;
+      this.stopPing();
+      connectionStatus.setDisconnected();
       this.scheduleReconnect();
     };
   }
@@ -83,6 +90,11 @@ class DashboardWebSocket {
   private scheduleReconnect(): void {
     if (this.reconnectTimeout) {
       clearTimeout(this.reconnectTimeout);
+    }
+
+    // Update status to show reconnection attempts
+    if (this.reconnectDelay > 1000) {
+      connectionStatus.setReconnecting();
     }
 
     this.reconnectTimeout = setTimeout(() => {
@@ -111,11 +123,29 @@ class DashboardWebSocket {
     };
   }
 
+  private startPing(): void {
+    this.stopPing();
+    this.pingInterval = setInterval(() => {
+      if (this.isConnected()) {
+        this.ws!.send(JSON.stringify({ event: "ping" }));
+      }
+    }, this.PING_INTERVAL) as unknown as number;
+  }
+
+  private stopPing(): void {
+    if (this.pingInterval) {
+      clearInterval(this.pingInterval);
+      this.pingInterval = null;
+    }
+  }
+
   disconnect(): void {
     if (this.reconnectTimeout) {
       clearTimeout(this.reconnectTimeout);
       this.reconnectTimeout = null;
     }
+
+    this.stopPing();
 
     if (this.ws) {
       this.ws.close();
