@@ -41,35 +41,34 @@ export const importDevice = (params: ImportableDevice) =>
 
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
-  initial_state: (_, data) => data.devices,
-  device_added: (current, data) => ({
-    ...current,
-    configured: [...current.configured, data.device],
-  }),
-  device_removed: (current, data) => ({
-    ...current,
-    configured: current.configured.filter(d => d.name !== data.device.name),
-  }),
-  device_updated: (current, data) => ({
-    ...current,
-    configured: current.configured.map(d =>
-      d.name === data.device.name ? data.device : d
-    ),
-  }),
-  importable_device_added: (current, data) => ({
-    ...current,
-    importable: [
-      ...current.importable.filter(d => d.name !== data.device.name),
-      data.device
-    ],
-  }),
-  importable_device_removed: (current, data) => ({
-    ...current,
-    importable: current.importable.filter(d => d.name !== data.name),
-  }),
+    initial_state: (_, data) => data.devices,
+    device_added: (current, data) => ({
+      ...current,
+      configured: [...current.configured, data.device],
+    }),
+    device_removed: (current, data) => ({
+      ...current,
+      configured: current.configured.filter(d => d.name !== data.device.name),
+    }),
+    device_updated: (current, data) => ({
+      ...current,
+      configured: current.configured.map(d =>
+        d.name === data.device.name ? data.device : d
+      ),
+    }),
+    importable_device_added: (current, data) => ({
+      ...current,
+      importable: [
+        ...current.importable.filter(d => d.name !== data.device.name),
+        data.device
+      ],
+    }),
+    importable_device_removed: (current, data) => ({
+      ...current,
+      importable: current.importable.filter(d => d.name !== data.name),
+    }),
 });
 
-// Maintain backward compatibility with existing code
 export const subscribeDevices = (onChange: (data: ListDevicesResult) => void) => {
   return devicesCollection.subscribe(onChange);
 };
