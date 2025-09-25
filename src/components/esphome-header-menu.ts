@@ -9,8 +9,11 @@ import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog, toggleSearch } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
+import { openCleanAllChooseDialog } from "../clean-all";
 import { showConfirmationDialog } from "../dialogs";
 import { fireEvent } from "../util/fire-event";
+import { mdiBroom } from "@mdi/js";
+import "../components/esphome-svg-icon";
 
 const isWideListener = window.matchMedia("(min-width: 641px)");
 
@@ -33,6 +36,12 @@ export class ESPHomeHeaderMenu extends LitElement {
               label="Update All"
               @click=${this._handleUpdateAll}
             ></mwc-button>
+            <mwc-button label="Clean All" @click=${this._handleCleanAll}>
+              <esphome-svg-icon
+                slot="icon"
+                .path=${mdiBroom}
+              ></esphome-svg-icon>
+            </mwc-button>
             <mwc-button
               icon="lock"
               label="Secrets"
@@ -69,6 +78,13 @@ export class ESPHomeHeaderMenu extends LitElement {
               <mwc-list-item graphic="icon"
                 ><mwc-icon slot="graphic">system_update</mwc-icon>Update
                 All</mwc-list-item
+              >
+              <mwc-list-item graphic="icon"
+                ><esphome-svg-icon
+                  slot="graphic"
+                  .path=${mdiBroom}
+                ></esphome-svg-icon
+                >Clean All</mwc-list-item
               >
               <mwc-list-item graphic="icon"
                 ><mwc-icon slot="graphic">lock</mwc-icon>Secrets
@@ -119,6 +135,10 @@ export class ESPHomeHeaderMenu extends LitElement {
     openUpdateAllDialog();
   }
 
+  private _handleCleanAll() {
+    openCleanAllChooseDialog();
+  }
+
   private _handleEditSecrets() {
     openEditDialog(SECRETS_FILE);
   }
@@ -143,6 +163,9 @@ export class ESPHomeHeaderMenu extends LitElement {
         this._handleUpdateAll();
         break;
       case 3:
+        this._handleCleanAll();
+        break;
+      case 4:
         this._handleEditSecrets();
         break;
     }
@@ -162,6 +185,10 @@ export class ESPHomeHeaderMenu extends LitElement {
     }
     mwc-icon {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
+    }
+    esphome-svg-icon {
+      --mdc-theme-text-icon-on-background: var(--primary-text-color);
+      color: var(--primary-text-color);
     }
     a {
       text-decoration: none;
