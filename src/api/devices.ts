@@ -1,6 +1,6 @@
 import { fetchApiJson } from ".";
 import { SupportedPlatforms } from "../const";
-import { createPollingCollection } from "../util/polling-collection";
+import { createWebSocketCollection } from "../util/websocket-collection";
 
 export interface ConfiguredDevice {
   name: string;
@@ -39,12 +39,43 @@ export const importDevice = (params: ImportableDevice) =>
     body: JSON.stringify({ ...params, encryption: true }),
   });
 
-export const subscribeDevices = createPollingCollection(getDevices, 5000);
+// Use WebSocket for real-time device updates
+const devicesCollection = createWebSocketCollection<ListDevicesResult>({
+  initial_state: (_, data) => data.devices,
+  device_added: (current, data) => ({
+    ...current,
+    configured: [...current.configured, data.device],
+  }),
+  device_removed: (current, data) => ({
+    ...current,
+    configured: current.configured.filter(d => d.name !== data.device.name),
+  }),
+  device_updated: (current, data) => ({
+    ...current,
+    configured: current.configured.map(d =>
+      d.name === data.device.name ? data.device : d
+    ),
+  }),
+  importable_device_added: (current, data) => ({
+    ...current,
+    importable: [
+      ...current.importable.filter(d => d.name !== data.device.name),
+      data.device
+    ],
+  }),
+  importable_device_removed: (current, data) => ({
+    ...current,
+    importable: current.importable.filter(d => d.name !== data.name),
+  }),
+});
+
+// Maintain backward compatibility with existing code
+export const subscribeDevices = (onChange: (data: ListDevicesResult) => void) => {
+  return devicesCollection.subscribe(onChange);
+};
 
 export const refreshDevices = () => {
-  const unsub = subscribeDevices(() => undefined);
-  unsub.refresh();
-  unsub();
+  devicesCollection.refresh();
 };
 
 export const canUpdateDevice = (device: ConfiguredDevice) =>
