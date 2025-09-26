@@ -30,7 +30,7 @@ class ConnectionStatus {
         setTimeout(() => {
           if (this.snackbar) {
             this.snackbar.labelText = "Connection restored";
-            this.snackbar.timeoutMs = 4000; // Minimum allowed timeout
+            this.snackbar.timeoutMs = 4000; // Show for 4 seconds before auto-dismissing
             this.snackbar.show();
           }
         }, 100);

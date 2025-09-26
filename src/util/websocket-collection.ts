@@ -15,7 +15,8 @@ export const createWebSocketCollection = <T>(events: {
 
   const notifySubscribers = () => {
     if (data !== undefined) {
-      subscribers.forEach((callback) => callback(data!));
+      const currentData = data;
+      subscribers.forEach((callback) => callback(currentData));
     }
   };
 

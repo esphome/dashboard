@@ -87,7 +87,7 @@ class DashboardWebSocket {
 
   private scheduleReconnect(): void {
     if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
+      window.clearTimeout(this.reconnectTimeout);
     }
 
     // Update status to show reconnection attempts
@@ -95,7 +95,7 @@ class DashboardWebSocket {
       connectionStatus.setReconnecting();
     }
 
-    this.reconnectTimeout = setTimeout(() => {
+    this.reconnectTimeout = window.setTimeout(() => {
       this.reconnectTimeout = null;
       this.connect();
       // Exponential backoff with max delay
@@ -103,7 +103,7 @@ class DashboardWebSocket {
         this.reconnectDelay * 2,
         this.maxReconnectDelay,
       );
-    }, this.reconnectDelay) as unknown as number;
+    }, this.reconnectDelay);
   }
 
   on(event: string, handler: MessageHandler): () => void {
@@ -126,23 +126,23 @@ class DashboardWebSocket {
 
   private startPing(): void {
     this.stopPing();
-    this.pingInterval = setInterval(() => {
+    this.pingInterval = window.setInterval(() => {
       if (this.isConnected()) {
         this.ws!.send(JSON.stringify({ event: ClientEvent.PING }));
       }
-    }, this.PING_INTERVAL) as unknown as number;
+    }, this.PING_INTERVAL);
   }
 
   private stopPing(): void {
     if (this.pingInterval) {
-      clearInterval(this.pingInterval);
+      window.clearInterval(this.pingInterval);
       this.pingInterval = null;
     }
   }
 
   disconnect(): void {
     if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
+      window.clearTimeout(this.reconnectTimeout);
       this.reconnectTimeout = null;
     }
 
