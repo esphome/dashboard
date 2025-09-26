@@ -27,4 +27,5 @@ export const DashboardEvent = {
   ...ClientEvent,
 } as const;
 
-export type DashboardEventType = (typeof DashboardEvent)[keyof typeof DashboardEvent];
+export type DashboardEventType =
+  (typeof DashboardEvent)[keyof typeof DashboardEvent];
