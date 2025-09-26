@@ -1,5 +1,6 @@
 import type { ListDevicesResult } from "./devices";
 import { connectionStatus } from "../util/connection-status";
+import { buildWebSocketUrl } from "../util/websocket-url";
 
 export interface WebSocketMessage {
   event: string;
@@ -35,11 +36,7 @@ class DashboardWebSocket {
   private readonly PING_INTERVAL = 25000; // 25 seconds (less than server's 30s timeout)
 
   constructor() {
-    // Build WebSocket URL based on current location
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const host = window.location.host;
-    const path = window.location.pathname.replace(/\/$/, "");
-    this.url = `${protocol}//${host}${path}/events`;
+    this.url = buildWebSocketUrl("events");
   }
 
   connect(): void {
