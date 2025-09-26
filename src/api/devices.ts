@@ -1,6 +1,7 @@
 import { fetchApiJson } from ".";
 import { SupportedPlatforms } from "../const";
-import { createPollingCollection } from "../util/polling-collection";
+import { createWebSocketCollection } from "../util/websocket-collection";
+import { ServerEvent } from "./dashboard-events";
 
 export interface ConfiguredDevice {
   name: string;
@@ -39,12 +40,55 @@ export const importDevice = (params: ImportableDevice) =>
     body: JSON.stringify({ ...params, encryption: true }),
   });
 
-export const subscribeDevices = createPollingCollection(getDevices, 5000);
+// Use WebSocket for real-time device updates
+const devicesCollection = createWebSocketCollection<ListDevicesResult>({
+  [ServerEvent.INITIAL_STATE]: (_, data) => data.devices,
+  [ServerEvent.ENTRY_ADDED]: (current, data) => ({
+    ...current,
+    configured: [...current.configured, data.device],
+    // Remove from importable if it exists there
+    importable: current.importable.filter((d) => d.name !== data.device.name),
+  }),
+  [ServerEvent.ENTRY_REMOVED]: (current, data) => ({
+    ...current,
+    configured: current.configured.filter((d) => d.name !== data.device.name),
+  }),
+  [ServerEvent.ENTRY_UPDATED]: (current, data) => ({
+    ...current,
+    configured: current.configured.map((d) =>
+      d.name === data.device.name ? data.device : d,
+    ),
+  }),
+  [ServerEvent.IMPORTABLE_DEVICE_ADDED]: (current, data) => {
+    // Don't add to importable if already in configured
+    const isConfigured = current.configured.some(
+      (d) => d.name === data.device.name,
+    );
+    if (isConfigured) {
+      return current;
+    }
+    return {
+      ...current,
+      importable: [
+        ...current.importable.filter((d) => d.name !== data.device.name),
+        data.device,
+      ],
+    };
+  },
+  [ServerEvent.IMPORTABLE_DEVICE_REMOVED]: (current, data) => ({
+    ...current,
+    importable: current.importable.filter((d) => d.name !== data.name),
+  }),
+});
+
+export const subscribeDevices = (
+  onChange: (data: ListDevicesResult) => void,
+) => {
+  return devicesCollection.subscribe(onChange);
+};
 
 export const refreshDevices = () => {
-  const unsub = subscribeDevices(() => undefined);
-  unsub.refresh();
-  unsub();
+  devicesCollection.refresh();
 };
 
 export const canUpdateDevice = (device: ConfiguredDevice) =>

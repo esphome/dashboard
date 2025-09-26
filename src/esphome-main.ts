@@ -3,6 +3,7 @@ import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { connectionStatus } from "./util/connection-status";
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
@@ -72,6 +73,7 @@ class ESPHomeMainView extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
+    connectionStatus.initialize();
     document.body.addEventListener<any>("edit-file", (ev) => {
       this.editing = ev.detail;
     });

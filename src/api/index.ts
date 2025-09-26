@@ -1,4 +1,5 @@
 import { getCookie } from "../util/cookie";
+import { buildWebSocketUrl } from "../util/websocket-url";
 
 export class APIError extends Error {
   constructor(
@@ -72,9 +73,7 @@ export const streamLogs = (
   lineReceived?: (line: string) => void,
   abortController?: AbortController,
 ) => {
-  const url = new URL(`./${path}`, location.href);
-  url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
-  const socket = new WebSocket(url.toString());
+  const socket = new WebSocket(buildWebSocketUrl(path));
 
   if (abortController) {
     abortController.signal.addEventListener("abort", () => socket.close());

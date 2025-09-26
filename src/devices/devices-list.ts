@@ -4,6 +4,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import {
   subscribeDevices,
+  refreshDevices,
   ImportableDevice,
   ConfiguredDevice,
 } from "../api/devices";
@@ -221,7 +222,7 @@ class ESPHomeDevicesList extends LitElement {
   `;
 
   private async _updateDevices() {
-    await this._devicesUnsub!.refresh();
+    refreshDevices();
   }
 
   private _scrollToDevice(name: string) {
