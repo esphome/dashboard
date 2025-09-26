@@ -52,8 +52,16 @@ export const createWebSocketCollection = <T>(events: {
       return () => {
         subscribers.delete(onChange);
 
-        // Disconnect WebSocket when no subscribers left
+        // Cleanup when no subscribers left
         if (subscribers.size === 0 && isConnected) {
+          // Clean up all WebSocket event listeners
+          unsubscribers.forEach(unsub => unsub());
+          unsubscribers.length = 0;
+
+          // Clear cached data
+          data = undefined;
+
+          // Disconnect WebSocket
           dashboardWebSocket.disconnect();
           isConnected = false;
         }
