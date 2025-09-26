@@ -1,5 +1,6 @@
 import { fetchApiJson } from ".";
 import { createWebSocketCollection } from "../util/websocket-collection";
+import { ServerEvent } from "./dashboard-events";
 
 export const getOnlineStatus = () =>
   fetchApiJson<Record<string, boolean>>("./ping");
@@ -7,8 +8,8 @@ export const getOnlineStatus = () =>
 // Use WebSocket for real-time dashboard events
 export const subscribeOnlineStatus = (() => {
   const collection = createWebSocketCollection<Record<string, boolean>>({
-    initial_state: (_, data) => data.ping,
-    entry_state_changed: (current, data) => ({
+    [ServerEvent.INITIAL_STATE]: (_, data) => data.ping,
+    [ServerEvent.ENTRY_STATE_CHANGED]: (current, data) => ({
       ...current,
       [data.filename]: data.state,
     }),

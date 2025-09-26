@@ -1,6 +1,7 @@
 import type { ListDevicesResult } from "./devices";
 import { connectionStatus } from "../util/connection-status";
 import { buildWebSocketUrl } from "../util/websocket-url";
+import { ClientEvent } from "./dashboard-events";
 
 export interface WebSocketMessage {
   event: string;
@@ -127,7 +128,7 @@ class DashboardWebSocket {
     this.stopPing();
     this.pingInterval = setInterval(() => {
       if (this.isConnected()) {
-        this.ws!.send(JSON.stringify({ event: "ping" }));
+        this.ws!.send(JSON.stringify({ event: ClientEvent.PING }));
       }
     }, this.PING_INTERVAL) as unknown as number;
   }

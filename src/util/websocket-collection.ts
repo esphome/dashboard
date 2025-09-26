@@ -1,5 +1,5 @@
 import { dashboardWebSocket } from "../api/websocket";
-import { DashboardEvent } from "../api/dashboard-events";
+import { DashboardEvent, ServerEvent } from "../api/dashboard-events";
 
 export interface WebSocketCollection<T> {
   subscribe(onChange: (data: T) => void): () => void;
@@ -23,7 +23,7 @@ export const createWebSocketCollection = <T>(events: {
   for (const [event, handler] of Object.entries(events)) {
     const unsub = dashboardWebSocket.on(event, (eventData) => {
       // For initial_state, pass undefined as current state; otherwise use existing data
-      if (event === "initial_state" || data !== undefined) {
+      if (event === ServerEvent.INITIAL_STATE || data !== undefined) {
         data = handler(data as T, eventData);
         notifySubscribers();
       }

@@ -1,6 +1,7 @@
 import { fetchApiJson } from ".";
 import { SupportedPlatforms } from "../const";
 import { createWebSocketCollection } from "../util/websocket-collection";
+import { ServerEvent } from "./dashboard-events";
 
 export interface ConfiguredDevice {
   name: string;
@@ -41,24 +42,24 @@ export const importDevice = (params: ImportableDevice) =>
 
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
-  initial_state: (_, data) => data.devices,
-  entry_added: (current, data) => ({
+  [ServerEvent.INITIAL_STATE]: (_, data) => data.devices,
+  [ServerEvent.ENTRY_ADDED]: (current, data) => ({
     ...current,
     configured: [...current.configured, data.device],
     // Remove from importable if it exists there
     importable: current.importable.filter((d) => d.name !== data.device.name),
   }),
-  entry_removed: (current, data) => ({
+  [ServerEvent.ENTRY_REMOVED]: (current, data) => ({
     ...current,
     configured: current.configured.filter((d) => d.name !== data.device.name),
   }),
-  entry_updated: (current, data) => ({
+  [ServerEvent.ENTRY_UPDATED]: (current, data) => ({
     ...current,
     configured: current.configured.map((d) =>
       d.name === data.device.name ? data.device : d,
     ),
   }),
-  importable_device_added: (current, data) => {
+  [ServerEvent.IMPORTABLE_DEVICE_ADDED]: (current, data) => {
     // Don't add to importable if already in configured
     const isConfigured = current.configured.some(
       (d) => d.name === data.device.name,
@@ -74,7 +75,7 @@ const devicesCollection = createWebSocketCollection<ListDevicesResult>({
       ],
     };
   },
-  importable_device_removed: (current, data) => ({
+  [ServerEvent.IMPORTABLE_DEVICE_REMOVED]: (current, data) => ({
     ...current,
     importable: current.importable.filter((d) => d.name !== data.name),
   }),
