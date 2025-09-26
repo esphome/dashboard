@@ -1,4 +1,5 @@
 import { dashboardWebSocket } from "../api/websocket";
+import { DashboardEvent } from "../api/dashboard-events";
 
 export interface WebSocketCollection<T> {
   subscribe(onChange: (data: T) => void): () => void;
@@ -69,11 +70,9 @@ export const createWebSocketCollection = <T>(events: {
     },
 
     refresh(): void {
-      // WebSocket doesn't need manual refresh - it's real-time
-      // But we can reconnect if disconnected
-      if (!dashboardWebSocket.isConnected()) {
-        dashboardWebSocket.connect();
-      }
+      // Send a message to the backend to force a refresh
+      // This ensures the backend polls for any changes that might have been missed
+      dashboardWebSocket.send({ event: DashboardEvent.REFRESH });
     },
   };
 };

@@ -156,6 +156,12 @@ class DashboardWebSocket {
   isConnected(): boolean {
     return this.ws !== null && this.ws.readyState === WebSocket.OPEN;
   }
+
+  send(message: { event: string; data?: any }): void {
+    if (this.isConnected()) {
+      this.ws!.send(JSON.stringify(message));
+    }
+  }
 }
 
 // Export singleton instance
