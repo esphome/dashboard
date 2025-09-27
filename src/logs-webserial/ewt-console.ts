@@ -1,3 +1,4 @@
+import { LitElement } from "lit";
 import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { sleep } from "../util/sleep";
 import { LineBreakTransformer } from "../util/line-break-transformer";
@@ -5,7 +6,7 @@ import { TimestampTransformer } from "../util/timestamp-transformer";
 import { ESPHomeLogTransformer } from "../util/esphome-log-transformer";
 import { Logger } from "../const";
 
-export class EwtConsole extends HTMLElement {
+export class EwtConsole extends LitElement {
   public port!: SerialPort;
   public logger!: Logger;
   public allowInput = true;
