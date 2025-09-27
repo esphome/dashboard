@@ -19,7 +19,11 @@ import "./importable-device-card";
 import "../components/esphome-search";
 import "../components/esphome-button-menu";
 import "../components/esphome-svg-icon";
-import "../components/esphome-data-table";
+import "../components/ha-data-table-wrapper";
+import type {
+  DataTableColumnContainer,
+  DataTableRowData,
+} from "../components/ha-data-table-wrapper";
 import { ESPHomeSearch } from "../components/esphome-search";
 import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
@@ -45,10 +49,6 @@ import {
   mdiUploadNetwork,
 } from "@mdi/js";
 import { getDeviceIPs } from "../api/device-ips";
-import {
-  DataTableColumnContainer,
-  DataTableRowData,
-} from "../components/esphome-data-table";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -125,37 +125,38 @@ class ESPHomeDevicesList extends LitElement {
       status_indicator: {
         title: "",
         sortable: false,
-        width: "24px",
-        template: (data: any, row: DataTableRowData) =>
+        minWidth: "24px",
+        maxWidth: "24px",
+        template: (row: DataTableRowData) =>
           this._renderStatusIndicator(row),
       },
       name: {
         title: "Name",
         sortable: true,
         filterable: true,
-        template: (data: any, row: DataTableRowData) =>
+        template: (row: DataTableRowData) =>
           this._renderDeviceName(row),
       },
       status: {
         title: "Status",
         sortable: true,
-        template: (data: any, row: DataTableRowData) => this._renderStatus(row),
+        template: (row: DataTableRowData) => this._renderStatus(row),
       },
       ip_address: {
         title: "IP Address",
         sortable: true,
-        template: (data: any, row: DataTableRowData) =>
+        template: (row: DataTableRowData) =>
           this._renderIPAddress(row),
       },
       mdns: {
         title: "mDNS",
         sortable: false,
-        template: (data: any, row: DataTableRowData) => this._renderMDNS(row),
+        template: (row: DataTableRowData) => this._renderMDNS(row),
       },
       actions: {
         title: "Actions",
         sortable: false,
-        template: (data: any, row: DataTableRowData) =>
+        template: (row: DataTableRowData) =>
           this._renderActions(row),
       },
     };
@@ -172,7 +173,7 @@ class ESPHomeDevicesList extends LitElement {
     ></div>`;
   }
 
-  private _renderDeviceName(row: DataTableRowData): string {
+  private _renderDeviceName(row: DataTableRowData): TemplateResult | string {
     return row.friendly_name || row.name;
   }
 
@@ -195,7 +196,7 @@ class ESPHomeDevicesList extends LitElement {
     `;
   }
 
-  private _renderIPAddress(row: DataTableRowData): string {
+  private _renderIPAddress(row: DataTableRowData): TemplateResult | string {
     if (row.type === "importable") {
       return row.network || "-";
     }
@@ -218,7 +219,7 @@ class ESPHomeDevicesList extends LitElement {
     return row.address;
   }
 
-  private _renderMDNS(row: DataTableRowData): string {
+  private _renderMDNS(row: DataTableRowData): TemplateResult | string {
     if (row.type === "importable") {
       return "-";
     }
@@ -491,7 +492,7 @@ class ESPHomeDevicesList extends LitElement {
           `
         : nothing}
       <div class="table-container">
-        <esphome-data-table
+        <ha-data-table
           .columns=${this._getTableColumns()}
           .data=${tableData}
           .sortColumn=${this._getSortColumn()}
@@ -500,7 +501,7 @@ class ESPHomeDevicesList extends LitElement {
           .noDataText=${"No devices found. Adjust your search criteria."}
           @sorting-changed=${this._handleTableSortChange}
           @row-click=${this._handleTableRowClick}
-        ></esphome-data-table>
+        ></ha-data-table>
       </div>
     `;
   }

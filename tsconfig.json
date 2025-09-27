@@ -14,5 +14,8 @@
     "strict": true,
     "ignoreDeprecations": "5.0",
     "importHelpers": true
-  }
+  },
+  "exclude": [
+    "homeassistant-frontend/**"
+  ]
 }

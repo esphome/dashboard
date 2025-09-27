@@ -28,7 +28,9 @@ const config = {
   },
   preserveEntrySignatures: false,
   plugins: [
-    typescript(),
+    typescript({
+      exclude: ['homeassistant-frontend/**']
+    }),
     postcss({
       plugins: [
         postcssUrl({
