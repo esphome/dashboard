@@ -122,42 +122,33 @@ class ESPHomeDevicesList extends LitElement {
 
   private _getTableColumns(): DataTableColumnContainer {
     return {
-      status_indicator: {
+      icon: {
         title: "",
         sortable: false,
-        minWidth: "24px",
-        maxWidth: "24px",
-        template: (row: DataTableRowData) =>
-          this._renderStatusIndicator(row),
+        minWidth: "48px",
+        maxWidth: "48px",
+        template: (row: DataTableRowData) => this._renderDeviceIcon(row),
       },
       name: {
         title: "Name",
         sortable: true,
         filterable: true,
-        template: (row: DataTableRowData) =>
-          this._renderDeviceName(row),
+        template: (row: DataTableRowData) => this._renderDeviceInfo(row),
       },
       status: {
         title: "Status",
         sortable: true,
         template: (row: DataTableRowData) => this._renderStatus(row),
       },
-      ip_address: {
-        title: "IP Address",
+      filename: {
+        title: "File name",
         sortable: true,
-        template: (row: DataTableRowData) =>
-          this._renderIPAddress(row),
-      },
-      mdns: {
-        title: "mDNS",
-        sortable: false,
-        template: (row: DataTableRowData) => this._renderMDNS(row),
+        template: (row: DataTableRowData) => this._renderFileName(row),
       },
       actions: {
-        title: "Actions",
+        title: "",
         sortable: false,
-        template: (row: DataTableRowData) =>
-          this._renderActions(row),
+        template: (row: DataTableRowData) => this._renderActions(row),
       },
     };
   }

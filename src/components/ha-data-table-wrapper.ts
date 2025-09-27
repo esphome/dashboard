@@ -42,7 +42,11 @@ export class HaDataTable extends LitElement {
   @state() private _filteredData: DataTableRowData[] = [];
 
   private _sortData = memoizeOne(
-    (data: DataTableRowData[], sortColumn?: string, sortDirection?: SortingDirection) => {
+    (
+      data: DataTableRowData[],
+      sortColumn?: string,
+      sortDirection?: SortingDirection,
+    ) => {
       if (!sortColumn || !sortDirection) {
         return data;
       }
@@ -63,11 +67,15 @@ export class HaDataTable extends LitElement {
       });
 
       return sorted;
-    }
+    },
   );
 
   private _filterData = memoizeOne(
-    (data: DataTableRowData[], filter: string, columns: DataTableColumnContainer) => {
+    (
+      data: DataTableRowData[],
+      filter: string,
+      columns: DataTableColumnContainer,
+    ) => {
       if (!filter) {
         return data;
       }
@@ -81,12 +89,16 @@ export class HaDataTable extends LitElement {
           return String(value).toLowerCase().includes(filterLower);
         });
       });
-    }
+    },
   );
 
   protected willUpdate() {
     const filtered = this._filterData(this.data, this.filter, this.columns);
-    this._filteredData = this._sortData(filtered, this.sortColumn, this.sortDirection);
+    this._filteredData = this._sortData(
+      filtered,
+      this.sortColumn,
+      this.sortDirection,
+    );
   }
 
   private _handleHeaderClick(columnKey: string) {
@@ -111,7 +123,7 @@ export class HaDataTable extends LitElement {
         detail: { column: this.sortColumn, direction: this.sortDirection },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -121,7 +133,7 @@ export class HaDataTable extends LitElement {
         detail: { index, data: this._filteredData[index] },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -131,7 +143,7 @@ export class HaDataTable extends LitElement {
     }
 
     const columnKeys = Object.keys(this.columns).filter(
-      (key) => !this.columns[key].hidden
+      (key) => !this.columns[key].hidden,
     );
 
     return html`
@@ -176,18 +188,20 @@ export class HaDataTable extends LitElement {
             </tr>
           </thead>
           <tbody>
-            ${this._filteredData.map((row, index) => html`
-              <tr @click=${() => this._handleRowClick(index)}>
-                ${columnKeys.map((key) => {
-                  const column = this.columns[key];
-                  const cellContent = column.template
-                    ? column.template(row)
-                    : row[key];
+            ${this._filteredData.map(
+              (row, index) => html`
+                <tr @click=${() => this._handleRowClick(index)}>
+                  ${columnKeys.map((key) => {
+                    const column = this.columns[key];
+                    const cellContent = column.template
+                      ? column.template(row)
+                      : row[key];
 
-                  return html`<td>${cellContent}</td>`;
-                })}
-              </tr>
-            `)}
+                    return html`<td>${cellContent}</td>`;
+                  })}
+                </tr>
+              `,
+            )}
           </tbody>
         </table>
       </div>
