@@ -153,75 +153,56 @@ class ESPHomeDevicesList extends LitElement {
     };
   }
 
-  private _renderStatusIndicator(row: DataTableRowData): TemplateResult {
-    if (row.type === "importable") {
-      return html`<div class="status-indicator discovered"></div>`;
-    }
-
-    const isOnline = this._onlineStatus[row.configuration];
-    return html`<div
-      class="status-indicator ${isOnline ? "online" : "offline"}"
-    ></div>`;
+  private _renderDeviceIcon(row: DataTableRowData): TemplateResult {
+    const icon =
+      row.platform === "ESP32"
+        ? "📟"
+        : row.platform === "ESP8266"
+          ? "📱"
+          : "🔌";
+    return html`
+      <div class="device-icon">
+        <span class="icon">${icon}</span>
+      </div>
+    `;
   }
 
-  private _renderDeviceName(row: DataTableRowData): TemplateResult | string {
-    return row.friendly_name || row.name;
+  private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
+    return html`
+      <div class="device-info">
+        <div class="device-name">${row.friendly_name || row.name}</div>
+        <div class="device-description">
+          ${row.comment || row.platform || "ESPHome Device"}
+        </div>
+      </div>
+    `;
+  }
+
+  private _renderFileName(row: DataTableRowData): TemplateResult {
+    return html`
+      <span class="filename">
+        ${row.configuration
+          ? html`<code>${row.configuration}</code>`
+          : html`<span class="no-config">—</span>`}
+      </span>
+    `;
   }
 
   private _renderStatus(row: DataTableRowData): TemplateResult {
     if (row.type === "importable") {
       return html`
-        <span class="status-badge discovered">
-          <div class="status-indicator discovered"></div>
-          Discovered
-        </span>
+        <span class="status-badge status-discovered"> Discovered </span>
       `;
     }
 
     const isOnline = this._onlineStatus[row.configuration];
     return html`
-      <span class="status-badge ${isOnline ? "online" : "offline"}">
-        <div class="status-indicator ${isOnline ? "online" : "offline"}"></div>
+      <span
+        class="status-badge ${isOnline ? "status-online" : "status-offline"}"
+      >
         ${isOnline ? "Online" : "Offline"}
       </span>
     `;
-  }
-
-  private _renderIPAddress(row: DataTableRowData): TemplateResult | string {
-    if (row.type === "importable") {
-      return row.network || "-";
-    }
-
-    // First check if we have a resolved IP from the API
-    const resolvedIP = this._deviceIPs[row.name];
-    if (resolvedIP) {
-      return resolvedIP;
-    }
-
-    // Fall back to existing logic for devices without resolved IPs
-    if (!row.address) {
-      return "-";
-    }
-    // If it's an mDNS address (ends with .local), return dash
-    if (row.address.endsWith(".local")) {
-      return "-";
-    }
-    // Otherwise it's an IP address
-    return row.address;
-  }
-
-  private _renderMDNS(row: DataTableRowData): TemplateResult | string {
-    if (row.type === "importable") {
-      return "-";
-    }
-
-    // If device has a .local address, use it; otherwise construct from configuration filename
-    if (row.address && row.address.endsWith(".local")) {
-      return row.address;
-    }
-    // Use configuration filename without .yaml/.yml extension
-    const filename = row.configuration.replace(/\.(yaml|yml)$/, "");
-    return `${filename}.local`;
   }
 
   private _renderActions(row: DataTableRowData): TemplateResult {
@@ -620,6 +601,78 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   static styles = css`
+    :host {
+      display: block;
+      height: 100%;
+    }
+
+    .device-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--secondary-background-color, #f5f5f5);
+    }
+
+    .device-icon .icon {
+      font-size: 20px;
+    }
+
+    .device-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .device-name {
+      font-weight: 500;
+      color: var(--primary-text-color, #212121);
+      font-size: 14px;
+    }
+
+    .device-description {
+      font-size: 12px;
+      color: var(--secondary-text-color, #727272);
+    }
+
+    .filename code {
+      font-family: monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      background: var(--secondary-background-color, #f5f5f5);
+      border-radius: 4px;
+    }
+
+    .filename .no-config {
+      color: var(--secondary-text-color, #727272);
+    }
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .status-online {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .status-offline {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .status-discovered {
+      background-color: #ff9800;
+      color: white;
+    }
+
     .grid {
       display: grid;
       grid-column-gap: 1rem;
