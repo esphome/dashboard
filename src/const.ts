@@ -17,6 +17,7 @@ export type SupportedPlatforms =
   | "ESP32P4"
   | "RP2040"
   | "BK72XX"
+  | "LN882X"
   | "RTL87XX";
 
 export type PlatformData = {
@@ -106,6 +107,12 @@ export const supportedPlatforms = {
     showInDeviceTypePicker: true,
     defaultBoard: null,
   },
+  LN882X: {
+    label: "LN882x",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: null,
+  },
   RTL87XX: {
     label: "RTL87xx",
     showInPickerTitle: true,
@@ -148,3 +155,17 @@ export interface Logger {
   error(msg: string, ...args: any[]): void;
   debug(msg: string, ...args: any[]): void;
 }
+
+export type ManifestBuild = {
+  chipFamily: ChipFamily;
+  ota?: {
+    path: string;
+    md5: string;
+    summary: string;
+    release_url: string;
+  };
+  parts: Array<{
+    path: string;
+    offset: number;
+  }>;
+};
