@@ -1,0 +1,90 @@
+name: Bug Report
+description: Report a bug or issue with the ESPHome Dashboard
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue form is for reporting bugs with the ESPHome Builder / Dashboard / Frontend only!
+
+        If you have a feature request or enhancement, please [request them here instead][fr].
+
+        If your issue is related to compilation or validation failing, please search for or
+        open an issue in the main [ESPHome repository][esphome-issues] instead.
+
+        [fr]: https://github.com/orgs/esphome/discussions
+        [esphome-issues]: https://github.com/esphome/esphome/issues
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of the ESPHome Builder / Dashboard are you running?
+      placeholder: 2025.6.3
+    validations:
+      required: true
+  - type: dropdown
+    validations:
+      required: true
+    id: installation
+    attributes:
+      label: What type of installation are you using?
+      options:
+        - Home Assistant Add-on
+        - Docker
+        - pip
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: What browser are you using?
+      placeholder: e.g. Chrome, Firefox, Safari
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Details
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of what the bug is.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: How to reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable,
