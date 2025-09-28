@@ -22,7 +22,7 @@ export class ESPHomeButtonMenu extends LitElement {
       <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner}>
+      <mwc-menu .corner=${this.corner} @opened=${this._onOpened} @closed=${this._onClosed}>
         <slot></slot>
       </mwc-menu>
     `;
@@ -34,6 +34,20 @@ export class ESPHomeButtonMenu extends LitElement {
     this._menu!.show();
   }
 
+  private _onOpened(): void {
+    this.dispatchEvent(new CustomEvent("menu-opened", {
+      bubbles: true,
+      composed: true
+    }));
+  }
+
+  private _onClosed(): void {
+    this.dispatchEvent(new CustomEvent("menu-closed", {
+      bubbles: true,
+      composed: true
+    }));
+  }
+
   static styles = css`
     :host {
       display: inline-block;
@@ -43,6 +57,7 @@ export class ESPHomeButtonMenu extends LitElement {
       --mdc-theme-surface: var(--card-background-color);
       --mdc-theme-on-surface: var(--primary-text-color);
       --mdc-list-item-graphic-color: var(--primary-text-color);
+      --mdc-menu-z-index: 99999;
     }
     /* Force icon colors */
     ::slotted(mwc-list-item) {

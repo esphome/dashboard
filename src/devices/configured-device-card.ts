@@ -87,14 +87,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         </div>
 
         <div class="card-content">
-          ${this.device.configuration !== `${this.device.name}.yaml` &&
-          this.device.configuration !== `${this.device.name}.yml`
-            ? html`
-                <div class="device-config-path">
-                  <code>${this.device.configuration}</code>
-                </div>
-              `
-            : ""}
+          <div class="device-config-path">
+            <code>${this.device.configuration}</code>
+          </div>
           <div class="network-info">
             <div class="info-row">
               <span class="info-label">IP:</span>

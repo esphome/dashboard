@@ -1,7 +1,10 @@
 const preload = () => import("./confirmation-dialog");
 
+import { TemplateResult } from "lit";
+
 export interface ConfirmationDialogParams {
   text?: string;
+  content?: TemplateResult;
   title?: string;
   confirmText?: string;
   dismissText?: string;

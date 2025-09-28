@@ -142,6 +142,22 @@ export class ESPHomeDataTable extends LitElement {
     });
   }
 
+  private _handleMenuOpened(e: Event) {
+    e.stopPropagation();
+    const tr = (e.target as HTMLElement).closest('tr');
+    if (tr) {
+      tr.classList.add('menu-open');
+    }
+  }
+
+  private _handleMenuClosed(e: Event) {
+    e.stopPropagation();
+    const tr = (e.target as HTMLElement).closest('tr');
+    if (tr) {
+      tr.classList.remove('menu-open');
+    }
+  }
+
   private _fireEvent(type: string, detail: any) {
     this.dispatchEvent(
       new CustomEvent(type, { detail, bubbles: true, composed: true }),
@@ -246,6 +262,8 @@ export class ESPHomeDataTable extends LitElement {
                     selected: this._selection.has(index),
                   })}
                   @click=${() => this._handleRowClick(index)}
+                  @menu-opened=${(e: Event) => this._handleMenuOpened(e)}
+                  @menu-closed=${(e: Event) => this._handleMenuClosed(e)}
                 >
                   ${this.selectable
                     ? html`
@@ -278,6 +296,7 @@ export class ESPHomeDataTable extends LitElement {
                         class=${classMap({
                           [`type-${column.type}`]: !!column.type,
                         })}
+                        style=${column.width ? `width: ${column.width}` : ""}
                       >
                         ${cellContent}
                       </td>
@@ -365,6 +384,17 @@ export class ESPHomeDataTable extends LitElement {
     tbody tr {
       background-color: var(--card-background-color, white);
       transition: background-color 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    tbody tr:hover {
+      z-index: 2;
+    }
+
+    /* Row with open dropdown menu should stay on top */
+    tbody tr.menu-open {
+      z-index: 100 !important;
     }
 
     tbody tr:nth-child(even) {
@@ -394,6 +424,7 @@ export class ESPHomeDataTable extends LitElement {
     tbody tr:last-child td {
       border-bottom: none;
     }
+
 
     /* Status indicator styles */
     .status-indicator {

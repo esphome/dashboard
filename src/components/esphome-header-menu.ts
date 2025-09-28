@@ -31,12 +31,6 @@ export class ESPHomeHeaderMenu extends LitElement {
     "viewMode",
     "cards",
   ) as "cards" | "table";
-  @state() private _sortBy: "name" | "ip" | "status" = this._loadPreference(
-    "sortBy",
-    "name",
-  ) as "name" | "ip" | "status";
-  @state() private _filterStatus: "all" | "online" | "offline" =
-    this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
   @state() private _cardColumns: number = parseInt(
     this._loadPreference("cardColumns", "3"),
     10,
@@ -75,26 +69,6 @@ export class ESPHomeHeaderMenu extends LitElement {
                     </mwc-select>
                   `
                 : nothing}
-
-              <mwc-select
-                .value=${this._sortBy}
-                @change=${this._handleSortChange}
-                label="Sort by"
-              >
-                <mwc-list-item value="name">Name</mwc-list-item>
-                <mwc-list-item value="ip">IP Address</mwc-list-item>
-                <mwc-list-item value="status">Status</mwc-list-item>
-              </mwc-select>
-
-              <mwc-select
-                .value=${this._filterStatus}
-                @change=${this._handleFilterChange}
-                label="Filter"
-              >
-                <mwc-list-item value="all">All devices</mwc-list-item>
-                <mwc-list-item value="online">Online only</mwc-list-item>
-                <mwc-list-item value="offline">Offline only</mwc-list-item>
-              </mwc-select>
             </div>
 
             <mwc-button
@@ -156,33 +130,6 @@ export class ESPHomeHeaderMenu extends LitElement {
                     </mwc-list-item>
                   `
                 : nothing}
-              <li divider role="separator"></li>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">sort</mwc-icon>
-                Sort by Name
-              </mwc-list-item>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">sort</mwc-icon>
-                Sort by IP
-              </mwc-list-item>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">sort</mwc-icon>
-                Sort by Status
-              </mwc-list-item>
-              <li divider role="separator"></li>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">filter_list</mwc-icon>
-                Show All
-              </mwc-list-item>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">filter_list</mwc-icon>
-                Online Only
-              </mwc-list-item>
-              <mwc-list-item graphic="icon">
-                <mwc-icon slot="graphic">filter_list</mwc-icon>
-                Offline Only
-              </mwc-list-item>
-              <li divider role="separator"></li>
             `
           : nothing}
 
@@ -223,10 +170,6 @@ export class ESPHomeHeaderMenu extends LitElement {
     // Emit initial state so devices list gets the saved preferences
     setTimeout(() => {
       fireEvent(document, "view-mode-changed", { viewMode: this._viewMode });
-      fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-      fireEvent(document, "filter-changed", {
-        filterStatus: this._filterStatus,
-      });
       fireEvent(document, "columns-changed", { columns: this._cardColumns });
     }, 0);
   }
@@ -268,19 +211,6 @@ export class ESPHomeHeaderMenu extends LitElement {
     fireEvent(document, "view-mode-changed", { viewMode: this._viewMode });
   }
 
-  private _handleSortChange(ev: Event) {
-    const select = ev.target as Select;
-    this._sortBy = select.value as "name" | "ip" | "status";
-    this._savePreference("sortBy", this._sortBy);
-    fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-  }
-
-  private _handleFilterChange(ev: Event) {
-    const select = ev.target as Select;
-    this._filterStatus = select.value as "all" | "online" | "offline";
-    this._savePreference("filterStatus", this._filterStatus);
-    fireEvent(document, "filter-changed", { filterStatus: this._filterStatus });
-  }
 
   private _handleColumnsChange(ev: Event) {
     const select = ev.target as Select;
@@ -320,7 +250,10 @@ export class ESPHomeHeaderMenu extends LitElement {
     // 1: View toggle
     // If cards mode, add column options:
     // 2-6: Column options (1-5 columns)
-    // Then continues with sort and filter options
+    // Then:
+    // Show discovered devices
+    // Update All
+    // Secrets Editor
 
     let index = ev.detail.index;
 
@@ -345,53 +278,20 @@ export class ESPHomeHeaderMenu extends LitElement {
           }
           // Adjust index for items after column selection
           index = index - 5;
+        } else {
+          // In table mode, no column options, so adjust by 1
+          index = index - 1;
         }
 
         // Continue with adjusted index
         switch (index) {
           case 2:
-            this._sortBy = "name";
-            this._savePreference("sortBy", this._sortBy);
-            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-            break;
-          case 3:
-            this._sortBy = "ip";
-            this._savePreference("sortBy", this._sortBy);
-            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-            break;
-          case 4:
-            this._sortBy = "status";
-            this._savePreference("sortBy", this._sortBy);
-            fireEvent(document, "sort-changed", { sortBy: this._sortBy });
-            break;
-          case 5:
-            this._filterStatus = "all";
-            this._savePreference("filterStatus", this._filterStatus);
-            fireEvent(document, "filter-changed", {
-              filterStatus: this._filterStatus,
-            });
-            break;
-          case 6:
-            this._filterStatus = "online";
-            this._savePreference("filterStatus", this._filterStatus);
-            fireEvent(document, "filter-changed", {
-              filterStatus: this._filterStatus,
-            });
-            break;
-          case 7:
-            this._filterStatus = "offline";
-            this._savePreference("filterStatus", this._filterStatus);
-            fireEvent(document, "filter-changed", {
-              filterStatus: this._filterStatus,
-            });
-            break;
-          case 8:
             fireEvent(this, "toggle-discovered-devices");
             break;
-          case 9:
+          case 3:
             this._handleUpdateAll();
             break;
-          case 10:
+          case 4:
             this._handleEditSecrets();
             break;
         }

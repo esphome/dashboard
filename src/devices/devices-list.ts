@@ -12,6 +12,7 @@ import { openAdoptDialog } from "../adopt";
 import "@material/mwc-button";
 import "@material/mwc-textfield";
 import "@material/mwc-icon-button";
+import "@material/mwc-icon";
 import "@material/mwc-list/mwc-list-item";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "./configured-device-card";
@@ -28,6 +29,7 @@ import { openInstallChooseDialog } from "../install-choose";
 import { openDeleteDeviceDialog } from "../delete-device";
 import { openEditDialog } from "../editor";
 import { openCleanDialog } from "../clean";
+import { showConfirmationDialog } from "../dialogs";
 import { openRenameDialog } from "../rename";
 import { openShowApiKeyDialog } from "../show-api-key";
 import { getFile } from "../api/files";
@@ -122,13 +124,6 @@ class ESPHomeDevicesList extends LitElement {
 
   private _getTableColumns(): DataTableColumnContainer {
     return {
-      status_indicator: {
-        title: "",
-        sortable: false,
-        width: "24px",
-        template: (data: any, row: DataTableRowData) =>
-          this._renderStatusIndicator(row),
-      },
       name: {
         title: "Name",
         sortable: true,
@@ -139,18 +134,8 @@ class ESPHomeDevicesList extends LitElement {
       status: {
         title: "Status",
         sortable: true,
-        template: (data: any, row: DataTableRowData) => this._renderStatus(row),
-      },
-      ip_address: {
-        title: "IP Address",
-        sortable: true,
         template: (data: any, row: DataTableRowData) =>
-          this._renderIPAddress(row),
-      },
-      mdns: {
-        title: "mDNS",
-        sortable: false,
-        template: (data: any, row: DataTableRowData) => this._renderMDNS(row),
+          this._renderStatus(row),
       },
       actions: {
         title: "Actions",
@@ -161,39 +146,83 @@ class ESPHomeDevicesList extends LitElement {
     };
   }
 
-  private _renderStatusIndicator(row: DataTableRowData): TemplateResult {
-    if (row.type === "importable") {
-      return html`<div class="status-indicator discovered"></div>`;
-    }
-
-    const isOnline = this._onlineStatus[row.configuration];
-    return html`<div
-      class="status-indicator ${isOnline ? "online" : "offline"}"
-    ></div>`;
-  }
-
-  private _renderDeviceName(row: DataTableRowData): string {
-    return row.friendly_name || row.name;
-  }
-
   private _renderStatus(row: DataTableRowData): TemplateResult {
     if (row.type === "importable") {
+      const tooltipText = `Network: ${row.network || 'Unknown'}`;
       return html`
-        <span class="status-badge discovered">
-          <div class="status-indicator discovered"></div>
-          Discovered
-        </span>
+        <div
+          class="status-cell"
+          title="${tooltipText}"
+          style="cursor: pointer; display: flex; flex-direction: column; justify-content: center; width: 100%; min-height: 48px; margin: -12px -16px; padding: 12px 16px;"
+          @click=${() => this._showDeviceInfo(row)}
+        >
+          <div class="status-line" style="color: var(--alert-warning-color); display: flex; align-items: center; gap: 4px;">
+            <mwc-icon style="--mdc-icon-size: 16px; line-height: 1; display: flex;">new_releases</mwc-icon>
+            <span style="line-height: 1;">Discovered</span>
+          </div>
+        </div>
       `;
     }
 
     const isOnline = this._onlineStatus[row.configuration];
+    const hasUpdate = row.update_available;
+    const ipAddress = this._deviceIPs[row.name] || 'Unknown';
+    const mdnsName = row.configuration.replace('.yaml', '.local');
+    const tooltipText = `mDNS: ${mdnsName}\nIP: ${ipAddress}`;
+
+    const statusColor = isOnline ? 'var(--alert-success-color)' : 'var(--alert-error-color)';
+
     return html`
-      <span class="status-badge ${isOnline ? "online" : "offline"}">
-        <div class="status-indicator ${isOnline ? "online" : "offline"}"></div>
-        ${isOnline ? "Online" : "Offline"}
-      </span>
+      <div
+        class="status-cell"
+        title="${tooltipText}"
+        style="cursor: pointer; display: flex; flex-direction: column; justify-content: center; width: 100%; min-height: 48px; margin: -12px -16px; padding: 12px 16px;"
+        @click=${() => this._showDeviceInfo(row)}
+      >
+        <div class="status-line" style="color: ${statusColor}; display: flex; align-items: center; gap: 4px;">
+          <mwc-icon style="--mdc-icon-size: 16px; line-height: 1; display: flex;">
+            ${isOnline ? 'check' : 'priority_high'}
+          </mwc-icon>
+          <span style="line-height: 1;">${isOnline ? 'Online' : 'Offline'}</span>
+        </div>
+        ${hasUpdate ? html`
+          <div class="status-line update">
+            <span>Update available</span>
+          </div>
+        ` : ''}
+      </div>
     `;
   }
+
+  private _renderDeviceName(row: DataTableRowData): TemplateResult {
+    const friendlyName = row.friendly_name || row.name;
+    const configuration = row.configuration;
+
+    // Determine background color based on current theme
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches ||
+                       document.documentElement.getAttribute('data-theme') === 'dark';
+    const bgColor = isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+    const isConfigured = row.type === "configured";
+
+    return html`
+      <div
+        style="display: flex; flex-direction: column; ${isConfigured ? 'cursor: pointer;' : ''}"
+        @click=${isConfigured ? () => openEditDialog(configuration) : undefined}
+      >
+        <div style="font-weight: 500;">${friendlyName}</div>
+        ${configuration ? html`
+          <code
+            style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; background-color: ${bgColor}; padding: 2px 4px; border-radius: 3px; font-family: monospace; color: var(--secondary-text-color); width: fit-content; margin-top: 4px;"
+          >
+            ${configuration}
+            <mwc-icon style="--mdc-icon-size: 12px; opacity: 0.7;">edit</mwc-icon>
+          </code>
+        ` : ''}
+      </div>
+    `;
+  }
+
+
 
   private _renderIPAddress(row: DataTableRowData): string {
     if (row.type === "importable") {
@@ -236,11 +265,16 @@ class ESPHomeDevicesList extends LitElement {
     if (row.type === "importable") {
       const device = row as ImportableDevice;
       return html`
-        <mwc-button
-          unelevated
-          @click=${() => openAdoptDialog(device, () => this._updateDevices())}
-          label="Adopt"
-        ></mwc-button>
+        <div class="actions-container">
+          <mwc-button
+            unelevated
+            @click=${(e: Event) => {
+              e.stopPropagation();
+              openAdoptDialog(device, () => this._updateDevices());
+            }}
+            label="Adopt"
+          ></mwc-button>
+        </div>
       `;
     }
 
@@ -250,47 +284,65 @@ class ESPHomeDevicesList extends LitElement {
 
     return html`
       <div class="actions-container">
-        ${canUpdate && isOnline
-          ? html`
-              <mwc-button
-                unelevated
-                @click=${() => openInstallChooseDialog(device.configuration)}
-                label="Update"
-              ></mwc-button>
-            `
-          : nothing}
-        ${device.web_port && isOnline
-          ? html`
-              <mwc-button
-                outlined
-                @click=${() => {
-                  const host =
-                    device.address && !device.address.endsWith(".local")
-                      ? device.address
-                      : `${device.name}.local`;
-                  const url = `http://${host}:${device.web_port}`;
-                  window.open(url, "_blank");
-                }}
-                label="Visit"
-              ></mwc-button>
-            `
-          : nothing}
-        <mwc-button
-          outlined
-          @click=${() => openEditDialog(device.configuration)}
-          label="Edit"
-        ></mwc-button>
-        <mwc-button
-          outlined
-          @click=${() => openLogsTargetDialog(device.configuration)}
-          label="Logs"
-        ></mwc-button>
-        <esphome-button-menu
+        <div class="action-buttons">
+          ${canUpdate && isOnline
+            ? html`
+                <mwc-icon-button
+                  class="action-update hide-small"
+                  icon="system_update"
+                  title="Update device"
+                  @click=${(e: Event) => {
+                    e.stopPropagation();
+                    openInstallChooseDialog(device.configuration);
+                  }}
+                ></mwc-icon-button>
+              `
+            : ""}
+          ${device.web_port && isOnline
+            ? html`
+                <mwc-icon-button
+                  class="action-visit hide-small"
+                  icon="open_in_new"
+                  title="Visit device"
+                  @click=${(e: Event) => {
+                    e.stopPropagation();
+                    const host =
+                      device.address && !device.address.endsWith(".local")
+                        ? device.address
+                        : `${device.name}.local`;
+                    const url = `http://${host}:${device.web_port}`;
+                    window.open(url, "_blank");
+                  }}
+                ></mwc-icon-button>
+              `
+            : ""}
+          ${isOnline
+            ? html`
+                <mwc-icon-button
+                  class="action-logs hide-medium"
+                  icon="description"
+                  title="View logs"
+                  @click=${(e: Event) => {
+                    e.stopPropagation();
+                    openLogsTargetDialog(device.configuration);
+                  }}
+                ></mwc-icon-button>
+              `
+            : ""}
+        </div>
+        <div class="menu-group" @click=${(e: Event) => e.stopPropagation()}>
+          <div class="vertical-divider"></div>
+          <esphome-button-menu
           corner="BOTTOM_RIGHT"
-          @action=${(ev: CustomEvent<ActionDetail>) =>
-            this._handleOverflowAction(ev, device)}
+          @action=${(ev: CustomEvent<ActionDetail>) => {
+            ev.stopPropagation();
+            this._handleOverflowAction(ev, device);
+          }}
         >
-          <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
+          <mwc-icon-button
+            slot="trigger"
+            icon="more_vert"
+          ></mwc-icon-button>
           <mwc-list-item graphic="icon">
             Validate
             <esphome-svg-icon
@@ -347,6 +399,7 @@ class ESPHomeDevicesList extends LitElement {
             ></esphome-svg-icon>
           </mwc-list-item>
         </esphome-button-menu>
+        </div>
       </div>
     `;
   }
@@ -499,7 +552,6 @@ class ESPHomeDevicesList extends LitElement {
           .filter=${this._search?.value || ""}
           .noDataText=${"No devices found. Adjust your search criteria."}
           @sorting-changed=${this._handleTableSortChange}
-          @row-click=${this._handleTableRowClick}
         ></esphome-data-table>
       </div>
     `;
@@ -582,9 +634,6 @@ class ESPHomeDevicesList extends LitElement {
     this.requestUpdate();
   }
 
-  private _handleTableRowClick(e: CustomEvent) {
-    // Handle row click if needed
-  }
 
   private _filter(item: DataTableRowData): boolean {
     if (!this.showDiscoveredDevices && item.type === "importable") {
@@ -628,6 +677,26 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   static styles = css`
+    /* Note: Name cell styles are applied inline in _renderDeviceName()
+       because the data table component uses shadow DOM isolation */
+    .status-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.2;
+    }
+    .status-line span {
+      vertical-align: middle;
+    }
+    .status-line.update {
+      color: var(--alert-info-color);
+      font-size: 0.9em;
+    }
     .grid {
       display: grid;
       grid-column-gap: 1rem;
@@ -706,23 +775,64 @@ class ESPHomeDevicesList extends LitElement {
     }
     .actions-container {
       display: flex;
-      gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 200px;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-right: auto;
+    }
+    .actions-container mwc-icon-button {
+      --mdc-icon-button-size: 36px;
+      --mdc-icon-size: 20px;
+      flex-shrink: 0;
     }
     .actions-container mwc-button {
       --mdc-theme-primary: var(--primary-text-color);
       --mdc-button-horizontal-padding: 8px;
       font-size: 14px;
     }
+    .actions-container esphome-button-menu {
+      flex-shrink: 0;
+    }
+    .menu-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vertical-divider {
+      height: 24px;
+      width: 1px;
+      background: var(--divider-color, rgba(0, 0, 0, 0.12));
+      flex-shrink: 0;
+    }
+
+    /* Responsive hiding of action buttons */
+    @media (max-width: 1200px) {
+      .hide-large {
+        display: none;
+      }
+    }
+    @media (max-width: 900px) {
+      .hide-medium {
+        display: none;
+      }
+    }
+    @media (max-width: 600px) {
+      .hide-small {
+        display: none;
+      }
+      .action-buttons {
+        display: none;
+      }
+    }
     .actions-container mwc-button[unelevated] {
       --mdc-theme-primary: var(--primary-text-color);
       --mdc-theme-on-primary: var(--card-background-color);
-    }
-    esphome-button-menu {
-      --mdc-theme-text-icon-on-background: var(--primary-text-color);
-      position: relative;
-      z-index: 1;
     }
     /* Fix icon colors in dropdown menus */
     esphome-button-menu {
@@ -796,6 +906,119 @@ class ESPHomeDevicesList extends LitElement {
 
   private async _updateDevices() {
     await this._devicesUnsub!.refresh();
+  }
+
+  private _showDeviceInfo(device: DataTableRowData) {
+    const friendlyName = device.friendly_name || device.name;
+    const hostname = device.configuration ? device.configuration.replace('.yaml', '') : device.name;
+    const mdnsName = device.configuration ? `${hostname}.local` : 'N/A';
+
+    // Use ip_address field if available (from table data), but filter out .local addresses
+    let ipAddress = device.ip_address || '';
+
+    // If ip_address is empty, '-', or a .local address, compute it properly
+    if (!ipAddress || ipAddress === '-' || ipAddress.endsWith('.local')) {
+      if (device.type === "importable") {
+        ipAddress = device.network || 'Unknown';
+      } else {
+        ipAddress = this._deviceIPs[device.name] || 'Unknown';
+        // Only use device.address if it's an actual IP (not .local)
+        if (ipAddress === 'Unknown' && device.address && !device.address.endsWith('.local')) {
+          ipAddress = device.address;
+        }
+      }
+    }
+
+    // Convert '-' or .local addresses to 'Unknown' for display
+    if (ipAddress === '-' || ipAddress.endsWith('.local')) {
+      ipAddress = 'Unknown';
+    }
+
+    const copyToClipboard = (text: string) => {
+      navigator.clipboard.writeText(text);
+    };
+
+    const infoHtml = html`
+      <style>
+        .info-row {
+          display: flex;
+          align-items: center;
+          padding: 8px 0;
+          border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+        }
+        .info-row:last-child {
+          border-bottom: none;
+        }
+        .info-label {
+          font-weight: 500;
+          min-width: 120px;
+          color: var(--secondary-text-color);
+        }
+        .info-value {
+          flex: 1;
+          color: var(--primary-text-color);
+          font-family: monospace;
+          margin: 0 8px;
+        }
+        .copy-button {
+          cursor: pointer;
+          opacity: 0.6;
+          transition: opacity 0.2s;
+        }
+        .copy-button:hover {
+          opacity: 1;
+        }
+      </style>
+      <div class="info-container">
+        <div class="info-row">
+          <span class="info-label">Device Name:</span>
+          <span class="info-value">${friendlyName}</span>
+          <mwc-icon-button
+            class="copy-button"
+            icon="content_copy"
+            @click=${() => copyToClipboard(friendlyName)}
+            title="Copy to clipboard"
+          ></mwc-icon-button>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Hostname:</span>
+          <span class="info-value">${hostname}</span>
+          <mwc-icon-button
+            class="copy-button"
+            icon="content_copy"
+            @click=${() => copyToClipboard(hostname)}
+            title="Copy to clipboard"
+          ></mwc-icon-button>
+        </div>
+        <div class="info-row">
+          <span class="info-label">mDNS:</span>
+          <span class="info-value">${mdnsName}</span>
+          <mwc-icon-button
+            class="copy-button"
+            icon="content_copy"
+            @click=${() => copyToClipboard(mdnsName)}
+            title="Copy to clipboard"
+          ></mwc-icon-button>
+        </div>
+        <div class="info-row">
+          <span class="info-label">IP Address:</span>
+          <span class="info-value">${ipAddress}</span>
+          <mwc-icon-button
+            class="copy-button"
+            icon="content_copy"
+            @click=${() => copyToClipboard(ipAddress)}
+            title="Copy to clipboard"
+          ></mwc-icon-button>
+        </div>
+      </div>
+    `;
+
+    showConfirmationDialog({
+      title: "Device Information",
+      content: infoHtml,
+      confirmText: "",
+      dismissText: "Close"
+    });
   }
 
   private async _handleOverflowAction(
