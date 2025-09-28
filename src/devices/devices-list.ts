@@ -1,6 +1,5 @@
 import { LitElement, html, css, nothing, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
-import { repeat } from "lit/directives/repeat.js";
 import {
   subscribeDevices,
   ImportableDevice,
@@ -14,17 +13,13 @@ import "@material/mwc-textfield";
 import "@material/mwc-icon-button";
 import "@material/mwc-list/mwc-list-item";
 import { subscribeOnlineStatus } from "../api/online-status";
-import "./configured-device-card";
-import "./importable-device-card";
-import "../components/esphome-search";
 import "../components/esphome-button-menu";
 import "../components/esphome-svg-icon";
-import "../components/ha-data-table-wrapper";
-import type {
-  DataTableColumnContainer,
-  DataTableRowData,
-} from "../components/ha-data-table-wrapper";
-import { ESPHomeSearch } from "../components/esphome-search";
+import "../components/ha-data-table";
+import "../../homeassistant-frontend/src/components/ha-fab";
+import "../../homeassistant-frontend/src/components/search-input-outlined";
+import "../../homeassistant-frontend/src/components/ha-svg-icon";
+import "../../homeassistant-frontend/src/layouts/hass-tabs-subpage-data-table";
 import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openLogsTargetDialog } from "../logs-target";
@@ -38,17 +33,24 @@ import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
 import { DownloadType, getDownloadUrl } from "../api/download";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
+import { mockHass } from "../util/hass-mock";
 import {
   mdiBroom,
   mdiCodeBraces,
   mdiDelete,
   mdiDownload,
   mdiKey,
+  mdiPlus,
   mdiRenameBox,
   mdiSpellcheck,
   mdiUploadNetwork,
 } from "@mdi/js";
 import { getDeviceIPs } from "../api/device-ips";
+import type {
+  DataTableColumnContainer,
+  DataTableRowData,
+  SortingDirection,
+} from "../components/ha-data-table";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -57,22 +59,19 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
   @state() private _deviceIPs: Record<string, string | null> = {};
-  @state() private _viewMode: "cards" | "table" = this._loadPreference(
-    "viewMode",
-    "cards",
-  ) as "cards" | "table";
   @state() private _sortBy: "name" | "ip" | "status" = this._loadPreference(
     "sortBy",
     "name",
   ) as "name" | "ip" | "status";
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
-  @state() private _cardColumns: number = parseInt(
-    this._loadPreference("cardColumns", "3"),
-    10,
-  );
-
-  @query("esphome-search") private _search!: ESPHomeSearch;
+  @state() private _selected: string[] = [];
+  @state() private _activeGrouping?: string;
+  @state() private _activeCollapsed: string[] = [];
+  @state() private _activeSorting?: SortingDirection;
+  @state() private _activeColumnOrder?: string[];
+  @state() private _activeHiddenColumns?: string[];
+  @state() private _filter: string = "";
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -83,10 +82,6 @@ class ESPHomeDevicesList extends LitElement {
     return "package_import_url" in item;
   };
 
-  private _handleViewModeChange = (e: CustomEvent) => {
-    this._viewMode = e.detail.viewMode;
-    this._savePreference("viewMode", this._viewMode);
-  };
 
   private _handleSortChange = (e: CustomEvent) => {
     this._sortBy = e.detail.sortBy;
@@ -99,10 +94,6 @@ class ESPHomeDevicesList extends LitElement {
     this._savePreference("filterStatus", this._filterStatus);
   };
 
-  private _handleColumnsChange = (e: CustomEvent) => {
-    this._cardColumns = e.detail.columns;
-    this._savePreference("cardColumns", String(this._cardColumns));
-  };
 
   private _loadPreference(key: string, defaultValue: string): string {
     try {
@@ -133,21 +124,46 @@ class ESPHomeDevicesList extends LitElement {
         title: "Name",
         sortable: true,
         filterable: true,
+        groupable: true,
+        direction: "asc",
+        flexGrow: 2,
         template: (row: DataTableRowData) => this._renderDeviceInfo(row),
       },
       status: {
         title: "Status",
         sortable: true,
+        filterable: true,
+        groupable: true,
+        width: "80px",
         template: (row: DataTableRowData) => this._renderStatus(row),
+      },
+      ip_address: {
+        title: "IP Address",
+        sortable: true,
+        filterable: true,
+        width: "130px",
+        template: (row: DataTableRowData) => row.ip_address || "-",
+      },
+      platform: {
+        title: "Platform",
+        sortable: true,
+        filterable: true,
+        groupable: true,
+        hidden: true,
+        width: "90px",
+        template: (row: DataTableRowData) => row.platform || "-",
       },
       filename: {
         title: "File name",
         sortable: true,
+        filterable: true,
+        width: "200px",
         template: (row: DataTableRowData) => this._renderFileName(row),
       },
       actions: {
         title: "",
         sortable: false,
+        width: "160px",
         template: (row: DataTableRowData) => this._renderActions(row),
       },
     };
@@ -345,6 +361,8 @@ class ESPHomeDevicesList extends LitElement {
     // Convert to table row data
     return devices.map((device) => ({
       ...device,
+      // Ensure we have an id field for the data table
+      id: device.name,
       type: this._isImportable(device) ? "importable" : "configured",
       // Add computed fields for sorting
       status: this._isImportable(device)
@@ -386,95 +404,41 @@ class ESPHomeDevicesList extends LitElement {
 
     const tableData = this._getTableData();
 
-    const discoveredCount = this._devices.filter(
-      (item) => this._isImportable(item) && !item.ignored,
-    ).length;
-
-    if (this._viewMode === "cards") {
-      let filteredData = tableData.filter((item) => this._filter(item));
-
-      // Apply sorting to card view
-      filteredData = this._sortData(filteredData);
-
-      // Use existing card implementation
-      let htmlClass = "no-result-container";
-      let htmlDevices = html`
-        <h5>No devices found</h5>
-        <p>Adjust your search criteria.</p>
-      `;
-
-      if (filteredData.length > 0) {
-        htmlClass = `grid grid-${this._cardColumns}`;
-        htmlDevices = html`${repeat(
-          filteredData,
-          (device) => device.name,
-          (device) => html`
-            ${device.type === "importable"
-              ? html`<esphome-importable-device-card
-                  .device=${device}
-                  @device-updated=${this._updateDevices}
-                ></esphome-importable-device-card>`
-              : html`<esphome-configured-device-card
-                  data-name=${device.name}
-                  .device=${device}
-                  .onlineStatus=${this._onlineStatus[device.configuration]}
-                  .deviceIP=${this._deviceIPs[device.name]}
-                  .highlightOnAdd=${this._new.has(device.name)}
-                  @deleted=${this._updateDevices}
-                ></esphome-configured-device-card>`}
-          `,
-        )}`;
-      }
-
-      return html`
-        <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
-        ${!this.showDiscoveredDevices && discoveredCount > 0
-          ? html`
-              <div class="show-discovered-bar">
-                <span>
-                  Discovered ${discoveredCount}
-                  device${discoveredCount == 1 ? "" : "s"}
-                </span>
-                <mwc-button
-                  label="Show"
-                  @click=${this._handleShowDiscovered}
-                ></mwc-button>
-              </div>
-            `
-          : nothing}
-        <div class="${htmlClass}">${htmlDevices}</div>
-      `;
-    }
-
-    // Table view using HA-style data table
+    // Always use table view with HA-style data table and toolbar
     return html`
-      <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
-      ${!this.showDiscoveredDevices && discoveredCount > 0
-        ? html`
-            <div class="show-discovered-bar">
-              <span>
-                Discovered ${discoveredCount}
-                device${discoveredCount == 1 ? "" : "s"}
-              </span>
-              <mwc-button
-                label="Show"
-                @click=${this._handleShowDiscovered}
-              ></mwc-button>
-            </div>
-          `
-        : nothing}
-      <div class="table-container">
-        <ha-data-table
-          .columns=${this._getTableColumns()}
-          .data=${tableData}
-          .sortColumn=${this._getSortColumn()}
-          .sortDirection=${this._getSortDirection()}
-          .filter=${this._search?.value || ""}
-          .noDataText=${"No devices found. Adjust your search criteria."}
-          @sorting-changed=${this._handleTableSortChange}
-          @row-click=${this._handleTableRowClick}
-        ></ha-data-table>
-      </div>
+      <hass-tabs-subpage-data-table
+        .hass=${mockHass}
+        .narrow=${false}
+        .route=${this.route || { prefix: "/devices", path: "/devices" }}
+        .tabs=${[{ path: "/devices", name: "Devices" }]}
+        .searchLabel=${`Search ${tableData.length} devices`}
+        .columns=${this._getTableColumns()}
+        .data=${this._getFilteredData(tableData)}
+        .filter=${this._filter || ""}
+        .filters=${0}
+        .noDataText=${"No devices found"}
+        .initialGroupColumn=${this._activeGrouping}
+        .initialCollapsedGroups=${this._activeCollapsed}
+        selectable
+        .selected=${this._selected.length}
+        clickable
+        has-filters
+        has-fab
+        @selection-changed=${this._handleSelectionChanged}
+        @grouping-changed=${this._handleGroupingChanged}
+        @collapsed-changed=${this._handleCollapseChanged}
+        @search-changed=${this._handleSearchChange}
+        @row-click=${this._handleTableRowClick}
+      >
+        <ha-fab
+          slot="fab"
+          .label=${"New device"}
+          extended
+          @click=${this._handleOpenWizardClick}
+        >
+          <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
+        </ha-fab>
+      </hass-tabs-subpage-data-table>
     `;
   }
 
@@ -556,7 +520,79 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _handleTableRowClick(e: CustomEvent) {
-    // Handle row click if needed
+    const deviceId = e.detail.id;
+    const device = this._getTableData().find(d => d.id === deviceId || d.name === deviceId);
+    if (!device) return;
+
+    if (device.type === "importable") {
+      openAdoptDialog(device as ImportableDevice, () => this._updateDevices());
+    } else if (device.configuration) {
+      openEditDialog(device.configuration);
+    }
+  }
+
+  private _handleSelectionChanged(ev: CustomEvent): void {
+    this._selected = ev.detail.value;
+  }
+
+  private _handleColumnsChanged(ev: CustomEvent): void {
+    this._activeColumnOrder = ev.detail.columnOrder;
+    this._activeHiddenColumns = ev.detail.hiddenColumns;
+    this._saveTablePreferences();
+  }
+
+  private _handleGroupingChanged(ev: CustomEvent): void {
+    this._activeGrouping = ev.detail.value;
+    this._saveTablePreferences();
+  }
+
+  private _handleCollapseChanged(ev: CustomEvent): void {
+    this._activeCollapsed = ev.detail.value;
+  }
+
+  private _handleSearchChange(ev: CustomEvent): void {
+    this._filter = ev.detail.value || "";
+  }
+
+  private _clearFilter(): void {
+    this._filter = "";
+  }
+
+  private _getFilteredData(data: DataTableRowData[]): DataTableRowData[] {
+    if (!this._filter) {
+      return data;
+    }
+    const searchValue = this._filter.toLowerCase();
+    return data.filter((item) => {
+      if (item.name?.toLowerCase().includes(searchValue)) return true;
+      if (item.friendly_name?.toLowerCase().includes(searchValue)) return true;
+      if (item.comment?.toLowerCase().includes(searchValue)) return true;
+      if (item.platform?.toLowerCase().includes(searchValue)) return true;
+      if (item.configuration?.toLowerCase().includes(searchValue)) return true;
+      return false;
+    });
+  }
+
+  private _saveTablePreferences(): void {
+    try {
+      if (this._activeColumnOrder) {
+        localStorage.setItem(
+          "esphome.tableColumnOrder",
+          JSON.stringify(this._activeColumnOrder),
+        );
+      }
+      if (this._activeHiddenColumns) {
+        localStorage.setItem(
+          "esphome.tableHiddenColumns",
+          JSON.stringify(this._activeHiddenColumns),
+        );
+      }
+      if (this._activeGrouping) {
+        localStorage.setItem("esphome.tableGrouping", this._activeGrouping);
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
   }
 
   private _filter(item: DataTableRowData): boolean {
@@ -564,8 +600,10 @@ class ESPHomeDevicesList extends LitElement {
       return false;
     }
 
-    if (this._search?.value) {
-      const searchValue = this._search!.value.toLowerCase();
+    // For card view, use the search component's value
+    const searchEl = this.shadowRoot?.querySelector("esphome-search") as any;
+    if (searchEl?.value) {
+      const searchValue = searchEl.value.toLowerCase();
       if (item.name!.toLowerCase().indexOf(searchValue) >= 0) {
         return true;
       }
@@ -604,6 +642,27 @@ class ESPHomeDevicesList extends LitElement {
     :host {
       display: block;
       height: 100%;
+      background-color: var(--primary-background-color);
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+    }
+
+    ha-fab {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      ha-fab {
+        bottom: 84px;
+      }
     }
 
     .device-icon {
@@ -745,11 +804,6 @@ class ESPHomeDevicesList extends LitElement {
       background-color: var(--primary-footer-bg-color);
       border-top: 1px solid var(--divider-color);
       color: var(--mdc-theme-on-primary);
-    }
-    .table-container {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1920px;
     }
     .actions-container {
       display: flex;

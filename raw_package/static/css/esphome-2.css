@@ -3,6 +3,7 @@
 :root {
   /* Colors */
   --primary-bg-color: #fafafa;
+  --primary-background-color: #fafafa;
   --primary-footer-bg-color: #212121;
   --card-background-color: #fafafa;
   --alert-standard-color: #666666;
@@ -33,7 +34,8 @@
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-bg-color: #000000;
+    --primary-bg-color: #111111;
+    --primary-background-color: #111111;
     --primary-text-color: #e1e1e1;
     --primary-footer-bg-color: #101e24;
     --esphome-background-header: #282828;
