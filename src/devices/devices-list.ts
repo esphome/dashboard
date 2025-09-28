@@ -242,7 +242,6 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const device = row as ConfiguredDevice;
-    const isOnline = this._onlineStatus[device.configuration];
     const canUpdate = canUpdateDevice(device);
 
     return html`
@@ -283,7 +282,6 @@ class ESPHomeDevicesList extends LitElement {
           ></mwc-icon-button>
         </div>
         <div class="menu-group" @click=${(e: Event) => e.stopPropagation()}>
-          <div class="vertical-divider"></div>
           <esphome-button-menu
           corner="BOTTOM_RIGHT"
           @action=${(ev: CustomEvent<ActionDetail>) => {
@@ -755,12 +753,6 @@ class ESPHomeDevicesList extends LitElement {
       display: flex;
       align-items: center;
       gap: 4px;
-    }
-    .vertical-divider {
-      height: 24px;
-      width: 1px;
-      background: var(--divider-color, rgba(0, 0, 0, 0.12));
-      flex-shrink: 0;
     }
 
     /* Responsive hiding of action buttons */
