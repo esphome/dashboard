@@ -248,7 +248,7 @@ class ESPHomeDevicesList extends LitElement {
     return html`
       <div class="actions-container">
         <div class="action-buttons">
-          ${canUpdate && isOnline
+          ${canUpdate
             ? html`
                 <mwc-icon-button
                   class="action-update hide-small"
@@ -260,38 +260,27 @@ class ESPHomeDevicesList extends LitElement {
                   }}
                 ></mwc-icon-button>
               `
-            : ""}
-          ${device.web_port && isOnline
-            ? html`
+            : html`
                 <mwc-icon-button
-                  class="action-visit hide-small"
-                  icon="open_in_new"
-                  title="Visit device"
+                  class="action-update hide-small"
+                  title="Install"
                   @click=${(e: Event) => {
                     e.stopPropagation();
-                    const host =
-                      device.address && !device.address.endsWith(".local")
-                        ? device.address
-                        : `${device.name}.local`;
-                    const url = `http://${host}:${device.web_port}`;
-                    window.open(url, "_blank");
+                    openInstallChooseDialog(device.configuration);
                   }}
-                ></mwc-icon-button>
-              `
-            : ""}
-          ${isOnline
-            ? html`
-                <mwc-icon-button
-                  class="action-logs hide-medium"
-                  icon="description"
-                  title="View logs"
-                  @click=${(e: Event) => {
-                    e.stopPropagation();
-                    openLogsTargetDialog(device.configuration);
-                  }}
-                ></mwc-icon-button>
-              `
-            : ""}
+                >
+                  <esphome-svg-icon .path=${mdiUploadNetwork}></esphome-svg-icon>
+                </mwc-icon-button>
+              `}
+          <mwc-icon-button
+            class="action-logs hide-medium"
+            icon="description"
+            title="View logs"
+            @click=${(e: Event) => {
+              e.stopPropagation();
+              openLogsTargetDialog(device.configuration);
+            }}
+          ></mwc-icon-button>
         </div>
         <div class="menu-group" @click=${(e: Event) => e.stopPropagation()}>
           <div class="vertical-divider"></div>
@@ -901,6 +890,10 @@ class ESPHomeDevicesList extends LitElement {
       navigator.clipboard.writeText(text);
     };
 
+    // Check if device has web interface and is online
+    const isOnline = device.status === 'Online' || this._onlineStatus[device.configuration];
+    const hasWebInterface = device.web_port && isOnline;
+
     const infoHtml = html`
       <style>
         .info-row {
@@ -930,6 +923,26 @@ class ESPHomeDevicesList extends LitElement {
         }
         .copy-button:hover {
           opacity: 1;
+        }
+        .visit-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 16px;
+          padding: 8px 16px;
+          background-color: var(--primary-color, #03a9f4);
+          color: var(--text-primary-color, white);
+          border-radius: 4px;
+          text-decoration: none;
+          font-weight: 500;
+          cursor: pointer;
+          transition: opacity 0.2s;
+        }
+        .visit-button:hover {
+          opacity: 0.9;
+        }
+        .visit-button mwc-icon {
+          font-size: 20px;
         }
       </style>
       <div class="info-container">
@@ -973,6 +986,17 @@ class ESPHomeDevicesList extends LitElement {
             title="Copy to clipboard"
           ></mwc-icon-button>
         </div>
+        ${hasWebInterface ? html`
+          <a
+            class="visit-button"
+            href="http://${ipAddress !== 'Unknown' && !ipAddress.endsWith('.local') ? ipAddress : mdnsName}:${device.web_port}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <mwc-icon>open_in_new</mwc-icon>
+            Visit Device
+          </a>
+        ` : ''}
       </div>
     `;
 
