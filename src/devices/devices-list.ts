@@ -702,8 +702,6 @@ class ESPHomeDevicesList extends LitElement {
       color: var(--mdc-theme-on-primary);
     }
     .table-container {
-      margin: 20px auto;
-      width: 90%;
       max-width: 1920px;
     }
     .actions-container {
