@@ -224,43 +224,6 @@ class ESPHomeDevicesList extends LitElement {
 
 
 
-  private _renderIPAddress(row: DataTableRowData): string {
-    if (row.type === "importable") {
-      return row.network || "-";
-    }
-
-    // First check if we have a resolved IP from the API
-    const resolvedIP = this._deviceIPs[row.name];
-    if (resolvedIP) {
-      return resolvedIP;
-    }
-
-    // Fall back to existing logic for devices without resolved IPs
-    if (!row.address) {
-      return "-";
-    }
-    // If it's an mDNS address (ends with .local), return dash
-    if (row.address.endsWith(".local")) {
-      return "-";
-    }
-    // Otherwise it's an IP address
-    return row.address;
-  }
-
-  private _renderMDNS(row: DataTableRowData): string {
-    if (row.type === "importable") {
-      return "-";
-    }
-
-    // If device has a .local address, use it; otherwise construct from configuration filename
-    if (row.address && row.address.endsWith(".local")) {
-      return row.address;
-    }
-    // Use configuration filename without .yaml/.yml extension
-    const filename = row.configuration.replace(/\.(yaml|yml)$/, "");
-    return `${filename}.local`;
-  }
-
   private _renderActions(row: DataTableRowData): TemplateResult {
     if (row.type === "importable") {
       const device = row as ImportableDevice;
