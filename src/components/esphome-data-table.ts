@@ -318,7 +318,6 @@ export class ESPHomeDataTable extends LitElement {
     }
 
     .table-container {
-      overflow-x: auto;
       background: var(--card-background-color, white);
     }
 
