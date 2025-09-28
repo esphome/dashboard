@@ -50,7 +50,9 @@ class ESPHomeCleanAllChooseDialog extends LitElement {
   }
 
   private _handleClose() {
-    this.parentNode!.removeChild(this);
+    if (this.parentNode) {
+      this.parentNode.removeChild(this);
+    }
   }
 
   static styles = [
