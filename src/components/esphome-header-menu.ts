@@ -142,7 +142,7 @@ export class ESPHomeHeaderMenu extends LitElement {
         text:
           "Do you want to clean all build and platform files? " +
           "This will remove all cached files and dependencies, " +
-          "which may take a while to re-download and reinstall.",
+          "which may take a while to download again and reinstall.",
         confirmText: "Clean All",
         dismissText: "Cancel",
         destructive: true,
