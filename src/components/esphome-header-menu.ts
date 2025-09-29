@@ -9,7 +9,7 @@ import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog, toggleSearch } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
-import { openCleanAllChooseDialog } from "../clean-all";
+import { openCleanAllDialog } from "../clean-all";
 import { showConfirmationDialog } from "../dialogs";
 import { fireEvent } from "../util/fire-event";
 import { mdiBroom } from "@mdi/js";
@@ -135,8 +135,22 @@ export class ESPHomeHeaderMenu extends LitElement {
     openUpdateAllDialog();
   }
 
-  private _handleCleanAll() {
-    openCleanAllChooseDialog();
+  private async _handleCleanAll() {
+    if (
+      !(await showConfirmationDialog({
+        title: "Clean All",
+        text:
+          "Do you want to clean all build and platform files? " +
+          "This will remove all cached files and dependencies, " +
+          "which may take a while to re-download and reinstall.",
+        confirmText: "Clean All",
+        dismissText: "Cancel",
+        destructive: true,
+      }))
+    ) {
+      return;
+    }
+    openCleanAllDialog();
   }
 
   private _handleEditSecrets() {
