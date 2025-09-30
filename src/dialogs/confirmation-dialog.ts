@@ -2,6 +2,7 @@ import { LitElement, html, TemplateResult, CSSResultGroup, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "@material/mwc-dialog";
+import "@material/mwc-icon-button";
 import { ConfirmationDialogParams } from ".";
 import { classMap } from "lit/directives/class-map.js";
 
@@ -28,21 +29,30 @@ class ESPHomeConfirmationDialog extends LitElement {
         @closed=${this._handleClose}
         open
       >
-        ${this._params.text ? html`<div>${this._params.text}</div>` : ""}
-        <mwc-button
-          slot="secondaryAction"
-          no-attention
-          .label=${this._params.dismissText || "Cancel"}
-          dialogAction="dismiss"
-        ></mwc-button>
-        <mwc-button
-          slot="primaryAction"
-          .label=${this._params.confirmText || "Yes"}
-          class=${classMap({
-            destructive: this._params.destructive || false,
-          })}
-          dialogAction="confirm"
-        ></mwc-button>
+        ${this._params.content ? this._params.content :
+          this._params.text ? html`<div style="white-space: pre-line;">${this._params.text}</div>` : ""}
+        ${this._params.confirmText === "" ? html`
+          <mwc-button
+            slot="primaryAction"
+            .label=${this._params.dismissText || "Close"}
+            dialogAction="dismiss"
+          ></mwc-button>
+        ` : html`
+          <mwc-button
+            slot="secondaryAction"
+            no-attention
+            .label=${this._params.dismissText || "Cancel"}
+            dialogAction="dismiss"
+          ></mwc-button>
+          <mwc-button
+            slot="primaryAction"
+            .label=${this._params.confirmText || "Yes"}
+            class=${classMap({
+              destructive: this._params.destructive || false,
+            })}
+            dialogAction="confirm"
+          ></mwc-button>
+        `}
       </mwc-dialog>
     `;
   }
