@@ -54,19 +54,9 @@ export const createWebSocketCollection = <T>(events: {
       return () => {
         subscribers.delete(onChange);
 
-        // Cleanup when no subscribers left
-        if (subscribers.size === 0 && isConnected) {
-          // Clean up all WebSocket event listeners
-          unsubscribers.forEach((unsub) => unsub());
-          unsubscribers.length = 0;
-
-          // Clear cached data
-          data = undefined;
-
-          // Disconnect WebSocket
-          dashboardWebSocket.disconnect();
-          isConnected = false;
-        }
+        // Don't disconnect WebSocket or clear data when no subscribers left
+        // This prevents connection loss and data loss when components unmount (e.g., when opening editor)
+        // The WebSocket connection will remain active to receive updates
       };
     },
 
