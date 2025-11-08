@@ -117,7 +117,8 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                 </div>
               `
             : ""}
-          ${this.device.loaded_integrations?.includes("web_server")
+          ${this.device.loaded_integrations?.includes("web_server") &&
+          !this.device.loaded_integrations?.includes("web_server_base")
             ? html`
                 <a
                   href=${`http://${this.device.address}${
