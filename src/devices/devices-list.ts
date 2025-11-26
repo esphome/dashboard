@@ -16,9 +16,7 @@ import { subscribeOnlineStatus } from "../api/online-status";
 import "../components/esphome-button-menu";
 import "../components/esphome-svg-icon";
 import "../../homeassistant-frontend/src/components/data-table/ha-data-table";
-import "../../homeassistant-frontend/src/components/ha-fab";
 import "../../homeassistant-frontend/src/components/search-input-outlined";
-import "../../homeassistant-frontend/src/components/ha-svg-icon";
 import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openLogsTargetDialog } from "../logs-target";
@@ -39,7 +37,6 @@ import {
   mdiDelete,
   mdiDownload,
   mdiKey,
-  mdiPlus,
   mdiRenameBox,
   mdiSpellcheck,
   mdiUploadNetwork,
@@ -418,13 +415,6 @@ class ESPHomeDevicesList extends LitElement {
           clickable
           @row-click=${this._handleTableRowClick}
         ></ha-data-table>
-        <ha-fab
-          .label=${"New device"}
-          extended
-          @click=${this._handleOpenWizardClick}
-        >
-          <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
-        </ha-fab>
       </div>
     `;
   }
@@ -621,6 +611,8 @@ class ESPHomeDevicesList extends LitElement {
       display: block;
       height: 100%;
       background-color: var(--primary-background-color);
+      /* Set divider color for data table row borders */
+      --divider-color: rgba(0, 0, 0, 0.12);
     }
 
     .table-container {
@@ -635,7 +627,7 @@ class ESPHomeDevicesList extends LitElement {
       align-items: center;
       padding: 8px 16px;
       gap: 8px;
-      border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+      border-bottom: 1px solid var(--divider-color);
     }
 
     .toolbar search-input-outlined {
@@ -646,27 +638,7 @@ class ESPHomeDevicesList extends LitElement {
     ha-data-table {
       flex: 1;
       width: 100%;
-      --data-table-border-width: 1px;
-      --data-table-row-border-width: 1px;
-      --data-table-row-border-color: var(--divider-color, rgba(0, 0, 0, 0.12));
-    }
-
-    /* Row divider lines */
-    ha-data-table::part(row) {
-      border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
-    }
-
-    ha-fab {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      z-index: 1000;
-    }
-
-    @media (max-width: 600px) {
-      ha-fab {
-        bottom: 84px;
-      }
+      --data-table-row-height: 60px;
     }
 
     .device-icon {
