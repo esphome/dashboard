@@ -17,6 +17,19 @@ import "../components/esphome-button-menu";
 import "../components/esphome-svg-icon";
 import "../../homeassistant-frontend/src/components/data-table/ha-data-table";
 import "../../homeassistant-frontend/src/components/search-input-outlined";
+import "../../homeassistant-frontend/src/components/chips/ha-assist-chip";
+import "../../homeassistant-frontend/src/components/chips/ha-filter-chip";
+import "../../homeassistant-frontend/src/components/ha-md-button-menu";
+import "../../homeassistant-frontend/src/components/ha-md-menu-item";
+import "../../homeassistant-frontend/src/components/ha-svg-icon";
+import "../../homeassistant-frontend/src/components/ha-icon-button";
+import "../../homeassistant-frontend/src/components/ha-expansion-panel";
+import "../../homeassistant-frontend/src/components/ha-dialog";
+import "../../homeassistant-frontend/src/components/ha-dialog-header";
+import "../../homeassistant-frontend/src/components/ha-button";
+import "../../homeassistant-frontend/src/components/ha-list";
+import "../../homeassistant-frontend/src/components/ha-list-item";
+import "../../homeassistant-frontend/src/components/ha-sortable";
 import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openLogsTargetDialog } from "../logs-target";
@@ -32,14 +45,16 @@ import { DownloadType, getDownloadUrl } from "../api/download";
 import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { mockHass } from "../util/hass-mock";
 import {
-  mdiBroom,
-  mdiCodeBraces,
-  mdiDelete,
-  mdiDownload,
-  mdiKey,
-  mdiRenameBox,
-  mdiSpellcheck,
-  mdiUploadNetwork,
+  mdiArrowDown,
+  mdiArrowUp,
+  mdiClose,
+  mdiDrag,
+  mdiEye,
+  mdiEyeOff,
+  mdiFilterVariant,
+  mdiFilterVariantRemove,
+  mdiMenuDown,
+  mdiTableCog,
 } from "@mdi/js";
 import type {
   DataTableColumnContainer,
@@ -53,19 +68,16 @@ class ESPHomeDevicesList extends LitElement {
 
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
-  @state() private _sortBy: "name" | "ip" | "status" = this._loadPreference(
-    "sortBy",
-    "name",
-  ) as "name" | "ip" | "status";
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
-  @state() private _selected: string[] = [];
-  @state() private _activeGrouping?: string;
-  @state() private _activeCollapsed: string[] = [];
-  @state() private _activeSorting?: SortingDirection;
-  @state() private _activeColumnOrder?: string[];
-  @state() private _activeHiddenColumns?: string[];
+  @state() private _groupColumn?: string = this._loadPreference("groupColumn", "") || undefined;
+  @state() private _sortColumn?: string = this._loadPreference("sortColumn", "name") || undefined;
+  @state() private _sortDirection: SortingDirection = (this._loadPreference("sortDirection", "asc") as SortingDirection) || null;
   @state() private _filter: string = "";
+  @state() private _columnOrder?: string[];
+  @state() private _hiddenColumns?: string[];
+  @state() private _showFilters = false;
+  @state() private _showSettingsDialog = false;
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -76,17 +88,81 @@ class ESPHomeDevicesList extends LitElement {
   };
 
 
-  private _handleSortChange = (e: CustomEvent) => {
-    this._sortBy = e.detail.sortBy;
-    this._savePreference("sortBy", this._sortBy);
-    this.requestUpdate();
-  };
-
   private _handleFilterChange = (e: CustomEvent) => {
     this._filterStatus = e.detail.filterStatus;
     this._savePreference("filterStatus", this._filterStatus);
   };
 
+  private _handleSortBy = (e: Event) => {
+    const target = e.currentTarget as HTMLElement;
+    const columnId = (target as any).value;
+    if (!this._sortDirection || this._sortColumn !== columnId) {
+      this._sortDirection = "asc";
+    } else if (this._sortDirection === "asc") {
+      this._sortDirection = "desc";
+    } else {
+      this._sortDirection = null;
+    }
+    this._sortColumn = this._sortDirection === null ? undefined : columnId;
+    this._savePreference("sortColumn", this._sortColumn || "");
+    this._savePreference("sortDirection", this._sortDirection || "");
+  };
+
+  private _handleSortingChanged = (e: CustomEvent) => {
+    this._sortDirection = e.detail.direction;
+    this._sortColumn = this._sortDirection ? e.detail.column : undefined;
+    this._savePreference("sortColumn", this._sortColumn || "");
+    this._savePreference("sortDirection", this._sortDirection || "");
+  };
+
+  private _handleGroupBy = (e: Event) => {
+    const target = e.currentTarget as HTMLElement;
+    const columnId = (target as any).value;
+    this._groupColumn = columnId || undefined;
+    this._savePreference("groupColumn", this._groupColumn || "");
+  };
+
+  private _toggleFilters = () => {
+    this._showFilters = !this._showFilters;
+  };
+
+  private _setStatusFilter = (status: "all" | "online" | "offline") => {
+    this._filterStatus = status;
+    this._savePreference("filterStatus", this._filterStatus);
+  };
+
+  private _clearFilters = () => {
+    this._filterStatus = "all";
+    this._savePreference("filterStatus", "all");
+  };
+
+  private _openSettings = () => {
+    this._showSettingsDialog = true;
+  };
+
+  private _closeSettingsDialog = () => {
+    this._showSettingsDialog = false;
+  };
+
+  private _toggleColumnVisibility = (columnId: string) => {
+    const hiddenColumns = [...(this._hiddenColumns || [])];
+    const idx = hiddenColumns.indexOf(columnId);
+    if (idx >= 0) {
+      hiddenColumns.splice(idx, 1);
+    } else {
+      hiddenColumns.push(columnId);
+    }
+    this._hiddenColumns = hiddenColumns;
+    this._savePreference("hiddenColumns", JSON.stringify(hiddenColumns));
+  };
+
+  private _resetColumnSettings = () => {
+    this._columnOrder = undefined;
+    this._hiddenColumns = undefined;
+    this._savePreference("columnOrder", "[]");
+    this._savePreference("hiddenColumns", "[]");
+    this._closeSettingsDialog();
+  };
 
   private _loadPreference(key: string, defaultValue: string): string {
     try {
@@ -116,7 +192,6 @@ class ESPHomeDevicesList extends LitElement {
       name: {
         title: "Name",
         sortable: true,
-        filterable: true,
         groupable: true,
         direction: "asc",
         flexGrow: 2,
@@ -125,7 +200,6 @@ class ESPHomeDevicesList extends LitElement {
       status: {
         title: "Status",
         sortable: true,
-        filterable: true,
         groupable: true,
         width: "80px",
         template: (row: DataTableRowData) => this._renderStatus(row),
@@ -133,14 +207,12 @@ class ESPHomeDevicesList extends LitElement {
       ip_address: {
         title: "Address",
         sortable: true,
-        filterable: true,
         width: "150px",
         template: (row: DataTableRowData) => row.ip_address || "-",
       },
       platform: {
         title: "Platform",
         sortable: true,
-        filterable: true,
         groupable: true,
         hidden: true,
         width: "90px",
@@ -149,7 +221,6 @@ class ESPHomeDevicesList extends LitElement {
       filename: {
         title: "File name",
         sortable: true,
-        filterable: true,
         width: "200px",
         template: (row: DataTableRowData) => this._renderFileName(row),
       },
@@ -267,68 +338,6 @@ class ESPHomeDevicesList extends LitElement {
           @click=${() => openLogsTargetDialog(device.configuration)}
           label="Logs"
         ></mwc-button>
-        <esphome-button-menu
-          corner="BOTTOM_RIGHT"
-          @action=${(ev: CustomEvent<ActionDetail>) =>
-            this._handleOverflowAction(ev, device)}
-        >
-          <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
-          <mwc-list-item graphic="icon">
-            Validate
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiSpellcheck}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Install
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiUploadNetwork}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Show API Key
-            <esphome-svg-icon slot="graphic" .path=${mdiKey}></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Download YAML
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiCodeBraces}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Rename hostname
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiRenameBox}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Clean Build Files
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiBroom}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
-            Download ELF file
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiDownload}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <li divider role="separator"></li>
-          <mwc-list-item class="warning" graphic="icon">
-            Delete
-            <esphome-svg-icon
-              class="warning"
-              slot="graphic"
-              .path=${mdiDelete}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-        </esphome-button-menu>
       </div>
     `;
   }
@@ -395,105 +404,253 @@ class ESPHomeDevicesList extends LitElement {
 
     const tableData = this._getTableData();
     const filteredData = this._getFilteredData(tableData);
+    const columns = this._getTableColumns();
 
-    return html`
-      <div class="table-container">
-        <div class="toolbar">
-          <search-input-outlined
-            .filter=${this._filter}
-            @value-changed=${this._handleSearchChange}
-            .label=${`Search ${tableData.length} devices`}
-          ></search-input-outlined>
-        </div>
-        <ha-data-table
-          .hass=${mockHass}
-          .columns=${this._getTableColumns()}
-          .data=${filteredData}
-          .filter=${this._filter || ""}
-          .noDataText=${"No devices found"}
-          .id=${"name"}
-          clickable
-          @row-click=${this._handleTableRowClick}
-        ></ha-data-table>
+    // Build Group by menu
+    const groupByMenu = html`
+      <ha-md-button-menu positioning="popover">
+        <ha-assist-chip
+          .label=${`Group by${this._groupColumn && columns[this._groupColumn] ? ` ${columns[this._groupColumn].title}` : ""}`}
+          slot="trigger"
+        >
+          <ha-svg-icon slot="trailing-icon" .path=${mdiMenuDown}></ha-svg-icon>
+        </ha-assist-chip>
+        ${Object.entries(columns).map(([id, column]) =>
+          column.groupable
+            ? html`
+                <ha-md-menu-item
+                  .value=${id}
+                  @click=${this._handleGroupBy}
+                  ?selected=${id === this._groupColumn}
+                >
+                  ${column.title}
+                </ha-md-menu-item>
+              `
+            : nothing
+        )}
+        <ha-md-menu-item
+          .value=${""}
+          @click=${this._handleGroupBy}
+          ?selected=${!this._groupColumn}
+        >
+          Don't group by
+        </ha-md-menu-item>
+      </ha-md-button-menu>
+    `;
+
+    // Build Sort by menu
+    const sortByMenu = html`
+      <ha-md-button-menu positioning="popover">
+        <ha-assist-chip
+          .label=${`Sort by${this._sortColumn && columns[this._sortColumn] ? ` ${columns[this._sortColumn].title}` : " Status"}`}
+          slot="trigger"
+        >
+          <ha-svg-icon slot="trailing-icon" .path=${mdiMenuDown}></ha-svg-icon>
+        </ha-assist-chip>
+        ${Object.entries(columns).map(([id, column]) =>
+          column.sortable
+            ? html`
+                <ha-md-menu-item
+                  .value=${id}
+                  @click=${this._handleSortBy}
+                  ?selected=${id === this._sortColumn}
+                >
+                  ${this._sortColumn === id
+                    ? html`
+                        <ha-svg-icon
+                          slot="end"
+                          .path=${this._sortDirection === "desc" ? mdiArrowDown : mdiArrowUp}
+                        ></ha-svg-icon>
+                      `
+                    : nothing}
+                  ${column.title}
+                </ha-md-menu-item>
+              `
+            : nothing
+        )}
+      </ha-md-button-menu>
+    `;
+
+    // Count active filters
+    const activeFilters = this._filterStatus !== "all" ? 1 : 0;
+
+    // Build Filter button
+    const filterButton = html`
+      <div class="relative">
+        <ha-assist-chip
+          .label=${"Filters"}
+          .active=${this._showFilters || activeFilters > 0}
+          @click=${this._toggleFilters}
+        >
+          <ha-svg-icon slot="icon" .path=${mdiFilterVariant}></ha-svg-icon>
+        </ha-assist-chip>
+        ${activeFilters > 0
+          ? html`<div class="badge">${activeFilters}</div>`
+          : nothing}
       </div>
     `;
-  }
 
-  private _getSortColumn(): string | undefined {
-    switch (this._sortBy) {
-      case "name":
-        return "name";
-      case "ip":
-        return "ip_address";
-      case "status":
-        return "status";
-      default:
-        return "name";
-    }
-  }
+    // Build Settings button (opens modal dialog)
+    const settingsButton = html`
+      <ha-assist-chip
+        class="has-dropdown select-mode-chip"
+        @click=${this._openSettings}
+        title="Table settings"
+      >
+        <ha-svg-icon slot="icon" .path=${mdiTableCog}></ha-svg-icon>
+      </ha-assist-chip>
+    `;
 
-  private _getSortDirection(): "asc" | "desc" | null {
-    // Always return ascending for now
-    return "asc";
-  }
+    // Filter pane content
+    const filterPane = html`
+      <ha-expansion-panel outlined expanded>
+        <div slot="header" class="filter-header">
+          <ha-svg-icon .path=${mdiFilterVariant}></ha-svg-icon>
+          Status
+        </div>
+        <div class="filter-content">
+          <ha-filter-chip
+            .selected=${this._filterStatus === "all"}
+            @click=${() => this._setStatusFilter("all")}
+          >
+            All
+          </ha-filter-chip>
+          <ha-filter-chip
+            .selected=${this._filterStatus === "online"}
+            @click=${() => this._setStatusFilter("online")}
+          >
+            Online
+          </ha-filter-chip>
+          <ha-filter-chip
+            .selected=${this._filterStatus === "offline"}
+            @click=${() => this._setStatusFilter("offline")}
+          >
+            Offline
+          </ha-filter-chip>
+        </div>
+      </ha-expansion-panel>
+    `;
 
-  private _sortData(data: DataTableRowData[]): DataTableRowData[] {
-    const sortedData = [...data];
-
-    switch (this._sortBy) {
-      case "name":
-        sortedData.sort((a, b) =>
-          (a.friendly_name || a.name).localeCompare(b.friendly_name || b.name),
-        );
-        break;
-      case "ip":
-        sortedData.sort((a, b) => {
-          const aIp = a.ip_address || "";
-          const bIp = b.ip_address || "";
-          return aIp.localeCompare(bIp);
-        });
-        break;
-      case "status":
-        // Sort by status: Online first, then Offline, then Discovered
-        const statusOrder: { [key: string]: number } = {
-          Online: 0,
-          Offline: 1,
-          Discovered: 2,
-        };
-        sortedData.sort((a, b) => {
-          const aOrder = statusOrder[a.status] ?? 3;
-          const bOrder = statusOrder[b.status] ?? 3;
-          return aOrder - bOrder;
-        });
-        break;
-    }
-
-    return sortedData;
-  }
-
-  private _handleTableSortChange(e: CustomEvent) {
-    const { column, direction } = e.detail;
-
-    if (!column || !direction) {
-      this._sortBy = "name";
-    } else {
-      switch (column) {
-        case "name":
-          this._sortBy = "name";
-          break;
-        case "ip_address":
-          this._sortBy = "ip";
-          break;
-        case "status":
-          this._sortBy = "status";
-          break;
-        default:
-          this._sortBy = "name";
-      }
-    }
-
-    this._savePreference("sortBy", this._sortBy);
-    this.requestUpdate();
+    return html`
+      <div class="page-container ${this._showFilters ? "with-pane" : ""}">
+        ${this._showFilters
+          ? html`
+              <div class="filter-pane">
+                <div class="pane-header">
+                  <ha-assist-chip
+                    .label=${"Filters"}
+                    active
+                    @click=${this._toggleFilters}
+                  >
+                    <ha-svg-icon slot="icon" .path=${mdiFilterVariant}></ha-svg-icon>
+                  </ha-assist-chip>
+                  ${activeFilters > 0
+                    ? html`
+                        <ha-icon-button
+                          .path=${mdiFilterVariantRemove}
+                          @click=${this._clearFilters}
+                          title="Clear filters"
+                        ></ha-icon-button>
+                      `
+                    : nothing}
+                </div>
+                <div class="pane-content">
+                  ${filterPane}
+                </div>
+              </div>
+            `
+          : nothing}
+        <div class="table-container">
+          <div class="table-header">
+            ${!this._showFilters ? filterButton : nothing}
+            <search-input-outlined
+              .hass=${mockHass}
+              .filter=${this._filter}
+              @value-changed=${this._handleSearchChange}
+              .label=${`Search ${tableData.length} devices`}
+              .placeholder=${`Search ${tableData.length} devices`}
+            ></search-input-outlined>
+            ${groupByMenu}
+            ${sortByMenu}
+            ${settingsButton}
+          </div>
+          <ha-data-table
+            .hass=${mockHass}
+            .columns=${columns}
+            .data=${filteredData}
+            .noDataText=${"No devices found"}
+            .id=${"name"}
+            .sortColumn=${this._sortColumn}
+            .sortDirection=${this._sortDirection}
+            .groupColumn=${this._groupColumn}
+            .columnOrder=${this._columnOrder}
+            .hiddenColumns=${this._hiddenColumns}
+            clickable
+            @row-click=${this._handleTableRowClick}
+            @sorting-changed=${this._handleSortingChanged}
+          ></ha-data-table>
+        </div>
+      </div>
+      ${this._showSettingsDialog
+        ? html`
+            <ha-dialog
+              open
+              @closed=${this._closeSettingsDialog}
+              heading="Customize"
+            >
+              <ha-dialog-header slot="heading">
+                <ha-icon-button
+                  slot="navigationIcon"
+                  .path=${mdiClose}
+                  @click=${this._closeSettingsDialog}
+                  title="Close"
+                ></ha-icon-button>
+                <span slot="title">Customize</span>
+              </ha-dialog-header>
+              <div class="settings-content">
+                <ha-list>
+                  ${Object.entries(columns).map(([id, column]) => {
+                    if (!column.title || id === "actions") return nothing;
+                    const isVisible = !this._hiddenColumns?.includes(id);
+                    return html`
+                      <ha-list-item
+                        hasMeta
+                        graphic="icon"
+                        @click=${() => this._toggleColumnVisibility(id)}
+                        class=${isVisible ? "" : "hidden-column"}
+                      >
+                        ${id !== "icon"
+                          ? html`<ha-svg-icon
+                              class="handle"
+                              .path=${mdiDrag}
+                              slot="graphic"
+                            ></ha-svg-icon>`
+                          : nothing}
+                        ${column.title || id}
+                        <ha-icon-button
+                          class="action"
+                          .path=${isVisible ? mdiEye : mdiEyeOff}
+                          slot="meta"
+                          title=${isVisible ? "Hide column" : "Show column"}
+                        ></ha-icon-button>
+                      </ha-list-item>
+                    `;
+                  })}
+                </ha-list>
+              </div>
+              <ha-button
+                slot="secondaryAction"
+                @click=${this._resetColumnSettings}
+              >
+                Restore defaults
+              </ha-button>
+              <ha-button slot="primaryAction" @click=${this._closeSettingsDialog}>
+                Done
+              </ha-button>
+            </ha-dialog>
+          `
+        : nothing}
+    `;
   }
 
   private _handleTableRowClick(e: CustomEvent) {
@@ -526,31 +683,8 @@ class ESPHomeDevicesList extends LitElement {
     }
   }
 
-  private _handleSelectionChanged(ev: CustomEvent): void {
-    this._selected = ev.detail.value;
-  }
-
-  private _handleColumnsChanged(ev: CustomEvent): void {
-    this._activeColumnOrder = ev.detail.columnOrder;
-    this._activeHiddenColumns = ev.detail.hiddenColumns;
-    this._saveTablePreferences();
-  }
-
-  private _handleGroupingChanged(ev: CustomEvent): void {
-    this._activeGrouping = ev.detail.value;
-    this._saveTablePreferences();
-  }
-
-  private _handleCollapseChanged(ev: CustomEvent): void {
-    this._activeCollapsed = ev.detail.value;
-  }
-
   private _handleSearchChange(ev: CustomEvent): void {
     this._filter = ev.detail.value || "";
-  }
-
-  private _clearFilter(): void {
-    this._filter = "";
   }
 
   private _getFilteredData(data: DataTableRowData[]): DataTableRowData[] {
@@ -568,33 +702,15 @@ class ESPHomeDevicesList extends LitElement {
     });
   }
 
-  private _saveTablePreferences(): void {
-    try {
-      if (this._activeColumnOrder) {
-        localStorage.setItem(
-          "esphome.tableColumnOrder",
-          JSON.stringify(this._activeColumnOrder),
-        );
-      }
-      if (this._activeHiddenColumns) {
-        localStorage.setItem(
-          "esphome.tableHiddenColumns",
-          JSON.stringify(this._activeHiddenColumns),
-        );
-      }
-      if (this._activeGrouping) {
-        localStorage.setItem("esphome.tableGrouping", this._activeGrouping);
-      }
-    } catch {
-      // Ignore localStorage errors
-    }
-  }
-
   private _handleShowDiscovered() {
     fireEvent(this, "toggle-discovered-devices");
   }
 
   private _handleViewModeChange = () => {
+    this.requestUpdate();
+  };
+
+  private _handleSortChange = () => {
     this.requestUpdate();
   };
 
@@ -615,30 +731,161 @@ class ESPHomeDevicesList extends LitElement {
       --divider-color: rgba(0, 0, 0, 0.12);
     }
 
+    .page-container {
+      display: flex;
+      height: 100%;
+    }
+
+    .page-container.with-pane .table-container {
+      flex: 1;
+    }
+
+    .filter-pane {
+      width: 250px;
+      min-width: 250px;
+      border-right: 1px solid var(--divider-color);
+      background: var(--primary-background-color);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 56px;
+      border-bottom: 1px solid var(--divider-color);
+      background: var(--primary-background-color);
+    }
+
+    .pane-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-header ha-svg-icon {
+      color: var(--primary-color);
+    }
+
+    .filter-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 0;
+    }
+
+    ha-expansion-panel {
+      --expansion-panel-summary-padding: 0 8px;
+      --expansion-panel-content-padding: 0 8px;
+    }
+
+    /* Settings dialog styles */
+    ha-dialog {
+      --mdc-dialog-min-width: 400px;
+      --mdc-dialog-max-width: 400px;
+      --dialog-content-padding: 0 8px;
+      --dialog-z-index: 20;
+    }
+
+    .settings-content {
+      min-height: 200px;
+    }
+
+    .settings-content ha-list-item {
+      --mdc-list-side-padding: 12px;
+      overflow: visible;
+      cursor: pointer;
+    }
+
+    .settings-content ha-list-item.hidden-column {
+      color: var(--disabled-text-color);
+    }
+
+    .settings-content .handle {
+      cursor: grab;
+    }
+
+    .settings-content ha-icon-button {
+      display: block;
+      margin: -12px;
+    }
+
     .table-container {
       display: flex;
       flex-direction: column;
       height: 100%;
       position: relative;
+      flex: 1;
+      z-index: 0;
     }
 
-    .toolbar {
+    .table-header {
       display: flex;
       align-items: center;
-      padding: 8px 16px;
-      gap: 8px;
+      --mdc-shape-small: 0;
+      height: 56px;
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 16px;
+      box-sizing: border-box;
+      background: var(--primary-background-color);
       border-bottom: 1px solid var(--divider-color);
     }
 
-    .toolbar search-input-outlined {
+    .table-header search-input-outlined {
       flex: 1;
-      max-width: 400px;
+    }
+
+    ha-assist-chip {
+      --ha-assist-chip-container-shape: 10px;
+      --ha-assist-chip-container-color: var(--card-background-color);
+    }
+
+    ha-md-button-menu ha-assist-chip {
+      --md-assist-chip-trailing-space: 8px;
+    }
+
+    .relative {
+      position: relative;
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      inset-inline-end: -4px;
+      inset-inline-start: initial;
+      min-width: 16px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 400;
+      background-color: var(--primary-color);
+      line-height: 16px;
+      text-align: center;
+      padding: 0px 2px;
+      color: var(--text-primary-color);
+    }
+
+    .select-mode-chip {
+      --md-assist-chip-icon-label-space: 0;
+      --md-assist-chip-trailing-space: 8px;
     }
 
     ha-data-table {
       flex: 1;
       width: 100%;
       --data-table-row-height: 60px;
+      --data-table-border-width: 0;
     }
 
     .device-icon {
