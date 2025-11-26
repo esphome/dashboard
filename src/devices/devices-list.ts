@@ -45,7 +45,6 @@ import {
   mdiSpellcheck,
   mdiUploadNetwork,
 } from "@mdi/js";
-import { getDeviceIPs } from "../api/device-ips";
 import type {
   DataTableColumnContainer,
   DataTableRowData,
@@ -58,7 +57,6 @@ class ESPHomeDevicesList extends LitElement {
 
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
-  @state() private _deviceIPs: Record<string, string | null> = {};
   @state() private _sortBy: "name" | "ip" | "status" = this._loadPreference(
     "sortBy",
     "name",
@@ -76,7 +74,6 @@ class ESPHomeDevicesList extends LitElement {
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
   private _new = new Set<string>();
-  private _deviceIPsRefreshInterval?: number;
 
   private _isImportable = (item: any): item is ImportableDevice => {
     return "package_import_url" in item;
@@ -138,10 +135,10 @@ class ESPHomeDevicesList extends LitElement {
         template: (row: DataTableRowData) => this._renderStatus(row),
       },
       ip_address: {
-        title: "IP Address",
+        title: "Address",
         sortable: true,
         filterable: true,
-        width: "130px",
+        width: "150px",
         template: (row: DataTableRowData) => row.ip_address || "-",
       },
       platform: {
@@ -372,9 +369,7 @@ class ESPHomeDevicesList extends LitElement {
           : "Offline",
       ip_address: this._isImportable(device)
         ? device.network || "-"
-        : this._deviceIPs[device.name] ||
-          (device as ConfiguredDevice).address ||
-          "-",
+        : (device as ConfiguredDevice).address || "-",
       name: device.friendly_name || device.name,
     }));
   }
@@ -950,15 +945,6 @@ class ESPHomeDevicesList extends LitElement {
     });
   }
 
-  private async _fetchDeviceIPs() {
-    try {
-      const deviceIPs = await getDeviceIPs();
-      this._deviceIPs = deviceIPs;
-    } catch (error) {
-      console.warn("Failed to fetch device IPs:", error);
-    }
-  }
-
   public connectedCallback() {
     super.connectedCallback();
 
@@ -978,11 +964,6 @@ class ESPHomeDevicesList extends LitElement {
       "columns-changed",
       this._handleColumnsChange as EventListener,
     );
-
-    this._fetchDeviceIPs();
-    this._deviceIPsRefreshInterval = window.setInterval(() => {
-      this._fetchDeviceIPs();
-    }, 30000);
 
     this._devicesUnsub = subscribeDevices(async (devices) => {
       if (!devices) return;
@@ -1022,9 +1003,6 @@ class ESPHomeDevicesList extends LitElement {
     }
     if (this._onlineStatusUnsub) {
       this._onlineStatusUnsub();
-    }
-    if (this._deviceIPsRefreshInterval) {
-      clearInterval(this._deviceIPsRefreshInterval);
     }
 
     document.removeEventListener(
