@@ -15,11 +15,10 @@ import "@material/mwc-list/mwc-list-item";
 import { subscribeOnlineStatus } from "../api/online-status";
 import "../components/esphome-button-menu";
 import "../components/esphome-svg-icon";
-import "../components/ha-data-table";
+import "../../homeassistant-frontend/src/components/data-table/ha-data-table";
 import "../../homeassistant-frontend/src/components/ha-fab";
 import "../../homeassistant-frontend/src/components/search-input-outlined";
 import "../../homeassistant-frontend/src/components/ha-svg-icon";
-import "../../homeassistant-frontend/src/layouts/hass-tabs-subpage-data-table";
 import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openLogsTargetDialog } from "../logs-target";
@@ -49,7 +48,7 @@ import type {
   DataTableColumnContainer,
   DataTableRowData,
   SortingDirection,
-} from "../components/ha-data-table";
+} from "../../homeassistant-frontend/src/components/data-table/ha-data-table";
 
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
@@ -398,42 +397,35 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const tableData = this._getTableData();
+    const filteredData = this._getFilteredData(tableData);
 
-    // Always use table view with HA-style data table and toolbar
     return html`
-      <hass-tabs-subpage-data-table
-        .hass=${mockHass}
-        .narrow=${false}
-        .route=${this.route || { prefix: "/devices", path: "/devices" }}
-        .tabs=${[{ path: "/devices", name: "Devices" }]}
-        .searchLabel=${`Search ${tableData.length} devices`}
-        .columns=${this._getTableColumns()}
-        .data=${this._getFilteredData(tableData)}
-        .filter=${this._filter || ""}
-        .filters=${0}
-        .noDataText=${"No devices found"}
-        .initialGroupColumn=${this._activeGrouping}
-        .initialCollapsedGroups=${this._activeCollapsed}
-        selectable
-        .selected=${this._selected.length}
-        clickable
-        has-filters
-        has-fab
-        @selection-changed=${this._handleSelectionChanged}
-        @grouping-changed=${this._handleGroupingChanged}
-        @collapsed-changed=${this._handleCollapseChanged}
-        @search-changed=${this._handleSearchChange}
-        @row-click=${this._handleTableRowClick}
-      >
+      <div class="table-container">
+        <div class="toolbar">
+          <search-input-outlined
+            .filter=${this._filter}
+            @value-changed=${this._handleSearchChange}
+            .label=${`Search ${tableData.length} devices`}
+          ></search-input-outlined>
+        </div>
+        <ha-data-table
+          .hass=${mockHass}
+          .columns=${this._getTableColumns()}
+          .data=${filteredData}
+          .filter=${this._filter || ""}
+          .noDataText=${"No devices found"}
+          .id=${"name"}
+          clickable
+          @row-click=${this._handleTableRowClick}
+        ></ha-data-table>
         <ha-fab
-          slot="fab"
           .label=${"New device"}
           extended
           @click=${this._handleOpenWizardClick}
         >
           <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
         </ha-fab>
-      </hass-tabs-subpage-data-table>
+      </div>
     `;
   }
 
@@ -515,6 +507,24 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _handleTableRowClick(e: CustomEvent) {
+    // Don't trigger row click if clicking on action buttons
+    const path = e.composedPath();
+    const clickedOnAction = path.some((el: EventTarget) => {
+      if (el instanceof HTMLElement) {
+        return (
+          el.tagName === "MWC-BUTTON" ||
+          el.tagName === "MWC-ICON-BUTTON" ||
+          el.tagName === "ESPHOME-BUTTON-MENU" ||
+          el.classList?.contains("actions-container")
+        );
+      }
+      return false;
+    });
+
+    if (clickedOnAction) {
+      return;
+    }
+
     const deviceId = e.detail.id;
     const device = this._getTableData().find(d => d.id === deviceId || d.name === deviceId);
     if (!device) return;
@@ -590,44 +600,17 @@ class ESPHomeDevicesList extends LitElement {
     }
   }
 
-  private _filter(item: DataTableRowData): boolean {
-    if (!this.showDiscoveredDevices && item.type === "importable") {
-      return false;
-    }
-
-    // For card view, use the search component's value
-    const searchEl = this.shadowRoot?.querySelector("esphome-search") as any;
-    if (searchEl?.value) {
-      const searchValue = searchEl.value.toLowerCase();
-      if (item.name!.toLowerCase().indexOf(searchValue) >= 0) {
-        return true;
-      }
-      if (
-        item.friendly_name &&
-        item.friendly_name!.toLowerCase().indexOf(searchValue) >= 0
-      ) {
-        return true;
-      }
-      if (
-        item.comment &&
-        item.comment!.toLowerCase().indexOf(searchValue) >= 0
-      ) {
-        return true;
-      }
-      if (
-        item.project_name &&
-        item.project_name!.toLowerCase().indexOf(searchValue) >= 0
-      ) {
-        return true;
-      }
-      return false;
-    }
-    return true;
-  }
-
   private _handleShowDiscovered() {
     fireEvent(this, "toggle-discovered-devices");
   }
+
+  private _handleViewModeChange = () => {
+    this.requestUpdate();
+  };
+
+  private _handleColumnsChange = () => {
+    this.requestUpdate();
+  };
 
   private _handleOpenWizardClick() {
     openWizardDialog();
@@ -640,18 +623,44 @@ class ESPHomeDevicesList extends LitElement {
       background-color: var(--primary-background-color);
     }
 
-    .container {
+    .table-container {
       display: flex;
       flex-direction: column;
       height: 100%;
       position: relative;
     }
 
+    .toolbar {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 8px;
+      border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+    }
+
+    .toolbar search-input-outlined {
+      flex: 1;
+      max-width: 400px;
+    }
+
+    ha-data-table {
+      flex: 1;
+      width: 100%;
+      --data-table-border-width: 1px;
+      --data-table-row-border-width: 1px;
+      --data-table-row-border-color: var(--divider-color, rgba(0, 0, 0, 0.12));
+    }
+
+    /* Row divider lines */
+    ha-data-table::part(row) {
+      border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+    }
+
     ha-fab {
       position: fixed;
       bottom: 16px;
       right: 16px;
-      z-index: 1;
+      z-index: 1000;
     }
 
     @media (max-width: 600px) {
@@ -818,7 +827,12 @@ class ESPHomeDevicesList extends LitElement {
     esphome-button-menu {
       --mdc-theme-text-icon-on-background: var(--primary-text-color);
       position: relative;
-      z-index: 1;
+      z-index: 100;
+    }
+
+    /* Ensure menu popups appear above everything */
+    esphome-button-menu mwc-menu {
+      z-index: 1000;
     }
     /* Fix icon colors in dropdown menus */
     esphome-button-menu {
