@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing, TemplateResult } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import {
   subscribeDevices,
   refreshDevices,
@@ -31,7 +31,6 @@ import "../../homeassistant-frontend/src/components/ha-button";
 import "../../homeassistant-frontend/src/components/ha-list";
 import "../../homeassistant-frontend/src/components/ha-list-item";
 import "../../homeassistant-frontend/src/components/ha-sortable";
-import { fireEvent } from "../util/fire-event";
 import { openValidateDialog } from "../validate";
 import { openLogsTargetDialog } from "../logs-target";
 import { openInstallChooseDialog } from "../install-choose";
@@ -48,18 +47,32 @@ import { mockHass } from "../util/hass-mock";
 import {
   mdiArrowDown,
   mdiArrowUp,
+  mdiCheck,
   mdiClose,
+  mdiDotsVertical,
   mdiDrag,
   mdiEye,
   mdiEyeOff,
   mdiFilterVariant,
   mdiFilterVariantRemove,
-  mdiLock,
   mdiMenuDown,
+  mdiMicrophone,
+  mdiMotionSensor,
+  mdiOpenInNew,
   mdiPencil,
   mdiTableCog,
+  mdiThermometer,
+  mdiAlertCircleOutline,
+  mdiUpdate,
+  mdiBroom,
+  mdiCodeBraces,
+  mdiDelete,
+  mdiDownload,
+  mdiKey,
+  mdiRenameBox,
+  mdiSpellcheck,
+  mdiUploadNetwork,
 } from "@mdi/js";
-import { supportedPlatforms, type SupportedPlatforms } from "../const";
 import type {
   DataTableColumnContainer,
   DataTableRowData,
@@ -75,7 +88,7 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
   @state() private _groupColumn?: string =
-    this._loadPreference("groupColumn", "") || undefined;
+    this._loadPreference("groupColumn", "type") || undefined;
   @state() private _sortColumn?: string =
     this._loadPreference("sortColumn", "name") || undefined;
   @state() private _sortDirection: SortingDirection =
@@ -93,7 +106,6 @@ class ESPHomeDevicesList extends LitElement {
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
-  private _new = new Set<string>();
 
   private _isImportable = (item: any): item is ImportableDevice => {
     return "package_import_url" in item;
@@ -200,12 +212,16 @@ class ESPHomeDevicesList extends LitElement {
 
   private _getTableColumns(): DataTableColumnContainer {
     return {
+      icon: {
+        title: "",
+        sortable: false,
+        template: (row: DataTableRowData) => this._renderDeviceIcon(row),
+      },
       name: {
         title: "Name",
         sortable: true,
         groupable: true,
         direction: "asc",
-        flexGrow: 2,
         template: (row: DataTableRowData) => this._renderDeviceInfo(row),
       },
       status: {
@@ -213,17 +229,6 @@ class ESPHomeDevicesList extends LitElement {
         sortable: true,
         groupable: true,
         template: (row: DataTableRowData) => this._renderStatus(row),
-      },
-      device_type: {
-        title: "Device Type",
-        sortable: true,
-        groupable: true,
-        template: (row: DataTableRowData) => this._renderDeviceType(row),
-      },
-      ip_address: {
-        title: "Address",
-        sortable: true,
-        template: (row: DataTableRowData) => this._renderAddress(row),
       },
       filename: {
         title: "File name",
@@ -235,65 +240,72 @@ class ESPHomeDevicesList extends LitElement {
         sortable: false,
         template: (row: DataTableRowData) => this._renderActions(row),
       },
+      type: {
+        title: "Type",
+        sortable: true,
+        groupable: true,
+        hidden: true,
+      },
     };
   }
 
-  private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
-    const showUpdate =
-      row.type !== "importable" &&
-      canUpdateDevice(row as ConfiguredDevice) &&
-      this._onlineStatus[row.configuration];
+  private _getDeviceIcon(row: DataTableRowData): string {
+    // Try to determine icon based on project name or loaded integrations
+    const projectName = (row.project_name || "").toLowerCase();
+    const loadedIntegrations = row.loaded_integrations || [];
 
+    // Check for voice/microphone devices
+    if (
+      projectName.includes("voice") ||
+      loadedIntegrations.includes("microphone") ||
+      loadedIntegrations.includes("voice_assistant")
+    ) {
+      return mdiMicrophone;
+    }
+
+    // Check for presence/motion sensors
+    if (
+      projectName.includes("presence") ||
+      projectName.includes("mtr") ||
+      loadedIntegrations.includes("ld2410") ||
+      loadedIntegrations.includes("ld2450")
+    ) {
+      return mdiMotionSensor;
+    }
+
+    // Default to thermometer/sensor icon for environmental sensors
+    if (
+      projectName.includes("air") ||
+      projectName.includes("environmental") ||
+      projectName.includes("sensor")
+    ) {
+      return mdiThermometer;
+    }
+
+    // Default icon
+    return mdiThermometer;
+  }
+
+  private _renderDeviceIcon(row: DataTableRowData): TemplateResult {
+    const icon = this._getDeviceIcon(row);
     return html`
-      <div class="device-info">
-        <div class="device-name-row">
-          <span class="device-name">${row.friendly_name || row.name}</span>
-          ${showUpdate
-            ? html`<span
-                class="update-badge"
-                style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;background-color:#4caf50;color:white;cursor:pointer;text-transform:uppercase;display:inline-block;line-height:14px;vertical-align:middle;"
-                @click=${(e: Event) => {
-                  e.stopPropagation();
-                  openInstallChooseDialog(row.configuration);
-                }}
-                >Update</span
-              >`
-            : nothing}
-        </div>
-        ${row.comment
-          ? html`<div class="device-description">${row.comment}</div>`
-          : nothing}
+      <div class="device-icon">
+        <ha-svg-icon .path=${icon}></ha-svg-icon>
       </div>
     `;
   }
 
-  private _renderDeviceType(row: DataTableRowData): TemplateResult {
-    if (row.type === "importable") {
-      return html`<span class="device-type">—</span>`;
-    }
-    const platform = row.target_platform as SupportedPlatforms;
-    const label =
-      platform && supportedPlatforms[platform]
-        ? supportedPlatforms[platform].label
-        : platform || "—";
-    return html`<span class="device-type">${label}</span>`;
-  }
+  private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
+    // Get project name for display below device name
+    const projectName = row.project_name || row.project_version || "";
 
-  private _renderAddress(row: DataTableRowData): TemplateResult {
-    const address = row.ip_address || "-";
-    const isStatic = row.has_static_ip === true;
     return html`
-      <span class="address-cell">
-        ${address}
-        ${isStatic
-          ? html`<ha-svg-icon
-              class="lock-icon"
-              .path=${mdiLock}
-              title="Static IP"
-              style="--mdc-icon-size: 10px; opacity: 0.25;"
-            ></ha-svg-icon>`
+      <div class="device-info">
+        <div class="device-name">${row.friendly_name || row.name}</div>
+        ${projectName
+          ? html`<div class="device-project">${projectName}</div>`
           : nothing}
-      </span>
+      </div>
     `;
   }
 
@@ -324,71 +336,164 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _renderStatus(row: DataTableRowData): TemplateResult {
-    if (row.type === "importable") {
-      return html`
-        <span
-          style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;text-transform:uppercase;background-color:#ff9800;color:white;display:inline-block;line-height:14px;vertical-align:middle;"
-        >
-          Discovered
-        </span>
-      `;
+    if (row.type === "Discovered") {
+      return html`<span class="status-text">—</span>`;
     }
 
     const isOnline = this._onlineStatus[row.configuration];
+    const hasUpdate = canUpdateDevice(row as ConfiguredDevice) && isOnline;
+
     return html`
-      <span
-        style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;text-transform:uppercase;background-color:${isOnline
-          ? "#4caf50"
-          : "#f44336"};color:white;display:inline-block;line-height:14px;vertical-align:middle;"
-      >
-        ${isOnline ? "Online" : "Offline"}
-      </span>
+      <div class="status-cell">
+        <div class="status-row ${isOnline ? "online" : "offline"}">
+          <ha-svg-icon
+            .path=${isOnline ? mdiCheck : mdiAlertCircleOutline}
+          ></ha-svg-icon>
+          <span>${isOnline ? "Online" : "Offline"}</span>
+        </div>
+        ${hasUpdate
+          ? html`
+              <div class="update-row">
+                <ha-svg-icon .path=${mdiUpdate}></ha-svg-icon>
+                <span>Update available</span>
+              </div>
+            `
+          : nothing}
+      </div>
     `;
   }
 
   private _renderActions(row: DataTableRowData): TemplateResult {
-    if (row.type === "importable") {
+    if (row.type === "Discovered") {
       const device = row as ImportableDevice;
       return html`
-        <mwc-button
-          unelevated
-          @click=${() => openAdoptDialog(device, () => this._updateDevices())}
-          label="Adopt"
-        ></mwc-button>
+        <div class="actions-container">
+          <span
+            class="take-control-link"
+            @click=${(e: Event) => {
+              e.stopPropagation();
+              openAdoptDialog(device, () => this._updateDevices());
+            }}
+            >Take control</span
+          >
+          <ha-icon-button
+            .path=${mdiDotsVertical}
+            @click=${(e: Event) => e.stopPropagation()}
+          ></ha-icon-button>
+        </div>
       `;
     }
 
     const device = row as ConfiguredDevice;
     const isOnline = this._onlineStatus[device.configuration];
+    const hasWebServer = device.loaded_integrations?.includes("web_server");
 
     return html`
       <div class="actions-container">
-        ${device.web_port && isOnline
+        ${hasWebServer && isOnline
           ? html`
-              <mwc-button
-                outlined
-                @click=${() => {
+              <ha-icon-button
+                .path=${mdiOpenInNew}
+                @click=${(e: Event) => {
+                  e.stopPropagation();
                   const host =
                     device.address && !device.address.endsWith(".local")
                       ? device.address
                       : `${device.name}.local`;
-                  const url = `http://${host}:${device.web_port}`;
+                  const url = `http://${host}${
+                    device.web_port && device.web_port !== 80
+                      ? `:${device.web_port}`
+                      : ""
+                  }`;
                   window.open(url, "_blank");
                 }}
-                label="Visit"
-              ></mwc-button>
+                title="Open web interface"
+              ></ha-icon-button>
             `
-          : nothing}
-        <mwc-button
-          outlined
-          @click=${() => openEditDialog(device.configuration)}
-          label="Edit"
-        ></mwc-button>
-        <mwc-button
-          outlined
-          @click=${() => openLogsTargetDialog(device.configuration)}
-          label="Logs"
-        ></mwc-button>
+          : html`<div class="icon-placeholder"></div>`}
+        <ha-icon-button
+          .path=${mdiPencil}
+          @click=${(e: Event) => {
+            e.stopPropagation();
+            openEditDialog(device.configuration);
+          }}
+          title="Edit"
+        ></ha-icon-button>
+        <esphome-button-menu
+          corner="BOTTOM_RIGHT"
+          @action=${(ev: CustomEvent<ActionDetail>) => {
+            ev.stopPropagation();
+            this._handleOverflowAction(ev, device);
+          }}
+        >
+          <ha-icon-button
+            slot="trigger"
+            .path=${mdiDotsVertical}
+            @click=${(e: Event) => e.stopPropagation()}
+          ></ha-icon-button>
+          <mwc-list-item graphic="icon">
+            Validate
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiSpellcheck}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Install
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiUploadNetwork}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Logs
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiCodeBraces}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Show API Key
+            <esphome-svg-icon slot="graphic" .path=${mdiKey}></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Download YAML
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiDownload}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Rename hostname
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiRenameBox}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Clean Build Files
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiBroom}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <mwc-list-item graphic="icon">
+            Download ELF file
+            <esphome-svg-icon
+              slot="graphic"
+              .path=${mdiDownload}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+          <li divider role="separator"></li>
+          <mwc-list-item class="warning" graphic="icon">
+            Delete
+            <esphome-svg-icon
+              class="warning"
+              slot="graphic"
+              .path=${mdiDelete}
+            ></esphome-svg-icon>
+          </mwc-list-item>
+        </esphome-button-menu>
       </div>
     `;
   }
@@ -431,7 +536,8 @@ class ESPHomeDevicesList extends LitElement {
         ...device,
         // Ensure we have an id field for the data table
         id: device.name,
-        type: isImportable ? "importable" : "configured",
+        // Type is used for grouping: "Your devices" vs "Discovered"
+        type: isImportable ? "Discovered" : "Your devices",
         // Add computed fields for sorting
         status: isImportable
           ? "Discovered"
@@ -444,6 +550,10 @@ class ESPHomeDevicesList extends LitElement {
           ? "-"
           : configuredDevice?.target_platform || "-",
         name: device.friendly_name || device.name,
+        // Project name for display (only available for importable devices)
+        project_name: isImportable
+          ? (device as ImportableDevice).project_name || ""
+          : "",
       };
     });
   }
@@ -777,7 +887,7 @@ class ESPHomeDevicesList extends LitElement {
     );
     if (!device) return;
 
-    if (device.type === "importable") {
+    if (device.type === "Discovered") {
       openAdoptDialog(device as ImportableDevice, () => this._updateDevices());
     } else if (device.configuration) {
       openEditDialog(device.configuration);
@@ -801,10 +911,6 @@ class ESPHomeDevicesList extends LitElement {
       if (item.configuration?.toLowerCase().includes(searchValue)) return true;
       return false;
     });
-  }
-
-  private _handleShowDiscovered() {
-    fireEvent(this, "toggle-discovered-devices");
   }
 
   private _handleViewModeChange = () => {
@@ -987,6 +1093,81 @@ class ESPHomeDevicesList extends LitElement {
       width: 100%;
       --data-table-row-height: 60px;
       --data-table-border-width: 0;
+    }
+
+    /* Device icon column */
+    .device-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      color: var(--secondary-text-color);
+    }
+
+    .device-icon ha-svg-icon {
+      --mdc-icon-size: 24px;
+    }
+
+    /* Status cell styles */
+    .status-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .status-row.online {
+      color: var(--success-color, #1e8e3e);
+    }
+
+    .status-row.offline {
+      color: var(--error-color, #d93025);
+    }
+
+    .status-row ha-svg-icon {
+      --mdc-icon-size: 18px;
+    }
+
+    .update-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--warning-color, #f57c00);
+    }
+
+    .update-row ha-svg-icon {
+      --mdc-icon-size: 14px;
+    }
+
+    /* Take control link */
+    .take-control-link {
+      color: var(--primary-color, #03a9f4);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .take-control-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Action icon placeholder for alignment */
+    .icon-placeholder {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Device project name */
+    .device-project {
+      font-size: 12px;
+      color: var(--secondary-text-color, #727272);
     }
 
     /* Row height variants */
@@ -1294,25 +1475,28 @@ class ESPHomeDevicesList extends LitElement {
     device: ConfiguredDevice,
   ) {
     switch (ev.detail.index) {
-      case 0:
+      case 0: // Validate
         openValidateDialog(device.configuration);
         break;
-      case 1:
+      case 1: // Install
         openInstallChooseDialog(device.configuration);
         break;
-      case 2:
+      case 2: // Logs
+        openLogsTargetDialog(device.configuration);
+        break;
+      case 3: // Show API Key
         openShowApiKeyDialog(device.configuration);
         break;
-      case 3:
+      case 4: // Download YAML
         this._handleDownloadYaml(device);
         break;
-      case 4:
+      case 5: // Rename hostname
         openRenameDialog(device.configuration, device.name);
         break;
-      case 5:
+      case 6: // Clean Build Files
         openCleanDialog(device.configuration);
         break;
-      case 6:
+      case 7: // Download ELF file
         const type: DownloadType = {
           title: "ELF File",
           description: "ELF File",
@@ -1326,7 +1510,7 @@ class ESPHomeDevicesList extends LitElement {
         link.click();
         link.remove();
         break;
-      case 8: // After the divider
+      case 9: // Delete (after the divider)
         openDeleteDeviceDialog(device.name, device.configuration, () =>
           this._updateDevices(),
         );
@@ -1363,19 +1547,10 @@ class ESPHomeDevicesList extends LitElement {
     this._devicesUnsub = subscribeDevices(async (devices) => {
       if (!devices) return;
 
-      const newDevices = new Set<string>();
       let newList: Array<ImportableDevice | ConfiguredDevice> = [];
 
       if (devices.configured) {
-        devices.configured.forEach((d) => {
-          if (
-            this._devices &&
-            this._devices.filter((old) => old.name === d.name).length === 0
-          ) {
-            newDevices.add(d.name);
-          }
-          newList.push(d);
-        });
+        newList = [...devices.configured];
       }
 
       if (devices.importable) {
@@ -1383,7 +1558,6 @@ class ESPHomeDevicesList extends LitElement {
       }
 
       this._devices = newList;
-      this._new = newDevices;
     });
 
     this._onlineStatusUnsub = subscribeOnlineStatus((res) => {
