@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import {
   subscribeDevices,
+  refreshDevices,
   ImportableDevice,
   ConfiguredDevice,
   canUpdateDevice,
@@ -1285,7 +1286,7 @@ class ESPHomeDevicesList extends LitElement {
   `;
 
   private async _updateDevices() {
-    await this._devicesUnsub!.refresh();
+    refreshDevices();
   }
 
   private async _handleOverflowAction(
