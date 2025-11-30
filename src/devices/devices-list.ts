@@ -215,6 +215,7 @@ class ESPHomeDevicesList extends LitElement {
       icon: {
         title: "",
         sortable: false,
+        width: "56px",
         template: (row: DataTableRowData) => this._renderDeviceIcon(row),
       },
       name: {
