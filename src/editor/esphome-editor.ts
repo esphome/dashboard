@@ -168,11 +168,15 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
+      // Move cursor to start after content is loaded (use setTimeout to ensure it happens after setValue completes)
+      setTimeout(() => {
+        this.editor?.setPosition({ lineNumber: 1, column: 1 });
+        this.editor?.revealLine(1);
+        this.editor?.focus();
+      }, 0);
 
       this.startAceWebsocket();
     });
-
-    this.editor.focus();
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {

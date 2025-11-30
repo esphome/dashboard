@@ -53,9 +53,12 @@ import {
   mdiEyeOff,
   mdiFilterVariant,
   mdiFilterVariantRemove,
+  mdiLock,
   mdiMenuDown,
+  mdiPencil,
   mdiTableCog,
 } from "@mdi/js";
+import { supportedPlatforms, type SupportedPlatforms } from "../const";
 import type {
   DataTableColumnContainer,
   DataTableRowData,
@@ -78,6 +81,8 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _hiddenColumns?: string[];
   @state() private _showFilters = false;
   @state() private _showSettingsDialog = false;
+  @state() private _rowHeight: "compact" | "default" | "comfortable" =
+    this._loadPreference("rowHeight", "default") as "compact" | "default" | "comfortable";
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -159,9 +164,16 @@ class ESPHomeDevicesList extends LitElement {
   private _resetColumnSettings = () => {
     this._columnOrder = undefined;
     this._hiddenColumns = undefined;
+    this._rowHeight = "default";
     this._savePreference("columnOrder", "[]");
     this._savePreference("hiddenColumns", "[]");
+    this._savePreference("rowHeight", "default");
     this._closeSettingsDialog();
+  }
+
+  private _setRowHeight = (height: "compact" | "default" | "comfortable") => {
+    this._rowHeight = height;
+    this._savePreference("rowHeight", height);
   };
 
   private _loadPreference(key: string, defaultValue: string): string {
@@ -182,13 +194,6 @@ class ESPHomeDevicesList extends LitElement {
 
   private _getTableColumns(): DataTableColumnContainer {
     return {
-      icon: {
-        title: "",
-        sortable: false,
-        minWidth: "48px",
-        maxWidth: "48px",
-        template: (row: DataTableRowData) => this._renderDeviceIcon(row),
-      },
       name: {
         title: "Name",
         sortable: true,
@@ -201,69 +206,110 @@ class ESPHomeDevicesList extends LitElement {
         title: "Status",
         sortable: true,
         groupable: true,
-        width: "80px",
         template: (row: DataTableRowData) => this._renderStatus(row),
+      },
+      device_type: {
+        title: "Device Type",
+        sortable: true,
+        groupable: true,
+        template: (row: DataTableRowData) => this._renderDeviceType(row),
       },
       ip_address: {
         title: "Address",
         sortable: true,
-        width: "150px",
-        template: (row: DataTableRowData) => row.ip_address || "-",
-      },
-      platform: {
-        title: "Platform",
-        sortable: true,
-        groupable: true,
-        hidden: true,
-        width: "90px",
-        template: (row: DataTableRowData) => row.platform || "-",
+        template: (row: DataTableRowData) => this._renderAddress(row),
       },
       filename: {
         title: "File name",
         sortable: true,
-        width: "200px",
         template: (row: DataTableRowData) => this._renderFileName(row),
       },
       actions: {
         title: "",
         sortable: false,
-        width: "160px",
         template: (row: DataTableRowData) => this._renderActions(row),
       },
     };
   }
 
-  private _renderDeviceIcon(row: DataTableRowData): TemplateResult {
-    const icon =
-      row.platform === "ESP32"
-        ? "📟"
-        : row.platform === "ESP8266"
-          ? "📱"
-          : "🔌";
+  private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
+    const showUpdate = row.type !== "importable" &&
+      canUpdateDevice(row as ConfiguredDevice) &&
+      this._onlineStatus[row.configuration];
+
     return html`
-      <div class="device-icon">
-        <span class="icon">${icon}</span>
+      <div class="device-info">
+        <div class="device-name-row">
+          <span class="device-name">${row.friendly_name || row.name}</span>
+          ${showUpdate
+            ? html`<span
+                class="update-badge"
+                style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;background-color:#4caf50;color:white;cursor:pointer;text-transform:uppercase;display:inline-block;line-height:14px;vertical-align:middle;"
+                @click=${(e: Event) => {
+                  e.stopPropagation();
+                  openInstallChooseDialog(row.configuration);
+                }}
+              >Update</span>`
+            : nothing}
+        </div>
+        ${row.comment
+          ? html`<div class="device-description">${row.comment}</div>`
+          : nothing}
       </div>
     `;
   }
 
-  private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
+  private _renderDeviceType(row: DataTableRowData): TemplateResult {
+    if (row.type === "importable") {
+      return html`<span class="device-type">—</span>`;
+    }
+    const platform = row.target_platform as SupportedPlatforms;
+    const label = platform && supportedPlatforms[platform]
+      ? supportedPlatforms[platform].label
+      : platform || "—";
+    return html`<span class="device-type">${label}</span>`;
+  }
+
+  private _renderAddress(row: DataTableRowData): TemplateResult {
+    const address = row.ip_address || "-";
+    const isStatic = row.has_static_ip === true;
     return html`
-      <div class="device-info">
-        <div class="device-name">${row.friendly_name || row.name}</div>
-        <div class="device-description">
-          ${row.comment || row.platform || "ESPHome Device"}
-        </div>
-      </div>
+      <span class="address-cell">
+        ${address}
+        ${isStatic
+          ? html`<ha-svg-icon
+              class="lock-icon"
+              .path=${mdiLock}
+              title="Static IP"
+              style="--mdc-icon-size: 10px; opacity: 0.25;"
+            ></ha-svg-icon>`
+          : nothing}
+      </span>
     `;
   }
 
   private _renderFileName(row: DataTableRowData): TemplateResult {
     return html`
-      <span class="filename">
+      <span class="filename editable-cell">
         ${row.configuration
           ? html`<code>${row.configuration}</code>`
           : html`<span class="no-config">—</span>`}
+        ${row.configuration
+          ? html`<ha-svg-icon
+              class="edit-pencil"
+              .path=${mdiPencil}
+              title="Rename"
+              style="--mdc-icon-size: 10px; opacity: 0.1; cursor: pointer;"
+              @click=${(e: Event) => {
+                e.stopPropagation();
+                openRenameDialog(row.configuration, row.name);
+              }}
+              @mouseenter=${(e: Event) =>
+                ((e.target as HTMLElement).style.opacity = "0.6")}
+              @mouseleave=${(e: Event) =>
+                ((e.target as HTMLElement).style.opacity = "0.1")}
+            ></ha-svg-icon>`
+          : nothing}
       </span>
     `;
   }
@@ -271,14 +317,20 @@ class ESPHomeDevicesList extends LitElement {
   private _renderStatus(row: DataTableRowData): TemplateResult {
     if (row.type === "importable") {
       return html`
-        <span class="status-badge status-discovered"> Discovered </span>
+        <span
+          style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;text-transform:uppercase;background-color:#ff9800;color:white;display:inline-block;line-height:14px;vertical-align:middle;"
+        >
+          Discovered
+        </span>
       `;
     }
 
     const isOnline = this._onlineStatus[row.configuration];
     return html`
       <span
-        class="status-badge ${isOnline ? "status-online" : "status-offline"}"
+        style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;text-transform:uppercase;background-color:${isOnline
+          ? "#4caf50"
+          : "#f44336"};color:white;display:inline-block;line-height:14px;vertical-align:middle;"
       >
         ${isOnline ? "Online" : "Offline"}
       </span>
@@ -299,19 +351,9 @@ class ESPHomeDevicesList extends LitElement {
 
     const device = row as ConfiguredDevice;
     const isOnline = this._onlineStatus[device.configuration];
-    const canUpdate = canUpdateDevice(device);
 
     return html`
       <div class="actions-container">
-        ${canUpdate && isOnline
-          ? html`
-              <mwc-button
-                unelevated
-                @click=${() => openInstallChooseDialog(device.configuration)}
-                label="Update"
-              ></mwc-button>
-            `
-          : nothing}
         ${device.web_port && isOnline
           ? html`
               <mwc-button
@@ -361,22 +403,35 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     // Convert to table row data
-    return devices.map((device) => ({
-      ...device,
-      // Ensure we have an id field for the data table
-      id: device.name,
-      type: this._isImportable(device) ? "importable" : "configured",
-      // Add computed fields for sorting
-      status: this._isImportable(device)
-        ? "Discovered"
-        : this._onlineStatus[(device as ConfiguredDevice).configuration]
-          ? "Online"
-          : "Offline",
-      ip_address: this._isImportable(device)
+    return devices.map((device) => {
+      const isImportable = this._isImportable(device);
+      const configuredDevice = isImportable ? null : (device as ConfiguredDevice);
+      const address = isImportable
         ? device.network || "-"
-        : (device as ConfiguredDevice).address || "-",
-      name: device.friendly_name || device.name,
-    }));
+        : configuredDevice?.address || "-";
+      // Static IP: address exists and is not an mDNS name (.local)
+      const hasStaticIp = !isImportable &&
+        configuredDevice?.address &&
+        !configuredDevice.address.endsWith(".local") &&
+        /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(configuredDevice.address);
+
+      return {
+        ...device,
+        // Ensure we have an id field for the data table
+        id: device.name,
+        type: isImportable ? "importable" : "configured",
+        // Add computed fields for sorting
+        status: isImportable
+          ? "Discovered"
+          : this._onlineStatus[configuredDevice!.configuration]
+            ? "Online"
+            : "Offline",
+        ip_address: address,
+        has_static_ip: hasStaticIp,
+        device_type: isImportable ? "-" : configuredDevice?.target_platform || "-",
+        name: device.friendly_name || device.name,
+      };
+    });
   }
 
   protected render() {
@@ -560,7 +615,7 @@ class ESPHomeDevicesList extends LitElement {
               </div>
             `
           : nothing}
-        <div class="table-container">
+        <div class="table-container row-height-${this._rowHeight}">
           <div class="table-header">
             ${!this._showFilters ? filterButton : nothing}
             <search-input-outlined
@@ -608,35 +663,61 @@ class ESPHomeDevicesList extends LitElement {
                 <span slot="title">Customize</span>
               </ha-dialog-header>
               <div class="settings-content">
-                <ha-list>
-                  ${Object.entries(columns).map(([id, column]) => {
-                    if (!column.title || id === "actions") return nothing;
-                    const isVisible = !this._hiddenColumns?.includes(id);
-                    return html`
-                      <ha-list-item
-                        hasMeta
-                        graphic="icon"
-                        @click=${() => this._toggleColumnVisibility(id)}
-                        class=${isVisible ? "" : "hidden-column"}
-                      >
-                        ${id !== "icon"
-                          ? html`<ha-svg-icon
-                              class="handle"
-                              .path=${mdiDrag}
-                              slot="graphic"
-                            ></ha-svg-icon>`
-                          : nothing}
-                        ${column.title || id}
-                        <ha-icon-button
-                          class="action"
-                          .path=${isVisible ? mdiEye : mdiEyeOff}
-                          slot="meta"
-                          title=${isVisible ? "Hide column" : "Show column"}
-                        ></ha-icon-button>
-                      </ha-list-item>
-                    `;
-                  })}
-                </ha-list>
+                <div class="settings-section">
+                  <div class="settings-section-title">Row Height</div>
+                  <div class="row-height-options">
+                    <ha-filter-chip
+                      .selected=${this._rowHeight === "compact"}
+                      @click=${() => this._setRowHeight("compact")}
+                    >
+                      Compact
+                    </ha-filter-chip>
+                    <ha-filter-chip
+                      .selected=${this._rowHeight === "default"}
+                      @click=${() => this._setRowHeight("default")}
+                    >
+                      Default
+                    </ha-filter-chip>
+                    <ha-filter-chip
+                      .selected=${this._rowHeight === "comfortable"}
+                      @click=${() => this._setRowHeight("comfortable")}
+                    >
+                      Comfortable
+                    </ha-filter-chip>
+                  </div>
+                </div>
+                <div class="settings-section">
+                  <div class="settings-section-title">Columns</div>
+                  <ha-list>
+                    ${Object.entries(columns).map(([id, column]) => {
+                      if (!column.title || id === "actions") return nothing;
+                      const isVisible = !this._hiddenColumns?.includes(id);
+                      return html`
+                        <ha-list-item
+                          hasMeta
+                          graphic="icon"
+                          @click=${() => this._toggleColumnVisibility(id)}
+                          class=${isVisible ? "" : "hidden-column"}
+                        >
+                          ${id !== "icon"
+                            ? html`<ha-svg-icon
+                                class="handle"
+                                .path=${mdiDrag}
+                                slot="graphic"
+                              ></ha-svg-icon>`
+                            : nothing}
+                          ${column.title || id}
+                          <ha-icon-button
+                            class="action"
+                            .path=${isVisible ? mdiEye : mdiEyeOff}
+                            slot="meta"
+                            title=${isVisible ? "Hide column" : "Show column"}
+                          ></ha-icon-button>
+                        </ha-list-item>
+                      `;
+                    })}
+                  </ha-list>
+                </div>
               </div>
               <ha-button
                 slot="secondaryAction"
@@ -888,24 +969,84 @@ class ESPHomeDevicesList extends LitElement {
       --data-table-border-width: 0;
     }
 
-    .device-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--secondary-background-color, #f5f5f5);
+    /* Row height variants */
+    .row-height-compact ha-data-table {
+      --data-table-row-height: 44px;
+    }
+    .row-height-default ha-data-table {
+      --data-table-row-height: 60px;
+    }
+    .row-height-comfortable ha-data-table {
+      --data-table-row-height: 76px;
     }
 
-    .device-icon .icon {
-      font-size: 20px;
+    /* Editable cell styles */
+    .editable-cell {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .editable-cell ha-svg-icon.edit-pencil {
+      --mdc-icon-size: 10px;
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      min-height: 10px;
+      color: var(--secondary-text-color);
+      opacity: 0.1;
+      cursor: pointer;
+      transition: opacity 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .editable-cell ha-svg-icon.edit-pencil:hover {
+      opacity: 0.6;
+      color: var(--primary-color);
+    }
+
+    /* Address cell with lock icon */
+    .address-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .address-cell ha-svg-icon.lock-icon {
+      --mdc-icon-size: 10px;
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      min-height: 10px;
+      color: var(--secondary-text-color);
+      opacity: 0.25;
+      flex-shrink: 0;
+    }
+
+    /* Smaller buttons with tighter padding */
+    mwc-button {
+      --mdc-typography-button-font-size: 12px;
+      --mdc-button-horizontal-padding: 4px;
+      --mdc-shape-small: 4px;
+    }
+
+    /* Device type badge */
+    .device-type {
+      font-size: 12px;
+      color: var(--primary-text-color);
     }
 
     .device-info {
       display: flex;
       flex-direction: column;
       gap: 2px;
+    }
+
+    .device-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .device-name {
@@ -937,7 +1078,6 @@ class ESPHomeDevicesList extends LitElement {
       font-size: 12px;
       font-weight: 500;
       text-transform: uppercase;
-      display: inline-block;
     }
 
     .status-online {
