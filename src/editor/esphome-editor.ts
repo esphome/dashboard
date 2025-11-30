@@ -158,6 +158,8 @@ class ESPHomeEditor extends LitElement {
       dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
+      cursorBlinking: "blink",
+      cursorStyle: "line",
     });
 
     const isSecrets =

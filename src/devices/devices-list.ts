@@ -1124,11 +1124,11 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     .status-row.online {
-      color: var(--success-color, #1e8e3e);
+      color: #1e8e3e;
     }
 
     .status-row.offline {
-      color: var(--error-color, #d93025);
+      color: #d93025;
     }
 
     .status-row ha-svg-icon {
