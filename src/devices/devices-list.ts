@@ -73,16 +73,22 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _onlineStatus: Record<string, boolean> = {};
   @state() private _filterStatus: "all" | "online" | "offline" =
     this._loadPreference("filterStatus", "all") as "all" | "online" | "offline";
-  @state() private _groupColumn?: string = this._loadPreference("groupColumn", "") || undefined;
-  @state() private _sortColumn?: string = this._loadPreference("sortColumn", "name") || undefined;
-  @state() private _sortDirection: SortingDirection = (this._loadPreference("sortDirection", "asc") as SortingDirection) || null;
+  @state() private _groupColumn?: string =
+    this._loadPreference("groupColumn", "") || undefined;
+  @state() private _sortColumn?: string =
+    this._loadPreference("sortColumn", "name") || undefined;
+  @state() private _sortDirection: SortingDirection =
+    (this._loadPreference("sortDirection", "asc") as SortingDirection) || null;
   @state() private _filter: string = "";
   @state() private _columnOrder?: string[];
   @state() private _hiddenColumns?: string[];
   @state() private _showFilters = false;
   @state() private _showSettingsDialog = false;
   @state() private _rowHeight: "compact" | "default" | "comfortable" =
-    this._loadPreference("rowHeight", "default") as "compact" | "default" | "comfortable";
+    this._loadPreference("rowHeight", "default") as
+      | "compact"
+      | "default"
+      | "comfortable";
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -91,7 +97,6 @@ class ESPHomeDevicesList extends LitElement {
   private _isImportable = (item: any): item is ImportableDevice => {
     return "package_import_url" in item;
   };
-
 
   private _handleFilterChange = (e: CustomEvent) => {
     this._filterStatus = e.detail.filterStatus;
@@ -169,7 +174,7 @@ class ESPHomeDevicesList extends LitElement {
     this._savePreference("hiddenColumns", "[]");
     this._savePreference("rowHeight", "default");
     this._closeSettingsDialog();
-  }
+  };
 
   private _setRowHeight = (height: "compact" | "default" | "comfortable") => {
     this._rowHeight = height;
@@ -233,7 +238,8 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
-    const showUpdate = row.type !== "importable" &&
+    const showUpdate =
+      row.type !== "importable" &&
       canUpdateDevice(row as ConfiguredDevice) &&
       this._onlineStatus[row.configuration];
 
@@ -249,7 +255,8 @@ class ESPHomeDevicesList extends LitElement {
                   e.stopPropagation();
                   openInstallChooseDialog(row.configuration);
                 }}
-              >Update</span>`
+                >Update</span
+              >`
             : nothing}
         </div>
         ${row.comment
@@ -264,9 +271,10 @@ class ESPHomeDevicesList extends LitElement {
       return html`<span class="device-type">—</span>`;
     }
     const platform = row.target_platform as SupportedPlatforms;
-    const label = platform && supportedPlatforms[platform]
-      ? supportedPlatforms[platform].label
-      : platform || "—";
+    const label =
+      platform && supportedPlatforms[platform]
+        ? supportedPlatforms[platform].label
+        : platform || "—";
     return html`<span class="device-type">${label}</span>`;
   }
 
@@ -405,12 +413,15 @@ class ESPHomeDevicesList extends LitElement {
     // Convert to table row data
     return devices.map((device) => {
       const isImportable = this._isImportable(device);
-      const configuredDevice = isImportable ? null : (device as ConfiguredDevice);
+      const configuredDevice = isImportable
+        ? null
+        : (device as ConfiguredDevice);
       const address = isImportable
         ? device.network || "-"
         : configuredDevice?.address || "-";
       // Static IP: address exists and is not an mDNS name (.local)
-      const hasStaticIp = !isImportable &&
+      const hasStaticIp =
+        !isImportable &&
         configuredDevice?.address &&
         !configuredDevice.address.endsWith(".local") &&
         /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(configuredDevice.address);
@@ -428,7 +439,9 @@ class ESPHomeDevicesList extends LitElement {
             : "Offline",
         ip_address: address,
         has_static_ip: hasStaticIp,
-        device_type: isImportable ? "-" : configuredDevice?.target_platform || "-",
+        device_type: isImportable
+          ? "-"
+          : configuredDevice?.target_platform || "-",
         name: device.friendly_name || device.name,
       };
     });
@@ -481,7 +494,7 @@ class ESPHomeDevicesList extends LitElement {
                   ${column.title}
                 </ha-md-menu-item>
               `
-            : nothing
+            : nothing,
         )}
         <ha-md-menu-item
           .value=${""}
@@ -514,14 +527,16 @@ class ESPHomeDevicesList extends LitElement {
                     ? html`
                         <ha-svg-icon
                           slot="end"
-                          .path=${this._sortDirection === "desc" ? mdiArrowDown : mdiArrowUp}
+                          .path=${this._sortDirection === "desc"
+                            ? mdiArrowDown
+                            : mdiArrowUp}
                         ></ha-svg-icon>
                       `
                     : nothing}
                   ${column.title}
                 </ha-md-menu-item>
               `
-            : nothing
+            : nothing,
         )}
       </ha-md-button-menu>
     `;
@@ -597,7 +612,10 @@ class ESPHomeDevicesList extends LitElement {
                     active
                     @click=${this._toggleFilters}
                   >
-                    <ha-svg-icon slot="icon" .path=${mdiFilterVariant}></ha-svg-icon>
+                    <ha-svg-icon
+                      slot="icon"
+                      .path=${mdiFilterVariant}
+                    ></ha-svg-icon>
                   </ha-assist-chip>
                   ${activeFilters > 0
                     ? html`
@@ -609,9 +627,7 @@ class ESPHomeDevicesList extends LitElement {
                       `
                     : nothing}
                 </div>
-                <div class="pane-content">
-                  ${filterPane}
-                </div>
+                <div class="pane-content">${filterPane}</div>
               </div>
             `
           : nothing}
@@ -625,9 +641,7 @@ class ESPHomeDevicesList extends LitElement {
               .label=${`Search ${tableData.length} devices`}
               .placeholder=${`Search ${tableData.length} devices`}
             ></search-input-outlined>
-            ${groupByMenu}
-            ${sortByMenu}
-            ${settingsButton}
+            ${groupByMenu} ${sortByMenu} ${settingsButton}
           </div>
           <ha-data-table
             .hass=${mockHass}
@@ -725,7 +739,10 @@ class ESPHomeDevicesList extends LitElement {
               >
                 Restore defaults
               </ha-button>
-              <ha-button slot="primaryAction" @click=${this._closeSettingsDialog}>
+              <ha-button
+                slot="primaryAction"
+                @click=${this._closeSettingsDialog}
+              >
                 Done
               </ha-button>
             </ha-dialog>
@@ -754,7 +771,9 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     const deviceId = e.detail.id;
-    const device = this._getTableData().find(d => d.id === deviceId || d.name === deviceId);
+    const device = this._getTableData().find(
+      (d) => d.id === deviceId || d.name === deviceId,
+    );
     if (!device) return;
 
     if (device.type === "importable") {
@@ -997,7 +1016,9 @@ class ESPHomeDevicesList extends LitElement {
       color: var(--secondary-text-color);
       opacity: 0.1;
       cursor: pointer;
-      transition: opacity 0.15s ease, color 0.15s ease;
+      transition:
+        opacity 0.15s ease,
+        color 0.15s ease;
       flex-shrink: 0;
     }
 

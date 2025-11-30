@@ -91,7 +91,6 @@ export class ESPHomeHeaderMenu extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     isWideListener.addEventListener("change", this._isWideUpdated);
-
   }
 
   disconnectedCallback() {
@@ -124,7 +123,6 @@ export class ESPHomeHeaderMenu extends LitElement {
   private _handleEditSecrets() {
     openEditDialog(SECRETS_FILE);
   }
-
 
   private async _handleOverflowAction(ev: CustomEvent<ActionDetail>) {
     if (this._isWide) {

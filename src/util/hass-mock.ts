@@ -25,11 +25,14 @@ export const createMockHass = (): MockHass => ({
       "ui.components.subpage-data-table.sort_by": "Sort by",
       "ui.components.subpage-data-table.group_by": "Group by",
       "ui.components.subpage-data-table.dont_group_by": "Don't group by",
-      "ui.components.subpage-data-table.collapse_all_groups": "Collapse all groups",
+      "ui.components.subpage-data-table.collapse_all_groups":
+        "Collapse all groups",
       "ui.components.subpage-data-table.expand_all_groups": "Expand all groups",
       "ui.components.subpage-data-table.settings": "Settings",
-      "ui.components.subpage-data-table.enter_selection_mode": "Enter selection mode",
-      "ui.components.subpage-data-table.exit_selection_mode": "Exit selection mode",
+      "ui.components.subpage-data-table.enter_selection_mode":
+        "Enter selection mode",
+      "ui.components.subpage-data-table.exit_selection_mode":
+        "Exit selection mode",
       "ui.components.subpage-data-table.select": "Select",
       "ui.components.subpage-data-table.select_all": "Select all",
       "ui.components.subpage-data-table.select_none": "Select none",
@@ -66,7 +69,7 @@ export const createMockHass = (): MockHass => ({
     let translation = translations[key] || key;
 
     // Handle parameter substitution for dynamic translations
-    if (params && typeof translation === 'string') {
+    if (params && typeof translation === "string") {
       Object.keys(params).forEach((param) => {
         translation = translation.replace(`{${param}}`, params[param]);
         translation = translation.replace(`{{${param}}}`, params[param]);
