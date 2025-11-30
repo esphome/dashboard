@@ -1,8 +1,39 @@
 const haRspack = require("./homeassistant-frontend/build-scripts/rspack.cjs");
 const haPaths = require("./homeassistant-frontend/build-scripts/paths.cjs");
 const path = require("path");
+const fs = require("fs");
 
 const isProdBuild = process.env.NODE_ENV === "production";
+
+// Plugin to fix manifest.json format for ESPHome compatibility
+// ESPHome expects {"index": "index.js"} but rspack produces {"index.js": "/static/js/esphome/index.js"}
+class FixManifestPlugin {
+  apply(compiler) {
+    compiler.hooks.afterEmit.tapAsync(
+      "FixManifestPlugin",
+      (compilation, callback) => {
+        const manifestPath = path.resolve(
+          compiler.options.output.path,
+          "manifest.json",
+        );
+        try {
+          const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+          const fixedManifest = {};
+          for (const [key, value] of Object.entries(manifest)) {
+            // Remove .js extension from key, extract just filename from value
+            const newKey = key.replace(/\.js$/, "");
+            const newValue = path.basename(value);
+            fixedManifest[newKey] = newValue;
+          }
+          fs.writeFileSync(manifestPath, JSON.stringify(fixedManifest));
+        } catch (e) {
+          // Ignore errors
+        }
+        callback();
+      },
+    );
+  }
+}
 
 // Override paths to point to our directory structure
 haPaths.polymer_dir = __dirname;
@@ -44,6 +75,9 @@ const createConfig = ({ isProdBuild, latestBuild = true }) => {
 
   // No dev server needed - we build directly to esphome_dashboard/static
   // The develop script uses --watch mode to rebuild on changes
+
+  // Add plugin to fix manifest format for ESPHome
+  config.plugins.push(new FixManifestPlugin());
 
   return config;
 };
