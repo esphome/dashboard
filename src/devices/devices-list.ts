@@ -337,24 +337,28 @@ class ESPHomeDevicesList extends LitElement {
 
   private _renderStatus(row: DataTableRowData): TemplateResult {
     if (row.type === "Discovered") {
-      return html`<span class="status-text">—</span>`;
+      return html`<span style="color: var(--secondary-text-color)">—</span>`;
     }
 
     const isOnline = this._onlineStatus[row.configuration];
     const hasUpdate = canUpdateDevice(row as ConfiguredDevice) && isOnline;
 
+    // Use inline styles because templates are rendered inside ha-data-table's Shadow DOM
+    const statusColor = isOnline ? "#1e8e3e" : "#d93025";
+
     return html`
-      <div class="status-cell">
-        <div class="status-row ${isOnline ? "online" : "offline"}">
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: ${statusColor};">
           <ha-svg-icon
             .path=${isOnline ? mdiCheck : mdiAlertCircleOutline}
+            style="--mdc-icon-size: 18px;"
           ></ha-svg-icon>
           <span>${isOnline ? "Online" : "Offline"}</span>
         </div>
         ${hasUpdate
           ? html`
-              <div class="update-row">
-                <ha-svg-icon .path=${mdiUpdate}></ha-svg-icon>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #f57c00;">
+                <ha-svg-icon .path=${mdiUpdate} style="--mdc-icon-size: 14px;"></ha-svg-icon>
                 <span>Update available</span>
               </div>
             `

@@ -170,12 +170,14 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
-      // Move cursor to start after content is loaded (use setTimeout to ensure it happens after setValue completes)
-      setTimeout(() => {
+      // Force layout recalculation after content is loaded to fix cursor positioning
+      // This must happen after the browser has had time to render and calculate dimensions
+      requestAnimationFrame(() => {
+        this.editor?.layout(this.calcEditorSize());
         this.editor?.setPosition({ lineNumber: 1, column: 1 });
         this.editor?.revealLine(1);
         this.editor?.focus();
-      }, 0);
+      });
 
       this.startAceWebsocket();
     });
