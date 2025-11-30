@@ -48,6 +48,7 @@ import {
   mdiArrowDown,
   mdiArrowUp,
   mdiCheck,
+  mdiChip,
   mdiClose,
   mdiDotsVertical,
   mdiDrag,
@@ -55,6 +56,7 @@ import {
   mdiEyeOff,
   mdiFilterVariant,
   mdiFilterVariantRemove,
+  mdiLightbulb,
   mdiMenuDown,
   mdiMicrophone,
   mdiMotionSensor,
@@ -216,6 +218,9 @@ class ESPHomeDevicesList extends LitElement {
         title: "",
         sortable: false,
         width: "56px",
+        minWidth: "56px",
+        maxWidth: "56px",
+        grows: false,
         template: (row: DataTableRowData) => this._renderDeviceIcon(row),
       },
       name: {
@@ -253,7 +258,7 @@ class ESPHomeDevicesList extends LitElement {
   private _getDeviceIcon(row: DataTableRowData): string {
     // Try to determine icon based on project name or loaded integrations
     const projectName = (row.project_name || "").toLowerCase();
-    const loadedIntegrations = row.loaded_integrations || [];
+    const loadedIntegrations: string[] = row.loaded_integrations || [];
 
     // Check for voice/microphone devices
     if (
@@ -269,22 +274,44 @@ class ESPHomeDevicesList extends LitElement {
       projectName.includes("presence") ||
       projectName.includes("mtr") ||
       loadedIntegrations.includes("ld2410") ||
-      loadedIntegrations.includes("ld2450")
+      loadedIntegrations.includes("ld2450") ||
+      loadedIntegrations.includes("binary_sensor")
     ) {
       return mdiMotionSensor;
     }
 
-    // Default to thermometer/sensor icon for environmental sensors
+    // Check for light devices
+    if (
+      projectName.includes("light") ||
+      projectName.includes("led") ||
+      loadedIntegrations.includes("light") ||
+      loadedIntegrations.includes("neopixelbus") ||
+      loadedIntegrations.includes("fastled") ||
+      loadedIntegrations.includes("rgbw") ||
+      loadedIntegrations.includes("rgb")
+    ) {
+      return mdiLightbulb;
+    }
+
+    // Check for environmental/temperature sensors
     if (
       projectName.includes("air") ||
       projectName.includes("environmental") ||
-      projectName.includes("sensor")
+      projectName.includes("sensor") ||
+      projectName.includes("temp") ||
+      loadedIntegrations.includes("dht") ||
+      loadedIntegrations.includes("bme280") ||
+      loadedIntegrations.includes("bme680") ||
+      loadedIntegrations.includes("sht3x") ||
+      loadedIntegrations.includes("aht10") ||
+      loadedIntegrations.includes("dallas") ||
+      loadedIntegrations.includes("sensor")
     ) {
       return mdiThermometer;
     }
 
-    // Default icon
-    return mdiThermometer;
+    // Default icon - generic chip for unknown device types
+    return mdiChip;
   }
 
   private _renderDeviceIcon(row: DataTableRowData): TemplateResult {
