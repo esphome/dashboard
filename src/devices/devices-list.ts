@@ -187,13 +187,21 @@ class ESPHomeDevicesList extends LitElement {
       columnOrder.push(columnId);
     }
 
+    // Initialize hiddenColumns with defaultHidden columns if not set
+    let hiddenColumns: string[];
+    if (this._hiddenColumns !== undefined) {
+      hiddenColumns = [...this._hiddenColumns];
+    } else {
+      // First time toggling - initialize with all defaultHidden columns
+      hiddenColumns = Object.entries(columns)
+        .filter(([_, col]) => col.defaultHidden)
+        .map(([id]) => id);
+    }
+
     // Determine current visibility
-    const isCurrentlyHidden = this._hiddenColumns
-      ? this._hiddenColumns.includes(columnId)
-      : column?.defaultHidden ?? false;
+    const isCurrentlyHidden = hiddenColumns.includes(columnId);
 
     // Toggle hidden state
-    let hiddenColumns = [...(this._hiddenColumns || [])];
     if (isCurrentlyHidden) {
       // Show the column - remove from hiddenColumns
       hiddenColumns = hiddenColumns.filter((id) => id !== columnId);
@@ -214,8 +222,13 @@ class ESPHomeDevicesList extends LitElement {
     this._columnOrder = undefined;
     this._hiddenColumns = undefined;
     this._rowHeight = "default";
-    this._savePreference("columnOrder", "[]");
-    this._savePreference("hiddenColumns", "[]");
+    // Remove stored preferences to use defaults
+    try {
+      localStorage.removeItem("esphome.devices.columnOrder");
+      localStorage.removeItem("esphome.devices.hiddenColumns");
+    } catch {
+      // Ignore localStorage errors
+    }
     this._savePreference("rowHeight", "default");
     this._closeSettingsDialog();
   };
@@ -259,7 +272,8 @@ class ESPHomeDevicesList extends LitElement {
       const stored = localStorage.getItem("esphome.devices.hiddenColumns");
       if (stored) {
         const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed : undefined;
+        // Return undefined for empty arrays to use defaultHidden values
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : undefined;
       }
       return undefined;
     } catch {
