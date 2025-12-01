@@ -73,6 +73,7 @@ import {
   mdiDelete,
   mdiDownload,
   mdiKey,
+  mdiLock,
   mdiRenameBox,
   mdiSpellcheck,
   mdiUploadNetwork,
@@ -276,6 +277,39 @@ class ESPHomeDevicesList extends LitElement {
         groupable: true,
         hidden: true,
       },
+      ip_address: {
+        title: "Address",
+        sortable: true,
+        hidden: true,
+        template: (row: DataTableRowData) => this._renderAddress(row),
+      },
+      device_type: {
+        title: "Platform",
+        sortable: true,
+        groupable: true,
+        hidden: true,
+      },
+      deployed_version: {
+        title: "Deployed",
+        sortable: true,
+        hidden: true,
+        template: (row: DataTableRowData) =>
+          html`<span class="version-text">${row.deployed_version || "—"}</span>`,
+      },
+      current_version: {
+        title: "Current",
+        sortable: true,
+        hidden: true,
+        template: (row: DataTableRowData) =>
+          html`<span class="version-text">${row.current_version || "—"}</span>`,
+      },
+      comment: {
+        title: "Comment",
+        sortable: true,
+        hidden: true,
+        template: (row: DataTableRowData) =>
+          html`<span class="comment-text">${row.comment || "—"}</span>`,
+      },
     };
   }
 
@@ -415,6 +449,28 @@ class ESPHomeDevicesList extends LitElement {
                 ((e.target as HTMLElement).style.opacity = "0.6")}
               @mouseleave=${(e: Event) =>
                 ((e.target as HTMLElement).style.opacity = "0.1")}
+            ></ha-svg-icon>`
+          : nothing}
+      </span>
+    `;
+  }
+
+  private _renderAddress(row: DataTableRowData): TemplateResult {
+    const address = row.ip_address || "—";
+    const hasStaticIp = row.has_static_ip;
+
+    if (address === "—") {
+      return html`<span style="color: var(--secondary-text-color)">—</span>`;
+    }
+
+    return html`
+      <span class="address-cell">
+        <code style="font-size: 12px;">${address}</code>
+        ${hasStaticIp
+          ? html`<ha-svg-icon
+              .path=${mdiLock}
+              style="--mdc-icon-size: 12px; opacity: 0.5;"
+              title="Static IP"
             ></ha-svg-icon>`
           : nothing}
       </span>
@@ -1326,6 +1382,22 @@ class ESPHomeDevicesList extends LitElement {
       color: var(--secondary-text-color);
       opacity: 0.25;
       flex-shrink: 0;
+    }
+
+    /* Version and comment column text */
+    .version-text {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--primary-text-color);
+    }
+
+    .comment-text {
+      font-size: 13px;
+      color: var(--secondary-text-color);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     /* Smaller buttons with tighter padding */
