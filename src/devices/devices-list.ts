@@ -99,8 +99,8 @@ class ESPHomeDevicesList extends LitElement {
   @state() private _sortDirection: SortingDirection =
     (this._loadPreference("sortDirection", "asc") as SortingDirection) || null;
   @state() private _filter: string = "";
-  @state() private _columnOrder?: string[];
-  @state() private _hiddenColumns?: string[];
+  @state() private _columnOrder?: string[] = this._loadColumnOrder();
+  @state() private _hiddenColumns?: string[] = this._loadHiddenColumns();
   @state() private _showFilters = false;
   @state() private _showSettingsDialog = false;
   @state() private _rowHeight: "compact" | "default" | "comfortable" =
@@ -174,14 +174,39 @@ class ESPHomeDevicesList extends LitElement {
   };
 
   private _toggleColumnVisibility = (columnId: string) => {
-    const hiddenColumns = [...(this._hiddenColumns || [])];
-    const idx = hiddenColumns.indexOf(columnId);
-    if (idx >= 0) {
-      hiddenColumns.splice(idx, 1);
-    } else {
-      hiddenColumns.push(columnId);
+    const columns = this._getTableColumns();
+    const column = columns[columnId];
+
+    // Initialize columnOrder with all column keys if not set
+    let columnOrder = this._columnOrder
+      ? [...this._columnOrder]
+      : Object.keys(columns);
+
+    // Ensure this column is in columnOrder
+    if (!columnOrder.includes(columnId)) {
+      columnOrder.push(columnId);
     }
+
+    // Determine current visibility
+    const isCurrentlyHidden = this._hiddenColumns
+      ? this._hiddenColumns.includes(columnId)
+      : column?.defaultHidden ?? false;
+
+    // Toggle hidden state
+    let hiddenColumns = [...(this._hiddenColumns || [])];
+    if (isCurrentlyHidden) {
+      // Show the column - remove from hiddenColumns
+      hiddenColumns = hiddenColumns.filter((id) => id !== columnId);
+    } else {
+      // Hide the column - add to hiddenColumns
+      if (!hiddenColumns.includes(columnId)) {
+        hiddenColumns.push(columnId);
+      }
+    }
+
+    this._columnOrder = columnOrder;
     this._hiddenColumns = hiddenColumns;
+    this._savePreference("columnOrder", JSON.stringify(columnOrder));
     this._savePreference("hiddenColumns", JSON.stringify(hiddenColumns));
   };
 
@@ -213,6 +238,32 @@ class ESPHomeDevicesList extends LitElement {
       localStorage.setItem(`esphome.devices.${key}`, value);
     } catch {
       // Ignore localStorage errors
+    }
+  }
+
+  private _loadColumnOrder(): string[] | undefined {
+    try {
+      const stored = localStorage.getItem("esphome.devices.columnOrder");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : undefined;
+      }
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private _loadHiddenColumns(): string[] | undefined {
+    try {
+      const stored = localStorage.getItem("esphome.devices.hiddenColumns");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : undefined;
+      }
+      return undefined;
+    } catch {
+      return undefined;
     }
   }
 
@@ -275,38 +326,38 @@ class ESPHomeDevicesList extends LitElement {
         title: "Type",
         sortable: true,
         groupable: true,
-        hidden: true,
+        defaultHidden: true,
       },
       ip_address: {
         title: "Address",
         sortable: true,
-        hidden: true,
+        defaultHidden: true,
         template: (row: DataTableRowData) => this._renderAddress(row),
       },
       device_type: {
         title: "Platform",
         sortable: true,
         groupable: true,
-        hidden: true,
+        defaultHidden: true,
       },
       deployed_version: {
         title: "Deployed",
         sortable: true,
-        hidden: true,
+        defaultHidden: true,
         template: (row: DataTableRowData) =>
           html`<span class="version-text">${row.deployed_version || "—"}</span>`,
       },
       current_version: {
         title: "Current",
         sortable: true,
-        hidden: true,
+        defaultHidden: true,
         template: (row: DataTableRowData) =>
           html`<span class="version-text">${row.current_version || "—"}</span>`,
       },
       comment: {
         title: "Comment",
         sortable: true,
-        hidden: true,
+        defaultHidden: true,
         template: (row: DataTableRowData) =>
           html`<span class="comment-text">${row.comment || "—"}</span>`,
       },
@@ -962,7 +1013,10 @@ class ESPHomeDevicesList extends LitElement {
                   <ha-list>
                     ${Object.entries(columns).map(([id, column]) => {
                       if (!column.title || id === "actions") return nothing;
-                      const isVisible = !this._hiddenColumns?.includes(id);
+                      // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
+                      const isVisible = this._hiddenColumns
+                        ? !this._hiddenColumns.includes(id)
+                        : !column.defaultHidden;
                       return html`
                         <ha-list-item
                           hasMeta
