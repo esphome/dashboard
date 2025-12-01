@@ -9,6 +9,7 @@ import {
 } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import { openAdoptDialog } from "../adopt";
+import { openIconPickerDialog } from "./icon-picker-dialog";
 import "@material/mwc-button";
 import "@material/mwc-textfield";
 import "@material/mwc-icon-button";
@@ -23,6 +24,7 @@ import "../../homeassistant-frontend/src/components/chips/ha-filter-chip";
 import "../../homeassistant-frontend/src/components/ha-md-button-menu";
 import "../../homeassistant-frontend/src/components/ha-md-menu-item";
 import "../../homeassistant-frontend/src/components/ha-svg-icon";
+import "../../homeassistant-frontend/src/components/ha-icon";
 import "../../homeassistant-frontend/src/components/ha-icon-button";
 import "../../homeassistant-frontend/src/components/ha-expansion-panel";
 import "../../homeassistant-frontend/src/components/ha-dialog";
@@ -105,6 +107,7 @@ class ESPHomeDevicesList extends LitElement {
       | "compact"
       | "default"
       | "comfortable";
+  @state() private _customIcons: Record<string, string> = this._loadCustomIcons();
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -207,6 +210,27 @@ class ESPHomeDevicesList extends LitElement {
   private _savePreference(key: string, value: string): void {
     try {
       localStorage.setItem(`esphome.devices.${key}`, value);
+    } catch {
+      // Ignore localStorage errors
+    }
+  }
+
+  private _loadCustomIcons(): Record<string, string> {
+    try {
+      const stored = localStorage.getItem("esphome.devices.customIcons");
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  private _saveCustomIcon(deviceName: string, icon: string): void {
+    try {
+      this._customIcons = { ...this._customIcons, [deviceName]: icon };
+      localStorage.setItem(
+        "esphome.devices.customIcons",
+        JSON.stringify(this._customIcons)
+      );
     } catch {
       // Ignore localStorage errors
     }
@@ -315,12 +339,46 @@ class ESPHomeDevicesList extends LitElement {
   }
 
   private _renderDeviceIcon(row: DataTableRowData): TemplateResult {
+    const deviceName = row.name || row.id;
+    const customIcon = this._customIcons[deviceName];
+
+    // If we have a custom icon (mdi: format), use ha-icon, otherwise use svg path
+    if (customIcon) {
+      return html`
+        <div
+          class="device-icon clickable"
+          @click=${(e: Event) => this._handleIconClick(e, row)}
+          title="Click to change icon"
+        >
+          <ha-icon .icon=${customIcon}></ha-icon>
+        </div>
+      `;
+    }
+
     const icon = this._getDeviceIcon(row);
     return html`
-      <div class="device-icon">
+      <div
+        class="device-icon clickable"
+        @click=${(e: Event) => this._handleIconClick(e, row)}
+        title="Click to change icon"
+      >
         <ha-svg-icon .path=${icon}></ha-svg-icon>
       </div>
     `;
+  }
+
+  private _handleIconClick(e: Event, row: DataTableRowData) {
+    e.stopPropagation();
+    const deviceName = row.name || row.id;
+    const currentIcon = this._customIcons[deviceName] || "";
+
+    openIconPickerDialog({
+      deviceName: row.friendly_name || deviceName,
+      currentIcon,
+      onIconSelected: (icon: string) => {
+        this._saveCustomIcon(deviceName, icon);
+      },
+    });
   }
 
   private _renderDeviceInfo(row: DataTableRowData): TemplateResult {
@@ -385,7 +443,7 @@ class ESPHomeDevicesList extends LitElement {
         </div>
         ${hasUpdate
           ? html`
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #f57c00;">
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--primary-text-color, #212121);">
                 <ha-svg-icon .path=${mdiUpdate} style="--mdc-icon-size: 14px;"></ha-svg-icon>
                 <span>Update available</span>
               </div>
@@ -1135,9 +1193,20 @@ class ESPHomeDevicesList extends LitElement {
       width: 40px;
       height: 40px;
       color: var(--secondary-text-color);
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
     }
 
-    .device-icon ha-svg-icon {
+    .device-icon.clickable {
+      cursor: pointer;
+    }
+
+    .device-icon.clickable:hover {
+      background-color: var(--secondary-background-color, rgba(0, 0, 0, 0.06));
+    }
+
+    .device-icon ha-svg-icon,
+    .device-icon ha-icon {
       --mdc-icon-size: 24px;
     }
 
