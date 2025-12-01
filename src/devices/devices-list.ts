@@ -24,7 +24,7 @@ import "../../homeassistant-frontend/src/components/chips/ha-filter-chip";
 import "../../homeassistant-frontend/src/components/ha-md-button-menu";
 import "../../homeassistant-frontend/src/components/ha-md-menu-item";
 import "../../homeassistant-frontend/src/components/ha-svg-icon";
-import "../../homeassistant-frontend/src/components/ha-icon";
+import "../components/esphome-mdi-icon";
 import "../../homeassistant-frontend/src/components/ha-icon-button";
 import "../../homeassistant-frontend/src/components/ha-expansion-panel";
 import "../../homeassistant-frontend/src/components/ha-dialog";
@@ -342,7 +342,7 @@ class ESPHomeDevicesList extends LitElement {
     const deviceName = row.name || row.id;
     const customIcon = this._customIcons[deviceName];
 
-    // If we have a custom icon (mdi: format), use ha-icon, otherwise use svg path
+    // If we have a custom icon (mdi: format), use esphome-mdi-icon, otherwise use svg path
     if (customIcon) {
       return html`
         <div
@@ -350,7 +350,7 @@ class ESPHomeDevicesList extends LitElement {
           @click=${(e: Event) => this._handleIconClick(e, row)}
           title="Click to change icon"
         >
-          <ha-icon .icon=${customIcon}></ha-icon>
+          <esphome-mdi-icon .icon=${customIcon}></esphome-mdi-icon>
         </div>
       `;
     }
@@ -1206,7 +1206,7 @@ class ESPHomeDevicesList extends LitElement {
     }
 
     .device-icon ha-svg-icon,
-    .device-icon ha-icon {
+    .device-icon esphome-mdi-icon {
       --mdc-icon-size: 24px;
     }
 

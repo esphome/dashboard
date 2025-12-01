@@ -6,7 +6,7 @@ import "../../homeassistant-frontend/src/components/ha-dialog";
 import "../../homeassistant-frontend/src/components/ha-dialog-header";
 import "../../homeassistant-frontend/src/components/ha-button";
 import "../../homeassistant-frontend/src/components/ha-icon-button";
-import "../../homeassistant-frontend/src/components/ha-icon";
+import "../components/esphome-mdi-icon";
 
 interface IconPickerDialogParams {
   deviceName: string;
@@ -91,7 +91,7 @@ export class ESPHomeIconPickerDialog extends LitElement {
             <span class="preview-label">Preview:</span>
             ${this._selectedIcon
               ? html`
-                  <ha-icon .icon=${this._selectedIcon}></ha-icon>
+                  <esphome-mdi-icon .icon=${this._selectedIcon}></esphome-mdi-icon>
                   <span class="icon-name">${this._selectedIcon}</span>
                 `
               : html`<span class="no-icon">No icon selected</span>`}
@@ -145,7 +145,7 @@ export class ESPHomeIconPickerDialog extends LitElement {
         @click=${() => this._selectIcon(icon)}
         title=${icon}
       >
-        <ha-icon .icon=${icon}></ha-icon>
+        <esphome-mdi-icon .icon=${icon}></esphome-mdi-icon>
       </div>
     `;
   }
@@ -193,7 +193,7 @@ export class ESPHomeIconPickerDialog extends LitElement {
       font-size: 14px;
     }
 
-    .preview ha-icon {
+    .preview esphome-mdi-icon {
       --mdc-icon-size: 32px;
       color: var(--primary-text-color);
     }
@@ -250,11 +250,11 @@ export class ESPHomeIconPickerDialog extends LitElement {
       border-color: var(--primary-color);
     }
 
-    .quick-icon.selected ha-icon {
+    .quick-icon.selected esphome-mdi-icon {
       color: var(--text-primary-color, white);
     }
 
-    .quick-icon ha-icon {
+    .quick-icon esphome-mdi-icon {
       --mdc-icon-size: 24px;
       color: var(--primary-text-color);
     }

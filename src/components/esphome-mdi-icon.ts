@@ -1,0 +1,148 @@
+import { LitElement, html, css, nothing } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+
+// Cache for loaded icon paths
+const iconCache: Record<string, string> = {};
+
+// Common icons that we pre-import from @mdi/js for instant display
+import {
+  mdiChip,
+  mdiLightbulb,
+  mdiThermometer,
+  mdiMotionSensor,
+  mdiMicrophone,
+  mdiFan,
+  mdiPowerPlug,
+  mdiLedStrip,
+  mdiSpeaker,
+  mdiGauge,
+  mdiWater,
+  mdiAirFilter,
+} from "@mdi/js";
+
+// Map of common icon names to their paths
+const COMMON_ICONS: Record<string, string> = {
+  chip: mdiChip,
+  lightbulb: mdiLightbulb,
+  thermometer: mdiThermometer,
+  "motion-sensor": mdiMotionSensor,
+  microphone: mdiMicrophone,
+  fan: mdiFan,
+  "power-plug": mdiPowerPlug,
+  "led-strip": mdiLedStrip,
+  speaker: mdiSpeaker,
+  gauge: mdiGauge,
+  water: mdiWater,
+  "air-filter": mdiAirFilter,
+};
+
+@customElement("esphome-mdi-icon")
+export class ESPHomeMdiIcon extends LitElement {
+  @property() public icon?: string;
+
+  @state() private _path?: string;
+
+  @state() private _loading = false;
+
+  @state() private _error = false;
+
+  updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has("icon")) {
+      this._loadIcon();
+    }
+  }
+
+  private async _loadIcon() {
+    if (!this.icon) {
+      this._path = undefined;
+      return;
+    }
+
+    // Parse the icon name (remove mdi: prefix if present)
+    const iconName = this.icon.startsWith("mdi:")
+      ? this.icon.slice(4)
+      : this.icon;
+
+    // Check if it's a common pre-loaded icon
+    if (COMMON_ICONS[iconName]) {
+      this._path = COMMON_ICONS[iconName];
+      this._error = false;
+      return;
+    }
+
+    // Check cache
+    if (iconCache[iconName]) {
+      this._path = iconCache[iconName];
+      this._error = false;
+      return;
+    }
+
+    // Fetch from CDN
+    this._loading = true;
+    this._error = false;
+
+    try {
+      // Use jsdelivr CDN to fetch the icon
+      const response = await fetch(
+        `https://cdn.jsdelivr.net/npm/@mdi/svg@latest/svg/${iconName}.svg`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Icon not found: ${iconName}`);
+      }
+
+      const svgText = await response.text();
+
+      // Extract the path from the SVG
+      const pathMatch = svgText.match(/d="([^"]+)"/);
+      if (pathMatch && pathMatch[1]) {
+        const path = pathMatch[1];
+        iconCache[iconName] = path;
+        this._path = path;
+      } else {
+        throw new Error(`Could not parse SVG for icon: ${iconName}`);
+      }
+    } catch (err) {
+      console.warn(`Failed to load icon: ${iconName}`, err);
+      this._error = true;
+      // Fallback to chip icon
+      this._path = mdiChip;
+    } finally {
+      this._loading = false;
+    }
+  }
+
+  protected render() {
+    if (!this._path) {
+      return nothing;
+    }
+
+    return html`
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+        <path d=${this._path}></path>
+      </svg>
+    `;
+  }
+
+  static styles = css`
+    :host {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--mdc-icon-size, 24px);
+      height: var(--mdc-icon-size, 24px);
+      fill: currentColor;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  `;
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "esphome-mdi-icon": ESPHomeMdiIcon;
+  }
+}
