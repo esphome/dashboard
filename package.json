@@ -103,8 +103,7 @@
   "overrides": {
     "@lit/reactive-element": "1.3.2",
     "rollup-plugin-monaco-editor": {
-      "monaco-editor": "$monaco-editor",
-      "rollup": "$rollup"
+      "monaco-editor": "$monaco-editor"
     }
   }
 }
