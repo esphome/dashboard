@@ -1317,7 +1317,6 @@ class ESPHomeDevicesList extends LitElement {
       height: 100%;
       position: relative;
       flex: 1;
-      z-index: 0;
     }
 
     .table-header {
