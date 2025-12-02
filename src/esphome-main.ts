@@ -70,7 +70,10 @@ class ESPHomeMainView extends LitElement {
       <footer class="page-footer">
         <div>
           ESPHome is a project by
-          <a href="https://www.openhomefoundation.org/" target="_blank" rel="noreferrer"
+          <a
+            href="https://www.openhomefoundation.org/"
+            target="_blank"
+            rel="noreferrer"
             >Open Home Foundation</a
           >
           |
