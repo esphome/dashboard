@@ -365,7 +365,7 @@ class ESPHomeDevicesList extends LitElement {
   private _getTableColumns(): DataTableColumnContainer {
     return {
       icon: {
-        title: "",
+        title: "Icon",
         sortable: false,
         type: "icon",
         minWidth: "56px",
