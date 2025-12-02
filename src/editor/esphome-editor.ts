@@ -37,7 +37,7 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
-  @query(".esphome-header", true) private editor_header!: HTMLElement;
+  @query(".editor-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -54,11 +54,13 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        .esphome-header {
+        .editor-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           align-content: stretch;
+          background-color: var(--esphome-background-header);
+          padding: 0 8px;
         }
         h2 {
           line-height: 100%;
@@ -80,7 +82,7 @@ class ESPHomeEditor extends LitElement {
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="esphome-header">
+      <div class="editor-header">
         <mwc-icon-button
           icon="clear"
           @click=${this._handleClose}
@@ -158,6 +160,8 @@ class ESPHomeEditor extends LitElement {
       dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
+      cursorBlinking: "blink",
+      cursorStyle: "line",
     });
 
     const isSecrets =
@@ -168,11 +172,17 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
+      // Force layout recalculation after content is loaded to fix cursor positioning
+      // This must happen after the browser has had time to render and calculate dimensions
+      requestAnimationFrame(() => {
+        this.editor?.layout(this.calcEditorSize());
+        this.editor?.setPosition({ lineNumber: 1, column: 1 });
+        this.editor?.revealLine(1);
+        this.editor?.focus();
+      });
 
       this.startAceWebsocket();
     });
-
-    this.editor.focus();
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
