@@ -70,6 +70,11 @@ const createConfig = ({ isProdBuild, latestBuild = true }) => {
     alias: {
       ...config.resolve.alias,
       "@ha": path.resolve(__dirname, "homeassistant-frontend/src"),
+      // Stub out HA frontend build artifacts that don't exist in this project
+      "../../build/translations/translationMetadata.json": path.resolve(
+        __dirname,
+        "src/stubs/translationMetadata.json",
+      ),
     },
   };
 
