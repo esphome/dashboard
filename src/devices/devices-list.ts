@@ -238,6 +238,66 @@ class ESPHomeDevicesList extends LitElement {
     this._savePreference("rowHeight", height);
   };
 
+  private _handleColumnMoved = (ev: CustomEvent) => {
+    const { oldIndex, newIndex } = ev.detail;
+    const columns = this._getTableColumns();
+
+    // Get current column order (excluding non-reorderable columns)
+    const reorderableColumns = Object.entries(columns)
+      .filter(([id, col]) => col.title && id !== "actions")
+      .map(([id]) => id);
+
+    // Use stored order or default order
+    let currentOrder = this._columnOrder
+      ? this._columnOrder.filter((id) => reorderableColumns.includes(id))
+      : reorderableColumns;
+
+    // Ensure all columns are in the order
+    for (const id of reorderableColumns) {
+      if (!currentOrder.includes(id)) {
+        currentOrder.push(id);
+      }
+    }
+
+    // Move the column
+    const [movedColumn] = currentOrder.splice(oldIndex, 1);
+    currentOrder.splice(newIndex, 0, movedColumn);
+
+    // Save the new order
+    this._columnOrder = currentOrder;
+    this._savePreference("columnOrder", JSON.stringify(currentOrder));
+  };
+
+  private _getOrderedColumnIds(columns: DataTableColumnContainer): string[] {
+    // Get reorderable column IDs (those with titles, excluding actions)
+    const reorderableColumns = Object.entries(columns)
+      .filter(([id, col]) => col.title && id !== "actions")
+      .map(([id]) => id);
+
+    if (!this._columnOrder) {
+      return reorderableColumns;
+    }
+
+    // Order columns according to saved order
+    const orderedIds: string[] = [];
+
+    // First add columns in the saved order
+    for (const id of this._columnOrder) {
+      if (reorderableColumns.includes(id)) {
+        orderedIds.push(id);
+      }
+    }
+
+    // Then add any new columns that weren't in the saved order
+    for (const id of reorderableColumns) {
+      if (!orderedIds.includes(id)) {
+        orderedIds.push(id);
+      }
+    }
+
+    return orderedIds;
+  }
+
   private _loadPreference(key: string, defaultValue: string): string {
     try {
       return localStorage.getItem(`esphome.devices.${key}`) || defaultValue;
@@ -1032,38 +1092,42 @@ class ESPHomeDevicesList extends LitElement {
                 </div>
                 <div class="settings-section">
                   <div class="settings-section-title">Columns</div>
-                  <ha-list>
-                    ${Object.entries(columns).map(([id, column]) => {
-                      if (!column.title || id === "actions") return nothing;
-                      // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
-                      const isVisible = this._hiddenColumns
-                        ? !this._hiddenColumns.includes(id)
-                        : !column.defaultHidden;
-                      return html`
-                        <ha-list-item
-                          hasMeta
-                          graphic="icon"
-                          @click=${() => this._toggleColumnVisibility(id)}
-                          class=${isVisible ? "" : "hidden-column"}
-                        >
-                          ${id !== "icon"
-                            ? html`<ha-svg-icon
-                                class="handle"
-                                .path=${mdiDrag}
-                                slot="graphic"
-                              ></ha-svg-icon>`
-                            : nothing}
-                          ${column.title || id}
-                          <ha-icon-button
-                            class="action"
-                            .path=${isVisible ? mdiEye : mdiEyeOff}
-                            slot="meta"
-                            title=${isVisible ? "Hide column" : "Show column"}
-                          ></ha-icon-button>
-                        </ha-list-item>
-                      `;
-                    })}
-                  </ha-list>
+                  <ha-sortable
+                    handle-selector=".handle"
+                    @item-moved=${this._handleColumnMoved}
+                  >
+                    <ha-list>
+                      ${this._getOrderedColumnIds(columns).map((id) => {
+                        const column = columns[id];
+                        if (!column.title || id === "actions") return nothing;
+                        // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
+                        const isVisible = this._hiddenColumns
+                          ? !this._hiddenColumns.includes(id)
+                          : !column.defaultHidden;
+                        return html`
+                          <ha-list-item
+                            hasMeta
+                            graphic="icon"
+                            @click=${() => this._toggleColumnVisibility(id)}
+                            class=${isVisible ? "" : "hidden-column"}
+                          >
+                            <ha-svg-icon
+                              class="handle"
+                              .path=${mdiDrag}
+                              slot="graphic"
+                            ></ha-svg-icon>
+                            ${column.title || id}
+                            <ha-icon-button
+                              class="action"
+                              .path=${isVisible ? mdiEye : mdiEyeOff}
+                              slot="meta"
+                              title=${isVisible ? "Hide column" : "Show column"}
+                            ></ha-icon-button>
+                          </ha-list-item>
+                        `;
+                      })}
+                    </ha-list>
+                  </ha-sortable>
                 </div>
               </div>
               <ha-button
