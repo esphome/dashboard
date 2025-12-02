@@ -42,10 +42,6 @@ export class ESPHomeMdiIcon extends LitElement {
 
   @state() private _path?: string;
 
-  @state() private _loading = false;
-
-  @state() private _error = false;
-
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("icon")) {
       this._loadIcon();
@@ -66,25 +62,21 @@ export class ESPHomeMdiIcon extends LitElement {
     // Check if it's a common pre-loaded icon
     if (COMMON_ICONS[iconName]) {
       this._path = COMMON_ICONS[iconName];
-      this._error = false;
       return;
     }
 
     // Check cache
     if (iconCache[iconName]) {
       this._path = iconCache[iconName];
-      this._error = false;
       return;
     }
 
     // Fetch from CDN
-    this._loading = true;
-    this._error = false;
 
     try {
       // Use jsdelivr CDN to fetch the icon
       const response = await fetch(
-        `https://cdn.jsdelivr.net/npm/@mdi/svg@latest/svg/${iconName}.svg`
+        `https://cdn.jsdelivr.net/npm/@mdi/svg@latest/svg/${iconName}.svg`,
       );
 
       if (!response.ok) {
@@ -104,11 +96,8 @@ export class ESPHomeMdiIcon extends LitElement {
       }
     } catch (err) {
       console.warn(`Failed to load icon: ${iconName}`, err);
-      this._error = true;
       // Fallback to chip icon
       this._path = mdiChip;
-    } finally {
-      this._loading = false;
     }
   }
 

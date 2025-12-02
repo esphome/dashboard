@@ -108,7 +108,8 @@ class ESPHomeDevicesList extends LitElement {
       | "compact"
       | "default"
       | "comfortable";
-  @state() private _customIcons: Record<string, string> = this._loadCustomIcons();
+  @state() private _customIcons: Record<string, string> =
+    this._loadCustomIcons();
 
   private _devicesUnsub?: ReturnType<typeof subscribeDevices>;
   private _onlineStatusUnsub?: ReturnType<typeof subscribeOnlineStatus>;
@@ -175,7 +176,6 @@ class ESPHomeDevicesList extends LitElement {
 
   private _toggleColumnVisibility = (columnId: string) => {
     const columns = this._getTableColumns();
-    const column = columns[columnId];
 
     // Initialize columnOrder with all column keys if not set
     let columnOrder = this._columnOrder
@@ -295,7 +295,7 @@ class ESPHomeDevicesList extends LitElement {
       this._customIcons = { ...this._customIcons, [deviceName]: icon };
       localStorage.setItem(
         "esphome.devices.customIcons",
-        JSON.stringify(this._customIcons)
+        JSON.stringify(this._customIcons),
       );
     } catch {
       // Ignore localStorage errors
@@ -307,10 +307,9 @@ class ESPHomeDevicesList extends LitElement {
       icon: {
         title: "",
         sortable: false,
-        width: "56px",
+        type: "icon",
         minWidth: "56px",
         maxWidth: "56px",
-        grows: false,
         template: (row: DataTableRowData) => this._renderDeviceIcon(row),
       },
       name: {
@@ -359,7 +358,9 @@ class ESPHomeDevicesList extends LitElement {
         sortable: true,
         defaultHidden: true,
         template: (row: DataTableRowData) =>
-          html`<span class="version-text">${row.deployed_version || "—"}</span>`,
+          html`<span class="version-text"
+            >${row.deployed_version || "—"}</span
+          >`,
       },
       current_version: {
         title: "Current",
@@ -555,7 +556,9 @@ class ESPHomeDevicesList extends LitElement {
 
     return html`
       <div style="display: flex; flex-direction: column; gap: 2px;">
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: ${statusColor};">
+        <div
+          style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: ${statusColor};"
+        >
           <ha-svg-icon
             .path=${isOnline ? mdiCheck : mdiAlertCircleOutline}
             style="--mdc-icon-size: 18px;"
@@ -564,8 +567,13 @@ class ESPHomeDevicesList extends LitElement {
         </div>
         ${hasUpdate
           ? html`
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--primary-text-color, #212121);">
-                <ha-svg-icon .path=${mdiUpdate} style="--mdc-icon-size: 14px;"></ha-svg-icon>
+              <div
+                style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--primary-text-color, #212121);"
+              >
+                <ha-svg-icon
+                  .path=${mdiUpdate}
+                  style="--mdc-icon-size: 14px;"
+                ></ha-svg-icon>
                 <span>Update available</span>
               </div>
             `

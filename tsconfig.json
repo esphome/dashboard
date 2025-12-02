@@ -13,14 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "ignoreDeprecations": "5.0",
-    "importHelpers": true,
-    "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "@ha/*": ["homeassistant-frontend/src/*"]
-    }
-  },
-  "exclude": [
-    "homeassistant-frontend/**"
-  ]
+    "importHelpers": true
+  }
 }

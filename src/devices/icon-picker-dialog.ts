@@ -19,7 +19,7 @@ let dialogElement: ESPHomeIconPickerDialog | undefined;
 export const openIconPickerDialog = (params: IconPickerDialogParams) => {
   if (!dialogElement) {
     dialogElement = document.createElement(
-      "esphome-icon-picker-dialog"
+      "esphome-icon-picker-dialog",
     ) as ESPHomeIconPickerDialog;
     document.body.appendChild(dialogElement);
   }
@@ -91,7 +91,9 @@ export class ESPHomeIconPickerDialog extends LitElement {
             <span class="preview-label">Preview:</span>
             ${this._selectedIcon
               ? html`
-                  <esphome-mdi-icon .icon=${this._selectedIcon}></esphome-mdi-icon>
+                  <esphome-mdi-icon
+                    .icon=${this._selectedIcon}
+                  ></esphome-mdi-icon>
                   <span class="icon-name">${this._selectedIcon}</span>
                 `
               : html`<span class="no-icon">No icon selected</span>`}
@@ -117,7 +119,11 @@ export class ESPHomeIconPickerDialog extends LitElement {
 
           <p class="help-text">
             Browse all icons at
-            <a href="https://pictogrammers.com/library/mdi/" target="_blank" rel="noopener">
+            <a
+              href="https://pictogrammers.com/library/mdi/"
+              target="_blank"
+              rel="noopener"
+            >
               pictogrammers.com/library/mdi
             </a>
           </p>
@@ -236,7 +242,9 @@ export class ESPHomeIconPickerDialog extends LitElement {
       border-radius: 8px;
       cursor: pointer;
       background: var(--secondary-background-color, #f5f5f5);
-      transition: background-color 0.2s ease, border-color 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
       border: 2px solid transparent;
     }
 
