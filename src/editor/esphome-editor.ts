@@ -54,11 +54,25 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
+        /* Override global fixed positioning for editor header */
         .esphome-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 56px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          align-content: stretch;
+          background-color: var(--esphome-background-header);
+          color: var(--primary-text-color);
+          padding: 0 16px;
+          z-index: 50;
+          box-sizing: border-box;
+        }
+        main {
+          margin-top: 56px;
+          height: calc(100vh - 56px);
         }
         h2 {
           line-height: 100%;
