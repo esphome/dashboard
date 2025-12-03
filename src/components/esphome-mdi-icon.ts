@@ -88,7 +88,7 @@ export class ESPHomeMdiIcon extends LitElement {
       }
 
       const svgText = await response.text();
-      const pathMatch = svgText.match(/d="([^"]+)"/);
+      const pathMatch = svgText.match(/<path d="([^"]+)"/);
 
       if (pathMatch && pathMatch[1]) {
         iconCache[iconName] = pathMatch[1];
