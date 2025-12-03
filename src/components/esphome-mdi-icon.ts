@@ -93,12 +93,14 @@ export class ESPHomeMdiIcon extends LitElement {
       if (pathMatch && pathMatch[1]) {
         iconCache[iconName] = pathMatch[1];
         this._path = pathMatch[1];
+        this.requestUpdate();
       } else {
         throw new Error(`Could not parse SVG for icon: ${iconName}`);
       }
     } catch (err) {
       console.warn(`Failed to load icon: ${iconName}`, err);
       this._path = mdiChip;
+      this.requestUpdate();
     }
   }
 
