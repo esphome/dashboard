@@ -40,6 +40,8 @@ export class ESPHomeMdiIcon extends LitElement {
 
   @state() private _path?: string;
 
+  private _loadingIcon?: string;
+
   connectedCallback() {
     super.connectedCallback();
     if (this.icon) {
@@ -56,8 +58,13 @@ export class ESPHomeMdiIcon extends LitElement {
   private async _loadIcon() {
     if (!this.icon) {
       this._path = undefined;
+      this._loadingIcon = undefined;
       return;
     }
+
+    // Track which icon we're loading to handle rapid changes
+    const currentIcon = this.icon;
+    this._loadingIcon = currentIcon;
 
     // Parse the icon name (remove mdi: prefix if present)
     const iconName = this.icon.startsWith("mdi:")
@@ -88,6 +95,12 @@ export class ESPHomeMdiIcon extends LitElement {
       }
 
       const svgText = await response.text();
+
+      // Check if icon changed during fetch - if so, ignore this result
+      if (this._loadingIcon !== currentIcon) {
+        return;
+      }
+
       const pathMatch = svgText.match(/<path d="([^"]+)"/);
 
       if (pathMatch && pathMatch[1]) {
@@ -98,6 +111,10 @@ export class ESPHomeMdiIcon extends LitElement {
         throw new Error(`Could not parse SVG for icon: ${iconName}`);
       }
     } catch (err) {
+      // Check if icon changed during fetch - if so, ignore this error
+      if (this._loadingIcon !== currentIcon) {
+        return;
+      }
       console.warn(`Failed to load icon: ${iconName}`, err);
       this._path = mdiChip;
       this.requestUpdate();
