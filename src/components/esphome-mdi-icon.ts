@@ -1,40 +1,9 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { mdiChip } from "@mdi/js";
 
 // Cache for loaded icon paths
 const iconCache: Record<string, string> = {};
-
-// Common icons that we pre-import from @mdi/js for instant display
-import {
-  mdiChip,
-  mdiLightbulb,
-  mdiThermometer,
-  mdiMotionSensor,
-  mdiMicrophone,
-  mdiFan,
-  mdiPowerPlug,
-  mdiLedStrip,
-  mdiSpeaker,
-  mdiGauge,
-  mdiWater,
-  mdiAirFilter,
-} from "@mdi/js";
-
-// Map of common icon names to their paths
-const COMMON_ICONS: Record<string, string> = {
-  chip: mdiChip,
-  lightbulb: mdiLightbulb,
-  thermometer: mdiThermometer,
-  "motion-sensor": mdiMotionSensor,
-  microphone: mdiMicrophone,
-  fan: mdiFan,
-  "power-plug": mdiPowerPlug,
-  "led-strip": mdiLedStrip,
-  speaker: mdiSpeaker,
-  gauge: mdiGauge,
-  water: mdiWater,
-  "air-filter": mdiAirFilter,
-};
 
 @customElement("esphome-mdi-icon")
 export class ESPHomeMdiIcon extends LitElement {
@@ -59,40 +28,30 @@ export class ESPHomeMdiIcon extends LitElement {
       ? this.icon.slice(4)
       : this.icon;
 
-    // Check if it's a common pre-loaded icon
-    if (COMMON_ICONS[iconName]) {
-      this._path = COMMON_ICONS[iconName];
-      return;
-    }
-
     // Check cache
     if (iconCache[iconName]) {
       this._path = iconCache[iconName];
       return;
     }
 
-    // Fetch from CDN
-
     try {
-      // Use jsdelivr CDN to fetch the icon
-      const response = await fetch(
-        `https://cdn.jsdelivr.net/npm/@mdi/svg@latest/svg/${iconName}.svg`,
-      );
+      // Convert icon name to @mdi/js export name (e.g., "lightbulb" -> "mdiLightbulb")
+      const mdiName =
+        "mdi" +
+        iconName
+          .split("-")
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join("");
 
-      if (!response.ok) {
-        throw new Error(`Icon not found: ${iconName}`);
-      }
+      // Dynamic import from @mdi/js
+      const mdiModule = await import("@mdi/js");
+      const path = mdiModule[mdiName as keyof typeof mdiModule] as string;
 
-      const svgText = await response.text();
-
-      // Extract the path from the SVG
-      const pathMatch = svgText.match(/d="([^"]+)"/);
-      if (pathMatch && pathMatch[1]) {
-        const path = pathMatch[1];
+      if (path && typeof path === "string") {
         iconCache[iconName] = path;
         this._path = path;
       } else {
-        throw new Error(`Could not parse SVG for icon: ${iconName}`);
+        throw new Error(`Icon not found: ${iconName}`);
       }
     } catch (err) {
       console.warn(`Failed to load icon: ${iconName}`, err);

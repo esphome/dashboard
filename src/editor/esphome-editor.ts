@@ -37,6 +37,7 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
+  @query(".esphome-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -53,30 +54,15 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        .editor-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
+        .esphome-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 56px;
-          background-color: var(--esphome-background-header);
-          color: var(--primary-text-color);
-          padding: 0 8px;
-          z-index: 50;
-          box-sizing: border-box;
-        }
-        main {
-          position: fixed;
-          top: 56px;
-          left: 0;
-          right: 0;
-          bottom: 0;
+          align-content: stretch;
         }
         h2 {
           line-height: 100%;
+          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
           padding: 0.8rem 0.5rem 1rem 0.5rem;
           margin: 0px;
           font-size: 1.4rem;
@@ -94,7 +80,7 @@ class ESPHomeEditor extends LitElement {
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="editor-header">
+      <div class="esphome-header">
         <mwc-icon-button
           icon="clear"
           @click=${this._handleClose}
@@ -320,7 +306,7 @@ class ESPHomeEditor extends LitElement {
   calcEditorSize() {
     return {
       width: document.body.offsetWidth,
-      height: window.innerHeight - 56, // Fixed header height
+      height: window.innerHeight - this.editor_header.offsetHeight,
     };
   }
   connectedCallback() {
