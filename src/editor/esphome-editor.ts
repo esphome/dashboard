@@ -71,8 +71,12 @@ class ESPHomeEditor extends LitElement {
           box-sizing: border-box;
         }
         main {
-          margin-top: 56px;
-          height: calc(100vh - 56px);
+          position: fixed;
+          top: 56px;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
         }
         h2 {
           line-height: 100%;
@@ -318,9 +322,10 @@ class ESPHomeEditor extends LitElement {
   }
 
   calcEditorSize() {
+    // Use the container's dimensions directly since main is now position:fixed
     return {
-      width: document.body.offsetWidth,
-      height: window.innerHeight - this.editor_header.offsetHeight,
+      width: this.container.offsetWidth || document.body.offsetWidth,
+      height: this.container.offsetHeight || window.innerHeight - 56,
     };
   }
   connectedCallback() {
