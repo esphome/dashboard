@@ -40,6 +40,13 @@ export class ESPHomeMdiIcon extends LitElement {
 
   @state() private _path?: string;
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.icon) {
+      this._loadIcon();
+    }
+  }
+
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("icon")) {
       this._loadIcon();
