@@ -36,8 +36,8 @@ class ESPHomeEditor extends LitElement {
 
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
-  @query("main", true) private container!: HTMLElement;
-  @query(".esphome-header", true) private editor_header!: HTMLElement;
+  @query("main.editor-container", true) private container!: HTMLElement;
+  @query(".esphome-editor-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -54,11 +54,24 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        .esphome-header {
+        /* Use more specific selector to override global esphome-2.css styles */
+        esphome-editor .esphome-editor-header {
+          position: static;
           display: flex;
           justify-content: space-between;
           align-items: center;
           align-content: stretch;
+          height: auto;
+          padding: 0;
+          background-color: transparent;
+          z-index: auto;
+        }
+        /* Override global main styles for editor */
+        esphome-editor main.editor-container {
+          margin-top: 0;
+          flex: 1;
+          display: block;
+          min-height: 0;
         }
         h2 {
           line-height: 100%;
@@ -80,7 +93,7 @@ class ESPHomeEditor extends LitElement {
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="esphome-header">
+      <div class="esphome-editor-header">
         <mwc-icon-button
           icon="clear"
           @click=${this._handleClose}
@@ -101,7 +114,7 @@ class ESPHomeEditor extends LitElement {
               @click=${this.handleInstall}
             ></mwc-button>`}
       </div>
-      <main></main>
+      <main class="editor-container"></main>
     `;
   }
 
