@@ -1,9 +1,38 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { mdiChip } from "@mdi/js";
+import {
+  mdiChip,
+  mdiLightbulb,
+  mdiThermometer,
+  mdiMotionSensor,
+  mdiMicrophone,
+  mdiFan,
+  mdiPowerPlug,
+  mdiLedStrip,
+  mdiSpeaker,
+  mdiGauge,
+  mdiWater,
+  mdiAirFilter,
+} from "@mdi/js";
 
 // Cache for loaded icon paths
 const iconCache: Record<string, string> = {};
+
+// Pre-bundled common icons
+const BUNDLED_ICONS: Record<string, string> = {
+  chip: mdiChip,
+  lightbulb: mdiLightbulb,
+  thermometer: mdiThermometer,
+  "motion-sensor": mdiMotionSensor,
+  microphone: mdiMicrophone,
+  fan: mdiFan,
+  "power-plug": mdiPowerPlug,
+  "led-strip": mdiLedStrip,
+  speaker: mdiSpeaker,
+  gauge: mdiGauge,
+  water: mdiWater,
+  "air-filter": mdiAirFilter,
+};
 
 @customElement("esphome-mdi-icon")
 export class ESPHomeMdiIcon extends LitElement {
@@ -28,34 +57,40 @@ export class ESPHomeMdiIcon extends LitElement {
       ? this.icon.slice(4)
       : this.icon;
 
-    // Check cache
+    // Check cache first
     if (iconCache[iconName]) {
       this._path = iconCache[iconName];
       return;
     }
 
+    // Check bundled icons
+    if (BUNDLED_ICONS[iconName]) {
+      this._path = BUNDLED_ICONS[iconName];
+      iconCache[iconName] = this._path;
+      return;
+    }
+
+    // Fetch from CDN for non-bundled icons
     try {
-      // Convert icon name to @mdi/js export name (e.g., "lightbulb" -> "mdiLightbulb")
-      const mdiName =
-        "mdi" +
-        iconName
-          .split("-")
-          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-          .join("");
+      const response = await fetch(
+        `https://cdn.jsdelivr.net/npm/@mdi/svg@7.4.47/svg/${iconName}.svg`
+      );
 
-      // Dynamic import from @mdi/js
-      const mdiModule = await import("@mdi/js");
-      const path = mdiModule[mdiName as keyof typeof mdiModule] as string;
-
-      if (path && typeof path === "string") {
-        iconCache[iconName] = path;
-        this._path = path;
-      } else {
+      if (!response.ok) {
         throw new Error(`Icon not found: ${iconName}`);
+      }
+
+      const svgText = await response.text();
+      const pathMatch = svgText.match(/d="([^"]+)"/);
+
+      if (pathMatch && pathMatch[1]) {
+        iconCache[iconName] = pathMatch[1];
+        this._path = pathMatch[1];
+      } else {
+        throw new Error(`Could not parse SVG for icon: ${iconName}`);
       }
     } catch (err) {
       console.warn(`Failed to load icon: ${iconName}`, err);
-      // Fallback to chip icon
       this._path = mdiChip;
     }
   }
