@@ -69,7 +69,11 @@ class ESPHomeEditor extends LitElement {
           box-sizing: border-box;
         }
         main {
-          margin-top: 56px;
+          position: fixed;
+          top: 56px;
+          left: 0;
+          right: 0;
+          bottom: 0;
         }
         h2 {
           line-height: 100%;
