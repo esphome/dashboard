@@ -54,29 +54,11 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        /* Override global fixed positioning for editor header */
         .esphome-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 56px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background-color: var(--esphome-background-header);
-          color: var(--primary-text-color);
-          padding: 0 16px;
-          z-index: 50;
-          box-sizing: border-box;
-        }
-        main {
-          position: fixed;
-          top: 56px;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: hidden;
+          align-content: stretch;
         }
         h2 {
           line-height: 100%;
@@ -176,8 +158,6 @@ class ESPHomeEditor extends LitElement {
       dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
-      cursorBlinking: "blink",
-      cursorStyle: "line",
     });
 
     const isSecrets =
@@ -188,17 +168,11 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
-      // Force layout recalculation after content is loaded to fix cursor positioning
-      // This must happen after the browser has had time to render and calculate dimensions
-      requestAnimationFrame(() => {
-        this.editor?.layout(this.calcEditorSize());
-        this.editor?.setPosition({ lineNumber: 1, column: 1 });
-        this.editor?.revealLine(1);
-        this.editor?.focus();
-      });
 
       this.startAceWebsocket();
     });
+
+    this.editor.focus();
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
@@ -322,10 +296,9 @@ class ESPHomeEditor extends LitElement {
   }
 
   calcEditorSize() {
-    // Use the container's dimensions directly since main is now position:fixed
     return {
-      width: this.container.offsetWidth || document.body.offsetWidth,
-      height: this.container.offsetHeight || window.innerHeight - 56,
+      width: document.body.offsetWidth,
+      height: window.innerHeight - this.editor_header.offsetHeight,
     };
   }
   connectedCallback() {
