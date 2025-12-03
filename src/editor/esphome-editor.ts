@@ -54,28 +54,30 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        /* Use more specific selector to override global esphome-2.css styles */
-        esphome-editor .esphome-editor-header {
-          position: static;
-          display: flex;
+        /* Override global .esphome-header styles - use !important since external CSS loads first */
+        .esphome-editor-header {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          left: auto !important;
+          display: flex !important;
           justify-content: space-between;
           align-items: center;
           align-content: stretch;
-          height: auto;
-          padding: 0;
-          background-color: transparent;
-          z-index: auto;
+          height: auto !important;
+          padding: 0 !important;
+          background-color: var(--primary-bg-color) !important;
+          z-index: auto !important;
         }
         /* Override global main styles for editor */
-        esphome-editor main.editor-container {
-          margin-top: 0;
+        main.editor-container {
+          margin-top: 0 !important;
           flex: 1;
           display: block;
           min-height: 0;
         }
         h2 {
           line-height: 100%;
-          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
           padding: 0.8rem 0.5rem 1rem 0.5rem;
           margin: 0px;
           font-size: 1.4rem;
