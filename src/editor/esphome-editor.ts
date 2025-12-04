@@ -49,10 +49,17 @@ class ESPHomeEditor extends LitElement {
 
     return html`
       <style>
-        html,
-        body {
-          height: 100vh;
-          overflow: hidden;
+        /* Make esphome-editor fill the viewport */
+        esphome-editor {
+          display: flex !important;
+          flex-direction: column !important;
+          height: 100vh !important;
+          width: 100vw !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          z-index: 100 !important;
+          background-color: var(--primary-bg-color, #fafafa) !important;
         }
         /* Override global .esphome-header styles - use !important since external CSS loads first */
         .esphome-editor-header {
@@ -65,16 +72,18 @@ class ESPHomeEditor extends LitElement {
           align-items: center;
           align-content: stretch;
           height: auto !important;
-          padding: 0 !important;
-          background-color: var(--primary-bg-color) !important;
+          padding: 0 8px !important;
+          background-color: var(--esphome-background-header, #e0e0e0) !important;
           z-index: auto !important;
+          flex-shrink: 0 !important;
         }
         /* Override global main styles for editor */
         main.editor-container {
           margin-top: 0 !important;
-          flex: 1;
-          display: block;
-          min-height: 0;
+          flex: 1 1 auto !important;
+          display: block !important;
+          min-height: 0 !important;
+          overflow: hidden !important;
         }
         h2 {
           line-height: 100%;
@@ -311,9 +320,11 @@ class ESPHomeEditor extends LitElement {
   }
 
   calcEditorSize() {
+    // Use the container's actual dimensions for accurate sizing
+    const containerRect = this.container.getBoundingClientRect();
     return {
-      width: document.body.offsetWidth,
-      height: window.innerHeight - this.editor_header.offsetHeight,
+      width: containerRect.width || window.innerWidth,
+      height: containerRect.height || (window.innerHeight - this.editor_header.offsetHeight),
     };
   }
   connectedCallback() {
