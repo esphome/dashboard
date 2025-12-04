@@ -63,7 +63,7 @@ class ESPHomeEditor extends LitElement {
         }
         /* Override global .esphome-header styles - use !important since external CSS loads first */
         .esphome-editor-header {
-          position: static !important;
+          position: relative !important;
           top: auto !important;
           right: auto !important;
           left: auto !important;
@@ -74,7 +74,7 @@ class ESPHomeEditor extends LitElement {
           height: auto !important;
           padding: 0 8px !important;
           background-color: var(--esphome-background-header, #e0e0e0) !important;
-          z-index: auto !important;
+          z-index: 200 !important;
           flex-shrink: 0 !important;
         }
         /* Override global main styles for editor */
