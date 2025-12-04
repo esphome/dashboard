@@ -37,7 +37,7 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main.editor-container", true) private container!: HTMLElement;
-  @query(".esphome-editor-header", true) private editorHeader!: HTMLElement;
+  @query(".esphome-header", true) private editorHeader!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -49,16 +49,31 @@ class ESPHomeEditor extends LitElement {
 
     return html`
       <style>
-        html,
-        body {
-          height: 100vh;
-          overflow: hidden;
+        :host {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 100;
+          background: var(--primary-background-color, #fff);
         }
-        .esphome-editor-header {
+        .esphome-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          align-content: stretch;
+          flex-shrink: 0;
+          height: 56px;
+          z-index: 200;
+          position: relative;
+          background: var(--primary-background-color, #fff);
+        }
+        main.editor-container {
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
         }
         h2 {
           line-height: 100%;
@@ -79,7 +94,7 @@ class ESPHomeEditor extends LitElement {
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="esphome-editor-header">
+      <div class="esphome-header">
         <mwc-icon-button
           icon="clear"
           @click=${this._handleClose}
