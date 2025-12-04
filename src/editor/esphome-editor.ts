@@ -84,6 +84,15 @@ class ESPHomeEditor extends LitElement {
           display: block !important;
           min-height: 0 !important;
           overflow: hidden !important;
+          position: relative !important;
+        }
+        /* Ensure Monaco editor container fills the space */
+        main.editor-container .monaco-editor {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
         }
         h2 {
           line-height: 100%;
@@ -179,7 +188,8 @@ class ESPHomeEditor extends LitElement {
         enabled: false,
       },
       tabSize: 2,
-      dimension: this.calcEditorSize(),
+      automaticLayout: true,
+      scrollBeyondLastLine: false,
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
@@ -193,10 +203,20 @@ class ESPHomeEditor extends LitElement {
       }
       this.editor?.setValue(response ?? "");
 
+      // Force layout recalculation after content is loaded
+      requestAnimationFrame(() => {
+        this.editor?.layout();
+      });
+
       this.startAceWebsocket();
     });
 
     this.editor.focus();
+
+    // Force initial layout after DOM is fully rendered
+    requestAnimationFrame(() => {
+      this.editor?.layout();
+    });
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
