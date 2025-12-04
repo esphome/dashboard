@@ -37,7 +37,6 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main.editor-container", true) private container!: HTMLElement;
-  @query(".esphome-editor-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -49,50 +48,31 @@ class ESPHomeEditor extends LitElement {
 
     return html`
       <style>
-        /* Make esphome-editor fill the viewport */
-        esphome-editor {
-          display: flex !important;
-          flex-direction: column !important;
-          height: 100vh !important;
-          width: 100vw !important;
-          position: fixed !important;
-          top: 0 !important;
-          left: 0 !important;
-          z-index: 100 !important;
-          background-color: var(--primary-bg-color, #fafafa) !important;
+        :host {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 100;
+          background: var(--primary-background-color, #fff);
         }
-        /* Override global .esphome-header styles - use !important since external CSS loads first */
         .esphome-editor-header {
-          position: relative !important;
-          top: auto !important;
-          right: auto !important;
-          left: auto !important;
-          display: flex !important;
+          display: flex;
           justify-content: space-between;
           align-items: center;
-          align-content: stretch;
-          height: auto !important;
-          padding: 0 8px !important;
-          background-color: var(--esphome-background-header, #e0e0e0) !important;
-          z-index: 200 !important;
-          flex-shrink: 0 !important;
+          flex-shrink: 0;
+          height: 56px;
+          z-index: 200;
+          position: relative;
+          background: var(--primary-background-color, #fff);
         }
-        /* Override global main styles for editor */
         main.editor-container {
-          margin-top: 0 !important;
-          flex: 1 1 auto !important;
-          display: block !important;
-          min-height: 0 !important;
-          overflow: hidden !important;
-          position: relative !important;
-        }
-        /* Ensure Monaco editor container fills the space */
-        main.editor-container .monaco-editor {
-          position: absolute !important;
-          top: 0 !important;
-          left: 0 !important;
-          right: 0 !important;
-          bottom: 0 !important;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
         }
         h2 {
           line-height: 100%;
@@ -202,21 +182,10 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
-
-      // Force layout recalculation after content is loaded
-      requestAnimationFrame(() => {
-        this.editor?.layout();
-      });
-
       this.startAceWebsocket();
     });
 
     this.editor.focus();
-
-    // Force initial layout after DOM is fully rendered
-    requestAnimationFrame(() => {
-      this.editor?.layout();
-    });
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
@@ -339,25 +308,6 @@ class ESPHomeEditor extends LitElement {
     });
   }
 
-  calcEditorSize() {
-    // Use the container's actual dimensions for accurate sizing
-    const containerRect = this.container.getBoundingClientRect();
-    return {
-      width: containerRect.width || window.innerWidth,
-      height: containerRect.height || (window.innerHeight - this.editor_header.offsetHeight),
-    };
-  }
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener("resize", this._handleResize);
-  }
-  disconnectedCallback() {
-    window.removeEventListener("resize", this._handleResize);
-    super.disconnectedCallback();
-  }
-  _handleResize = () => {
-    this.editor?.layout(this.calcEditorSize());
-  };
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
