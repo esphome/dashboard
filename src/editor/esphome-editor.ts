@@ -153,6 +153,9 @@ class ESPHomeEditor extends LitElement {
       minimap: {
         enabled: false,
       },
+      stickyScroll: {
+        enabled: false,
+      },
       tabSize: 2,
       dimension: this.calcEditorSize(),
       fontFamily:
