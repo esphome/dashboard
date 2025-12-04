@@ -1,6 +1,6 @@
 import "./devices/devices-list";
 import "./components/esphome-header-menu";
-import { LitElement, html, PropertyValues, css } from "lit";
+import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { connectionStatus } from "./util/connection-status";
 import { openWizardDialog } from "./wizard";
@@ -140,45 +140,6 @@ class ESPHomeMainView extends LitElement {
     }
   }
 
-  static styles = css`
-    :host {
-      display: block;
-      --primary-text-color: var(--mdc-theme-on-surface, #1d1d1d);
-      --secondary-text-color: var(
-        --mdc-theme-text-secondary-on-background,
-        rgba(0, 0, 0, 0.54)
-      );
-      color: var(--primary-text-color);
-    }
-    .header-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 20px;
-      font-weight: 500;
-    }
-    .header-title esphome-svg-icon {
-      --mdc-icon-size: 28px;
-    }
-    .create-device-btn {
-      --mdc-theme-primary: #1e8e3e;
-      --mdc-theme-on-primary: white;
-      margin-right: 8px;
-    }
-    /* Global style for button menu icons */
-    esphome-button-menu esphome-svg-icon {
-      fill: var(--primary-text-color) !important;
-      color: var(--primary-text-color) !important;
-    }
-    /* Target Material list items with icons */
-    mwc-list-item[graphic="icon"] {
-      --mdc-theme-text-primary-on-background: var(--primary-text-color);
-    }
-    /* Ensure SVG paths get the right color */
-    esphome-svg-icon svg path {
-      fill: currentColor;
-    }
-  `;
 }
 
 declare global {
