@@ -37,6 +37,7 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main.editor-container", true) private container!: HTMLElement;
+  @query(".esphome-editor-header", true) private editorHeader!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -168,8 +169,7 @@ class ESPHomeEditor extends LitElement {
         enabled: false,
       },
       tabSize: 2,
-      automaticLayout: true,
-      scrollBeyondLastLine: false,
+      dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
@@ -308,6 +308,26 @@ class ESPHomeEditor extends LitElement {
     });
   }
 
+  calcEditorSize() {
+    return {
+      width: document.body.offsetWidth,
+      height: window.innerHeight - this.editorHeader.offsetHeight,
+    };
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("resize", this._handleResize);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener("resize", this._handleResize);
+    super.disconnectedCallback();
+  }
+
+  _handleResize = () => {
+    this.editor?.layout(this.calcEditorSize());
+  };
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
