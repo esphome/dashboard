@@ -297,10 +297,12 @@ class ESPHomeEditor extends LitElement {
   }
 
   calcEditorSize() {
-    return {
+    const size = {
       width: document.body.offsetWidth,
       height: window.innerHeight - this.editorHeader.offsetHeight,
     };
+    console.log("calcEditorSize:", size, "window.innerHeight:", window.innerHeight, "editorHeader.offsetHeight:", this.editorHeader.offsetHeight);
+    return size;
   }
 
   connectedCallback() {
