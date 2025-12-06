@@ -227,24 +227,33 @@ export class ESPHomeWizardDialog extends LitElement {
     let hideActions = false;
     const content = html`
       <div>
-        A device needs to be connected to a computer using a USB cable to be
-        added to ESPHome. Once added, ESPHome will interact with the device
+        A device needs to be connected to a computer (either the server running
+        ESPHome or the client running the browser) using a USB cable to be added
+        to ESPHome. Once added, ESPHome will interact with the device
         wirelessly.
       </div>
       <div>
-        ${allowsWebSerial
-          ? "Your browser does not support WebSerial."
-          : "You are not browsing the ESPHome Device Builder over a secure connection (HTTPS)."}
-        This prevents ESPHome from being able to install this on devices
-        connected to this computer.
+        The following issues prevent ESPHome from being able to remotely install
+        the necessary firmware on devices physically connected to the client
+        computer (running the browser):
+        <ul>
+          <li>Your browser does not support WebSerial.</li>
+          ${allowsWebSerial
+            ? ""
+            : html`<li>
+                You are not browsing the ESPHome Device Builder over a secure
+                connection (HTTPS).
+              </li>`}
+        </ul>
       </div>
       <div>
         You will still be able to install ESPHome by connecting the device to
-        the computer that runs the ESPHome Device Builder.
+        the computer or server that is hosting the ESPHome dashboard.
       </div>
       <div>
-        Alternatively, you can use ESPHome Web to prepare a device for being
-        used with ESPHome using this computer.
+        Alternatively, you can use ESPHome Web (an external service provided by
+        the ESPHome project) to prepare your device for being used with ESPHome
+        using this computer and browser (if compatible; see above).
       </div>
 
       <mwc-button
