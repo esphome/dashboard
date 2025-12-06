@@ -37,7 +37,6 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
-  @query(".esphome-header", true) private editorHeader!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -75,6 +74,29 @@ class ESPHomeEditor extends LitElement {
         }
         mwc-button {
           --mdc-theme-primary: var(--primary-text-color);
+        }
+        /* Fix editor to viewport to escape any parent CSS issues */
+        esphome-editor {
+          position: fixed !important;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: flex !important;
+          flex-direction: column !important;
+          z-index: 100;
+          background: var(--primary-bg-color, #fafafa);
+        }
+        esphome-editor > main {
+          flex: 1;
+          position: relative !important;
+          overflow: hidden !important;
+          width: 100%;
+          height: 100%;
+        }
+        esphome-editor > main > .monaco-editor {
+          width: 100% !important;
+          height: 100% !important;
         }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
@@ -153,11 +175,8 @@ class ESPHomeEditor extends LitElement {
       minimap: {
         enabled: false,
       },
-      stickyScroll: {
-        enabled: false,
-      },
       tabSize: 2,
-      dimension: this.calcEditorSize(),
+      automaticLayout: true,
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
     });
@@ -296,28 +315,7 @@ class ESPHomeEditor extends LitElement {
     });
   }
 
-  calcEditorSize() {
-    const size = {
-      width: document.body.offsetWidth,
-      height: window.innerHeight - this.editorHeader.offsetHeight,
-    };
-    console.log("calcEditorSize:", size, "window.innerHeight:", window.innerHeight, "editorHeader.offsetHeight:", this.editorHeader.offsetHeight);
-    return size;
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener("resize", this._handleResize);
-  }
-
-  disconnectedCallback() {
-    window.removeEventListener("resize", this._handleResize);
-    super.disconnectedCallback();
-  }
-
-  _handleResize = () => {
-    this.editor?.layout(this.calcEditorSize());
-  };
+  // Using automaticLayout: true instead of manual resize handling
 }
 
 const EMPTY_SECRETS = `# Your Wi-Fi SSID and password
