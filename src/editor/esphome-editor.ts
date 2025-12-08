@@ -1,5 +1,4 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import "monaco-editor/min/vs/editor/editor.main.css";
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
