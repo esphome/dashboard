@@ -22,7 +22,7 @@ export class ESPHomeButtonMenu extends LitElement {
       <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner} @action=${this._handleAction}>
+      <mwc-menu .corner=${this.corner} .fixed=${true} @action=${this._handleAction}>
         <slot></slot>
       </mwc-menu>
     `;
@@ -55,7 +55,7 @@ export class ESPHomeButtonMenu extends LitElement {
       --mdc-theme-surface: var(--card-background-color);
       --mdc-theme-on-surface: var(--primary-text-color);
       --mdc-list-item-graphic-color: var(--primary-text-color);
-      --mdc-menu-z-index: 1000;
+      --mdc-menu-z-index: 9999;
     }
     /* Force icon colors */
     ::slotted(mwc-list-item) {
