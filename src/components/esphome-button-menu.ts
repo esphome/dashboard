@@ -43,7 +43,7 @@ export class ESPHomeButtonMenu extends LitElement {
       --mdc-theme-surface: var(--card-background-color);
       --mdc-theme-on-surface: var(--primary-text-color);
       --mdc-list-item-graphic-color: var(--primary-text-color);
-      --mdc-menu-z-index: 100;
+      --mdc-menu-z-index: 1000;
     }
     /* Force icon colors */
     ::slotted(mwc-list-item) {

@@ -365,7 +365,7 @@ class ESPHomeDevicesList extends LitElement {
   private _getTableColumns(): DataTableColumnContainer {
     return {
       icon: {
-        title: "",
+        title: "Icon",
         sortable: false,
         type: "icon",
         minWidth: "56px",
@@ -395,8 +395,8 @@ class ESPHomeDevicesList extends LitElement {
         sortable: false,
         template: (row: DataTableRowData) => this._renderActions(row),
       },
-      type: {
-        title: "Type",
+      platform: {
+        title: "Platform",
         sortable: true,
         groupable: true,
         defaultHidden: true,
@@ -406,12 +406,6 @@ class ESPHomeDevicesList extends LitElement {
         sortable: true,
         defaultHidden: true,
         template: (row: DataTableRowData) => this._renderAddress(row),
-      },
-      device_type: {
-        title: "Platform",
-        sortable: true,
-        groupable: true,
-        defaultHidden: true,
       },
       deployed_version: {
         title: "Deployed",
@@ -428,13 +422,6 @@ class ESPHomeDevicesList extends LitElement {
         defaultHidden: true,
         template: (row: DataTableRowData) =>
           html`<span class="version-text">${row.current_version || "—"}</span>`,
-      },
-      comment: {
-        title: "Comment",
-        sortable: true,
-        defaultHidden: true,
-        template: (row: DataTableRowData) =>
-          html`<span class="comment-text">${row.comment || "—"}</span>`,
       },
     };
   }
@@ -666,9 +653,23 @@ class ESPHomeDevicesList extends LitElement {
     const device = row as ConfiguredDevice;
     const isOnline = this._onlineStatus[device.configuration];
     const hasWebServer = device.loaded_integrations?.includes("web_server");
+    const hasUpdate = canUpdateDevice(device);
 
     return html`
       <div class="actions-container">
+        ${hasUpdate
+          ? html`
+              <ha-icon-button
+                class="update-button"
+                .path=${mdiUpdate}
+                @click=${(e: Event) => {
+                  e.stopPropagation();
+                  openInstallChooseDialog(device.configuration);
+                }}
+                title="Update available"
+              ></ha-icon-button>
+            `
+          : nothing}
         ${hasWebServer && isOnline
           ? html`
               <ha-icon-button
@@ -689,7 +690,7 @@ class ESPHomeDevicesList extends LitElement {
                 title="Open web interface"
               ></ha-icon-button>
             `
-          : html`<div class="icon-placeholder"></div>`}
+          : nothing}
         <ha-icon-button
           .path=${mdiPencil}
           @click=${(e: Event) => {
@@ -815,8 +816,8 @@ class ESPHomeDevicesList extends LitElement {
         ...device,
         // Ensure we have an id field for the data table
         id: device.name,
-        // Type is used for grouping: "Your devices" vs "Discovered"
-        type: isImportable ? "Discovered" : "Your devices",
+        // Type field for internal use (Discovered vs configured)
+        type: isImportable ? "Discovered" : "Configured",
         // Add computed fields for sorting
         status: isImportable
           ? "Discovered"
@@ -825,7 +826,8 @@ class ESPHomeDevicesList extends LitElement {
             : "Offline",
         ip_address: address,
         has_static_ip: hasStaticIp,
-        device_type: isImportable
+        // Platform shows the device type (ESP32, ESP8266, etc.)
+        platform: isImportable
           ? "-"
           : configuredDevice?.target_platform || "-",
         name: device.friendly_name || device.name,
@@ -1689,6 +1691,10 @@ class ESPHomeDevicesList extends LitElement {
       gap: 8px;
       align-items: center;
       flex-wrap: wrap;
+    }
+    .actions-container .update-button {
+      --mdc-icon-button-size: 40px;
+      color: var(--success-color, #4caf50);
     }
     .actions-container mwc-button {
       --mdc-theme-primary: var(--primary-text-color);
