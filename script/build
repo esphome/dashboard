@@ -11,5 +11,4 @@ if [ ! -d "./node_modules" ]; then
     npm install
 fi
 
-# Use rollup like upstream - it properly handles Monaco editor bundling
-NODE_ENV=production npm exec -- rollup -c
+NODE_ENV=production exec ./node_modules/.bin/rspack build --config rspack.config.js

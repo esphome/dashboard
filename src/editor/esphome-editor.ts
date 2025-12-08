@@ -1,4 +1,6 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// Import Monaco CSS as raw string (asset/source) and inject it
+import monacoCss from "monaco-editor/min/vs/editor/editor.main.css";
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
@@ -13,6 +15,14 @@ import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
 import { setSchemaVersion } from "./editor-shims";
+
+// Inject Monaco CSS into the document head
+if (!document.getElementById("monaco-editor-css")) {
+  const style = document.createElement("style");
+  style.id = "monaco-editor-css";
+  style.textContent = monacoCss;
+  document.head.appendChild(style);
+}
 
 // WebSocket URL Helper
 const loc = window.location;
