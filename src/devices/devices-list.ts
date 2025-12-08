@@ -701,6 +701,7 @@ class ESPHomeDevicesList extends LitElement {
         ></ha-icon-button>
         <esphome-button-menu
           corner="BOTTOM_RIGHT"
+          @click=${(e: Event) => e.stopPropagation()}
           @action=${(ev: CustomEvent<ActionDetail>) => {
             ev.stopPropagation();
             this._handleOverflowAction(ev, device);
@@ -709,7 +710,6 @@ class ESPHomeDevicesList extends LitElement {
           <ha-icon-button
             slot="trigger"
             .path=${mdiDotsVertical}
-            @click=${(e: Event) => e.stopPropagation()}
           ></ha-icon-button>
           <mwc-list-item graphic="icon">
             Validate
