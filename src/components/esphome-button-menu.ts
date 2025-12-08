@@ -22,7 +22,7 @@ export class ESPHomeButtonMenu extends LitElement {
       <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner}>
+      <mwc-menu .corner=${this.corner} @action=${this._handleAction}>
         <slot></slot>
       </mwc-menu>
     `;
@@ -32,6 +32,17 @@ export class ESPHomeButtonMenu extends LitElement {
     ev.preventDefault();
     this._menu!.anchor = this;
     this._menu!.show();
+  }
+
+  private _handleAction(ev: CustomEvent): void {
+    // Re-dispatch the action event so it bubbles out of the shadow DOM
+    this.dispatchEvent(
+      new CustomEvent("action", {
+        detail: ev.detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   static styles = css`
