@@ -1381,6 +1381,11 @@ class ESPHomeDevicesList extends LitElement {
       width: 100%;
       --data-table-row-height: 60px;
       --data-table-border-width: 0;
+      overflow: visible;
+    }
+    /* Allow menu overflow from table rows */
+    ha-data-table::part(mdc-data-table__row) {
+      overflow: visible;
     }
 
     /* Device icon column */
@@ -1690,7 +1695,8 @@ class ESPHomeDevicesList extends LitElement {
       display: flex;
       gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      overflow: visible;
     }
     .actions-container .update-button {
       --mdc-icon-button-size: 40px;

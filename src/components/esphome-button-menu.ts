@@ -22,7 +22,7 @@ export class ESPHomeButtonMenu extends LitElement {
       <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner} .fixed=${true} @action=${this._handleAction}>
+      <mwc-menu .corner=${this.corner} .absolute=${true} @action=${this._handleAction}>
         <slot></slot>
       </mwc-menu>
     `;
