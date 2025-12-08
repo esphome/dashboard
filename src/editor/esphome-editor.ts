@@ -36,7 +36,7 @@ class ESPHomeEditor extends LitElement {
 
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
-  @query("#editor-container", true) private container!: HTMLElement;
+  @query("main", true) private container!: HTMLElement;
   @query(".esphome-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
@@ -62,6 +62,7 @@ class ESPHomeEditor extends LitElement {
         }
         h2 {
           line-height: 100%;
+          /* this margin, padding stretches the container, offsetHeight does not calculate margin of .editor-header */
           padding: 0.8rem 0.5rem 1rem 0.5rem;
           margin: 0px;
           font-size: 1.4rem;
@@ -75,25 +76,6 @@ class ESPHomeEditor extends LitElement {
         }
         mwc-button {
           --mdc-theme-primary: var(--primary-text-color);
-        }
-        /* Fix editor to viewport - use absolute positioning to bypass parent CSS */
-        esphome-editor {
-          position: fixed !important;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 100;
-          background: var(--primary-bg-color, #fafafa);
-        }
-        /* Editor container uses absolute positioning, not flex/grid */
-        #editor-container {
-          position: absolute !important;
-          top: 56px;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: hidden !important;
         }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
@@ -119,7 +101,7 @@ class ESPHomeEditor extends LitElement {
               @click=${this.handleInstall}
             ></mwc-button>`}
       </div>
-      <div id="editor-container"></div>
+      <main></main>
     `;
   }
 
@@ -186,6 +168,7 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
+
       this.startAceWebsocket();
     });
 
@@ -318,17 +301,14 @@ class ESPHomeEditor extends LitElement {
       height: window.innerHeight - this.editor_header.offsetHeight,
     };
   }
-
   connectedCallback() {
     super.connectedCallback();
     window.addEventListener("resize", this._handleResize);
   }
-
   disconnectedCallback() {
     window.removeEventListener("resize", this._handleResize);
     super.disconnectedCallback();
   }
-
   _handleResize = () => {
     this.editor?.layout(this.calcEditorSize());
   };

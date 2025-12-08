@@ -2,21 +2,22 @@ const haRspack = require("./homeassistant-frontend/build-scripts/rspack.cjs");
 const haPaths = require("./homeassistant-frontend/build-scripts/paths.cjs");
 const path = require("path");
 const fs = require("fs");
+const rspack = require("@rspack/core");
 
 const isProdBuild = process.env.NODE_ENV === "production";
 
-// Plugin to fix manifest.json format for ESPHome compatibility
-// ESPHome expects {"index": "index.js"} but rspack produces {"index.js": "/static/js/esphome/index.js"}
+// Plugin to fix manifest.json format for ESPHome compatibility and copy Monaco worker
+// ESPHome expects {"index": "index.js", "editor.worker": "..."} format
 class FixManifestPlugin {
   apply(compiler) {
     compiler.hooks.afterEmit.tapAsync(
       "FixManifestPlugin",
       (compilation, callback) => {
-        const manifestPath = path.resolve(
-          compiler.options.output.path,
-          "manifest.json",
-        );
+        const outputPath = compiler.options.output.path;
+        const manifestPath = path.resolve(outputPath, "manifest.json");
+
         try {
+          // Fix the manifest format
           const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
           const fixedManifest = {};
           for (const [key, value] of Object.entries(manifest)) {
@@ -25,10 +26,33 @@ class FixManifestPlugin {
             const newValue = path.basename(value);
             fixedManifest[newKey] = newValue;
           }
+
+          // Add editor.worker entry that Monaco expects
+          fixedManifest["editor.worker"] =
+            "monaco-editor/esm/vs/editor/editor.worker.js";
+
           fs.writeFileSync(manifestPath, JSON.stringify(fixedManifest));
         } catch (e) {
-          // Ignore errors
+          console.error("FixManifestPlugin error:", e);
         }
+
+        // Copy Monaco editor worker to the expected location
+        const monacoWorkerSrc = path.resolve(
+          __dirname,
+          "node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+        );
+        const monacoWorkerDest = path.resolve(
+          outputPath,
+          "monaco-editor/esm/vs/editor/editor.worker.js",
+        );
+
+        try {
+          fs.mkdirSync(path.dirname(monacoWorkerDest), { recursive: true });
+          fs.copyFileSync(monacoWorkerSrc, monacoWorkerDest);
+        } catch (e) {
+          console.error("Failed to copy Monaco worker:", e);
+        }
+
         callback();
       },
     );
