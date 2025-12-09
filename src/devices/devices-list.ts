@@ -23,6 +23,7 @@ import "../../homeassistant-frontend/src/components/chips/ha-assist-chip";
 import "../../homeassistant-frontend/src/components/chips/ha-filter-chip";
 import "../../homeassistant-frontend/src/components/ha-md-button-menu";
 import "../../homeassistant-frontend/src/components/ha-md-menu-item";
+import "../../homeassistant-frontend/src/components/ha-md-divider";
 import "../../homeassistant-frontend/src/components/ha-svg-icon";
 import "../components/esphome-mdi-icon";
 import "../../homeassistant-frontend/src/components/ha-icon-button";
@@ -700,81 +701,74 @@ class ESPHomeDevicesList extends LitElement {
           }}
           title="Edit"
         ></ha-icon-button>
-        <esphome-button-menu
-          corner="BOTTOM_RIGHT"
+        <ha-md-button-menu
+          positioning="popover"
           @click=${(e: Event) => e.stopPropagation()}
-          @action=${(ev: CustomEvent<ActionDetail>) => {
-            ev.stopPropagation();
-            this._handleOverflowAction(ev, device);
-          }}
         >
           <ha-icon-button
             slot="trigger"
             .path=${mdiDotsVertical}
           ></ha-icon-button>
-          <mwc-list-item graphic="icon">
+          <ha-md-menu-item
+            @click=${() => openValidateDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiSpellcheck}></ha-svg-icon>
             Validate
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiSpellcheck}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openInstallChooseDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiUploadNetwork}></ha-svg-icon>
             Install
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiUploadNetwork}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openLogsTargetDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiCodeBraces}></ha-svg-icon>
             Logs
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiCodeBraces}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openShowApiKeyDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiKey}></ha-svg-icon>
             Show API Key
-            <esphome-svg-icon slot="graphic" .path=${mdiKey}></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item @click=${() => this._handleDownloadYaml(device)}>
+            <ha-svg-icon slot="start" .path=${mdiDownload}></ha-svg-icon>
             Download YAML
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiDownload}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openRenameDialog(device.configuration, device.name)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiRenameBox}></ha-svg-icon>
             Rename hostname
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiRenameBox}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openCleanDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiBroom}></ha-svg-icon>
             Clean Build Files
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiBroom}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item @click=${() => this._handleDownloadElf(device)}>
+            <ha-svg-icon slot="start" .path=${mdiDownload}></ha-svg-icon>
             Download ELF file
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiDownload}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <li divider role="separator"></li>
-          <mwc-list-item class="warning" graphic="icon">
-            Delete
-            <esphome-svg-icon
-              class="warning"
-              slot="graphic"
+          </ha-md-menu-item>
+          <ha-md-divider></ha-md-divider>
+          <ha-md-menu-item
+            class="warning"
+            @click=${() =>
+              openDeleteDeviceDialog(device.name, device.configuration, () =>
+                this._updateDevices(),
+              )}
+          >
+            <ha-svg-icon
+              slot="start"
               .path=${mdiDelete}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-        </esphome-button-menu>
+              class="warning"
+            ></ha-svg-icon>
+            Delete
+          </ha-md-menu-item>
+        </ha-md-button-menu>
       </div>
     `;
   }
@@ -1850,6 +1844,21 @@ class ESPHomeDevicesList extends LitElement {
     getFile(device.configuration).then((config) => {
       textDownload(config!, device.configuration);
     });
+  }
+
+  private _handleDownloadElf(device: ConfiguredDevice) {
+    const type: DownloadType = {
+      title: "ELF File",
+      description: "ELF File",
+      file: "firmware.elf",
+      download: `${device.name}.elf`,
+    };
+    const link = document.createElement("a");
+    link.download = type.download;
+    link.href = getDownloadUrl(device.configuration, type);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
   public connectedCallback() {
