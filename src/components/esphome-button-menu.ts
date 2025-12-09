@@ -9,8 +9,6 @@ export class ESPHomeButtonMenu extends LitElement {
 
   @query("mwc-menu", true) private _menu?: Menu;
 
-  @query(".trigger") private _trigger?: HTMLElement;
-
   public get items() {
     return this._menu?.items;
   }
@@ -21,13 +19,13 @@ export class ESPHomeButtonMenu extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <div class="trigger" @click=${this._handleClick}>
+      <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
       <mwc-menu
         .corner=${this.corner}
-        .fixed=${true}
         .quick=${true}
+        .fixed=${true}
         @action=${this._handleAction}
         @closed=${this._handleClosed}
       >
@@ -39,8 +37,25 @@ export class ESPHomeButtonMenu extends LitElement {
   private _handleClick(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
-    // Use the trigger element as anchor for better positioning
-    this._menu!.anchor = this._trigger!;
+
+    // Get the bounding rect of this element for fixed positioning
+    const rect = this.getBoundingClientRect();
+
+    // Set x/y coordinates for fixed positioning based on corner
+    // BOTTOM_RIGHT means menu appears below and to the left of the anchor
+    if (this.corner === "BOTTOM_RIGHT" || this.corner === "BOTTOM_LEFT") {
+      this._menu!.y = rect.bottom;
+    } else {
+      this._menu!.y = rect.top;
+    }
+
+    if (this.corner === "BOTTOM_RIGHT" || this.corner === "TOP_RIGHT") {
+      this._menu!.x = rect.right;
+    } else {
+      this._menu!.x = rect.left;
+    }
+
+    this._menu!.anchor = null;
     this._menu!.show();
   }
 
@@ -64,14 +79,10 @@ export class ESPHomeButtonMenu extends LitElement {
       display: inline-block;
       position: relative;
     }
-    .trigger {
-      display: inline-block;
-    }
     mwc-menu {
       --mdc-theme-surface: var(--card-background-color);
       --mdc-theme-on-surface: var(--primary-text-color);
       --mdc-list-item-graphic-color: var(--primary-text-color);
-      --mdc-menu-z-index: 9999;
     }
     /* Force icon colors */
     ::slotted(mwc-list-item) {
