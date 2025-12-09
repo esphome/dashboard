@@ -54,7 +54,7 @@ export class ESPHomeIconPickerDialog extends LitElement {
     this.close();
   }
 
-  private _handleInputChange(ev: Event) {
+  private _handleInputChange(ev: InputEvent) {
     const input = ev.target as HTMLInputElement;
     this._selectedIcon = input.value || "";
   }

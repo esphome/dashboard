@@ -22,7 +22,14 @@ export class ESPHomeButtonMenu extends LitElement {
       <div @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner}>
+      <mwc-menu
+        .corner=${"TOP_END" as Corner}
+        .menuCorner=${"END"}
+        .quick=${true}
+        .fixed=${true}
+        @action=${this._handleAction}
+        @closed=${this._handleClosed}
+      >
         <slot></slot>
       </mwc-menu>
     `;
@@ -30,8 +37,32 @@ export class ESPHomeButtonMenu extends LitElement {
 
   private _handleClick(ev: Event): void {
     ev.preventDefault();
-    this._menu!.anchor = this;
+    ev.stopPropagation();
+
+    // Get the bounding rect of this element for fixed positioning
+    const rect = this.getBoundingClientRect();
+
+    // Position menu below and to the right of the trigger
+    // x = right edge of button, y = bottom of button
+    this._menu!.x = rect.right;
+    this._menu!.y = rect.bottom;
+    this._menu!.anchor = null;
     this._menu!.show();
+  }
+
+  private _handleAction(ev: CustomEvent): void {
+    // Re-dispatch the action event so it bubbles out of the shadow DOM
+    this.dispatchEvent(
+      new CustomEvent("action", {
+        detail: ev.detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private _handleClosed(ev: Event): void {
+    ev.stopPropagation();
   }
 
   static styles = css`

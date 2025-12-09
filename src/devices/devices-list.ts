@@ -23,6 +23,7 @@ import "../../homeassistant-frontend/src/components/chips/ha-assist-chip";
 import "../../homeassistant-frontend/src/components/chips/ha-filter-chip";
 import "../../homeassistant-frontend/src/components/ha-md-button-menu";
 import "../../homeassistant-frontend/src/components/ha-md-menu-item";
+import "../../homeassistant-frontend/src/components/ha-md-divider";
 import "../../homeassistant-frontend/src/components/ha-svg-icon";
 import "../components/esphome-mdi-icon";
 import "../../homeassistant-frontend/src/components/ha-icon-button";
@@ -244,7 +245,7 @@ class ESPHomeDevicesList extends LitElement {
 
     // Get current column order (excluding non-reorderable columns)
     const reorderableColumns = Object.entries(columns)
-      .filter(([id, col]) => col.title && id !== "actions")
+      .filter(([id, col]) => (col.title || col.label) && id !== "actions")
       .map(([id]) => id);
 
     // Use stored order or default order
@@ -269,9 +270,9 @@ class ESPHomeDevicesList extends LitElement {
   };
 
   private _getOrderedColumnIds(columns: DataTableColumnContainer): string[] {
-    // Get reorderable column IDs (those with titles, excluding actions)
+    // Get reorderable column IDs (those with titles/labels, excluding actions)
     const reorderableColumns = Object.entries(columns)
-      .filter(([id, col]) => col.title && id !== "actions")
+      .filter(([id, col]) => (col.title || col.label) && id !== "actions")
       .map(([id]) => id);
 
     if (!this._columnOrder) {
@@ -365,7 +366,8 @@ class ESPHomeDevicesList extends LitElement {
   private _getTableColumns(): DataTableColumnContainer {
     return {
       icon: {
-        title: "Icon",
+        title: "",
+        label: "Icon",
         sortable: false,
         type: "icon",
         minWidth: "56px",
@@ -395,8 +397,8 @@ class ESPHomeDevicesList extends LitElement {
         sortable: false,
         template: (row: DataTableRowData) => this._renderActions(row),
       },
-      type: {
-        title: "Type",
+      platform: {
+        title: "Platform",
         sortable: true,
         groupable: true,
         defaultHidden: true,
@@ -406,12 +408,6 @@ class ESPHomeDevicesList extends LitElement {
         sortable: true,
         defaultHidden: true,
         template: (row: DataTableRowData) => this._renderAddress(row),
-      },
-      device_type: {
-        title: "Platform",
-        sortable: true,
-        groupable: true,
-        defaultHidden: true,
       },
       deployed_version: {
         title: "Deployed",
@@ -428,13 +424,6 @@ class ESPHomeDevicesList extends LitElement {
         defaultHidden: true,
         template: (row: DataTableRowData) =>
           html`<span class="version-text">${row.current_version || "—"}</span>`,
-      },
-      comment: {
-        title: "Comment",
-        sortable: true,
-        defaultHidden: true,
-        template: (row: DataTableRowData) =>
-          html`<span class="comment-text">${row.comment || "—"}</span>`,
       },
     };
   }
@@ -666,9 +655,23 @@ class ESPHomeDevicesList extends LitElement {
     const device = row as ConfiguredDevice;
     const isOnline = this._onlineStatus[device.configuration];
     const hasWebServer = device.loaded_integrations?.includes("web_server");
+    const hasUpdate = canUpdateDevice(device);
 
     return html`
       <div class="actions-container">
+        ${hasUpdate
+          ? html`
+              <ha-icon-button
+                class="update-button"
+                .path=${mdiUpdate}
+                @click=${(e: Event) => {
+                  e.stopPropagation();
+                  openInstallChooseDialog(device.configuration);
+                }}
+                title="Update available"
+              ></ha-icon-button>
+            `
+          : nothing}
         ${hasWebServer && isOnline
           ? html`
               <ha-icon-button
@@ -689,7 +692,7 @@ class ESPHomeDevicesList extends LitElement {
                 title="Open web interface"
               ></ha-icon-button>
             `
-          : html`<div class="icon-placeholder"></div>`}
+          : nothing}
         <ha-icon-button
           .path=${mdiPencil}
           @click=${(e: Event) => {
@@ -698,81 +701,74 @@ class ESPHomeDevicesList extends LitElement {
           }}
           title="Edit"
         ></ha-icon-button>
-        <esphome-button-menu
-          corner="BOTTOM_RIGHT"
-          @action=${(ev: CustomEvent<ActionDetail>) => {
-            ev.stopPropagation();
-            this._handleOverflowAction(ev, device);
-          }}
+        <ha-md-button-menu
+          positioning="popover"
+          @click=${(e: Event) => e.stopPropagation()}
         >
           <ha-icon-button
             slot="trigger"
             .path=${mdiDotsVertical}
-            @click=${(e: Event) => e.stopPropagation()}
           ></ha-icon-button>
-          <mwc-list-item graphic="icon">
+          <ha-md-menu-item
+            @click=${() => openValidateDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiSpellcheck}></ha-svg-icon>
             Validate
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiSpellcheck}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openInstallChooseDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiUploadNetwork}></ha-svg-icon>
             Install
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiUploadNetwork}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openLogsTargetDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiCodeBraces}></ha-svg-icon>
             Logs
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiCodeBraces}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openShowApiKeyDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiKey}></ha-svg-icon>
             Show API Key
-            <esphome-svg-icon slot="graphic" .path=${mdiKey}></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item @click=${() => this._handleDownloadYaml(device)}>
+            <ha-svg-icon slot="start" .path=${mdiDownload}></ha-svg-icon>
             Download YAML
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiDownload}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openRenameDialog(device.configuration, device.name)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiRenameBox}></ha-svg-icon>
             Rename hostname
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiRenameBox}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item
+            @click=${() => openCleanDialog(device.configuration)}
+          >
+            <ha-svg-icon slot="start" .path=${mdiBroom}></ha-svg-icon>
             Clean Build Files
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiBroom}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <mwc-list-item graphic="icon">
+          </ha-md-menu-item>
+          <ha-md-menu-item @click=${() => this._handleDownloadElf(device)}>
+            <ha-svg-icon slot="start" .path=${mdiDownload}></ha-svg-icon>
             Download ELF file
-            <esphome-svg-icon
-              slot="graphic"
-              .path=${mdiDownload}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-          <li divider role="separator"></li>
-          <mwc-list-item class="warning" graphic="icon">
-            Delete
-            <esphome-svg-icon
-              class="warning"
-              slot="graphic"
+          </ha-md-menu-item>
+          <ha-md-divider></ha-md-divider>
+          <ha-md-menu-item
+            class="warning"
+            @click=${() =>
+              openDeleteDeviceDialog(device.name, device.configuration, () =>
+                this._updateDevices(),
+              )}
+          >
+            <ha-svg-icon
+              slot="start"
               .path=${mdiDelete}
-            ></esphome-svg-icon>
-          </mwc-list-item>
-        </esphome-button-menu>
+              class="warning"
+            ></ha-svg-icon>
+            Delete
+          </ha-md-menu-item>
+        </ha-md-button-menu>
       </div>
     `;
   }
@@ -815,8 +811,8 @@ class ESPHomeDevicesList extends LitElement {
         ...device,
         // Ensure we have an id field for the data table
         id: device.name,
-        // Type is used for grouping: "Your devices" vs "Discovered"
-        type: isImportable ? "Discovered" : "Your devices",
+        // Type field for internal use (Discovered vs configured)
+        type: isImportable ? "Discovered" : "Configured",
         // Add computed fields for sorting
         status: isImportable
           ? "Discovered"
@@ -825,7 +821,8 @@ class ESPHomeDevicesList extends LitElement {
             : "Offline",
         ip_address: address,
         has_static_ip: hasStaticIp,
-        device_type: isImportable
+        // Platform shows the device type (ESP32, ESP8266, etc.)
+        platform: isImportable
           ? "-"
           : configuredDevice?.target_platform || "-",
         name: device.friendly_name || device.name,
@@ -1099,7 +1096,9 @@ class ESPHomeDevicesList extends LitElement {
                     <ha-list>
                       ${this._getOrderedColumnIds(columns).map((id) => {
                         const column = columns[id];
-                        if (!column.title || id === "actions") return nothing;
+                        // Skip columns without a title/label or the actions column
+                        if ((!column.title && !column.label) || id === "actions")
+                          return nothing;
                         // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
                         const isVisible = this._hiddenColumns
                           ? !this._hiddenColumns.includes(id)
@@ -1116,7 +1115,7 @@ class ESPHomeDevicesList extends LitElement {
                               .path=${mdiDrag}
                               slot="graphic"
                             ></ha-svg-icon>
-                            ${column.title || id}
+                            ${column.label || column.title || id}
                             <ha-icon-button
                               class="action"
                               .path=${isVisible ? mdiEye : mdiEyeOff}
@@ -1378,6 +1377,11 @@ class ESPHomeDevicesList extends LitElement {
       width: 100%;
       --data-table-row-height: 60px;
       --data-table-border-width: 0;
+      overflow: visible;
+    }
+    /* Allow menu overflow from table rows */
+    ha-data-table::part(mdc-data-table__row) {
+      overflow: visible;
     }
 
     /* Device icon column */
@@ -1687,7 +1691,12 @@ class ESPHomeDevicesList extends LitElement {
       display: flex;
       gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+    .actions-container .update-button {
+      --mdc-icon-button-size: 40px;
+      color: var(--success-color, #4caf50);
     }
     .actions-container mwc-button {
       --mdc-theme-primary: var(--primary-text-color);
@@ -1834,6 +1843,21 @@ class ESPHomeDevicesList extends LitElement {
     getFile(device.configuration).then((config) => {
       textDownload(config!, device.configuration);
     });
+  }
+
+  private _handleDownloadElf(device: ConfiguredDevice) {
+    const type: DownloadType = {
+      title: "ELF File",
+      description: "ELF File",
+      file: "firmware.elf",
+      download: `${device.name}.elf`,
+    };
+    const link = document.createElement("a");
+    link.download = type.download;
+    link.href = getDownloadUrl(device.configuration, type);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
   public connectedCallback() {

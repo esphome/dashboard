@@ -1,10 +1,5 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-
-// Cache for loaded icon paths
-const iconCache: Record<string, string> = {};
-
-// Common icons that we pre-import from @mdi/js for instant display
 import {
   mdiChip,
   mdiLightbulb,
@@ -20,8 +15,11 @@ import {
   mdiAirFilter,
 } from "@mdi/js";
 
-// Map of common icon names to their paths
-const COMMON_ICONS: Record<string, string> = {
+// Cache for loaded icon paths
+const iconCache: Record<string, string> = {};
+
+// Pre-bundled common icons
+const BUNDLED_ICONS: Record<string, string> = {
   chip: mdiChip,
   lightbulb: mdiLightbulb,
   thermometer: mdiThermometer,
@@ -42,6 +40,15 @@ export class ESPHomeMdiIcon extends LitElement {
 
   @state() private _path?: string;
 
+  private _loadingIcon?: string;
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.icon) {
+      this._loadIcon();
+    }
+  }
+
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("icon")) {
       this._loadIcon();
@@ -51,32 +58,36 @@ export class ESPHomeMdiIcon extends LitElement {
   private async _loadIcon() {
     if (!this.icon) {
       this._path = undefined;
+      this._loadingIcon = undefined;
       return;
     }
+
+    // Track which icon we're loading to handle rapid changes
+    const currentIcon = this.icon;
+    this._loadingIcon = currentIcon;
 
     // Parse the icon name (remove mdi: prefix if present)
     const iconName = this.icon.startsWith("mdi:")
       ? this.icon.slice(4)
       : this.icon;
 
-    // Check if it's a common pre-loaded icon
-    if (COMMON_ICONS[iconName]) {
-      this._path = COMMON_ICONS[iconName];
-      return;
-    }
-
-    // Check cache
+    // Check cache first
     if (iconCache[iconName]) {
       this._path = iconCache[iconName];
       return;
     }
 
-    // Fetch from CDN
+    // Check bundled icons
+    if (BUNDLED_ICONS[iconName]) {
+      this._path = BUNDLED_ICONS[iconName];
+      iconCache[iconName] = this._path;
+      return;
+    }
 
+    // Fetch from CDN for non-bundled icons
     try {
-      // Use jsdelivr CDN to fetch the icon
       const response = await fetch(
-        `https://cdn.jsdelivr.net/npm/@mdi/svg@latest/svg/${iconName}.svg`,
+        `https://cdn.jsdelivr.net/npm/@mdi/svg@7.4.47/svg/${iconName}.svg`
       );
 
       if (!response.ok) {
@@ -85,19 +96,28 @@ export class ESPHomeMdiIcon extends LitElement {
 
       const svgText = await response.text();
 
-      // Extract the path from the SVG
-      const pathMatch = svgText.match(/d="([^"]+)"/);
+      // Check if icon changed during fetch - if so, ignore this result
+      if (this._loadingIcon !== currentIcon) {
+        return;
+      }
+
+      const pathMatch = svgText.match(/<path d="([^"]+)"/);
+
       if (pathMatch && pathMatch[1]) {
-        const path = pathMatch[1];
-        iconCache[iconName] = path;
-        this._path = path;
+        iconCache[iconName] = pathMatch[1];
+        this._path = pathMatch[1];
+        this.requestUpdate();
       } else {
         throw new Error(`Could not parse SVG for icon: ${iconName}`);
       }
     } catch (err) {
+      // Check if icon changed during fetch - if so, ignore this error
+      if (this._loadingIcon !== currentIcon) {
+        return;
+      }
       console.warn(`Failed to load icon: ${iconName}`, err);
-      // Fallback to chip icon
       this._path = mdiChip;
+      this.requestUpdate();
     }
   }
 

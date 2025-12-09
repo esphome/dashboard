@@ -1,4 +1,7 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// Import full Monaco editor with all contributions (including context menu)
+import * as monaco from "monaco-editor";
+// Import Monaco CSS as raw string (asset/source) and inject it
+import monacoCss from "monaco-editor/min/vs/editor/editor.main.css";
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
@@ -13,6 +16,24 @@ import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
 import { setSchemaVersion } from "./editor-shims";
+
+// Inject Monaco CSS into the document head
+if (!document.getElementById("monaco-editor-css")) {
+  const style = document.createElement("style");
+  style.id = "monaco-editor-css";
+  // Add context menu z-index fix to ensure it appears above everything
+  style.textContent =
+    monacoCss +
+    `
+    .monaco-menu-container {
+      z-index: 10000 !important;
+    }
+    .context-view.monaco-menu-container {
+      z-index: 10000 !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -160,8 +181,6 @@ class ESPHomeEditor extends LitElement {
       dimension: this.calcEditorSize(),
       fontFamily:
         'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
-      cursorBlinking: "blink",
-      cursorStyle: "line",
     });
 
     const isSecrets =
@@ -172,17 +191,11 @@ class ESPHomeEditor extends LitElement {
         response = EMPTY_SECRETS;
       }
       this.editor?.setValue(response ?? "");
-      // Force layout recalculation after content is loaded to fix cursor positioning
-      // This must happen after the browser has had time to render and calculate dimensions
-      requestAnimationFrame(() => {
-        this.editor?.layout(this.calcEditorSize());
-        this.editor?.setPosition({ lineNumber: 1, column: 1 });
-        this.editor?.revealLine(1);
-        this.editor?.focus();
-      });
 
       this.startAceWebsocket();
     });
+
+    this.editor.focus();
 
     this.editor.getModel()?.onDidChangeContent(
       debounce(() => {
