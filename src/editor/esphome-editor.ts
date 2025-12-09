@@ -1,4 +1,5 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// Import full Monaco editor with all contributions (including context menu)
+import * as monaco from "monaco-editor";
 // Import Monaco CSS as raw string (asset/source) and inject it
 import monacoCss from "monaco-editor/min/vs/editor/editor.main.css";
 import { LitElement, html } from "lit";
