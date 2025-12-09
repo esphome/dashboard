@@ -23,7 +23,8 @@ export class ESPHomeButtonMenu extends LitElement {
         <slot name="trigger"></slot>
       </div>
       <mwc-menu
-        .corner=${this.corner}
+        .corner=${"TOP_END" as Corner}
+        .menuCorner=${"END"}
         .quick=${true}
         .fixed=${true}
         @action=${this._handleAction}
@@ -41,20 +42,10 @@ export class ESPHomeButtonMenu extends LitElement {
     // Get the bounding rect of this element for fixed positioning
     const rect = this.getBoundingClientRect();
 
-    // Set x/y coordinates for fixed positioning based on corner
-    // BOTTOM_RIGHT means menu appears below and to the left of the anchor
-    if (this.corner === "BOTTOM_RIGHT" || this.corner === "BOTTOM_LEFT") {
-      this._menu!.y = rect.bottom;
-    } else {
-      this._menu!.y = rect.top;
-    }
-
-    if (this.corner === "BOTTOM_RIGHT" || this.corner === "TOP_RIGHT") {
-      this._menu!.x = rect.right;
-    } else {
-      this._menu!.x = rect.left;
-    }
-
+    // Position menu below and to the right of the trigger
+    // x = right edge of button, y = bottom of button
+    this._menu!.x = rect.right;
+    this._menu!.y = rect.bottom;
     this._menu!.anchor = null;
     this._menu!.show();
   }

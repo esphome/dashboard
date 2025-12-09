@@ -20,7 +20,17 @@ import { setSchemaVersion } from "./editor-shims";
 if (!document.getElementById("monaco-editor-css")) {
   const style = document.createElement("style");
   style.id = "monaco-editor-css";
-  style.textContent = monacoCss;
+  // Add context menu z-index fix to ensure it appears above everything
+  style.textContent =
+    monacoCss +
+    `
+    .monaco-menu-container {
+      z-index: 10000 !important;
+    }
+    .context-view.monaco-menu-container {
+      z-index: 10000 !important;
+    }
+  `;
   document.head.appendChild(style);
 }
 

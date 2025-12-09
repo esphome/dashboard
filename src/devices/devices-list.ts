@@ -244,7 +244,7 @@ class ESPHomeDevicesList extends LitElement {
 
     // Get current column order (excluding non-reorderable columns)
     const reorderableColumns = Object.entries(columns)
-      .filter(([id, col]) => col.title && id !== "actions")
+      .filter(([id, col]) => (col.title || col.label) && id !== "actions")
       .map(([id]) => id);
 
     // Use stored order or default order
@@ -269,9 +269,9 @@ class ESPHomeDevicesList extends LitElement {
   };
 
   private _getOrderedColumnIds(columns: DataTableColumnContainer): string[] {
-    // Get reorderable column IDs (those with titles, excluding actions)
+    // Get reorderable column IDs (those with titles/labels, excluding actions)
     const reorderableColumns = Object.entries(columns)
-      .filter(([id, col]) => col.title && id !== "actions")
+      .filter(([id, col]) => (col.title || col.label) && id !== "actions")
       .map(([id]) => id);
 
     if (!this._columnOrder) {
@@ -366,6 +366,7 @@ class ESPHomeDevicesList extends LitElement {
     return {
       icon: {
         title: "",
+        label: "Icon",
         sortable: false,
         type: "icon",
         minWidth: "56px",
@@ -1101,7 +1102,9 @@ class ESPHomeDevicesList extends LitElement {
                     <ha-list>
                       ${this._getOrderedColumnIds(columns).map((id) => {
                         const column = columns[id];
-                        if (!column.title || id === "actions") return nothing;
+                        // Skip columns without a title/label or the actions column
+                        if ((!column.title && !column.label) || id === "actions")
+                          return nothing;
                         // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
                         const isVisible = this._hiddenColumns
                           ? !this._hiddenColumns.includes(id)
@@ -1118,7 +1121,7 @@ class ESPHomeDevicesList extends LitElement {
                               .path=${mdiDrag}
                               slot="graphic"
                             ></ha-svg-icon>
-                            ${column.title || id}
+                            ${column.label || column.title || id}
                             <ha-icon-button
                               class="action"
                               .path=${isVisible ? mdiEye : mdiEyeOff}
