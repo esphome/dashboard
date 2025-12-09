@@ -9,6 +9,8 @@ export class ESPHomeButtonMenu extends LitElement {
 
   @query("mwc-menu", true) private _menu?: Menu;
 
+  @query(".trigger") private _trigger?: HTMLElement;
+
   public get items() {
     return this._menu?.items;
   }
@@ -19,10 +21,16 @@ export class ESPHomeButtonMenu extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <div @click=${this._handleClick}>
+      <div class="trigger" @click=${this._handleClick}>
         <slot name="trigger"></slot>
       </div>
-      <mwc-menu .corner=${this.corner} .absolute=${true} @action=${this._handleAction}>
+      <mwc-menu
+        .corner=${this.corner}
+        .fixed=${true}
+        .quick=${true}
+        @action=${this._handleAction}
+        @closed=${this._handleClosed}
+      >
         <slot></slot>
       </mwc-menu>
     `;
@@ -31,7 +39,8 @@ export class ESPHomeButtonMenu extends LitElement {
   private _handleClick(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
-    this._menu!.anchor = this;
+    // Use the trigger element as anchor for better positioning
+    this._menu!.anchor = this._trigger!;
     this._menu!.show();
   }
 
@@ -46,10 +55,17 @@ export class ESPHomeButtonMenu extends LitElement {
     );
   }
 
+  private _handleClosed(ev: Event): void {
+    ev.stopPropagation();
+  }
+
   static styles = css`
     :host {
       display: inline-block;
       position: relative;
+    }
+    .trigger {
+      display: inline-block;
     }
     mwc-menu {
       --mdc-theme-surface: var(--card-background-color);
