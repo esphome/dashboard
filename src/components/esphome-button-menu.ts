@@ -57,7 +57,7 @@ export class ESPHomeButtonMenu extends LitElement {
         detail: ev.detail,
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 

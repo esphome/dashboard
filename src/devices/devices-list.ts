@@ -821,9 +821,7 @@ class ESPHomeDevicesList extends LitElement {
         ip_address: address,
         has_static_ip: hasStaticIp,
         // Platform shows the device type (ESP32, ESP8266, etc.)
-        platform: isImportable
-          ? "-"
-          : configuredDevice?.target_platform || "-",
+        platform: isImportable ? "-" : configuredDevice?.target_platform || "-",
         name: device.friendly_name || device.name,
         // Project name for display (only available for importable devices)
         project_name: isImportable
@@ -1096,7 +1094,10 @@ class ESPHomeDevicesList extends LitElement {
                       ${this._getOrderedColumnIds(columns).map((id) => {
                         const column = columns[id];
                         // Skip columns without a title/label or the actions column
-                        if ((!column.title && !column.label) || id === "actions")
+                        if (
+                          (!column.title && !column.label) ||
+                          id === "actions"
+                        )
                           return nothing;
                         // Check visibility: if in hiddenColumns -> hidden, else use defaultHidden
                         const isVisible = this._hiddenColumns

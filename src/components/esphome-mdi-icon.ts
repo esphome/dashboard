@@ -87,7 +87,7 @@ export class ESPHomeMdiIcon extends LitElement {
     // Fetch from CDN for non-bundled icons
     try {
       const response = await fetch(
-        `https://cdn.jsdelivr.net/npm/@mdi/svg@7.4.47/svg/${iconName}.svg`
+        `https://cdn.jsdelivr.net/npm/@mdi/svg@7.4.47/svg/${iconName}.svg`,
       );
 
       if (!response.ok) {
