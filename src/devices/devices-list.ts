@@ -45,7 +45,6 @@ import { openShowApiKeyDialog } from "../show-api-key";
 import { getFile } from "../api/files";
 import { textDownload } from "../util/file-download";
 import { DownloadType, getDownloadUrl } from "../api/download";
-import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { mockHass } from "../util/hass-mock";
 import {
   mdiArrowDown,
@@ -1789,54 +1788,6 @@ class ESPHomeDevicesList extends LitElement {
 
   private async _updateDevices() {
     refreshDevices();
-  }
-
-  private async _handleOverflowAction(
-    ev: CustomEvent<ActionDetail>,
-    device: ConfiguredDevice,
-  ) {
-    switch (ev.detail.index) {
-      case 0: // Validate
-        openValidateDialog(device.configuration);
-        break;
-      case 1: // Install
-        openInstallChooseDialog(device.configuration);
-        break;
-      case 2: // Logs
-        openLogsTargetDialog(device.configuration);
-        break;
-      case 3: // Show API Key
-        openShowApiKeyDialog(device.configuration);
-        break;
-      case 4: // Download YAML
-        this._handleDownloadYaml(device);
-        break;
-      case 5: // Rename hostname
-        openRenameDialog(device.configuration, device.name);
-        break;
-      case 6: // Clean Build Files
-        openCleanDialog(device.configuration);
-        break;
-      case 7: // Download ELF file
-        const type: DownloadType = {
-          title: "ELF File",
-          description: "ELF File",
-          file: "firmware.elf",
-          download: `${device.name}.elf`,
-        };
-        const link = document.createElement("a");
-        link.download = type.download;
-        link.href = getDownloadUrl(device.configuration, type);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        break;
-      case 9: // Delete (after the divider)
-        openDeleteDeviceDialog(device.name, device.configuration, () =>
-          this._updateDevices(),
-        );
-        break;
-    }
   }
 
   private async _handleDownloadYaml(device: ConfiguredDevice) {
