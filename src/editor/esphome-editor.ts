@@ -21,9 +21,15 @@ import { setSchemaVersion } from "./editor-shims";
 if (!document.getElementById("monaco-editor-css")) {
   const style = document.createElement("style");
   style.id = "monaco-editor-css";
+  // Fix the codicon font path - the CSS has a relative path that doesn't work
+  // when injected as a string, so we replace it with the absolute path
+  const fixedCss = monacoCss.replace(
+    /url\([^)]*codicon\.ttf\)/g,
+    "url(/static/js/esphome/codicon.ttf)",
+  );
   // Add context menu z-index fix to ensure it appears above everything
   style.textContent =
-    monacoCss +
+    fixedCss +
     `
     .monaco-menu-container {
       z-index: 10000 !important;
