@@ -1,7 +1,5 @@
 // Import full Monaco editor with all contributions (including context menu)
 import * as monaco from "monaco-editor";
-// Import Monaco CSS as raw string (asset/source) and inject it
-import monacoCss from "monaco-editor/min/vs/editor/editor.main.css";
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
@@ -17,20 +15,18 @@ import { debounce } from "../util/debounce";
 import "./monaco-provider";
 import { setSchemaVersion } from "./editor-shims";
 
-// Inject Monaco CSS into the document head
+// Inject Monaco CSS overrides into the document head
 if (!document.getElementById("monaco-editor-css")) {
   const style = document.createElement("style");
   style.id = "monaco-editor-css";
-  // Fix the codicon font path - the CSS has a relative path that doesn't work
-  // when injected as a string, so we replace it with the absolute path
-  const fixedCss = monacoCss.replace(
-    /url\([^)]*codicon\.ttf\)/g,
-    "url(/static/js/esphome/codicon.ttf)",
-  );
-  // Add context menu z-index fix to ensure it appears above everything
-  style.textContent =
-    fixedCss +
-    `
+  // Override the codicon font with correct absolute path
+  // Monaco bundles CSS with relative paths that don't work in our setup
+  style.textContent = `
+    @font-face {
+      font-family: "codicon";
+      font-display: block;
+      src: url("/static/js/esphome/codicon.ttf") format("truetype");
+    }
     .monaco-menu-container {
       z-index: 10000 !important;
     }
