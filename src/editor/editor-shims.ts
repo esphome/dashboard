@@ -1,4 +1,5 @@
-import * as monaco from "monaco-editor";
+// Use the API-only import for better initialization compatibility across browsers
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { ESPHomeSchema } from "./esphome-schema";
 
 let schema_version = "dev";
