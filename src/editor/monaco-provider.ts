@@ -1,3 +1,4 @@
+// Use the API-only import for better initialization compatibility across browsers
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { CompletionsHandler } from "./completions-handler";
 import { DefinitionHandler } from "./definition-handler";

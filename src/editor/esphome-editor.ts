@@ -1,4 +1,5 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// Import full Monaco editor with all contributions (including context menu)
+import * as monaco from "monaco-editor";
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import "@material/mwc-dialog";
@@ -13,6 +14,28 @@ import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
 import { setSchemaVersion } from "./editor-shims";
+
+// Inject Monaco CSS overrides into the document head
+if (!document.getElementById("monaco-editor-css")) {
+  const style = document.createElement("style");
+  style.id = "monaco-editor-css";
+  // Override the codicon font with correct absolute path
+  // Monaco bundles CSS with relative paths that don't work in our setup
+  style.textContent = `
+    @font-face {
+      font-family: "codicon";
+      font-display: block;
+      src: url("/static/js/esphome/codicon.ttf") format("truetype");
+    }
+    .monaco-menu-container {
+      z-index: 10000 !important;
+    }
+    .context-view.monaco-menu-container {
+      z-index: 10000 !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -37,7 +60,7 @@ class ESPHomeEditor extends LitElement {
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
   @query("main", true) private container!: HTMLElement;
-  @query(".esphome-header", true) private editor_header!: HTMLElement;
+  @query(".editor-header", true) private editor_header!: HTMLElement;
 
   createRenderRoot() {
     return this;
@@ -54,11 +77,13 @@ class ESPHomeEditor extends LitElement {
           height: 100vh;
           overflow: hidden;
         }
-        .esphome-header {
+        .editor-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           align-content: stretch;
+          background-color: var(--esphome-background-header);
+          padding: 0 8px;
         }
         h2 {
           line-height: 100%;
@@ -80,7 +105,7 @@ class ESPHomeEditor extends LitElement {
       </style>
       <mwc-snackbar leading></mwc-snackbar>
 
-      <div class="esphome-header">
+      <div class="editor-header">
         <mwc-icon-button
           icon="clear"
           @click=${this._handleClose}

@@ -15,12 +15,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6.0.1
+        with:
+          submodules: recursive
       - name: Use Node.js
         uses: actions/setup-node@v5.0.0
         with:
           node-version: 24
       - run: npm ci
-      - run: tsc
+      - name: Type check
+        run: |
+          # Type check src files only, ignoring homeassistant-frontend submodule errors
+          tsc 2>&1 | grep -v "^homeassistant-frontend/" | tee /tmp/tsc-output.txt
+          # Fail only if there are errors in our source files
+          if grep -q "^src/\|^web.esphome.io/src/" /tmp/tsc-output.txt; then
+            echo "TypeScript errors found in source files:"
+            grep "^src/\|^web.esphome.io/src/" /tmp/tsc-output.txt
+            exit 1
+          fi
       - run: script/build
       - run: web.esphome.io/script/build_web
       - run: npm exec -- prettier --check src web.esphome.io/src
