@@ -1,10 +1,11 @@
+import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import { StreamError, streamLogs } from "../api";
 import { ColoredConsole, coloredConsoleStyles } from "../util/console-color";
 import { fireEvent } from "../util/fire-event";
 
 @customElement("esphome-remote-process")
-class ESPHomeRemoteProcess extends HTMLElement {
+class ESPHomeRemoteProcess extends LitElement {
   public type!: "validate" | "logs" | "upload" | "clean-mqtt" | "clean";
   public spawnParams!: Record<string, any>;
 

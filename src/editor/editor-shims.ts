@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import { ESPHomeSchema } from "./esphome-schema";
 
 let schema_version = "dev";
@@ -97,9 +97,20 @@ export const toMonacoPosition = (position: Position): monaco.IPosition => ({
 });
 
 export type CompletionItem = monaco.languages.CompletionItem;
-export const CompletionItemKind = monaco.languages.CompletionItemKind;
-export const CompletionItemInsertTextRule =
+
+// Lazy getters to avoid accessing monaco.languages at module load time
+// This fixes Chrome initialization issues where monaco.languages may be undefined
+export const getCompletionItemKind = () => monaco.languages.CompletionItemKind;
+export const getCompletionItemInsertTextRule = () =>
   monaco.languages.CompletionItemInsertTextRule;
+
+// For backward compatibility - these are accessed at runtime in functions
+export const CompletionItemKind = new Proxy({} as typeof monaco.languages.CompletionItemKind, {
+  get: (_, prop) => monaco.languages.CompletionItemKind[prop as keyof typeof monaco.languages.CompletionItemKind],
+});
+export const CompletionItemInsertTextRule = new Proxy({} as typeof monaco.languages.CompletionItemInsertTextRule, {
+  get: (_, prop) => monaco.languages.CompletionItemInsertTextRule[prop as keyof typeof monaco.languages.CompletionItemInsertTextRule],
+});
 
 export const createCompletion = (
   label: string,
@@ -130,7 +141,8 @@ export const createCompletion = (
   // use IMarkdownString
   if (documentation) completion.documentation = { value: documentation };
   if (snippet) {
-    completion.insertTextRules = CompletionItemInsertTextRule.InsertAsSnippet;
+    completion.insertTextRules =
+      monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet;
   }
   return completion;
 };
@@ -145,7 +157,8 @@ export const createCompletionSnippet = (
     label: label,
     insertText: insertText,
     kind,
-    insertTextRules: CompletionItemInsertTextRule.InsertAsSnippet,
+    insertTextRules:
+      monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
     documentation,
     range: null!,
   };

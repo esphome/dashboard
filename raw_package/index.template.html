@@ -14,7 +14,7 @@
 
 {% block footer %}
 <script
-  src="{{ get_static_file_url('js/esphome/index.js') }}"
+  src="{{ get_static_file_url('js/esphome/index.js') }}?v={{ version }}"
   type="module"
 ></script>
 {% end %}

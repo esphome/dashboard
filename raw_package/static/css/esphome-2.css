@@ -3,6 +3,7 @@
 :root {
   /* Colors */
   --primary-bg-color: #fafafa;
+  --primary-background-color: #fafafa;
   --primary-footer-bg-color: #212121;
   --card-background-color: #fafafa;
   --alert-standard-color: #666666;
@@ -17,7 +18,7 @@
   --alert-error-color-bg: #faefeb;
   --mdc-theme-primary: #03a9f4;
   --primary-text-color: #212121;
-  --mdc-dialog-z-index: 998;
+  --mdc-dialog-z-index: 10000;
   --mdc-theme-primary-no-attention: #444444;
   --mdc-theme-on-primary-no-attention: white;
   --esphome-background-header: #e0e0e0;
@@ -33,7 +34,8 @@
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-bg-color: #000000;
+    --primary-bg-color: #111111;
+    --primary-background-color: #111111;
     --primary-text-color: #e1e1e1;
     --primary-footer-bg-color: #101e24;
     --esphome-background-header: #282828;
@@ -103,7 +105,7 @@ esphome-main {
   background-color: var(--esphome-background-header);
   color: var(--primary-text-color);
   padding: 0 24px;
-  z-index: 1;
+  z-index: 50;
 }
 
 .flex {

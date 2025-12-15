@@ -1,9 +1,12 @@
 import "./devices/devices-list";
 import "./components/esphome-header-menu";
-import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { connectionStatus } from "./util/connection-status";
+import { openWizardDialog } from "./wizard";
+import "@material/mwc-button";
+import { mdiHomeAutomation } from "@mdi/js";
+import "./components/esphome-svg-icon";
 
 @customElement("esphome-main")
 class ESPHomeMainView extends LitElement {
@@ -35,12 +38,25 @@ class ESPHomeMainView extends LitElement {
     }
     return html`
       <header class="esphome-header">
-        <img src="static/images/logo-text.svg" alt="ESPHome Logo" />
+        <div class="header-title">
+          <esphome-svg-icon .path=${mdiHomeAutomation}></esphome-svg-icon>
+          <span>ESPHome Device Builder</span>
+        </div>
         <div class="flex"></div>
+        <mwc-button
+          raised
+          class="create-device-btn"
+          @click=${this._handleCreateDevice}
+        >
+          Create device
+        </mwc-button>
         <esphome-header-menu
           .logoutUrl=${this.logoutUrl}
           .showDiscoveredDevices=${this.showDiscoveredDevices}
           @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+          @view-mode-changed=${this._handleViewModeChanged}
+          @sort-changed=${this._handleSortChanged}
+          @filter-changed=${this._handleFilterChanged}
         ></esphome-header-menu>
       </header>
 
@@ -51,11 +67,16 @@ class ESPHomeMainView extends LitElement {
         ></esphome-devices-list>
       </main>
 
-      <esphome-fab></esphome-fab>
-
       <footer class="page-footer">
         <div>
-          ESPHome by Open Home Foundation |
+          ESPHome is a project by
+          <a
+            href="https://www.openhomefoundation.org/"
+            target="_blank"
+            rel="noreferrer"
+            >Open Home Foundation</a
+          >
+          |
           <a href="https://esphome.io/guides/supporters.html" target="_blank"
             >Fund&nbsp;development</a
           >
@@ -84,8 +105,42 @@ class ESPHomeMainView extends LitElement {
     this.editing = undefined;
   }
 
+  private _handleCreateDevice() {
+    openWizardDialog();
+  }
+
   private _toggleDiscoveredDevices() {
     this.showDiscoveredDevices = !this.showDiscoveredDevices;
+  }
+
+  private _handleViewModeChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("view-mode-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleSortChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("sort-changed", { detail: e.detail }),
+      );
+    }
+  }
+
+  private _handleFilterChanged(e: CustomEvent) {
+    // Forward event to devices list
+    const devicesList = document.querySelector("esphome-devices-list");
+    if (devicesList) {
+      devicesList.dispatchEvent(
+        new CustomEvent("filter-changed", { detail: e.detail }),
+      );
+    }
   }
 }
 

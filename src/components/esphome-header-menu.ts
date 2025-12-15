@@ -63,6 +63,7 @@ export class ESPHomeHeaderMenu extends LitElement {
               <mwc-list-item graphic="icon"
                 ><mwc-icon slot="graphic">search</mwc-icon>Search</mwc-list-item
               >
+              <li divider role="separator"></li>
             `
           : nothing}
 
@@ -166,6 +167,13 @@ export class ESPHomeHeaderMenu extends LitElement {
       }
       return;
     }
+
+    // Mobile menu structure:
+    // 0: Search
+    // 1: Show/Hide discovered devices
+    // 2: Update All
+    // 3: Secrets Editor
+
     switch (ev.detail.index) {
       case 0:
         this._handleSearch();
@@ -190,6 +198,8 @@ export class ESPHomeHeaderMenu extends LitElement {
       display: flex;
       align-items: center;
       --mdc-theme-primary: var(--primary-text-color);
+      position: relative;
+      z-index: 100;
     }
     .search {
       width: 48px;
@@ -206,6 +216,10 @@ export class ESPHomeHeaderMenu extends LitElement {
     }
     a {
       text-decoration: none;
+    }
+    mwc-icon-button {
+      --mdc-icon-button-size: 40px;
+      --mdc-icon-size: 24px;
     }
   `;
 }
