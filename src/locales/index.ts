@@ -9,7 +9,7 @@ import { tr } from "./tr";
 // Available locales
 export const LOCALES = {
   en: { name: "English", nativeName: "English", translations: en },
-  tr: { name: "Turkish", nativeName: "Turkce", translations: tr },
+  tr: { name: "Turkish", nativeName: "Türkçe", translations: tr },
 } as const;
 
 export type LocaleCode = keyof typeof LOCALES;
@@ -72,7 +72,7 @@ export function setLocale(locale: LocaleCode): void {
 
   // Dispatch custom event for components that don't use listeners
   window.dispatchEvent(
-    new CustomEvent("locale-changed", { detail: { locale } })
+    new CustomEvent("locale-changed", { detail: { locale } }),
   );
 }
 
@@ -121,7 +121,7 @@ function getNestedValue(obj: unknown, path: string): string | undefined {
  */
 export function t(
   key: string,
-  params?: Record<string, string | number>
+  params?: Record<string, string | number>,
 ): string {
   const translations = getTranslations();
   let value = getNestedValue(translations, key);
@@ -142,7 +142,7 @@ export function t(
     Object.entries(params).forEach(([paramKey, paramValue]) => {
       value = value!.replace(
         new RegExp(`\\{${paramKey}\\}`, "g"),
-        String(paramValue)
+        String(paramValue),
       );
     });
   }

@@ -111,7 +111,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                     label="${t("device.update")}"
                   ></mwc-button>
                   <paper-tooltip>
-                    ${t("device.updateAvailable", { deployed: this.device.deployed_version || "", current: this.device.current_version || "" })}
+                    ${t("device.updateAvailable", {
+                      deployed: this.device.deployed_version || "",
+                      current: this.device.current_version || "",
+                    })}
                   </paper-tooltip>
                 </div>
               `
@@ -130,8 +133,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               `
             : ""}
 
-          <mwc-button label="${t("edit")}" @click=${this._handleEdit}></mwc-button>
-          <mwc-button label="${t("device.logs")}" @click=${this._handleLogs}></mwc-button>
+          <mwc-button
+            label="${t("edit")}"
+            @click=${this._handleEdit}
+          ></mwc-button>
+          <mwc-button
+            label="${t("device.logs")}"
+            @click=${this._handleLogs}
+          ></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
             corner="BOTTOM_RIGHT"

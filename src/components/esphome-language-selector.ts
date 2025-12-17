@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js";
 import "@material/mwc-menu";
+import type { Menu } from "@material/mwc-menu";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import {
@@ -18,7 +19,8 @@ import {
 @customElement("esphome-language-selector")
 export class ESPHomeLanguageSelector extends LitElement {
   @state() private _currentLocale: LocaleCode = getLocale();
-  @state() private _menuOpen = false;
+
+  @query("mwc-menu", true) private _menu?: Menu;
 
   private _unsubscribe?: () => void;
 
@@ -37,7 +39,7 @@ export class ESPHomeLanguageSelector extends LitElement {
   protected render() {
     const locales = getAvailableLocales();
     const currentLocaleData = locales.find(
-      (l) => l.code === this._currentLocale
+      (l) => l.code === this._currentLocale,
     );
 
     return html`
@@ -47,11 +49,7 @@ export class ESPHomeLanguageSelector extends LitElement {
           @click=${this._toggleMenu}
           title="${currentLocaleData?.nativeName || "Language"}"
         ></mwc-icon-button>
-        <mwc-menu
-          .open=${this._menuOpen}
-          @closed=${this._handleMenuClosed}
-          corner="BOTTOM_START"
-        >
+        <mwc-menu corner="BOTTOM_START">
           ${locales.map(
             (locale) => html`
               <mwc-list-item
@@ -63,7 +61,7 @@ export class ESPHomeLanguageSelector extends LitElement {
                   ? html`<mwc-icon slot="meta">check</mwc-icon>`
                   : ""}
               </mwc-list-item>
-            `
+            `,
           )}
         </mwc-menu>
       </div>
@@ -71,16 +69,12 @@ export class ESPHomeLanguageSelector extends LitElement {
   }
 
   private _toggleMenu() {
-    this._menuOpen = !this._menuOpen;
-  }
-
-  private _handleMenuClosed() {
-    this._menuOpen = false;
+    this._menu!.anchor = this;
+    this._menu!.show();
   }
 
   private _selectLocale(locale: LocaleCode) {
     setLocale(locale);
-    this._menuOpen = false;
     // Force page reload to apply translations
     window.location.reload();
   }

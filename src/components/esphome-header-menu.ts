@@ -38,7 +38,10 @@ export class ESPHomeHeaderMenu extends LitElement {
               label="${t("header.updateAll")}"
               @click=${this._handleUpdateAll}
             ></mwc-button>
-            <mwc-button label="${t("header.cleanAll")}" @click=${this._handleCleanAll}>
+            <mwc-button
+              label="${t("header.cleanAll")}"
+              @click=${this._handleCleanAll}
+            >
               <esphome-svg-icon
                 slot="icon"
                 .path=${mdiBroom}
@@ -65,7 +68,9 @@ export class ESPHomeHeaderMenu extends LitElement {
         ${!this._isWide
           ? html`
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">search</mwc-icon>${t("header.search")}</mwc-list-item
+                ><mwc-icon slot="graphic">search</mwc-icon>${t(
+                  "header.search",
+                )}</mwc-list-item
               >
             `
           : nothing}
@@ -80,7 +85,9 @@ export class ESPHomeHeaderMenu extends LitElement {
         ${!this._isWide
           ? html`
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">system_update</mwc-icon>${t("header.updateAll")}</mwc-list-item
+                ><mwc-icon slot="graphic">system_update</mwc-icon>${t(
+                  "header.updateAll",
+                )}</mwc-list-item
               >
               <mwc-list-item graphic="icon"
                 ><esphome-svg-icon
@@ -90,7 +97,9 @@ export class ESPHomeHeaderMenu extends LitElement {
                 >${t("header.cleanAll")}</mwc-list-item
               >
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">lock</mwc-icon>${t("header.secretsEditor")}</mwc-list-item
+                ><mwc-icon slot="graphic">lock</mwc-icon>${t(
+                  "header.secretsEditor",
+                )}</mwc-list-item
               >
             `
           : nothing}

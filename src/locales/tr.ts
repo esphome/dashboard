@@ -90,7 +90,8 @@ export const tr = {
     webInstallNotSupported:
       "Bu cihaz için web üzerinden kurulum henüz desteklenmiyor",
     plugIntoServer: "ESPHome Cihaz Oluşturucu'nun çalıştığı bilgisayara takın",
-    forDevicesConnectedToServer: "USB ile sunucuya bağlı cihazlar için{picoNote}",
+    forDevicesConnectedToServer:
+      "USB ile sunucuya bağlı cihazlar için{picoNote}",
     andRunningEsphome: " ve ESPHome çalıştıran",
     manualDownload: "Manuel indirme",
     installYourself: "Kendiniz yükleyin",

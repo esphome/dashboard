@@ -127,9 +127,13 @@ class ESPHomeEditor extends LitElement {
 
     try {
       await writeFile(this.fileName, code ?? "");
-      this._showSnackbar(`✅ ${t("editor.saved", { fileName: this.fileName })}`);
+      this._showSnackbar(
+        `✅ ${t("editor.saved", { fileName: this.fileName })}`,
+      );
     } catch (error) {
-      this._showSnackbar(`❌ ${t("editor.saveError", { fileName: this.fileName })}`);
+      this._showSnackbar(
+        `❌ ${t("editor.saveError", { fileName: this.fileName })}`,
+      );
     }
   }
 
