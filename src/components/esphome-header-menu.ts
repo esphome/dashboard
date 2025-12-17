@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "./esphome-button-menu";
+import "./esphome-language-selector";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-icon-button";
 import "@material/mwc-button";
@@ -14,6 +15,7 @@ import { showConfirmationDialog } from "../dialogs";
 import { fireEvent } from "../util/fire-event";
 import { mdiBroom } from "@mdi/js";
 import "../components/esphome-svg-icon";
+import { t } from "../locales";
 
 const isWideListener = window.matchMedia("(min-width: 641px)");
 
@@ -33,10 +35,10 @@ export class ESPHomeHeaderMenu extends LitElement {
         ? html`
             <mwc-button
               icon="system_update"
-              label="Update All"
+              label="${t("header.updateAll")}"
               @click=${this._handleUpdateAll}
             ></mwc-button>
-            <mwc-button label="Clean All" @click=${this._handleCleanAll}>
+            <mwc-button label="${t("header.cleanAll")}" @click=${this._handleCleanAll}>
               <esphome-svg-icon
                 slot="icon"
                 .path=${mdiBroom}
@@ -44,7 +46,7 @@ export class ESPHomeHeaderMenu extends LitElement {
             </mwc-button>
             <mwc-button
               icon="lock"
-              label="Secrets"
+              label="${t("header.secrets")}"
               @click=${this._handleEditSecrets}
             ></mwc-button>
           `
@@ -52,6 +54,8 @@ export class ESPHomeHeaderMenu extends LitElement {
       <mwc-button class="search" @click=${this._handleSearch}>
         <mwc-icon>search</mwc-icon>
       </mwc-button>
+
+      <esphome-language-selector></esphome-language-selector>
 
       <esphome-button-menu
         corner="BOTTOM_START"
@@ -61,7 +65,7 @@ export class ESPHomeHeaderMenu extends LitElement {
         ${!this._isWide
           ? html`
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">search</mwc-icon>Search</mwc-list-item
+                ><mwc-icon slot="graphic">search</mwc-icon>${t("header.search")}</mwc-list-item
               >
             `
           : nothing}
@@ -69,33 +73,31 @@ export class ESPHomeHeaderMenu extends LitElement {
         <mwc-list-item graphic="icon"
           ><mwc-icon slot="graphic">filter_list</mwc-icon>
           ${this.showDiscoveredDevices
-            ? "Hide discovered devices"
-            : "Show discovered devices"}
+            ? t("header.hideDiscoveredDevices")
+            : t("header.showDiscoveredDevices")}
         </mwc-list-item>
 
         ${!this._isWide
           ? html`
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">system_update</mwc-icon>Update
-                All</mwc-list-item
+                ><mwc-icon slot="graphic">system_update</mwc-icon>${t("header.updateAll")}</mwc-list-item
               >
               <mwc-list-item graphic="icon"
                 ><esphome-svg-icon
                   slot="graphic"
                   .path=${mdiBroom}
                 ></esphome-svg-icon
-                >Clean All</mwc-list-item
+                >${t("header.cleanAll")}</mwc-list-item
               >
               <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">lock</mwc-icon>Secrets
-                Editor</mwc-list-item
+                ><mwc-icon slot="graphic">lock</mwc-icon>${t("header.secretsEditor")}</mwc-list-item
               >
             `
           : nothing}
         ${this.logoutUrl
           ? html`
               <a href=${this.logoutUrl}
-                ><mwc-list-item>Log Out</mwc-list-item></a
+                ><mwc-list-item>${t("header.logOut")}</mwc-list-item></a
               >
             `
           : ""}
@@ -124,10 +126,10 @@ export class ESPHomeHeaderMenu extends LitElement {
   private async _handleUpdateAll() {
     if (
       !(await showConfirmationDialog({
-        title: "Update All",
-        text: "Do you want to update all devices?",
-        confirmText: "Update All",
-        dismissText: "Cancel",
+        title: t("header.updateAll"),
+        text: t("header.updateAllConfirm"),
+        confirmText: t("header.updateAll"),
+        dismissText: t("cancel"),
       }))
     ) {
       return;
@@ -138,13 +140,10 @@ export class ESPHomeHeaderMenu extends LitElement {
   private async _handleCleanAll() {
     if (
       !(await showConfirmationDialog({
-        title: "Clean All",
-        text:
-          "Do you want to clean all build and platform files? " +
-          "This will remove all cached files and dependencies, " +
-          "which may take a while to download again and reinstall.",
-        confirmText: "Clean All",
-        dismissText: "Cancel",
+        title: t("header.cleanAll"),
+        text: t("header.cleanAllConfirm"),
+        confirmText: t("header.cleanAll"),
+        dismissText: t("cancel"),
         destructive: true,
       }))
     ) {

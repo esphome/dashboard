@@ -5,6 +5,7 @@ import "@material/mwc-dialog";
 import { deleteConfiguration } from "../api/configuration";
 import { fireEvent } from "../util/fire-event";
 import { esphomeDialogStyles } from "../styles";
+import { t } from "../locales";
 
 @customElement("esphome-delete-device-dialog")
 class ESPHomeDeleteDeviceDialog extends LitElement {
@@ -14,22 +15,22 @@ class ESPHomeDeleteDeviceDialog extends LitElement {
   protected render() {
     return html`
       <mwc-dialog
-        .heading=${`Delete ${this.name}`}
+        .heading=${t("deleteDevice.deleteTitle", { name: this.name })}
         @closed=${this._handleClose}
         open
       >
-        <div>Are you sure you want to delete ${this.name}?</div>
+        <div>${t("deleteDevice.confirmDelete", { name: this.name })}</div>
         <mwc-button
           slot="primaryAction"
           class="warning"
-          label="Delete"
+          label="${t("delete")}"
           dialogAction="close"
           @click=${this._handleDelete}
         ></mwc-button>
         <mwc-button
           slot="secondaryAction"
           no-attention
-          label="Cancel"
+          label="${t("cancel")}"
           dialogAction="cancel"
         ></mwc-button>
       </mwc-dialog>

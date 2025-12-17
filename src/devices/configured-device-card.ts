@@ -34,8 +34,8 @@ import {
   mdiUploadNetwork,
 } from "@mdi/js";
 import { DownloadType, getDownloadUrl } from "../api/download";
+import { t } from "../locales";
 
-const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
   NEW: "var(--status-new)",
   OFFLINE: "var(--alert-error-color)",
@@ -69,7 +69,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         <div class="device-config-path tooltip-container">
           <code class="inlinecode">${this.device.configuration}</code>
           <paper-tooltip>
-            Full Path:
+            ${t("device.fullPath")}
             <code class="inlinecode">${this.device.path}</code>
           </paper-tooltip>
         </div>
@@ -108,11 +108,10 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                   <mwc-button
                     @click=${this._handleInstall}
                     icon="system_update"
-                    label="Update"
+                    label="${t("device.update")}"
                   ></mwc-button>
                   <paper-tooltip>
-                    Update Available: ${this.device.deployed_version}
-                    ${UPDATE_TO_ICON} ${this.device.current_version}
+                    ${t("device.updateAvailable", { deployed: this.device.deployed_version || "", current: this.device.current_version || "" })}
                   </paper-tooltip>
                 </div>
               `
@@ -126,13 +125,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
                       : ``
                   }`}
                   target="_blank"
-                  ><mwc-button label="Visit"></mwc-button
+                  ><mwc-button label="${t("device.visit")}"></mwc-button
                 ></a>
               `
             : ""}
 
-          <mwc-button label="Edit" @click=${this._handleEdit}></mwc-button>
-          <mwc-button label="Logs" @click=${this._handleLogs}></mwc-button>
+          <mwc-button label="${t("edit")}" @click=${this._handleEdit}></mwc-button>
+          <mwc-button label="${t("device.logs")}" @click=${this._handleLogs}></mwc-button>
           <div class="flex"></div>
           <esphome-button-menu
             corner="BOTTOM_RIGHT"
@@ -140,49 +139,49 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
           >
             <mwc-icon-button slot="trigger" icon="more_vert"></mwc-icon-button>
             <mwc-list-item graphic="icon">
-              Validate
+              ${t("device.validate")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiSpellcheck}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Install
+              ${t("install")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiUploadNetwork}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Show API Key
+              ${t("device.showApiKey")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiKey}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Download YAML
+              ${t("device.downloadYaml")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiCodeBraces}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Rename hostname
+              ${t("device.renameHostname")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiRenameBox}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Clean Build Files
+              ${t("device.cleanBuildFiles")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiBroom}
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
-              Download ELF file
+              ${t("device.downloadElf")}
               <esphome-svg-icon
                 slot="graphic"
                 .path=${mdiDownload}
@@ -190,7 +189,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             </mwc-list-item>
             <li divider role="separator"></li>
             <mwc-list-item class="warning" graphic="icon">
-              Delete
+              ${t("delete")}
               <esphome-svg-icon
                 class="warning"
                 slot="graphic"
@@ -199,7 +198,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
             </mwc-list-item>
             ${this.device.loaded_integrations?.includes("mqtt")
               ? html`<mwc-list-item graphic="icon">
-                  Clean MQTT
+                  ${t("device.cleanMqtt")}
                   <esphome-svg-icon
                     slot="graphic"
                     .path=${mdiBroom}
