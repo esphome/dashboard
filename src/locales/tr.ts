@@ -4,188 +4,188 @@
 export const tr = {
   // Common buttons
   save: "Kaydet",
-  cancel: "Iptal",
+  cancel: "İptal",
   close: "Kapat",
   delete: "Sil",
-  install: "Yukle",
-  edit: "Duzenle",
+  install: "Yükle",
+  edit: "Düzenle",
   retry: "Tekrar Dene",
   back: "Geri",
   skip: "Atla",
   yes: "Evet",
-  download: "Indir",
-  rename: "Yeniden Adlandir",
+  download: "İndir",
+  rename: "Yeniden Adlandır",
 
   // Editor
   editor: {
-    saveFile: "Dosyayi kaydet",
+    saveFile: "Dosyayı kaydet",
     saved: "{fileName} kaydedildi",
-    saveError: "{fileName} kaydedilirken bir hata olustu",
+    saveError: "{fileName} kaydedilirken bir hata oluştu",
   },
 
   // Device Card
   device: {
-    update: "Guncelle",
+    update: "Güncelle",
     visit: "Ziyaret Et",
-    logs: "Kayitlar",
-    validate: "Dogrula",
-    showApiKey: "API Anahtarini Goster",
-    downloadYaml: "YAML Indir",
-    renameHostname: "Ana bilgisayar adini degistir",
-    cleanBuildFiles: "Derleme Dosyalarini Temizle",
-    downloadElf: "ELF dosyasini indir",
+    logs: "Kayıtlar",
+    validate: "Doğrula",
+    showApiKey: "API Anahtarını Göster",
+    downloadYaml: "YAML İndir",
+    renameHostname: "Ana bilgisayar adını değiştir",
+    cleanBuildFiles: "Derleme Dosyalarını Temizle",
+    downloadElf: "ELF dosyasını indir",
     cleanMqtt: "MQTT Temizle",
     fullPath: "Tam Yol:",
-    updateAvailable: "Guncelleme Mevcut: {deployed} -> {current}",
+    updateAvailable: "Güncelleme Mevcut: {deployed} → {current}",
   },
 
   // Device Status
   status: {
-    new: "YENI",
-    online: "CEVRIMICI",
-    offline: "CEVRIMDISI",
-    discovered: "KESFEDILDI",
-    ignoredDiscovery: "YOKSAYILAN KESIF",
+    new: "YENİ",
+    online: "ÇEVRİMİÇİ",
+    offline: "ÇEVRİMDIŞI",
+    discovered: "KEŞFEDİLDİ",
+    ignoredDiscovery: "YOKSAYILAN KEŞİF",
   },
 
   // Adopt Dialog
   adopt: {
-    takeControl: "Kontrolu Al",
-    configurationCreated: "Yapilandirma olusturuldu",
-    installationSkipped: "Kurulum atlandi",
+    takeControl: "Kontrolü Al",
+    configurationCreated: "Yapılandırma oluşturuldu",
+    installationSkipped: "Kurulum atlandı",
     takeControlDescription:
-      "{name} cihazinin kontrolunu almak, bu cihaz icin yerel bir ESPHome yapilandirmasi olusturacaktir. Bu size yapilandirma uzerinde tam kontrol saglar. Uretici tarafindan saglanan yazilim guncellemelerine erisimi kaybedeceksiniz ve cihazi ESPHome Cihaz Olusturucu'da manuel olarak derlemeniz ve guncellemeniz gerekecektir. Her zaman uretici guncellemelerine geri donebilirsiniz, ancak bu cihazi yeniden kurmanizi gerektirecektir.",
+      "{name} cihazının kontrolünü almak, bu cihaz için yerel bir ESPHome yapılandırması oluşturacaktır. Bu size yapılandırma üzerinde tam kontrol sağlar. Üretici tarafından sağlanan yazılım güncellemelerine erişimi kaybedeceksiniz ve cihazı ESPHome Cihaz Oluşturucu'da manuel olarak derlemeniz ve güncellemeniz gerekecektir. Her zaman üretici güncellemelerine geri dönebilirsiniz, ancak bu cihazı yeniden kurmanızı gerektirecektir.",
     finishTakingControl:
-      "{name} cihazinin kontrolunu tamamlamak icin yeni yapilandirmanin cihaza yuklenmesi gerekmektedir.",
+      "{name} cihazının kontrolünü tamamlamak için yeni yapılandırmanın cihaza yüklenmesi gerekmektedir.",
     installLater:
-      "Yapilandirmayi daha sonra cihaz kartindaki uc nokta menusunden yukleyebilirsiniz.",
+      "Yapılandırmayı daha sonra cihaz kartındaki üç nokta menüsünden yükleyebilirsiniz.",
     encryptionKeyInfo:
-      "Her ESPHome cihazinin diger cihazlarla iletisim kurmak icin benzersiz bir sifreleme anahtari vardir. Home Assistant'a cihazinizi dahil etmek icin bu anahtara ihtiyaciniz olacak. Anahtari daha sonra cihaz menusunde bulabilirsiniz.",
-    encryptionKey: "Sifreleme anahtari",
-    copied: "Kopyalandi!",
-    takingControl: "Kontrol aliniyor...",
+      "Her ESPHome cihazının diğer cihazlarla iletişim kurmak için benzersiz bir şifreleme anahtarı vardır. Home Assistant'a cihazınızı dahil etmek için bu anahtara ihtiyacınız olacak. Anahtarı daha sonra cihaz menüsünde bulabilirsiniz.",
+    encryptionKey: "Şifreleme anahtarı",
+    copied: "Kopyalandı!",
+    takingControl: "Kontrol alınıyor...",
     newName: "Yeni Ad",
-    networkName: "Ag adi",
+    networkName: "Ağ adı",
     password: "Parola",
-    leaveBlankIfNoPassword: "Parola yoksa bos birakin",
+    leaveBlankIfNoPassword: "Parola yoksa boş bırakın",
     wifiSecretsStored:
-      "Bu cihaz, sirlarinizda kayitli Wi-Fi agina baglanacak sekilde yapilandirilacaktir.",
+      "Bu cihaz, sırlarınızda kayıtlı Wi-Fi ağına bağlanacak şekilde yapılandırılacaktır.",
     enterWifiCredentials:
-      "Cihazinizin baglanmasini istediginiz Wi-Fi aginin kimlik bilgilerini girin.",
+      "Cihazınızın bağlanmasını istediğiniz Wi-Fi ağının kimlik bilgilerini girin.",
     wifiCredentialsStoredInfo:
-      "Bu bilgiler sirlarinizda saklanacak ve bu ve gelecekteki cihazlar icin kullanilacaktir. Bilgileri daha sonra sayfanin ustundeki sirlarinizi duzenleyerek degistirebilirsiniz.",
-    failedToStoreWifi: "Wi-Fi kimlik bilgileri saklanamadi",
-    failedToImport: "Cihaz iceri aktarilamadi",
+      "Bu bilgiler sırlarınızda saklanacak ve bu ve gelecekteki cihazlar için kullanılacaktır. Bilgileri daha sonra sayfanın üstündeki sırlarınızı düzenleyerek değiştirebilirsiniz.",
+    failedToStoreWifi: "Wi-Fi kimlik bilgileri saklanamadı",
+    failedToImport: "Cihaz içeri aktarılamadı",
   },
 
   // Install Choose Dialog
   installChoose: {
     howToInstall:
-      "{configuration} yapilandirmasini cihaziniza nasil yuklemek istiyorsunuz?",
+      "{configuration} yapılandırmasını cihazınıza nasıl yüklemek istiyorsunuz?",
     wirelessly: "Kablosuz olarak",
-    viaNetwork: "Ag uzerinden",
-    requiresOnline: "Cihazin cevrimici olmasi gerekir",
-    plugIntoThisComputer: "Bu bilgisayara takin",
-    forDevicesConnectedViaUsb: "USB ile bu bilgisayara bagli cihazlar icin",
+    viaNetwork: "Ağ üzerinden",
+    requiresOnline: "Cihazın çevrimiçi olması gerekir",
+    plugIntoThisComputer: "Bu bilgisayara takın",
+    forDevicesConnectedViaUsb: "USB ile bu bilgisayara bağlı cihazlar için",
     webInstallNotSupported:
-      "Bu cihaz icin web uzerinden kurulum henuz desteklenmiyor",
-    plugIntoServer: "ESPHome Cihaz Olusturucu'nun calistigi bilgisayara takin",
-    forDevicesConnectedToServer: "USB ile sunucuya bagli cihazlar icin{picoNote}",
-    andRunningEsphome: " ve ESPHome calistiran",
+      "Bu cihaz için web üzerinden kurulum henüz desteklenmiyor",
+    plugIntoServer: "ESPHome Cihaz Oluşturucu'nun çalıştığı bilgisayara takın",
+    forDevicesConnectedToServer: "USB ile sunucuya bağlı cihazlar için{picoNote}",
+    andRunningEsphome: " ve ESPHome çalıştıran",
     manualDownload: "Manuel indirme",
-    installYourself: "Kendiniz yukleyin",
-    byUsingEsphomeWeb: "ESPHome Web veya diger araclari kullanarak",
-    byCopyingToPico: "Pico USB surucusune kopyalayarak",
-    pickServerPort: "Sunucu Portu Secin",
-    loadingSerialDevices: "Seri cihazlar yukleniyor",
-    noSerialDevicesFound: "Seri cihaz bulunamadi.",
+    installYourself: "Kendiniz yükleyin",
+    byUsingEsphomeWeb: "ESPHome Web veya diğer araçları kullanarak",
+    byCopyingToPico: "Pico USB sürücüsüne kopyalayarak",
+    pickServerPort: "Sunucu Portu Seçin",
+    loadingSerialDevices: "Seri cihazlar yükleniyor",
+    noSerialDevicesFound: "Seri cihaz bulunamadı.",
     autoRefreshNote:
-      "Bir cihaz taktiginizda bu liste otomatik olarak yenilenir.",
+      "Bir cihaz taktığınızda bu liste otomatik olarak yenilenir.",
     picoRequiresEsphome:
-      "Sunucu uzerinden kurulum, Pico'nun zaten ESPHome calistirmasi gerektirir.",
+      "Sunucu üzerinden kurulum, Pico'nun zaten ESPHome çalıştırması gerektirir.",
     downloadInstructions: {
-      installViaUsb: "USB surucusu ile ESPHome yukleyin",
-      installViaBrowser: "Tarayici ile ESPHome yukleyin",
+      installViaUsb: "USB sürücüsü ile ESPHome yükleyin",
+      installViaBrowser: "Tarayıcı ile ESPHome yükleyin",
       picoInstructions:
-        "ESPHome projeniz {configuration} cihaziniza dosya gezgininiz araciligiyla su adimlari izleyerek yukleyebilirsiniz:",
+        "ESPHome projeniz {configuration} cihazınıza dosya gezgininiz aracılığıyla şu adımları izleyerek yükleyebilirsiniz:",
       browserInstructions:
-        "ESPHome, belirli gereksinimler karsilanirsa tarayici uzerinden {configuration} yapilandirmasini cihaziniza yukleyebilir:",
+        "ESPHome, belirli gereksinimler karşılanırsa tarayıcı üzerinden {configuration} yapılandırmasını cihazınıza yükleyebilir:",
       browserRequirements: {
-        https: "ESPHome HTTPS uzerinden ziyaret ediliyor",
-        webSerial: "Tarayiciniz WebSerial destekliyor",
+        https: "ESPHome HTTPS üzerinden ziyaret ediliyor",
+        webSerial: "Tarayıcınız WebSerial destekliyor",
       },
       requirementsNotMet:
-        "Su anda tum gereksinimler karsilanmiyor. En kolay cozum projenizi indirmek ve kurulumu ESPHome Web ile yapmaktir. ESPHome Web %100 tarayicinizda calisir ve ESPHome projesiyle hicbir veri paylasilmaz.",
+        "Şu anda tüm gereksinimler karşılanmıyor. En kolay çözüm projenizi indirmek ve kurulumu ESPHome Web ile yapmaktır. ESPHome Web %100 tarayıcınızda çalışır ve ESPHome projesiyle hiçbir veri paylaşılmaz.",
       picoSteps: {
-        disconnect: "Raspberry Pi Pico'yu bilgisayarinizdan cikarin",
+        disconnect: "Raspberry Pi Pico'yu bilgisayarınızdan çıkarın",
         holdBootsel:
-          "BOOTSEL duzgmesini basili tutun ve Pico'yu bilgisayariniza baglayyin. Pico, RPI-RP2 adli bir USB surucu olarak gorunecektir",
+          "BOOTSEL düğmesini basılı tutun ve Pico'yu bilgisayarınıza bağlayın. Pico, RPI-RP2 adlı bir USB sürücü olarak görünecektir",
         downloadProject: "Projeyi indir",
         dragToUsb:
-          "Indirilen dosyayi USB surucusune surukleyin. Surucu kaybolduğunda kurulum tamamlanmis demektir",
-        complete: "Pico'nuz artik ESPHome projenizi calistiriyor",
+          "İndirilen dosyayı USB sürücüsüne sürükleyin. Sürücü kaybolduğunda kurulum tamamlanmış demektir",
+        complete: "Pico'nuz artık ESPHome projenizi çalıştırıyor 🎉",
       },
-      openEsphomeWeb: "ESPHome Web'i Ac",
-      preparingDownload: "indirme hazirlaniyor...",
-      preparationFailed: "hazirlama basarisiz:",
-      seeWhatWentWrong: "neyin yanlis gittigini gor",
+      openEsphomeWeb: "ESPHome Web'i Aç",
+      preparingDownload: "indirme hazırlanıyor...",
+      preparationFailed: "hazırlama başarısız:",
+      seeWhatWentWrong: "neyin yanlış gittiğini gör",
     },
   },
 
   // Delete Dialog
   deleteDevice: {
     deleteTitle: "{name} Sil",
-    confirmDelete: "{name} cihazini silmek istediginizden emin misiniz?",
+    confirmDelete: "{name} cihazını silmek istediğinizden emin misiniz?",
   },
 
   // Rename Dialog
   renameDialog: {
-    renameTitle: "{configuration} Yeniden Adlandir",
+    renameTitle: "{configuration} Yeniden Adlandır",
     newName: "Yeni Ad",
-    helperText: "Kucuk harfler (a-z), rakamlar (0-9) veya tire (-)",
+    helperText: "Küçük harfler (a-z), rakamlar (0-9) veya tire (-)",
   },
 
   // Compile Dialog
   compile: {
-    downloadTitle: "{configuration} Indir",
+    downloadTitle: "{configuration} İndir",
   },
 
   // Logs Dialog
   logs: {
-    logsTitle: "Kayitlar {configuration}",
+    logsTitle: "Kayıtlar {configuration}",
   },
 
   // Header Menu
   header: {
-    updateAll: "Tumunu Guncelle",
-    cleanAll: "Tumunu Temizle",
-    secrets: "Sirlar",
-    secretsEditor: "Sirlar Duzenleyici",
+    updateAll: "Tümünü Güncelle",
+    cleanAll: "Tümünü Temizle",
+    secrets: "Sırlar",
+    secretsEditor: "Sırlar Düzenleyici",
     search: "Ara",
-    showDiscoveredDevices: "Kesfedilen cihazlari goster",
-    hideDiscoveredDevices: "Kesfedilen cihazlari gizle",
-    logOut: "Cikis Yap",
-    updateAllConfirm: "Tum cihazlari guncellemek istiyor musunuz?",
+    showDiscoveredDevices: "Keşfedilen cihazları göster",
+    hideDiscoveredDevices: "Keşfedilen cihazları gizle",
+    logOut: "Çıkış Yap",
+    updateAllConfirm: "Tüm cihazları güncellemek istiyor musunuz?",
     cleanAllConfirm:
-      "Tum derleme ve platform dosyalarini temizlemek istiyor musunuz? Bu, tum onbellege alinmis dosyalari ve bagimliliklari kaldiracaktir, bunlarin yeniden indirilmesi ve kurulmasi biraz zaman alabilir.",
+      "Tüm derleme ve platform dosyalarını temizlemek istiyor musunuz? Bu, tüm önbelleğe alınmış dosyaları ve bağımlılıkları kaldıracaktır, bunların yeniden indirilmesi ve kurulması biraz zaman alabilir.",
   },
 
   // Importable Device Card
   importable: {
-    takeControl: "Kontrolu Al",
+    takeControl: "Kontrolü Al",
     ignore: "Yoksay",
-    unignore: "Yoksaymayi Kaldir",
+    unignore: "Yoksaymayı Kaldır",
   },
 
   // Footer
   footer: {
-    fundDevelopment: "Gelistirmeyi destekle",
-    documentation: "Dokumantasyon",
+    fundDevelopment: "Geliştirmeyi destekle",
+    documentation: "Dokümantasyon",
   },
 
   // Validation
   validate: {
-    validateTitle: "{configuration} Dogrula",
+    validateTitle: "{configuration} Doğrula",
   },
 
   // Clean Dialog
@@ -195,54 +195,54 @@ export const tr = {
 
   // Update All Dialog
   updateAll: {
-    title: "Tum Cihazlari Guncelle",
+    title: "Tüm Cihazları Güncelle",
   },
 
   // Clean All Dialog
   cleanAllDialog: {
-    title: "Tum Cihazlari Temizle",
+    title: "Tüm Cihazları Temizle",
   },
 
   // Show API Key Dialog
   showApiKey: {
-    title: "{configuration} icin API Anahtari",
-    apiKey: "API Anahtari",
+    title: "{configuration} için API Anahtarı",
+    apiKey: "API Anahtarı",
     copyToClipboard: "Panoya kopyala",
   },
 
   // Logs Target Dialog
   logsTarget: {
-    title: "{configuration} icin kayit hedefi secin",
+    title: "{configuration} için kayıt hedefi seçin",
     ota: "OTA (Kablosuz)",
-    selectPort: "Bir seri port secin",
+    selectPort: "Bir seri port seçin",
   },
 
   // Install Server Dialog
   installServer: {
-    title: "{configuration} Yukle",
-    installingTo: "{target} cihazina yukleniyor...",
+    title: "{configuration} Yükle",
+    installingTo: "{target} cihazına yükleniyor...",
   },
 
   // Install Web Dialog
   installWeb: {
-    title: "{configuration} tarayici ile yukle",
-    connecting: "Baglaniyor...",
-    selectPort: "Port Sec",
-    installFirmware: "Yazilimi Yukle",
+    title: "{configuration} tarayıcı ile yükle",
+    connecting: "Bağlanıyor...",
+    selectPort: "Port Seç",
+    installFirmware: "Yazılımı Yükle",
   },
 
   // Alerts and Messages
   alerts: {
-    warning: "Uyari",
+    warning: "Uyarı",
     error: "Hata",
-    success: "Basarili",
+    success: "Başarılı",
     info: "Bilgi",
   },
 
   // Language
   language: {
-    selectLanguage: "Dil Secin",
-    english: "Ingilizce",
-    turkish: "Turkce",
+    selectLanguage: "Dil Seçin",
+    english: "İngilizce",
+    turkish: "Türkçe",
   },
 } as const;
