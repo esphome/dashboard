@@ -114,12 +114,16 @@ class ESPHomeDevicesList extends LitElement {
           @click=${() => this._handleStatusFilterChange("all")}
         ></mwc-button>
         <mwc-button
-          class="filter-button ${this._statusFilter === "online" ? "active" : ""}"
+          class="filter-button ${this._statusFilter === "online"
+            ? "active"
+            : ""}"
           label="Online"
           @click=${() => this._handleStatusFilterChange("online")}
         ></mwc-button>
         <mwc-button
-          class="filter-button ${this._statusFilter === "offline" ? "active" : ""}"
+          class="filter-button ${this._statusFilter === "offline"
+            ? "active"
+            : ""}"
           label="Offline"
           @click=${() => this._handleStatusFilterChange("offline")}
         ></mwc-button>
@@ -305,7 +309,11 @@ class ESPHomeDevicesList extends LitElement {
     // Load saved filter from localStorage
     try {
       const savedFilter = localStorage.getItem("esphome-status-filter");
-      if (savedFilter === "online" || savedFilter === "offline" || savedFilter === "all") {
+      if (
+        savedFilter === "online" ||
+        savedFilter === "offline" ||
+        savedFilter === "all"
+      ) {
         this._statusFilter = savedFilter;
       }
     } catch (e) {
