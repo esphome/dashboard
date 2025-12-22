@@ -19,12 +19,15 @@ import { MetadataRefresher } from "./device-metadata-refresher";
 import { ESPHomeSearch } from "../components/esphome-search";
 import { fireEvent } from "../util/fire-event";
 
+type StatusFilter = "all" | "online" | "offline";
+
 @customElement("esphome-devices-list")
 class ESPHomeDevicesList extends LitElement {
   @property() public showDiscoveredDevices = false;
 
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
+  @state() private _statusFilter: StatusFilter = "all";
 
   @query("esphome-search") private _search!: ESPHomeSearch;
 
@@ -103,6 +106,24 @@ class ESPHomeDevicesList extends LitElement {
 
     return html`
       <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+      <div class="filter-bar">
+        <span class="filter-label">Status:</span>
+        <mwc-button
+          class="filter-button ${this._statusFilter === "all" ? "active" : ""}"
+          label="Alle"
+          @click=${() => this._handleStatusFilterChange("all")}
+        ></mwc-button>
+        <mwc-button
+          class="filter-button ${this._statusFilter === "online" ? "active" : ""}"
+          label="Online"
+          @click=${() => this._handleStatusFilterChange("online")}
+        ></mwc-button>
+        <mwc-button
+          class="filter-button ${this._statusFilter === "offline" ? "active" : ""}"
+          label="Offline"
+          @click=${() => this._handleStatusFilterChange("offline")}
+        ></mwc-button>
+      </div>
       ${!this.showDiscoveredDevices && discoveredCount > 0
         ? html`
             <div class="show-discovered-bar">
@@ -124,6 +145,17 @@ class ESPHomeDevicesList extends LitElement {
   private _filter(item: ImportableDevice | ConfiguredDevice): boolean {
     if (!this.showDiscoveredDevices && this._isImportable(item)) {
       return false;
+    }
+
+    // Status filter for configured devices only
+    if (!this._isImportable(item) && this._statusFilter !== "all") {
+      const isOnline = this._onlineStatus[item.configuration] || false;
+      if (this._statusFilter === "online" && !isOnline) {
+        return false;
+      }
+      if (this._statusFilter === "offline" && isOnline) {
+        return false;
+      }
     }
 
     if (this._search?.value) {
@@ -163,6 +195,17 @@ class ESPHomeDevicesList extends LitElement {
 
   private _handleOpenWizardClick() {
     openWizardDialog();
+  }
+
+  private _handleStatusFilterChange(filter: StatusFilter) {
+    this._statusFilter = filter;
+    // Save to localStorage for persistence
+    try {
+      localStorage.setItem("esphome-status-filter", filter);
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+    this.requestUpdate();
   }
 
   static styles = css`
@@ -219,6 +262,28 @@ class ESPHomeDevicesList extends LitElement {
       border-top: 1px solid var(--divider-color);
       color: var(--mdc-theme-on-primary);
     }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background-color: var(--primary-bg-color);
+      border-bottom: 1px solid var(--divider-color);
+    }
+    .filter-label {
+      font-weight: 500;
+      color: var(--primary-text-color);
+      margin-right: 8px;
+    }
+    .filter-button {
+      --mdc-theme-primary: var(--primary-text-color);
+      --mdc-button-outline-color: var(--divider-color);
+    }
+    .filter-button.active {
+      --mdc-theme-primary: var(--primary-color);
+      background-color: var(--primary-color);
+      color: white;
+    }
   `;
 
   private async _updateDevices() {
@@ -236,6 +301,16 @@ class ESPHomeDevicesList extends LitElement {
 
   public connectedCallback() {
     super.connectedCallback();
+
+    // Load saved filter from localStorage
+    try {
+      const savedFilter = localStorage.getItem("esphome-status-filter");
+      if (savedFilter === "online" || savedFilter === "offline" || savedFilter === "all") {
+        this._statusFilter = savedFilter;
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
 
     this._devicesUnsub = subscribeDevices(async (devices) => {
       if (!devices) return;
