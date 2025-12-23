@@ -18,7 +18,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
     "fs-extra": "^11.3.3",
-    "monaco-editor": "^0.52.2",
+    "monaco-editor": "^0.55.1",
     "nunjucks": "^3.2.4",
     "postcss": "^8.5.6",
     "postcss-url": "^10.1.3",
