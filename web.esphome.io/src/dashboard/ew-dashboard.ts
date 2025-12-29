@@ -40,7 +40,7 @@ class EWDashboard extends LitElement {
             </p>
             <p>
               ESPHome Web runs 100% in your browser. No data will leave your
-              computer.
+              network.
             </p>
             <p>
               This page is a lite variant of ESPHome. If you want to create and
