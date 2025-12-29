@@ -103,8 +103,14 @@ class ESPHomeEditor extends LitElement {
           <p>This file was modified from another tab or external editor.</p>
           <p><strong>Your options:</strong></p>
           <ul>
-            <li><strong>Cancel</strong> - Don't save, editor remains open for reference</li>
-            <li><strong>Overwrite</strong> - Save anyway, overwriting changes on the server</li>
+            <li>
+              <strong>Cancel</strong> - Don't save, editor remains open for
+              reference
+            </li>
+            <li>
+              <strong>Overwrite</strong> - Save anyway, overwriting changes on
+              the server
+            </li>
           </ul>
         </div>
         <mwc-button
@@ -113,10 +119,7 @@ class ESPHomeEditor extends LitElement {
         >
           Cancel
         </mwc-button>
-        <mwc-button
-          slot="secondaryAction"
-          @click=${this._handleOverwrite}
-        >
+        <mwc-button slot="secondaryAction" @click=${this._handleOverwrite}>
           Overwrite
         </mwc-button>
       </mwc-dialog>
@@ -159,18 +162,18 @@ class ESPHomeEditor extends LitElement {
     openInstallChooseDialog(this.fileName);
   }
 
-  private async _saveFile(forceOrEvent?: boolean  | Event) {
+  private async _saveFile(forceOrEvent?: boolean | Event) {
     // Check if the first argument is an event object or our force parameter
-    const force = typeof forceOrEvent === 'boolean' ? forceOrEvent : false;
+    const force = typeof forceOrEvent === "boolean" ? forceOrEvent : false;
 
     const code = this.getValue();
     if (this._snackbar.open) {
       this._snackbar.close();
     }
-    
+
     try {
       // Send mtime unless force is true
-      const mtime = force ? undefined : this.fileMtime ?? undefined;
+      const mtime = force ? undefined : (this.fileMtime ?? undefined);
       const result = await writeFileWithMtime(this.fileName, code ?? "", mtime);
 
       // Update stored mtime with new value from server
@@ -186,7 +189,7 @@ class ESPHomeEditor extends LitElement {
         this._showSnackbar(`❌ File ${this.fileName} was deleted`);
       } else {
         // Generic error
-        console.error('Error saving file:', error);
+        console.error("Error saving file:", error);
         this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
       }
     }

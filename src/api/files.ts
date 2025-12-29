@@ -8,7 +8,7 @@ export interface FileWithMtime {
 }
 
 export const getFileWithMtime = async (
-  filename: string
+  filename: string,
 ): Promise<FileWithMtime> => {
   try {
     const urlSearchParams = new URLSearchParams({
@@ -17,7 +17,10 @@ export const getFileWithMtime = async (
     const response = await fetch(`./edit?${urlSearchParams.toString()}`);
 
     if (!response.ok && response.status !== 404) {
-      throw new APIError(`Request failed (${response.status})`, response.status);
+      throw new APIError(
+        `Request failed (${response.status})`,
+        response.status,
+      );
     }
 
     if (response.status === 404) {
@@ -25,7 +28,7 @@ export const getFileWithMtime = async (
     }
 
     const content = await response.text();
-    const mtime = response.headers.get('X-File-Mtime');
+    const mtime = response.headers.get("X-File-Mtime");
     return { content, mtime };
   } catch (err) {
     if (err instanceof APIError && err.status === 404) {
@@ -38,30 +41,29 @@ export const getFileWithMtime = async (
 export const writeFileWithMtime = async (
   filename: string,
   content: string,
-  mtime?: string
+  mtime?: string,
 ): Promise<{ newMtime: string | null }> => {
   const params = new URLSearchParams({
     configuration: filename,
   });
   if (mtime !== undefined) {
-    params.set('mtime', mtime);
+    params.set("mtime", mtime);
   }
 
-
   const response = await fetch(`./edit?${params.toString()}`, {
-    method: 'POST',
+    method: "POST",
     body: content,
-    credentials: 'same-origin',
+    credentials: "same-origin",
     headers: {
-      'X-CSRFToken': getCookie('_xsrf') || '',
+      "X-CSRFToken": getCookie("_xsrf") || "",
     },
   });
 
   if (!response.ok) {
     let errMessage = `Request not successful (${response.status})`;
     try {
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         const json = await response.json();
         errMessage += `: ${json.error}`;
       } else {
@@ -74,7 +76,7 @@ export const writeFileWithMtime = async (
     throw new APIError(errMessage, response.status);
   }
 
-  const newMtime = response.headers.get('X-File-Mtime');
+  const newMtime = response.headers.get("X-File-Mtime");
   return { newMtime };
 };
 
@@ -89,5 +91,5 @@ export const writeFile = async (
   content: string,
 ): Promise<string> => {
   await writeFileWithMtime(filename, content);
-  return '';
+  return "";
 };
