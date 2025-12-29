@@ -1,5 +1,4 @@
-import { APIError } from ".";
-import { getCookie } from "../util/cookie";
+import { APIError, fetchApiResponse } from ".";
 
 // Interface for mtime-aware file responses
 export interface FileWithMtime {
@@ -10,23 +9,12 @@ export interface FileWithMtime {
 export const getFileWithMtime = async (
   filename: string,
 ): Promise<FileWithMtime> => {
+  const urlSearchParams = new URLSearchParams({
+    configuration: filename,
+  });
+
   try {
-    const urlSearchParams = new URLSearchParams({
-      configuration: filename,
-    });
-    const response = await fetch(`./edit?${urlSearchParams.toString()}`);
-
-    if (!response.ok && response.status !== 404) {
-      throw new APIError(
-        `Request failed (${response.status})`,
-        response.status,
-      );
-    }
-
-    if (response.status === 404) {
-      return { content: null, mtime: null };
-    }
-
+    const response = await fetchApiResponse(`./edit?${urlSearchParams.toString()}`);
     const content = await response.text();
     const mtime = response.headers.get("X-File-Mtime");
     return { content, mtime };
@@ -50,31 +38,10 @@ export const writeFileWithMtime = async (
     params.set("mtime", mtime);
   }
 
-  const response = await fetch(`./edit?${params.toString()}`, {
+  const response = await fetchApiResponse(`./edit?${params.toString()}`, {
     method: "POST",
     body: content,
-    credentials: "same-origin",
-    headers: {
-      "X-CSRFToken": getCookie("_xsrf") || "",
-    },
   });
-
-  if (!response.ok) {
-    let errMessage = `Request not successful (${response.status})`;
-    try {
-      const contentType = response.headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
-        const json = await response.json();
-        errMessage += `: ${json.error}`;
-      } else {
-        const text = await response.text();
-        if (text) errMessage += `: ${text}`;
-      }
-    } catch {
-      // Ignore parsing errors
-    }
-    throw new APIError(errMessage, response.status);
-  }
 
   const newMtime = response.headers.get("X-File-Mtime");
   return { newMtime };
