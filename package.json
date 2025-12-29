@@ -31,7 +31,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@lit-labs/motion": "^1.0.8",
+    "@lit-labs/motion": "^1.1.0",
     "@material/mwc-button": "^0.27.0",
     "@material/mwc-circular-progress": "^0.27.0",
     "@material/mwc-dialog": "^0.27.0",
