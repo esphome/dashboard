@@ -14,7 +14,9 @@ export const getFileWithMtime = async (
   });
 
   try {
-    const response = await fetchApiResponse(`./edit?${urlSearchParams.toString()}`);
+    const response = await fetchApiResponse(
+      `./edit?${urlSearchParams.toString()}`,
+    );
     const content = await response.text();
     const mtime = response.headers.get("X-File-Mtime");
     return { content, mtime };
