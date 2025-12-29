@@ -81,9 +81,6 @@ class ESPHomeEditor extends LitElement {
         mwc-button {
           --mdc-theme-primary: var(--primary-text-color);
         }
-        #conflict-dialog mwc-button {
-          //--mdc-theme-primary: #f44336; /* Red for danger */
-        }
         #conflict-dialog mwc-button[slot="secondaryAction"] {
           --mdc-theme-primary: var(--alert-error-color);
         }
