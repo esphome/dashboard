@@ -233,9 +233,9 @@ export class ESPHomeWizardDialog extends LitElement {
         wirelessly.
       </div>
       <div>
-        The following issues prevent ESPHome from being able to remotely install
-        the necessary firmware on devices physically connected to the client
-        computer (running the browser):
+        The following issues prevent ESPHome from being able to install the
+        firmware on devices physically connected to the client computer (running
+        the browser):
         <ul>
           <li>Your browser does not support WebSerial.</li>
           ${allowsWebSerial
