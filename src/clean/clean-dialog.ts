@@ -10,13 +10,12 @@ import { esphomeDialogStyles } from "../styles";
 @customElement("esphome-clean-dialog")
 class ESPHomeCleanDialog extends LitElement {
   @property() public configuration!: string;
-  @property() public type!: string;
 
   protected render() {
     return html`
       <esphome-process-dialog
         .heading=${`Clean ${this.configuration}`}
-        .type=${this.type}
+        .type=${"clean"}
         .spawnParams=${{ configuration: this.configuration }}
         @closed=${this._handleClose}
       >

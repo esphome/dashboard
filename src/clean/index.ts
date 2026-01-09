@@ -1,9 +1,8 @@
 const preload = () => import("./clean-dialog");
 
-export const openCleanDialog = (configuration: string, type: string) => {
+export const openCleanDialog = (configuration: string) => {
   preload();
   const dialog = document.createElement("esphome-clean-dialog");
   dialog.configuration = configuration;
-  dialog.type = type;
   document.body.append(dialog);
 };
