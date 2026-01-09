@@ -94,7 +94,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         })}
       >
         <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
+          ${this.device.friendly_name ?? this.device.name}
         </div>
 
         ${content.length

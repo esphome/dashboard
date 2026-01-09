@@ -75,7 +75,7 @@ class ESPHomeInstallUploadDialog extends LitElement {
     this._installRequested = true;
     const input = this._input;
 
-    if (!input.files || input.files.length === 0) {
+    if (input.files === null || input.files.length === 0) {
       input.classList.add("error");
       return;
     }

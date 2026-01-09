@@ -3,7 +3,7 @@ import { ESPHomeSchema } from "./esphome-schema";
 
 let schema_version = "dev";
 const schema_uri = (name: string, version?: string) =>
-  `https://schema.esphome.io/${version || schema_version}/${name}.json`;
+  `https://schema.esphome.io/${version ?? schema_version}/${name}.json`;
 
 export async function setSchemaVersion(version: string) {
   if (version.endsWith("dev")) schema_version = "dev";
