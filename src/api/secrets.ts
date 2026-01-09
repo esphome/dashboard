@@ -18,7 +18,7 @@ export const appendSecrets = async (
   secrets: Record<string, string>,
   comment?: string,
 ): Promise<void> => {
-  const content = await getFile(SECRETS_FILE) ?? "";
+  const content = (await getFile(SECRETS_FILE)) ?? "";
 
   let toAppend =
     content.length === 0

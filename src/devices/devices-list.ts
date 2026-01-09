@@ -91,9 +91,7 @@ class ESPHomeDevicesList extends LitElement {
                 })}
                 data-name=${device.name}
                 .device=${device}
-                .onlineStatus=${this._onlineStatus[
-                  device.configuration
-                ]}
+                .onlineStatus=${this._onlineStatus[device.configuration]}
                 .highlightOnAdd=${this._new.has(device.name)}
                 @deleted=${this._updateDevices}
               ></esphome-configured-device-card>`}
