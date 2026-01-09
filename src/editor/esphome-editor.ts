@@ -13,6 +13,7 @@ import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
 import { setSchemaVersion } from "./editor-shims";
+import { t } from "../locales";
 
 // WebSocket URL Helper
 const loc = window.location;
@@ -90,14 +91,14 @@ class ESPHomeEditor extends LitElement {
 
         <mwc-button
           slot="secondaryAction"
-          label="Save"
+          label="${t("save")}"
           @click=${this._saveFile}
         ></mwc-button>
         ${isSecrets
           ? ""
           : html` <mwc-button
               slot="secondaryAction"
-              label="Install"
+              label="${t("install")}"
               @click=${this.handleInstall}
             ></mwc-button>`}
       </div>
@@ -126,9 +127,13 @@ class ESPHomeEditor extends LitElement {
 
     try {
       await writeFile(this.fileName, code ?? "");
-      this._showSnackbar(`✅ Saved ${this.fileName}`);
+      this._showSnackbar(
+        `✅ ${t("editor.saved", { fileName: this.fileName })}`,
+      );
     } catch (error) {
-      this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
+      this._showSnackbar(
+        `❌ ${t("editor.saveError", { fileName: this.fileName })}`,
+      );
     }
   }
 
@@ -182,7 +187,7 @@ class ESPHomeEditor extends LitElement {
 
     this.editor.addAction({
       id: "action-save-file",
-      label: "Save file",
+      label: t("editor.saveFile"),
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
       run: () => {
         this._saveFile();
