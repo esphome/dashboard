@@ -40,7 +40,7 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Take Control";
       content = html`
         <div>
-          Taking control of ${this.device.friendly_name || this.device.name}
+          Taking control of ${this.device.friendly_name ?? this.device.name}
           will create a local ESPHome configuration for this device. This gives
           you full control over the configuration. You will lose access to
           vendor-provided firmware updates and will have to manually compile and
@@ -119,7 +119,7 @@ class ESPHomeAdoptDialog extends LitElement {
       heading = "Configuration created";
       content = html`
         <div>
-          To finish taking control of ${this._nameOverride || this.device.name},
+          To finish taking control of ${this._nameOverride ?? this.device.name},
           the new configuration needs to be installed on the device.
         </div>
         ${this._apiKey

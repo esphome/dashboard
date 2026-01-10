@@ -22,7 +22,7 @@ class ESPHomeImportableDeviceCard extends LitElement {
         ?ignored=${this.device.ignored}
       >
         <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
+          ${this.device.friendly_name ?? this.device.name}
         </div>
         <div class="card-content flex">
           ${this.device.friendly_name

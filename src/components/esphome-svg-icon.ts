@@ -10,10 +10,10 @@ export class ESPHomeSvgIcon extends LitElement {
   protected render(): SVGTemplateResult {
     return svg`
     <svg
-      viewBox=${this.viewBox || "0 0 24 24"}
+      viewBox=${this.viewBox ?? "0 0 24 24"}
       preserveAspectRatio="xMidYMid meet"
       focusable="false"
-      role="img" 
+      role="img"
       aria-hidden="true"
     >
       <g>
