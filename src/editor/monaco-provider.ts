@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import { CompletionsHandler } from "./completions-handler";
 import { DefinitionHandler } from "./definition-handler";
 import { fromMonacoPosition } from "./editor-shims";
