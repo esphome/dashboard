@@ -1,15 +1,14 @@
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
-import json from "@rollup/plugin-json";
 import typescript from "@rollup/plugin-typescript";
-import manifest from "./build-scripts/rollup/manifest-plugin.mjs";
-import postcss from "rollup-plugin-postcss";
-import postcssUrl from "postcss-url";
-import commonjs from "@rollup/plugin-commonjs";
-import monaco from "rollup-plugin-monaco-editor";
-import copy from "rollup-plugin-copy";
 import fs from "fs-extra";
 import path from "path";
+import postcssUrl from "postcss-url";
+import copy from "rollup-plugin-copy";
+import postcss from "rollup-plugin-postcss";
+import manifest from "./build-scripts/rollup/manifest-plugin.mjs";
 
 const isProdBuild = process.env.NODE_ENV === "production";
 
@@ -50,11 +49,15 @@ const config = {
     copy({
       targets: [
         { src: "schema/*.json", dest: "esphome_dashboard/static/schema" },
+        {
+          src: "node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+          dest: "esphome_dashboard/static/js/esphome/monaco-editor/esm/vs/editor/",
+        },
+        {
+          src: "node_modules/monaco-editor/esm/vs/base/worker/workerMain.js",
+          dest: "esphome_dashboard/static/js/esphome/monaco-editor/esm/vs/base/worker/",
+        },
       ],
-    }),
-    monaco({
-      languages: ["yaml"],
-      sourcemap: false,
     }),
     nodeResolve({
       browser: true,
