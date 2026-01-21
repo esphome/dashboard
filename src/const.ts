@@ -4,10 +4,7 @@ export const supportsWebSerial = "serial" in navigator;
 export const allowsWebSerial = window.isSecureContext;
 
 export type SupportedPlatforms =
-  | "ESP8266"
   | "ESP32"
-  | "ESP32S2"
-  | "ESP32S3"
   | "ESP32C2"
   | "ESP32C3"
   | "ESP32C5"
@@ -15,6 +12,9 @@ export type SupportedPlatforms =
   | "ESP32C61"
   | "ESP32H2"
   | "ESP32P4"
+  | "ESP32S2"
+  | "ESP32S3"
+  | "ESP8266"
   | "RP2040"
   | "BK72XX"
   | "LN882X"
@@ -34,18 +34,6 @@ export const supportedPlatforms = {
     showInPickerTitle: true,
     showInDeviceTypePicker: true,
     defaultBoard: "esp32dev",
-  },
-  ESP32S2: {
-    label: "ESP32-S2",
-    showInPickerTitle: true,
-    showInDeviceTypePicker: true,
-    defaultBoard: "esp32-s2-saola-1",
-  },
-  ESP32S3: {
-    label: "ESP32-S3",
-    showInPickerTitle: true,
-    showInDeviceTypePicker: true,
-    defaultBoard: "esp32-s3-devkitc-1",
   },
   ESP32C2: {
     label: "ESP32-C2",
@@ -89,6 +77,18 @@ export const supportedPlatforms = {
     showInDeviceTypePicker: false,
     defaultBoard: "esp32-p4-function-ev-board",
   },
+  ESP32S2: {
+    label: "ESP32-S2",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32-s2-saola-1",
+  },
+  ESP32S3: {
+    label: "ESP32-S3",
+    showInPickerTitle: true,
+    showInDeviceTypePicker: true,
+    defaultBoard: "esp32-s3-devkitc-1",
+  },
   ESP8266: {
     label: "ESP8266",
     showInPickerTitle: true,
@@ -124,8 +124,6 @@ export const supportedPlatforms = {
 // esploader.chip.CHIP_NAME mapped to ESPHome platform names
 export const chipFamilyToPlatform = {
   ESP32: "ESP32",
-  "ESP32-S2": "ESP32S2",
-  "ESP32-S3": "ESP32S3",
   "ESP32-C2": "ESP32C2",
   "ESP32-C3": "ESP32C3",
   "ESP32-C5": "ESP32C5",
@@ -133,6 +131,8 @@ export const chipFamilyToPlatform = {
   "ESP32-C61": "ESP32C61",
   "ESP32-H2": "ESP32H2",
   "ESP32-P4": "ESP32P4",
+  "ESP32-S2": "ESP32S2",
+  "ESP32-S3": "ESP32S3",
   ESP8266: "ESP8266",
 } as const satisfies { [key: string]: SupportedPlatforms };
 
