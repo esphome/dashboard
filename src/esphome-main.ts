@@ -2,7 +2,7 @@ import "./devices/devices-list";
 import "./components/esphome-header-menu";
 import "./components/esphome-fab";
 import { LitElement, html, PropertyValues } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property, state, query } from "lit/decorators.js";
 import { connectionStatus } from "./util/connection-status";
 
 @customElement("esphome-main")
@@ -16,6 +16,12 @@ class ESPHomeMainView extends LitElement {
   @state() private editing?: string;
 
   @state() private showDiscoveredDevices = false;
+
+  @state() private _selectedCount = 0;
+
+  @state() private _selectedConfigurations: string[] = [];
+
+  @query("esphome-devices-list") private _devicesList?: HTMLElement;
 
   protected render() {
     if (this.editing) {
@@ -40,7 +46,10 @@ class ESPHomeMainView extends LitElement {
         <esphome-header-menu
           .logoutUrl=${this.logoutUrl}
           .showDiscoveredDevices=${this.showDiscoveredDevices}
+          .selectedCount=${this._selectedCount}
+          .selectedConfigurations=${this._selectedConfigurations}
           @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+          @update-selected-started=${this._clearSelection}
         ></esphome-header-menu>
       </header>
 
@@ -48,6 +57,7 @@ class ESPHomeMainView extends LitElement {
         <esphome-devices-list
           .showDiscoveredDevices=${this.showDiscoveredDevices}
           @toggle-discovered-devices=${this._toggleDiscoveredDevices}
+          @selection-changed=${this._handleSelectionChanged}
         ></esphome-devices-list>
       </main>
 
@@ -86,6 +96,21 @@ class ESPHomeMainView extends LitElement {
 
   private _toggleDiscoveredDevices() {
     this.showDiscoveredDevices = !this.showDiscoveredDevices;
+  }
+
+  private _handleSelectionChanged(
+    e: CustomEvent<{ count: number; configurations: string[] }>,
+  ) {
+    this._selectedCount = e.detail.count;
+    this._selectedConfigurations = e.detail.configurations;
+  }
+
+  private _clearSelection() {
+    this._selectedCount = 0;
+    this._selectedConfigurations = [];
+    if (this._devicesList) {
+      (this._devicesList as any).clearSelection();
+    }
   }
 }
 

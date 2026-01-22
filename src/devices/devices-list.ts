@@ -7,6 +7,7 @@ import {
   refreshDevices,
   ImportableDevice,
   ConfiguredDevice,
+  canUpdateDevice,
 } from "../api/devices";
 import { openWizardDialog } from "../wizard";
 import "@material/mwc-button";
@@ -25,6 +26,7 @@ class ESPHomeDevicesList extends LitElement {
 
   @state() private _devices?: Array<ImportableDevice | ConfiguredDevice>;
   @state() private _onlineStatus: Record<string, boolean> = {};
+  @state() private _selectedDevices: Set<string> = new Set();
 
   @query("esphome-search") private _search!: ESPHomeSearch;
 
@@ -36,6 +38,75 @@ class ESPHomeDevicesList extends LitElement {
   private _isImportable = (item: any): item is ImportableDevice => {
     return "package_import_url" in item;
   };
+
+  public getSelectedConfigurations(): string[] {
+    return Array.from(this._selectedDevices);
+  }
+
+  public clearSelection() {
+    this._selectedDevices = new Set();
+  }
+
+  private _handleSelectionChange(
+    e: CustomEvent<{ configuration: string; selected: boolean }>,
+  ) {
+    const { configuration, selected } = e.detail;
+    const newSelection = new Set(this._selectedDevices);
+    if (selected) {
+      newSelection.add(configuration);
+    } else {
+      newSelection.delete(configuration);
+    }
+    this._selectedDevices = newSelection;
+    fireEvent(this, "selection-changed", {
+      count: this._selectedDevices.size,
+      configurations: Array.from(this._selectedDevices),
+    });
+  }
+
+  private _getUpdatableDevices(): ConfiguredDevice[] {
+    if (!this._devices) return [];
+    return this._devices.filter(
+      (d): d is ConfiguredDevice => !this._isImportable(d) && canUpdateDevice(d),
+    );
+  }
+
+  private _getConfiguredDevices(): ConfiguredDevice[] {
+    if (!this._devices) return [];
+    return this._devices.filter(
+      (d): d is ConfiguredDevice => !this._isImportable(d),
+    );
+  }
+
+  private _handleSelectAll() {
+    const configured = this._getConfiguredDevices();
+    const newSelection = new Set<string>();
+    configured.forEach((d) => newSelection.add(d.configuration));
+    this._selectedDevices = newSelection;
+    fireEvent(this, "selection-changed", {
+      count: this._selectedDevices.size,
+      configurations: Array.from(this._selectedDevices),
+    });
+  }
+
+  private _handleSelectAllUpdatable() {
+    const updatable = this._getUpdatableDevices();
+    const newSelection = new Set(this._selectedDevices);
+    updatable.forEach((d) => newSelection.add(d.configuration));
+    this._selectedDevices = newSelection;
+    fireEvent(this, "selection-changed", {
+      count: this._selectedDevices.size,
+      configurations: Array.from(this._selectedDevices),
+    });
+  }
+
+  private _handleDeselectAll() {
+    this._selectedDevices = new Set();
+    fireEvent(this, "selection-changed", {
+      count: 0,
+      configurations: [],
+    });
+  }
 
   protected render() {
     // catch when 1st load there is no data yet, and we don't want to show no devices message
@@ -95,14 +166,59 @@ class ESPHomeDevicesList extends LitElement {
                   device.configuration
                 ]}
                 .highlightOnAdd=${this._new.has(device.name)}
+                .selected=${this._selectedDevices.has(device.configuration)}
                 @deleted=${this._updateDevices}
+                @selection-change=${this._handleSelectionChange}
               ></esphome-configured-device-card>`}
         `,
       )}`;
     }
 
+    const updatableCount = this._getUpdatableDevices().length;
+    const configuredCount = this._getConfiguredDevices().length;
+    const selectionCount = this._selectedDevices.size;
+
     return html`
       <esphome-search @input=${() => this.requestUpdate()}></esphome-search>
+      ${configuredCount > 0
+        ? html`
+            <div class="selection-toolbar">
+              <span class="selection-info">
+                ${selectionCount > 0
+                  ? `${selectionCount} selected`
+                  : updatableCount > 0
+                    ? `${updatableCount} device${updatableCount === 1 ? "" : "s"} with updates`
+                    : `${configuredCount} device${configuredCount === 1 ? "" : "s"}`}
+              </span>
+              <div class="selection-actions">
+                ${selectionCount > 0
+                  ? html`
+                      <mwc-button
+                        dense
+                        label="Deselect All"
+                        @click=${this._handleDeselectAll}
+                      ></mwc-button>
+                    `
+                  : html`
+                      ${updatableCount > 0
+                        ? html`
+                            <mwc-button
+                              dense
+                              label="Select Updatable"
+                              @click=${this._handleSelectAllUpdatable}
+                            ></mwc-button>
+                          `
+                        : nothing}
+                      <mwc-button
+                        dense
+                        label="Select All"
+                        @click=${this._handleSelectAll}
+                      ></mwc-button>
+                    `}
+              </div>
+            </div>
+          `
+        : nothing}
       ${!this.showDiscoveredDevices && discoveredCount > 0
         ? html`
             <div class="show-discovered-bar">
@@ -218,6 +334,33 @@ class ESPHomeDevicesList extends LitElement {
       background-color: var(--primary-footer-bg-color);
       border-top: 1px solid var(--divider-color);
       color: var(--mdc-theme-on-primary);
+    }
+    .selection-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      margin: 8px auto 0;
+      width: 90%;
+      max-width: 1920px;
+      background-color: var(--card-background-color, #f5f5f5);
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .selection-info {
+      font-size: 14px;
+      color: var(--primary-text-color);
+    }
+    .selection-actions {
+      display: flex;
+      gap: 8px;
+    }
+    @media only screen and (max-width: 750px) {
+      .selection-toolbar {
+        width: 100%;
+        margin: 8px 0 0;
+        border-radius: 0;
+      }
     }
   `;
 

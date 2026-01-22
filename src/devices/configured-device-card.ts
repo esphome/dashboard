@@ -6,6 +6,7 @@ import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-button";
 import "@material/mwc-icon-button";
+import "@material/mwc-checkbox";
 import "../components/esphome-button-menu";
 import "../components/esphome-card";
 import "../components/esphome-svg-icon";
@@ -47,6 +48,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   @property() public device!: ConfiguredDevice;
   @property() public onlineStatus?: boolean;
   @property() public highlightOnAdd = false;
+  @property({ type: Boolean }) public selected = false;
   @state() private _highlight = false;
 
   public async highlight() {
@@ -89,12 +91,21 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       <esphome-card
         .status=${status}
         .noStatusBar=${status === "ONLINE"}
+        class="${this.selected ? "selected" : ""} ${status === "OFFLINE" ? "offline" : ""}"
         style=${styleMap({
           "--status-color": status === undefined ? "" : STATUS_COLORS[status],
         })}
       >
         <div class="card-header">
-          ${this.device.friendly_name || this.device.name}
+          <mwc-checkbox
+            class="select-checkbox"
+            .checked=${this.selected}
+            @change=${this._handleSelectionChange}
+            @click=${(e: Event) => e.stopPropagation()}
+          ></mwc-checkbox>
+          <span class="card-title"
+            >${this.device.friendly_name || this.device.name}</span
+          >
         </div>
 
         ${content.length
@@ -226,6 +237,11 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         margin-bottom: 8px;
         font-size: 14px;
       }
+      .device-version {
+        font-size: 13px;
+        color: var(--secondary-text-color);
+        margin-bottom: 4px;
+      }
       .inlinecode {
         box-sizing: border-box;
         padding: 0.2em 0.4em;
@@ -247,6 +263,24 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       }
       .mdc-icon-button {
         color: var(--primary-text-color);
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+      }
+      .card-title {
+        flex: 1;
+      }
+      .select-checkbox {
+        --mdc-checkbox-unchecked-color: var(--secondary-text-color);
+        margin-right: 4px;
+        margin-left: -8px;
+      }
+      esphome-card.selected {
+        --status-color: var(--primary-color, #03a9f4) !important;
+      }
+      esphome-card.selected.offline {
+        --status-color: var(--warning-color, #ff9800) !important;
       }
     `,
   ];
@@ -306,6 +340,14 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
   }
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
+  }
+
+  private _handleSelectionChange(e: Event) {
+    const checkbox = e.target as HTMLInputElement;
+    fireEvent(this, "selection-change", {
+      configuration: this.device.configuration,
+      selected: checkbox.checked,
+    });
   }
 
   private async _handleDownloadYaml() {
