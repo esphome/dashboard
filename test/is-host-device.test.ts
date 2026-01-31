@@ -1,5 +1,5 @@
 import test from "node:test";
-import assert from "node:assert/strict";
+import { strict as assert } from "node:assert";
 
 import { is_host_device } from "../src/util/is-host-device";
 
