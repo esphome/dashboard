@@ -15,6 +15,8 @@ import { openCleanDialog } from "../clean";
 import { openValidateDialog } from "../validate";
 import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
+import { openLogsDialog } from "../logs";
+import { is_host_device } from "../util/is-host-device";
 import { fireEvent } from "../util/fire-event";
 import { openDeleteDeviceDialog } from "../delete-device";
 import { esphomeCardStyles } from "../styles";
@@ -305,6 +307,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     openInstallChooseDialog(this.device.configuration);
   }
   private _handleLogs() {
+    // Host devices don't support serial/OTA selection - always stream logs locally.
+    if (is_host_device(this.device)) {
+      openLogsDialog(this.device.configuration, "OTA");
+      return;
+    }
+
     openLogsTargetDialog(this.device.configuration);
   }
 
