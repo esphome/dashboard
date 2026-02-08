@@ -80,6 +80,8 @@ export const streamLogs = (
   }
 
   return new Promise((resolve, reject) => {
+    let done = false;
+
     socket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
       if (data.event === "line") {
@@ -93,6 +95,8 @@ export const streamLogs = (
         return;
       }
 
+      done = true;
+      socket.close();
       if (data.code === 0) {
         resolve(undefined);
       } else {
@@ -114,7 +118,9 @@ export const streamLogs = (
     });
 
     socket.addEventListener("close", () => {
-      reject(new Error("Unexpected socket closure"));
+      if (!done) {
+        reject(new Error("Unexpected socket closure"));
+      }
     });
   });
 };
