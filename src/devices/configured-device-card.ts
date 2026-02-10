@@ -12,6 +12,7 @@ import "../components/esphome-svg-icon";
 import "@polymer/paper-tooltip/paper-tooltip.js";
 import { openCleanMQTTDialog } from "../clean-mqtt";
 import { openCleanDialog } from "../clean";
+import { openCleanAllDialog } from "../clean-all";
 import { openValidateDialog } from "../validate";
 import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
@@ -182,6 +183,13 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
               ></esphome-svg-icon>
             </mwc-list-item>
             <mwc-list-item graphic="icon">
+              Clean All Files
+              <esphome-svg-icon
+                slot="graphic"
+                .path=${mdiBroom}
+              ></esphome-svg-icon>
+            </mwc-list-item>
+            <mwc-list-item graphic="icon">
               Download ELF file
               <esphome-svg-icon
                 slot="graphic"
@@ -272,6 +280,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 6:
+        this._handleCleanAll();
+        break;
+      case 7:
         const type: DownloadType = {
           title: "ELF File",
           description: "ELF File",
@@ -285,17 +296,21 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         link.click();
         link.remove();
         break;
-      case 7:
+      case 8:
         openDeleteDeviceDialog(
           this.device.name,
           this.device.configuration,
           () => fireEvent(this, "deleted"),
         );
         break;
-      case 7:
+      case 9:
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
+  }
+
+  private _handleCleanAll() {
+    openCleanAllDialog();
   }
 
   private _handleEdit() {
