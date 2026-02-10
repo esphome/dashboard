@@ -12,7 +12,7 @@ class ESPHomeRemoteProcess extends HTMLElement {
   private _abortController?: AbortController;
 
   public logs(): string {
-    return this._coloredConsole?.logs() || "";
+    return this._coloredConsole?.logs() ?? "";
   }
 
   public connectedCallback() {

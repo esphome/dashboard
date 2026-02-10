@@ -24,7 +24,7 @@ class ESPHomeConfirmationDialog extends LitElement {
     }
     return html`
       <mwc-dialog
-        .heading=${this._params.title || ""}
+        .heading=${this._params.title ?? ""}
         @closed=${this._handleClose}
         open
       >
@@ -32,14 +32,14 @@ class ESPHomeConfirmationDialog extends LitElement {
         <mwc-button
           slot="secondaryAction"
           no-attention
-          .label=${this._params.dismissText || "Cancel"}
+          .label=${this._params.dismissText ?? "Cancel"}
           dialogAction="dismiss"
         ></mwc-button>
         <mwc-button
           slot="primaryAction"
-          .label=${this._params.confirmText || "Yes"}
+          .label=${this._params.confirmText ?? "Yes"}
           class=${classMap({
-            destructive: this._params.destructive || false,
+            destructive: this._params.destructive ?? false,
           })}
           dialogAction="confirm"
         ></mwc-button>
