@@ -280,7 +280,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanDialog(this.device.configuration);
         break;
       case 6:
-        this._handleCleanAll();
+        openCleanAllDialog();
         break;
       case 7:
         const type: DownloadType = {
@@ -307,10 +307,6 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
         openCleanMQTTDialog(this.device.configuration);
         break;
     }
-  }
-
-  private _handleCleanAll() {
-    openCleanAllDialog();
   }
 
   private _handleEdit() {
