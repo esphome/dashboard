@@ -32,7 +32,8 @@ class ESPHomeImportableDeviceCard extends LitElement {
                 </div>
               `
             : ""}
-          ${this.device.project_name}
+          <div>${this.device.project_name}</div>
+          <div class="device-version">Firmware: ${this.device.project_version}</div>
         </div>
 
         <div class="card-actions">
@@ -99,6 +100,11 @@ class ESPHomeImportableDeviceCard extends LitElement {
         font-family:
           "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
           monospace;
+      }
+      .device-version {
+        font-size: 13px;
+        color: var(--secondary-text-color);
+        margin-top: 4px;
       }
       .card-actions mwc-button {
         --mdc-theme-primary: #4caf50;

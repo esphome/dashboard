@@ -9,6 +9,7 @@ import type { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import { openEditDialog, toggleSearch } from "../editor";
 import { SECRETS_FILE } from "../api/secrets";
 import { openUpdateAllDialog } from "../update-all";
+import { openUpdateSelectedDialog } from "../update-selected";
 import { openCleanAllDialog } from "../clean-all";
 import { showConfirmationDialog } from "../dialogs";
 import { fireEvent } from "../util/fire-event";
@@ -25,17 +26,32 @@ export class ESPHomeHeaderMenu extends LitElement {
 
   @property() discoveredDeviceCount = 0;
 
+  @property({ type: Number }) selectedCount = 0;
+
+  @property({ type: Array }) selectedConfigurations: string[] = [];
+
   @state() private _isWide = isWideListener.matches;
 
   protected render(): TemplateResult {
     return html`
       ${this._isWide
         ? html`
-            <mwc-button
-              icon="system_update"
-              label="Update All"
-              @click=${this._handleUpdateAll}
-            ></mwc-button>
+            ${this.selectedCount > 0
+              ? html`
+                  <mwc-button
+                    class="update-selected"
+                    icon="system_update"
+                    label="Install Selected (${this.selectedCount})"
+                    @click=${this._handleUpdateSelected}
+                  ></mwc-button>
+                `
+              : html`
+                  <mwc-button
+                    icon="system_update"
+                    label="Update All"
+                    @click=${this._handleUpdateAll}
+                  ></mwc-button>
+                `}
             <mwc-button label="Clean All" @click=${this._handleCleanAll}>
               <esphome-svg-icon
                 slot="icon"
@@ -75,10 +91,19 @@ export class ESPHomeHeaderMenu extends LitElement {
 
         ${!this._isWide
           ? html`
-              <mwc-list-item graphic="icon"
-                ><mwc-icon slot="graphic">system_update</mwc-icon>Update
-                All</mwc-list-item
-              >
+              ${this.selectedCount > 0
+                ? html`
+                    <mwc-list-item graphic="icon"
+                      ><mwc-icon slot="graphic">system_update</mwc-icon>Install
+                      Selected (${this.selectedCount})</mwc-list-item
+                    >
+                  `
+                : html`
+                    <mwc-list-item graphic="icon"
+                      ><mwc-icon slot="graphic">system_update</mwc-icon>Update
+                      All</mwc-list-item
+                    >
+                  `}
               <mwc-list-item graphic="icon"
                 ><esphome-svg-icon
                   slot="graphic"
@@ -135,6 +160,23 @@ export class ESPHomeHeaderMenu extends LitElement {
     openUpdateAllDialog();
   }
 
+  private async _handleUpdateSelected() {
+    if (this.selectedConfigurations.length === 0) return;
+
+    if (
+      !(await showConfirmationDialog({
+        title: "Install Selected",
+        text: `Do you want to install ${this.selectedConfigurations.length} selected device${this.selectedConfigurations.length === 1 ? "" : "s"}?`,
+        confirmText: "Install Selected",
+        dismissText: "Cancel",
+      }))
+    ) {
+      return;
+    }
+    openUpdateSelectedDialog(this.selectedConfigurations);
+    fireEvent(this, "update-selected-started");
+  }
+
   private async _handleCleanAll() {
     if (
       !(await showConfirmationDialog({
@@ -174,7 +216,11 @@ export class ESPHomeHeaderMenu extends LitElement {
         fireEvent(this, "toggle-discovered-devices");
         break;
       case 2:
-        this._handleUpdateAll();
+        if (this.selectedCount > 0) {
+          this._handleUpdateSelected();
+        } else {
+          this._handleUpdateAll();
+        }
         break;
       case 3:
         this._handleCleanAll();
@@ -206,6 +252,9 @@ export class ESPHomeHeaderMenu extends LitElement {
     }
     a {
       text-decoration: none;
+    }
+    .update-selected {
+      --mdc-theme-primary: var(--primary-color, #03a9f4);
     }
   `;
 }
