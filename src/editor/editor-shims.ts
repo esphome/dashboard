@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import { ESPHomeSchema } from "./esphome-schema";
 
 let schema_version = "dev";
