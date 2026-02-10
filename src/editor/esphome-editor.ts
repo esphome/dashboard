@@ -7,8 +7,10 @@ import "@material/mwc-snackbar";
 import "@material/mwc-icon-button";
 import "@material/mwc-list/mwc-list-item.js";
 import { openInstallChooseDialog } from "../install-choose";
-import { getFile, writeFile } from "../api/files";
+import { getFileWithMtime, writeFileWithMtime } from "../api/files";
+import { APIError } from "../api";
 import type { Snackbar } from "@material/mwc-snackbar";
+import type { Dialog } from "@material/mwc-dialog";
 import { fireEvent } from "../util/fire-event";
 import { debounce } from "../util/debounce";
 import "./monaco-provider";
@@ -33,9 +35,11 @@ class ESPHomeEditor extends LitElement {
   private editorValidationScheduled = false;
   private editorValidationRunning = false;
   private editorActiveSecrets = false;
+  private fileMtime: string | null = null;
 
   @property() public fileName!: string;
   @query("mwc-snackbar", true) private _snackbar!: Snackbar;
+  @query("mwc-dialog#conflict-dialog") private conflictDialog?: Dialog;
   @query("main", true) private container!: HTMLElement;
   @query(".esphome-header", true) private editor_header!: HTMLElement;
 
@@ -77,8 +81,45 @@ class ESPHomeEditor extends LitElement {
         mwc-button {
           --mdc-theme-primary: var(--primary-text-color);
         }
+        #conflict-dialog mwc-button[slot="secondaryAction"] {
+          --mdc-theme-primary: var(--alert-error-color);
+        }
+        #conflict-dialog ul {
+          margin: 0.5rem 0;
+          padding-left: 1.5rem;
+        }
+        #conflict-dialog p {
+          margin: 0.5rem 0;
+        }
       </style>
       <mwc-snackbar leading></mwc-snackbar>
+
+      <!-- Conflict dialog -->
+      <mwc-dialog id="conflict-dialog" heading="Conflict Detected">
+        <div>
+          <p>This file was modified from another tab or external editor.</p>
+          <p><strong>Your options:</strong></p>
+          <ul>
+            <li>
+              <strong>Cancel</strong> - Don't save, editor remains open for
+              reference
+            </li>
+            <li>
+              <strong>Overwrite</strong> - Save anyway, overwriting changes on
+              the server
+            </li>
+          </ul>
+        </div>
+        <mwc-button
+          slot="primaryAction"
+          @click=${() => this.conflictDialog?.close()}
+        >
+          Cancel
+        </mwc-button>
+        <mwc-button slot="secondaryAction" @click=${this._handleOverwrite}>
+          Overwrite
+        </mwc-button>
+      </mwc-dialog>
 
       <div class="esphome-header">
         <mwc-icon-button
@@ -118,18 +159,43 @@ class ESPHomeEditor extends LitElement {
     openInstallChooseDialog(this.fileName);
   }
 
-  private async _saveFile() {
+  private async _saveFile(forceOrEvent?: boolean | Event) {
+    // Check if the first argument is an event object or our force parameter
+    const force = typeof forceOrEvent === "boolean" ? forceOrEvent : false;
+
     const code = this.getValue();
     if (this._snackbar.open) {
       this._snackbar.close();
     }
 
     try {
-      await writeFile(this.fileName, code ?? "");
+      // Send mtime unless force is true
+      const mtime = force ? undefined : (this.fileMtime ?? undefined);
+      const result = await writeFileWithMtime(this.fileName, code ?? "", mtime);
+
+      // Update stored mtime with new value from server
+      this.fileMtime = result.newMtime;
+
       this._showSnackbar(`✅ Saved ${this.fileName}`);
     } catch (error) {
-      this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
+      if (error instanceof APIError && error.status === 409) {
+        // Conflict detected - show dialog
+        this.conflictDialog?.show();
+      } else if (error instanceof APIError && error.status === 404) {
+        // File was deleted
+        this._showSnackbar(`❌ File ${this.fileName} was deleted`);
+      } else {
+        // Generic error
+        console.error("Error saving file:", error);
+        this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
+      }
     }
+  }
+
+  private async _handleOverwrite() {
+    // Force save, bypassing conflict check
+    this.conflictDialog?.close();
+    await this._saveFile(true);
   }
 
   private _showSnackbar(message: string) {
@@ -163,11 +229,14 @@ class ESPHomeEditor extends LitElement {
     const isSecrets =
       this.fileName === "secrets.yaml" || this.fileName === "secrets.yml";
 
-    getFile(this.fileName).then((response) => {
-      if (response === null && isSecrets) {
-        response = EMPTY_SECRETS;
+    getFileWithMtime(this.fileName).then((response) => {
+      if (response.content === null && isSecrets) {
+        this.editor?.setValue(EMPTY_SECRETS);
+        this.fileMtime = null;
+      } else {
+        this.editor?.setValue(response.content ?? "");
+        this.fileMtime = response.mtime;
       }
-      this.editor?.setValue(response ?? "");
 
       this.startAceWebsocket();
     });
