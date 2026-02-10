@@ -36,7 +36,7 @@ export class ESPHomeHeaderMenu extends LitElement {
               label="Update All"
               @click=${this._handleUpdateAll}
             ></mwc-button>
-            <mwc-button label="Clean All" @click=${this._handleCleanAll}>
+            <mwc-button label="Clean All Files" @click=${this._handleCleanAll}>
               <esphome-svg-icon
                 slot="icon"
                 .path=${mdiBroom}
@@ -84,7 +84,7 @@ export class ESPHomeHeaderMenu extends LitElement {
                   slot="graphic"
                   .path=${mdiBroom}
                 ></esphome-svg-icon
-                >Clean All</mwc-list-item
+                >Clean All Files</mwc-list-item
               >
               <mwc-list-item graphic="icon"
                 ><mwc-icon slot="graphic">lock</mwc-icon>Secrets
@@ -135,21 +135,7 @@ export class ESPHomeHeaderMenu extends LitElement {
     openUpdateAllDialog();
   }
 
-  private async _handleCleanAll() {
-    if (
-      !(await showConfirmationDialog({
-        title: "Clean All",
-        text:
-          "Do you want to clean all build and platform files? " +
-          "This will remove all cached files and dependencies, " +
-          "which may take a while to download again and reinstall.",
-        confirmText: "Clean All",
-        dismissText: "Cancel",
-        destructive: true,
-      }))
-    ) {
-      return;
-    }
+  private _handleCleanAll() {
     openCleanAllDialog();
   }
 
