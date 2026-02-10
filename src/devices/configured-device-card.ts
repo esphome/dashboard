@@ -16,6 +16,7 @@ import { openCleanAllDialog } from "../clean-all";
 import { openValidateDialog } from "../validate";
 import { openInstallChooseDialog } from "../install-choose";
 import { openLogsTargetDialog } from "../logs-target";
+import { openLogsDialog } from "../logs";
 import { fireEvent } from "../util/fire-event";
 import { openDeleteDeviceDialog } from "../delete-device";
 import { esphomeCardStyles } from "../styles";
@@ -35,6 +36,18 @@ import {
   mdiUploadNetwork,
 } from "@mdi/js";
 import { DownloadType, getDownloadUrl } from "../api/download";
+
+type HostDeviceLike = {
+  target_platform?: string | null;
+  loaded_integrations?: string[] | null;
+};
+
+function is_host_device(device: HostDeviceLike): boolean {
+  return (
+    device.target_platform?.toUpperCase() === "HOST" ||
+    (device.loaded_integrations?.includes("host") ?? false)
+  );
+}
 
 const UPDATE_TO_ICON = "➡️";
 const STATUS_COLORS = {
@@ -316,6 +329,12 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     openInstallChooseDialog(this.device.configuration);
   }
   private _handleLogs() {
+    // Host devices don't support serial/OTA selection - always stream logs locally.
+    if (is_host_device(this.device)) {
+      openLogsDialog(this.device.configuration, "OTA");
+      return;
+    }
+
     openLogsTargetDialog(this.device.configuration);
   }
 
