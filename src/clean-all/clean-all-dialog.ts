@@ -9,7 +9,7 @@ class ESPHomeCleanAllDialog extends LitElement {
   protected render() {
     return html`
       <esphome-process-dialog
-        heading="Clean All"
+        heading="Clean All Files"
         .type=${"clean-all"}
         .spawnParams=${{ clean_build_dir: true }}
         @closed=${this._handleClose}

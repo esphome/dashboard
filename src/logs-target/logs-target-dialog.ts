@@ -195,7 +195,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
   }
 
   private _handleClose() {
-    this.parentNode!.removeChild(this);
+    this.parentNode?.removeChild(this);
   }
 
   static styles = [
