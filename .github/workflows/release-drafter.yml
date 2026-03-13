@@ -22,7 +22,7 @@ jobs:
       - name: Get version
         id: get_version
         run: echo version=$(python setup.py --version) >> $GITHUB_OUTPUT
-      - uses: release-drafter/release-drafter@v6
+      - uses: release-drafter/release-drafter@v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
