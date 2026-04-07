@@ -23,6 +23,7 @@ import {
 } from "../const";
 import { esphomeDialogStyles } from "../styles";
 import { sleep } from "../util/sleep";
+import { resetSerialDevice } from "../web-serial/reset-serial-device";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -241,6 +242,7 @@ export class ESPHomeInstallWebDialog extends LitElement {
       }
 
       await esploader.after();
+      await resetSerialDevice(esploader.transport);
       this._state = "done";
     } finally {
       console.log("Closing port");

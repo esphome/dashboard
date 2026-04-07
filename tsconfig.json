@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "ignoreDeprecations": "5.0",
+    "ignoreDeprecations": "6.0",
     "importHelpers": true
   }
 }
