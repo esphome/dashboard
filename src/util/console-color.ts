@@ -91,9 +91,11 @@ export class ColoredConsole {
           case 4:
             this.state.underline = true;
             break;
+          case 5:
           case 8:
             this.state.secret = true;
             break;
+          case 6:
           case 28:
             this.state.secret = false;
             break;
