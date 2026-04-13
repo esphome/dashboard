@@ -11,7 +11,8 @@ class EWUnsupportedCard extends LitElement {
         <div class="card-header">Dashboard Unavailable</div>
         <div class="card-content flex">
           ESPHome Web requires a browser that supports WebSerial. Please open
-          this website on your desktop using Google Chrome or Microsoft Edge.
+          this website on your desktop using Firefox, Google Chrome or Microsoft
+          Edge.
         </div>
       </esphome-card>
     `;
