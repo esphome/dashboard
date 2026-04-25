@@ -78,9 +78,7 @@ export class ESPHomeProcessDialog extends LitElement {
 
   public restart() {
     this._result = undefined;
-    this.shadowRoot
-      ?.querySelector("esphome-remote-process")
-      ?.restart();
+    this.shadowRoot?.querySelector("esphome-remote-process")?.restart();
   }
 
   private _onToggleShowStates(ev: Event) {

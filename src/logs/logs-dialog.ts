@@ -20,7 +20,8 @@ class ESPHomeLogsDialog extends LitElement {
   @state() private _showStates: boolean =
     localStorage.getItem(SHOW_STATES_STORAGE_KEY) !== "false";
 
-  @query("esphome-process-dialog") private _processDialog!: ESPHomeProcessDialog;
+  @query("esphome-process-dialog")
+  private _processDialog!: ESPHomeProcessDialog;
 
   protected render() {
     return html`
