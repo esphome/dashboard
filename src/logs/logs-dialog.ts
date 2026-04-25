@@ -11,14 +11,31 @@ import { esphomeDialogStyles } from "../styles";
 
 const SHOW_STATES_STORAGE_KEY = "esphome-logs-show-states";
 
+// Safari private mode and locked-down browser contexts can throw on any
+// localStorage access; fall back to the default and silently swallow writes.
+const readShowStates = (): boolean => {
+  try {
+    return localStorage.getItem(SHOW_STATES_STORAGE_KEY) !== "false";
+  } catch {
+    return true;
+  }
+};
+
+const writeShowStates = (value: boolean): void => {
+  try {
+    localStorage.setItem(SHOW_STATES_STORAGE_KEY, String(value));
+  } catch {
+    // ignore
+  }
+};
+
 @customElement("esphome-logs-dialog")
 class ESPHomeLogsDialog extends LitElement {
   @property() public configuration!: string;
   @property() public target!: string;
 
   @state() private _result?: number;
-  @state() private _showStates: boolean =
-    localStorage.getItem(SHOW_STATES_STORAGE_KEY) !== "false";
+  @state() private _showStates: boolean = readShowStates();
 
   @query("esphome-process-dialog")
   private _processDialog!: ESPHomeProcessDialog;
@@ -74,7 +91,7 @@ class ESPHomeLogsDialog extends LitElement {
 
   private async _toggleShowStates(ev: CustomEvent<boolean>) {
     this._showStates = ev.detail;
-    localStorage.setItem(SHOW_STATES_STORAGE_KEY, String(this._showStates));
+    writeShowStates(this._showStates);
     this._result = undefined;
     // Wait for our render plus the inner process-dialog render so the new
     // spawnParams reach esphome-remote-process before we restart the stream.
