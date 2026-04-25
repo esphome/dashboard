@@ -43,7 +43,7 @@ export class ESPHomeProcessDialog extends LitElement {
             @process-done=${this._handleProcessDone}
           ></esphome-remote-process>
 
-          <div class="action-row">
+          <div class="action-row" @click=${this._handleActionRowClick}>
             ${this.showStatesToggle
               ? html`
                   <mwc-formfield label="Show entity state changes">
@@ -74,6 +74,17 @@ export class ESPHomeProcessDialog extends LitElement {
 
   private _closeDialog() {
     this.shadowRoot?.querySelector("mwc-dialog")?.close();
+  }
+
+  // mwc-dialog's built-in dialogAction click delegation only walks closest()
+  // from mdcRoot's listener, which can't reach slotted buttons now that we
+  // render the action row in the content slot. Mirror the behaviour here so
+  // existing `dialogAction="close"` buttons keep closing the dialog.
+  private _handleActionRowClick(ev: MouseEvent) {
+    const target = ev.target as Element | null;
+    if (target?.closest("[dialogAction]")) {
+      this._closeDialog();
+    }
   }
 
   public restart() {
