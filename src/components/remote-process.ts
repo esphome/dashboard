@@ -31,23 +31,39 @@ class ESPHomeRemoteProcess extends HTMLElement {
       <div class="log"></div>
     `;
 
-    const coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);
-    this._coloredConsole = coloredConsole;
-    this._abortController = new AbortController();
+    this._coloredConsole = new ColoredConsole(shadowRoot.querySelector("div")!);
+    this._startStream();
+  }
+
+  public restart() {
+    this._startStream();
+  }
+
+  private _startStream() {
+    if (this._abortController) {
+      this._abortController.abort();
+    }
+    const controller = new AbortController();
+    this._abortController = controller;
 
     streamLogs(
       this.type,
       this.spawnParams,
       (line) => {
-        coloredConsole.addLine(line);
+        this._coloredConsole?.addLine(line);
       },
-      this._abortController,
+      controller,
     ).then(
       () => {
-        fireEvent(this, "process-done", 0);
+        // Ignore the resolution of a stream we have already replaced.
+        if (this._abortController === controller) {
+          fireEvent(this, "process-done", 0);
+        }
       },
       (error: StreamError) => {
-        fireEvent(this, "process-done", error.code);
+        if (this._abortController === controller) {
+          fireEvent(this, "process-done", error.code);
+        }
       },
     );
   }
