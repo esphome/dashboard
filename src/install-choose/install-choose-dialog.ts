@@ -53,7 +53,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
           graphic="icon"
           twoline
           @click=${() => {
-            openInstallServerDialog(this.configuration);
+            openInstallServerDialog(this.configuration, "OTA");
             this._close();
           }}
         >
