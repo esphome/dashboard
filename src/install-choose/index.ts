@@ -1,8 +1,9 @@
 const preload = () => import("./install-choose-dialog");
 
-export const openInstallChooseDialog = (configuration: string, isQueued: boolean = false) => {
+export const openInstallChooseDialog = async (configuration: string, isQueued: boolean = false) => {
+  await import("./install-choose-dialog");  
   const dialog = document.createElement("esphome-install-choose-dialog") as any;
   dialog.configuration = configuration;
-  dialog.isQueued = isQueued; // <-- PASS THE STATE TO THE DIALOG
+  dialog.isQueued = isQueued; 
   document.body.appendChild(dialog);
 };
