@@ -139,11 +139,14 @@ class ESPHomeInstallChooseDialog extends LitElement {
   }
 
   private _openQueueDialog() {
-    // Repurpose the web dialog for the queuing process
-    openInstallWebDialog({
+    // Bypass the openInstallWebDialog wrapper to prevent the browser's serial port prompt
+    const dialog = document.createElement("esphome-install-web-dialog") as any;
+    dialog.params = {
       configuration: this.configuration,
       isQueue: true,
-    });
+    };
+    document.body.appendChild(dialog);
+    
     this._close();
   }
 
