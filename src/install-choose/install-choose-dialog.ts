@@ -86,6 +86,22 @@ class ESPHomeInstallChooseDialog extends LitElement {
               </mwc-list-item>
             `}
 
+        ${this._ports === undefined || this._ports.length > 0
+          ? html`
+              <mwc-list-item
+                graphic="icon"
+                twoline
+                @click=${() => {
+                  this._state = "pick_port";
+                }}
+              >
+                <slot name="graphic">🔌</slot>
+                <span>Plugged into the computer running ESPHome Dashboard</span>
+                <span slot="secondary">Install via USB</span>
+              </mwc-list-item>
+            `
+          : ""}
+
         ${supportsWebSerial
           ? html`
               <mwc-list-item
