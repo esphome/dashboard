@@ -70,7 +70,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
                 @click=${this._openQueueDialog}
               >
                 <slot name="graphic">⏳</slot>
-                <span>Queue for Wake-up</span>
+                <span>Queue for Update</span>
                 <span slot="secondary">Build firmware and wait for device to connect</span>
               </mwc-list-item>
             `
@@ -82,7 +82,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
               >
                 <slot name="graphic">❌</slot>
                 <span style="color: var(--alert-error-color);">Remove from Queue</span>
-                <span slot="secondary">Cancel the pending ambush update</span>
+                <span slot="secondary">Cancel the pending update</span>
               </mwc-list-item>
             `}
 
