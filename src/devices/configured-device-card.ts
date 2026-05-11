@@ -313,7 +313,7 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
     openEditDialog(this.device.configuration);
   }
   private _handleInstall() {
-    openInstallChooseDialog(this.device.configuration);
+    openInstallChooseDialog(this.device.configuration, this.device.is_queued);
   }
   private _handleLogs() {
     openLogsTargetDialog(this.device.configuration);
