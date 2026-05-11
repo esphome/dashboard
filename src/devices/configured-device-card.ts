@@ -96,6 +96,9 @@ class ESPHomeConfiguredDeviceCard extends LitElement {
       >
         <div class="card-header">
           ${this.device.friendly_name || this.device.name}
+          ${this.device.is_queued 
+            ? html`<span style="margin-left: 8px; font-size: 12px; padding: 2px 6px; background-color: var(--alert-warning-color); color: #000; border-radius: 4px; font-weight: bold;">⏳ Queued</span>` 
+            : ""}
         </div>
 
         ${content.length
