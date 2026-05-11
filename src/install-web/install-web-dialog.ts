@@ -96,16 +96,15 @@ export class ESPHomeInstallWebDialog extends LitElement {
   private async _prepareConfig() {
     const configuration = this.params.configuration!;
 
-    // NEW QUEUE LOGIC: Bypass web-serial entirely
     if (this.params.isQueue) {
       return new Promise<void>((resolve, reject) => {
         const socket = new WebSocket(buildWebSocketUrl("queue-update"));
         
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
-          if (data.event === "queued_success") {
+          
+          if (data.event === "queued_success" || (data.event === "exit" && data.code === 0)) {
             this._state = "queued";
-            socket.close();
             resolve();
           }
         };
@@ -135,7 +134,6 @@ export class ESPHomeInstallWebDialog extends LitElement {
       });
     }
 
-    // EXISTING WEB-SERIAL LOGIC
     try {
       if (this.params.filesCallback) {
         // ... (existing flash logic)
