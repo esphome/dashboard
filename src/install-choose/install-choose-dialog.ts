@@ -138,16 +138,19 @@ class ESPHomeInstallChooseDialog extends LitElement {
     `;
   }
 
-private async _openQueueDialog() {
-    // 1. Force the browser to lazy-load and register the custom element
-    await import("../install-web/install-web-dialog");
+  private async _openQueueDialog() {
+    // 1. Force the browser to lazy-load the standard ESPHome terminal UI
+    await import("../components/esphome-process-dialog");
 
-    // 2. Now that the browser knows what this element is, we can create it
-    const dialog = document.createElement("esphome-install-web-dialog") as any;
-    dialog.params = {
-      configuration: this.configuration,
-      isQueue: true,
-    };
+    // 2. Create the terminal dialog element
+    const dialog = document.createElement("esphome-process-dialog") as any;
+    
+    // 3. Configure it to connect to our custom /queue-update websocket endpoint
+    dialog.heading = `Queue Update: ${this.configuration}`;
+    dialog.type = "queue-update";
+    dialog.spawnParams = { configuration: this.configuration };
+    
+    // 4. Attach it to the screen
     document.body.appendChild(dialog);
     
     this._close();
