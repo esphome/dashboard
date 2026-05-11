@@ -42,6 +42,12 @@ export const importDevice = (params: ImportableDevice) =>
     body: JSON.stringify({ ...params, encryption: true }),
   });
 
+export const cancelQueuedUpdate = (configuration: string) =>
+  fetchApiJson<{}>("./cancel-queue", {
+    method: "post",
+    body: JSON.stringify({ configuration }),
+  });
+
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
   [ServerEvent.INITIAL_STATE]: (_, data: InitialStateData) => {
