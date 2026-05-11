@@ -2,6 +2,7 @@ import { fetchApiJson } from ".";
 import { SupportedPlatforms } from "../const";
 import { createWebSocketCollection } from "../util/websocket-collection";
 import { ServerEvent } from "./dashboard-events";
+import type { InitialStateData, QueuedChangedData } from "./websocket"; //
 
 export interface ConfiguredDevice {
   name: string;
@@ -15,6 +16,7 @@ export interface ConfiguredDevice {
   address?: string;
   web_port?: number;
   target_platform: SupportedPlatforms;
+  is_queued: boolean; //
 }
 
 export interface ImportableDevice {
@@ -42,7 +44,17 @@ export const importDevice = (params: ImportableDevice) =>
 
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
-  [ServerEvent.INITIAL_STATE]: (_, data) => data.devices,
+  [ServerEvent.INITIAL_STATE]: (_, data: InitialStateData) => {
+    // Map initial queue status from the backend to the device objects
+    const { devices, queued } = data;
+    return {
+      ...devices,
+      configured: devices.configured.map((d) => ({
+        ...d,
+        is_queued: !!queued?.[d.configuration],
+      })),
+    };
+  },
   [ServerEvent.ENTRY_ADDED]: (current, data) => ({
     ...current,
     configured: [...current.configured, data.device],
@@ -57,6 +69,13 @@ const devicesCollection = createWebSocketCollection<ListDevicesResult>({
     ...current,
     configured: current.configured.map((d) =>
       d.name === data.device.name ? data.device : d,
+    ),
+  }),
+  // Handle real-time updates when a device is added to or removed from the queue
+  [ServerEvent.QUEUED_STATE_CHANGED]: (current, data: QueuedChangedData) => ({
+    ...current,
+    configured: current.configured.map((d) =>
+      d.configuration === data.filename ? { ...d, is_queued: data.state } : d,
     ),
   }),
   [ServerEvent.IMPORTABLE_DEVICE_ADDED]: (current, data) => {

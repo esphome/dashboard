@@ -11,9 +11,16 @@ export interface WebSocketMessage {
 export interface InitialStateData {
   devices: ListDevicesResult;
   ping: Record<string, boolean>;
+  queued: Record<string, boolean>;
 }
 
 export interface StateChangedData {
+  filename: string;
+  name: string;
+  state: boolean;
+}
+
+export interface QueuedChangedData {
   filename: string;
   name: string;
   state: boolean;

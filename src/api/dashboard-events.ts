@@ -9,6 +9,7 @@ export const ServerEvent = {
   ENTRY_REMOVED: "entry_removed",
   ENTRY_UPDATED: "entry_updated",
   ENTRY_STATE_CHANGED: "entry_state_changed",
+  QUEUED_STATE_CHANGED: "queued_state_changed",
   IMPORTABLE_DEVICE_ADDED: "importable_device_added",
   IMPORTABLE_DEVICE_REMOVED: "importable_device_removed",
   INITIAL_STATE: "initial_state",
