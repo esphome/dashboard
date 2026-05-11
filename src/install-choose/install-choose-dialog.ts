@@ -138,8 +138,11 @@ class ESPHomeInstallChooseDialog extends LitElement {
     `;
   }
 
-  private _openQueueDialog() {
-    // Bypass the openInstallWebDialog wrapper to prevent the browser's serial port prompt
+private async _openQueueDialog() {
+    // 1. Force the browser to lazy-load and register the custom element
+    await import("../install-web/install-web-dialog");
+
+    // 2. Now that the browser knows what this element is, we can create it
     const dialog = document.createElement("esphome-install-web-dialog") as any;
     dialog.params = {
       configuration: this.configuration,
