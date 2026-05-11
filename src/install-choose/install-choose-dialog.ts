@@ -140,7 +140,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
 
   private async _openQueueDialog() {
     // 1. Force the browser to lazy-load the standard ESPHome terminal UI
-    await import("../components/esphome-process-dialog");
+    await import("../components/process-dialog");
 
     // 2. Create the terminal dialog element
     const dialog = document.createElement("esphome-process-dialog") as any;
