@@ -42,17 +42,28 @@ export const importDevice = (params: ImportableDevice) =>
     body: JSON.stringify({ ...params, encryption: true }),
   });
 
+export const cancelQueuedUpdate = async (configuration: string) => {
+  return fetch("./cancel-queue", {
+    method: "POST",
+    body: JSON.stringify({ configuration }), // This matches your Python json.loads()
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 // Use WebSocket for real-time device updates
 const devicesCollection = createWebSocketCollection<ListDevicesResult>({
   [ServerEvent.INITIAL_STATE]: (_, data: InitialStateData) => {
     // Map initial queue status from the backend to the device objects
-    const { devices, queued } = data;
+    const configuredWithQueue = data.devices.configured.map((device) => ({
+      ...device,
+      is_queued: data.queued && data.queued[device.configuration] === true,
+    }));
+
     return {
-      ...devices,
-      configured: devices.configured.map((d) => ({
-        ...d,
-        is_queued: !!queued?.[d.configuration],
-      })),
+      ...data.devices,
+      configured: configuredWithQueue,
     };
   },
   [ServerEvent.ENTRY_ADDED]: (current, data) => ({
