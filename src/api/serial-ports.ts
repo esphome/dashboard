@@ -5,8 +5,10 @@ export interface ServerSerialPort {
   port: string;
 }
 
-export const getSerialPorts = () =>
-  fetchApiJson<ServerSerialPort[]>("./serial-ports")
+export const getSerialPorts = (configuration: string) =>
+  fetchApiJson<ServerSerialPort[]>(
+    `./serial-ports?configuration=${encodeURIComponent(configuration)}`,
+  )
     // We don't care about OTA but can't remove yet
     // until all legacy JS is gone
     .then((ports) => ports.filter((port) => port.port !== "OTA"));
