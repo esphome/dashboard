@@ -7,6 +7,7 @@ import "../components/remote-process";
 import "../components/process-dialog";
 import { openLogsDialog } from "../logs";
 import { getSerialPorts, ServerSerialPort } from "../api/serial-ports";
+import { getConfiguration } from "../api/configuration";
 import { allowsWebSerial, metaChevronRight, supportsWebSerial } from "../const";
 import { openLogsWebSerialDialog } from "../logs-webserial";
 import { esphomeDialogStyles, esphomeSvgStyles } from "../styles";
@@ -16,6 +17,8 @@ const ESPHOME_WEB_URL = "https://web.esphome.io/?dashboard_logs";
 @customElement("esphome-logs-target-dialog")
 class ESPHomeLogsTargetDialog extends LitElement {
   @property() public configuration!: string;
+
+  @state() private _ethernet = false;
 
   @state() private _ports?: ServerSerialPort[];
 
@@ -36,7 +39,7 @@ class ESPHomeLogsTargetDialog extends LitElement {
           .port=${"OTA"}
           @click=${this._pickPort}
         >
-          <span>Wirelessly</span>
+          <span>${this._ethernet ? "Via the network" : "Wirelessly"}</span>
           <span slot="secondary">Requires the device to be online</span>
           ${metaChevronRight}
         </mwc-list-item>
@@ -161,12 +164,15 @@ class ESPHomeLogsTargetDialog extends LitElement {
     super.firstUpdated(changedProperties);
     getSerialPorts().then((ports) => {
       if (ports.length === 0 && !supportsWebSerial) {
-        // Automatically pick wireless option if no other options available
+        // Automatically pick the network option if no other options available
         this._handleClose();
         openLogsDialog(this.configuration, "OTA");
       } else {
         this._ports = ports;
       }
+    });
+    getConfiguration(this.configuration).then((config) => {
+      this._ethernet = config.loaded_integrations.includes("ethernet");
     });
   }
 
