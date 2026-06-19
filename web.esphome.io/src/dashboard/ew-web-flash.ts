@@ -272,12 +272,27 @@ class EWWebFlash extends LitElement {
           });
           return;
         }
-        const installing = state === "installing";
-        this._post({
-          type: MSG_STATE,
-          state: installing ? "installing" : "connecting",
-          detail: installing ? "Erasing…" : "Connecting to device…",
-        });
+        // Map install-web's phases to the mirror; onProgress flips to
+        // "Installing" once the first write lands.
+        if (state === "installing") {
+          this._post({
+            type: MSG_STATE,
+            state: "installing",
+            detail: "Erasing…",
+          });
+        } else if (state === "prepare_installation") {
+          this._post({
+            type: MSG_STATE,
+            state: "installing",
+            detail: "Preparing…",
+          });
+        } else {
+          this._post({
+            type: MSG_STATE,
+            state: "connecting",
+            detail: "Connecting to device…",
+          });
+        }
       },
       onClose: (success) => {
         this._busy = false;
