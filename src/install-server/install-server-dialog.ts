@@ -23,7 +23,7 @@ class ESPHomeInstallServerDialog extends LitElement {
         @closed=${this._handleClose}
         @process-done=${this._handleProcessDone}
       >
-        ${this.target === "OTA"
+        ${this.target === "OTA" || this.target === "PUBLISH"
           ? ""
           : html`
               <a
