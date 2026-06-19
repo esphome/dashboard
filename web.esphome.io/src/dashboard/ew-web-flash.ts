@@ -26,10 +26,20 @@ interface FirmwarePart {
 }
 
 // install-web wants each image as a binary string (the byte-for-byte shape
-// FileReader's readAsBinaryString produces); latin1 maps each byte 1:1 to the
-// same code unit, in one native call.
-const toBinaryString = (buffer: ArrayBuffer): string =>
-  new TextDecoder("latin1").decode(buffer);
+// FileReader's readAsBinaryString produces): each byte maps to the code unit of
+// the same value. Built in chunks so a ~1MB image doesn't blow the argument
+// limit of String.fromCharCode. Do NOT use TextDecoder("latin1") here: per the
+// Encoding spec that label is windows-1252, which remaps 0x80-0x9F and corrupts
+// the firmware (checksum failure on boot).
+function toBinaryString(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  const CHUNK = 0x8000;
+  let result = "";
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    result += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
+  }
+  return result;
+}
 
 // Validate the firmware payload before trusting its shape: each part must have a
 // non-negative integer address and ArrayBuffer data. Mirrors isFlashParts in the
