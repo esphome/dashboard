@@ -14,7 +14,7 @@ export class EwtConsole extends HTMLElement {
   private _cancelConnection?: () => Promise<void>;
 
   public logs(): string {
-    return this._console?.logs() || "";
+    return this._console?.logs() ?? "";
   }
 
   public connectedCallback() {
