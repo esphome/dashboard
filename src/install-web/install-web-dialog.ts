@@ -209,7 +209,14 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _handleInstall() {
     const esploader = this.esploader;
+    // Set once the flash succeeds: the post-flash reset re-enumerates the USB
+    // device (a native USB-Serial-JTAG chip drops and re-creates its port on
+    // boot), and that expected disconnect must not be reported as a failure.
+    let installed = false;
     esploader.transport.device.addEventListener("disconnect", async () => {
+      if (installed) {
+        return;
+      }
       this._state = "done";
       this._error = "Device disconnected";
       if (!this.params.port) {
@@ -273,6 +280,9 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
+      // The flash itself is done; the reset below intentionally re-enumerates
+      // the device, so stop treating a disconnect as a failure.
+      installed = true;
       // A bare RTS toggle leaves native USB-Serial-JTAG chips (S3/C3/...) in
       // download mode after writeFlash; pick a reset strategy that boots the app.
       await hardResetChip(

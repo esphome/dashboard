@@ -57,9 +57,6 @@ class EWWebFlash extends LitElement {
   @state() private _deviceName = "";
   @state() private _detail = "";
   @state() private _busy = false;
-  // The connected port, kept open after a successful flash so the user lands on
-  // the standard device card (logs, prepare for first use).
-  @state() private _port: SerialPort | null = null;
 
   private _nonce = "";
   private _opener: Window | null = null;
@@ -216,23 +213,14 @@ class EWWebFlash extends LitElement {
     if (!this._files || this._busy) return;
     this._busy = true;
     const files = this._files;
-    // Pick the port but don't open it; install-web opens it via the ESPLoader
-    // (which surfaces the "hold BOOT" guidance on a chip-init failure) and
-    // reopens it after a successful flash so we can show the device card. This
-    // mirrors the device-builder flasher, which never pre-opens the port.
-    let port: SerialPort;
-    try {
-      port = await navigator.serial.requestPort();
-    } catch {
-      // Picker dismissed or failed; stay on the ready card so the user can retry.
-      this._busy = false;
-      return;
-    }
-    this._port = port;
+    // Let install-web own the port: it requests + opens it (surfacing the "hold
+    // BOOT" guidance on a chip-init failure) and, crucially, does NOT reopen it
+    // after the flash since we pass no port; reopening a native-USB port after
+    // the reset re-resets the chip into a boot loop. We don't need the port back
+    // (logs are a separate fresh connect), mirroring the device-builder flasher.
     // "Erasing" until the first write progress arrives, then "Installing".
     let writing = false;
     await openInstallWebDialog({
-      port,
       erase: this._erase,
       filesCallback: async () => files,
       // Mirror progress and the granular phase so the dashboard's install view
@@ -264,21 +252,10 @@ class EWWebFlash extends LitElement {
           detail: installing ? "Erasing…" : "Connecting to device…",
         });
       },
-      onClose: async (success) => {
+      onClose: (success) => {
         this._busy = false;
-        if (!success) {
-          this._status = "ready"; // failed: stay on the card so the user retries
-          return;
-        }
-        // Release the flash port so the rebooted device runs cleanly; the cached
-        // handle is unreliable after a native-USB re-enumeration anyway.
-        try {
-          await this._port?.close();
-        } catch {
-          // already closed / handle died on re-enumeration
-        }
-        this._port = null;
-        this._status = "done";
+        // Failed: stay on the card so the user can retry. Succeeded: done.
+        this._status = success ? "done" : "ready";
       },
     });
   };
