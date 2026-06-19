@@ -218,27 +218,38 @@ class EWWebFlash extends LitElement {
     if (!this._files || this._busy) return;
     this._busy = true;
     const files = this._files;
-    // Open the port ourselves and pass it in, so install-web keeps it open after
-    // the flash; that lets us drop straight onto the device card.
+    // Pick the port but don't open it; install-web opens it via the ESPLoader
+    // (which surfaces the "hold BOOT" guidance on a chip-init failure) and
+    // reopens it after a successful flash so we can show the device card. This
+    // mirrors the device-builder flasher, which never pre-opens the port.
     let port: SerialPort;
     try {
       port = await navigator.serial.requestPort();
-      await port.open({ baudRate: 115200, bufferSize: 8192 });
-    } catch (err) {
+    } catch {
+      // Picker dismissed or failed; stay on the ready card so the user can retry.
       this._busy = false;
-      if ((err as DOMException)?.name !== "NotFoundError") {
-        this._fail(`Could not open the serial port: ${(err as Error).message}`);
-      }
       return;
     }
     this._port = port;
+    // "Erasing" until the first write progress arrives, then "Installing".
+    let writing = false;
     await openInstallWebDialog({
       port,
       erase: this._erase,
       filesCallback: async () => files,
-      // Mirror progress and state back to the dashboard so its own install view
-      // tracks this tab.
-      onProgress: (pct) => this._post({ type: MSG_PROGRESS, pct }),
+      // Mirror progress and the granular phase so the dashboard's install view
+      // tracks this tab instead of showing a stale phase.
+      onProgress: (pct) => {
+        this._post({ type: MSG_PROGRESS, pct });
+        if (!writing) {
+          writing = true;
+          this._post({
+            type: MSG_STATE,
+            state: "installing",
+            detail: "Installing over USB…",
+          });
+        }
+      },
       onStateChange: (state, error) => {
         if (state === "done") {
           this._post({
@@ -252,7 +263,7 @@ class EWWebFlash extends LitElement {
         this._post({
           type: MSG_STATE,
           state: installing ? "installing" : "connecting",
-          detail: installing ? "Installing over USB…" : "Connecting to device…",
+          detail: installing ? "Erasing…" : "Connecting to device…",
         });
       },
       onClose: (success) => {
