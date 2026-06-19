@@ -285,11 +285,17 @@ export class ESPHomeInstallWebDialog extends LitElement {
       installed = true;
       // A bare RTS toggle leaves native USB-Serial-JTAG chips (S3/C3/...) in
       // download mode after writeFlash; pick a reset strategy that boots the app.
-      await hardResetChip(
-        esploader,
-        esploader.transport,
-        esploader.transport.device,
-      );
+      // The write is already committed, so a reset that throws must not report
+      // the install as failed: log it and still mark done.
+      try {
+        await hardResetChip(
+          esploader,
+          esploader.transport,
+          esploader.transport.device,
+        );
+      } catch (err) {
+        console.error("Post-flash reset failed:", err);
+      }
       this._state = "done";
     } finally {
       console.log("Closing port");
