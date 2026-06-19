@@ -174,11 +174,18 @@ class EWWebFlash extends LitElement {
   private _post(message: object): void {
     try {
       this._opener?.postMessage(message, this._targetOrigin);
-    } catch {
-      // A malformed origin from the hash would throw; broadcast instead so the
-      // repeating ready announcements don't wedge the handoff.
+    } catch (err) {
+      // A malformed origin from the hash makes postMessage throw; fall back to
+      // '*' so the ready announcements keep flowing (no nonce travels outbound,
+      // so the broader audience leaks nothing). Log rather than swallow so an
+      // unrelated failure stays visible.
+      console.error("postMessage failed; falling back to '*':", err);
       this._targetOrigin = "*";
-      this._opener?.postMessage(message, "*");
+      try {
+        this._opener?.postMessage(message, "*");
+      } catch (err2) {
+        console.error("postMessage failed after origin fallback:", err2);
+      }
     }
   }
 
