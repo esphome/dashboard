@@ -98,8 +98,16 @@ class EWWebFlash extends LitElement {
     let waited = 0;
     this._readyTimer = window.setInterval(() => {
       waited += 500;
-      if (this._files || waited >= 10000) {
+      if (this._files) {
         this._stopReady();
+        return;
+      }
+      if (waited >= 10000) {
+        // Opener crashed, navigated away, or speaks a mismatched protocol; give
+        // the user a terminal state instead of an endless spinner.
+        this._fail(
+          "Didn't receive firmware. Return to ESPHome Device Builder and try the USB install again.",
+        );
         return;
       }
       this._sendReady();
