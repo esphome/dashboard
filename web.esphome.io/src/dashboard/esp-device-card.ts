@@ -3,7 +3,7 @@ import "@material/mwc-button";
 import "@material/mwc-icon-button";
 import type { ActionDetail } from "@material/mwc-list";
 import { LitElement, html, css, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "../../../src/components/esphome-svg-icon";
 import "../../../src/components/esphome-card";
 import "../../../src/components/esphome-button-menu";
@@ -26,11 +26,14 @@ import { mdiLinkOff, mdiWifiCog } from "@mdi/js";
 @customElement("ew-esp-device-card")
 class EWESPDeviceCard extends LitElement {
   public port!: SerialPort;
+  // Optional friendly name (e.g. from a Device Builder hand-off); falls back to
+  // the generic label for the standard connect flow.
+  @property() public name?: string;
 
   protected render() {
     return html`
       <esphome-card status="CONNECTED" no-status-bar>
-        <div class="card-header">ESP Device</div>
+        <div class="card-header">${this.name || "ESP Device"}</div>
         <div class="card-content flex"></div>
 
         <div class="card-actions">

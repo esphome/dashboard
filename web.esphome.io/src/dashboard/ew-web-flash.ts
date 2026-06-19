@@ -112,6 +112,7 @@ class EWWebFlash extends LitElement {
       return this._port
         ? html`<ew-esp-device-card
             .port=${this._port}
+            .name=${this._deviceName}
             @close=${this._onCardClose}
           ></ew-esp-device-card>`
         : html`<esphome-card status="DONE">
