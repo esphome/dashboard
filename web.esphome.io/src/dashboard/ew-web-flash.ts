@@ -1,12 +1,14 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-button";
+import "../../../src/components/esphome-card";
+import "./esp-device-card";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
 } from "../../../src/install-web";
 import type { FileToFlash } from "../../../src/web-serial/flash";
-import { esphomeDialogStyles } from "../../../src/styles";
+import { esphomeCardStyles } from "../../../src/styles";
 
 // Message contract shared with the ESPHome Device Builder dashboard (the opener,
 // on any http/https origin). The opener origin is unknown, so authentication is
@@ -17,31 +19,48 @@ const PROTOCOL_VERSION = 1;
 const MSG_READY = "esphome-web-flash:ready";
 const MSG_FIRMWARE = "esphome-web-flash:firmware";
 const MSG_STATE = "esphome-web-flash:state";
+const MSG_PROGRESS = "esphome-web-flash:progress";
 
 interface FirmwarePart {
   address: number;
   data: ArrayBuffer;
 }
 
-// install-web wants each image as a binary string (the same shape FileReader's
-// readAsBinaryString produces); convert in chunks so a ~1MB factory image
-// doesn't blow the argument limit of String.fromCharCode.
-function bufferToBinaryString(buffer: ArrayBuffer): string {
-  const bytes = new Uint8Array(buffer);
-  const CHUNK = 0x8000;
-  let result = "";
-  for (let i = 0; i < bytes.length; i += CHUNK) {
-    result += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
-  }
-  return result;
+// install-web wants each image as a binary string (the byte-for-byte shape
+// FileReader's readAsBinaryString produces); latin1 maps each byte 1:1 to the
+// same code unit, in one native call.
+const toBinaryString = (buffer: ArrayBuffer): string =>
+  new TextDecoder("latin1").decode(buffer);
+
+// Validate the firmware payload before trusting its shape: each part must have a
+// non-negative integer address and ArrayBuffer data. Mirrors isFlashParts in the
+// device-builder flasher.
+function isFlashParts(parts: unknown): parts is FirmwarePart[] {
+  return (
+    Array.isArray(parts) &&
+    parts.length > 0 &&
+    parts.every(
+      (p) =>
+        p &&
+        typeof p === "object" &&
+        typeof p.address === "number" &&
+        Number.isInteger(p.address) &&
+        p.address >= 0 &&
+        p.data instanceof ArrayBuffer,
+    )
+  );
 }
 
 @customElement("ew-web-flash")
 class EWWebFlash extends LitElement {
-  @state() private _status: "waiting" | "ready" | "error" = "waiting";
+  @state() private _status: "waiting" | "ready" | "done" | "error" = "waiting";
   @state() private _name = "";
+  @state() private _deviceName = "";
   @state() private _detail = "";
   @state() private _busy = false;
+  // The connected port, kept open after a successful flash so the user lands on
+  // the standard device card (logs, prepare for first use).
+  @state() private _port: SerialPort | null = null;
 
   private _nonce = "";
   private _opener: Window | null = null;
@@ -87,32 +106,54 @@ class EWWebFlash extends LitElement {
   }
 
   protected render() {
+    // After a successful flash, hand the kept-open port to the standard device
+    // card so the user can check logs or prepare the device for first use.
+    if (this._status === "done") {
+      return this._port
+        ? html`<ew-esp-device-card
+            .port=${this._port}
+            @close=${this._onCardClose}
+          ></ew-esp-device-card>`
+        : html`<esphome-card status="DONE">
+            <div class="card-header">Install over USB</div>
+            <div class="card-content">Installed. You can close this tab.</div>
+          </esphome-card>`;
+    }
     return html`
-      <div class="card">
-        <h2>Install over USB</h2>
-        ${this._status === "error"
-          ? html`<p class="error">${this._detail}</p>`
-          : this._status === "waiting"
-            ? html`<p>
-                Waiting for firmware from ESPHome Device Builder&hellip;
-              </p>`
-            : html`
-                <p>
-                  Firmware
+      <esphome-card
+        status=${this._status === "ready"
+          ? "READY"
+          : this._status === "error"
+            ? "ERROR"
+            : "WAITING"}
+      >
+        <div class="card-header">
+          ${this._deviceName
+            ? html`Install ${this._deviceName} over USB`
+            : "Install over USB"}
+        </div>
+        <div class="card-content">
+          ${this._status === "error"
+            ? html`<span class="error">${this._detail}</span>`
+            : this._status === "waiting"
+              ? html`Waiting for firmware from ESPHome Device Builder&hellip;`
+              : html`Firmware for
+                  <b>${this._deviceName || "your device"}</b>
                   received${this._name
                     ? html` (<code>${this._name}</code>)`
                     : ""}.
-                  Plug your device into this computer over USB, then connect and
-                  install.
-                </p>
-                <mwc-button
-                  raised
-                  label="Connect & install"
-                  .disabled=${this._busy}
-                  @click=${this._install}
-                ></mwc-button>
-              `}
-      </div>
+                  Plug it into this computer over USB, then connect and install.`}
+        </div>
+        ${this._status === "ready"
+          ? html`<div class="card-actions">
+              <mwc-button
+                label="Connect & install"
+                .disabled=${this._busy}
+                @click=${this._install}
+              ></mwc-button>
+            </div>`
+          : nothing}
+      </esphome-card>
     `;
   }
 
@@ -124,7 +165,14 @@ class EWWebFlash extends LitElement {
   }
 
   private _post(message: object): void {
-    this._opener?.postMessage(message, this._targetOrigin);
+    try {
+      this._opener?.postMessage(message, this._targetOrigin);
+    } catch {
+      // A malformed origin from the hash would throw; broadcast instead so the
+      // repeating ready announcements don't wedge the handoff.
+      this._targetOrigin = "*";
+      this._opener?.postMessage(message, "*");
+    }
   }
 
   private _sendReady(): void {
@@ -138,7 +186,8 @@ class EWWebFlash extends LitElement {
     if (!data || data.type !== MSG_FIRMWARE || data.nonce !== this._nonce)
       return;
     if (this._files) return; // already handed off
-    if (!Array.isArray(data.parts) || data.parts.length === 0) {
+    const parts = data.parts;
+    if (!isFlashParts(parts)) {
       this._fail("Received a malformed firmware payload.");
       return;
     }
@@ -147,16 +196,20 @@ class EWWebFlash extends LitElement {
     }
     this._stopReady();
     try {
-      this._files = (data.parts as FirmwarePart[]).map((part) => ({
-        data: bufferToBinaryString(part.data),
+      this._files = parts.map((part) => ({
+        data: toBinaryString(part.data),
         address: part.address,
       }));
     } catch {
       this._fail("Could not read the firmware payload.");
       return;
     }
-    this._erase = data.erase ?? true;
+    this._erase = data.erase !== false;
     this._name = typeof data.name === "string" ? data.name : "";
+    this._deviceName =
+      typeof data.deviceName === "string" ? data.deviceName : "";
+    // Identify the window in the browser tab so multiple flashes don't blur.
+    if (this._deviceName) document.title = `Install ${this._deviceName}`;
     this._status = "ready";
   };
 
@@ -164,49 +217,75 @@ class EWWebFlash extends LitElement {
     if (!this._files || this._busy) return;
     this._busy = true;
     const files = this._files;
-    let opened = false;
-    await openInstallWebDialog(
-      {
-        erase: this._erase,
-        filesCallback: async () => files,
-        onClose: (success) => {
-          this._busy = false;
+    // Open the port ourselves and pass it in, so install-web keeps it open after
+    // the flash; that lets us drop straight onto the device card.
+    let port: SerialPort;
+    try {
+      port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 115200, bufferSize: 8192 });
+    } catch (err) {
+      this._busy = false;
+      if ((err as DOMException)?.name !== "NotFoundError") {
+        this._fail(`Could not open the serial port: ${(err as Error).message}`);
+      }
+      return;
+    }
+    this._port = port;
+    await openInstallWebDialog({
+      port,
+      erase: this._erase,
+      filesCallback: async () => files,
+      // Mirror progress and state back to the dashboard so its own install view
+      // tracks this tab.
+      onProgress: (pct) => this._post({ type: MSG_PROGRESS, pct }),
+      onStateChange: (state, error) => {
+        if (state === "done") {
           this._post({
             type: MSG_STATE,
-            state: success ? "done" : "error",
-            detail: success ? "" : "Installation did not complete.",
+            state: error ? "error" : "done",
+            detail: error ?? "",
           });
-        },
+          return;
+        }
+        const installing = state === "installing";
+        this._post({
+          type: MSG_STATE,
+          state: installing ? "installing" : "connecting",
+          detail: installing ? "Installing over USB…" : "Connecting to device…",
+        });
       },
-      () => {
-        opened = true;
+      onClose: (success) => {
+        this._busy = false;
+        // Success leaves the port open; show the device card. On failure stay on
+        // the install card so the user can retry.
+        this._status = success ? "done" : "ready";
       },
-    );
-    // Port picker dismissed or failed before the dialog opened: re-enable so the
-    // user can try again (install-web's own no-port dialog also offers a retry).
-    if (!opened) this._busy = false;
+    });
+  };
+
+  private _onCardClose = (): void => {
+    this._port = null;
   };
 
   private _fail(detail: string): void {
+    this._stopReady(); // stop announcing ready once we're wedged
     this._status = "error";
     this._detail = detail;
   }
 
   static styles = [
-    esphomeDialogStyles,
+    esphomeCardStyles,
     css`
-      .card {
-        margin: 40px auto;
+      :host {
+        display: block;
         max-width: 450px;
-        padding: 24px;
-        border-radius: 12px;
-        background: var(--card-background-color, #fff);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        text-align: center;
-        color: var(--primary-text-color);
+        margin: 40px auto;
       }
-      h2 {
-        margin-top: 0;
+      esphome-card {
+        --status-color: var(--alert-warning-color);
+      }
+      .card-actions mwc-button {
+        --mdc-theme-primary: var(--alert-warning-color);
       }
       code {
         word-break: break-all;

@@ -41,6 +41,17 @@ export class ESPHomeInstallWebDialog extends LitElement {
     // Callback when the dialog is closed. Note that if success is false,
     // some other dialog might be opened when the dialog is closed.
     onClose?: (success: boolean) => void;
+    // Mirror progress (0-100) and state to an embedder that shows the flash
+    // elsewhere (the postMessage hand-off from ESPHome Device Builder).
+    onProgress?: (pct: number) => void;
+    onStateChange?: (
+      state:
+        | "connecting_webserial"
+        | "prepare_installation"
+        | "installing"
+        | "done",
+      error?: string,
+    ) => void;
   };
 
   @property() public esploader!: ESPLoader;
@@ -56,6 +67,27 @@ export class ESPHomeInstallWebDialog extends LitElement {
   @state() private _error?: string | TemplateResult;
 
   private _platform?: SupportedPlatforms;
+
+  protected updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
+    if (
+      changedProps.has("_writeProgress") &&
+      this._writeProgress !== undefined
+    ) {
+      this.params.onProgress?.(this._writeProgress);
+    }
+    if (changedProps.has("_state")) {
+      // Preserve the error signal even when _error is a TemplateResult, so an
+      // embedder mirroring "done" can't mistake a failure for success.
+      const error =
+        this._error === undefined
+          ? undefined
+          : typeof this._error === "string"
+            ? this._error
+            : "Installation failed";
+      this.params.onStateChange?.(this._state, error);
+    }
+  }
 
   protected render() {
     let heading;
