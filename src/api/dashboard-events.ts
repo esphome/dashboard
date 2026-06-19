@@ -12,6 +12,7 @@ export const ServerEvent = {
   IMPORTABLE_DEVICE_ADDED: "importable_device_added",
   IMPORTABLE_DEVICE_REMOVED: "importable_device_removed",
   INITIAL_STATE: "initial_state",
+  PRE_BUILD_STATUS: "pre_build_status",
   PONG: "pong",
 } as const;
 
