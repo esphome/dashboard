@@ -70,8 +70,9 @@ class EWWebFlash extends LitElement {
 
   private _nonce = "";
   private _opener: Window | null = null;
-  // Stays '*' until the first valid inbound frame reveals the opener origin; no
-  // outbound frame carries the nonce, so the pre-handoff broadcast leaks nothing.
+  // Seeded from the 'origin' hash param when the opener passes it, otherwise '*'
+  // until the first valid inbound frame reveals the opener origin. No outbound
+  // frame carries the nonce, so even the '*' broadcast leaks nothing.
   private _targetOrigin = "*";
   private _files: FileToFlash[] | null = null;
   private _erase = true;

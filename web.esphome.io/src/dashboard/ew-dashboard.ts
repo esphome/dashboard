@@ -112,15 +112,22 @@ class EWDashboard extends LitElement {
     `;
   }
 
-  protected firstUpdated(changedProps: PropertyValues): void {
-    super.firstUpdated(changedProps);
-    // Only enter flash mode for a real hand-off (opened by Device Builder). A
-    // stale #nonce bookmark without an opener falls through to the dashboard.
+  connectedCallback(): void {
+    super.connectedCallback();
+    // Decide flash mode before the first render to avoid a one-frame flash of
+    // the normal dashboard. Only a real hand-off (opened by Device Builder) qualifies;
+    // a stale #nonce bookmark without an opener falls through to the dashboard.
     if (
       window.opener &&
       new URLSearchParams(location.hash.slice(1)).get("nonce")
     ) {
       this.flashMode = true;
+    }
+  }
+
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+    if (this.flashMode) {
       return;
     }
     const params = new URLSearchParams(location.search);
