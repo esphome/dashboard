@@ -120,8 +120,9 @@ class EWWebFlash extends LitElement {
             : "Install over USB"}
         </div>
         <div class="card-content">
-          Installed and rebooting. You can close this tab. To view logs, open
-          web.esphome.io and connect to the device.
+          Installed and rebooting. You can close this tab, or
+          <a href="${location.pathname}${location.search}">connect</a> to view
+          the device logs.
         </div>
       </esphome-card>`;
     }
@@ -292,6 +293,10 @@ class EWWebFlash extends LitElement {
       }
       code {
         word-break: break-all;
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
       }
       .error {
         color: var(--alert-error-color);
