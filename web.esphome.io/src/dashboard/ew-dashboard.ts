@@ -4,6 +4,7 @@ import "@material/mwc-button";
 import "./unsupported-card";
 import "./esp-connect-card";
 import "./pico-connect-card";
+import "./ew-web-flash";
 import { supportsWebSerial } from "../../../src/const";
 import { ARROW, ARROW_RIGHT } from "./arrow";
 import { esphomeSvgStyles } from "../../../src/styles";
@@ -11,8 +12,21 @@ import { esphomeSvgStyles } from "../../../src/styles";
 @customElement("ew-dashboard")
 class EWDashboard extends LitElement {
   @state() private pico = false;
+  // Set when opened by ESPHome Device Builder to receive firmware over
+  // postMessage and flash it over USB (the add-on is plain http, so it can't run
+  // Web Serial itself); the nonce in the hash is the hand-off marker.
+  @state() private flashMode = false;
 
   protected render() {
+    if (this.flashMode) {
+      return html`
+        <div class="container">
+          ${!supportsWebSerial
+            ? html`<ew-unsupported-card></ew-unsupported-card>`
+            : html`<ew-web-flash></ew-web-flash>`}
+        </div>
+      `;
+    }
     return html`
       <div class="container">
         ${!supportsWebSerial
@@ -100,6 +114,10 @@ class EWDashboard extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
+    if (new URLSearchParams(location.hash.slice(1)).get("nonce")) {
+      this.flashMode = true;
+      return;
+    }
     const params = new URLSearchParams(location.search);
 
     for (const key of params.keys()) {
