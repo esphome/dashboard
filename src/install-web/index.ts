@@ -1,6 +1,38 @@
+import type { IEspLoaderTerminal } from "esptool-js";
 import { openNoPortPickedDialog } from "../no-port-picked";
 import { createESPLoader } from "../web-serial/create-esploader";
 import type { ESPHomeInstallWebDialog } from "./install-web-dialog";
+
+export class ESPLoaderTerminalStream {
+  public stream: ReadableStream;
+  public terminal: IEspLoaderTerminal;
+  private controller?: ReadableStreamDefaultController<any>;
+
+  constructor() {
+    const _this = this;
+    this.stream = new ReadableStream({
+      start(controller) {
+        _this.controller = controller;
+      },
+    });
+
+    this.terminal = {
+      clean: () => {
+        this.controller?.enqueue("\n\n\n");
+      },
+      writeLine: (data: string) => {
+        console.log(data);
+        this.controller?.enqueue(`${data}\n`);
+      },
+      write: (data: string) => {
+        console.log(data);
+        // Fix "Connecting..." line break
+        if (data == "\n\r") this.controller?.enqueue("\n");
+        else this.controller?.enqueue(data);
+      },
+    };
+  }
+}
 
 export const preloadInstallWebDialog = () => import("./install-web-dialog");
 
@@ -30,7 +62,10 @@ export const openInstallWebDialog = async (
       return;
     }
   }
-  const esploader = createESPLoader(port);
+
+  const terminalStream = new ESPLoaderTerminalStream();
+
+  const esploader = createESPLoader(port, terminalStream.terminal);
 
   if (onDialogOpen) {
     onDialogOpen();
@@ -39,5 +74,6 @@ export const openInstallWebDialog = async (
   const dialog = document.createElement("esphome-install-web-dialog");
   dialog.params = params;
   dialog.esploader = esploader;
+  dialog.stream = terminalStream.stream;
   document.body.append(dialog);
 };
