@@ -23,7 +23,7 @@ import {
 } from "../const";
 import { esphomeDialogStyles } from "../styles";
 import { sleep } from "../util/sleep";
-import { resetSerialDevice } from "../web-serial/reset-serial-device";
+import { hardResetChip } from "../web-serial/hard-reset";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -273,8 +273,13 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      await esploader.after();
-      await resetSerialDevice(esploader.transport);
+      // A bare RTS toggle leaves native USB-Serial-JTAG chips (S3/C3/...) in
+      // download mode after writeFlash; pick a reset strategy that boots the app.
+      await hardResetChip(
+        esploader,
+        esploader.transport,
+        esploader.transport.device,
+      );
       this._state = "done";
     } finally {
       console.log("Closing port");

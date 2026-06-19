@@ -2,7 +2,6 @@ import { LitElement, html, css, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "@material/mwc-button";
 import "../../../src/components/esphome-card";
-import "./esp-device-card";
 import {
   openInstallWebDialog,
   preloadInstallWebDialog,
@@ -106,19 +105,18 @@ class EWWebFlash extends LitElement {
   }
 
   protected render() {
-    // After a successful flash, hand the kept-open port to the standard device
-    // card so the user can check logs or prepare the device for first use.
     if (this._status === "done") {
-      return this._port
-        ? html`<ew-esp-device-card
-            .port=${this._port}
-            .name=${this._deviceName}
-            @close=${this._onCardClose}
-          ></ew-esp-device-card>`
-        : html`<esphome-card status="DONE">
-            <div class="card-header">Install over USB</div>
-            <div class="card-content">Installed. You can close this tab.</div>
-          </esphome-card>`;
+      return html`<esphome-card status="DONE">
+        <div class="card-header">
+          ${this._deviceName
+            ? html`Installed ${this._deviceName}`
+            : "Install over USB"}
+        </div>
+        <div class="card-content">
+          Installed and rebooting. You can close this tab. To view logs, open
+          web.esphome.io and connect to the device.
+        </div>
+      </esphome-card>`;
     }
     return html`
       <esphome-card
@@ -266,17 +264,23 @@ class EWWebFlash extends LitElement {
           detail: installing ? "Erasing…" : "Connecting to device…",
         });
       },
-      onClose: (success) => {
+      onClose: async (success) => {
         this._busy = false;
-        // Success leaves the port open; show the device card. On failure stay on
-        // the install card so the user can retry.
-        this._status = success ? "done" : "ready";
+        if (!success) {
+          this._status = "ready"; // failed: stay on the card so the user retries
+          return;
+        }
+        // Release the flash port so the rebooted device runs cleanly; the cached
+        // handle is unreliable after a native-USB re-enumeration anyway.
+        try {
+          await this._port?.close();
+        } catch {
+          // already closed / handle died on re-enumeration
+        }
+        this._port = null;
+        this._status = "done";
       },
     });
-  };
-
-  private _onCardClose = (): void => {
-    this._port = null;
   };
 
   private _fail(detail: string): void {
