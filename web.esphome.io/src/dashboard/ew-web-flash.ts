@@ -247,59 +247,66 @@ class EWWebFlash extends LitElement {
     // (logs are a separate fresh connect), mirroring the device-builder flasher.
     // "Erasing" until the first write progress arrives, then "Installing".
     let writing = false;
-    await openInstallWebDialog({
-      erase: this._erase,
-      filesCallback: async () => files,
-      // Mirror progress and the granular phase so the dashboard's install view
-      // tracks this tab instead of showing a stale phase.
-      onProgress: (pct) => {
-        this._post({ type: MSG_PROGRESS, pct });
-        if (!writing) {
-          writing = true;
-          this._post({
-            type: MSG_STATE,
-            state: "installing",
-            detail: "Installing over USB…",
-          });
-        }
-      },
-      onStateChange: (state, error) => {
-        if (state === "done") {
-          this._post({
-            type: MSG_STATE,
-            state: error ? "error" : "done",
-            detail: error ?? "",
-          });
-          return;
-        }
-        // Map install-web's phases to the mirror; onProgress flips to
-        // "Installing" once the first write lands.
-        if (state === "installing") {
-          this._post({
-            type: MSG_STATE,
-            state: "installing",
-            detail: "Erasing…",
-          });
-        } else if (state === "prepare_installation") {
-          this._post({
-            type: MSG_STATE,
-            state: "installing",
-            detail: "Preparing…",
-          });
-        } else {
-          this._post({
-            type: MSG_STATE,
-            state: "connecting",
-            detail: "Connecting to device…",
-          });
-        }
-      },
-      onClose: (success) => {
-        this._busy = false;
-        // Failed: stay on the card so the user can retry. Succeeded: done.
-        this._status = success ? "done" : "ready";
-      },
-    });
+    try {
+      await openInstallWebDialog({
+        erase: this._erase,
+        filesCallback: async () => files,
+        // Mirror progress and the granular phase so the dashboard's install view
+        // tracks this tab instead of showing a stale phase.
+        onProgress: (pct) => {
+          this._post({ type: MSG_PROGRESS, pct });
+          if (!writing) {
+            writing = true;
+            this._post({
+              type: MSG_STATE,
+              state: "installing",
+              detail: "Installing over USB…",
+            });
+          }
+        },
+        onStateChange: (state, error) => {
+          if (state === "done") {
+            this._post({
+              type: MSG_STATE,
+              state: error ? "error" : "done",
+              detail: error ?? "",
+            });
+            return;
+          }
+          // Map install-web's phases to the mirror; onProgress flips to
+          // "Installing" once the first write lands.
+          if (state === "installing") {
+            this._post({
+              type: MSG_STATE,
+              state: "installing",
+              detail: "Erasing…",
+            });
+          } else if (state === "prepare_installation") {
+            this._post({
+              type: MSG_STATE,
+              state: "installing",
+              detail: "Preparing…",
+            });
+          } else {
+            this._post({
+              type: MSG_STATE,
+              state: "connecting",
+              detail: "Connecting to device…",
+            });
+          }
+        },
+        onClose: (success) => {
+          this._busy = false;
+          // Failed: stay on the card so the user can retry. Succeeded: done.
+          this._status = success ? "done" : "ready";
+        },
+      });
+    } catch (err) {
+      // A throw before onClose (e.g. failing to open the dialog) would otherwise
+      // leave the button disabled forever; re-enable so the user can retry.
+      console.error("Failed to open the USB installer:", err);
+      this._busy = false;
+    }
   };
 
   private _fail(detail: string): void {

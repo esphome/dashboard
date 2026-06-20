@@ -65,9 +65,18 @@ async function watchdogReset(
       regs.wdtConfig0,
       (1 << 31) | (5 << 28) | (1 << 8) | 2,
     );
+  } catch (err) {
+    // A genuine transport error before the WDT was armed: don't claim success,
+    // so the caller falls through to the VID-based reset instead of leaving a
+    // native-USB chip stuck in download mode.
+    console.error("Watchdog reset failed to arm:", err);
+    return false;
+  }
+  // The re-lock can race the reset firing (the WDT has already done its job).
+  try {
     await loader.writeReg(regs.wdtWProtect, 0);
   } catch {
-    // A writeReg can race the reset firing; the WDT has already done its job.
+    // raced by the reset; ignore
   }
   await sleep(200);
   return true;
