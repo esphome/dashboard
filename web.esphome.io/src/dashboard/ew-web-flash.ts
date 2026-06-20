@@ -313,6 +313,10 @@ class EWWebFlash extends LitElement {
     this._stopReady(); // stop announcing ready once we're wedged
     this._status = "error";
     this._detail = detail;
+    // Notify the opener so its install view doesn't hang waiting for state
+    // frames after a post-handoff failure (malformed payload / conversion). A
+    // no-op when there's no opener (the open-directly error case).
+    this._post({ type: MSG_STATE, state: "error", detail });
   }
 
   static styles = [
