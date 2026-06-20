@@ -14,8 +14,13 @@ export const openInstallWebDialog = async (
   let port = params.port;
 
   if (port) {
-    // ESPLoader likes opening the port.
-    await port.close();
+    // ESPLoader likes opening the port; tolerate a port that isn't open yet
+    // (a caller may pass a freshly-requested, unopened port).
+    try {
+      await port.close();
+    } catch {
+      // not open / already closed
+    }
   } else {
     try {
       port = await navigator.serial.requestPort();

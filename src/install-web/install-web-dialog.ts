@@ -23,7 +23,7 @@ import {
 } from "../const";
 import { esphomeDialogStyles } from "../styles";
 import { sleep } from "../util/sleep";
-import { resetSerialDevice } from "../web-serial/reset-serial-device";
+import { hardResetChip } from "../web-serial/hard-reset";
 
 const OK_ICON = "🎉";
 const WARNING_ICON = "👀";
@@ -41,6 +41,17 @@ export class ESPHomeInstallWebDialog extends LitElement {
     // Callback when the dialog is closed. Note that if success is false,
     // some other dialog might be opened when the dialog is closed.
     onClose?: (success: boolean) => void;
+    // Mirror progress (0-100) and state to an embedder that shows the flash
+    // elsewhere (the postMessage hand-off from ESPHome Device Builder).
+    onProgress?: (pct: number) => void;
+    onStateChange?: (
+      state:
+        | "connecting_webserial"
+        | "prepare_installation"
+        | "installing"
+        | "done",
+      error?: string,
+    ) => void;
   };
 
   @property() public esploader!: ESPLoader;
@@ -56,6 +67,27 @@ export class ESPHomeInstallWebDialog extends LitElement {
   @state() private _error?: string | TemplateResult;
 
   private _platform?: SupportedPlatforms;
+
+  protected updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
+    if (
+      changedProps.has("_writeProgress") &&
+      this._writeProgress !== undefined
+    ) {
+      this.params.onProgress?.(this._writeProgress);
+    }
+    if (changedProps.has("_state")) {
+      // Preserve the error signal even when _error is a TemplateResult, so an
+      // embedder mirroring "done" can't mistake a failure for success.
+      const error =
+        this._error === undefined
+          ? undefined
+          : typeof this._error === "string"
+            ? this._error
+            : "Installation failed";
+      this.params.onStateChange?.(this._state, error);
+    }
+  }
 
   protected render() {
     let heading;
@@ -177,7 +209,14 @@ export class ESPHomeInstallWebDialog extends LitElement {
 
   private async _handleInstall() {
     const esploader = this.esploader;
+    // Set once the flash succeeds: the post-flash reset re-enumerates the USB
+    // device (a native USB-Serial-JTAG chip drops and re-creates its port on
+    // boot), and that expected disconnect must not be reported as a failure.
+    let installed = false;
     esploader.transport.device.addEventListener("disconnect", async () => {
+      if (installed) {
+        return;
+      }
       this._state = "done";
       this._error = "Device disconnected";
       if (!this.params.port) {
@@ -241,8 +280,22 @@ export class ESPHomeInstallWebDialog extends LitElement {
         return;
       }
 
-      await esploader.after();
-      await resetSerialDevice(esploader.transport);
+      // The flash itself is done; the reset below intentionally re-enumerates
+      // the device, so stop treating a disconnect as a failure.
+      installed = true;
+      // A bare RTS toggle leaves native USB-Serial-JTAG chips (S3/C3/...) in
+      // download mode after writeFlash; pick a reset strategy that boots the app.
+      // The write is already committed, so a reset that throws must not report
+      // the install as failed: log it and still mark done.
+      try {
+        await hardResetChip(
+          esploader,
+          esploader.transport,
+          esploader.transport.device,
+        );
+      } catch (err) {
+        console.error("Post-flash reset failed:", err);
+      }
       this._state = "done";
     } finally {
       console.log("Closing port");
