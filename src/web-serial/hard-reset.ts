@@ -61,9 +61,12 @@ async function watchdogReset(
   try {
     await loader.writeReg(regs.wdtWProtect, RTC_CNTL_WDT_WKEY);
     await loader.writeReg(regs.wdtConfig1, 2000);
+    // config0 = 0xD0000102: enable (bit 31) | stage0 = reset-system (bits 28-30
+    // = 5) | clock prescaler (bit 8) | timeout-stage 2. >>> 0 keeps it an
+    // unsigned u32 (1 << 31 alone is negative in JS).
     await loader.writeReg(
       regs.wdtConfig0,
-      (1 << 31) | (5 << 28) | (1 << 8) | 2,
+      ((1 << 31) | (5 << 28) | (1 << 8) | 2) >>> 0,
     );
   } catch (err) {
     // A genuine transport error before the WDT was armed: don't claim success,
