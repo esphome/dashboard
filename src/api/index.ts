@@ -31,7 +31,7 @@ const fetchApiBase = async (
   if (!resp.ok) {
     let errMessage = `Request not successful (${resp.status})`;
     try {
-      const contentType = resp.headers.get("content-type") || "";
+      const contentType = resp.headers.get("content-type") ?? "";
       if (contentType.includes("application/json")) {
         const json = await resp.json();
         errMessage += `: ${json.error}`;

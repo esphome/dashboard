@@ -91,9 +91,7 @@ class ESPHomeDevicesList extends LitElement {
                 })}
                 data-name=${device.name}
                 .device=${device}
-                .onlineStatus=${(this._onlineStatus || {})[
-                  device.configuration
-                ]}
+                .onlineStatus=${this._onlineStatus[device.configuration]}
                 .highlightOnAdd=${this._new.has(device.name)}
                 @deleted=${this._updateDevices}
               ></esphome-configured-device-card>`}
@@ -258,11 +256,9 @@ class ESPHomeDevicesList extends LitElement {
       }
 
       newList.sort((a, b) => {
-        const a_name = a.friendly_name || a.name;
-        const b_name = b.friendly_name || b.name;
-        return a_name
-          .toLocaleLowerCase()
-          .localeCompare(b_name.toLocaleLowerCase());
+        const a_name = (a.friendly_name ?? a.name).toLocaleLowerCase();
+        const b_name = (b.friendly_name ?? b.name).toLocaleLowerCase();
+        return a_name.localeCompare(b_name);
       });
 
       if (devices.importable) {
