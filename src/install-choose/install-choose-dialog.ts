@@ -28,6 +28,7 @@ class ESPHomeInstallChooseDialog extends LitElement {
   @state() private _shouldDownloadFactory = false;
 
   @state() private _ports?: ServerSerialPort[];
+  @state() private _hasPublish = false;
 
   @state() private _state:
     | "pick_option"
@@ -110,6 +111,23 @@ class ESPHomeInstallChooseDialog extends LitElement {
           </span>
           ${metaChevronRight}
         </mwc-list-item>
+
+        ${this._hasPublish
+          ? html`
+              <mwc-list-item
+                twoline
+                hasMeta
+                .port=${"PUBLISH"}
+                @click=${this._handleLegacyOption}
+              >
+                <span>Publish</span>
+                <span slot="secondary"
+                  >Run the configured shell command on the server</span
+                >
+                ${metaChevronRight}
+              </mwc-list-item>
+            `
+          : ""}
 
         <mwc-button
           no-attention
@@ -314,7 +332,9 @@ class ESPHomeInstallChooseDialog extends LitElement {
   }
 
   private async _updateSerialPorts() {
-    this._ports = await getSerialPorts();
+    const ports = await getSerialPorts(this.configuration);
+    this._hasPublish = ports.some((p) => p.port === "PUBLISH");
+    this._ports = ports.filter((p) => p.port !== "PUBLISH");
   }
 
   protected willUpdate(changedProps: PropertyValues) {
