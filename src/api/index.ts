@@ -63,6 +63,14 @@ export const fetchApiJson = async <T>(
   return resp.json();
 };
 
+// Returns the raw Response for cases where headers need to be accessed
+export const fetchApiResponse = async (
+  path: Parameters<typeof fetch>[0],
+  options?: Parameters<typeof fetch>[1],
+): Promise<Response> => {
+  return fetchApiBase(path, options);
+};
+
 export class StreamError extends Error {
   code?: number;
 }
