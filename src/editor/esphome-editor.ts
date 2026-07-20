@@ -114,11 +114,14 @@ class ESPHomeEditor extends LitElement {
   }
 
   private async handleInstall() {
-    await this._saveFile();
+    const saved = await this._saveFile();
+    if (!saved) {
+      return;
+    }
     openInstallChooseDialog(this.fileName);
   }
 
-  private async _saveFile() {
+  private async _saveFile(): Promise<boolean> {
     const code = this.getValue();
     if (this._snackbar.open) {
       this._snackbar.close();
@@ -127,8 +130,10 @@ class ESPHomeEditor extends LitElement {
     try {
       await writeFile(this.fileName, code ?? "");
       this._showSnackbar(`✅ Saved ${this.fileName}`);
+      return true;
     } catch (error) {
       this._showSnackbar(`❌ An error occurred saving ${this.fileName}`);
+      return false;
     }
   }
 
